@@ -1,6 +1,6 @@
 <!-- generated from devices/ns-pc87307/registers.toml by defs-gen - do not edit, change the source -->
 <!-- defs-gen 2 -->
-<!-- input sha256 76cde275bc5d5315ccc6348402124412d364c8bfe4d70fc6d57910902abc382f -->
+<!-- input sha256 fdc452855d3492175a63ce3946a9d26e06e456dfb5396f49a49e4e0a4620bb82 -->
 
 # National Semiconductor PC87307 Super I/O (marked NS87307) as wired in the Visual Workstation 320 and 540
 
@@ -43,13 +43,13 @@ Every item has a grade: established, inferred or unknown. A grade says how the i
 | `pnp_status` | 0x5 | r | 8 |  | pc87307_card | unknown | established | National Semiconductor PC87307/PC97307 datasheet (Preliminary, March 1998) p.27 |
 | `csn` | 0x6 | rw | 8 |  | pc87307_card | 0x0 (National Semiconductor PC87307/PC97307 datasheet (Preliminary, March 1998) p.30) | established | National Semiconductor PC87307/PC97307 datasheet (Preliminary, March 1998) p.27, 30 |
 | `ldn` | 0x7 | rw | 8 |  | pc87307_card | 0x0 (National Semiconductor PC87307/PC97307 datasheet (Preliminary, March 1998) p.30) | established | National Semiconductor PC87307/PC97307 datasheet (Preliminary, March 1998) p.27, 30 |
-| `sid` | 0x20 | r | 8 |  | pc87307_card | 0xc0 (National Semiconductor PC87307/PC97307 datasheet (Preliminary, March 1998) p.34) | established | National Semiconductor PC87307/PC97307 datasheet (Preliminary, March 1998) p.34 |
+| `sid` | 0x20 | r | 8 |  | pc87307_card | 0xc0 (inferred; National Semiconductor PC87307/PC97307 datasheet (Preliminary, March 1998) p.34) | established | National Semiconductor PC87307/PC97307 datasheet (Preliminary, March 1998) p.34 |
 | `sioc1` | 0x21 | rw | 8 |  | pc87307_card | unknown | established | National Semiconductor PC87307/PC97307 datasheet (Preliminary, March 1998) p.34-35 |
 | `sioc2` | 0x22 | rw | 8 |  | pc87307_card | unknown | established | National Semiconductor PC87307/PC97307 datasheet (Preliminary, March 1998) p.35 |
 | `cs_index` | 0x23 | rw | 8 |  | pc87307_card | 0x0 (National Semiconductor PC87307/PC97307 datasheet (Preliminary, March 1998) p.35) | established | National Semiconductor PC87307/PC97307 datasheet (Preliminary, March 1998) p.35-36 |
 | `cs_data` | 0x24 | rw | 8 |  | pc87307_card | 0x0 (National Semiconductor PC87307/PC97307 datasheet (Preliminary, March 1998) p.36) | established | National Semiconductor PC87307/PC97307 datasheet (Preliminary, March 1998) p.36 |
 | `srid` | 0x27 | r | 8 |  | pc87307_card | unknown | established | National Semiconductor PC87307/PC97307 datasheet (Preliminary, March 1998) p.36 |
-| `cfg_index` | 0x0 | rw | 8 |  | pc87307_cfgport | 0x0 (inferred) | established | National Semiconductor PC87307/PC97307 datasheet (Preliminary, March 1998) p.24-25 |
+| `cfg_index` | 0x0 | rw | 8 |  | pc87307_cfgport | unknown | established | National Semiconductor PC87307/PC97307 datasheet (Preliminary, March 1998) p.24-25 |
 | `cfg_data` | 0x1 | rw | 8 |  | pc87307_cfgport | unknown | established | National Semiconductor PC87307/PC97307 datasheet (Preliminary, March 1998) p.24-25 |
 | `cs_base_msb` | 0x0 | rw | 8 | 3 | pc87307_cs | 0x0 (National Semiconductor PC87307/PC97307 datasheet (Preliminary, March 1998) p.39) | established | National Semiconductor PC87307/PC97307 datasheet (Preliminary, March 1998) p.39-40 |
 | `cs_base_lsb` | 0x1 | rw | 8 | 3 | pc87307_cs | 0x0 (National Semiconductor PC87307/PC97307 datasheet (Preliminary, March 1998) p.39) | established | National Semiconductor PC87307/PC97307 datasheet (Preliminary, March 1998) p.39-40 |
@@ -187,7 +187,7 @@ Logical device number: selects which logical device's registers the indexes 0x30
 
 ### Register `sid`
 
-Identification. In the PC87307 bits 7:5 are the chip identification and bits 4:0 the revision, and the register reads 0xc0. In the PC97307 all eight bits are the chip identification and it reads 0xcf. Reset 0xc0 is the PC87307's.
+Identification. In the PC87307 bits 7:5 are the chip identification and bits 4:0 the revision, and the register reads 0xc0. In the PC97307 all eight bits are the chip identification and it reads 0xcf. Reset 0xc0 is the PC87307's. The reset of 0xc0 is inferred on the reading that the board part is a PC87307 (the board's documents say NS87307).
 
 | Bits | Field | Grade | Values | Source | Description |
 |---|---|---|---|---|---|
@@ -234,7 +234,7 @@ Chip revision identification, PC97307 only: incremented on each tapeout.
 
 ### Register `cfg_index`
 
-Configuration index register. A write selects the configuration register the data port then reaches; a read returns the last index written. Reset: the part wakes in the Config state in PnP motherboard mode, so no key sequence is needed. The PROM and Linux write ports 0x2e and 0x2f directly.
+Configuration index register. A write selects the configuration register the data port then reaches; a read returns the last index written. Reset: the part wakes in the Config state in PnP motherboard mode, so no key sequence is needed. The PROM and Linux write ports 0x2e and 0x2f directly. The reset value is unknown: no source states it and no PROM read of the index port before its first write is held.
 
 ### Register `cfg_data`
 

@@ -1,6 +1,6 @@
 /* generated from devices/cobalt/registers.toml by defs-gen - do not edit, change the source */
 /* defs-gen 2 */
-/* input sha256 19f8621d27161f38e6f456d3242a1560c0986e491015583f41f0bff9b6e515ee */
+/* input sha256 20f482005a324addbb08bda15ddc0986046d26510e25bccbbd22bdfb507c0ee3 */
 /* Cobalt (system ASIC of the SGI Visual Workstation 320 and 540): the CPU block with its timer, and the interrupt controller */
 #ifndef COBALT_GEN_H
 #define COBALT_GEN_H
@@ -85,7 +85,7 @@
 #define COBALT_CPU_CTRL_ECC_ENABLE_INPLACE           (COBALT_CPU_CTRL_ECC_ENABLE_MASK << COBALT_CPU_CTRL_ECC_ENABLE_SHIFT)
 
 /*
- * Machine reset on early boards (the PROM main module's reboot routine does the same: it sets bit 0 here, or writes 6 to port 0xcf9 on the newer board classes). The NT HAL sets bit 0 to reboot the 320 below board revision 12 and the 540 revision 0 (halborg.dll 1.3, HalpReboot, BoardResetAtPIIX4); other boards reboot through port 0xcf9. A separate register from the memory block's error status at offset 0x18. The PROM self-test also writes it: a read-modify-write that ORs in bit 0 only when neither of two CMOS marker bytes is 0xa5 (a cold boot: it writes 0xa5 to both, and every boot then zeroes both) (the value read is only ORed, never tested), a store of 3 (bits 1 and 0) right after it stores 0xbb in extended CMOS byte 0x8c, and a store of 1 on a second path whose caller was not traced. What bit 1 does is unknown. Addresses: the Cobalt README.
+ * Machine reset on early boards (the PROM main module's reboot routine does the same: it sets bit 0 here, or writes 6 to the PIIX4 reset control register on the newer board classes). The NT HAL sets bit 0 to reboot the 320 below board revision 12 and the 540 revision 0 (halborg.dll 1.3, HalpReboot, BoardResetAtPIIX4); other boards reboot through the PIIX4 reset control register. A separate register from the memory block's error status at offset 0x18. The PROM self-test also writes it: a read-modify-write that ORs in bit 0 only when neither of two CMOS marker bytes is 0xa5 (a cold boot: it writes 0xa5 to both, and every boot then zeroes both) (the value read is only ORed, never tested), a store of 3 (bits 1 and 0) right after it stores 0xbb in extended CMOS byte 0x8c, and a store of 1 on a second path whose caller was not traced. What bit 1 does is unknown. Addresses: the Cobalt README.
  */
 /* cpu_reset: rw32, space cpu, reset unknown */
 #define COBALT_CPU_RESET_OFFSET                      0x18u /* established */

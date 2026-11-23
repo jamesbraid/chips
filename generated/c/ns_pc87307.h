@@ -1,6 +1,6 @@
 /* generated from devices/ns-pc87307/registers.toml by defs-gen - do not edit, change the source */
 /* defs-gen 2 */
-/* input sha256 76cde275bc5d5315ccc6348402124412d364c8bfe4d70fc6d57910902abc382f */
+/* input sha256 fdc452855d3492175a63ce3946a9d26e06e456dfb5396f49a49e4e0a4620bb82 */
 /* National Semiconductor PC87307 Super I/O (marked NS87307) as wired in the Visual Workstation 320 and 540 */
 #ifndef PC87307_GEN_H
 #define PC87307_GEN_H
@@ -66,7 +66,7 @@
 #define PC87307_LDN_OFFSET                           0x7u /* established */
 
 /*
- * Identification. In the PC87307 bits 7:5 are the chip identification and bits 4:0 the revision, and the register reads 0xc0. In the PC97307 all eight bits are the chip identification and it reads 0xcf. Reset 0xc0 is the PC87307's.
+ * Identification. In the PC87307 bits 7:5 are the chip identification and bits 4:0 the revision, and the register reads 0xc0. In the PC97307 all eight bits are the chip identification and it reads 0xcf. Reset 0xc0 is the PC87307's. The reset of 0xc0 is inferred on the reading that the board part is a PC87307 (the board's documents say NS87307).
  */
 /* sid: r8, space pc87307_card, reset 0xc0; National Semiconductor PC87307/PC97307 datasheet (Preliminary, March 1998) p.34 */
 #define PC87307_SID_OFFSET                           0x20u /* established */
@@ -144,9 +144,9 @@
 #define PC87307_SRID_OFFSET                          0x27u /* established */
 
 /*
- * Configuration index register. A write selects the configuration register the data port then reaches; a read returns the last index written. Reset: the part wakes in the Config state in PnP motherboard mode, so no key sequence is needed. The PROM and Linux write ports 0x2e and 0x2f directly.
+ * Configuration index register. A write selects the configuration register the data port then reaches; a read returns the last index written. Reset: the part wakes in the Config state in PnP motherboard mode, so no key sequence is needed. The PROM and Linux write ports 0x2e and 0x2f directly. The reset value is unknown: no source states it and no PROM read of the index port before its first write is held.
  */
-/* cfg_index: rw8, space pc87307_cfgport, reset 0x0; National Semiconductor PC87307/PC97307 datasheet (Preliminary, March 1998) p.24-25 */
+/* cfg_index: rw8, space pc87307_cfgport, reset unknown; National Semiconductor PC87307/PC97307 datasheet (Preliminary, March 1998) p.24-25 */
 #define PC87307_CFG_INDEX_OFFSET                     0x0u /* established */
 
 /*

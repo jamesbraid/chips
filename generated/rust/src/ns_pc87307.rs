@@ -1,6 +1,6 @@
 // generated from devices/ns-pc87307/registers.toml by defs-gen - do not edit, change the source
 // defs-gen 2
-// input sha256 76cde275bc5d5315ccc6348402124412d364c8bfe4d70fc6d57910902abc382f
+// input sha256 fdc452855d3492175a63ce3946a9d26e06e456dfb5396f49a49e4e0a4620bb82
 // National Semiconductor PC87307 Super I/O (marked NS87307) as wired in the Visual Workstation 320 and 540
 #![allow(dead_code)]
 

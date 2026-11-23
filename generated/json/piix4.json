@@ -1,6 +1,6 @@
 {
  "generator": "defs-gen 2",
- "input_sha256": "4095ecd03f27c316c0e277b1e0601b278c04db4d80a6d3f1f614b65056469c03",
+ "input_sha256": "9419598440ab2c5e0a78081f4f4024eecd7686d44a9b3e8d221f0b1de5cd234d",
  "schema": "defs-flat/1",
  "source": "devices/piix4/registers.toml",
  "profile": "public",
@@ -2019,7 +2019,7 @@
    "space": "piix4_f2",
    "reset": 640,
    "grade": "established",
-   "from": "Intel 82371AB datasheet 290562-001 (April 1997) p.103"
+   "from": "Intel 82371AB datasheet 290562-001 (April 1997) p.103-104"
   },
   {
    "unit": "piix4",
@@ -2115,7 +2115,7 @@
    "count": 1,
    "stride": 4,
    "space": "piix4_f2",
-   "reset": 0,
+   "reset": 1,
    "grade": "established",
    "from": "Intel 82371AB datasheet 290562-001 (April 1997) p.108"
   },
@@ -2384,9 +2384,9 @@
    "count": 1,
    "stride": 1,
    "space": "piix4_f3",
-   "reset": "unknown",
-   "grade": "unknown",
-   "from": "Intel 82371AB datasheet 290562-001 (April 1997) p.120"
+   "reset": 0,
+   "grade": "established",
+   "from": "Intel 82371AB specification update 297738-017 (January 2002) p.13"
   },
   {
    "unit": "piix4",
@@ -2568,7 +2568,7 @@
    "kind": "register",
    "name": "f3_smbshdw1",
    "offset": 212,
-   "access": "r",
+   "access": "rw",
    "width": 8,
    "count": 1,
    "stride": 1,
@@ -2582,7 +2582,7 @@
    "kind": "register",
    "name": "f3_smbshdw2",
    "offset": 213,
-   "access": "r",
+   "access": "rw",
    "width": 8,
    "count": 1,
    "stride": 1,
@@ -2608,6 +2608,106 @@
   {
    "unit": "piix4",
    "kind": "register",
+   "name": "rirq",
+   "offset": 96,
+   "access": "r",
+   "width": 8,
+   "count": 1,
+   "stride": 1,
+   "space": "piix4_isa",
+   "reset": "unknown",
+   "grade": "established",
+   "from": "Intel 82371AB datasheet 290562-001 (April 1997) p.86"
+  },
+  {
+   "unit": "piix4",
+   "kind": "register",
+   "name": "nmisc",
+   "offset": 97,
+   "access": "rw",
+   "width": 8,
+   "count": 1,
+   "stride": 1,
+   "space": "piix4_isa",
+   "reset": 0,
+   "grade": "established",
+   "from": "Intel 82371AB datasheet 290562-001 (April 1997) p.83"
+  },
+  {
+   "unit": "piix4",
+   "kind": "field",
+   "name": "nmisc.serr_status",
+   "hi": 7,
+   "lo": 7,
+   "grade": "established",
+   "from": "Intel 82371AB datasheet 290562-001 (April 1997) p.83"
+  },
+  {
+   "unit": "piix4",
+   "kind": "field",
+   "name": "nmisc.iochk_status",
+   "hi": 6,
+   "lo": 6,
+   "grade": "established",
+   "from": "Intel 82371AB datasheet 290562-001 (April 1997) p.83"
+  },
+  {
+   "unit": "piix4",
+   "kind": "field",
+   "name": "nmisc.timer2_out",
+   "hi": 5,
+   "lo": 5,
+   "grade": "established",
+   "from": "Intel 82371AB datasheet 290562-001 (April 1997) p.83"
+  },
+  {
+   "unit": "piix4",
+   "kind": "field",
+   "name": "nmisc.refresh",
+   "hi": 4,
+   "lo": 4,
+   "grade": "established",
+   "from": "Intel 82371AB datasheet 290562-001 (April 1997) p.83"
+  },
+  {
+   "unit": "piix4",
+   "kind": "field",
+   "name": "nmisc.iochk_dis",
+   "hi": 3,
+   "lo": 3,
+   "grade": "established",
+   "from": "Intel 82371AB datasheet 290562-001 (April 1997) p.83"
+  },
+  {
+   "unit": "piix4",
+   "kind": "field",
+   "name": "nmisc.serr_dis",
+   "hi": 2,
+   "lo": 2,
+   "grade": "established",
+   "from": "Intel 82371AB datasheet 290562-001 (April 1997) p.83"
+  },
+  {
+   "unit": "piix4",
+   "kind": "field",
+   "name": "nmisc.spkr_en",
+   "hi": 1,
+   "lo": 1,
+   "grade": "established",
+   "from": "Intel 82371AB datasheet 290562-001 (April 1997) p.83"
+  },
+  {
+   "unit": "piix4",
+   "kind": "field",
+   "name": "nmisc.timer2_en",
+   "hi": 0,
+   "lo": 0,
+   "grade": "established",
+   "from": "Intel 82371AB datasheet 290562-001 (April 1997) p.83"
+  },
+  {
+   "unit": "piix4",
+   "kind": "register",
    "name": "rtci",
    "offset": 112,
    "access": "w",
@@ -2615,7 +2715,7 @@
    "count": 1,
    "stride": 1,
    "space": "piix4_isa",
-   "reset": 128,
+   "reset": "unknown",
    "grade": "established",
    "from": "Intel 82371AB datasheet 290562-001 (April 1997) p.84-85"
   },
@@ -2756,6 +2856,52 @@
    "reset": 0,
    "grade": "established",
    "from": "Intel 82371AB datasheet 290562-001 (April 1997) p.86"
+  },
+  {
+   "unit": "piix4",
+   "kind": "register",
+   "name": "cerr",
+   "offset": 240,
+   "access": "w",
+   "width": 8,
+   "count": 1,
+   "stride": 1,
+   "space": "piix4_isa",
+   "reset": "unknown",
+   "grade": "established",
+   "from": "Intel 82371AB datasheet 290562-001 (April 1997) p.87"
+  },
+  {
+   "unit": "piix4",
+   "kind": "register",
+   "name": "rc",
+   "offset": 3321,
+   "access": "rw",
+   "width": 8,
+   "count": 1,
+   "stride": 1,
+   "space": "piix4_isa",
+   "reset": 0,
+   "grade": "established",
+   "from": "Intel 82371AB datasheet 290562-001 (April 1997) p.88"
+  },
+  {
+   "unit": "piix4",
+   "kind": "field",
+   "name": "rc.rcpu",
+   "hi": 2,
+   "lo": 2,
+   "grade": "established",
+   "from": "Intel 82371AB datasheet 290562-001 (April 1997) p.88"
+  },
+  {
+   "unit": "piix4",
+   "kind": "field",
+   "name": "rc.srst",
+   "hi": 1,
+   "lo": 1,
+   "grade": "established",
+   "from": "Intel 82371AB datasheet 290562-001 (April 1997) p.88"
   },
   {
    "unit": "piix4",
@@ -3444,7 +3590,7 @@
    "space": "piix4_pm",
    "reset": 2147467263,
    "grade": "established",
-   "from": "Intel 82371AB datasheet 290562-001 (April 1997) p.148"
+   "from": "Intel 82371AB datasheet 290562-001 (April 1997) p.148; Intel 82371AB specification update 297738-017 (January 2002) p.23"
   },
   {
    "unit": "piix4",
@@ -3453,7 +3599,7 @@
    "hi": 30,
    "lo": 30,
    "grade": "established",
-   "from": "Intel 82371AB datasheet 290562-001 (April 1997) p.148"
+   "from": "Intel 82371AB datasheet 290562-001 (April 1997) p.148; Intel 82371AB specification update 297738-017 (January 2002) p.23"
   },
   {
    "unit": "piix4",
@@ -3462,7 +3608,7 @@
    "hi": 29,
    "lo": 29,
    "grade": "established",
-   "from": "Intel 82371AB datasheet 290562-001 (April 1997) p.148"
+   "from": "Intel 82371AB datasheet 290562-001 (April 1997) p.148; Intel 82371AB specification update 297738-017 (January 2002) p.23"
   },
   {
    "unit": "piix4",
@@ -3471,7 +3617,7 @@
    "hi": 28,
    "lo": 28,
    "grade": "inferred",
-   "from": "Intel 82371AB datasheet 290562-001 (April 1997) p.148"
+   "from": "Intel 82371AB datasheet 290562-001 (April 1997) p.148; Intel 82371AB specification update 297738-017 (January 2002) p.23"
   },
   {
    "unit": "piix4",
@@ -3480,7 +3626,7 @@
    "hi": 27,
    "lo": 27,
    "grade": "established",
-   "from": "Intel 82371AB datasheet 290562-001 (April 1997) p.148"
+   "from": "Intel 82371AB datasheet 290562-001 (April 1997) p.148; Intel 82371AB specification update 297738-017 (January 2002) p.23"
   },
   {
    "unit": "piix4",
@@ -3489,7 +3635,7 @@
    "hi": 26,
    "lo": 26,
    "grade": "established",
-   "from": "Intel 82371AB datasheet 290562-001 (April 1997) p.148"
+   "from": "Intel 82371AB datasheet 290562-001 (April 1997) p.148; Intel 82371AB specification update 297738-017 (January 2002) p.23"
   },
   {
    "unit": "piix4",
@@ -3498,7 +3644,7 @@
    "hi": 25,
    "lo": 25,
    "grade": "established",
-   "from": "Intel 82371AB datasheet 290562-001 (April 1997) p.148"
+   "from": "Intel 82371AB datasheet 290562-001 (April 1997) p.148; Intel 82371AB specification update 297738-017 (January 2002) p.23"
   },
   {
    "unit": "piix4",
@@ -3507,7 +3653,7 @@
    "hi": 24,
    "lo": 24,
    "grade": "established",
-   "from": "Intel 82371AB datasheet 290562-001 (April 1997) p.148"
+   "from": "Intel 82371AB datasheet 290562-001 (April 1997) p.148; Intel 82371AB specification update 297738-017 (January 2002) p.23"
   },
   {
    "unit": "piix4",
@@ -3516,7 +3662,7 @@
    "hi": 23,
    "lo": 23,
    "grade": "established",
-   "from": "Intel 82371AB datasheet 290562-001 (April 1997) p.148"
+   "from": "Intel 82371AB datasheet 290562-001 (April 1997) p.148; Intel 82371AB specification update 297738-017 (January 2002) p.23"
   },
   {
    "unit": "piix4",
@@ -3525,7 +3671,7 @@
    "hi": 22,
    "lo": 22,
    "grade": "established",
-   "from": "Intel 82371AB datasheet 290562-001 (April 1997) p.148"
+   "from": "Intel 82371AB datasheet 290562-001 (April 1997) p.148; Intel 82371AB specification update 297738-017 (January 2002) p.23"
   },
   {
    "unit": "piix4",
@@ -3534,7 +3680,7 @@
    "hi": 21,
    "lo": 21,
    "grade": "established",
-   "from": "Intel 82371AB datasheet 290562-001 (April 1997) p.148"
+   "from": "Intel 82371AB datasheet 290562-001 (April 1997) p.148; Intel 82371AB specification update 297738-017 (January 2002) p.23"
   },
   {
    "unit": "piix4",
@@ -3543,7 +3689,7 @@
    "hi": 20,
    "lo": 20,
    "grade": "established",
-   "from": "Intel 82371AB datasheet 290562-001 (April 1997) p.148"
+   "from": "Intel 82371AB datasheet 290562-001 (April 1997) p.148; Intel 82371AB specification update 297738-017 (January 2002) p.23"
   },
   {
    "unit": "piix4",
@@ -3552,7 +3698,7 @@
    "hi": 19,
    "lo": 19,
    "grade": "established",
-   "from": "Intel 82371AB datasheet 290562-001 (April 1997) p.148"
+   "from": "Intel 82371AB datasheet 290562-001 (April 1997) p.148; Intel 82371AB specification update 297738-017 (January 2002) p.23"
   },
   {
    "unit": "piix4",
@@ -3561,7 +3707,7 @@
    "hi": 18,
    "lo": 18,
    "grade": "established",
-   "from": "Intel 82371AB datasheet 290562-001 (April 1997) p.148"
+   "from": "Intel 82371AB datasheet 290562-001 (April 1997) p.148; Intel 82371AB specification update 297738-017 (January 2002) p.23"
   },
   {
    "unit": "piix4",
@@ -3570,7 +3716,7 @@
    "hi": 17,
    "lo": 17,
    "grade": "established",
-   "from": "Intel 82371AB datasheet 290562-001 (April 1997) p.148"
+   "from": "Intel 82371AB datasheet 290562-001 (April 1997) p.148; Intel 82371AB specification update 297738-017 (January 2002) p.23"
   },
   {
    "unit": "piix4",
@@ -3579,7 +3725,7 @@
    "hi": 16,
    "lo": 16,
    "grade": "established",
-   "from": "Intel 82371AB datasheet 290562-001 (April 1997) p.148"
+   "from": "Intel 82371AB datasheet 290562-001 (April 1997) p.148; Intel 82371AB specification update 297738-017 (January 2002) p.23"
   },
   {
    "unit": "piix4",
@@ -3588,7 +3734,7 @@
    "hi": 15,
    "lo": 15,
    "grade": "established",
-   "from": "Intel 82371AB datasheet 290562-001 (April 1997) p.148"
+   "from": "Intel 82371AB datasheet 290562-001 (April 1997) p.148; Intel 82371AB specification update 297738-017 (January 2002) p.23"
   },
   {
    "unit": "piix4",
@@ -3597,7 +3743,7 @@
    "hi": 14,
    "lo": 14,
    "grade": "established",
-   "from": "Intel 82371AB datasheet 290562-001 (April 1997) p.148"
+   "from": "Intel 82371AB datasheet 290562-001 (April 1997) p.148; Intel 82371AB specification update 297738-017 (January 2002) p.23"
   },
   {
    "unit": "piix4",
@@ -3606,7 +3752,7 @@
    "hi": 13,
    "lo": 13,
    "grade": "established",
-   "from": "Intel 82371AB datasheet 290562-001 (April 1997) p.148"
+   "from": "Intel 82371AB datasheet 290562-001 (April 1997) p.148; Intel 82371AB specification update 297738-017 (January 2002) p.23"
   },
   {
    "unit": "piix4",
@@ -3615,7 +3761,7 @@
    "hi": 12,
    "lo": 12,
    "grade": "established",
-   "from": "Intel 82371AB datasheet 290562-001 (April 1997) p.148"
+   "from": "Intel 82371AB datasheet 290562-001 (April 1997) p.148; Intel 82371AB specification update 297738-017 (January 2002) p.23"
   },
   {
    "unit": "piix4",
@@ -3624,7 +3770,7 @@
    "hi": 11,
    "lo": 11,
    "grade": "established",
-   "from": "Intel 82371AB datasheet 290562-001 (April 1997) p.148"
+   "from": "Intel 82371AB datasheet 290562-001 (April 1997) p.148; Intel 82371AB specification update 297738-017 (January 2002) p.23"
   },
   {
    "unit": "piix4",
@@ -3633,7 +3779,7 @@
    "hi": 10,
    "lo": 10,
    "grade": "established",
-   "from": "Intel 82371AB datasheet 290562-001 (April 1997) p.148"
+   "from": "Intel 82371AB datasheet 290562-001 (April 1997) p.148; Intel 82371AB specification update 297738-017 (January 2002) p.23"
   },
   {
    "unit": "piix4",
@@ -3642,7 +3788,7 @@
    "hi": 9,
    "lo": 9,
    "grade": "established",
-   "from": "Intel 82371AB datasheet 290562-001 (April 1997) p.148"
+   "from": "Intel 82371AB datasheet 290562-001 (April 1997) p.148; Intel 82371AB specification update 297738-017 (January 2002) p.23"
   },
   {
    "unit": "piix4",
@@ -3651,7 +3797,7 @@
    "hi": 8,
    "lo": 8,
    "grade": "established",
-   "from": "Intel 82371AB datasheet 290562-001 (April 1997) p.148"
+   "from": "Intel 82371AB datasheet 290562-001 (April 1997) p.148; Intel 82371AB specification update 297738-017 (January 2002) p.23"
   },
   {
    "unit": "piix4",
@@ -3660,7 +3806,7 @@
    "hi": 7,
    "lo": 7,
    "grade": "established",
-   "from": "Intel 82371AB datasheet 290562-001 (April 1997) p.148"
+   "from": "Intel 82371AB datasheet 290562-001 (April 1997) p.148; Intel 82371AB specification update 297738-017 (January 2002) p.23"
   },
   {
    "unit": "piix4",
@@ -3669,7 +3815,7 @@
    "hi": 6,
    "lo": 6,
    "grade": "established",
-   "from": "Intel 82371AB datasheet 290562-001 (April 1997) p.148"
+   "from": "Intel 82371AB datasheet 290562-001 (April 1997) p.148; Intel 82371AB specification update 297738-017 (January 2002) p.23"
   },
   {
    "unit": "piix4",
@@ -3678,7 +3824,7 @@
    "hi": 5,
    "lo": 5,
    "grade": "established",
-   "from": "Intel 82371AB datasheet 290562-001 (April 1997) p.148"
+   "from": "Intel 82371AB datasheet 290562-001 (April 1997) p.148; Intel 82371AB specification update 297738-017 (January 2002) p.23"
   },
   {
    "unit": "piix4",
@@ -3687,7 +3833,7 @@
    "hi": 4,
    "lo": 4,
    "grade": "established",
-   "from": "Intel 82371AB datasheet 290562-001 (April 1997) p.148"
+   "from": "Intel 82371AB datasheet 290562-001 (April 1997) p.148; Intel 82371AB specification update 297738-017 (January 2002) p.23"
   },
   {
    "unit": "piix4",
@@ -3696,7 +3842,7 @@
    "hi": 3,
    "lo": 3,
    "grade": "established",
-   "from": "Intel 82371AB datasheet 290562-001 (April 1997) p.148"
+   "from": "Intel 82371AB datasheet 290562-001 (April 1997) p.148; Intel 82371AB specification update 297738-017 (January 2002) p.23"
   },
   {
    "unit": "piix4",
@@ -3705,7 +3851,7 @@
    "hi": 2,
    "lo": 2,
    "grade": "established",
-   "from": "Intel 82371AB datasheet 290562-001 (April 1997) p.148"
+   "from": "Intel 82371AB datasheet 290562-001 (April 1997) p.148; Intel 82371AB specification update 297738-017 (January 2002) p.23"
   },
   {
    "unit": "piix4",
@@ -3714,7 +3860,7 @@
    "hi": 1,
    "lo": 1,
    "grade": "established",
-   "from": "Intel 82371AB datasheet 290562-001 (April 1997) p.148"
+   "from": "Intel 82371AB datasheet 290562-001 (April 1997) p.148; Intel 82371AB specification update 297738-017 (January 2002) p.23"
   },
   {
    "unit": "piix4",
@@ -3723,39 +3869,7 @@
    "hi": 0,
    "lo": 0,
    "grade": "established",
-   "from": "Intel 82371AB datasheet 290562-001 (April 1997) p.148"
-  },
-  {
-   "unit": "piix4",
-   "kind": "register",
-   "name": "rc",
-   "offset": 1,
-   "access": "rw",
-   "width": 8,
-   "count": 1,
-   "stride": 1,
-   "space": "piix4_rcport",
-   "reset": 0,
-   "grade": "established",
-   "from": "Intel 82371AB datasheet 290562-001 (April 1997) p.88"
-  },
-  {
-   "unit": "piix4",
-   "kind": "field",
-   "name": "rc.rcpu",
-   "hi": 2,
-   "lo": 2,
-   "grade": "established",
-   "from": "Intel 82371AB datasheet 290562-001 (April 1997) p.88"
-  },
-  {
-   "unit": "piix4",
-   "kind": "field",
-   "name": "rc.srst",
-   "hi": 1,
-   "lo": 1,
-   "grade": "established",
-   "from": "Intel 82371AB datasheet 290562-001 (April 1997) p.88"
+   "from": "Intel 82371AB datasheet 290562-001 (April 1997) p.148; Intel 82371AB specification update 297738-017 (January 2002) p.23"
   },
   {
    "unit": "piix4",
@@ -3984,6 +4098,98 @@
    "reset": 0,
    "grade": "established",
    "from": "Intel 82371AB datasheet 290562-001 (April 1997) p.152"
+  },
+  {
+   "unit": "piix4",
+   "kind": "register",
+   "name": "smbslvcnt",
+   "offset": 8,
+   "access": "rw",
+   "width": 8,
+   "count": 1,
+   "stride": 1,
+   "space": "piix4_smb",
+   "reset": 0,
+   "grade": "established",
+   "from": "Intel 82371AB datasheet 290562-001 (April 1997) p.152"
+  },
+  {
+   "unit": "piix4",
+   "kind": "field",
+   "name": "smbslvcnt.alert_en",
+   "hi": 3,
+   "lo": 3,
+   "grade": "established",
+   "from": "Intel 82371AB datasheet 290562-001 (April 1997) p.152"
+  },
+  {
+   "unit": "piix4",
+   "kind": "field",
+   "name": "smbslvcnt.shdw2_en",
+   "hi": 2,
+   "lo": 2,
+   "grade": "established",
+   "from": "Intel 82371AB datasheet 290562-001 (April 1997) p.152"
+  },
+  {
+   "unit": "piix4",
+   "kind": "field",
+   "name": "smbslvcnt.shdw1_en",
+   "hi": 1,
+   "lo": 1,
+   "grade": "established",
+   "from": "Intel 82371AB datasheet 290562-001 (April 1997) p.152"
+  },
+  {
+   "unit": "piix4",
+   "kind": "field",
+   "name": "smbslvcnt.slv_en",
+   "hi": 0,
+   "lo": 0,
+   "grade": "established",
+   "from": "Intel 82371AB datasheet 290562-001 (April 1997) p.152"
+  },
+  {
+   "unit": "piix4",
+   "kind": "register",
+   "name": "smbshdwcmd",
+   "offset": 9,
+   "access": "r",
+   "width": 8,
+   "count": 1,
+   "stride": 1,
+   "space": "piix4_smb",
+   "reset": 0,
+   "grade": "established",
+   "from": "Intel 82371AB datasheet 290562-001 (April 1997) p.153"
+  },
+  {
+   "unit": "piix4",
+   "kind": "register",
+   "name": "smbslvevt",
+   "offset": 10,
+   "access": "rw",
+   "width": 16,
+   "count": 1,
+   "stride": 2,
+   "space": "piix4_smb",
+   "reset": 0,
+   "grade": "established",
+   "from": "Intel 82371AB datasheet 290562-001 (April 1997) p.153"
+  },
+  {
+   "unit": "piix4",
+   "kind": "register",
+   "name": "smbslvdat",
+   "offset": 12,
+   "access": "r",
+   "width": 16,
+   "count": 1,
+   "stride": 2,
+   "space": "piix4_smb",
+   "reset": 0,
+   "grade": "established",
+   "from": "Intel 82371AB datasheet 290562-001 (April 1997) p.153"
   },
   {
    "unit": "piix4",

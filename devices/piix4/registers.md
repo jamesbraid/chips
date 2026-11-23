@@ -1,6 +1,6 @@
 <!-- generated from devices/piix4/registers.toml by defs-gen - do not edit, change the source -->
 <!-- defs-gen 2 -->
-<!-- input sha256 4095ecd03f27c316c0e277b1e0601b278c04db4d80a6d3f1f614b65056469c03 -->
+<!-- input sha256 9419598440ab2c5e0a78081f4f4024eecd7686d44a9b3e8d221f0b1de5cd234d -->
 
 # Intel 82371AB PIIX4 (PCI-to-ISA bridge, IDE, USB, power management and SMBus) as wired in the Visual Workstation 320 and 540
 
@@ -21,8 +21,7 @@ Every item has a grade: established, inferred or unknown. A grade says how the i
 | piix4_pm | byte | Power management I/O block: base from PMBA (function 3 offset 0x40). The firmware programs the base 0xf80. |
 | piix4_smb | byte | SMBus host and slave I/O block: base from SMBBA (function 3 offset 0x90). The firmware programs the base 0xfd0. |
 | piix4_bm | byte | IDE bus-master I/O block: base from BMIBA (function 1 offset 0x20); primary channel at +0, secondary at +8. |
-| piix4_isa | byte | Fixed ISA-compatible I/O ports the PIIX4 decodes itself (absolute port numbers below 0x100). |
-| piix4_rcport | byte | I/O ports from 0xcf8, offsets from that port. The reset control register sits at port 0xcf9, inside the PCI configuration address dword that the host bridge decodes at 0xcf8. |
+| piix4_isa | byte | Fixed ISA-compatible I/O ports the PIIX4 decodes itself (absolute port numbers). |
 
 ## Registers
 
@@ -74,14 +73,14 @@ Every item has a grade: established, inferred or unknown. A grade says how the i
 | `f2_vid` | 0x0 | r | 16 |  | piix4_f2 | 0x8086 (Intel 82371AB datasheet 290562-001 (April 1997) p.102) | established | Intel 82371AB datasheet 290562-001 (April 1997) p.102 |
 | `f2_did` | 0x2 | r | 16 |  | piix4_f2 | 0x7112 (Intel 82371AB datasheet 290562-001 (April 1997) p.102) | established | Intel 82371AB datasheet 290562-001 (April 1997) p.102 |
 | `f2_pcicmd` | 0x4 | rw | 16 |  | piix4_f2 | 0x0 (Intel 82371AB datasheet 290562-001 (April 1997) p.103) | established | Intel 82371AB datasheet 290562-001 (April 1997) p.103 |
-| `f2_pcists` | 0x6 | rw | 16 |  | piix4_f2 | 0x280 (Intel 82371AB datasheet 290562-001 (April 1997) p.103) | established | Intel 82371AB datasheet 290562-001 (April 1997) p.103 |
+| `f2_pcists` | 0x6 | rw | 16 |  | piix4_f2 | 0x280 (Intel 82371AB datasheet 290562-001 (April 1997) p.103) | established | Intel 82371AB datasheet 290562-001 (April 1997) p.103-104 |
 | `f2_rid` | 0x8 | r | 8 |  | piix4_f2 | unknown | established | Intel 82371AB datasheet 290562-001 (April 1997) p.104 |
 | `f2_classc_pi` | 0x9 | r | 8 |  | piix4_f2 | 0x0 (Intel 82371AB datasheet 290562-001 (April 1997) p.104) | established | Intel 82371AB datasheet 290562-001 (April 1997) p.104 |
 | `f2_classc_scc` | 0xa | r | 8 |  | piix4_f2 | 0x3 (Intel 82371AB datasheet 290562-001 (April 1997) p.104) | established | Intel 82371AB datasheet 290562-001 (April 1997) p.104 |
 | `f2_classc_basec` | 0xb | r | 8 |  | piix4_f2 | 0xc (Intel 82371AB datasheet 290562-001 (April 1997) p.104) | established | Intel 82371AB datasheet 290562-001 (April 1997) p.104 |
 | `f2_mlt` | 0xd | rw | 8 |  | piix4_f2 | 0x0 (Intel 82371AB datasheet 290562-001 (April 1997) p.105) | established | Intel 82371AB datasheet 290562-001 (April 1997) p.105 |
 | `f2_hedt` | 0xe | r | 8 |  | piix4_f2 | 0x0 (Intel 82371AB datasheet 290562-001 (April 1997) p.105) | established | Intel 82371AB datasheet 290562-001 (April 1997) p.105 |
-| `f2_usbba` | 0x20 | rw | 32 |  | piix4_f2 | 0x0 (Intel 82371AB datasheet 290562-001 (April 1997) p.108) | established | Intel 82371AB datasheet 290562-001 (April 1997) p.108 |
+| `f2_usbba` | 0x20 | rw | 32 |  | piix4_f2 | 0x1 (inferred) | established | Intel 82371AB datasheet 290562-001 (April 1997) p.108 |
 | `f2_intln` | 0x3c | rw | 8 |  | piix4_f2 | 0x0 (Intel 82371AB datasheet 290562-001 (April 1997) p.105) | established | Intel 82371AB datasheet 290562-001 (April 1997) p.105 |
 | `f2_intpn` | 0x3d | r | 8 |  | piix4_f2 | 0x4 (Intel 82371AB datasheet 290562-001 (April 1997) p.106) | established | Intel 82371AB datasheet 290562-001 (April 1997) p.106 |
 | `f2_sbrnum` | 0x60 | r | 8 |  | piix4_f2 | 0x10 (Intel 82371AB datasheet 290562-001 (April 1997) p.106) | established | Intel 82371AB datasheet 290562-001 (April 1997) p.106 |
@@ -97,7 +96,7 @@ Every item has a grade: established, inferred or unknown. A grade says how the i
 | `f3_classc_basec` | 0xb | r | 8 |  | piix4_f3 | 0x6 (Intel 82371AB datasheet 290562-001 (April 1997) p.119) | established | Intel 82371AB datasheet 290562-001 (April 1997) p.119 |
 | `f3_hedt` | 0xe | r | 8 |  | piix4_f3 | 0x0 (Intel 82371AB datasheet 290562-001 (April 1997) p.119) | established | Intel 82371AB datasheet 290562-001 (April 1997) p.119 |
 | `f3_intln` | 0x3c | rw | 8 |  | piix4_f3 | 0x0 (Intel 82371AB datasheet 290562-001 (April 1997) p.120) | established | Intel 82371AB datasheet 290562-001 (April 1997) p.120 |
-| `f3_intpn` | 0x3d | r | 8 |  | piix4_f3 | unknown | unknown | Intel 82371AB datasheet 290562-001 (April 1997) p.120 |
+| `f3_intpn` | 0x3d | r | 8 |  | piix4_f3 | 0x0 (Intel 82371AB specification update 297738-017 (January 2002) p.13) | established | Intel 82371AB specification update 297738-017 (January 2002) p.13 |
 | `f3_pmba` | 0x40 | rw | 32 |  | piix4_f3 | 0x1 (Intel 82371AB datasheet 290562-001 (April 1997) p.120) | established | Intel 82371AB datasheet 290562-001 (April 1997) p.120 |
 | `f3_cnta` | 0x44 | rw | 32 |  | piix4_f3 | 0x0 (Intel 82371AB datasheet 290562-001 (April 1997) p.121) | established | Intel 82371AB datasheet 290562-001 (April 1997) p.121 |
 | `f3_cntb` | 0x48 | rw | 32 |  | piix4_f3 | 0x0 (Intel 82371AB datasheet 290562-001 (April 1997) p.121) | established | Intel 82371AB datasheet 290562-001 (April 1997) p.121-122 |
@@ -106,16 +105,20 @@ Every item has a grade: established, inferred or unknown. A grade says how the i
 | `f3_smbba` | 0x90 | rw | 32 |  | piix4_f3 | 0x1 (Intel 82371AB datasheet 290562-001 (April 1997) p.135) | established | Intel 82371AB datasheet 290562-001 (April 1997) p.135 |
 | `f3_smbhstcfg` | 0xd2 | rw | 8 |  | piix4_f3 | 0x0 (Intel 82371AB datasheet 290562-001 (April 1997) p.135) | established | Intel 82371AB datasheet 290562-001 (April 1997) p.135 |
 | `f3_smbslvc` | 0xd3 | rw | 8 |  | piix4_f3 | 0x0 (Intel 82371AB datasheet 290562-001 (April 1997) p.135) | established | Intel 82371AB datasheet 290562-001 (April 1997) p.135 |
-| `f3_smbshdw1` | 0xd4 | r | 8 |  | piix4_f3 | 0x0 (Intel 82371AB datasheet 290562-001 (April 1997) p.136) | established | Intel 82371AB datasheet 290562-001 (April 1997) p.136 |
-| `f3_smbshdw2` | 0xd5 | r | 8 |  | piix4_f3 | 0x0 (Intel 82371AB datasheet 290562-001 (April 1997) p.136) | established | Intel 82371AB datasheet 290562-001 (April 1997) p.136 |
+| `f3_smbshdw1` | 0xd4 | rw | 8 |  | piix4_f3 | 0x0 (Intel 82371AB datasheet 290562-001 (April 1997) p.136) | established | Intel 82371AB datasheet 290562-001 (April 1997) p.136 |
+| `f3_smbshdw2` | 0xd5 | rw | 8 |  | piix4_f3 | 0x0 (Intel 82371AB datasheet 290562-001 (April 1997) p.136) | established | Intel 82371AB datasheet 290562-001 (April 1997) p.136 |
 | `f3_smbrev` | 0xd6 | r | 8 |  | piix4_f3 | 0x0 (Intel 82371AB datasheet 290562-001 (April 1997) p.136) | established | Intel 82371AB datasheet 290562-001 (April 1997) p.136 |
-| `rtci` | 0x70 | w | 8 |  | piix4_isa | 0x80 (established; Intel 82371AB datasheet 290562-001 (April 1997) p.84) | established | Intel 82371AB datasheet 290562-001 (April 1997) p.84-85 |
+| `rirq` | 0x60 | r | 8 |  | piix4_isa | unknown | established | Intel 82371AB datasheet 290562-001 (April 1997) p.86 |
+| `nmisc` | 0x61 | rw | 8 |  | piix4_isa | 0x0 (Intel 82371AB datasheet 290562-001 (April 1997) p.83) | established | Intel 82371AB datasheet 290562-001 (April 1997) p.83 |
+| `rtci` | 0x70 | w | 8 |  | piix4_isa | unknown | established | Intel 82371AB datasheet 290562-001 (April 1997) p.84-85 |
 | `rtcd` | 0x71 | rw | 8 |  | piix4_isa | unknown | established | Intel 82371AB datasheet 290562-001 (April 1997) p.85 |
 | `rtcei` | 0x72 | w | 8 |  | piix4_isa | unknown | established | Intel 82371AB datasheet 290562-001 (April 1997) p.85 |
 | `rtced` | 0x73 | rw | 8 |  | piix4_isa | unknown | established | Intel 82371AB datasheet 290562-001 (April 1997) p.85 |
 | `p92` | 0x92 | rw | 8 |  | piix4_isa | 0x0 (Intel 82371AB datasheet 290562-001 (April 1997) p.87) | established | Intel 82371AB datasheet 290562-001 (April 1997) p.87 |
 | `apmc` | 0xb2 | rw | 8 |  | piix4_isa | 0x0 (Intel 82371AB datasheet 290562-001 (April 1997) p.86) | established | Intel 82371AB datasheet 290562-001 (April 1997) p.86 |
 | `apms` | 0xb3 | rw | 8 |  | piix4_isa | 0x0 (Intel 82371AB datasheet 290562-001 (April 1997) p.86) | established | Intel 82371AB datasheet 290562-001 (April 1997) p.86 |
+| `cerr` | 0xf0 | w | 8 |  | piix4_isa | unknown | established | Intel 82371AB datasheet 290562-001 (April 1997) p.87 |
+| `rc` | 0xcf9 | rw | 8 |  | piix4_isa | 0x0 (Intel 82371AB datasheet 290562-001 (April 1997) p.88) | established | Intel 82371AB datasheet 290562-001 (April 1997) p.88 |
 | `pmsts` | 0x0 | rw | 16 |  | piix4_pm | 0x0 (Intel 82371AB datasheet 290562-001 (April 1997) p.137) | established | Intel 82371AB datasheet 290562-001 (April 1997) p.137 |
 | `pmen` | 0x2 | rw | 16 |  | piix4_pm | 0x0 (Intel 82371AB datasheet 290562-001 (April 1997) p.138) | established | Intel 82371AB datasheet 290562-001 (April 1997) p.138 |
 | `pmcntrl` | 0x4 | rw | 16 |  | piix4_pm | 0x0 (Intel 82371AB datasheet 290562-001 (April 1997) p.138) | established | Intel 82371AB datasheet 290562-001 (April 1997) p.138-139 |
@@ -131,8 +134,7 @@ Every item has a grade: established, inferred or unknown. A grade says how the i
 | `glbctl` | 0x28 | rw | 32 |  | piix4_pm | 0x0 (Intel 82371AB datasheet 290562-001 (April 1997) p.145) | established | Intel 82371AB datasheet 290562-001 (April 1997) p.145 |
 | `devctl` | 0x2c | rw | 32 |  | piix4_pm | 0x0 (Intel 82371AB datasheet 290562-001 (April 1997) p.146) | established | Intel 82371AB datasheet 290562-001 (April 1997) p.146-147 |
 | `gpireg` | 0x30 | r | 32 |  | piix4_pm | unknown | established | Intel 82371AB datasheet 290562-001 (April 1997) p.147 |
-| `gporeg` | 0x34 | rw | 32 |  | piix4_pm | 0x7fffbfff (established; Intel 82371AB specification update 297738-017 (January 2002) p.23) | established | Intel 82371AB datasheet 290562-001 (April 1997) p.148 |
-| `rc` | 0x1 | rw | 8 |  | piix4_rcport | 0x0 (Intel 82371AB datasheet 290562-001 (April 1997) p.88) | established | Intel 82371AB datasheet 290562-001 (April 1997) p.88 |
+| `gporeg` | 0x34 | rw | 32 |  | piix4_pm | 0x7fffbfff (established; Intel 82371AB datasheet 290562-001 (April 1997) p.148 (default 7FFFBFFFh) and Intel 82371AB specification update 297738-017 (January 2002) p.23 (erratum 3, per-bit table)) | established | Intel 82371AB datasheet 290562-001 (April 1997) p.148; Intel 82371AB specification update 297738-017 (January 2002) p.23 |
 | `smbhststs` | 0x0 | rw | 8 |  | piix4_smb | 0x0 (Intel 82371AB datasheet 290562-001 (April 1997) p.148) | established | Intel 82371AB datasheet 290562-001 (April 1997) p.148-149 |
 | `smbslvsts` | 0x1 | rw | 8 |  | piix4_smb | 0x0 (Intel 82371AB datasheet 290562-001 (April 1997) p.149) | established | Intel 82371AB datasheet 290562-001 (April 1997) p.149 |
 | `smbhstcnt` | 0x2 | rw | 8 |  | piix4_smb | 0x0 (Intel 82371AB datasheet 290562-001 (April 1997) p.150) | established | Intel 82371AB datasheet 290562-001 (April 1997) p.150 |
@@ -141,6 +143,10 @@ Every item has a grade: established, inferred or unknown. A grade says how the i
 | `smbhstdat0` | 0x5 | rw | 8 |  | piix4_smb | 0x0 (Intel 82371AB datasheet 290562-001 (April 1997) p.151) | established | Intel 82371AB datasheet 290562-001 (April 1997) p.151 |
 | `smbhstdat1` | 0x6 | rw | 8 |  | piix4_smb | 0x0 (Intel 82371AB datasheet 290562-001 (April 1997) p.151) | established | Intel 82371AB datasheet 290562-001 (April 1997) p.151 |
 | `smbblkdat` | 0x7 | rw | 8 |  | piix4_smb | 0x0 (Intel 82371AB datasheet 290562-001 (April 1997) p.152) | established | Intel 82371AB datasheet 290562-001 (April 1997) p.152 |
+| `smbslvcnt` | 0x8 | rw | 8 |  | piix4_smb | 0x0 (Intel 82371AB datasheet 290562-001 (April 1997) p.152) | established | Intel 82371AB datasheet 290562-001 (April 1997) p.152 |
+| `smbshdwcmd` | 0x9 | r | 8 |  | piix4_smb | 0x0 (Intel 82371AB datasheet 290562-001 (April 1997) p.153) | established | Intel 82371AB datasheet 290562-001 (April 1997) p.153 |
+| `smbslvevt` | 0xa | rw | 16 |  | piix4_smb | 0x0 (Intel 82371AB datasheet 290562-001 (April 1997) p.153) | established | Intel 82371AB datasheet 290562-001 (April 1997) p.153 |
+| `smbslvdat` | 0xc | r | 16 |  | piix4_smb | 0x0 (Intel 82371AB datasheet 290562-001 (April 1997) p.153) | established | Intel 82371AB datasheet 290562-001 (April 1997) p.153 |
 
 ### Register `bm_cmd`
 
@@ -202,7 +208,7 @@ Device identification of function 0. The firmware's self-test reads the function
 
 ### Register `f0_pcicmd`
 
-PCI command. The firmware writes 0x0f once. Bits 2 to 0 are hardwired to 1 and the bits the datasheet marks not implemented read 0, so the write leaves special cycle enable (bit 3) and SERR enable unchanged except bit 3 set; the special cycle enable is what lets the chip see the shutdown special cycle that Linux sends before powering off.
+PCI command. The firmware writes 0x0f once. Bits 2 to 0 are hardwired to 1 and the bits the datasheet marks not implemented read 0, so the write leaves special cycle enable (bit 3) and SERR enable unchanged except bit 3 set; the special cycle enable is what lets the chip see the shutdown special cycle that Linux sends before powering off. The read-only mask lists the hardwired and reserved bits; only the fields shown are writable.
 
 | Bits | Field | Grade | Values | Source | Description |
 |---|---|---|---|---|---|
@@ -422,11 +428,11 @@ Vendor identification, Intel.
 
 ### Register `f1_did`
 
-Device identification of function 1. The firmware's self-test reads the function 0 vendor and device words as one dword and expects 0x71108086.
+Device identification of function 1.
 
 ### Register `f1_pcicmd`
 
-PCI command. The PROM's IDE attach writes 5 (I/O space and bus master enable).
+PCI command. The PROM's IDE attach writes 5 (I/O space and bus master enable). The read-only mask lists the hardwired and reserved bits; only the fields shown are writable.
 
 | Bits | Field | Grade | Values | Source | Description |
 |---|---|---|---|---|---|
@@ -523,11 +529,11 @@ Vendor identification, Intel.
 
 ### Register `f2_did`
 
-Device identification of function 2. The firmware's self-test reads the function 0 vendor and device words as one dword and expects 0x71108086.
+Device identification of function 2.
 
 ### Register `f2_pcicmd`
 
-PCI command.
+PCI command. The read-only mask lists the hardwired and reserved bits; only the fields shown are writable.
 
 ### Register `f2_pcists`
 
@@ -559,7 +565,7 @@ Header type, 0.
 
 ### Register `f2_usbba`
 
-USB I/O space base address: bits 15:5, bit 0 hardwired 1.
+USB I/O space base address: bits 15:5, bit 0 hardwired 1. The datasheet's default of 00h disagrees with bit 0 being hardwired to 1; the reset here is 1 (inferred).
 
 | Bits | Field | Grade | Values | Source | Description |
 |---|---|---|---|---|---|
@@ -600,11 +606,11 @@ Vendor identification, Intel.
 
 ### Register `f3_did`
 
-Device identification of function 3. The firmware's self-test reads the function 0 vendor and device words as one dword and expects 0x71108086.
+Device identification of function 3.
 
 ### Register `f3_pcicmd`
 
-PCI command. Bit 0 enables the SMBus I/O block and works independently of PMREGMISC bit 0. The PROM's function 3 attach sets it after writing the SMBus base.
+PCI command. Bit 0 enables the SMBus I/O block and works independently of PMREGMISC bit 0. The PROM's function 3 attach sets it after writing the SMBus base. The read-only mask lists the hardwired and reserved bits; only the fields shown are writable.
 
 | Bits | Field | Grade | Values | Source | Description |
 |---|---|---|---|---|---|
@@ -636,11 +642,11 @@ Header type, 0.
 
 ### Register `f3_intln`
 
-Interrupt line; no effect on the hardware.
+Interrupt line. The datasheet (p.120) says it has no effect on the hardware. Specification update spec change 9 (p.15) says the register 'is not implemented and is RESERVED'.
 
 ### Register `f3_intpn`
 
-Interrupt pin. The datasheet says it reads 1 (PIRQA#). The specification update (spec change 1, p.13) says the register is not implemented because the power management and SMBus interrupts are hardwired to IRQ9, so the datasheet value is superseded. What the silicon returns is not stated.
+Interrupt pin: not implemented. The datasheet (p.120) says it is read only, default 01h, and that PIRQA# is used for the power management module. Specification update spec change 1 (p.13) retitles it 'INTPN Register Not Implemented' and says: 'the INTPN register indicates the PCI interrupt pin PIRQA# is used for routing Serial Interrupts. However, Serial Interrupts are hardwired to IRQ9. This register is not implemented.' It lists bits 7:0 as Not Implemented with default 00h. The datasheet's pin A is superseded. The update says 'Serial Interrupts'; that this means the power management and SMBus interrupts is our reading (inferred). What a read returns is taken as 0 from the update's default.
 
 ### Register `f3_pmba`
 
@@ -705,9 +711,28 @@ SMBus slave shadow port 2.
 
 SMBus revision.
 
+### Register `rirq`
+
+Reset X-bus IRQ12/M and IRQ1: a read clears the latched mouse and keyboard interrupts; the read value has no defined pattern. Reads and writes are also sent to ISA.
+
+### Register `nmisc`
+
+NMI status and control. Bits 7:4 are read-only status (SERR# NMI source, IOCHK# NMI source, counter 2 output, refresh toggle) and must be written as 0.
+
+| Bits | Field | Grade | Values | Source | Description |
+|---|---|---|---|---|---|
+| 7 | `serr_status` | established |  | Intel 82371AB datasheet 290562-001 (April 1997) p.83 | SERR# NMI source status. |
+| 6 | `iochk_status` | established |  | Intel 82371AB datasheet 290562-001 (April 1997) p.83 | IOCHK# NMI source status. |
+| 5 | `timer2_out` | established |  | Intel 82371AB datasheet 290562-001 (April 1997) p.83 | Counter 2 output state. |
+| 4 | `refresh` | established |  | Intel 82371AB datasheet 290562-001 (April 1997) p.83 | Refresh cycle toggle. |
+| 3 | `iochk_dis` | established |  | Intel 82371AB datasheet 290562-001 (April 1997) p.83 | 1 clears and disables IOCHK# NMIs. |
+| 2 | `serr_dis` | established |  | Intel 82371AB datasheet 290562-001 (April 1997) p.83 | 1 clears and disables PCI SERR# NMIs. |
+| 1 | `spkr_en` | established |  | Intel 82371AB datasheet 290562-001 (April 1997) p.83 | 1 drives SPKR from counter 2. |
+| 0 | `timer2_en` | established |  | Intel 82371AB datasheet 290562-001 (April 1997) p.83 | Counter 2 enable. |
+
 ### Register `rtci`
 
-RTC index and NMI enable, shared. Bits 6:0 index the lower RTC bank; bit 7 set disables NMI. The PROM and the HAL reach the clock through ports 0x70 and 0x71.
+RTC index and NMI enable, shared. Bits 6:0 index the lower RTC bank and are undefined at reset (the datasheet gives only 'Bit[6:0]=undefined; Bit 7=1', p.84); bit 7 set disables NMI. Write only. The PROM and the HAL reach the clock through ports 0x70 and 0x71.
 
 | Bits | Field | Grade | Values | Source | Description |
 |---|---|---|---|---|---|
@@ -748,6 +773,19 @@ APM control port; a write can raise an SMI#.
 
 APM status port.
 
+### Register `cerr`
+
+Coprocessor error: a write asserts IGNNE# if FERR# is asserted and negates internal IRQ13; any value. Reads and writes flow through to ISA.
+
+### Register `rc`
+
+Reset control. Linux restarts the board by writing 0x06 (reset CPU with system reset set); the HAL does the same on all but the earliest boards. Bit 2 going 0 to 1 starts the reset; bit 1 chooses a hard reset (1) or a soft INIT-only reset (0).
+
+| Bits | Field | Grade | Values | Source | Description |
+|---|---|---|---|---|---|
+| 2 | `rcpu` | established |  | Intel 82371AB datasheet 290562-001 (April 1997) p.88 | Reset CPU on a 0 to 1 transition; cannot be read as 1. |
+| 1 | `srst` | established |  | Intel 82371AB datasheet 290562-001 (April 1997) p.88 | 1 hard reset, 0 soft reset (INIT). |
+
 ### Register `pmsts`
 
 Power management status. The HAL clears it and reads bit 8 for the power button; the PROM reads it for wake-up state and writes it back to clear.
@@ -787,7 +825,7 @@ Power management control. Linux powers off, and the HAL suspends, by writing 0x2
 
 ### Register `pmtmr`
 
-Power management timer: a free-running 24-bit counter at 3.579545 MHz; bit 23 toggling sets TMROF_STS.
+Power management timer: a free-running 24-bit counter at 3.579545 MHz; bit 23 toggling sets TMROF_STS. The register summary table (p.51) lists the register as R/W while its description (p.139) says read only; this unit takes read only.
 
 | Bits | Field | Grade | Values | Source | Description |
 |---|---|---|---|---|---|
@@ -832,7 +870,7 @@ Processor level 3: a read enters stop clock, sleep or deep sleep.
 
 ### Register `glbsts`
 
-Global status.
+Global status. Bits 10, 8, 5, 2, 1 and 0 are write-1-to-clear; bits 7, 6 and 4 are read only summaries. Bit 11 is labelled R/W in the datasheet but also 'can only be reset by writing a 1', so it is not in the write-1-to-clear mask here (p.143).
 
 ### Register `devsts`
 
@@ -878,50 +916,41 @@ General purpose input, byte reads only (offsets 0x30 to 0x32; the byte at 0x33 i
 
 ### Register `gporeg`
 
-General purpose output, byte accesses only (ports 0xfb4 to 0xfb7). Bits 30:0 drive GPO30 to GPO0 and read back the last value written; a pin shared with another function follows that function until GENCFG or XBCS selects the output. The reset value 0x7fffbfff is what the specification update says the chip actually does (erratum 3, p.23): bit 31 has no output, bits 30:15 and 13:0 reset to 1 and bit 14 to 0. Port 0xfb5 therefore resets to 0xbf.
+General purpose output, byte accesses only (ports 0xfb4 to 0xfb7). Bits 30:0 drive GPO30 to GPO0 and read back the last value written; a pin shared with another function follows that function until GENCFG or XBCS selects the output. The reset value 0x7fffbfff is the datasheet's default (p.148) and the specification update's erratum 3 (p.23) gives the actual value per bit: bit 31 has no output, bits 30:15 and 13:0 reset to 1 and bit 14 to 0. Port 0xfb5 therefore resets to 0xbf.
 
 | Bits | Field | Grade | Values | Source | Description |
 |---|---|---|---|---|---|
-| 30 | `gpo30` | established |  | Intel 82371AB datasheet 290562-001 (April 1997) p.148 | GPO30 output. |
-| 29 | `gpo29` | established |  | Intel 82371AB datasheet 290562-001 (April 1997) p.148 | GPO29 output. |
-| 28 | `gpo28` | inferred |  | Intel 82371AB datasheet 290562-001 (April 1997) p.148 | GPO28, non-multiplexed. The front-panel line: the PROM's self-test clears it, pulses it once and sets and clears it later; software only ever writes it. Whether it is an LED or a beeper is not known. |
-| 27 | `gpo27` | established |  | Intel 82371AB datasheet 290562-001 (April 1997) p.148 | GPO27 output. |
-| 26 | `gpo26` | established |  | Intel 82371AB datasheet 290562-001 (April 1997) p.148 | GPO26 output. |
-| 25 | `gpo25` | established |  | Intel 82371AB datasheet 290562-001 (April 1997) p.148 | GPO25 output. |
-| 24 | `gpo24` | established |  | Intel 82371AB datasheet 290562-001 (April 1997) p.148 | GPO24 output. |
-| 23 | `gpo23` | established |  | Intel 82371AB datasheet 290562-001 (April 1997) p.148 | GPO23 output. |
-| 22 | `gpo22` | established |  | Intel 82371AB datasheet 290562-001 (April 1997) p.148 | GPO22 output. |
-| 21 | `gpo21` | established |  | Intel 82371AB datasheet 290562-001 (April 1997) p.148 | GPO21 output. |
-| 20 | `gpo20` | established |  | Intel 82371AB datasheet 290562-001 (April 1997) p.148 | GPO20 output. |
-| 19 | `gpo19` | established |  | Intel 82371AB datasheet 290562-001 (April 1997) p.148 | GPO19 output. |
-| 18 | `gpo18` | established |  | Intel 82371AB datasheet 290562-001 (April 1997) p.148 | GPO18 output. |
-| 17 | `gpo17` | established |  | Intel 82371AB datasheet 290562-001 (April 1997) p.148 | GPO17 output. |
-| 16 | `gpo16` | established |  | Intel 82371AB datasheet 290562-001 (April 1997) p.148 | GPO16 output. |
-| 15 | `gpo15` | established |  | Intel 82371AB datasheet 290562-001 (April 1997) p.148 | GPO15 output. |
-| 14 | `gpo14` | established |  | Intel 82371AB datasheet 290562-001 (April 1997) p.148 | GPO14 output. |
-| 13 | `gpo13` | established |  | Intel 82371AB datasheet 290562-001 (April 1997) p.148 | GPO13 output. |
-| 12 | `gpo12` | established |  | Intel 82371AB datasheet 290562-001 (April 1997) p.148 | GPO12 output. |
-| 11 | `gpo11` | established |  | Intel 82371AB datasheet 290562-001 (April 1997) p.148 | GPO11 output. |
-| 10 | `gpo10` | established |  | Intel 82371AB datasheet 290562-001 (April 1997) p.148 | GPO10 output. |
-| 9 | `gpo9` | established |  | Intel 82371AB datasheet 290562-001 (April 1997) p.148 | GPO9 output. |
-| 8 | `gpo8` | established |  | Intel 82371AB datasheet 290562-001 (April 1997) p.148 | GPO8, non-multiplexed, driven low when core power is removed. The HAL writes bit 0 of port 0xfb5 (this bit) around its power-off sequence; what the pin drives on the board is not known. |
-| 7 | `gpo7` | established |  | Intel 82371AB datasheet 290562-001 (April 1997) p.148 | GPO7 output. |
-| 6 | `gpo6` | established |  | Intel 82371AB datasheet 290562-001 (April 1997) p.148 | GPO6 output. |
-| 5 | `gpo5` | established |  | Intel 82371AB datasheet 290562-001 (April 1997) p.148 | GPO5 output. |
-| 4 | `gpo4` | established |  | Intel 82371AB datasheet 290562-001 (April 1997) p.148 | GPO4 output. |
-| 3 | `gpo3` | established |  | Intel 82371AB datasheet 290562-001 (April 1997) p.148 | GPO3 output. |
-| 2 | `gpo2` | established |  | Intel 82371AB datasheet 290562-001 (April 1997) p.148 | GPO2 output. |
-| 1 | `gpo1` | established |  | Intel 82371AB datasheet 290562-001 (April 1997) p.148 | GPO1 output. |
-| 0 | `gpo0` | established |  | Intel 82371AB datasheet 290562-001 (April 1997) p.148 | GPO0 output. |
-
-### Register `rc`
-
-Reset control. Linux restarts the board by writing 0x06 (reset CPU with system reset set); the HAL does the same on all but the earliest boards. Bit 2 going 0 to 1 starts the reset; bit 1 chooses a hard reset (1) or a soft INIT-only reset (0).
-
-| Bits | Field | Grade | Values | Source | Description |
-|---|---|---|---|---|---|
-| 2 | `rcpu` | established |  | Intel 82371AB datasheet 290562-001 (April 1997) p.88 | Reset CPU on a 0 to 1 transition; cannot be read as 1. |
-| 1 | `srst` | established |  | Intel 82371AB datasheet 290562-001 (April 1997) p.88 | 1 hard reset, 0 soft reset (INIT). |
+| 30 | `gpo30` | established |  | Intel 82371AB datasheet 290562-001 (April 1997) p.148; Intel 82371AB specification update 297738-017 (January 2002) p.23 | GPO30 output. |
+| 29 | `gpo29` | established |  | Intel 82371AB datasheet 290562-001 (April 1997) p.148; Intel 82371AB specification update 297738-017 (January 2002) p.23 | GPO29 output. |
+| 28 | `gpo28` | inferred |  | Intel 82371AB datasheet 290562-001 (April 1997) p.148; Intel 82371AB specification update 297738-017 (January 2002) p.23 | GPO28, non-multiplexed. The front-panel line: the PROM's self-test clears it, pulses it once and sets and clears it later; software only ever writes it. Whether it is an LED or a beeper is not known. |
+| 27 | `gpo27` | established |  | Intel 82371AB datasheet 290562-001 (April 1997) p.148; Intel 82371AB specification update 297738-017 (January 2002) p.23 | GPO27 output. |
+| 26 | `gpo26` | established |  | Intel 82371AB datasheet 290562-001 (April 1997) p.148; Intel 82371AB specification update 297738-017 (January 2002) p.23 | GPO26 output. |
+| 25 | `gpo25` | established |  | Intel 82371AB datasheet 290562-001 (April 1997) p.148; Intel 82371AB specification update 297738-017 (January 2002) p.23 | GPO25 output. |
+| 24 | `gpo24` | established |  | Intel 82371AB datasheet 290562-001 (April 1997) p.148; Intel 82371AB specification update 297738-017 (January 2002) p.23 | GPO24 output. |
+| 23 | `gpo23` | established |  | Intel 82371AB datasheet 290562-001 (April 1997) p.148; Intel 82371AB specification update 297738-017 (January 2002) p.23 | GPO23 output. |
+| 22 | `gpo22` | established |  | Intel 82371AB datasheet 290562-001 (April 1997) p.148; Intel 82371AB specification update 297738-017 (January 2002) p.23 | GPO22 output. |
+| 21 | `gpo21` | established |  | Intel 82371AB datasheet 290562-001 (April 1997) p.148; Intel 82371AB specification update 297738-017 (January 2002) p.23 | GPO21 output. |
+| 20 | `gpo20` | established |  | Intel 82371AB datasheet 290562-001 (April 1997) p.148; Intel 82371AB specification update 297738-017 (January 2002) p.23 | GPO20 output. |
+| 19 | `gpo19` | established |  | Intel 82371AB datasheet 290562-001 (April 1997) p.148; Intel 82371AB specification update 297738-017 (January 2002) p.23 | GPO19 output. |
+| 18 | `gpo18` | established |  | Intel 82371AB datasheet 290562-001 (April 1997) p.148; Intel 82371AB specification update 297738-017 (January 2002) p.23 | GPO18 output. |
+| 17 | `gpo17` | established |  | Intel 82371AB datasheet 290562-001 (April 1997) p.148; Intel 82371AB specification update 297738-017 (January 2002) p.23 | GPO17 output. |
+| 16 | `gpo16` | established |  | Intel 82371AB datasheet 290562-001 (April 1997) p.148; Intel 82371AB specification update 297738-017 (January 2002) p.23 | GPO16 output. |
+| 15 | `gpo15` | established |  | Intel 82371AB datasheet 290562-001 (April 1997) p.148; Intel 82371AB specification update 297738-017 (January 2002) p.23 | GPO15 output. |
+| 14 | `gpo14` | established |  | Intel 82371AB datasheet 290562-001 (April 1997) p.148; Intel 82371AB specification update 297738-017 (January 2002) p.23 | GPO14 output. |
+| 13 | `gpo13` | established |  | Intel 82371AB datasheet 290562-001 (April 1997) p.148; Intel 82371AB specification update 297738-017 (January 2002) p.23 | GPO13 output. |
+| 12 | `gpo12` | established |  | Intel 82371AB datasheet 290562-001 (April 1997) p.148; Intel 82371AB specification update 297738-017 (January 2002) p.23 | GPO12 output. |
+| 11 | `gpo11` | established |  | Intel 82371AB datasheet 290562-001 (April 1997) p.148; Intel 82371AB specification update 297738-017 (January 2002) p.23 | GPO11 output. |
+| 10 | `gpo10` | established |  | Intel 82371AB datasheet 290562-001 (April 1997) p.148; Intel 82371AB specification update 297738-017 (January 2002) p.23 | GPO10 output. |
+| 9 | `gpo9` | established |  | Intel 82371AB datasheet 290562-001 (April 1997) p.148; Intel 82371AB specification update 297738-017 (January 2002) p.23 | GPO9 output. |
+| 8 | `gpo8` | established |  | Intel 82371AB datasheet 290562-001 (April 1997) p.148; Intel 82371AB specification update 297738-017 (January 2002) p.23 | GPO8, non-multiplexed, driven low when core power is removed. The HAL writes bit 0 of port 0xfb5 (this bit) around its power-off sequence; what the pin drives on the board is not known. |
+| 7 | `gpo7` | established |  | Intel 82371AB datasheet 290562-001 (April 1997) p.148; Intel 82371AB specification update 297738-017 (January 2002) p.23 | GPO7 output. |
+| 6 | `gpo6` | established |  | Intel 82371AB datasheet 290562-001 (April 1997) p.148; Intel 82371AB specification update 297738-017 (January 2002) p.23 | GPO6 output. |
+| 5 | `gpo5` | established |  | Intel 82371AB datasheet 290562-001 (April 1997) p.148; Intel 82371AB specification update 297738-017 (January 2002) p.23 | GPO5 output. |
+| 4 | `gpo4` | established |  | Intel 82371AB datasheet 290562-001 (April 1997) p.148; Intel 82371AB specification update 297738-017 (January 2002) p.23 | GPO4 output. |
+| 3 | `gpo3` | established |  | Intel 82371AB datasheet 290562-001 (April 1997) p.148; Intel 82371AB specification update 297738-017 (January 2002) p.23 | GPO3 output. |
+| 2 | `gpo2` | established |  | Intel 82371AB datasheet 290562-001 (April 1997) p.148; Intel 82371AB specification update 297738-017 (January 2002) p.23 | GPO2 output. |
+| 1 | `gpo1` | established |  | Intel 82371AB datasheet 290562-001 (April 1997) p.148; Intel 82371AB specification update 297738-017 (January 2002) p.23 | GPO1 output. |
+| 0 | `gpo0` | established |  | Intel 82371AB datasheet 290562-001 (April 1997) p.148; Intel 82371AB specification update 297738-017 (January 2002) p.23 | GPO0 output. |
 
 ### Register `smbhststs`
 
@@ -970,6 +999,29 @@ SMBus host data 1.
 
 SMBus block data port.
 
+### Register `smbslvcnt`
+
+SMBus slave control.
+
+| Bits | Field | Grade | Values | Source | Description |
+|---|---|---|---|---|---|
+| 3 | `alert_en` | established |  | Intel 82371AB datasheet 290562-001 (April 1997) p.152 | SMBALERT# enable. |
+| 2 | `shdw2_en` | established |  | Intel 82371AB datasheet 290562-001 (April 1997) p.152 | Shadow port 2 enable. |
+| 1 | `shdw1_en` | established |  | Intel 82371AB datasheet 290562-001 (April 1997) p.152 | Shadow port 1 enable. |
+| 0 | `slv_en` | established |  | Intel 82371AB datasheet 290562-001 (April 1997) p.152 | Slave port (address 10h) event enable. |
+
+### Register `smbshdwcmd`
+
+SMBus shadow command: command received by an external master access to the slave or shadow ports.
+
+### Register `smbslvevt`
+
+SMBus slave event: data bits compared with incoming slave data.
+
+### Register `smbslvdat`
+
+SMBus slave data: data received by an external master access to the slave or shadow ports.
+
 ## Constants
 
 | Constant | Value | Grade | Source | Description |
@@ -1000,8 +1052,8 @@ A vector is a value recorded from a source. An example only shows the layout.
 | `f3_pmregmisc` | 0x1 | vector | pmiose=1 |
 | `f3_smbba` | 0xfd1 | vector | rte=1, base=253 |
 | `f3_smbhstcfg` | 0x9 | vector | host_en=1, intrsel=4 |
+| `rc` | 0x6 | vector | srst=1, rcpu=1 |
 | `pmen` | 0x100 | vector | pwrbtn_en=1, rtc_en=0 |
 | `pmcntrl` | 0x1401 | vector | sus_en=0, sus_typ=5, sci_en=1 |
 | `pmcntrl` | 0x2000 | vector | sus_en=1, sus_typ=0, sci_en=0 |
-| `rc` | 0x6 | vector | srst=1, rcpu=1 |
 | `smbhstcnt` | 0x54 | vector | start=1, cmd_prot=5, kill=0, interen=0 |

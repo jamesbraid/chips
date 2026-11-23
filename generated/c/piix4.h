@@ -1,6 +1,6 @@
 /* generated from devices/piix4/registers.toml by defs-gen - do not edit, change the source */
 /* defs-gen 2 */
-/* input sha256 4095ecd03f27c316c0e277b1e0601b278c04db4d80a6d3f1f614b65056469c03 */
+/* input sha256 9419598440ab2c5e0a78081f4f4024eecd7686d44a9b3e8d221f0b1de5cd234d */
 /* Intel 82371AB PIIX4 (PCI-to-ISA bridge, IDE, USB, power management and SMBus) as wired in the Visual Workstation 320 and 540 */
 #ifndef PIIX4_GEN_H
 #define PIIX4_GEN_H
@@ -99,7 +99,7 @@
 #define PIIX4_F0_DID_OFFSET                          0x2u /* established */
 
 /*
- * PCI command. The firmware writes 0x0f once. Bits 2 to 0 are hardwired to 1 and the bits the datasheet marks not implemented read 0, so the write leaves special cycle enable (bit 3) and SERR enable unchanged except bit 3 set; the special cycle enable is what lets the chip see the shutdown special cycle that Linux sends before powering off.
+ * PCI command. The firmware writes 0x0f once. Bits 2 to 0 are hardwired to 1 and the bits the datasheet marks not implemented read 0, so the write leaves special cycle enable (bit 3) and SERR enable unchanged except bit 3 set; the special cycle enable is what lets the chip see the shutdown special cycle that Linux sends before powering off. The read-only mask lists the hardwired and reserved bits; only the fields shown are writable.
  */
 /* f0_pcicmd: rw16, space piix4_f0, reset 0x7; Intel 82371AB datasheet 290562-001 (April 1997) p.54 */
 #define PIIX4_F0_PCICMD_OFFSET                       0x4u /* established */
@@ -527,13 +527,13 @@
 #define PIIX4_F1_VID_OFFSET                          0x0u /* established */
 
 /*
- * Device identification of function 1. The firmware's self-test reads the function 0 vendor and device words as one dword and expects 0x71108086.
+ * Device identification of function 1.
  */
 /* f1_did: r16, space piix4_f1, reset 0x7111; Intel 82371AB datasheet 290562-001 (April 1997) p.89 */
 #define PIIX4_F1_DID_OFFSET                          0x2u /* established */
 
 /*
- * PCI command. The PROM's IDE attach writes 5 (I/O space and bus master enable).
+ * PCI command. The PROM's IDE attach writes 5 (I/O space and bus master enable). The read-only mask lists the hardwired and reserved bits; only the fields shown are writable.
  */
 /* f1_pcicmd: rw16, space piix4_f1, reset 0x0; Intel 82371AB datasheet 290562-001 (April 1997) p.89-90 */
 #define PIIX4_F1_PCICMD_OFFSET                       0x4u /* established */
@@ -691,13 +691,13 @@
 #define PIIX4_F2_VID_OFFSET                          0x0u /* established */
 
 /*
- * Device identification of function 2. The firmware's self-test reads the function 0 vendor and device words as one dword and expects 0x71108086.
+ * Device identification of function 2.
  */
 /* f2_did: r16, space piix4_f2, reset 0x7112; Intel 82371AB datasheet 290562-001 (April 1997) p.102 */
 #define PIIX4_F2_DID_OFFSET                          0x2u /* established */
 
 /*
- * PCI command.
+ * PCI command. The read-only mask lists the hardwired and reserved bits; only the fields shown are writable.
  */
 /* f2_pcicmd: rw16, space piix4_f2, reset 0x0; Intel 82371AB datasheet 290562-001 (April 1997) p.103 */
 #define PIIX4_F2_PCICMD_OFFSET                       0x4u /* established */
@@ -705,7 +705,7 @@
 /*
  * PCI status.
  */
-/* f2_pcists: rw16, space piix4_f2, reset 0x280; Intel 82371AB datasheet 290562-001 (April 1997) p.103 */
+/* f2_pcists: rw16, space piix4_f2, reset 0x280; Intel 82371AB datasheet 290562-001 (April 1997) p.103-104 */
 #define PIIX4_F2_PCISTS_OFFSET                       0x6u /* established */
 
 /*
@@ -745,9 +745,9 @@
 #define PIIX4_F2_HEDT_OFFSET                         0xeu /* established */
 
 /*
- * USB I/O space base address: bits 15:5, bit 0 hardwired 1.
+ * USB I/O space base address: bits 15:5, bit 0 hardwired 1. The datasheet's default of 00h disagrees with bit 0 being hardwired to 1; the reset here is 1 (inferred).
  */
-/* f2_usbba: rw32, space piix4_f2, reset 0x0; Intel 82371AB datasheet 290562-001 (April 1997) p.108 */
+/* f2_usbba: rw32, space piix4_f2, reset 0x1; Intel 82371AB datasheet 290562-001 (April 1997) p.108 */
 #define PIIX4_F2_USBBA_OFFSET                        0x20u /* established */
 #define PIIX4_F2_USBBA_BASE_SHIFT                    5 /* established */
 #define PIIX4_F2_USBBA_BASE_MASK                     0x7ffu
@@ -799,13 +799,13 @@
 #define PIIX4_F3_VID_OFFSET                          0x0u /* established */
 
 /*
- * Device identification of function 3. The firmware's self-test reads the function 0 vendor and device words as one dword and expects 0x71108086.
+ * Device identification of function 3.
  */
 /* f3_did: r16, space piix4_f3, reset 0x7113; Intel 82371AB datasheet 290562-001 (April 1997) p.117 */
 #define PIIX4_F3_DID_OFFSET                          0x2u /* established */
 
 /*
- * PCI command. Bit 0 enables the SMBus I/O block and works independently of PMREGMISC bit 0. The PROM's function 3 attach sets it after writing the SMBus base.
+ * PCI command. Bit 0 enables the SMBus I/O block and works independently of PMREGMISC bit 0. The PROM's function 3 attach sets it after writing the SMBus base. The read-only mask lists the hardwired and reserved bits; only the fields shown are writable.
  */
 /* f3_pcicmd: rw16, space piix4_f3, reset 0x0; Intel 82371AB datasheet 290562-001 (April 1997) p.117-118 */
 #define PIIX4_F3_PCICMD_OFFSET                       0x4u /* established */
@@ -850,16 +850,16 @@
 #define PIIX4_F3_HEDT_OFFSET                         0xeu /* established */
 
 /*
- * Interrupt line; no effect on the hardware.
+ * Interrupt line. The datasheet (p.120) says it has no effect on the hardware. Specification update spec change 9 (p.15) says the register 'is not implemented and is RESERVED'.
  */
 /* f3_intln: rw8, space piix4_f3, reset 0x0; Intel 82371AB datasheet 290562-001 (April 1997) p.120 */
 #define PIIX4_F3_INTLN_OFFSET                        0x3cu /* established */
 
 /*
- * Interrupt pin. The datasheet says it reads 1 (PIRQA#). The specification update (spec change 1, p.13) says the register is not implemented because the power management and SMBus interrupts are hardwired to IRQ9, so the datasheet value is superseded. What the silicon returns is not stated.
+ * Interrupt pin: not implemented. The datasheet (p.120) says it is read only, default 01h, and that PIRQA# is used for the power management module. Specification update spec change 1 (p.13) retitles it 'INTPN Register Not Implemented' and says: 'the INTPN register indicates the PCI interrupt pin PIRQA# is used for routing Serial Interrupts. However, Serial Interrupts are hardwired to IRQ9. This register is not implemented.' It lists bits 7:0 as Not Implemented with default 00h. The datasheet's pin A is superseded. The update says 'Serial Interrupts'; that this means the power management and SMBus interrupts is our reading (inferred). What a read returns is taken as 0 from the update's default.
  */
-/* f3_intpn: r8, space piix4_f3, reset unknown; Intel 82371AB datasheet 290562-001 (April 1997) p.120 */
-#define PIIX4_F3_INTPN_OFFSET                        0x3du /* unknown */
+/* f3_intpn: r8, space piix4_f3, reset 0x0; Intel 82371AB specification update 297738-017 (January 2002) p.13 */
+#define PIIX4_F3_INTPN_OFFSET                        0x3du /* established */
 
 /*
  * Power management base address. Bits 15:6 hold the I/O base, bit 0 is hardwired 1, bits 31:16 are hardwired 0. The PROM writes 0x0f80 and the register then reads 0x0f81; the base 0xf80 is what Linux and the HAL assume. The HAL never programs it.
@@ -933,13 +933,13 @@
 /*
  * SMBus slave shadow port 1.
  */
-/* f3_smbshdw1: r8, space piix4_f3, reset 0x0; Intel 82371AB datasheet 290562-001 (April 1997) p.136 */
+/* f3_smbshdw1: rw8, space piix4_f3, reset 0x0; Intel 82371AB datasheet 290562-001 (April 1997) p.136 */
 #define PIIX4_F3_SMBSHDW1_OFFSET                     0xd4u /* established */
 
 /*
  * SMBus slave shadow port 2.
  */
-/* f3_smbshdw2: r8, space piix4_f3, reset 0x0; Intel 82371AB datasheet 290562-001 (April 1997) p.136 */
+/* f3_smbshdw2: rw8, space piix4_f3, reset 0x0; Intel 82371AB datasheet 290562-001 (April 1997) p.136 */
 #define PIIX4_F3_SMBSHDW2_OFFSET                     0xd5u /* established */
 
 /*
@@ -949,9 +949,45 @@
 #define PIIX4_F3_SMBREV_OFFSET                       0xd6u /* established */
 
 /*
- * RTC index and NMI enable, shared. Bits 6:0 index the lower RTC bank; bit 7 set disables NMI. The PROM and the HAL reach the clock through ports 0x70 and 0x71.
+ * Reset X-bus IRQ12/M and IRQ1: a read clears the latched mouse and keyboard interrupts; the read value has no defined pattern. Reads and writes are also sent to ISA.
  */
-/* rtci: w8, space piix4_isa, reset 0x80; Intel 82371AB datasheet 290562-001 (April 1997) p.84-85 */
+/* rirq: r8, space piix4_isa, reset unknown; Intel 82371AB datasheet 290562-001 (April 1997) p.86 */
+#define PIIX4_RIRQ_OFFSET                            0x60u /* established */
+
+/*
+ * NMI status and control. Bits 7:4 are read-only status (SERR# NMI source, IOCHK# NMI source, counter 2 output, refresh toggle) and must be written as 0.
+ */
+/* nmisc: rw8, space piix4_isa, reset 0x0; Intel 82371AB datasheet 290562-001 (April 1997) p.83 */
+#define PIIX4_NMISC_OFFSET                           0x61u /* established */
+#define PIIX4_NMISC_SERR_STATUS_SHIFT                7 /* established */
+#define PIIX4_NMISC_SERR_STATUS_MASK                 0x1u
+#define PIIX4_NMISC_SERR_STATUS_INPLACE              (PIIX4_NMISC_SERR_STATUS_MASK << PIIX4_NMISC_SERR_STATUS_SHIFT)
+#define PIIX4_NMISC_IOCHK_STATUS_SHIFT               6 /* established */
+#define PIIX4_NMISC_IOCHK_STATUS_MASK                0x1u
+#define PIIX4_NMISC_IOCHK_STATUS_INPLACE             (PIIX4_NMISC_IOCHK_STATUS_MASK << PIIX4_NMISC_IOCHK_STATUS_SHIFT)
+#define PIIX4_NMISC_TIMER2_OUT_SHIFT                 5 /* established */
+#define PIIX4_NMISC_TIMER2_OUT_MASK                  0x1u
+#define PIIX4_NMISC_TIMER2_OUT_INPLACE               (PIIX4_NMISC_TIMER2_OUT_MASK << PIIX4_NMISC_TIMER2_OUT_SHIFT)
+#define PIIX4_NMISC_REFRESH_SHIFT                    4 /* established */
+#define PIIX4_NMISC_REFRESH_MASK                     0x1u
+#define PIIX4_NMISC_REFRESH_INPLACE                  (PIIX4_NMISC_REFRESH_MASK << PIIX4_NMISC_REFRESH_SHIFT)
+#define PIIX4_NMISC_IOCHK_DIS_SHIFT                  3 /* established */
+#define PIIX4_NMISC_IOCHK_DIS_MASK                   0x1u
+#define PIIX4_NMISC_IOCHK_DIS_INPLACE                (PIIX4_NMISC_IOCHK_DIS_MASK << PIIX4_NMISC_IOCHK_DIS_SHIFT)
+#define PIIX4_NMISC_SERR_DIS_SHIFT                   2 /* established */
+#define PIIX4_NMISC_SERR_DIS_MASK                    0x1u
+#define PIIX4_NMISC_SERR_DIS_INPLACE                 (PIIX4_NMISC_SERR_DIS_MASK << PIIX4_NMISC_SERR_DIS_SHIFT)
+#define PIIX4_NMISC_SPKR_EN_SHIFT                    1 /* established */
+#define PIIX4_NMISC_SPKR_EN_MASK                     0x1u
+#define PIIX4_NMISC_SPKR_EN_INPLACE                  (PIIX4_NMISC_SPKR_EN_MASK << PIIX4_NMISC_SPKR_EN_SHIFT)
+#define PIIX4_NMISC_TIMER2_EN_SHIFT                  0 /* established */
+#define PIIX4_NMISC_TIMER2_EN_MASK                   0x1u
+#define PIIX4_NMISC_TIMER2_EN_INPLACE                (PIIX4_NMISC_TIMER2_EN_MASK << PIIX4_NMISC_TIMER2_EN_SHIFT)
+
+/*
+ * RTC index and NMI enable, shared. Bits 6:0 index the lower RTC bank and are undefined at reset (the datasheet gives only 'Bit[6:0]=undefined; Bit 7=1', p.84); bit 7 set disables NMI. Write only. The PROM and the HAL reach the clock through ports 0x70 and 0x71.
+ */
+/* rtci: w8, space piix4_isa, reset unknown; Intel 82371AB datasheet 290562-001 (April 1997) p.84-85 */
 #define PIIX4_RTCI_OFFSET                            0x70u /* established */
 #define PIIX4_RTCI_NMI_DIS_SHIFT                     7 /* established */
 #define PIIX4_RTCI_NMI_DIS_MASK                      0x1u
@@ -1007,6 +1043,24 @@
  */
 /* apms: rw8, space piix4_isa, reset 0x0; Intel 82371AB datasheet 290562-001 (April 1997) p.86 */
 #define PIIX4_APMS_OFFSET                            0xb3u /* established */
+
+/*
+ * Coprocessor error: a write asserts IGNNE# if FERR# is asserted and negates internal IRQ13; any value. Reads and writes flow through to ISA.
+ */
+/* cerr: w8, space piix4_isa, reset unknown; Intel 82371AB datasheet 290562-001 (April 1997) p.87 */
+#define PIIX4_CERR_OFFSET                            0xf0u /* established */
+
+/*
+ * Reset control. Linux restarts the board by writing 0x06 (reset CPU with system reset set); the HAL does the same on all but the earliest boards. Bit 2 going 0 to 1 starts the reset; bit 1 chooses a hard reset (1) or a soft INIT-only reset (0).
+ */
+/* rc: rw8, space piix4_isa, reset 0x0; Intel 82371AB datasheet 290562-001 (April 1997) p.88 */
+#define PIIX4_RC_OFFSET                              0xcf9u /* established */
+#define PIIX4_RC_RCPU_SHIFT                          2 /* established */
+#define PIIX4_RC_RCPU_MASK                           0x1u
+#define PIIX4_RC_RCPU_INPLACE                        (PIIX4_RC_RCPU_MASK << PIIX4_RC_RCPU_SHIFT)
+#define PIIX4_RC_SRST_SHIFT                          1 /* established */
+#define PIIX4_RC_SRST_MASK                           0x1u
+#define PIIX4_RC_SRST_INPLACE                        (PIIX4_RC_SRST_MASK << PIIX4_RC_SRST_SHIFT)
 
 /*
  * Power management status. The HAL clears it and reads bit 8 for the power button; the PROM reads it for wake-up state and writes it back to clear.
@@ -1081,7 +1135,7 @@
 #define PIIX4_PMCNTRL_SCI_EN_INPLACE                 (PIIX4_PMCNTRL_SCI_EN_MASK << PIIX4_PMCNTRL_SCI_EN_SHIFT)
 
 /*
- * Power management timer: a free-running 24-bit counter at 3.579545 MHz; bit 23 toggling sets TMROF_STS.
+ * Power management timer: a free-running 24-bit counter at 3.579545 MHz; bit 23 toggling sets TMROF_STS. The register summary table (p.51) lists the register as R/W while its description (p.139) says read only; this unit takes read only.
  */
 /* pmtmr: r32, space piix4_pm, reset 0x0; Intel 82371AB datasheet 290562-001 (April 1997) p.139 */
 #define PIIX4_PMTMR_OFFSET                           0x8u /* established */
@@ -1153,7 +1207,7 @@
 #define PIIX4_PLVL3_OFFSET                           0x15u /* established */
 
 /*
- * Global status.
+ * Global status. Bits 10, 8, 5, 2, 1 and 0 are write-1-to-clear; bits 7, 6 and 4 are read only summaries. Bit 11 is labelled R/W in the datasheet but also 'can only be reset by writing a 1', so it is not in the write-1-to-clear mask here (p.143).
  */
 /* glbsts: rw16, space piix4_pm, reset 0x0; Intel 82371AB datasheet 290562-001 (April 1997) p.143 */
 #define PIIX4_GLBSTS_OFFSET                          0x18u /* established */
@@ -1246,9 +1300,9 @@
 #define PIIX4_GPIREG_GPI0_INPLACE                    (PIIX4_GPIREG_GPI0_MASK << PIIX4_GPIREG_GPI0_SHIFT)
 
 /*
- * General purpose output, byte accesses only (ports 0xfb4 to 0xfb7). Bits 30:0 drive GPO30 to GPO0 and read back the last value written; a pin shared with another function follows that function until GENCFG or XBCS selects the output. The reset value 0x7fffbfff is what the specification update says the chip actually does (erratum 3, p.23): bit 31 has no output, bits 30:15 and 13:0 reset to 1 and bit 14 to 0. Port 0xfb5 therefore resets to 0xbf.
+ * General purpose output, byte accesses only (ports 0xfb4 to 0xfb7). Bits 30:0 drive GPO30 to GPO0 and read back the last value written; a pin shared with another function follows that function until GENCFG or XBCS selects the output. The reset value 0x7fffbfff is the datasheet's default (p.148) and the specification update's erratum 3 (p.23) gives the actual value per bit: bit 31 has no output, bits 30:15 and 13:0 reset to 1 and bit 14 to 0. Port 0xfb5 therefore resets to 0xbf.
  */
-/* gporeg: rw32, space piix4_pm, reset 0x7fffbfff; Intel 82371AB datasheet 290562-001 (April 1997) p.148 */
+/* gporeg: rw32, space piix4_pm, reset 0x7fffbfff; Intel 82371AB datasheet 290562-001 (April 1997) p.148; Intel 82371AB specification update 297738-017 (January 2002) p.23 */
 #define PIIX4_GPOREG_OFFSET                          0x34u /* established */
 #define PIIX4_GPOREG_GPO30_SHIFT                     30 /* established */
 #define PIIX4_GPOREG_GPO30_MASK                      0x1u
@@ -1345,18 +1399,6 @@
 #define PIIX4_GPOREG_GPO0_INPLACE                    (PIIX4_GPOREG_GPO0_MASK << PIIX4_GPOREG_GPO0_SHIFT)
 
 /*
- * Reset control. Linux restarts the board by writing 0x06 (reset CPU with system reset set); the HAL does the same on all but the earliest boards. Bit 2 going 0 to 1 starts the reset; bit 1 chooses a hard reset (1) or a soft INIT-only reset (0).
- */
-/* rc: rw8, space piix4_rcport, reset 0x0; Intel 82371AB datasheet 290562-001 (April 1997) p.88 */
-#define PIIX4_RC_OFFSET                              0x1u /* established */
-#define PIIX4_RC_RCPU_SHIFT                          2 /* established */
-#define PIIX4_RC_RCPU_MASK                           0x1u
-#define PIIX4_RC_RCPU_INPLACE                        (PIIX4_RC_RCPU_MASK << PIIX4_RC_RCPU_SHIFT)
-#define PIIX4_RC_SRST_SHIFT                          1 /* established */
-#define PIIX4_RC_SRST_MASK                           0x1u
-#define PIIX4_RC_SRST_INPLACE                        (PIIX4_RC_SRST_MASK << PIIX4_RC_SRST_SHIFT)
-
-/*
  * SMBus host status: failed, bus collision, device error, interrupt (all write 1 to clear) and host busy. The PROM clears it by writing before its one transaction.
  */
 /* smbhststs: rw8, space piix4_smb, reset 0x0; Intel 82371AB datasheet 290562-001 (April 1997) p.148-149 */
@@ -1435,6 +1477,42 @@
  */
 /* smbblkdat: rw8, space piix4_smb, reset 0x0; Intel 82371AB datasheet 290562-001 (April 1997) p.152 */
 #define PIIX4_SMBBLKDAT_OFFSET                       0x7u /* established */
+
+/*
+ * SMBus slave control.
+ */
+/* smbslvcnt: rw8, space piix4_smb, reset 0x0; Intel 82371AB datasheet 290562-001 (April 1997) p.152 */
+#define PIIX4_SMBSLVCNT_OFFSET                       0x8u /* established */
+#define PIIX4_SMBSLVCNT_ALERT_EN_SHIFT               3 /* established */
+#define PIIX4_SMBSLVCNT_ALERT_EN_MASK                0x1u
+#define PIIX4_SMBSLVCNT_ALERT_EN_INPLACE             (PIIX4_SMBSLVCNT_ALERT_EN_MASK << PIIX4_SMBSLVCNT_ALERT_EN_SHIFT)
+#define PIIX4_SMBSLVCNT_SHDW2_EN_SHIFT               2 /* established */
+#define PIIX4_SMBSLVCNT_SHDW2_EN_MASK                0x1u
+#define PIIX4_SMBSLVCNT_SHDW2_EN_INPLACE             (PIIX4_SMBSLVCNT_SHDW2_EN_MASK << PIIX4_SMBSLVCNT_SHDW2_EN_SHIFT)
+#define PIIX4_SMBSLVCNT_SHDW1_EN_SHIFT               1 /* established */
+#define PIIX4_SMBSLVCNT_SHDW1_EN_MASK                0x1u
+#define PIIX4_SMBSLVCNT_SHDW1_EN_INPLACE             (PIIX4_SMBSLVCNT_SHDW1_EN_MASK << PIIX4_SMBSLVCNT_SHDW1_EN_SHIFT)
+#define PIIX4_SMBSLVCNT_SLV_EN_SHIFT                 0 /* established */
+#define PIIX4_SMBSLVCNT_SLV_EN_MASK                  0x1u
+#define PIIX4_SMBSLVCNT_SLV_EN_INPLACE               (PIIX4_SMBSLVCNT_SLV_EN_MASK << PIIX4_SMBSLVCNT_SLV_EN_SHIFT)
+
+/*
+ * SMBus shadow command: command received by an external master access to the slave or shadow ports.
+ */
+/* smbshdwcmd: r8, space piix4_smb, reset 0x0; Intel 82371AB datasheet 290562-001 (April 1997) p.153 */
+#define PIIX4_SMBSHDWCMD_OFFSET                      0x9u /* established */
+
+/*
+ * SMBus slave event: data bits compared with incoming slave data.
+ */
+/* smbslvevt: rw16, space piix4_smb, reset 0x0; Intel 82371AB datasheet 290562-001 (April 1997) p.153 */
+#define PIIX4_SMBSLVEVT_OFFSET                       0xau /* established */
+
+/*
+ * SMBus slave data: data received by an external master access to the slave or shadow ports.
+ */
+/* smbslvdat: r16, space piix4_smb, reset 0x0; Intel 82371AB datasheet 290562-001 (April 1997) p.153 */
+#define PIIX4_SMBSLVDAT_OFFSET                       0xcu /* established */
 
 #define PIIX4_BOARD_ID_SHIFT                         0x2u /* inferred */
 #define PIIX4_IDETIM_PROM_VALUE                      0xc077c077u /* established */

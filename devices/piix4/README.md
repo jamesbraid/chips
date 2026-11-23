@@ -4,7 +4,7 @@ Mode: **spec-backed**. The chip is Intel's PCI-to-ISA, IDE, USB, power managemen
 and specification update are held (see [documents](../../platforms/visws/documents.md)): *82371AB (PIIX4)* order number
 290562-001, April 1997 (preliminary, 284 pages), and *82371AB, 82371EB, 82371MB PIIX4 Specification Update* 297738-017,
 January 2002. Page numbers below are printed pages, which equal file pages. The update corrects the datasheet and wins
-where they differ. Registers: [registers.md](registers.md) (113 registers). The board is in
+where they differ. Registers: [registers.md](registers.md) (120 registers). The board is in
 [platforms/visws](../../platforms/visws/README.md).
 
 **Grades.** *Established*: a datasheet or update page states it (cited), or the shipped firmware or Windows NT HAL does it in
@@ -22,7 +22,7 @@ none was read from a board.
   IDE interrupts and the USB interrupt each have an entry of their own, and the flash holding the system firmware sits behind
   the chip's BIOS chip select (inferred; see unknowns). The Super I/O ([ns-pc87307](../ns-pc87307/README.md)) supplies the
   UARTs, floppy and parallel port.
-- **Not described here.** The standard 8259, 8254 and DMA register sets, the USB host controller's I/O registers (no held
+- **Not described here.** The standard 8259, 8254 and DMA register sets, the keyboard data port 0x60 beyond its interrupt-clear read, the USB host controller's I/O registers (no held
   software touches them at register level) and the function 3 device-monitor registers (offsets 0x50 to 0x7f), which no
   held software writes.
 
@@ -71,9 +71,12 @@ code on [boot-and-detection](../../platforms/visws/boot-and-detection.md).
 
 ## Where sources disagree or say more than the datasheet
 
-- **Function 3 interrupt pin (`f3_intpn`).** The datasheet says function 3 has pin A (p.120). The specification update, spec
-  change 1 (p.13), says the register is not implemented, because the power management and SMBus interrupts are hardwired
-  to IRQ 9. The update wins; what the register returns is unknown.
+- **Function 3 interrupt pin (`f3_intpn`) and line (`f3_intln`).** The datasheet says function 3 has pin A, read only, default
+  01h (p.120). Specification update spec change 1 (p.13) retitles the register "INTPN Register Not Implemented" and says:
+  "the INTPN register indicates the PCI interrupt pin PIRQA# is used for routing Serial Interrupts. However, Serial Interrupts
+  are hardwired to IRQ9. This register is not implemented." Its default is 00h, so this unit resets it to 0 and treats pin A as
+  superseded. The update's words are "Serial Interrupts"; reading them as the power management and SMBus interrupts is ours
+  (inferred). Spec change 9 (p.15) likewise makes INTLN not implemented and reserved.
 - **Extended clock index bit 7 (`rtcei`).** The datasheet calls it reserved. Spec change 2 (p.13) makes it an aliased copy of
   the NMI enable bit of port 0x70.
 - **The firmware writes the SMBus base.** The main module's function 3 attach, read in full, writes `f3_smbba` = 0x0fd0 and
@@ -81,10 +84,10 @@ code on [boot-and-detection](../../platforms/visws/boot-and-detection.md).
 - **XBCS clears two chip selects.** The firmware's 0xf4 write sets bits 7, 6 and 2 and the coprocessor and mouse functions
   and also clears bits 1 and 0, the external keyboard and RTC chip selects. With the Super I/O's keyboard controller
   decoding its own ports this fits the board using that controller (inferred).
-- **GPOREG default.** The datasheet intends zero; erratum 3 (p.23) says the chip's actual default is 0x7fffbfff and gives it
-  per bit. This unit takes it as the reset value with that source.
+- **GPOREG default.** The datasheet gives 7FFFBFFFh (p.148) and the update's erratum 3 (p.23) gives the actual value per bit:
+  bit 31 none, bits 30:15 and 13:0 set, bit 14 clear. They agree; this unit cites both.
 - **Datasheet inconsistencies.** MBDMA defaults to 04h while its bit 3 reads 1 (the PROM writes 0x0c); the extended index is
-  write only in its register page and read/write in Table 5; GENCFG bit 29 is printed "GPO2" and is GPO24 in the GPO table;
+  write only in its register page and read/write in Table 5; the USB base address (`f2_usbba`) is given default 00h while its bit 0 is hardwired to 1 (p.108), so this unit resets it to 1 (inferred); the PM timer is R/W in the register summary (p.51) and read only in its description (p.139); GENCFG bit 29 is printed "GPO2" and is GPO24 in the GPO table;
   Tables 1 and 2 label GENCFG and XBCS "PCI Function 1" but both are function 0 registers (pp.57, 65).
 
 ## Unknowns

@@ -1,7 +1,7 @@
 <?xml version="1.0" ?>
 <!-- generated from devices/ns-pc87307/registers.toml by defs-gen - do not edit, change the source -->
 <!-- defs-gen 2 -->
-<!-- input sha256 76cde275bc5d5315ccc6348402124412d364c8bfe4d70fc6d57910902abc382f -->
+<!-- input sha256 fdc452855d3492175a63ce3946a9d26e06e456dfb5396f49a49e4e0a4620bb82 -->
 <genxml unit="ns_pc87307" prefix="PC87307" title="National Semiconductor PC87307 Super I/O (marked NS87307) as wired in the Visual Workstation 320 and 540">
   <doc>Register contract of the PC87307 Super I/O: its configuration protocol, the nine logical devices' configuration registers, the GPIO ports and the power management block, from the published datasheet, with the board's use taken from the system firmware, the Windows NT hardware abstraction layer and the Linux Visual Workstation code. Every register is eight bits wide. Grades: established means a datasheet page states it (the page is cited) or the shipped firmware and HAL do it in a routine read in full, which is a software expectation and not a measurement; inferred means a reasoned reading; unknown means no held source settles it. The configuration registers are addressed by an index written to an index port, so the offsets of the card, logical-device, chip-select and power management spaces are indexes, not bus addresses. The part has two variants: the PC87307 reads 0xc0 in its identification register and the PC97307 0xcf, and the PC97307 adds a stepping register; which one the board carries is not known. Not listed: the keyboard, mouse, real-time clock and advanced power control function registers, the floppy controller, UART and parallel port function registers, which are standard PC parts at the bases the logical devices select.</doc>
   <space name="pc87307_cfgport" unit="byte"/>
@@ -61,7 +61,7 @@
     <doc>Logical device number: selects which logical device's registers the indexes 0x30 to 0xff address. The HAL writes 0, 5, 6, 3, 4 and 1 to steer IRQs 1, 3, 4, 6, 7 and 12; the PROM and Linux write 7 and 8 to set the GPIO and power management bases.</doc>
   </struct>
   <struct name="SID" size="1" grade="established" from="National Semiconductor PC87307/PC97307 datasheet (Preliminary, March 1998) p.34" register="yes" offset="0x20" access="r" space="pc87307_card" reset="0xc0">
-    <doc>Identification. In the PC87307 bits 7:5 are the chip identification and bits 4:0 the revision, and the register reads 0xc0. In the PC97307 all eight bits are the chip identification and it reads 0xcf. Reset 0xc0 is the PC87307's.</doc>
+    <doc>Identification. In the PC87307 bits 7:5 are the chip identification and bits 4:0 the revision, and the register reads 0xc0. In the PC97307 all eight bits are the chip identification and it reads 0xcf. Reset 0xc0 is the PC87307's. The reset of 0xc0 is inferred on the reading that the board part is a PC87307 (the board's documents say NS87307).</doc>
     <field name="chip_id" start="5" size="3" type="uint" grade="established"/>
     <field name="revision" start="0" size="5" type="uint" grade="established"/>
     <test value="0xc0" kind="vector">
@@ -96,8 +96,8 @@
   <struct name="SRID" size="1" grade="established" from="National Semiconductor PC87307/PC97307 datasheet (Preliminary, March 1998) p.36" register="yes" offset="0x27" access="r" space="pc87307_card" reset="unknown">
     <doc>Chip revision identification, PC97307 only: incremented on each tapeout.</doc>
   </struct>
-  <struct name="CFG_INDEX" size="1" grade="established" from="National Semiconductor PC87307/PC97307 datasheet (Preliminary, March 1998) p.24-25" register="yes" offset="0x0" access="rw" space="pc87307_cfgport" reset="0x0">
-    <doc>Configuration index register. A write selects the configuration register the data port then reaches; a read returns the last index written. Reset: the part wakes in the Config state in PnP motherboard mode, so no key sequence is needed. The PROM and Linux write ports 0x2e and 0x2f directly.</doc>
+  <struct name="CFG_INDEX" size="1" grade="established" from="National Semiconductor PC87307/PC97307 datasheet (Preliminary, March 1998) p.24-25" register="yes" offset="0x0" access="rw" space="pc87307_cfgport" reset="unknown">
+    <doc>Configuration index register. A write selects the configuration register the data port then reaches; a read returns the last index written. Reset: the part wakes in the Config state in PnP motherboard mode, so no key sequence is needed. The PROM and Linux write ports 0x2e and 0x2f directly. The reset value is unknown: no source states it and no PROM read of the index port before its first write is held.</doc>
   </struct>
   <struct name="CFG_DATA" size="1" grade="established" from="National Semiconductor PC87307/PC97307 datasheet (Preliminary, March 1998) p.24-25" register="yes" offset="0x1" access="rw" space="pc87307_cfgport" reset="unknown">
     <doc>Configuration data register: reads and writes the register selected by the index. Reserved bits must be preserved, so software uses read-modify-write.</doc>

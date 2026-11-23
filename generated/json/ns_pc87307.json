@@ -1,6 +1,6 @@
 {
  "generator": "defs-gen 2",
- "input_sha256": "76cde275bc5d5315ccc6348402124412d364c8bfe4d70fc6d57910902abc382f",
+ "input_sha256": "fdc452855d3492175a63ce3946a9d26e06e456dfb5396f49a49e4e0a4620bb82",
  "schema": "defs-flat/1",
  "source": "devices/ns-pc87307/registers.toml",
  "profile": "public",
@@ -364,7 +364,7 @@
    "count": 1,
    "stride": 1,
    "space": "pc87307_cfgport",
-   "reset": 0,
+   "reset": "unknown",
    "grade": "established",
    "from": "National Semiconductor PC87307/PC97307 datasheet (Preliminary, March 1998) p.24-25"
   },

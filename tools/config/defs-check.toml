@@ -388,10 +388,12 @@ prose_offsets = false
 group = "uv_bau.h"
 prose_offsets = false
 
+# prose_offsets = false: datasheet port and memory addresses and written values collide with other units' offsets.
 [units.piix4]
 group = "piix4"
 prose_offsets = false
 
+# prose_offsets = false: as for piix4.
 [units.ns_pc87307]
 group = "ns_pc87307"
 prose_offsets = false

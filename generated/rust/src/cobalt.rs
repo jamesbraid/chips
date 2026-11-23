@@ -1,6 +1,6 @@
 // generated from devices/cobalt/registers.toml by defs-gen - do not edit, change the source
 // defs-gen 2
-// input sha256 19f8621d27161f38e6f456d3242a1560c0986e491015583f41f0bff9b6e515ee
+// input sha256 20f482005a324addbb08bda15ddc0986046d26510e25bccbbd22bdfb507c0ee3
 // Cobalt (system ASIC of the SGI Visual Workstation 320 and 540): the CPU block with its timer, and the interrupt controller
 #![allow(dead_code)]
 
@@ -173,7 +173,7 @@ pub mod cpu_ctrl {
         }
     }
 }
-/// Machine reset on early boards (the PROM main module's reboot routine does the same: it sets bit 0 here, or writes 6 to port 0xcf9 on the newer board c (established)
+/// Machine reset on early boards (the PROM main module's reboot routine does the same: it sets bit 0 here, or writes 6 to the PIIX4 reset control registe (established)
 pub mod cpu_reset {
     pub const WIDTH: u32 = 32;
     pub const OFFSET: u64 = 0x18;

@@ -1,6 +1,6 @@
 // generated from devices/piix4/registers.toml by defs-gen - do not edit, change the source
 // defs-gen 2
-// input sha256 4095ecd03f27c316c0e277b1e0601b278c04db4d80a6d3f1f614b65056469c03
+// input sha256 9419598440ab2c5e0a78081f4f4024eecd7686d44a9b3e8d221f0b1de5cd234d
 // Intel 82371AB PIIX4 (PCI-to-ISA bridge, IDE, USB, power management and SMBus) as wired in the Visual Workstation 320 and 540
 #![allow(dead_code)]
 
@@ -1431,12 +1431,12 @@ pub mod f1_vid {
     pub const WIDTH: u32 = 16;
     pub const OFFSET: u64 = 0x0;
 }
-/// Device identification of function 1. The firmware's self-test reads the function 0 vendor and device words as one dword and expects 0x71108086. (established)
+/// Device identification of function 1. (established)
 pub mod f1_did {
     pub const WIDTH: u32 = 16;
     pub const OFFSET: u64 = 0x2;
 }
-/// PCI command. The PROM's IDE attach writes 5 (I/O space and bus master enable). (established)
+/// PCI command. The PROM's IDE attach writes 5 (I/O space and bus master enable). The read-only mask lists the hardwired and reserved bits; only the fiel (established)
 pub mod f1_pcicmd {
     pub const WIDTH: u32 = 16;
     pub const OFFSET: u64 = 0x4;
@@ -1748,12 +1748,12 @@ pub mod f2_vid {
     pub const WIDTH: u32 = 16;
     pub const OFFSET: u64 = 0x0;
 }
-/// Device identification of function 2. The firmware's self-test reads the function 0 vendor and device words as one dword and expects 0x71108086. (established)
+/// Device identification of function 2. (established)
 pub mod f2_did {
     pub const WIDTH: u32 = 16;
     pub const OFFSET: u64 = 0x2;
 }
-/// PCI command. (established)
+/// PCI command. The read-only mask lists the hardwired and reserved bits; only the fields shown are writable. (established)
 pub mod f2_pcicmd {
     pub const WIDTH: u32 = 16;
     pub const OFFSET: u64 = 0x4;
@@ -1793,7 +1793,7 @@ pub mod f2_hedt {
     pub const WIDTH: u32 = 8;
     pub const OFFSET: u64 = 0xe;
 }
-/// USB I/O space base address: bits 15:5, bit 0 hardwired 1. (established)
+/// USB I/O space base address: bits 15:5, bit 0 hardwired 1. The datasheet's default of 00h disagrees with bit 0 being hardwired to 1; the reset here is  (established)
 pub mod f2_usbba {
     pub const WIDTH: u32 = 32;
     pub const OFFSET: u64 = 0x20;
@@ -1868,7 +1868,7 @@ pub mod f3_vid {
     pub const WIDTH: u32 = 16;
     pub const OFFSET: u64 = 0x0;
 }
-/// Device identification of function 3. The firmware's self-test reads the function 0 vendor and device words as one dword and expects 0x71108086. (established)
+/// Device identification of function 3. (established)
 pub mod f3_did {
     pub const WIDTH: u32 = 16;
     pub const OFFSET: u64 = 0x2;
@@ -1918,12 +1918,12 @@ pub mod f3_hedt {
     pub const WIDTH: u32 = 8;
     pub const OFFSET: u64 = 0xe;
 }
-/// Interrupt line; no effect on the hardware. (established)
+/// Interrupt line. The datasheet (p.120) says it has no effect on the hardware. Specification update spec change 9 (p.15) says the register 'is not imple (established)
 pub mod f3_intln {
     pub const WIDTH: u32 = 8;
     pub const OFFSET: u64 = 0x3c;
 }
-/// Interrupt pin. The datasheet says it reads 1 (PIRQA#). The specification update (spec change 1, p.13) says the register is not implemented because the (unknown)
+/// Interrupt pin: not implemented. The datasheet (p.120) says it is read only, default 01h, and that PIRQA# is used for the power management module. Spec (established)
 pub mod f3_intpn {
     pub const WIDTH: u32 = 8;
     pub const OFFSET: u64 = 0x3d;
@@ -2053,7 +2053,97 @@ pub mod f3_smbrev {
     pub const WIDTH: u32 = 8;
     pub const OFFSET: u64 = 0xd6;
 }
-/// RTC index and NMI enable, shared. Bits 6:0 index the lower RTC bank; bit 7 set disables NMI. The PROM and the HAL reach the clock through ports 0x70 a (established)
+/// Reset X-bus IRQ12/M and IRQ1: a read clears the latched mouse and keyboard interrupts; the read value has no defined pattern. Reads and writes are als (established)
+pub mod rirq {
+    pub const WIDTH: u32 = 8;
+    pub const OFFSET: u64 = 0x60;
+}
+/// NMI status and control. Bits 7:4 are read-only status (SERR# NMI source, IOCHK# NMI source, counter 2 output, refresh toggle) and must be written as 0 (established)
+pub mod nmisc {
+    pub const WIDTH: u32 = 8;
+    pub const OFFSET: u64 = 0x61;
+    pub mod serr_status { // bits 7:7, established
+        pub const SHIFT: u32 = 7;
+        pub const MASK: u32 = 0x1;
+        pub const fn get(v: u32) -> u32 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u32, x: u32) -> u32 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod iochk_status { // bits 6:6, established
+        pub const SHIFT: u32 = 6;
+        pub const MASK: u32 = 0x1;
+        pub const fn get(v: u32) -> u32 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u32, x: u32) -> u32 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod timer2_out { // bits 5:5, established
+        pub const SHIFT: u32 = 5;
+        pub const MASK: u32 = 0x1;
+        pub const fn get(v: u32) -> u32 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u32, x: u32) -> u32 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod refresh { // bits 4:4, established
+        pub const SHIFT: u32 = 4;
+        pub const MASK: u32 = 0x1;
+        pub const fn get(v: u32) -> u32 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u32, x: u32) -> u32 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod iochk_dis { // bits 3:3, established
+        pub const SHIFT: u32 = 3;
+        pub const MASK: u32 = 0x1;
+        pub const fn get(v: u32) -> u32 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u32, x: u32) -> u32 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod serr_dis { // bits 2:2, established
+        pub const SHIFT: u32 = 2;
+        pub const MASK: u32 = 0x1;
+        pub const fn get(v: u32) -> u32 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u32, x: u32) -> u32 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod spkr_en { // bits 1:1, established
+        pub const SHIFT: u32 = 1;
+        pub const MASK: u32 = 0x1;
+        pub const fn get(v: u32) -> u32 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u32, x: u32) -> u32 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod timer2_en { // bits 0:0, established
+        pub const SHIFT: u32 = 0;
+        pub const MASK: u32 = 0x1;
+        pub const fn get(v: u32) -> u32 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u32, x: u32) -> u32 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+}
+/// RTC index and NMI enable, shared. Bits 6:0 index the lower RTC bank and are undefined at reset (the datasheet gives only 'Bit[6:0]=undefined; Bit 7=1' (established)
 pub mod rtci {
     pub const WIDTH: u32 = 8;
     pub const OFFSET: u64 = 0x70;
@@ -2147,6 +2237,36 @@ pub mod apmc {
 pub mod apms {
     pub const WIDTH: u32 = 8;
     pub const OFFSET: u64 = 0xb3;
+}
+/// Coprocessor error: a write asserts IGNNE# if FERR# is asserted and negates internal IRQ13; any value. Reads and writes flow through to ISA. (established)
+pub mod cerr {
+    pub const WIDTH: u32 = 8;
+    pub const OFFSET: u64 = 0xf0;
+}
+/// Reset control. Linux restarts the board by writing 0x06 (reset CPU with system reset set); the HAL does the same on all but the earliest boards. Bit 2 (established)
+pub mod rc {
+    pub const WIDTH: u32 = 8;
+    pub const OFFSET: u64 = 0xcf9;
+    pub mod rcpu { // bits 2:2, established
+        pub const SHIFT: u32 = 2;
+        pub const MASK: u32 = 0x1;
+        pub const fn get(v: u32) -> u32 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u32, x: u32) -> u32 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod srst { // bits 1:1, established
+        pub const SHIFT: u32 = 1;
+        pub const MASK: u32 = 0x1;
+        pub const fn get(v: u32) -> u32 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u32, x: u32) -> u32 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
 }
 /// Power management status. The HAL clears it and reads bit 8 for the power button; the PROM reads it for wake-up state and writes it back to clear. (established)
 pub mod pmsts {
@@ -2363,7 +2483,7 @@ pub mod pmcntrl {
         }
     }
 }
-/// Power management timer: a free-running 24-bit counter at 3.579545 MHz; bit 23 toggling sets TMROF_STS. (established)
+/// Power management timer: a free-running 24-bit counter at 3.579545 MHz; bit 23 toggling sets TMROF_STS. The register summary table (p.51) lists the reg (established)
 pub mod pmtmr {
     pub const WIDTH: u32 = 32;
     pub const OFFSET: u64 = 0x8;
@@ -2513,7 +2633,7 @@ pub mod plvl3 {
     pub const WIDTH: u32 = 8;
     pub const OFFSET: u64 = 0x15;
 }
-/// Global status. (established)
+/// Global status. Bits 10, 8, 5, 2, 1 and 0 are write-1-to-clear; bits 7, 6 and 4 are read only summaries. Bit 11 is labelled R/W in the datasheet but al (established)
 pub mod glbsts {
     pub const WIDTH: u32 = 16;
     pub const OFFSET: u64 = 0x18;
@@ -3048,31 +3168,6 @@ pub mod gporeg {
         }
     }
 }
-/// Reset control. Linux restarts the board by writing 0x06 (reset CPU with system reset set); the HAL does the same on all but the earliest boards. Bit 2 (established)
-pub mod rc {
-    pub const WIDTH: u32 = 8;
-    pub const OFFSET: u64 = 0x1;
-    pub mod rcpu { // bits 2:2, established
-        pub const SHIFT: u32 = 2;
-        pub const MASK: u32 = 0x1;
-        pub const fn get(v: u32) -> u32 {
-            (v >> SHIFT) & MASK
-        }
-        pub const fn set(v: u32, x: u32) -> u32 {
-            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
-        }
-    }
-    pub mod srst { // bits 1:1, established
-        pub const SHIFT: u32 = 1;
-        pub const MASK: u32 = 0x1;
-        pub const fn get(v: u32) -> u32 {
-            (v >> SHIFT) & MASK
-        }
-        pub const fn set(v: u32, x: u32) -> u32 {
-            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
-        }
-    }
-}
 /// SMBus host status: failed, bus collision, device error, interrupt (all write 1 to clear) and host busy. The PROM clears it by writing before its one t (established)
 pub mod smbhststs {
     pub const WIDTH: u32 = 8;
@@ -3239,6 +3334,66 @@ pub mod smbblkdat {
     pub const WIDTH: u32 = 8;
     pub const OFFSET: u64 = 0x7;
 }
+/// SMBus slave control. (established)
+pub mod smbslvcnt {
+    pub const WIDTH: u32 = 8;
+    pub const OFFSET: u64 = 0x8;
+    pub mod alert_en { // bits 3:3, established
+        pub const SHIFT: u32 = 3;
+        pub const MASK: u32 = 0x1;
+        pub const fn get(v: u32) -> u32 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u32, x: u32) -> u32 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod shdw2_en { // bits 2:2, established
+        pub const SHIFT: u32 = 2;
+        pub const MASK: u32 = 0x1;
+        pub const fn get(v: u32) -> u32 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u32, x: u32) -> u32 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod shdw1_en { // bits 1:1, established
+        pub const SHIFT: u32 = 1;
+        pub const MASK: u32 = 0x1;
+        pub const fn get(v: u32) -> u32 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u32, x: u32) -> u32 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod slv_en { // bits 0:0, established
+        pub const SHIFT: u32 = 0;
+        pub const MASK: u32 = 0x1;
+        pub const fn get(v: u32) -> u32 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u32, x: u32) -> u32 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+}
+/// SMBus shadow command: command received by an external master access to the slave or shadow ports. (established)
+pub mod smbshdwcmd {
+    pub const WIDTH: u32 = 8;
+    pub const OFFSET: u64 = 0x9;
+}
+/// SMBus slave event: data bits compared with incoming slave data. (established)
+pub mod smbslvevt {
+    pub const WIDTH: u32 = 16;
+    pub const OFFSET: u64 = 0xa;
+}
+/// SMBus slave data: data received by an external master access to the slave or shadow ports. (established)
+pub mod smbslvdat {
+    pub const WIDTH: u32 = 16;
+    pub const OFFSET: u64 = 0xc;
+}
 pub const BOARD_ID_SHIFT: u32 = 0x2; // inferred
 pub const IDETIM_PROM_VALUE: u32 = 0xc077c077; // established
 pub const PM_BASE: u32 = 0xf80; // established
@@ -3357,6 +3512,12 @@ mod tests {
     }
 
     #[test]
+    fn rc_6() {
+        assert_eq!(rc::srst::get(0x6), 1);
+        assert_eq!(rc::rcpu::get(0x6), 1);
+    }
+
+    #[test]
     fn pmen_100() {
         assert_eq!(pmen::pwrbtn_en::get(0x100), 1);
         assert_eq!(pmen::rtc_en::get(0x100), 0);
@@ -3374,12 +3535,6 @@ mod tests {
         assert_eq!(pmcntrl::sus_en::get(0x2000), 1);
         assert_eq!(pmcntrl::sus_typ::get(0x2000), 0);
         assert_eq!(pmcntrl::sci_en::get(0x2000), 0);
-    }
-
-    #[test]
-    fn rc_6() {
-        assert_eq!(rc::srst::get(0x6), 1);
-        assert_eq!(rc::rcpu::get(0x6), 1);
     }
 
     #[test]
