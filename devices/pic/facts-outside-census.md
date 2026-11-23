@@ -84,6 +84,70 @@ The IOC4 numbers its DMA bytes big-endian across the PCI lanes, as the IOC3 does
 
 The open test for the sense is in [open-questions.md](../../questions/README.md) under the PIC direct-window lane sense.
 
+## Processor PIO byte lanes: what the IRIX 6.5.30 IP35 kernel does
+
+Question: how does software on a big-endian processor place byte, halfword and word accesses to a device behind a PIC, and does
+anything differ for an enclosure ("outer") PIC of an IX-brick compared with the PIC of an Origin 350 or Tezro? Readings are of
+`IP35/usr/cpu/sysgen/IP35boot` objects (sha256 in the Sources list); offsets are object offsets. Static readings, nothing run.
+
+**One kernel, no host switch (established).** The object set carries one PIC attach (`pic_attach`, `pic_attach2` in `pic.o`) and one
+Bridge-family driver (`pcibr.o`). Its branches test the chip type (`lh` at record +114, 2 is PIC), the chip revision (`lw` at +120,
+low nibble 1), the bus index (record +72, 0 or 1) and the L1 brick-type code (record +138). None tests the compute brick or
+the enclosure's position. So the swap and lane setup below is the same code for every PIC the kernel meets (established as
+code). That the hardware behaves the same behind an outer PIC is **unknown**.
+
+**What the kernel programs (established).**
+- `pcibr_slot_device_init` (`pcibr.o` `0xdc18`, read in full): per slot, Device(n) loses bit 27, gains bit 16, and gains bit 25
+  unless the chip is a PIC at revision 1. It does not touch bit 13 (`dev_swap`) or bit 19 (`swap_direct`): whatever the
+  firmware left there stays until a PIO mapping rewrites bit 13.
+- The address-translation routine behind `pcibr_piomap_alloc` (`0x1b24`, calls it at `0x1bac`) and `pcibr_piotrans_addr` (`0x1e38`, at
+  `0x1e98`) is a static routine at `0x1250`. A request carrying flag `0x1000` (byte stream) wants the window's Device bit 13 set;
+  any other request wants it clear. It reuses an existing window only when bit 13 agrees (`0x14b0` to `0x14d4`, `0x17d0`), and
+  when it allocates a window it writes Device(n) with bit 13 set or cleared accordingly, bit 12 set for memory, the window offset in
+  bits 11:0, and the other upper bits kept (`0x1864` to `0x1890`, store at `0x1aa8`). So bit 19 is never changed by a PIO mapping.
+- The same routine, for the memory alias (space codes 4 and 5; bus index 0 at `0x4000_0000`, index 1 at `0xc000_0000`), sets Control bit 22
+  (`mem_swap`) through `pcireg_control_bit_set` (`0x19c4`) for a byte-stream request and clears it (`0x1ae4`) otherwise. It keeps the
+  chosen mode in the bus record (`+2724`) and refuses a later request for the other mode. Configuration space (space code 7 in this routine) is
+  refused for flag `0x1000` (`0x157c`). Space code 2 returns the unmappable value when the chip is a PIC (`0x1788` to `0x1a68`), which agrees with a PIC having no I/O alias.
+- `pic_attach2` (`pic.o` `0x64c`) writes Control as: clear bits 55:48 and set the bus index there, clear 62:61 and 47:40, set 31:30,
+  set 29 unless revision 1, set 21 (`0xb70` to `0xbc0`, literal masks from `.lit8`). It sets neither bit 22 nor bit 9 (`sys_end`).
+- Drivers that ask for byte stream or word values: `ioc4.o` and `sio_ioc4.o` pass flags 0 to `pciio_pio_addr` / `pciio_piotrans_addr` for
+  BAR0 (space 8, 928 bytes; `ioc4_attach` `0x25c`, `ioc4_serial_attach` `0xcd8`), as does `ql.o` for the SCSI adapter (space 9, 256 bytes, `0x4664`). So their windows have Device bit 13 clear.
+
+**Where software compensates for lanes (established as code).** In every IOC4 path the code reads and writes by the width it means and at the
+plain offset: 32-bit `lw`/`sw` for registers, `lbu`/`sb` at `UART + n` for the 16550 registers (`hardware_init`, `sio_ioc4.o` `0x8f8`;
+`ioc4_attach`, `ioc4.o` `0x204`), and for the ATA block a 32-bit access at `base + 4 * index`, with the byte and halfword forms
+masking the loaded word and storing a whole word (`xide_putb` `0x905c`, `xide_getb` `0x9154`, vendor halfword `0x10a9` branch, `ide.o`). No
+byte reversal instruction and no address `XOR` is on the IOC4 path. For other devices the kernel does the opposite:
+- PCI config space: `do_pcibr_config_get` (`pcibr.o` `0xbadc`) reads one aligned word and shifts and masks in software, so a sub-word read is
+  a word read. `do_pcibr_config_set` (`0xbb68`) stores a byte at offset `XOR 3` and a halfword at offset `XOR 2` (`xori` at `0xbba4`, `0xbbdc`,
+  `0xbc2c`, `0xbc48`), a word at the aligned offset. The Tigon driver wraps both with the same XORs before calling the generic
+  routines (`tg_pci_cfg_rd` `0x8c88`, `tg_pci_cfg_wr` `0x8cc8`, `if_tg.o`).
+- The ATA driver for a non-IOC4 vendor halfword uses `index XOR 3` (byte) and `XOR 2` (halfword) (`ide.o` `0x9074`, `0x90c8`, `0x916c`, `0x91cc`).
+- The SCSI adapter driver (`ql.o`) does 16-bit accesses at literal offsets that are the public SCSI-adapter register offsets with bit 1 flipped: `0xc2` (45
+  sites) for the host command and control register that the public header puts at `0xc0`, `0x0a` (37) for the interface control register at `0x08`, and
+  a mailbox command written to `0x72` with its status (`0x4000`) polled at `0x72` while an argument goes to `0x70` (`ql_enable_sram_parity`, `ql.o` `0xe94`, stores at `0xf94`, `0xfa0`, `0xfac`, poll at `0xfb0`). The access width is established; that these are the `XOR 2` images of those register offsets is **inferred** (register offsets from
+  the public Linux driver for the part, not re-fetched here).
+- The Tigon (Broadcom) and SCSI (QLogic) parts are the ordinary devices on an IO9 behind an outer PIC (see [IX-brick](../../platforms/bricks/ixbrick.md)); the audio
+  drivers (`mad_dd.o`, `emu_dd.o`) carry the same XORs on their byte and halfword accesses and are not tied to a PIC.
+
+Reading: the kernel treats a PIC window as a map in which a CPU byte at address `a` reaches PCI byte lane `a XOR 3` and a halfword reaches
+`a XOR 2`, with 32-bit values kept numerically. The IOC4 is the exception because it numbers its bytes big-endian across the lanes (see
+[devices/ioc4](../ioc4/README.md#ioc4-behind-a-pic-how-its-dma-bytes-are-numbered-public-linux)). That is a **software expectation** and an inference about the hardware (the XOR could equally be
+done by Bedrock, the crossbar or the PIC); the kernel code cannot say which part reverses lanes.
+
+**IX-brick and brick type (established as code; meaning inferred).** `pic_attach` (`0x42c`) asks the L1 for the brick type. For codes `0x30` and `0x56`
+it names the buses `agp/0` and `agp/1`, for every other code `pci-x/0` and `pci-x/1`. `pic_attach2` then picks slot limits and read-response-buffer
+splits from a table indexed by the code minus `0x23` (`pic_attach2` `0x9d8` to `0x9fc` and `0xef4` to `0xf10`; the tables are at `.rodata +0x448` and `+0x5e8`, targets `0xa20`, `0xa58`, `0x12d8`): codes `0x23`, `0x37`, `0x38`,
+`0x39`, `0x3d`, `0x45`, `0x51` get slots 0 to 1 (the bytes the "slots %d-%d" message prints, record +49 and +50), code `0x39` slots 0 to 2 when `pcibr_widget_to_bus` returns 2
+(`0x12c0`), code `0x3d` slots 0 to 3 when it returns 1 (`0x12cc`), codes `0x30` and `0x56` slot 0 only. The public Altix header calls `0x3d` the IX-brick and its bus 1 holds the IO9 at config devices 1 to 4; reading code `0x3d` that way is inferred.
+None of these branches touches a swap bit.
+
+**IP35 PROM (6.210).** The CPU PROM reaches the IOC4 with 32-bit stores and loads at `+0x20`, `+0x28`, `+0x30`, `+0x38` and a byte load of the UART line status at `+5`
+(`0x1fc2af84`, `0x1fc2af18`); its PIC accesses are the interrupt-clear and probe sites in the census (`0xc00000001fc41f38`). It programs no Device or Control swap bit.
+The BaseIO monitor inside the same image (gzip ELF at image offset `0x8cbb0`, sha256 of the decompressed ELF `f903b3ce33b86c286f168ba43395f36a0073c24b1d4e703adce240f683b8c2d7`)
+carries its own Bridge-family driver; where it sets Device bit 13 or Control bit 22 is **unknown** (not read).
+
 ## Force registers
 
 Established, from the public PIC header:
@@ -119,6 +183,7 @@ Unknown: whether head 1 is bus 2 on every module. The captures that print a bus 
 - Public SGI PIC register header, `include/asm-ia64/sn/pci/pic.h` and `bridge.h` in the pinned `linux-2.4.37` submodule (GPL): register bit names and force-register layout.
 - Public SN2 PIC driver (`pcibr_intr.c`, `pcibr_dvr.c`): force-write timing, byte-stream flags and the Device bit mapping.
 - Shipped IP35 PROM 6.210 and IRIX 6.5.30 IP35 kernel objects, static readings only. No symbol names or source text are carried here.
+- Objects read for the lane section (sha256, `IP35boot`): `pcibr.o` `5a79bfd6f2bf07f4c614b5794a9a3e6f5f973f8e60110e0ac2f6b293eb252a29`, `pic.o` `4ccc69e42c0fde78fe7d49e2c67a1095131022d33d24fa48caf131238ca9f188`, `ioc4.o` `e15e32c04c3260244fb2995f636128dadc4145d4d98aded4e2bbc2caa6c941f8`, `sduart.a` member `sio_ioc4.o` (archive `e68b526b8f3aafded170871f43f180706f1f6ce5d039fb9dc2fab68ef1c9bb2f`, member `eaf1d7d5d4e6f7db2c1594bcc2d0581fb51c30730143290b17c999c04c288733`), `ide.o` `1e61f46697355749673539c0b4a90a3112f7f87d95c5b47d99e45e0ab74baa8c`, `ql.o` `6d95ec4c32d288ce31a4ab38142db0154c22189736df282ae2ae393e7e22e23a`, `if_tg.o` `0dec82e929558ac27fa2a9fdc826db90f6dabd4142fa07dd8a7bc95233d92bce`; PROM `ip35prom.img` `d74b4b7ef9c11c66692019db9af698104595be7a0573a86feae8a83441921318`. All match `tools/config/inventory-root.sha256`.
 - Spot checks of the PROM readings against the 6.210 image (`ip35prom.img`): a store of `0x41` to offset `0x114` of a head at image offset `0x2d388`, and the `0xdeadbeef` store to offset `0x7c` at image offset `0x4dd9c`. The rest of the PROM sequences were not re-derived and stay inferred.
 - Captures: the verbose heavy-diagnostic Tezro PROM output with no failure messages, and the Tezro `hinv` captures named in [questions/tezro-widget-11.md](../../questions/tezro-widget-11.md).
 - *IRIX Device Driver Programmer's Guide*, 007-0911-210 (2003), printed pages 718 to 719.

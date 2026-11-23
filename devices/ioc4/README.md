@@ -180,6 +180,11 @@ by effect, addresses low 32 bits). Read as instructions, not run.
   register 3, 1 then 7 to register 2, 0 to register 4; `0xa0` to the RX timer (`+20`) and the control word `0x180` last. Before the
   first control write it waits for UART register 5 bit 5, 3 microseconds a try. The sequence matches IOC3's except for the control
   word (IOC3 stores `0x10180`) and the wait (bit 7 here, bit 22 and a requester field there). Established.
+- **The polled value is the numeric bit 7 of a 32-bit word, not `0x80000000` (established).** `hardware_init` loads `+0x20` with `lw` and tests
+  `andi 0x80` (`sio_ioc4.o` `0x93c` to `0x984`); `0x80000000` is the value it first stores to the port's control register (`0x930` to `0x934`). The loop has no
+  counter, so a path that reverses the word on the way back to the processor (delivering `0x80000000` for a register holding `0x80`) makes the guest spin
+  forever. Every access to this chip in the IP35 objects is a plain-offset word, or a byte at `UART + n`; none is lane-corrected in software. Lane evidence
+  for the surrounding PIC is in [PIC: processor PIO byte lanes](../pic/facts-outside-census.md#processor-pio-byte-lanes-what-the-irix-6530-ip35-kernel-does).
 - **Ring base**: `hardware_init` stores the ring's bus address as high word then low word ORed with 1, to `0x304` and `0x300` when the
   port is the first of its pair, or to `0x30c` and `0x308` for the pair that starts at port 2; the other two ports write nothing
   (the first pair's configuration entry compares with the table start, the second with the start plus 80 bytes). Established.
