@@ -83,6 +83,7 @@
 | Page | Title | Summary |
 |---|---|---|
 | [cpu-cache.md](ip32/cpu-cache.md) | O2 CPU cache and CRIME processor-interface visibility | This page covers the R10000 processor's primary and secondary caches as the O2 uses them, and what the CRIME 1.5... |
+| [prom-assets.md](ip32/prom-assets.md) | O2 PROM visual and audio assets: palette, gradient, fonts, icons, logo, tunes and menu layout | The O2 (IP32) PROM draws its graphical menus and plays its start-up sound from data inside the `firmware` segment. |
 | [prom-console-input.md](ip32/prom-console-input.md) | O2 PROM 6.5.30: what it does when no PS/2 keyboard or mouse answers | Question. |
 | [prom-environment.md](ip32/prom-environment.md) | O2 PROM environment: the flash "env" segment, its checksums and how setenv writes it | The O2 PROM keeps its environment variables (`console`, `netaddr`, `OSLoadPartition` and so on) in one segment of... |
 | [prom-rom.md](ip32/prom-rom.md) | O2 system ROM: decode, flash aliasing and reset fetch | This page covers the O2's system ROM window as CRIME and MACE expose it, the external flash that MACE drives, and... |
