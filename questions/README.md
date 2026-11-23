@@ -476,3 +476,7 @@ Checked the "Madison L3 cache-as-RAM: what PAL 520's commands do in silicon" ent
 ## Indigo INT2 (added with devices/int2)
 
 - **Indigo INT2 interrupt controller.** *[route: software now for the power-off path and the 4.0.5G PROM; the HP-1 schematic for the LED bits and the timer clock]* Unknown: the polarity and use of port register bit 4, the LED bits, what the PROM's writes to the lane-0 timer address do, the 8254 clock crystal, edge or level latching of the timer interrupts, the R3000 board line mapping. See [questions/int2.md](int2.md).
+
+## Indigo WD33C93 SCSI controller (added with devices/wd33c93)
+
+- **Indigo WD33C93 SCSI controller.** *[route: software now for the 4.0.5G PROM; the Indigo schematic for the clock; the HPC1 page for the interrupt and reset lines]* Unknown: which chip revision the R4000 board fits, the board's clock frequency, the WD33C93B revision code, whether the HPC1 reset bit also drives SCSI RST, how the HPC1 gates the interrupt line into INT2, access widths other than byte, and the 4.0.5G SCSI code. See [questions/ip20-wd33c93.md](ip20-wd33c93.md).

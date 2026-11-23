@@ -1,0 +1,950 @@
+{
+ "generator": "defs-gen 4",
+ "input_sha256": "9910f5661f6314c737e8fc59355fe020e6e1845f293604aa3a75852ecd0c3cb5",
+ "schema": "defs-flat/1",
+ "source": "devices/wd33c93/registers.toml",
+ "profile": "public",
+ "rows": [
+  {
+   "unit": "wd33c93",
+   "kind": "register",
+   "name": "own_id",
+   "offset": 0,
+   "access": "rw",
+   "width": 8,
+   "count": 1,
+   "stride": 1,
+   "space": "wd33c93_index",
+   "reset": 0,
+   "grade": "established"
+  },
+  {
+   "unit": "wd33c93",
+   "kind": "field",
+   "name": "own_id.fs",
+   "hi": 7,
+   "lo": 6,
+   "grade": "established"
+  },
+  {
+   "unit": "wd33c93",
+   "kind": "field",
+   "name": "own_id.eih_raf",
+   "hi": 5,
+   "lo": 5,
+   "grade": "inferred"
+  },
+  {
+   "unit": "wd33c93",
+   "kind": "field",
+   "name": "own_id.ehp",
+   "hi": 4,
+   "lo": 4,
+   "grade": "established"
+  },
+  {
+   "unit": "wd33c93",
+   "kind": "field",
+   "name": "own_id.eaf",
+   "hi": 3,
+   "lo": 3,
+   "grade": "established"
+  },
+  {
+   "unit": "wd33c93",
+   "kind": "field",
+   "name": "own_id.id",
+   "hi": 2,
+   "lo": 0,
+   "grade": "established"
+  },
+  {
+   "unit": "wd33c93",
+   "kind": "register",
+   "name": "control",
+   "offset": 1,
+   "access": "rw",
+   "width": 8,
+   "count": 1,
+   "stride": 1,
+   "space": "wd33c93_index",
+   "reset": 0,
+   "grade": "established"
+  },
+  {
+   "unit": "wd33c93",
+   "kind": "field",
+   "name": "control.dma_mode",
+   "hi": 7,
+   "lo": 5,
+   "grade": "established"
+  },
+  {
+   "unit": "wd33c93",
+   "kind": "field",
+   "name": "control.hhp",
+   "hi": 4,
+   "lo": 4,
+   "grade": "established"
+  },
+  {
+   "unit": "wd33c93",
+   "kind": "field",
+   "name": "control.edi",
+   "hi": 3,
+   "lo": 3,
+   "grade": "established"
+  },
+  {
+   "unit": "wd33c93",
+   "kind": "field",
+   "name": "control.idi",
+   "hi": 2,
+   "lo": 2,
+   "grade": "established"
+  },
+  {
+   "unit": "wd33c93",
+   "kind": "field",
+   "name": "control.ha",
+   "hi": 1,
+   "lo": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "wd33c93",
+   "kind": "field",
+   "name": "control.hsp",
+   "hi": 0,
+   "lo": 0,
+   "grade": "established"
+  },
+  {
+   "unit": "wd33c93",
+   "kind": "register",
+   "name": "timeout",
+   "offset": 2,
+   "access": "rw",
+   "width": 8,
+   "count": 1,
+   "stride": 1,
+   "space": "wd33c93_index",
+   "reset": 0,
+   "grade": "established"
+  },
+  {
+   "unit": "wd33c93",
+   "kind": "register",
+   "name": "cdb",
+   "offset": 3,
+   "access": "rw",
+   "width": 8,
+   "count": 12,
+   "stride": 1,
+   "space": "wd33c93_index",
+   "reset": 0,
+   "grade": "established"
+  },
+  {
+   "unit": "wd33c93",
+   "kind": "register",
+   "name": "target_lun",
+   "offset": 15,
+   "access": "rw",
+   "width": 8,
+   "count": 1,
+   "stride": 1,
+   "space": "wd33c93_index",
+   "reset": 0,
+   "grade": "established"
+  },
+  {
+   "unit": "wd33c93",
+   "kind": "field",
+   "name": "target_lun.tlv",
+   "hi": 7,
+   "lo": 7,
+   "grade": "established"
+  },
+  {
+   "unit": "wd33c93",
+   "kind": "field",
+   "name": "target_lun.dok",
+   "hi": 6,
+   "lo": 6,
+   "grade": "established"
+  },
+  {
+   "unit": "wd33c93",
+   "kind": "field",
+   "name": "target_lun.lun",
+   "hi": 2,
+   "lo": 0,
+   "grade": "established"
+  },
+  {
+   "unit": "wd33c93",
+   "kind": "register",
+   "name": "command_phase",
+   "offset": 16,
+   "access": "rw",
+   "width": 8,
+   "count": 1,
+   "stride": 1,
+   "space": "wd33c93_index",
+   "reset": 0,
+   "grade": "established"
+  },
+  {
+   "unit": "wd33c93",
+   "kind": "register",
+   "name": "sync_transfer",
+   "offset": 17,
+   "access": "rw",
+   "width": 8,
+   "count": 1,
+   "stride": 1,
+   "space": "wd33c93_index",
+   "reset": 0,
+   "grade": "established"
+  },
+  {
+   "unit": "wd33c93",
+   "kind": "field",
+   "name": "sync_transfer.fast",
+   "hi": 7,
+   "lo": 7,
+   "grade": "inferred"
+  },
+  {
+   "unit": "wd33c93",
+   "kind": "field",
+   "name": "sync_transfer.period",
+   "hi": 6,
+   "lo": 4,
+   "grade": "established"
+  },
+  {
+   "unit": "wd33c93",
+   "kind": "field",
+   "name": "sync_transfer.offset",
+   "hi": 3,
+   "lo": 0,
+   "grade": "established"
+  },
+  {
+   "unit": "wd33c93",
+   "kind": "register",
+   "name": "transfer_count",
+   "offset": 18,
+   "access": "rw",
+   "width": 8,
+   "count": 3,
+   "stride": 1,
+   "space": "wd33c93_index",
+   "reset": 0,
+   "grade": "established"
+  },
+  {
+   "unit": "wd33c93",
+   "kind": "register",
+   "name": "dest_id",
+   "offset": 21,
+   "access": "rw",
+   "width": 8,
+   "count": 1,
+   "stride": 1,
+   "space": "wd33c93_index",
+   "reset": 0,
+   "grade": "established"
+  },
+  {
+   "unit": "wd33c93",
+   "kind": "field",
+   "name": "dest_id.scc",
+   "hi": 7,
+   "lo": 7,
+   "grade": "inferred"
+  },
+  {
+   "unit": "wd33c93",
+   "kind": "field",
+   "name": "dest_id.dpd",
+   "hi": 6,
+   "lo": 6,
+   "grade": "established"
+  },
+  {
+   "unit": "wd33c93",
+   "kind": "field",
+   "name": "dest_id.df",
+   "hi": 5,
+   "lo": 5,
+   "grade": "inferred"
+  },
+  {
+   "unit": "wd33c93",
+   "kind": "field",
+   "name": "dest_id.id",
+   "hi": 2,
+   "lo": 0,
+   "grade": "established"
+  },
+  {
+   "unit": "wd33c93",
+   "kind": "register",
+   "name": "source_id",
+   "offset": 22,
+   "access": "rw",
+   "width": 8,
+   "count": 1,
+   "stride": 1,
+   "space": "wd33c93_index",
+   "reset": 0,
+   "grade": "established"
+  },
+  {
+   "unit": "wd33c93",
+   "kind": "field",
+   "name": "source_id.er",
+   "hi": 7,
+   "lo": 7,
+   "grade": "established"
+  },
+  {
+   "unit": "wd33c93",
+   "kind": "field",
+   "name": "source_id.es",
+   "hi": 6,
+   "lo": 6,
+   "grade": "inferred"
+  },
+  {
+   "unit": "wd33c93",
+   "kind": "field",
+   "name": "source_id.dsp",
+   "hi": 5,
+   "lo": 5,
+   "grade": "inferred"
+  },
+  {
+   "unit": "wd33c93",
+   "kind": "field",
+   "name": "source_id.siv",
+   "hi": 3,
+   "lo": 3,
+   "grade": "established"
+  },
+  {
+   "unit": "wd33c93",
+   "kind": "field",
+   "name": "source_id.id",
+   "hi": 2,
+   "lo": 0,
+   "grade": "established"
+  },
+  {
+   "unit": "wd33c93",
+   "kind": "register",
+   "name": "scsi_status",
+   "offset": 23,
+   "access": "r",
+   "width": 8,
+   "count": 1,
+   "stride": 1,
+   "space": "wd33c93_index",
+   "reset": 0,
+   "grade": "established"
+  },
+  {
+   "unit": "wd33c93",
+   "kind": "register",
+   "name": "command",
+   "offset": 24,
+   "access": "rw",
+   "width": 8,
+   "count": 1,
+   "stride": 1,
+   "space": "wd33c93_index",
+   "reset": 0,
+   "grade": "established"
+  },
+  {
+   "unit": "wd33c93",
+   "kind": "field",
+   "name": "command.sbt",
+   "hi": 7,
+   "lo": 7,
+   "grade": "established"
+  },
+  {
+   "unit": "wd33c93",
+   "kind": "field",
+   "name": "command.code",
+   "hi": 6,
+   "lo": 0,
+   "grade": "established"
+  },
+  {
+   "unit": "wd33c93",
+   "kind": "register",
+   "name": "data",
+   "offset": 25,
+   "access": "rw",
+   "width": 8,
+   "count": 1,
+   "stride": 1,
+   "space": "wd33c93_index",
+   "reset": "unknown",
+   "grade": "established"
+  },
+  {
+   "unit": "wd33c93",
+   "kind": "register",
+   "name": "queue_tag",
+   "offset": 26,
+   "access": "rw",
+   "width": 8,
+   "count": 1,
+   "stride": 1,
+   "space": "wd33c93_index",
+   "reset": "unknown",
+   "grade": "inferred"
+  },
+  {
+   "unit": "wd33c93",
+   "kind": "register",
+   "name": "aux_status",
+   "offset": 290,
+   "access": "r",
+   "width": 8,
+   "count": 1,
+   "stride": 1,
+   "space": "wd33c93_port_r",
+   "reset": 128,
+   "grade": "established"
+  },
+  {
+   "unit": "wd33c93",
+   "kind": "field",
+   "name": "aux_status.int",
+   "hi": 7,
+   "lo": 7,
+   "grade": "established"
+  },
+  {
+   "unit": "wd33c93",
+   "kind": "field",
+   "name": "aux_status.lci",
+   "hi": 6,
+   "lo": 6,
+   "grade": "established"
+  },
+  {
+   "unit": "wd33c93",
+   "kind": "field",
+   "name": "aux_status.bsy",
+   "hi": 5,
+   "lo": 5,
+   "grade": "established"
+  },
+  {
+   "unit": "wd33c93",
+   "kind": "field",
+   "name": "aux_status.cip",
+   "hi": 4,
+   "lo": 4,
+   "grade": "established"
+  },
+  {
+   "unit": "wd33c93",
+   "kind": "field",
+   "name": "aux_status.pe",
+   "hi": 1,
+   "lo": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "wd33c93",
+   "kind": "field",
+   "name": "aux_status.dbr",
+   "hi": 0,
+   "lo": 0,
+   "grade": "established"
+  },
+  {
+   "unit": "wd33c93",
+   "kind": "register",
+   "name": "data_port",
+   "offset": 294,
+   "access": "rw",
+   "width": 8,
+   "count": 1,
+   "stride": 1,
+   "space": "wd33c93_port_r",
+   "reset": "unknown",
+   "grade": "established"
+  },
+  {
+   "unit": "wd33c93",
+   "kind": "register",
+   "name": "address",
+   "offset": 290,
+   "access": "w",
+   "width": 8,
+   "count": 1,
+   "stride": 1,
+   "space": "wd33c93_port_w",
+   "reset": "unknown",
+   "grade": "established"
+  },
+  {
+   "unit": "wd33c93",
+   "kind": "constant",
+   "name": "CMD_ABORT",
+   "value": 1,
+   "count": 1,
+   "grade": "inferred"
+  },
+  {
+   "unit": "wd33c93",
+   "kind": "constant",
+   "name": "CMD_ASSERT_ATN",
+   "value": 2,
+   "count": 1,
+   "grade": "inferred"
+  },
+  {
+   "unit": "wd33c93",
+   "kind": "constant",
+   "name": "CMD_DISCONNECT",
+   "value": 4,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "wd33c93",
+   "kind": "constant",
+   "name": "CMD_NEGATE_ACK",
+   "value": 3,
+   "count": 1,
+   "grade": "inferred"
+  },
+  {
+   "unit": "wd33c93",
+   "kind": "constant",
+   "name": "CMD_RESELECT",
+   "value": 5,
+   "count": 1,
+   "grade": "inferred"
+  },
+  {
+   "unit": "wd33c93",
+   "kind": "constant",
+   "name": "CMD_RESET",
+   "value": 0,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "wd33c93",
+   "kind": "constant",
+   "name": "CMD_SBT",
+   "value": 128,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "wd33c93",
+   "kind": "constant",
+   "name": "CMD_SELECT",
+   "value": 7,
+   "count": 1,
+   "grade": "inferred"
+  },
+  {
+   "unit": "wd33c93",
+   "kind": "constant",
+   "name": "CMD_SELECT_ATN",
+   "value": 6,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "wd33c93",
+   "kind": "constant",
+   "name": "CMD_SELECT_ATN_XFER",
+   "value": 8,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "wd33c93",
+   "kind": "constant",
+   "name": "CMD_SELECT_XFER",
+   "value": 9,
+   "count": 1,
+   "grade": "inferred"
+  },
+  {
+   "unit": "wd33c93",
+   "kind": "constant",
+   "name": "CMD_TRANSFER_INFO",
+   "value": 32,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "wd33c93",
+   "kind": "constant",
+   "name": "CMD_TRANSLATE",
+   "value": 24,
+   "count": 1,
+   "grade": "inferred"
+  },
+  {
+   "unit": "wd33c93",
+   "kind": "constant",
+   "name": "CONTROL_IRIX_BURST",
+   "value": 45,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "wd33c93",
+   "kind": "constant",
+   "name": "CONTROL_IRIX_SINGLE",
+   "value": 141,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "wd33c93",
+   "kind": "constant",
+   "name": "CPH_CMD_COMPLETE",
+   "value": 96,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "wd33c93",
+   "kind": "constant",
+   "name": "CPH_CMD_START",
+   "value": 48,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "wd33c93",
+   "kind": "constant",
+   "name": "CPH_DATA_DONE",
+   "value": 70,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "wd33c93",
+   "kind": "constant",
+   "name": "CPH_DISCONNECTED",
+   "value": 67,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "wd33c93",
+   "kind": "constant",
+   "name": "CPH_DISCONNECT_MSG",
+   "value": 66,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "wd33c93",
+   "kind": "constant",
+   "name": "CPH_IDENTIFY_IN",
+   "value": 69,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "wd33c93",
+   "kind": "constant",
+   "name": "CPH_IDENTIFY_SENT",
+   "value": 32,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "wd33c93",
+   "kind": "constant",
+   "name": "CPH_RESELECTED",
+   "value": 68,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "wd33c93",
+   "kind": "constant",
+   "name": "CPH_SAVE_DP",
+   "value": 65,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "wd33c93",
+   "kind": "constant",
+   "name": "CPH_SELECTED",
+   "value": 16,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "wd33c93",
+   "kind": "constant",
+   "name": "CPH_STATUS_DONE",
+   "value": 80,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "wd33c93",
+   "kind": "constant",
+   "name": "CPH_STATUS_PHASE",
+   "value": 71,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "wd33c93",
+   "kind": "constant",
+   "name": "OWNID_IRIX_AF",
+   "value": 168,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "wd33c93",
+   "kind": "constant",
+   "name": "OWNID_IRIX_PLAIN",
+   "value": 128,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "wd33c93",
+   "kind": "constant",
+   "name": "PHASE_COMMAND",
+   "value": 2,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "wd33c93",
+   "kind": "constant",
+   "name": "PHASE_DATA_IN",
+   "value": 1,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "wd33c93",
+   "kind": "constant",
+   "name": "PHASE_DATA_OUT",
+   "value": 0,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "wd33c93",
+   "kind": "constant",
+   "name": "PHASE_MSG_IN",
+   "value": 7,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "wd33c93",
+   "kind": "constant",
+   "name": "PHASE_MSG_OUT",
+   "value": 6,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "wd33c93",
+   "kind": "constant",
+   "name": "PHASE_STATUS",
+   "value": 3,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "wd33c93",
+   "kind": "constant",
+   "name": "SOURCEID_ENABLE_RESEL",
+   "value": 128,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "wd33c93",
+   "kind": "constant",
+   "name": "STATUS_BAD_CMD",
+   "value": 64,
+   "count": 1,
+   "grade": "inferred"
+  },
+  {
+   "unit": "wd33c93",
+   "kind": "constant",
+   "name": "STATUS_BAD_STATUS",
+   "value": 71,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "wd33c93",
+   "kind": "constant",
+   "name": "STATUS_DISCONNECT",
+   "value": 133,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "wd33c93",
+   "kind": "constant",
+   "name": "STATUS_MSGIN_PAUSED",
+   "value": 32,
+   "count": 1,
+   "grade": "inferred"
+  },
+  {
+   "unit": "wd33c93",
+   "kind": "constant",
+   "name": "STATUS_PARITY",
+   "value": 67,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "wd33c93",
+   "kind": "constant",
+   "name": "STATUS_PARITY_ATN",
+   "value": 68,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "wd33c93",
+   "kind": "constant",
+   "name": "STATUS_REQ_MSGIN",
+   "value": 143,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "wd33c93",
+   "kind": "constant",
+   "name": "STATUS_REQ_MSGOUT",
+   "value": 142,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "wd33c93",
+   "kind": "constant",
+   "name": "STATUS_RESELECT",
+   "value": 128,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "wd33c93",
+   "kind": "constant",
+   "name": "STATUS_RESELECT_AF",
+   "value": 129,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "wd33c93",
+   "kind": "constant",
+   "name": "STATUS_RESET",
+   "value": 0,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "wd33c93",
+   "kind": "constant",
+   "name": "STATUS_RESET_AF",
+   "value": 1,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "wd33c93",
+   "kind": "constant",
+   "name": "STATUS_SAT_DONE",
+   "value": 22,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "wd33c93",
+   "kind": "constant",
+   "name": "STATUS_SAVE_DP",
+   "value": 33,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "wd33c93",
+   "kind": "constant",
+   "name": "STATUS_SELECT_DONE",
+   "value": 17,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "wd33c93",
+   "kind": "constant",
+   "name": "STATUS_SEL_TIMEOUT",
+   "value": 66,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "wd33c93",
+   "kind": "constant",
+   "name": "STATUS_UNEXP_DISC",
+   "value": 65,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "wd33c93",
+   "kind": "constant",
+   "name": "STATUS_UNEXP_PHASE",
+   "value": 72,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "wd33c93",
+   "kind": "constant",
+   "name": "STATUS_XFER_DONE",
+   "value": 24,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "wd33c93",
+   "kind": "constant",
+   "name": "TIMEOUT_IRIX",
+   "value": 64,
+   "count": 1,
+   "grade": "established"
+  }
+ ]
+}

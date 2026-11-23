@@ -1,0 +1,330 @@
+unit = "wd33c93"
+prefix = "WD33C93"
+title = "WD33C93/WD33C93A SCSI bus interface controller as wired on the Indigo (R3000 and R4000 boards)"
+doc = "The SCSI controller behind the Indigo's HPC1. The CPU reaches it through two byte ports in the HPC1 window: an address port, which on a read returns the auxiliary status register, and a data port. A write to the address port selects one of the chip's internal registers; each access to the data port reads or writes the selected register and then advances the selection by one, except for the data and command registers, which stay selected. The internal registers are described in the chip's own index space (offsets are the value written to the address port); the two ports are in two port spaces whose offsets are bytes from the HPC1 window base, physical 0x1fb80000, big-endian view. Names and layouts follow the Western Digital data sheet and the public NetBSD driver, with the IRIX driver's own names only where the page says so. Grades: established means read in full from the IRIX R4000 Indigo SCSI driver object, the 4.0.5D PROM or the data sheet; inferred means a reasoned reading; unknown means nothing shipped settles it. Reset values are from the data sheet, so they hold for the part. Nothing was measured on a board. The prose is in devices/wd33c93/README.md."
+from = "IRIX 6.5 R4000 Indigo SCSI driver and kernel objects; PROM 4.0.5D; Western Digital data sheet"
+public_from = ["WD33C93A Data Sheet", "NetBSD", "Linux"]
+name_source = "public"
+name_cite = "NetBSD sys/dev/ic/wd33c93reg.h (SBIC_ register and status names) and the Western Digital data sheet"
+
+[spaces.wd33c93_index]
+unit = "byte"
+doc = "Internal register index: the value written to the address port. The index is not a bus address."
+
+[spaces.wd33c93_port_r]
+unit = "byte"
+doc = "Byte offsets from the HPC1 window base (physical 0x1fb80000), big-endian view, for the ports a CPU read reaches. Each port is one byte in the second most significant byte lane of a 4-byte word."
+
+[spaces.wd33c93_port_w]
+unit = "byte"
+doc = "Byte offsets from the HPC1 window base for the same two ports as seen by a CPU write. The address port and the auxiliary status register share one offset."
+
+[constants]
+CMD_RESET = { value = 0x00, grade = "established", doc = "Reset command. Levels I. The IRIX driver and the PROM write it to the command register to start the chip with the own-ID register's configuration." }
+CMD_ABORT = { value = 0x01, grade = "inferred", doc = "Abort. Used by the IRIX driver on timeouts (passed through the driver's last-command-ignored retry routine); the call site's constant is the delay-slot argument, so the read is inferred." }
+CMD_ASSERT_ATN = { value = 0x02, grade = "inferred", doc = "Assert ATN, initiator. Passed to the retry routine in the extended-message handler." }
+CMD_NEGATE_ACK = { value = 0x03, grade = "inferred", doc = "Negate ACK, initiator. The driver passes it after message-in handling." }
+CMD_DISCONNECT = { value = 0x04, grade = "established", doc = "Disconnect. Written by the interrupt handler after an unexpected bus-free status, and passed to the retry routine by the abort and inquiry paths." }
+CMD_SELECT_ATN = { value = 0x06, grade = "established", doc = "Select-with-ATN. The PROM and IRIX use it for the device probe: the chip must answer status 0x11 (selected) and then 0x8e (message-out requested)." }
+CMD_SELECT_ATN_XFER = { value = 0x08, grade = "established", doc = "Select-with-ATN-and-Transfer, the combination command the IRIX driver and the PROM use for every normal SCSI command." }
+CMD_TRANSFER_INFO = { value = 0x20, grade = "established", doc = "Transfer Info, initiator, level II. The driver also issues it with the single-byte-transfer bit set (0xa0) to accept one message byte." }
+CMD_SBT = { value = 0x80, grade = "established", doc = "Single-byte-transfer qualifier ORed into the command code (data sheet 6.2.20); the driver uses 0xa0." }
+CMD_SELECT = { value = 0x07, grade = "inferred", doc = "Select-without-ATN. Defined by the part; no shipped Indigo code was seen issuing it." }
+CMD_SELECT_XFER = { value = 0x09, grade = "inferred", doc = "Select-without-ATN-and-Transfer. Defined by the part; not seen issued." }
+CMD_RESELECT = { value = 0x05, grade = "inferred", doc = "Reselect, target role. Not used by an initiator-only driver." }
+CMD_TRANSLATE = { value = 0x18, grade = "inferred", doc = "Translate Address (disk geometry). Defined by the part; not seen issued." }
+STATUS_RESET = { value = 0x00, grade = "established", doc = "Reset command completed on a part without advanced features, or hardware reset. Data sheet 6.2.19; the PROM and driver accept it and treat the chip as a plain WD33C93." }
+STATUS_RESET_AF = { value = 0x01, grade = "established", doc = "Reset command completed with advanced features enabled (own-ID EAF set): the part is a WD33C93A or WD33C93B. This is the reset-complete status the PROM and the driver look for." }
+STATUS_SELECT_DONE = { value = 0x11, grade = "established", doc = "Select command completed, now connected as initiator. The PROM's and driver's device probe expects it." }
+STATUS_SAT_DONE = { value = 0x16, grade = "established", doc = "Select-and-Transfer completed. The target status byte is then in the target LUN register." }
+STATUS_XFER_DONE = { value = 0x18, grade = "established", doc = "Transfer Info completed; the low three bits give the next bus phase (MCI)." }
+STATUS_MSGIN_PAUSED = { value = 0x20, grade = "inferred", doc = "Transfer Info paused with ACK asserted for a message-in byte." }
+STATUS_SAVE_DP = { value = 0x21, grade = "established", doc = "Save data pointers message received during Select-and-Transfer; the handler saves the pointers and resumes with command phase 0x41." }
+STATUS_BAD_CMD = { value = 0x40, grade = "inferred", doc = "Invalid command." }
+STATUS_UNEXP_DISC = { value = 0x41, grade = "established", doc = "Unexpected disconnect (bus free). The handler issues Disconnect and releases the channel." }
+STATUS_SEL_TIMEOUT = { value = 0x42, grade = "established", doc = "Selection timed out. The handler retries or fails the command." }
+STATUS_PARITY = { value = 0x43, grade = "established", doc = "Parity error, ATN not asserted. The handler resumes with command phase 0x45." }
+STATUS_PARITY_ATN = { value = 0x44, grade = "established", doc = "Parity error with ATN asserted. Same handler as 0x43." }
+STATUS_BAD_STATUS = { value = 0x47, grade = "established", doc = "Bad status byte during Select-and-Transfer. The handler resumes the transfer." }
+STATUS_UNEXP_PHASE = { value = 0x48, grade = "established", doc = "Base of the unexpected-information-phase family 0x48 to 0x4f; the low three bits are the requested phase. The handler decodes the family with a bit test, and treats 0x4f (message-in) separately." }
+STATUS_RESELECT = { value = 0x80, grade = "established", doc = "Reselected, no Identify message transferred yet (advanced features off)." }
+STATUS_RESELECT_AF = { value = 0x81, grade = "established", doc = "Reselected with advanced features on; source ID register holds the target ID and the data register holds the Identify message." }
+STATUS_DISCONNECT = { value = 0x85, grade = "established", doc = "Disconnect with intermediate-disconnect interrupt enabled (control IDI)." }
+STATUS_REQ_MSGOUT = { value = 0x8e, grade = "established", doc = "Service required, REQ asserted with message-out phase. The device probe waits for it after status 0x11." }
+STATUS_REQ_MSGIN = { value = 0x8f, grade = "established", doc = "Service required, REQ asserted with message-in phase." }
+PHASE_DATA_OUT = { value = 0x00, grade = "established", doc = "MCI field 000: data out." }
+PHASE_DATA_IN = { value = 0x01, grade = "established", doc = "MCI field 001: data in." }
+PHASE_COMMAND = { value = 0x02, grade = "established", doc = "MCI field 010: command." }
+PHASE_STATUS = { value = 0x03, grade = "established", doc = "MCI field 011: status." }
+PHASE_MSG_OUT = { value = 0x06, grade = "established", doc = "MCI field 110: message out." }
+PHASE_MSG_IN = { value = 0x07, grade = "established", doc = "MCI field 111: message in." }
+CPH_SELECTED = { value = 0x10, grade = "established", doc = "Command phase after selection (data sheet 6.2.14)." }
+CPH_IDENTIFY_SENT = { value = 0x20, grade = "established", doc = "Identify message sent." }
+CPH_CMD_START = { value = 0x30, grade = "established", doc = "Command phase started; 0x30 + n after n bytes." }
+CPH_SAVE_DP = { value = 0x41, grade = "established", doc = "Save data pointers received. The driver writes it back to resume after a save-data-pointers interrupt." }
+CPH_DISCONNECT_MSG = { value = 0x42, grade = "established", doc = "Disconnect message received, bus not free." }
+CPH_DISCONNECTED = { value = 0x43, grade = "established", doc = "Target has disconnected." }
+CPH_RESELECTED = { value = 0x44, grade = "established", doc = "Reselected by the original target. The driver writes it back to resume after reselection." }
+CPH_IDENTIFY_IN = { value = 0x45, grade = "established", doc = "Identify message received from the reselecting target. The driver writes it back to resume data transfer and after a parity error." }
+CPH_DATA_DONE = { value = 0x46, grade = "established", doc = "Data phase complete (transfer count reached zero)." }
+CPH_STATUS_PHASE = { value = 0x47, grade = "established", doc = "Status phase started." }
+CPH_STATUS_DONE = { value = 0x50, grade = "established", doc = "Status byte received into the target LUN register." }
+CPH_CMD_COMPLETE = { value = 0x60, grade = "established", doc = "Command Complete message received." }
+OWNID_IRIX_AF = { value = 0xa8, grade = "established", doc = "Own-ID base value the PROM and the IRIX driver write before a Reset command when they want advanced features: frequency select 2 (divisor 4, 16 to 20 MHz clock), bit 5 and EAF. The host ID (0 to 7) is ORed in." }
+OWNID_IRIX_PLAIN = { value = 0x80, grade = "established", doc = "Own-ID base value without advanced features, written when the caller asks for a plain reset." }
+CONTROL_IRIX_BURST = { value = 0x2d, grade = "established", doc = "Control register value the IRIX driver (when its burst flag is set, which wd93_init sets) and the PROM (when its flag, set during SCSI init, is set) write after reset: burst-mode DMA, EDI, IDI, halt on SCSI parity error." }
+CONTROL_IRIX_SINGLE = { value = 0x8d, grade = "established", doc = "Control register value written when the burst flag is clear: single-byte DMA mode instead of burst, same other bits. Also the value the driver writes on a part that answered the reset with status 0." }
+TIMEOUT_IRIX = { value = 0x40, grade = "established", doc = "Selection timeout period the IRIX driver and the PROM write (the PROM through a helper called at the end of its reset routine; the helper writes 0x08 instead when its flag argument is nonzero). With a 20 MHz clock the data sheet formula gives 64 * 80 / 20 = 256 ms." }
+SOURCEID_ENABLE_RESEL = { value = 0x80, grade = "established", doc = "Source ID register value that enables reselection, written when disconnect is enabled." }
+
+[registers.address]
+offset = 0x122
+space = "wd33c93_port_w"
+access = "w"
+width = 8
+reset = "unknown"
+grade = "established"
+from = "IRIX kernel.o scuzzy table entry 0 (first word, 0xbfb80122); PROM 4.0.5D table at 0xbfc52f80; NetBSD wdsc.c and hpcreg.h (HPC1_SCSI0_DEVREGS 0x11f plus 3)"
+doc = "Address port. A byte written here selects the internal register the next data-port access uses. No shipped code reads it back (a read returns the auxiliary status register). The index auto-increments after every data-port access except when the selected register is the data register or the command register. A qtest can discriminate: write 0x03, write three bytes to the data port, and read cdb1 to cdb3 back by writing 0x03 once and reading the data port three times."
+
+[registers.aux_status]
+offset = 0x122
+space = "wd33c93_port_r"
+access = "r"
+width = 8
+ro = 0xff
+reset = 0x80
+reset_grade = "established"
+reset_from = "data sheet 6.3.1 (INT set when a hardware reset completes; LCI, PE, DBR, BSY and CIP clear); NetBSD wdsc_match tests the value 0x80 after pulsing the HPC reset"
+grade = "established"
+from = "data sheet 6.2.1; IRIX wd93.o wd93_int_present (0x4978 in kernel.o), wait_scintr (0x5070), handle_intr (0x3c70); PROM 4.0.5D 0xbfc167d0 and 0xbfc168cc"
+doc = "Auxiliary status. Bit 7 INT is the interrupt-request pin: it stays set until the SCSI status register is read. Bit 6 LCI says a command was written while an interrupt was pending or the chip was busy decoding the last command, and the command was ignored. Bit 5 BSY is set while a level II command runs. Bit 4 CIP is set while the chip decodes a command; the command register may not be written while it is set. Bit 1 PE is a parity error, cleared when a new command is issued. Bit 0 DBR is data-buffer-ready for programmed data-register transfers. Both IRIX and the PROM poll bit 4 clear before every command and bit 7 for interrupts. A qtest can discriminate: after a hard reset read 0x80; after a Reset command and before the status read INT stays set; reading scsi_status clears bit 7."
+
+[registers.aux_status.fields]
+dbr = { bits = [0, 0], grade = "established" }
+pe  = { bits = [1, 1], grade = "established" }
+cip = { bits = [4, 4], grade = "established" }
+bsy = { bits = [5, 5], grade = "established" }
+lci = { bits = [6, 6], grade = "established" }
+int = { bits = [7, 7], grade = "established" }
+
+[registers.data_port]
+offset = 0x126
+space = "wd33c93_port_r"
+access = "rw"
+width = 8
+reset = "unknown"
+grade = "established"
+from = "IRIX kernel.o scuzzy table entry 0 (second word, 0xbfb80126); PROM 4.0.5D table 0xbfc52f84; NetBSD wdsc.c"
+doc = "Data port. Reads and writes the internal register selected through the address port. Every IRIX and PROM access is a byte access. A qtest can discriminate: write own_id then read it back (the controller presence test, below)."
+
+[registers.own_id]
+offset = 0x00
+space = "wd33c93_index"
+access = "rw"
+width = 8
+reset = 0x00
+reset_grade = "established"
+reset_from = "data sheet 6.3.1 (hardware reset clears the Own ID register) and E062-B item 23 (on the A part a hard reset clears only this register)"
+grade = "established"
+from = "data sheet 6.2.3; IRIX wd93.o wd93reset (0x2a74), wd93_earlyinit (0x10e8); PROM 4.0.5D 0xbfc147e4 (reset) and 0xbfc13084 (presence test)"
+doc = "Own ID and CDB size. The bus ID in bits 2:0 and the configuration bits are sampled by the Reset command, so they take effect only after a reset. Both the PROM and IRIX write it before every Reset. In advanced mode, bits 3:0 hold the CDB length for a command group the chip does not know (the driver writes it from startwd93 only on parts that answered the reset with advanced features). Bit 5 is EIH on rev E/F A parts and RAF on the B. A qtest can discriminate: write 0 to 7 and read each back; the presence test needs all eight bits to read back."
+
+[registers.own_id.fields]
+id  = { bits = [2, 0], grade = "established" }
+eaf = { bits = [3, 3], grade = "established", doc = "Enable advanced features. Selects status 0x01 instead of 0x00 after Reset on A and B parts." }
+ehp = { bits = [4, 4], grade = "established", doc = "Enable host parity (PLCC package only)." }
+eih_raf = { bits = [5, 5], grade = "inferred", doc = "Enable immediate halt on rev E/F of the A part; enable really advanced features on the B. IRIX and the PROM set it with 0xa8, which with EAF is the NetBSD default for the same chips." }
+fs  = { bits = [7, 6], grade = "established", doc = "Frequency select. 0 divides the input clock by 2 (8-10 MHz), 1 by 3 (12-15 MHz), 2 by 4 (16-20 MHz). IRIX and the PROM write 2." }
+
+[registers.control]
+offset = 0x01
+space = "wd33c93_index"
+access = "rw"
+width = 8
+reset = 0x00
+reset_grade = "established"
+reset_from = "data sheet 6.3.2 (Reset command clears registers 01h through 16h); a hardware reset leaves it unchanged"
+grade = "established"
+from = "data sheet 6.2.4; IRIX wd93reset (0x2a74, writes 0x2d or 0x8d); PROM 4.0.5D 0xbfc14a54"
+doc = "Control. Interrupt and DMA mode selection. IRIX and the PROM write 0x2d (burst DMA mode) once the chip has been reset and detected as a WD33C93A or B, and 0x8d (single-byte DMA mode) when the burst flag is clear or the chip answered the reset with status 0. A qtest can discriminate: reset clears it; write 0x2d and read it back."
+
+[registers.control.fields]
+hsp = { bits = [0, 0], grade = "established", doc = "Halt on SCSI parity error." }
+ha  = { bits = [1, 1], grade = "established", doc = "Halt on ATN (target mode)." }
+idi = { bits = [2, 2], grade = "established", doc = "Intermediate disconnect interrupt: status 0x85 on a disconnect during Select-and-Transfer." }
+edi = { bits = [3, 3], grade = "established", doc = "Ending disconnect interrupt." }
+hhp = { bits = [4, 4], grade = "established", doc = "Halt on host parity error." }
+dma_mode = { bits = [7, 5], grade = "established", doc = "0 programmed I/O; 1 burst demand-mode DMA (the HPC1 channel); 2 WD bus mode; 4 single-byte DMA. IRIX uses 1, or 4 when its flag is clear." }
+
+[registers.timeout]
+offset = 0x02
+space = "wd33c93_index"
+access = "rw"
+width = 8
+reset = 0x00
+reset_grade = "established"
+reset_from = "data sheet 6.3.2"
+grade = "established"
+from = "data sheet 6.2.5; IRIX wd93reset (0x2a74, writes 0x40; 0x20 when the clock-select byte of its table is zero); wd93hinv (0xe78, reads it, writes it back reduced, then restores); PROM 4.0.5D helper 0xbfc126fc"
+doc = "Selection timeout. Zero disables the timeout. IRIX writes 0x40; the PROM writes 0x40 through a helper called at the end of its reset routine. During the hinv bus scan IRIX divides the value by 32 (rounded up) and later restores it, to shorten selects of missing targets. A qtest can discriminate: a Select to a target that is not present stays pending when this is zero, and ends with status 0x42 when it is not."
+
+[registers.cdb]
+offset = 0x03
+space = "wd33c93_index"
+access = "rw"
+width = 8
+count = 12
+stride = 1
+reset = 0x00
+reset_grade = "established"
+reset_from = "data sheet 6.3.2"
+grade = "established"
+from = "data sheet 6.2.6 to 6.2.12 (registers 03h to 0Eh); IRIX startwd93 (0x2e90, writes up to 12 bytes through the data port after selecting 03h); PROM 4.0.5D 0xbfc14f4c"
+doc = "CDB bytes 1 to 12 for Select-and-Transfer. The same offsets are total sectors, heads, cylinders, logical address and head and cylinder numbers for Translate Address. The 12 bytes are written with one address-port write of 3 and as many data-port writes as the CDB has bytes, using the auto-increment (IRIX stops at 12, rounding a 13+ byte count down). On a WD33C93B with RAF set, index 3 reads back a revision code after Reset (below). A qtest can discriminate: auto-increment and cdb1 reading zero after reset."
+
+[registers.target_lun]
+offset = 0x0f
+space = "wd33c93_index"
+access = "rw"
+width = 8
+reset = 0x00
+reset_grade = "established"
+reset_from = "data sheet 6.3.2"
+grade = "established"
+from = "data sheet 6.2.13; IRIX setdest (0x2df4, writes the LUN), handle_intr (0x3c70, reads it after an interrupt); PROM 4.0.5D 0xbfc14cb4"
+doc = "Target LUN. The initiator writes the LUN for the Identify message; after Select-and-Transfer completes it holds the target's status byte (IRIX reads it on status 0x16 and stores it as the SCSI status). During reselection with advanced features it holds the Identify byte (TLV in bit 7, DOK in bit 6). IRIX reads it first in the interrupt handler and then reads the command phase register by letting the address auto-increment."
+
+[registers.target_lun.fields]
+lun = { bits = [2, 0], grade = "established" }
+dok = { bits = [6, 6], grade = "established", doc = "Disconnect OK, from the reselecting target's Identify message." }
+tlv = { bits = [7, 7], grade = "established", doc = "Identify message valid." }
+
+[registers.command_phase]
+offset = 0x10
+space = "wd33c93_index"
+access = "rw"
+width = 8
+reset = 0x00
+reset_grade = "established"
+reset_from = "data sheet 6.3.2"
+grade = "established"
+from = "data sheet 6.2.14 and 7.5 command phase table; IRIX startwd93 (writes 0 before a new command), handle_intr and unex_info (write 0x41, 0x44, 0x45 to resume), wd93_transfer (0x2d8c); PROM 4.0.5D 0xbfc14c34, 0xbfc1566c, 0xbfc1596c"
+doc = "Command phase: how far a Select-and-Transfer has progressed. The chip advances it as phases complete (CPH_ constants); the driver writes a value back and reissues Select-and-Transfer to resume. IRIX writes 0x00 to start, 0x41 after Save Data Pointers, 0x44 after reselection and 0x45 after the Identify message or a parity error. A qtest can discriminate: after Select-and-Transfer to a missing target it reads 0x00; to a present one 0x10 and up."
+
+[registers.sync_transfer]
+offset = 0x11
+space = "wd33c93_index"
+access = "rw"
+width = 8
+reset = 0x00
+reset_grade = "established"
+reset_from = "data sheet 6.3.2"
+grade = "established"
+from = "data sheet 6.2.15; IRIX startwd93 (0x2e90, writes the per-target value), sync_setup (0x2240), _sync_setup (0x1b44); PROM 4.0.5D 0xbfc14850 (reads and saves before the first reset), 0xbfc16204"
+doc = "Synchronous transfer: offset in bits 3:0 (zero means asynchronous), period in bits 6:4 (0 is 8 clock cycles, 2 to 7 are that many cycles), bit 7 fast SCSI on the B. IRIX initialises the per-target copy to 0x20 (two cycles, offset zero, asynchronous) and loads the target's value before every command. The PROM reads it before the first reset and restores it afterwards (inferred: to keep a boot target's setting)."
+
+[registers.sync_transfer.fields]
+offset = { bits = [3, 0], grade = "established" }
+period = { bits = [6, 4], grade = "established" }
+fast   = { bits = [7, 7], grade = "inferred", doc = "WD33C93B only (E062-B item 1); IRIX never sets it." }
+
+[registers.transfer_count]
+offset = 0x12
+space = "wd33c93_index"
+access = "rw"
+width = 8
+count = 3
+stride = 1
+reset = 0x00
+reset_grade = "established"
+reset_from = "data sheet 6.3.2"
+grade = "established"
+from = "data sheet 6.2.16; IRIX wd93_dma (0x51f0, writes MSB first through the auto-increment), startwd93, handle_extmsgin, unex_info; PROM 4.0.5D 0xbfc14eac"
+doc = "24-bit transfer count, most significant byte at index 12h, written with one address-port write of 12h and three data-port writes. IRIX writes zero for commands with no data phase and the HPC1-programmed length otherwise (at most 0xfffffc). After an interrupted transfer it holds the bytes not transferred (IRIX reads it back when it saves the data pointers). A qtest can discriminate: three-byte write through the auto-increment and read back."
+
+[registers.dest_id]
+offset = 0x15
+space = "wd33c93_index"
+access = "rw"
+width = 8
+reset = 0x00
+reset_grade = "established"
+reset_from = "data sheet 6.3.2"
+grade = "established"
+from = "data sheet 6.2.17; IRIX setdest (0x2df4), wd93_transfer (0x2d8c); PROM 4.0.5D 0xbfc14c14 and 0xbfc14c98"
+doc = "Destination ID: target to select or reselect, bits 2:0; bit 6 DPD gives the expected data direction in advanced mode (1 is device to host); bit 7 SCC and bit 5 DF are target-mode chaining controls. IRIX writes the target ID with bit 6 from the data direction (the command's 0x40 flag) at every command start. The PROM's first-time path reads it back and saves bits 2:0."
+
+[registers.dest_id.fields]
+id  = { bits = [2, 0], grade = "established" }
+df  = { bits = [5, 5], grade = "inferred", doc = "Data phase direction check disable, A rev E/F." }
+dpd = { bits = [6, 6], grade = "established" }
+scc = { bits = [7, 7], grade = "inferred", doc = "Select command chain; target mode only, never used by IRIX." }
+
+[registers.source_id]
+offset = 0x16
+space = "wd33c93_index"
+access = "rw"
+width = 8
+reset = 0x00
+reset_grade = "established"
+reset_from = "data sheet 6.3.1 and 6.3.2 (ER, ES and DSP clear on either reset; the low four bits are read-only status)"
+grade = "established"
+from = "data sheet 6.2.18; IRIX wd93reset (0x2a74, writes 0x80 when disconnect is enabled), handle_intr (reads it after a reselect); PROM 4.0.5D 0xbfc14a20"
+doc = "Source ID: ER (bit 7) enables reselection, ES (bit 6) selection, DSP (bit 5) ignores select parity; bit 3 SIV and bits 2:0 report who selected or reselected the chip. IRIX and the PROM write 0x80 after a reset when disconnect is enabled (the PROM's per-controller enable word is 1) and 0 otherwise. After a reselect IRIX reads this register and then the SCSI status register by auto-increment and uses bits 2:0 to find the channel."
+
+[registers.source_id.fields]
+id  = { bits = [2, 0], grade = "established" }
+siv = { bits = [3, 3], grade = "established" }
+dsp = { bits = [5, 5], grade = "inferred", doc = "Never set by IRIX." }
+es  = { bits = [6, 6], grade = "inferred", doc = "Never set by IRIX." }
+er  = { bits = [7, 7], grade = "established" }
+
+[registers.scsi_status]
+offset = 0x17
+space = "wd33c93_index"
+access = "r"
+width = 8
+ro = 0xff
+reset = 0x00
+reset_grade = "established"
+reset_from = "data sheet 6.3.1 and 6.3.2"
+grade = "established"
+from = "data sheet 6.2.19; IRIX wait_scintr (0x5070) and handle_intr (0x3c70); PROM 4.0.5D 0xbfc168cc"
+doc = "SCSI status: the cause of the last interrupt, high nibble the group (0 reset, 1 done, 2 paused, 4 terminated, 8 service) and low nibble the qualifier or phase. Reading it clears INT in the auxiliary status register and the chip's interrupt request; the chip will not change it until it is read. The driver must not issue a command within 7 microseconds of reading it, or the chip ignores the command and sets LCI. Values acted on by IRIX are the STATUS_ constants. A qtest can discriminate: after Reset read 0x00 or 0x01 depending on own_id.eaf, then INT is clear."
+
+[registers.command]
+offset = 0x18
+space = "wd33c93_index"
+access = "rw"
+width = 8
+reset = 0x00
+reset_grade = "established"
+reset_from = "data sheet 6.3.2"
+grade = "established"
+from = "data sheet 6.2.20 and 7.1; IRIX wd93_transfer, setdest, do_select, wd93cmd_lci (0x53b8), wd93reset; PROM 4.0.5D 0xbfc14904, 0xbfc167f8"
+doc = "Command: bits 6:0 the command code, bit 7 single-byte transfer. The register stays selected after a write (no auto-increment). It must not be written while CIP or INT is set. A command written while an interrupt is pending is ignored and sets LCI; the IRIX driver handles that in wd93cmd_lci by reading SCSI status and rewriting the command. A qtest can discriminate: a write with INT set must leave LCI set and not start the command."
+
+[registers.command.fields]
+code = { bits = [6, 0], grade = "established" }
+sbt  = { bits = [7, 7], grade = "established" }
+
+[registers.data]
+offset = 0x19
+space = "wd33c93_index"
+access = "rw"
+width = 8
+reset = "unknown"
+grade = "established"
+from = "data sheet 6.2.21; IRIX ack_msgin (0x23a8), do_trinfo (0x2460), do_inquiry (0x2760); PROM 4.0.5D 0xbfc14100"
+doc = "Data register: the host side of the 12-byte FIFO. IRIX uses it in programmed-I/O message and inquiry phases, polling the DBR bit of the auxiliary status register, and never for bulk data. The register stays selected after an access. In the HPC1 burst mode the DMA channel moves bulk data through the same register without CPU involvement."
+
+[registers.queue_tag]
+offset = 0x1a
+space = "wd33c93_index"
+access = "rw"
+width = 8
+reset = "unknown"
+grade = "inferred"
+from = "the NetBSD wd33c93 driver (reset routine and register header); data sheet application note E062-B, WD33C93B differences item 2"
+doc = "Queue tag, WD33C93B only. IRIX never touches it. NetBSD writes 0x55 here and reads it back after a reset that returned status 0x01: if it reads 0x55 the part is a B, otherwise an A. On an A part the register does not exist and the read returns all ones (data sheet note 2 to the register map). A qtest can discriminate: the write sticks only on a model configured as a B."

@@ -1,6 +1,6 @@
 // @generated from devices/ and formats/ by defs-gen - do not edit, change the source
 // defs-gen 4
-// input sha256 9dd6289188a3e7655719e23527252db8d862aa579e4f201c5116f74a627ad139
+// input sha256 6f25b41bcb31265bd843a9aeb0a3fa3878bdf372e1f36d59240c2ba01b3c5c80
 #![no_std]
 #![cfg_attr(rustfmt, rustfmt_skip)]
 pub mod aic7880;
@@ -94,6 +94,7 @@ pub mod uv5;
 pub mod uv_bau;
 pub mod uv_gru;
 pub mod vice;
+pub mod wd33c93;
 pub mod xbow;
 pub mod xbow_extra;
 pub mod xbridge;

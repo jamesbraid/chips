@@ -114,6 +114,7 @@
 | [uv_gru/](uv_gru/README.md) | UV global reference unit (GRU) | The GRU is a per-hub engine that lets a user program issue loads, stores, block copies, message-queue operations and... |
 | [vice/](vice/README.md) | VICE | Mode: spec-backed (see references/documents/specs.md). |
 | [vsc7174/](vsc7174/README.md) | Vitesse VSC 7174 four-port SATA controller | Mode: no-spec. |
+| [wd33c93/](wd33c93/README.md) | WD33C93 / WD33C93A SCSI controller on the Indigo | The SCSI controller of the Indigo, both the R3000 board (IP12) and the R4000 board (IP20), is a Western Digital... |
 | [xbow/](xbow/README.md) | Xbow (Crossbow) | Mode: spec-backed (see references/documents/specs.md: Crossbow ASIC Specification, revision 12.0; its register map... |
 | [xframe/](xframe/README.md) | Neterion Xframe 10-Gigabit Ethernet controller | The Neterion Xframe, formerly S2io, is a 10-gigabit Ethernet controller on PCI and PCI-X add-in cards. |
 | [xio_fc/](xio_fc/README.md) | Datasheet: SGI XIO Fibre Channel board (XT-FC-2P / X9-FC-2P family, Adaptec AIC-1160) | Status: research draft, not independently reviewed. |
