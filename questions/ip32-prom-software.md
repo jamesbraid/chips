@@ -18,6 +18,8 @@ Status: **unknown** for everything below. Route: read the named routine in the h
 - **4.18 raw flash dump.** `references/prom-images.md` records a raw 512 KiB dump of 4.18 with sha256 `a60e19b6…`; it is
   not in the firmware directory this reading used. The shipped 4.18 image is `11230c35…`. Route: compare the dump with
   the shipped image segment by segment (the environment segment and any stored state may differ).
+  Partly answered: in the first 0x9200 bytes (flash) the dump differs from the shipped image only in 120 bytes inside
+  `0x4040`..`0x43ff`; the memory-sizing code is identical. The firmware segment was not compared.
 - **Segment-level 4.8 versus 4.18 diff.** Only strings, the default environment table and segment sizes were compared.
 
 Assets (see [the assets page](../platforms/ip32/prom-assets.md)). Route for each: read the named routine in 4.18, or a
@@ -48,3 +50,14 @@ capture of the stock PROM on hardware, as a last resort.
   modes, and whether `sgilogo` or the 700-line threshold changes anything beyond hiding the logo.
 - **Bit 0 of the logo flag word.** `0x8107215c` bit 0 also means no big logo (readers mask `0x10001`); what sets it is not found.
 - **Sound seed.** The first LCG seed is stale stack (`0x81000e48`); whether the noise is meant to vary is open.
+
+Memory sizing (see [the memory page](../platforms/ip32/prom-memory.md)).
+
+- **Real response of an empty bank.** Whether a bank-control match with no DIMMs returns zero, noise or a bus error on
+  the CPU is not shown by any firmware; the probe only needs a value that differs from its patterns. Route: a
+  capture from a machine with an empty bank, as a last resort.
+- **Socket to bank map.** No firmware or kernel string names a DIMM socket. Route: the published hardware guide's
+  installation figures against a machine with one pair fitted.
+- **Memory between `0x8000` and `0x1400000`.** What initialises it for ECC beyond the loader copies. Route: the
+  remaining first-stage tests (`mem_scache1`..`10`, `mem_init`) and the firmware entry path.
+- **ECC enable bit in PROM 2.3.** The first write clears bit 4 where later images clear bit 0.
