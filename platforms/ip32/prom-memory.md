@@ -9,8 +9,8 @@ images and the load map are in [prom-software.md](prom-software.md).
 Sources and grades. Images: PROM 4.18 (`11230c35…`, IRIX 6.5.30 media) and PROM 4.8 (`820585be…`, IRIX 6.5 base
 media), read as MIPS code from the shipped files. The sizing routine was also compared in PROM 2.3 (`32f131cd…`) and
 in the raw 4.18 flash dump (`a60e19b6…`). Kernel: the 6.5.30 IP32 kernel object, through
-[the kernel function readings in the CRIME workspace (`software/kernel/functions.md`: `szmem`, `last_phys_pfn`, `bank_size`,
-`_addr_to_ibank`). **Established**: read in full in the listing. **Inferred**: reasoned. **Unknown**: not settled.
+the kernel function readings in the CRIME workspace (`software/kernel/functions.md`: `szmem`, `last_phys_pfn`, `bank_size`,
+`addr_to_ibank`). **Established**: read in full in the listing. **Inferred**: reasoned. **Unknown**: not settled.
 Addresses are flash addresses (`0xbfc00000` base) for the first stage and run-time addresses for the firmware
 segment. Where two builds differ the 4.8 address follows in brackets.
 
@@ -27,25 +27,30 @@ segment. Where two builds differ the 4.8 address follows in brackets.
 
 The sizing routine is instruction for instruction the same in 4.8 and 4.18 apart from the relocation of the pointers
 to its strings and patterns (16 instructions differ, all of that kind). The firmware size routine is also identical.
-PROM 2.3 has the same routine with one difference: the first write clears bit 4 of the CRIME register at
-`0x14000008` where 4.8 and 4.18 clear bit 0 (**established** for the mask; which bit is ECC enable on the CRIME in
-that release is **unknown**). The raw 4.18 dump differs from the shipped image in 120 bytes at flash
+All 18 catalogued IP32 PROMs share this routine (**established** for 2.3, 4.8, 4.18 and the raw dump by comparison;
+the rest by the catalogue's identical build family, **inferred**). The one difference is the mask of the first write
+to the CRIME control register at `0x14000008`: 2.3 and 4.3 clear bit 4, while 3.3, 4.0 and 4.4 to 4.18 clear bit 0
+(**established** for the mask; why it changed is **unknown**). 2.3 is the same algorithm in a different build. The raw 4.18 dump differs from the shipped image in 120 bytes at flash
 `0x4040`..`0x43ff`; the sizing code at `0x5ad4` is byte-identical.
 
 ## The sequence
 
-1. **ECC off first** (established). A read-modify-write of the 64-bit register at `0x14000008` clears bit 0 before
-   any bank is touched, so the probe's reads of never-written DRAM raise no ECC fault. The same bit is cleared again
-   at the start of the routine that jumps to the RAM copy of the later tests (`0xbfc060fc`). No store that
-   sets the bit was found in the first stage or in the loaded firmware (**inferred**: a scan of the firmware's
-   `0xb4000000` constructions found none touching offset 8 except one read that discards its result). The kernel
-   writes 1 to the same register itself (CRIME workspace readings).
+1. **Clear a control bit first** (established). A read-modify-write of the 64-bit CRIME control register at
+   `0x14000008` (the register at `+0x8`, not the memory-control register at `+0x200`) clears bit 0 before any bank is
+   touched. The PROM's own message for this step says "ECC off", and that string (`0xbfc06c54`) is the only basis
+   for reading the bit as an ECC switch, so the ECC meaning is **inferred**. It conflicts with the CRIME register
+   page, where `ecc_enable` is bit 0 of memory control at `+0x200`, not of `+0x8`; the conflict is open. The same
+   bit is cleared again at the start of the routine that jumps to the RAM copy of the later tests (`0xbfc060fc`).
+   No store that sets the bit was found in the first stage or in the loaded firmware (**inferred**: a scan of the
+   firmware's `0xb4000000` constructions found none touching offset 8 except one read that discards its result).
+   The kernel's early reset code does a read-modify-write of the same `+0x8` register that clears bit 9, or bits
+   13, 12 and 9, and ORs in `0x3000`; it never sets bit 0. The kernel's write of 1 to enable ECC goes to `+0x200`.
 2. **Probe loop, banks 0 to 7** (established). For bank `i` the routine keeps a running address `A = i * 128 MiB`.
    - It installs four uncached TLB entries, each mapping 32 MiB, so that `A` .. `A + 128 MiB - 1` in the user
      segment reaches physical `0x40000000 + A`, the CRIME full-RAM window. Every probe access is uncached.
    - It writes the bank controls of banks `i` through `7` (not just `i`) with the same value, `0x100 | ((A >> 25) &
      0x1f)`: 64 Mbit geometry, selector `4 * i`. Writes go out low bank number first, as 64-bit stores. Because every
-     bank from `i` up now matches `A`, and the lowest match wins, bank `i` is the one under test, and the access can
+     bank from `i` up now matches `A`, and (**inferred**, from the specification's priority rule, not from PROM code) the lowest match wins, bank `i` is the one under test, and the access can
      never fall in an unmatched hole (so it never reaches the memory-address-error path). Banks below `i` keep the
      values written on earlier passes.
    - It stores four doublewords at offsets `0`, `32 MiB - 8`, `32 MiB` and `128 MiB - 8` from `A`. Each value is the
@@ -55,8 +60,8 @@ that release is **unknown**). The raw 4.18 dump differs from the shipped image i
      *32 MiB* if offset 0 returns the value stored for offset `32 MiB`, offset `32 MiB - 8` returns the value stored
      for offset `128 MiB - 8`, and the other two read back as stored (a 32 MiB part wraps modulo 32 MiB under the
      128 MiB decode); *128 MiB* if all four read back as stored; *absent* otherwise.
-   - It records 32, 128 or 0 for the bank and prints a line. After each bank it rewrites the four TLB entries (**inferred**:
-     invalidates them) and moves `A` up by 128 MiB, whatever the size found.
+   - It records 32, 128 or 0 for the bank and prints a line. After each bank it invalidates the four TLB entries
+     (established, `0xbfc05998`) and moves `A` up by 128 MiB, whatever the size found.
    - Bank 0 absent is fatal: the routine prints "Error, no SIMM in bank0" and then toggles the two bits at `0x1f310008`
      (`0x30`) forever, with a delay loop between toggles.
 3. **Final programming, in three passes over the recorded sizes** (established). A new running address starts at 0.
@@ -92,7 +97,8 @@ routine would record 128 MiB (**inferred**; relies on the memory wrapping modulo
 
 - The probe never expects a bus error and cannot survive one (established). The first-stage general exception vector
   (`0xbfc00380`) either parks in a one-instruction loop or, when `$30` is nonzero, jumps through it, and the sizing
-  routine itself holds the constant 128 in `$30`. There is no handler for bus errors. The probe also never reads or
+  routine happens to hold the constant 128 in `$30` (the compiler's choice, not a handler address), so an exception
+  there would jump to address `0x80`. There is no handler for bus errors. The probe also never reads or
   writes the memory-error status or address registers.
 - A matched bank with no DIMMs must complete the stores and loads and must return something that does not equal the
   stored values. Zero, all-ones or noise all work. It must not store the patterns (that would read back as 128 MiB or
@@ -101,8 +107,9 @@ routine would record 128 MiB (**inferred**; relies on the memory wrapping modulo
 - The probe sees the full 64-bit data path. A bank where only one DIMM of a pair is fitted, or any data bit stuck,
   fails the 64-bit compare and is reported as absent (inferred from the compare width; no fitted-hardware evidence).
 - Short banks: only the two sizes above are recognised. Missing and "short" are not otherwise told apart.
-- The first-4 KiB DRAM test (below) reads the CRIME ID word at `0x14000000` between each store and its load, so a
-  floating bus cannot return the stored value (established). The bank probe has no such read between its stores and loads.
+- The first-4 KiB DRAM test (below) reads the CRIME ID word at `0x14000000` between store and load only in its
+  walking-one and walking-zero loops over the first 32 bytes (`0xbfc051b8`, `0xbfc051f8`), so a floating bus cannot
+  return the stored value there (established). The later pattern passes and the bank probe have no such read.
 
 ## Question 3: the smallest accepted configuration
 
@@ -114,17 +121,27 @@ routine would record 128 MiB (**inferred**; relies on the memory wrapping modulo
   through the uncached alias: walking-one and walking-zero doubleword tests at four offsets, alternating `0x5a5a5a5a`
   and its complement words, an address-in-address pattern and its complement, each read back and compared. Failure
   blinks the same two LED bits as the bank 0 error, with no message.
+- Order after sizing (established): the memory-transfer-engine clear, then the 4 KiB test, then the stack handover
+  and the copy of the later tests.
 - Stack: before sizing, the first 4 KiB at `0x80000000` is made into RAM by writing cache tags (see
   [prom-software.md](prom-software.md)) and the stack lives there. After the test the routine copies that page
-  through the uncached alias into real DRAM at physical 0 (`0xbfc060a0`, 4104 bytes) and moves the stack pointer to
-  the uncached alias. A model that returns correct data for physical 0..0xfff before the first write must still keep
-  those lines coherent: the page goes to DRAM only through that copy.
-- A bootstrap stub is copied to physical `0x10000` and the rest of the first stage to `0x4000` and run from there
-  (`0xbfc060f8`, `0xbfc044c8`); both must be real, uncached-writable DRAM.
-- A memory-transfer-engine clear then fills 32 KiB at full-window address `0x40000000` with zeros, mode `0x11`
-  (clear, destination ECC bit set), through the engine's linear-buffer path (`0xbfc061f0`). It writes the engine's page-translation words, byte mask `0xffffffff`, fill value 0, start (`0x3030`) and
-  end (`0x3038`), starts it by writing the mode through the `0x3800` alias, then waits on a status word. A model without that engine hangs here. **Inferred** purpose: make the first 32 KiB valid
-  under ECC.
+  through the uncached alias into real DRAM at physical 0 (`0xbfc060a0`, 4104 bytes). The caller then moves the stack
+  pointer to the uncached alias, saving the old pointer at physical `0x1008` (`0xbfc0449c`..`0xbfc044ac`). A model
+  that returns correct data for physical 0..0xfff before the first write must still keep those lines coherent: the
+  page goes to DRAM only through that copy.
+- Copier chain (established): `0xbfc060f8` copies a 28-byte copier from flash to physical `0x10000`, runs it cached at
+  `0x80010000`, and that copier copies flash `0xbfc06fd0`..`0xbfc09120` to physical `0x4000`, which is then entered
+  uncached at `0xa0004000`. Both ranges must be real DRAM.
+- The memory-transfer-engine clear (`0xbfc061f0`) fills 32 KiB at full-window address `0x40000000` with zeros. It is
+  skipped entirely when the CRIME revision (the ID register's low nibble) is 0; the firmware's twin does the same
+  through `0x81004d9c`. Otherwise it writes the engine's page-translation words and then, with these register
+  offsets inside the CRIME block (names **inferred**): `0x3030` start address, `0x3038` inclusive end, `0x3018` fill
+  value 0, `0x3008` byte mask `0xffffffff`, and mode `0x11` written through the `0x3800` alias, which starts it
+  (mode: clear, destination ECC bit). The routine does not wait for completion: the status test at
+  `0xbfc06400`..`0xbfc06480` ANDs bit 25 of a status word into a 0 or 1 and never loops on it. The only real wait is
+  the check for space in the page-translation FIFO at `0xbfc065f8`, which a status of zero or all-ones passes. So a
+  model needs the registers to accept the writes, not to complete a transfer (**inferred** purpose of the fill: make
+  the first 32 KiB valid under ECC).
 - The firmware repeats the same clear for physical `0x1400000` up to the total size (`0x81007010`, called with
   `0x41400000` and total minus `0x1400000`), in chunks of at most 128 KiB (established). That is the only ECC-aware
   clear of the rest of RAM in the PROM, and its length follows the size. What initialises `0x8000`..`0x1400000`
