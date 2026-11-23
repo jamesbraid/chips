@@ -7,8 +7,8 @@ Status: **unknown** for everything below.
 
 - **Which HPC revision each Indigo carries.** Two public boot logs (an R4000 and an R3000 Indigo) print HPC1, not HPC1.5. The IRIX header says the
   endian register's bits 7:6 hold 1 on the 1.5. Whether every IP20 and IP12 board has an HPC1 without the endian register, or a part that reports
-  another revision, is not read from any binary. Tried: both PROMs, the kernel and driver objects. Route: the IP20 4.0.5G PROM image (not on the host
-  for this reading) and its first `+0xc0` access, or a hardware read.
+  another revision, is not read from any binary. Tried: both PROMs, the kernel and driver objects. Route: a hardware read. Reviewed 2026-11-23: the 4.0.5G PROM is
+  held and its `+0xc0` accesses are identical to 4.0.5D's (a bit-0 test with a zero store, and a guarded zero byte store at `+0xc3`), so it adds nothing.
 - **Descriptor completion flags.** Which bit of word 0 the HPC clears when a receive or transmit descriptor completes (the IRIX driver tests bit 31,
   the public driver bit 30 on receive). Tried: the IRIX Ethernet driver's whole interrupt routine, the public drivers. Route: read the receive
   recycling path in `if_ec2.o` against the descriptor writes with the debug build, or a model run against both drivers.
@@ -30,6 +30,8 @@ Status: **unknown** for everything below.
   held) is unknown. Route: the part's datasheet.
 - **EEPROM word 0 after the byte-order flip.** The start-up flip routine XORs `0x8400` into word 0, whose high byte is the NVRAM checksum byte; the
   checksum algorithm excludes that byte, so the stored checksum would no longer validate. Who rewrites it is unknown. Route: trace the PROM's
-  next boot of a flipped part, or read the little-endian path of the environment initialiser.
+  next boot of a flipped part, or read the little-endian path of the environment initialiser. Reviewed 2026-11-23: 4.0.5G has the same routine; the
+  MC page says EEPROM bits feed CPUCTRL0 bit 18 and an HPC width bit at reset, which a checksum in word 0's high byte would corrupt. Route: the MC
+  specification's text on which EEPROM bits are loaded.
 - **Keyboard and mouse channels.** Which Z85C30 channel is the keyboard and which the mouse on the Indigo, and which of the three serial blocks is
   populated on each board. Route: the serial driver's port table and `du_keyboard_port`/`du_mouse_port`, read with its initialiser.

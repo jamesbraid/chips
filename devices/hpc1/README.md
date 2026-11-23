@@ -22,7 +22,8 @@ clock, the interrupt controller and the DSP firmware interface. This page record
 - **The shipped developer headers** (IP20 board header, HPC1 header, NVRAM header). They name the registers and the descriptor
   bitfields; each is read as a software expectation and checked against object code where the table says so.
 - **Indigo PROMs.** IP20 4.0.5D Rev A (070-8116-004) was disassembled over the whole image; the 4.0.5G Rev B image (070-8116-005, sha256
-  `ae35c097...`) is listed but **was not on the host for this reading**, so every PROM address below is a 4.0.5D address. The
+  `ae35c097...`) was not on the host for the first reading, so every PROM address below is a 4.0.5D address. The 4.0.5G comparison is in the
+  review section at the end. The
   IP12 images 070-8086-002 and 070-8088-xxx (4.0.1 Rev C) were scanned for the accesses they make to the HPC1 window.
 - **Public drivers.** NetBSD sgimips (`hpcreg.h`, `hpc.c`, `if_sq.c`, `sqvar.h`, `haudreg.h`) is level 3 and agrees with the IRIX objects wherever
   both are read. NetBSD's offsets for byte-wide devices are not raw addresses (its `wdsc.c` says so, and it attaches the WD33C93 of the
@@ -79,7 +80,10 @@ before it attaches (`wbadaddr_val`, `if_ec2.o+0x2ec`), and the parallel driver a
 Bits 0 to 4 give the byte order of the CPU and of each channel's DMA, one bit each: CPU, Ethernet, SCSI, parallel, DSP (bit set means
 little-endian). Bits 7:6 are the revision. The kernel sets all five bits for a little-endian kernel (OR `0x1f`) and clears them (AND
 `0xe0`) for a big-endian one. The kernel and PROM both do this as a byte access at the big-endian address `+0xc3` inside a guarded store
-(`kernel.o` helper at `+0x2338`, called from `mlreset`; PROM `0xbfc08e00`, helper `0xbfc2a5b0`). **Established.** The IP20 PROM's first access
+(`kernel.o` helper at `+0x2338`, called from `mlreset`; PROM `0xbfc08e00`, helper `0xbfc2a5b0`). **Established.** The PROM's guard is itself
+a byte store of **zero** to `+0xc3` (`0xbfc2a5b0` with size 1; it returns 0 when no bus error came back), made before the read-modify-write. A
+byte store to `+0xc3` must therefore not fault, and a model that keeps bits 7:6 read-only sees them survive that zero store. The PROM never
+compares anything read from `+0xc0` to a value, so no particular read value is required, only that the word read at `0xbfc003fc` does not fault. The IP20 PROM's first access
 (`0xbfc003fc`, before it touches memory) reads the word and, if bit 0 is set, stores zero, so that every channel is big-endian even when the
 CPU came out of reset little-endian. **Established.** Reset value, and whether bit 0 is a read-only strap or a writable bit that the zero
 store clears, are **unknown**; the word-wide store implies that bits 7:6 also take the zero, so a model should keep the revision bits
@@ -216,7 +220,12 @@ The registers at `+0x180` to `+0x1b4` and the SRAM at `+0x60000` are the host si
 converters at `+0xd30` and `+0xd34`, and later (`0xbfc01f5c`) stores 1, writes -1 to SRAM word 0, copies two tables into SRAM (one at
 `+0x68000`, one interleaved at `+0x78000`), stores 8 (run), waits 50 microseconds, reads SRAM word 0 under a 24-bit mask expecting 1 or 2 and
 bit 7 of word 1 clear, then reports the low byte of word 1 as the audio revision (the `hinv` text "Iris Audio Processor: revision %d" prints the same value). That fixes the reset
-and run handshake and nothing more. The DSP-to-host interrupt is local interrupt source 12 (`VECTOR_DSP`, header).
+and run handshake and nothing more. Review addition: the first table is 1584 bytes (396 words) copied to `+0x68000` (`0xbfbe8000`); the second is 640 bytes
+(80 pairs) whose first words continue at `0xbfbe8630` up to `0xbfbe876c` and whose second words go to the same offsets plus `0x10000` (`0xbfbf8630`
+up to `0xbfbf876c`). Both PROMs hold identical table bytes and lengths, 24-bit values (`0x0008f4be` is a DSP56001 `movep` word), so the loops never store above
+`0xbfbe876c` in the low bank. The pass criterion is exactly: after the `+0x1b0` store of 8 and a 50 microsecond wait, SRAM word 0 masked with `0xffffff` is 1 or 2 and bit 7 of word 1 is clear;
+the audio revision is then word 1 masked with `0xff`, any other result is -1. A model without a DSP core must therefore make word 0 become 1 or 2 after the run store, or the PROM reports no audio.
+The PROM also stores two words ahead of the tables: word 2 (from an environment variable, or 0 when the caller's first argument is 1) and word 3 (the caller's second argument). The DSP-to-host interrupt is local interrupt source 12 (`VECTOR_DSP`, header).
 
 **Unknown:** every DMA, handshake and burst field (open question in [questions/hpc1.md](../../questions/hpc1.md)). The chips page for the DSP says the
 driver object is not held; the IP20 `kdsp` archive in this reading reaches the block only through a pointer table and was not decoded.
@@ -227,7 +236,10 @@ The four 16-byte blocks at `+0xd00`, `+0xd10`, `+0xd20`, `+0xd30` hold one Z85C3
 control A at +8, data A at +0xc, each in its own word with the byte in bits 7:0, so a big-endian access is at offset +3), and the fourth
 block's two words are the headphone gain converters (`+0xd30`, `+0xd34`). **Established** (header; serial driver port table in `sduart.a`
 lists twelve addresses, `0xbfb80d03` to `0xbfb80d2f` by 4; the IP20 PROM table at `0xbfc44710` lists the same twelve). The interrupts of the
-serial blocks are OR-ed into local source 5.
+serial blocks are OR-ed into local source 5. The PROM's port table orders the channels block 0 A (`+0xd0b`, data `+0xd0f`), block 0 B (`+0xd03`, `+0xd07`), then B and A of
+blocks 1 and 2, so control B is at `+0xd03`, data B `+0xd07`, control A `+0xd0b`, data A `+0xd0f` in each block (**established**, `0xbfc44710` and `0xbfc4473c`). Clock: both the PROM (`0xbfc05b04`) and
+`zduart.o mips_du_config` (`+0x42d4`) compute the baud-rate time constant as `(16*baud + 3672000) / (32*baud) - 2`, which assumes a 3.672 MHz input to the baud-rate generator
+(**software expectation**; which pin of the chip carries it, and whether the chip's PCLK is the same, is **unknown**).
 
 Which port is the keyboard and the mouse: the serial driver exports `du_keyboard_port` and `du_mouse_port`; the NetBSD driver attaches its
 console to the block at `+0xd10` channel 1 and the blocks at `+0xd00` as the other serial ports on an IP20 and IP12 (boot logs for both). The
@@ -265,6 +277,39 @@ writes `0xffff`, then protect-write at address 125, polling ready each time, pri
 
 **Timing:** software only; the PROM spaces the ready poll at 100 microseconds and nothing else is delayed (a model can take the part as
 instant). The write itself completes when DO reads one. **Established** as software behaviour; the part's timings are not read.
+
+**What the part must do for the PROM and kernel to work** (all from the PROM routines above, 4.0.5D and 4.0.5G identical; the FM93CS56 datasheet is not
+held, so the dummy-bit and busy behaviour below is what the code needs, **inferred** for the part itself). Store values are the whole aux
+byte with bit 0 (PRE) clear, bits 1 CS, 2 SK, 3 DI, 4 DO.
+
+- **Start.** Stores `0x00`, `0x02` (CS rises with SK low), `0x06` (SK rises, DI is 0). That first rising edge carries DI 0 and is **not** the
+  start bit: the part must ignore clocks until it sees DI 1 on a rising edge. A model that takes the first edge as the start bit mis-decodes
+  every instruction.
+- **Instruction bits.** Per bit: DI set (`0x0e`) or cleared (`0x06`) while SK is high, then SK low, then SK high. The part latches DI on the rising edge. 11 bits:
+  start 1, two opcode bits, eight address bits (`0xc000` read, `0xa000` write, `0x9800` enable, `0x8000` disable with PRE clear).
+- **Read.** After the 11th rising edge DO is 0 (dummy, never sampled). Then per bit the PROM does SK low, SK high, **then** samples DO: the first
+  sample must be bit 15, so the first rising edge after the instruction moves bit 15 onto DO. 16 samples, MSB first. Off by one here gives
+  `word >> 1` and a bad checksum.
+- **Enable.** `0x9800` then CS low sets write-enable, `0x8000` then CS low clears it. The PROM brackets every word write with both.
+- **Write.** Instruction `0xa000 | addr << 5`, then 16 data bits the same way, DI cleared, then the end sequence (`0x02`, `0x00`, `0x04`:
+  SK low, CS low, SK high). The word is committed by CS falling after the 16th bit. The PROM then starts a new cycle (`0x00`, `0x02`, `0x06`) and
+  reads the aux byte at once: **bit 4 must read 1 there** (CS high, SK high, DI 0, no start bit seen yet). If it reads 0 the PROM waits 100
+  microseconds and reads again about 200 times (about 20 ms), then gives up. The ready state must survive the SK rising edge of that start step.
+  A part that finishes instantly satisfies this; a model that reports busy until a start bit arrives, or clears ready on the first clock, fails every write.
+- **What a failed ready costs.** The only failure path of a PROM word write is that poll timing out (`0xbfc2abcc` returns -1, `0xbfc2a8f4` skips
+  its RAM cache update and returns -1, every caller up to `0xbfc093e8` returns it and `0xbfc09054` prints "Could not set NVRAM variable"). Nothing
+  reads the word back, checks write-enable, or reads the protect register in that path; the kernel's version (`kernel.o+0x54dc`) polls the same way.
+  So **write success is decided by DO alone.** A write that the part ignores (not enabled, protected address) cannot be told apart by the PROM; whether the real
+  part still shows ready then is unknown.
+- **Protect register** (PRE bit set). `0xb2b0` stores bit 0 set, runs a start, sends `0xc000`, and samples **8** bits (not 16) the same way; the
+  Ethernet address variable is only written if the value read is `0xff` (otherwise the set-variable call returns 2). `0xb130` is called only from the old-layout
+  migration (`0xbfc2b574`, `0xbfc2b5a8`): enable with PRE clear, then with PRE set enable, clear (`0xffff`), ready poll, and with argument 1 protect-write at address 125, ready poll;
+  the two "did not complete" messages come from those polls. A power-on value of `0xff` for the protect register keeps every PROM path working.
+- **Validity gate.** `0xb044` accepts the store when byte 0 equals the computed checksum (it recomputes and compares a second time before giving up) **and** byte 1 is 6. Otherwise
+  the PROM prints "NVRAM checksum is incorrect: reinitializing the NVRAM.", rewrites every variable, sets byte 1 to 6 (`0xb0e4`) and writes the
+  recomputed checksum to byte 0 (`0xadf8` with offset 0 skips its own checksum update). Nothing loops: init ends whether or not those writes stuck, and a store that never
+  accepts writes is re-initialised on every boot. Test vector: word 0 `0xa306`, words 1 to 127 zero is valid (checksum `0xa3`). The cycle sequences above were replayed against a small
+  reference model written for this review (round trip of word reads, enabled writes, ready poll); that model is not committed.
 
 **Words and bytes.** Byte `2n` is the high byte of word `n`, byte `2n+1` the low byte (PROM `0xbfc2acac`, kernel `get_nvreg` byte routines). The
 PROM caches the 128 words in RAM after the first read. **Established.**
@@ -309,10 +354,14 @@ the high byte XOR the low byte; XOR it into the accumulator and rotate the 8-bit
 byte 0. **Established** (`kernel.o+0x5788` and PROM `0xbfc2a6d0`, identical). The PROM tests it twice before it declares the store invalid
 and re-initialises from the defaults (string "NVRAM checksum is incorrect: reinitializing the NVRAM.").
 
-Open point: the R4000 start-up flip routine (see the [Indigo PROM page](../../platforms/ip20/prom-software.md)) reads word 0, XORs `0x8400` into
+Open point (reviewed 2026-11-23, still open): the R4000 start-up flip routine (see the [Indigo PROM page](../../platforms/ip20/prom-software.md)) reads word 0, XORs `0x8400` into
 it and writes it back through the MC's EEPROM register. Word 0's high byte is this layout's checksum byte, which the checksum itself does not
 include, so after a flip the stored byte no longer equals the computed one and the PROM's next check would report the NVRAM invalid. Whether
-the PROM or IRIX rewrites it, or the flip is only for a boot that is about to be redone, is **unknown** (question filed).
+the PROM or IRIX rewrites it, or the flip is only for a boot that is about to be redone, is **unknown** (question filed). Review reading: the code
+reading is right (byte 0 is the high byte of word 0, the checksum skips it, `0xb044` would reject the flipped store), and the flip routine is identical in 4.0.5G. A sharper
+contradiction: the [MC page](../mc/README.md) says CPUCTRL0 bit 18 and an HPC width bit are loaded from the EEPROM at reset, yet a rewritten checksum would put arbitrary
+values in bits 15 and 10 of word 0. Either the MC loads from elsewhere or the mode bits are not those. The flip runs only when the CPU leaves reset little-endian, so a model that resets
+big-endian never reaches it. Route: the MC specification's text on which EEPROM bits are loaded.
 
 QEMU qtest hooks: write the EEPROM instruction stream bit by bit through `+0x1bf` and read word 0; a write without write-enable must not stick; the
 checksum of an image the PROM wrote validates; the protected tail rejects writes once the protect register is set.
@@ -335,7 +384,7 @@ holds the register's contents.
 |---|---|---|---|
 | `+0x05b`, `+0x05f` | byte read of `+0x5f`, then store `0x5a` to `+0x5b` (`0xbfc029e4`, `0xbfc029f4`), inside the power-on peripheral check | HPC1 (Ethernet receive FIFO pointer and data slots by the driver's dump labels); the check's purpose is **unknown**. Only the store is ever made; no value is compared. | access: established; role: unknown |
 | `+0x094` | one word store of 0 (`0xbfc00974`) | HPC1, SCSI control: clears reset, flush, direction, start | established |
-| `+0x0ac` | walking one from bit 27 down to bit 0 written to `+0xac` and read back (`0xbfc02910`..`0xbfc02948`; the same test on MC `+0xd4` at `0xbfc028b0`) | HPC1, parallel current buffer pointer | established: a mismatch jumps to a failure stub, so the register must hold the 28 low bits |
+| `+0x0ac` | walking one from bit 27 down to bit 0 written to `+0xac` and read back (`0xbfc02908`..`0xbfc02930`; the same test on MC `+0xd4` at `0xbfc028b0`). A mismatch calls `0xbfc027b0` and then spins at `0xbfc02940`..`0xbfc02958` writing and reading the walking one forever | HPC1, parallel current buffer pointer | established: the register must return what was written for each of the 28 one-hot values. The test cannot show that bits 31:28 are zero |
 | `+0x0c0` (`+0xc3`) | word read, bit 0 test, word store 0 (`0xbfc003fc`..); later a guarded byte store and a masked store (`0xbfc08e00`) | HPC1, endian and revision byte | established |
 | `+0x122`, `+0x126` | WD33C93 address and data bytes (`0xbfc02960`; 0x17 written to the address port, a read of the data port to clear it, 0x02 to the address port, 0xa5 to data, readback compare) | WD33C93 behind HPC1 | established |
 | `+0x1b0` | word stores 9 (`0xbfc0089c`), 1 and 8 (`0xbfc01f78`, `0xbfc02040`) | HPC1, DSP miscellaneous control | established values; field meanings inferred |
@@ -394,3 +443,34 @@ accesses; the register names are NetBSD's (**inferred** for the part wired here)
 | `+0x1c0`..`+0x1ff`, `+0xd00`.., `+0xe00`.. | window decode only; see the INT2 page and the serial and clock pages |
 | `+0xe14` | the clock's 1/100 s counter changes between two reads taken a few thousand instructions apart (the PROM's clock probe) |
 | `+0x50000` | reads the board revision word; the PROM treats `~word & 0x7000` as the revision |
+
+## Review (2026-11-23)
+
+Examined revision: chips `7107d637`. Scope: this page and `registers.toml` against both IP20 PROMs (4.0.5D `e6e1f1ed...`, 4.0.5G `ae35c097...`, both disassembled in
+full), the IP20 `kernel.o`, `if_ec2.o`, `wd93.o`, `hpcplp.o` and `zduart.o`, and NetBSD `hpcreg.h`, `sqvar.h`, `if_sq.c` (trunk, fetched for this review; the
+Library holds no copy). The FM93CS56 datasheet is not held. Reviewer did not author the page. Outcome: the register map and the PROM accounts hold; the EEPROM section lacked the protocol
+detail a model needs (added above), three statements were corrected, and one grade was lowered.
+
+| Claim | Result |
+|---|---|
+| `+0xac` takes a walking one from bit 27 to bit 0 and reads it back | **CONFIRMED** at `0xbfc02908`..`0xbfc02930` (the brief's `0xbfc02940`..`0xbfc02958` is the failure spin loop). "Holds 28 bits" is a lower bound: a 32-bit register passes. Width and reset otherwise unknown |
+| `+0xc0` first read, bit-0 test, zero store | **CONFIRMED** (`0xbfc003fc`). Nothing compared; no value is required. The `+0xc3` access is a guarded byte store of zero first (added above) |
+| `+0xc3` set `0x1f` / mask `0xe0` after the PROM's little-endian test | **CONFIRMED** (`0xbfc08e00`), identical in 4.0.5G (`0xbfc0ba00`) |
+| EEPROM bit layout, 11-bit instruction, opcodes, 16-bit read, write, enable, disable | **CONFIRMED**; start-bit and dummy-bit behaviour added |
+| EEPROM ready poll "bit 4 reads one, up to 200 reads, 100 us" | **CONFIRMED**; the only write failure path (see above) |
+| NVRAM layout, checksum algorithm | **CONFIRMED** (`0xbfc2a6d0` seed `0xa5`, word 0 low byte only, rotate left 1 per word); validity also needs byte 1 = 6 (`0xbfc2b044`), which the page omitted |
+| Protect register read | **WRONG as implied**: it is an 8-bit read, passes on `0xff` |
+| Word 0 flip vs checksum | **UNVERIFIED**, sharpened (contradiction with the MC page's EEPROM-loaded bits) |
+| SCC `+0xd00` block layout | **CONFIRMED**; channel order and clock expectation added. INT2 line: local source 5 (**established**, see [interrupts](../../platforms/ip20/interrupts.md)) |
+| RTC window `+0xe00`, `+0xe57`/`+0xe5b` byte test | **CONFIRMED** (writes `0xa5` and `0x5a`, restores both, flags a failure bit on mismatch) |
+| 8254 | Not an HPC1 matter. the same three byte stores (`0x02`, `0x42`, `0x42`) go to `+0x1f0` in 4.0.5D (the lane-0 exception the INT2 page already notes) and to `+0x1ff`, the 8254 control byte, in 4.0.5G (`0xbfc00938`..`0xbfc00954`). Belongs to the INT2 page |
+| Board revision word `+0x50000` | **CONFIRMED** read; the HPC decoding it is unknown as stated |
+| DSP SRAM, 396-word copy, 80 pairs | **CONFIRMED**; pass criterion written out above. The QEMU-observed end `0xbfbe8e2c` is **not** reached by either PROM's copy loops (they end at `0xbfbe8770`): it comes from something else, a model fault or a different image |
+| SCSI/Ethernet descriptors: flags and count in word 0, buffer in word 1, end of chain bit 31 of word 1, 13-bit count | **CONFIRMED** against `kernel.o` (`wd93dma_flush` masks `0x1fff` and `0x0fffffff`), `if_ec2.o` and NetBSD (`SQ_INIT_RXDESC`) |
+| SCSI start `0x90`/`0x80`, flush bit 1, poll bit 7 up to 512 | **CONFIRMED** (`wd93_go`, `wd93dma_flush`) |
+| `enet_ctl` bit 2 "both drivers keep it set" | **WRONG**: NetBSD writes 3 then 0 (`sq_reset`), leaving it clear, while IRIX writes 7 then 4. The public header names the bit loopback-enable. Polarity is unknown; field downgraded |
+| Register offsets in `registers.toml` against NetBSD | **CONFIRMED** for SCSI (`+0x88`..`+0x9c`), parallel (`+0xa8`..`+0xbc`), Ethernet `+0x10`..`+0x5c`. NetBSD calls `+0x54` and `+0x20` the current buffer pointers where the page, following the IRIX dump labels, calls them current descriptor pointers |
+
+**4.0.5D against 4.0.5G.** The whole EEPROM block (`0xbfc2a6d0`..`0xbfc2b3c8` in 4.0.5D, base `0xbfc30490` in 4.0.5G) matches instruction for instruction after masking addresses;
+the byte-order flip, the walking-one test, the SCSI and RTC power-on checks, the DSP load and its table bytes match. The `+0xc3` routine matches. Only difference found among HPC1 window
+accesses: the 8254 control byte above. Constant-address scan of both images shows no other HPC1 offset added or removed (a heuristic scan; indirect accesses were not enumerated).
