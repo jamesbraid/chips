@@ -1,6 +1,6 @@
 <?xml version="1.0" ?>
 <!-- generated from devices/rad1/registers.toml by defs-gen - do not edit, change the source -->
-<!-- defs-gen 2 -->
+<!-- defs-gen 3 -->
 <!-- input sha256 7a27d2922890b63bdc7b63e5987d6635761be56c0bfa930e19e752505dca5231 -->
 <genxml unit="rad1" prefix="RAD1" title="SGI RAD digital audio ASIC (PCI 10a9:0005) register contract">
   <doc>Register file of the RAD audio ASIC seen on the Octane base board (PCI revision 0xc0) and on the Onyx2 and Origin 2000 MediaIO card (revision 0x70). Offsets are in PCI BAR0, which the shipped driver maps as 0x2000 bytes. The shipped drivers touch the chip only with aligned 32-bit accesses, except the subcode buffers (64-bit) and one 64-bit write to the clock register. Grades say how the layout was derived from software; none of it is a silicon measurement, and reset values are unknown unless stated. Board variants are called modes after the PCI revision's high nibble: 7 for MediaIO, 12 (0xc) for the Octane base board, 13 (0xd) for the PCI audio board; the three modes write a different subset of the registers at start. Interrupts: the shipped drivers connect no data or status interrupt (they poll a completion word in host memory and read position registers), and register only a PCI error handler. Whether the silicon can raise one is unknown. DMA: a descriptor RAM of 12-byte entries, a per-channel working descriptor, and a host-memory status ring that mirrors the position registers; see the DMA items below.</doc>

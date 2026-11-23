@@ -1,6 +1,6 @@
 <?xml version="1.0" ?>
 <!-- generated from devices/tio/registers.toml by defs-gen - do not edit, change the source -->
-<!-- defs-gen 2 -->
+<!-- defs-gen 3 -->
 <!-- input sha256 b463b599a6e231ec27eb619f305e4db2b5869fa84254ccd3fe4d207973c9b22e -->
 <genxml unit="tio" prefix="TIO" title="TIO (NUMAlink I/O node ASIC of the Altix generation), as SGI's Linux platform code names its registers">
   <doc>Offsets, field positions and constants are software definitions from SGI's Linux Altix platform code (header and driver, v5.3); the TIO's own register specification is not held. Only five registers are named by that code. Reset values are unknown throughout. Offsets are node offsets inside the TIO's address space, not CPU addresses.</doc>

@@ -1,6 +1,6 @@
 <?xml version="1.0" ?>
 <!-- generated from devices/uv_gru/registers.toml by defs-gen - do not edit, change the source -->
-<!-- defs-gen 2 -->
+<!-- defs-gen 3 -->
 <!-- input sha256 9fd998eb93a63f0428f5eca34e50f2c7058b2d23a787c4039f35569109e1a020 -->
 <genxml unit="uv_gru" prefix="UV_GRU" title="UV global reference unit (GRU): chiplet memory map, handles and instruction word">
   <doc>The GRU is reached through memory-mapped handles, not a flat register file. Constants are the driver's layout numbers. Words are the handle and control-block dwords; positions come from the driver's bitfield structs read least-significant first within each 64-bit dword, which the driver's own comments and shift macros confirm for the control-block word and are otherwise inferred from the declared field order and widths under the x86-64 and ia64 ABIs. Role text paraphrases the driver and is inferred.</doc>

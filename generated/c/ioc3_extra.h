@@ -1,5 +1,6 @@
-/* generated from devices/ioc3/registers-extra.toml by defs-gen - do not edit, change the source */
-/* defs-gen 2 */
+/* generated from devices/ioc3/registers-extra.toml by defs-gen - do not edit,
+ * change the source */
+/* defs-gen 3 */
 /* input sha256 c59900e6424ca5a2f7eb294332632d0801a78dc80e6e82309d0f37c86c0b0889 */
 /* IOC3 registers outside the census */
 #ifndef IOC3_GEN_H
@@ -9,22 +10,26 @@
 
 
 /*
- * The 32-bit microlan control register the shipped IRIX one-wire access routine drives: it writes the pulse width shifted left 10 ORed with the sample time shifted left 2, polls bit 1 (done) with no limit, and returns bit 0 (the sampled line level). Only the lowest bit of the pulse and sample fields is recorded as a position.
+ * The 32-bit microlan control register the shipped IRIX one-wire access routine
+ * drives: it writes the pulse width shifted left 10 ORed with the sample time
+ * shifted left 2, polls bit 1 (done) with no limit, and returns bit 0 (the
+ * sampled line level). Only the lowest bit of the pulse and sample fields is
+ * recorded as a position.
  */
 /* one_wire_ctl: rw32, reset unknown */
 #define IOC3_ONE_WIRE_CTL                            0x000030 /* established */
 #define IOC3_ONE_WIRE_CTL_PULSE_SHIFT                10 /* established */
 #define IOC3_ONE_WIRE_CTL_PULSE_MASK                 0x1u
-#define IOC3_ONE_WIRE_CTL_PULSE_INPLACE              (IOC3_ONE_WIRE_CTL_PULSE_MASK << IOC3_ONE_WIRE_CTL_PULSE_SHIFT)
+#define IOC3_ONE_WIRE_CTL_PULSE_INPLACE (IOC3_ONE_WIRE_CTL_PULSE_MASK << IOC3_ONE_WIRE_CTL_PULSE_SHIFT)
 #define IOC3_ONE_WIRE_CTL_SAMPLE_SHIFT               2 /* established */
 #define IOC3_ONE_WIRE_CTL_SAMPLE_MASK                0x1u
-#define IOC3_ONE_WIRE_CTL_SAMPLE_INPLACE             (IOC3_ONE_WIRE_CTL_SAMPLE_MASK << IOC3_ONE_WIRE_CTL_SAMPLE_SHIFT)
+#define IOC3_ONE_WIRE_CTL_SAMPLE_INPLACE (IOC3_ONE_WIRE_CTL_SAMPLE_MASK << IOC3_ONE_WIRE_CTL_SAMPLE_SHIFT)
 #define IOC3_ONE_WIRE_CTL_DONE_SHIFT                 1 /* established */
 #define IOC3_ONE_WIRE_CTL_DONE_MASK                  0x1u
-#define IOC3_ONE_WIRE_CTL_DONE_INPLACE               (IOC3_ONE_WIRE_CTL_DONE_MASK << IOC3_ONE_WIRE_CTL_DONE_SHIFT)
+#define IOC3_ONE_WIRE_CTL_DONE_INPLACE (IOC3_ONE_WIRE_CTL_DONE_MASK << IOC3_ONE_WIRE_CTL_DONE_SHIFT)
 #define IOC3_ONE_WIRE_CTL_RESULT_SHIFT               0 /* established */
 #define IOC3_ONE_WIRE_CTL_RESULT_MASK                0x1u
-#define IOC3_ONE_WIRE_CTL_RESULT_INPLACE             (IOC3_ONE_WIRE_CTL_RESULT_MASK << IOC3_ONE_WIRE_CTL_RESULT_SHIFT)
+#define IOC3_ONE_WIRE_CTL_RESULT_INPLACE (IOC3_ONE_WIRE_CTL_RESULT_MASK << IOC3_ONE_WIRE_CTL_RESULT_SHIFT)
 
 /* plp_a_addr_hi: rw32, reset unknown */
 #define IOC3_PLP_A_ADDR_HI                           0x000080 /* established */
@@ -60,13 +65,21 @@
 #define IOC3_KM_TX_MOUSE                             0x0000ac /* established */
 
 /*
- * Layout of the general-purpose control set alias, gpcr_s (offset 0x34), as the shipped IRIX one-wire routine writes it. Before reading the address part the routine stores 0x200000 to the register address its caller passes, when that address is not null; with a null address it prints that it is bypassing the enable and goes on. The word is written whole, so bit 21 is the only bit the routine sets. That the store enables the one-wire path to the part is read from the routine's own message, and that a set alias leaves other bits alone is inferred from its name.
+ * Layout of the general-purpose control set alias, gpcr_s (offset 0x34), as the
+ * shipped IRIX one-wire routine writes it. Before reading the address part the
+ * routine stores 0x200000 to the register address its caller passes, when that
+ * address is not null; with a null address it prints that it is bypassing the
+ * enable and goes on. The word is written whole, so bit 21 is the only bit the
+ * routine sets. That the store enables the one-wire path to the part is read
+ * from the routine's own message, and that a set alias leaves other bits alone
+ * is inferred from its name.
  */
-/* word GPCR_S_FORMAT: 32 bits; shipped IRIX kernel binaries, per kudzu docs/nic.md */
+/* word GPCR_S_FORMAT: 32 bits; shipped IRIX kernel binaries, per kudzu
+ * docs/nic.md */
 #define IOC3_GPCR_S_FORMAT_WIDTH                     32 /* inferred */
 #define IOC3_GPCR_S_FORMAT_NIC_ENABLE_SHIFT          21 /* inferred */
 #define IOC3_GPCR_S_FORMAT_NIC_ENABLE_MASK           0x1u
-#define IOC3_GPCR_S_FORMAT_NIC_ENABLE_INPLACE        (IOC3_GPCR_S_FORMAT_NIC_ENABLE_MASK << IOC3_GPCR_S_FORMAT_NIC_ENABLE_SHIFT)
+#define IOC3_GPCR_S_FORMAT_NIC_ENABLE_INPLACE (IOC3_GPCR_S_FORMAT_NIC_ENABLE_MASK << IOC3_GPCR_S_FORMAT_NIC_ENABLE_SHIFT)
 
 #define IOC3_GPCR_S_MICROLAN_ROUTE_BIT               0x200000u /* inferred */
 #define IOC3_GPCR_S_NIC_ENABLE_WORD                  0x200000u /* inferred */

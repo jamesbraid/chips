@@ -1,10 +1,13 @@
-// generated from devices/uv3/registers.toml by defs-gen - do not edit, change the source
-// defs-gen 2
+// @generated from devices/uv3/registers.toml by defs-gen - do not edit, change the source
+// defs-gen 3
 // input sha256 25bba3f9f18f2ed1a355ee404ac42e82c65b3ce3589c1436a4961681239fd172
 // UV3 (UV 300 generation) hub MMR map
 #![allow(dead_code)]
+#![allow(clippy::doc_markdown)]
+#![cfg_attr(rustfmt, rustfmt_skip)]
 
 /// Header name UVH_NODE_ID. Hub identity: part number, revision, manufacturer and the node id the hub was given. Software reads it at offset 0 to tell th (established)
+#[allow(clippy::module_inception)]
 pub mod node_id {
     pub const WIDTH: u32 = 64;
     pub const OFFSET: u64 = 0x0;
@@ -1687,6 +1690,7 @@ pub mod event_occurred2_alias {
     pub const OFFSET: u64 = 0x70108;
 }
 /// Header name UVH_SCRATCH5. Scratch register firmware and kernel share: carries the TSC sync state and the NMI request bit. (established)
+#[allow(clippy::module_inception)]
 pub mod scratch5 {
     pub const WIDTH: u32 = 64;
     pub const OFFSET: u64 = 0x2d0200;

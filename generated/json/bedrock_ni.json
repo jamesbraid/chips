@@ -1,5 +1,5 @@
 {
- "generator": "defs-gen 2",
+ "generator": "defs-gen 3",
  "input_sha256": "04d5ffad594b1763f0ae5bf21018846c021831d98979a127f60036b8abad3823",
  "schema": "defs-flat/1",
  "source": "devices/bedrock_ni/registers.toml",

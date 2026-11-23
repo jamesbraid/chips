@@ -1,8 +1,10 @@
-// generated from devices/synergy/registers.toml by defs-gen - do not edit, change the source
-// defs-gen 2
+// @generated from devices/synergy/registers.toml by defs-gen - do not edit, change the source
+// defs-gen 3
 // input sha256 4c3ea2546f72bcace270f575e55b39b69ccbbb218f4ea2c4bd2699014b6f3a17
 // Synergy: the Itanium processor-bus ASIC of the SN1 IA-64 node (register offsets the Linux port uses)
 #![allow(dead_code)]
+#![allow(clippy::doc_markdown)]
+#![cfg_attr(rustfmt, rustfmt_skip)]
 
 /// Interrupt vector enable mask, vectors 192 to 255, for the processor in bus slot 0. Bit n enables vector 192 plus n. The kernel sets a processor's bit  (established)
 pub mod vec_mask3_a {

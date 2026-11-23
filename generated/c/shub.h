@@ -1,7 +1,9 @@
-/* generated from devices/shub/registers.toml by defs-gen - do not edit, change the source */
-/* defs-gen 2 */
+/* generated from devices/shub/registers.toml by defs-gen - do not edit, change
+ * the source */
+/* defs-gen 3 */
 /* input sha256 c27c4ba4b09b56b6270264238125032654f58c5a4b6632a33d80294f299d9aed */
-/* SHub 1 registers outside the I/O interface: interrupts, local block, real-time clock, PIO write status, TLB purge, junk bus LEDs */
+/* SHub 1 registers outside the I/O interface: interrupts, local block,
+ * real-time clock, PIO write status, TLB purge, junk bus LEDs */
 #ifndef SHUB_GEN_H
 #define SHUB_GEN_H
 
@@ -9,1119 +11,1826 @@
 
 
 /*
- * Chip identification word at node offset 0x1_0000_0000 (memory and directory block by address); the name is ours. The PROM reads it through the node's global window at node start and stores bits 27:12 as the node's part number and bits 31:28 as its revision. It then offers the part number to four method tables in turn, each of which accepts one value (0x4363, 0x3017, 0x239, 0x4422), and keeps the first match; a part number outside the four stores a null table that two later callers call through without a test. Established covers the access and that chain, read in full; that the field is a part number is inferred, and which chips the other three values belong to is unknown. A bounded read that returns 0x4363 selects the first table.
+ * Chip identification word at node offset 0x1_0000_0000 (memory and directory
+ * block by address); the name is ours. The PROM reads it through the node's
+ * global window at node start and stores bits 27:12 as the node's part number
+ * and bits 31:28 as its revision. It then offers the part number to four method
+ * tables in turn, each of which accepts one value (0x4363, 0x3017, 0x239,
+ * 0x4422), and keeps the first match; a part number outside the four stores a
+ * null table that two later callers call through without a test. Established
+ * covers the access and that chain, read in full; that the field is a part
+ * number is inferred, and which chips the other three values belong to is
+ * unknown. A bounded read that returns 0x4363 selects the first table.
  */
-/* chip_id: r64, reset unknown; SAL 5.04 PROM site 0xffa0be1c (read), 0xffa0f8c0 (storage of the fields), 0xffa0f7e0 (table walk), 0xffa959a6 (compare against 17251) */
-#define SHUB_CHIP_ID                                 0x100000000 /* established */
+/* chip_id: r64, reset unknown; SAL 5.04 PROM site 0xffa0be1c (read), 0xffa0f8c0
+ * (storage of the fields), 0xffa0f7e0 (table walk), 0xffa959a6 (compare against
+ * 17251) */
+/* established */
+#define SHUB_CHIP_ID                                 0x100000000
 #define SHUB_CHIP_ID_REVISION_SHIFT                  28 /* inferred */
 #define SHUB_CHIP_ID_REVISION_MASK                   0xfull
-#define SHUB_CHIP_ID_REVISION_INPLACE                (SHUB_CHIP_ID_REVISION_MASK << SHUB_CHIP_ID_REVISION_SHIFT)
+#define SHUB_CHIP_ID_REVISION_INPLACE (SHUB_CHIP_ID_REVISION_MASK << SHUB_CHIP_ID_REVISION_SHIFT)
 #define SHUB_CHIP_ID_PART_NUMBER_SHIFT               12 /* established */
 #define SHUB_CHIP_ID_PART_NUMBER_MASK                0xffffull
-#define SHUB_CHIP_ID_PART_NUMBER_INPLACE             (SHUB_CHIP_ID_PART_NUMBER_MASK << SHUB_CHIP_ID_PART_NUMBER_SHIFT)
+#define SHUB_CHIP_ID_PART_NUMBER_INPLACE (SHUB_CHIP_ID_PART_NUMBER_MASK << SHUB_CHIP_ID_PART_NUMBER_SHIFT)
 
 /*
- * Memory test engine status; the name is ours. Written 0 before every engine start. Bit 36 is read after each operation 16 poll (site 0xffa702c0, inside the compare wrapper) and treated as failure when set, so it must read 0 on a passing run; the failure report reads it again; with bit 36 set it runs a diagnosis (site 0xffa708e0) that reads bit 36 once more, with bit 36 clear it reads md_mbist_err. Operation 48, the directory write and the DRAM commands never read it. Bits 32:0 are read in the failure report as the failing address in 8-byte units. Plain storage satisfies the PROM. The flag name (compare error) is inferred. See memory-init.md.
+ * Memory test engine status; the name is ours. Written 0 before every engine
+ * start. Bit 36 is read after each operation 16 poll (site 0xffa702c0, inside
+ * the compare wrapper) and treated as failure when set, so it must read 0 on a
+ * passing run; the failure report reads it again; with bit 36 set it runs a
+ * diagnosis (site 0xffa708e0) that reads bit 36 once more, with bit 36 clear it
+ * reads md_mbist_err. Operation 48, the directory write and the DRAM commands
+ * never read it. Bits 32:0 are read in the failure report as the failing
+ * address in 8-byte units. Plain storage satisfies the PROM. The flag name
+ * (compare error) is inferred. See memory-init.md.
  */
-/* md_mbist_status: rw64, reset unknown; SAL 5.04 PROM site 0xffa6fbac (written 0 at engine start); bit 36 read at site 0xffa702c0 and 0xffa72500; no Linux v5.3 name */
-#define SHUB_MD_MBIST_STATUS                         0x100000080 /* established */
+/* md_mbist_status: rw64, reset unknown; SAL 5.04 PROM site 0xffa6fbac (written
+ * 0 at engine start); bit 36 read at site 0xffa702c0 and 0xffa72500; no Linux
+ * v5.3 name */
+/* established */
+#define SHUB_MD_MBIST_STATUS                         0x100000080
 #define SHUB_MD_MBIST_STATUS_CMP_ERR_SHIFT           36 /* inferred */
 #define SHUB_MD_MBIST_STATUS_CMP_ERR_MASK            0x1ull
-#define SHUB_MD_MBIST_STATUS_CMP_ERR_INPLACE         (SHUB_MD_MBIST_STATUS_CMP_ERR_MASK << SHUB_MD_MBIST_STATUS_CMP_ERR_SHIFT)
+#define SHUB_MD_MBIST_STATUS_CMP_ERR_INPLACE (SHUB_MD_MBIST_STATUS_CMP_ERR_MASK << SHUB_MD_MBIST_STATUS_CMP_ERR_SHIFT)
 #define SHUB_MD_MBIST_STATUS_FAIL_ADDR_SHIFT         0 /* inferred */
 #define SHUB_MD_MBIST_STATUS_FAIL_ADDR_MASK          0x1ffffffffull
-#define SHUB_MD_MBIST_STATUS_FAIL_ADDR_INPLACE       (SHUB_MD_MBIST_STATUS_FAIL_ADDR_MASK << SHUB_MD_MBIST_STATUS_FAIL_ADDR_SHIFT)
+#define SHUB_MD_MBIST_STATUS_FAIL_ADDR_INPLACE (SHUB_MD_MBIST_STATUS_FAIL_ADDR_MASK << SHUB_MD_MBIST_STATUS_FAIL_ADDR_SHIFT)
 
 /*
- * Memory test engine other-error value; the name is ours. Read only in the failure report, and only when bit 36 of md_mbist_status is found clear (the report then prints that the failure was not a compare error); not read on a passing run, so it needs no particular value. Its layout is unknown.
+ * Memory test engine other-error value; the name is ours. Read only in the
+ * failure report, and only when bit 36 of md_mbist_status is found clear (the
+ * report then prints that the failure was not a compare error); not read on a
+ * passing run, so it needs no particular value. Its layout is unknown.
  */
-/* md_mbist_err: r64, reset unknown; SAL 5.04 PROM site 0xffa725f6 (read in the failure report); no Linux v5.3 name */
-#define SHUB_MD_MBIST_ERR                            0x1000000b8 /* established */
+/* md_mbist_err: r64, reset unknown; SAL 5.04 PROM site 0xffa725f6 (read in the
+ * failure report); no Linux v5.3 name */
+/* established */
+#define SHUB_MD_MBIST_ERR                            0x1000000b8
 
 /*
- * Memory test engine mask; the name is ours (inferred from the all-ones write only). Written with all ones each time the engine starts; never read. Must return: plain storage.
+ * Memory test engine mask; the name is ours (inferred from the all-ones write
+ * only). Written with all ones each time the engine starts; never read. Must
+ * return: plain storage.
  */
-/* md_mbist_mask: w64, reset unknown; SAL 5.04 PROM site 0xffa6fbdc (written all ones at engine start); no Linux v5.3 name */
-#define SHUB_MD_MBIST_MASK                           0x1000000c0 /* established */
+/* md_mbist_mask: w64, reset unknown; SAL 5.04 PROM site 0xffa6fbdc (written all
+ * ones at engine start); no Linux v5.3 name */
+/* established */
+#define SHUB_MD_MBIST_MASK                           0x1000000c0
 
 /*
- * Memory controller register, unnamed; the name is ours. One of three registers (offsets 0x1_0001_0000, _0008 and _0010) the memory set-up writes with the same 64-bit word, built by merging fields into the old value of _0008 (bits it does not deposit keep their old value): a timing index in bits 35:32 and one byte per bank at bit 8k with the density index, rank code and a two-bit field. For a 2 GiB node (one bank, density 3, rank 0) the low byte is 0x03 and banks 1 to 3 read 0x27, 0x47, 0x67 (density 7). This one is never read; accept the store. See memory-init.md.
+ * Memory controller register, unnamed; the name is ours. One of three registers
+ * (offsets 0x1_0001_0000, _0008 and _0010) the memory set-up writes with the
+ * same 64-bit word, built by merging fields into the old value of _0008 (bits
+ * it does not deposit keep their old value): a timing index in bits 35:32 and
+ * one byte per bank at bit 8k with the density index, rank code and a two-bit
+ * field. For a 2 GiB node (one bank, density 3, rank 0) the low byte is 0x03
+ * and banks 1 to 3 read 0x27, 0x47, 0x67 (density 7). This one is never read;
+ * accept the store. See memory-init.md.
  */
-/* md_bank_cfg0: w64, reset unknown; SAL 5.04 PROM site 0xffa7701c (write); no Linux v5.3 name */
-#define SHUB_MD_BANK_CFG0                            0x100010000 /* established */
+/* md_bank_cfg0: w64, reset unknown; SAL 5.04 PROM site 0xffa7701c (write); no
+ * Linux v5.3 name */
+/* established */
+#define SHUB_MD_BANK_CFG0                            0x100010000
 #define SHUB_MD_BANK_CFG0_TIMING_IDX_SHIFT           32 /* inferred */
 #define SHUB_MD_BANK_CFG0_TIMING_IDX_MASK            0xfull
-#define SHUB_MD_BANK_CFG0_TIMING_IDX_INPLACE         (SHUB_MD_BANK_CFG0_TIMING_IDX_MASK << SHUB_MD_BANK_CFG0_TIMING_IDX_SHIFT)
+#define SHUB_MD_BANK_CFG0_TIMING_IDX_INPLACE (SHUB_MD_BANK_CFG0_TIMING_IDX_MASK << SHUB_MD_BANK_CFG0_TIMING_IDX_SHIFT)
 #define SHUB_MD_BANK_CFG0_B3_FIELD_SHIFT             29 /* established */
 #define SHUB_MD_BANK_CFG0_B3_FIELD_MASK              0x3ull
-#define SHUB_MD_BANK_CFG0_B3_FIELD_INPLACE           (SHUB_MD_BANK_CFG0_B3_FIELD_MASK << SHUB_MD_BANK_CFG0_B3_FIELD_SHIFT)
+#define SHUB_MD_BANK_CFG0_B3_FIELD_INPLACE (SHUB_MD_BANK_CFG0_B3_FIELD_MASK << SHUB_MD_BANK_CFG0_B3_FIELD_SHIFT)
 #define SHUB_MD_BANK_CFG0_B3_RANK_SHIFT              27 /* inferred */
 #define SHUB_MD_BANK_CFG0_B3_RANK_MASK               0x1ull
-#define SHUB_MD_BANK_CFG0_B3_RANK_INPLACE            (SHUB_MD_BANK_CFG0_B3_RANK_MASK << SHUB_MD_BANK_CFG0_B3_RANK_SHIFT)
+#define SHUB_MD_BANK_CFG0_B3_RANK_INPLACE (SHUB_MD_BANK_CFG0_B3_RANK_MASK << SHUB_MD_BANK_CFG0_B3_RANK_SHIFT)
 #define SHUB_MD_BANK_CFG0_B3_DENSITY_SHIFT           24 /* inferred */
 #define SHUB_MD_BANK_CFG0_B3_DENSITY_MASK            0x7ull
-#define SHUB_MD_BANK_CFG0_B3_DENSITY_INPLACE         (SHUB_MD_BANK_CFG0_B3_DENSITY_MASK << SHUB_MD_BANK_CFG0_B3_DENSITY_SHIFT)
+#define SHUB_MD_BANK_CFG0_B3_DENSITY_INPLACE (SHUB_MD_BANK_CFG0_B3_DENSITY_MASK << SHUB_MD_BANK_CFG0_B3_DENSITY_SHIFT)
 #define SHUB_MD_BANK_CFG0_B2_FIELD_SHIFT             21 /* established */
 #define SHUB_MD_BANK_CFG0_B2_FIELD_MASK              0x3ull
-#define SHUB_MD_BANK_CFG0_B2_FIELD_INPLACE           (SHUB_MD_BANK_CFG0_B2_FIELD_MASK << SHUB_MD_BANK_CFG0_B2_FIELD_SHIFT)
+#define SHUB_MD_BANK_CFG0_B2_FIELD_INPLACE (SHUB_MD_BANK_CFG0_B2_FIELD_MASK << SHUB_MD_BANK_CFG0_B2_FIELD_SHIFT)
 #define SHUB_MD_BANK_CFG0_B2_RANK_SHIFT              19 /* inferred */
 #define SHUB_MD_BANK_CFG0_B2_RANK_MASK               0x1ull
-#define SHUB_MD_BANK_CFG0_B2_RANK_INPLACE            (SHUB_MD_BANK_CFG0_B2_RANK_MASK << SHUB_MD_BANK_CFG0_B2_RANK_SHIFT)
+#define SHUB_MD_BANK_CFG0_B2_RANK_INPLACE (SHUB_MD_BANK_CFG0_B2_RANK_MASK << SHUB_MD_BANK_CFG0_B2_RANK_SHIFT)
 #define SHUB_MD_BANK_CFG0_B2_DENSITY_SHIFT           16 /* inferred */
 #define SHUB_MD_BANK_CFG0_B2_DENSITY_MASK            0x7ull
-#define SHUB_MD_BANK_CFG0_B2_DENSITY_INPLACE         (SHUB_MD_BANK_CFG0_B2_DENSITY_MASK << SHUB_MD_BANK_CFG0_B2_DENSITY_SHIFT)
+#define SHUB_MD_BANK_CFG0_B2_DENSITY_INPLACE (SHUB_MD_BANK_CFG0_B2_DENSITY_MASK << SHUB_MD_BANK_CFG0_B2_DENSITY_SHIFT)
 #define SHUB_MD_BANK_CFG0_B1_FIELD_SHIFT             13 /* established */
 #define SHUB_MD_BANK_CFG0_B1_FIELD_MASK              0x3ull
-#define SHUB_MD_BANK_CFG0_B1_FIELD_INPLACE           (SHUB_MD_BANK_CFG0_B1_FIELD_MASK << SHUB_MD_BANK_CFG0_B1_FIELD_SHIFT)
+#define SHUB_MD_BANK_CFG0_B1_FIELD_INPLACE (SHUB_MD_BANK_CFG0_B1_FIELD_MASK << SHUB_MD_BANK_CFG0_B1_FIELD_SHIFT)
 #define SHUB_MD_BANK_CFG0_B1_RANK_SHIFT              11 /* inferred */
 #define SHUB_MD_BANK_CFG0_B1_RANK_MASK               0x1ull
-#define SHUB_MD_BANK_CFG0_B1_RANK_INPLACE            (SHUB_MD_BANK_CFG0_B1_RANK_MASK << SHUB_MD_BANK_CFG0_B1_RANK_SHIFT)
+#define SHUB_MD_BANK_CFG0_B1_RANK_INPLACE (SHUB_MD_BANK_CFG0_B1_RANK_MASK << SHUB_MD_BANK_CFG0_B1_RANK_SHIFT)
 #define SHUB_MD_BANK_CFG0_B1_DENSITY_SHIFT           8 /* inferred */
 #define SHUB_MD_BANK_CFG0_B1_DENSITY_MASK            0x7ull
-#define SHUB_MD_BANK_CFG0_B1_DENSITY_INPLACE         (SHUB_MD_BANK_CFG0_B1_DENSITY_MASK << SHUB_MD_BANK_CFG0_B1_DENSITY_SHIFT)
+#define SHUB_MD_BANK_CFG0_B1_DENSITY_INPLACE (SHUB_MD_BANK_CFG0_B1_DENSITY_MASK << SHUB_MD_BANK_CFG0_B1_DENSITY_SHIFT)
 #define SHUB_MD_BANK_CFG0_B0_FIELD_SHIFT             5 /* established */
 #define SHUB_MD_BANK_CFG0_B0_FIELD_MASK              0x3ull
-#define SHUB_MD_BANK_CFG0_B0_FIELD_INPLACE           (SHUB_MD_BANK_CFG0_B0_FIELD_MASK << SHUB_MD_BANK_CFG0_B0_FIELD_SHIFT)
+#define SHUB_MD_BANK_CFG0_B0_FIELD_INPLACE (SHUB_MD_BANK_CFG0_B0_FIELD_MASK << SHUB_MD_BANK_CFG0_B0_FIELD_SHIFT)
 #define SHUB_MD_BANK_CFG0_B0_RANK_SHIFT              3 /* inferred */
 #define SHUB_MD_BANK_CFG0_B0_RANK_MASK               0x1ull
-#define SHUB_MD_BANK_CFG0_B0_RANK_INPLACE            (SHUB_MD_BANK_CFG0_B0_RANK_MASK << SHUB_MD_BANK_CFG0_B0_RANK_SHIFT)
+#define SHUB_MD_BANK_CFG0_B0_RANK_INPLACE (SHUB_MD_BANK_CFG0_B0_RANK_MASK << SHUB_MD_BANK_CFG0_B0_RANK_SHIFT)
 #define SHUB_MD_BANK_CFG0_B0_DENSITY_SHIFT           0 /* inferred */
 #define SHUB_MD_BANK_CFG0_B0_DENSITY_MASK            0x7ull
-#define SHUB_MD_BANK_CFG0_B0_DENSITY_INPLACE         (SHUB_MD_BANK_CFG0_B0_DENSITY_MASK << SHUB_MD_BANK_CFG0_B0_DENSITY_SHIFT)
+#define SHUB_MD_BANK_CFG0_B0_DENSITY_INPLACE (SHUB_MD_BANK_CFG0_B0_DENSITY_MASK << SHUB_MD_BANK_CFG0_B0_DENSITY_SHIFT)
 
 /*
- * Memory controller register, unnamed; the name is ours. One of three registers (offsets 0x1_0001_0000, _0008 and _0010) the memory set-up writes with the same 64-bit word, built by merging fields into the old value of _0008 (bits it does not deposit keep their old value): a timing index in bits 35:32 and one byte per bank at bit 8k with the density index, rank code and a two-bit field. For a 2 GiB node (one bank, density 3, rank 0) the low byte is 0x03 and banks 1 to 3 read 0x27, 0x47, 0x67 (density 7). Read first by the set-up, then by the memory test and the credit routine to find each bank's size: it must read back what was written. See memory-init.md.
+ * Memory controller register, unnamed; the name is ours. One of three registers
+ * (offsets 0x1_0001_0000, _0008 and _0010) the memory set-up writes with the
+ * same 64-bit word, built by merging fields into the old value of _0008 (bits
+ * it does not deposit keep their old value): a timing index in bits 35:32 and
+ * one byte per bank at bit 8k with the density index, rank code and a two-bit
+ * field. For a 2 GiB node (one bank, density 3, rank 0) the low byte is 0x03
+ * and banks 1 to 3 read 0x27, 0x47, 0x67 (density 7). Read first by the set-up,
+ * then by the memory test and the credit routine to find each bank's size: it
+ * must read back what was written. See memory-init.md.
  */
-/* md_bank_cfg1: rw64, reset unknown; SAL 5.04 PROM site 0xffa76c3c (read), 0xffa7704c (write), 0xffa6dedc and 0xffa7ab9c (reads for the bank size); no Linux v5.3 name */
-#define SHUB_MD_BANK_CFG1                            0x100010008 /* established */
+/* md_bank_cfg1: rw64, reset unknown; SAL 5.04 PROM site 0xffa76c3c (read),
+ * 0xffa7704c (write), 0xffa6dedc and 0xffa7ab9c (reads for the bank size); no
+ * Linux v5.3 name */
+/* established */
+#define SHUB_MD_BANK_CFG1                            0x100010008
 #define SHUB_MD_BANK_CFG1_TIMING_IDX_SHIFT           32 /* inferred */
 #define SHUB_MD_BANK_CFG1_TIMING_IDX_MASK            0xfull
-#define SHUB_MD_BANK_CFG1_TIMING_IDX_INPLACE         (SHUB_MD_BANK_CFG1_TIMING_IDX_MASK << SHUB_MD_BANK_CFG1_TIMING_IDX_SHIFT)
+#define SHUB_MD_BANK_CFG1_TIMING_IDX_INPLACE (SHUB_MD_BANK_CFG1_TIMING_IDX_MASK << SHUB_MD_BANK_CFG1_TIMING_IDX_SHIFT)
 #define SHUB_MD_BANK_CFG1_B3_FIELD_SHIFT             29 /* established */
 #define SHUB_MD_BANK_CFG1_B3_FIELD_MASK              0x3ull
-#define SHUB_MD_BANK_CFG1_B3_FIELD_INPLACE           (SHUB_MD_BANK_CFG1_B3_FIELD_MASK << SHUB_MD_BANK_CFG1_B3_FIELD_SHIFT)
+#define SHUB_MD_BANK_CFG1_B3_FIELD_INPLACE (SHUB_MD_BANK_CFG1_B3_FIELD_MASK << SHUB_MD_BANK_CFG1_B3_FIELD_SHIFT)
 #define SHUB_MD_BANK_CFG1_B3_RANK_SHIFT              27 /* inferred */
 #define SHUB_MD_BANK_CFG1_B3_RANK_MASK               0x1ull
-#define SHUB_MD_BANK_CFG1_B3_RANK_INPLACE            (SHUB_MD_BANK_CFG1_B3_RANK_MASK << SHUB_MD_BANK_CFG1_B3_RANK_SHIFT)
+#define SHUB_MD_BANK_CFG1_B3_RANK_INPLACE (SHUB_MD_BANK_CFG1_B3_RANK_MASK << SHUB_MD_BANK_CFG1_B3_RANK_SHIFT)
 #define SHUB_MD_BANK_CFG1_B3_DENSITY_SHIFT           24 /* inferred */
 #define SHUB_MD_BANK_CFG1_B3_DENSITY_MASK            0x7ull
-#define SHUB_MD_BANK_CFG1_B3_DENSITY_INPLACE         (SHUB_MD_BANK_CFG1_B3_DENSITY_MASK << SHUB_MD_BANK_CFG1_B3_DENSITY_SHIFT)
+#define SHUB_MD_BANK_CFG1_B3_DENSITY_INPLACE (SHUB_MD_BANK_CFG1_B3_DENSITY_MASK << SHUB_MD_BANK_CFG1_B3_DENSITY_SHIFT)
 #define SHUB_MD_BANK_CFG1_B2_FIELD_SHIFT             21 /* established */
 #define SHUB_MD_BANK_CFG1_B2_FIELD_MASK              0x3ull
-#define SHUB_MD_BANK_CFG1_B2_FIELD_INPLACE           (SHUB_MD_BANK_CFG1_B2_FIELD_MASK << SHUB_MD_BANK_CFG1_B2_FIELD_SHIFT)
+#define SHUB_MD_BANK_CFG1_B2_FIELD_INPLACE (SHUB_MD_BANK_CFG1_B2_FIELD_MASK << SHUB_MD_BANK_CFG1_B2_FIELD_SHIFT)
 #define SHUB_MD_BANK_CFG1_B2_RANK_SHIFT              19 /* inferred */
 #define SHUB_MD_BANK_CFG1_B2_RANK_MASK               0x1ull
-#define SHUB_MD_BANK_CFG1_B2_RANK_INPLACE            (SHUB_MD_BANK_CFG1_B2_RANK_MASK << SHUB_MD_BANK_CFG1_B2_RANK_SHIFT)
+#define SHUB_MD_BANK_CFG1_B2_RANK_INPLACE (SHUB_MD_BANK_CFG1_B2_RANK_MASK << SHUB_MD_BANK_CFG1_B2_RANK_SHIFT)
 #define SHUB_MD_BANK_CFG1_B2_DENSITY_SHIFT           16 /* inferred */
 #define SHUB_MD_BANK_CFG1_B2_DENSITY_MASK            0x7ull
-#define SHUB_MD_BANK_CFG1_B2_DENSITY_INPLACE         (SHUB_MD_BANK_CFG1_B2_DENSITY_MASK << SHUB_MD_BANK_CFG1_B2_DENSITY_SHIFT)
+#define SHUB_MD_BANK_CFG1_B2_DENSITY_INPLACE (SHUB_MD_BANK_CFG1_B2_DENSITY_MASK << SHUB_MD_BANK_CFG1_B2_DENSITY_SHIFT)
 #define SHUB_MD_BANK_CFG1_B1_FIELD_SHIFT             13 /* established */
 #define SHUB_MD_BANK_CFG1_B1_FIELD_MASK              0x3ull
-#define SHUB_MD_BANK_CFG1_B1_FIELD_INPLACE           (SHUB_MD_BANK_CFG1_B1_FIELD_MASK << SHUB_MD_BANK_CFG1_B1_FIELD_SHIFT)
+#define SHUB_MD_BANK_CFG1_B1_FIELD_INPLACE (SHUB_MD_BANK_CFG1_B1_FIELD_MASK << SHUB_MD_BANK_CFG1_B1_FIELD_SHIFT)
 #define SHUB_MD_BANK_CFG1_B1_RANK_SHIFT              11 /* inferred */
 #define SHUB_MD_BANK_CFG1_B1_RANK_MASK               0x1ull
-#define SHUB_MD_BANK_CFG1_B1_RANK_INPLACE            (SHUB_MD_BANK_CFG1_B1_RANK_MASK << SHUB_MD_BANK_CFG1_B1_RANK_SHIFT)
+#define SHUB_MD_BANK_CFG1_B1_RANK_INPLACE (SHUB_MD_BANK_CFG1_B1_RANK_MASK << SHUB_MD_BANK_CFG1_B1_RANK_SHIFT)
 #define SHUB_MD_BANK_CFG1_B1_DENSITY_SHIFT           8 /* inferred */
 #define SHUB_MD_BANK_CFG1_B1_DENSITY_MASK            0x7ull
-#define SHUB_MD_BANK_CFG1_B1_DENSITY_INPLACE         (SHUB_MD_BANK_CFG1_B1_DENSITY_MASK << SHUB_MD_BANK_CFG1_B1_DENSITY_SHIFT)
+#define SHUB_MD_BANK_CFG1_B1_DENSITY_INPLACE (SHUB_MD_BANK_CFG1_B1_DENSITY_MASK << SHUB_MD_BANK_CFG1_B1_DENSITY_SHIFT)
 #define SHUB_MD_BANK_CFG1_B0_FIELD_SHIFT             5 /* established */
 #define SHUB_MD_BANK_CFG1_B0_FIELD_MASK              0x3ull
-#define SHUB_MD_BANK_CFG1_B0_FIELD_INPLACE           (SHUB_MD_BANK_CFG1_B0_FIELD_MASK << SHUB_MD_BANK_CFG1_B0_FIELD_SHIFT)
+#define SHUB_MD_BANK_CFG1_B0_FIELD_INPLACE (SHUB_MD_BANK_CFG1_B0_FIELD_MASK << SHUB_MD_BANK_CFG1_B0_FIELD_SHIFT)
 #define SHUB_MD_BANK_CFG1_B0_RANK_SHIFT              3 /* inferred */
 #define SHUB_MD_BANK_CFG1_B0_RANK_MASK               0x1ull
-#define SHUB_MD_BANK_CFG1_B0_RANK_INPLACE            (SHUB_MD_BANK_CFG1_B0_RANK_MASK << SHUB_MD_BANK_CFG1_B0_RANK_SHIFT)
+#define SHUB_MD_BANK_CFG1_B0_RANK_INPLACE (SHUB_MD_BANK_CFG1_B0_RANK_MASK << SHUB_MD_BANK_CFG1_B0_RANK_SHIFT)
 #define SHUB_MD_BANK_CFG1_B0_DENSITY_SHIFT           0 /* inferred */
 #define SHUB_MD_BANK_CFG1_B0_DENSITY_MASK            0x7ull
-#define SHUB_MD_BANK_CFG1_B0_DENSITY_INPLACE         (SHUB_MD_BANK_CFG1_B0_DENSITY_MASK << SHUB_MD_BANK_CFG1_B0_DENSITY_SHIFT)
+#define SHUB_MD_BANK_CFG1_B0_DENSITY_INPLACE (SHUB_MD_BANK_CFG1_B0_DENSITY_MASK << SHUB_MD_BANK_CFG1_B0_DENSITY_SHIFT)
 
 /*
- * Memory controller register, unnamed; the name is ours. One of three registers (offsets 0x1_0001_0000, _0008 and _0010) the memory set-up writes with the same 64-bit word, built by merging fields into the old value of _0008 (bits it does not deposit keep their old value): a timing index in bits 35:32 and one byte per bank at bit 8k with the density index, rank code and a two-bit field. For a 2 GiB node (one bank, density 3, rank 0) the low byte is 0x03 and banks 1 to 3 read 0x27, 0x47, 0x67 (density 7). The memory test driver reads it to skip banks whose density index is 7, and the size sum reads it too: it must read back what was written. See memory-init.md.
+ * Memory controller register, unnamed; the name is ours. One of three registers
+ * (offsets 0x1_0001_0000, _0008 and _0010) the memory set-up writes with the
+ * same 64-bit word, built by merging fields into the old value of _0008 (bits
+ * it does not deposit keep their old value): a timing index in bits 35:32 and
+ * one byte per bank at bit 8k with the density index, rank code and a two-bit
+ * field. For a 2 GiB node (one bank, density 3, rank 0) the low byte is 0x03
+ * and banks 1 to 3 read 0x27, 0x47, 0x67 (density 7). The memory test driver
+ * reads it to skip banks whose density index is 7, and the size sum reads it
+ * too: it must read back what was written. See memory-init.md.
  */
-/* md_bank_cfg2: rw64, reset unknown; SAL 5.04 PROM site 0xffa7707c (write), 0xffa6f2fc and 0xffa7838c (reads); no Linux v5.3 name */
-#define SHUB_MD_BANK_CFG2                            0x100010010 /* established */
+/* md_bank_cfg2: rw64, reset unknown; SAL 5.04 PROM site 0xffa7707c (write),
+ * 0xffa6f2fc and 0xffa7838c (reads); no Linux v5.3 name */
+/* established */
+#define SHUB_MD_BANK_CFG2                            0x100010010
 #define SHUB_MD_BANK_CFG2_TIMING_IDX_SHIFT           32 /* inferred */
 #define SHUB_MD_BANK_CFG2_TIMING_IDX_MASK            0xfull
-#define SHUB_MD_BANK_CFG2_TIMING_IDX_INPLACE         (SHUB_MD_BANK_CFG2_TIMING_IDX_MASK << SHUB_MD_BANK_CFG2_TIMING_IDX_SHIFT)
+#define SHUB_MD_BANK_CFG2_TIMING_IDX_INPLACE (SHUB_MD_BANK_CFG2_TIMING_IDX_MASK << SHUB_MD_BANK_CFG2_TIMING_IDX_SHIFT)
 #define SHUB_MD_BANK_CFG2_B3_FIELD_SHIFT             29 /* established */
 #define SHUB_MD_BANK_CFG2_B3_FIELD_MASK              0x3ull
-#define SHUB_MD_BANK_CFG2_B3_FIELD_INPLACE           (SHUB_MD_BANK_CFG2_B3_FIELD_MASK << SHUB_MD_BANK_CFG2_B3_FIELD_SHIFT)
+#define SHUB_MD_BANK_CFG2_B3_FIELD_INPLACE (SHUB_MD_BANK_CFG2_B3_FIELD_MASK << SHUB_MD_BANK_CFG2_B3_FIELD_SHIFT)
 #define SHUB_MD_BANK_CFG2_B3_RANK_SHIFT              27 /* inferred */
 #define SHUB_MD_BANK_CFG2_B3_RANK_MASK               0x1ull
-#define SHUB_MD_BANK_CFG2_B3_RANK_INPLACE            (SHUB_MD_BANK_CFG2_B3_RANK_MASK << SHUB_MD_BANK_CFG2_B3_RANK_SHIFT)
+#define SHUB_MD_BANK_CFG2_B3_RANK_INPLACE (SHUB_MD_BANK_CFG2_B3_RANK_MASK << SHUB_MD_BANK_CFG2_B3_RANK_SHIFT)
 #define SHUB_MD_BANK_CFG2_B3_DENSITY_SHIFT           24 /* inferred */
 #define SHUB_MD_BANK_CFG2_B3_DENSITY_MASK            0x7ull
-#define SHUB_MD_BANK_CFG2_B3_DENSITY_INPLACE         (SHUB_MD_BANK_CFG2_B3_DENSITY_MASK << SHUB_MD_BANK_CFG2_B3_DENSITY_SHIFT)
+#define SHUB_MD_BANK_CFG2_B3_DENSITY_INPLACE (SHUB_MD_BANK_CFG2_B3_DENSITY_MASK << SHUB_MD_BANK_CFG2_B3_DENSITY_SHIFT)
 #define SHUB_MD_BANK_CFG2_B2_FIELD_SHIFT             21 /* established */
 #define SHUB_MD_BANK_CFG2_B2_FIELD_MASK              0x3ull
-#define SHUB_MD_BANK_CFG2_B2_FIELD_INPLACE           (SHUB_MD_BANK_CFG2_B2_FIELD_MASK << SHUB_MD_BANK_CFG2_B2_FIELD_SHIFT)
+#define SHUB_MD_BANK_CFG2_B2_FIELD_INPLACE (SHUB_MD_BANK_CFG2_B2_FIELD_MASK << SHUB_MD_BANK_CFG2_B2_FIELD_SHIFT)
 #define SHUB_MD_BANK_CFG2_B2_RANK_SHIFT              19 /* inferred */
 #define SHUB_MD_BANK_CFG2_B2_RANK_MASK               0x1ull
-#define SHUB_MD_BANK_CFG2_B2_RANK_INPLACE            (SHUB_MD_BANK_CFG2_B2_RANK_MASK << SHUB_MD_BANK_CFG2_B2_RANK_SHIFT)
+#define SHUB_MD_BANK_CFG2_B2_RANK_INPLACE (SHUB_MD_BANK_CFG2_B2_RANK_MASK << SHUB_MD_BANK_CFG2_B2_RANK_SHIFT)
 #define SHUB_MD_BANK_CFG2_B2_DENSITY_SHIFT           16 /* inferred */
 #define SHUB_MD_BANK_CFG2_B2_DENSITY_MASK            0x7ull
-#define SHUB_MD_BANK_CFG2_B2_DENSITY_INPLACE         (SHUB_MD_BANK_CFG2_B2_DENSITY_MASK << SHUB_MD_BANK_CFG2_B2_DENSITY_SHIFT)
+#define SHUB_MD_BANK_CFG2_B2_DENSITY_INPLACE (SHUB_MD_BANK_CFG2_B2_DENSITY_MASK << SHUB_MD_BANK_CFG2_B2_DENSITY_SHIFT)
 #define SHUB_MD_BANK_CFG2_B1_FIELD_SHIFT             13 /* established */
 #define SHUB_MD_BANK_CFG2_B1_FIELD_MASK              0x3ull
-#define SHUB_MD_BANK_CFG2_B1_FIELD_INPLACE           (SHUB_MD_BANK_CFG2_B1_FIELD_MASK << SHUB_MD_BANK_CFG2_B1_FIELD_SHIFT)
+#define SHUB_MD_BANK_CFG2_B1_FIELD_INPLACE (SHUB_MD_BANK_CFG2_B1_FIELD_MASK << SHUB_MD_BANK_CFG2_B1_FIELD_SHIFT)
 #define SHUB_MD_BANK_CFG2_B1_RANK_SHIFT              11 /* inferred */
 #define SHUB_MD_BANK_CFG2_B1_RANK_MASK               0x1ull
-#define SHUB_MD_BANK_CFG2_B1_RANK_INPLACE            (SHUB_MD_BANK_CFG2_B1_RANK_MASK << SHUB_MD_BANK_CFG2_B1_RANK_SHIFT)
+#define SHUB_MD_BANK_CFG2_B1_RANK_INPLACE (SHUB_MD_BANK_CFG2_B1_RANK_MASK << SHUB_MD_BANK_CFG2_B1_RANK_SHIFT)
 #define SHUB_MD_BANK_CFG2_B1_DENSITY_SHIFT           8 /* inferred */
 #define SHUB_MD_BANK_CFG2_B1_DENSITY_MASK            0x7ull
-#define SHUB_MD_BANK_CFG2_B1_DENSITY_INPLACE         (SHUB_MD_BANK_CFG2_B1_DENSITY_MASK << SHUB_MD_BANK_CFG2_B1_DENSITY_SHIFT)
+#define SHUB_MD_BANK_CFG2_B1_DENSITY_INPLACE (SHUB_MD_BANK_CFG2_B1_DENSITY_MASK << SHUB_MD_BANK_CFG2_B1_DENSITY_SHIFT)
 #define SHUB_MD_BANK_CFG2_B0_FIELD_SHIFT             5 /* established */
 #define SHUB_MD_BANK_CFG2_B0_FIELD_MASK              0x3ull
-#define SHUB_MD_BANK_CFG2_B0_FIELD_INPLACE           (SHUB_MD_BANK_CFG2_B0_FIELD_MASK << SHUB_MD_BANK_CFG2_B0_FIELD_SHIFT)
+#define SHUB_MD_BANK_CFG2_B0_FIELD_INPLACE (SHUB_MD_BANK_CFG2_B0_FIELD_MASK << SHUB_MD_BANK_CFG2_B0_FIELD_SHIFT)
 #define SHUB_MD_BANK_CFG2_B0_RANK_SHIFT              3 /* inferred */
 #define SHUB_MD_BANK_CFG2_B0_RANK_MASK               0x1ull
-#define SHUB_MD_BANK_CFG2_B0_RANK_INPLACE            (SHUB_MD_BANK_CFG2_B0_RANK_MASK << SHUB_MD_BANK_CFG2_B0_RANK_SHIFT)
+#define SHUB_MD_BANK_CFG2_B0_RANK_INPLACE (SHUB_MD_BANK_CFG2_B0_RANK_MASK << SHUB_MD_BANK_CFG2_B0_RANK_SHIFT)
 #define SHUB_MD_BANK_CFG2_B0_DENSITY_SHIFT           0 /* inferred */
 #define SHUB_MD_BANK_CFG2_B0_DENSITY_MASK            0x7ull
-#define SHUB_MD_BANK_CFG2_B0_DENSITY_INPLACE         (SHUB_MD_BANK_CFG2_B0_DENSITY_MASK << SHUB_MD_BANK_CFG2_B0_DENSITY_SHIFT)
+#define SHUB_MD_BANK_CFG2_B0_DENSITY_INPLACE (SHUB_MD_BANK_CFG2_B0_DENSITY_MASK << SHUB_MD_BANK_CFG2_B0_DENSITY_SHIFT)
 
 /*
- * Memory controller register, unnamed; the name is ours. Timing word built from a 32-byte row of the timing table at flash site 0xffbe0650 (row = the timing index). One of two registers (offsets _0020 and _0040) that carry the same word; bits 63:40 and 7:0 of the old value of _0040 are merged in (read at site 0xffa76c9c). Never read. Must return: plain storage. See memory-init.md.
+ * Memory controller register, unnamed; the name is ours. Timing word built from
+ * a 32-byte row of the timing table at flash site 0xffbe0650 (row = the timing
+ * index). One of two registers (offsets _0020 and _0040) that carry the same
+ * word; bits 63:40 and 7:0 of the old value of _0040 are merged in (read at
+ * site 0xffa76c9c). Never read. Must return: plain storage. See memory-init.md.
  */
-/* md_timing_0: w64, reset unknown; SAL 5.04 PROM site 0xffa7710c (write); no Linux v5.3 name */
-#define SHUB_MD_TIMING_0                             0x100010020 /* established */
+/* md_timing_0: w64, reset unknown; SAL 5.04 PROM site 0xffa7710c (write); no
+ * Linux v5.3 name */
+/* established */
+#define SHUB_MD_TIMING_0                             0x100010020
 #define SHUB_MD_TIMING_0_TRCD4_SHIFT                 54 /* inferred */
 #define SHUB_MD_TIMING_0_TRCD4_MASK                  0x1ull
-#define SHUB_MD_TIMING_0_TRCD4_INPLACE               (SHUB_MD_TIMING_0_TRCD4_MASK << SHUB_MD_TIMING_0_TRCD4_SHIFT)
+#define SHUB_MD_TIMING_0_TRCD4_INPLACE (SHUB_MD_TIMING_0_TRCD4_MASK << SHUB_MD_TIMING_0_TRCD4_SHIFT)
 #define SHUB_MD_TIMING_0_TRCD2_SHIFT                 53 /* inferred */
 #define SHUB_MD_TIMING_0_TRCD2_MASK                  0x1ull
-#define SHUB_MD_TIMING_0_TRCD2_INPLACE               (SHUB_MD_TIMING_0_TRCD2_MASK << SHUB_MD_TIMING_0_TRCD2_SHIFT)
+#define SHUB_MD_TIMING_0_TRCD2_INPLACE (SHUB_MD_TIMING_0_TRCD2_MASK << SHUB_MD_TIMING_0_TRCD2_SHIFT)
 #define SHUB_MD_TIMING_0_TRCD3_SHIFT                 52 /* inferred */
 #define SHUB_MD_TIMING_0_TRCD3_MASK                  0x1ull
-#define SHUB_MD_TIMING_0_TRCD3_INPLACE               (SHUB_MD_TIMING_0_TRCD3_MASK << SHUB_MD_TIMING_0_TRCD3_SHIFT)
+#define SHUB_MD_TIMING_0_TRCD3_INPLACE (SHUB_MD_TIMING_0_TRCD3_MASK << SHUB_MD_TIMING_0_TRCD3_SHIFT)
 #define SHUB_MD_TIMING_0_ROW_C_SHIFT                 48 /* established */
 #define SHUB_MD_TIMING_0_ROW_C_MASK                  0xfull
-#define SHUB_MD_TIMING_0_ROW_C_INPLACE               (SHUB_MD_TIMING_0_ROW_C_MASK << SHUB_MD_TIMING_0_ROW_C_SHIFT)
+#define SHUB_MD_TIMING_0_ROW_C_INPLACE (SHUB_MD_TIMING_0_ROW_C_MASK << SHUB_MD_TIMING_0_ROW_C_SHIFT)
 #define SHUB_MD_TIMING_0_ROW_B_SHIFT                 44 /* established */
 #define SHUB_MD_TIMING_0_ROW_B_MASK                  0xfull
-#define SHUB_MD_TIMING_0_ROW_B_INPLACE               (SHUB_MD_TIMING_0_ROW_B_MASK << SHUB_MD_TIMING_0_ROW_B_SHIFT)
+#define SHUB_MD_TIMING_0_ROW_B_INPLACE (SHUB_MD_TIMING_0_ROW_B_MASK << SHUB_MD_TIMING_0_ROW_B_SHIFT)
 #define SHUB_MD_TIMING_0_ROW_A_SHIFT                 40 /* established */
 #define SHUB_MD_TIMING_0_ROW_A_MASK                  0xfull
-#define SHUB_MD_TIMING_0_ROW_A_INPLACE               (SHUB_MD_TIMING_0_ROW_A_MASK << SHUB_MD_TIMING_0_ROW_A_SHIFT)
+#define SHUB_MD_TIMING_0_ROW_A_INPLACE (SHUB_MD_TIMING_0_ROW_A_MASK << SHUB_MD_TIMING_0_ROW_A_SHIFT)
 #define SHUB_MD_TIMING_0_ROW_LO_SHIFT                8 /* established */
 #define SHUB_MD_TIMING_0_ROW_LO_MASK                 0xffffffffull
-#define SHUB_MD_TIMING_0_ROW_LO_INPLACE              (SHUB_MD_TIMING_0_ROW_LO_MASK << SHUB_MD_TIMING_0_ROW_LO_SHIFT)
+#define SHUB_MD_TIMING_0_ROW_LO_INPLACE (SHUB_MD_TIMING_0_ROW_LO_MASK << SHUB_MD_TIMING_0_ROW_LO_SHIFT)
 #define SHUB_MD_TIMING_0_CONST_LO_SHIFT              1 /* established */
 #define SHUB_MD_TIMING_0_CONST_LO_MASK               0x7full
-#define SHUB_MD_TIMING_0_CONST_LO_INPLACE            (SHUB_MD_TIMING_0_CONST_LO_MASK << SHUB_MD_TIMING_0_CONST_LO_SHIFT)
+#define SHUB_MD_TIMING_0_CONST_LO_INPLACE (SHUB_MD_TIMING_0_CONST_LO_MASK << SHUB_MD_TIMING_0_CONST_LO_SHIFT)
 
 /*
- * Memory controller register, unnamed; the name is ours. Six 4-bit timing fields from the 16-bit values at offsets 14, 16, 18, 20, 22 and 24 of the timing-table row; the other bits keep the old value read from _0048 (site 0xffa76c6c). One of two registers (_0028 and _0048) that carry the same word. Never read. Must return: plain storage. See memory-init.md.
+ * Memory controller register, unnamed; the name is ours. Six 4-bit timing
+ * fields from the 16-bit values at offsets 14, 16, 18, 20, 22 and 24 of the
+ * timing-table row; the other bits keep the old value read from _0048 (site
+ * 0xffa76c6c). One of two registers (_0028 and _0048) that carry the same word.
+ * Never read. Must return: plain storage. See memory-init.md.
  */
-/* md_timing_1: w64, reset unknown; SAL 5.04 PROM site 0xffa770ac (write); no Linux v5.3 name */
-#define SHUB_MD_TIMING_1                             0x100010028 /* established */
+/* md_timing_1: w64, reset unknown; SAL 5.04 PROM site 0xffa770ac (write); no
+ * Linux v5.3 name */
+/* established */
+#define SHUB_MD_TIMING_1                             0x100010028
 #define SHUB_MD_TIMING_1_U5_SHIFT                    20 /* established */
 #define SHUB_MD_TIMING_1_U5_MASK                     0xfull
-#define SHUB_MD_TIMING_1_U5_INPLACE                  (SHUB_MD_TIMING_1_U5_MASK << SHUB_MD_TIMING_1_U5_SHIFT)
+#define SHUB_MD_TIMING_1_U5_INPLACE (SHUB_MD_TIMING_1_U5_MASK << SHUB_MD_TIMING_1_U5_SHIFT)
 #define SHUB_MD_TIMING_1_U4_SHIFT                    16 /* established */
 #define SHUB_MD_TIMING_1_U4_MASK                     0xfull
-#define SHUB_MD_TIMING_1_U4_INPLACE                  (SHUB_MD_TIMING_1_U4_MASK << SHUB_MD_TIMING_1_U4_SHIFT)
+#define SHUB_MD_TIMING_1_U4_INPLACE (SHUB_MD_TIMING_1_U4_MASK << SHUB_MD_TIMING_1_U4_SHIFT)
 #define SHUB_MD_TIMING_1_U3_SHIFT                    12 /* established */
 #define SHUB_MD_TIMING_1_U3_MASK                     0xfull
-#define SHUB_MD_TIMING_1_U3_INPLACE                  (SHUB_MD_TIMING_1_U3_MASK << SHUB_MD_TIMING_1_U3_SHIFT)
+#define SHUB_MD_TIMING_1_U3_INPLACE (SHUB_MD_TIMING_1_U3_MASK << SHUB_MD_TIMING_1_U3_SHIFT)
 #define SHUB_MD_TIMING_1_U2_SHIFT                    8 /* established */
 #define SHUB_MD_TIMING_1_U2_MASK                     0xfull
-#define SHUB_MD_TIMING_1_U2_INPLACE                  (SHUB_MD_TIMING_1_U2_MASK << SHUB_MD_TIMING_1_U2_SHIFT)
+#define SHUB_MD_TIMING_1_U2_INPLACE (SHUB_MD_TIMING_1_U2_MASK << SHUB_MD_TIMING_1_U2_SHIFT)
 #define SHUB_MD_TIMING_1_U1_SHIFT                    4 /* established */
 #define SHUB_MD_TIMING_1_U1_MASK                     0xfull
-#define SHUB_MD_TIMING_1_U1_INPLACE                  (SHUB_MD_TIMING_1_U1_MASK << SHUB_MD_TIMING_1_U1_SHIFT)
+#define SHUB_MD_TIMING_1_U1_INPLACE (SHUB_MD_TIMING_1_U1_MASK << SHUB_MD_TIMING_1_U1_SHIFT)
 #define SHUB_MD_TIMING_1_U0_SHIFT                    0 /* established */
 #define SHUB_MD_TIMING_1_U0_MASK                     0xfull
-#define SHUB_MD_TIMING_1_U0_INPLACE                  (SHUB_MD_TIMING_1_U0_MASK << SHUB_MD_TIMING_1_U0_SHIFT)
+#define SHUB_MD_TIMING_1_U0_INPLACE (SHUB_MD_TIMING_1_U0_MASK << SHUB_MD_TIMING_1_U0_SHIFT)
 
 /*
- * Memory controller register, unnamed; the name is ours. One word is written to both _0030 and _0050, once, after the eight DRAM initialisation runs: it starts as the old value of _0050 with bit 23 cleared and these fields deposited. Never read. See memory-init.md.
+ * Memory controller register, unnamed; the name is ours. One word is written to
+ * both _0030 and _0050, once, after the eight DRAM initialisation runs: it
+ * starts as the old value of _0050 with bit 23 cleared and these fields
+ * deposited. Never read. See memory-init.md.
  */
-/* md_refresh_0: w64, reset unknown; SAL 5.04 PROM site 0xffa77adc (write); no Linux v5.3 name */
-#define SHUB_MD_REFRESH_0                            0x100010030 /* established */
+/* md_refresh_0: w64, reset unknown; SAL 5.04 PROM site 0xffa77adc (write); no
+ * Linux v5.3 name */
+/* established */
+#define SHUB_MD_REFRESH_0                            0x100010030
 #define SHUB_MD_REFRESH_0_BANK_SMALL_SHIFT           24 /* established */
 #define SHUB_MD_REFRESH_0_BANK_SMALL_MASK            0xfull
-#define SHUB_MD_REFRESH_0_BANK_SMALL_INPLACE         (SHUB_MD_REFRESH_0_BANK_SMALL_MASK << SHUB_MD_REFRESH_0_BANK_SMALL_SHIFT)
+#define SHUB_MD_REFRESH_0_BANK_SMALL_INPLACE (SHUB_MD_REFRESH_0_BANK_SMALL_MASK << SHUB_MD_REFRESH_0_BANK_SMALL_SHIFT)
 #define SHUB_MD_REFRESH_0_TRFC_SHIFT                 17 /* inferred */
 #define SHUB_MD_REFRESH_0_TRFC_MASK                  0x3full
-#define SHUB_MD_REFRESH_0_TRFC_INPLACE               (SHUB_MD_REFRESH_0_TRFC_MASK << SHUB_MD_REFRESH_0_TRFC_SHIFT)
+#define SHUB_MD_REFRESH_0_TRFC_INPLACE (SHUB_MD_REFRESH_0_TRFC_MASK << SHUB_MD_REFRESH_0_TRFC_SHIFT)
 #define SHUB_MD_REFRESH_0_INTERVAL_SHIFT             8 /* inferred */
 #define SHUB_MD_REFRESH_0_INTERVAL_MASK              0x1ffull
-#define SHUB_MD_REFRESH_0_INTERVAL_INPLACE           (SHUB_MD_REFRESH_0_INTERVAL_MASK << SHUB_MD_REFRESH_0_INTERVAL_SHIFT)
+#define SHUB_MD_REFRESH_0_INTERVAL_INPLACE (SHUB_MD_REFRESH_0_INTERVAL_MASK << SHUB_MD_REFRESH_0_INTERVAL_SHIFT)
 #define SHUB_MD_REFRESH_0_CS_ENABLE_SHIFT            0 /* inferred */
 #define SHUB_MD_REFRESH_0_CS_ENABLE_MASK             0xffull
-#define SHUB_MD_REFRESH_0_CS_ENABLE_INPLACE          (SHUB_MD_REFRESH_0_CS_ENABLE_MASK << SHUB_MD_REFRESH_0_CS_ENABLE_SHIFT)
+#define SHUB_MD_REFRESH_0_CS_ENABLE_INPLACE (SHUB_MD_REFRESH_0_CS_ENABLE_MASK << SHUB_MD_REFRESH_0_CS_ENABLE_SHIFT)
 
 /*
- * Memory controller register, unnamed; the name is ours. Timing word built from a 32-byte row of the timing table at flash site 0xffbe0650 (row = the timing index). One of two registers (offsets _0020 and _0040) that carry the same word; bits 63:40 and 7:0 of the old value of _0040 are merged in (read at site 0xffa76c9c). Read once before the write, so any value is accepted before the first write. See memory-init.md.
+ * Memory controller register, unnamed; the name is ours. Timing word built from
+ * a 32-byte row of the timing table at flash site 0xffbe0650 (row = the timing
+ * index). One of two registers (offsets _0020 and _0040) that carry the same
+ * word; bits 63:40 and 7:0 of the old value of _0040 are merged in (read at
+ * site 0xffa76c9c). Read once before the write, so any value is accepted before
+ * the first write. See memory-init.md.
  */
-/* md_timing_2: rw64, reset unknown; SAL 5.04 PROM site 0xffa76c9c (read), 0xffa7713c (write); no Linux v5.3 name */
-#define SHUB_MD_TIMING_2                             0x100010040 /* established */
+/* md_timing_2: rw64, reset unknown; SAL 5.04 PROM site 0xffa76c9c (read),
+ * 0xffa7713c (write); no Linux v5.3 name */
+/* established */
+#define SHUB_MD_TIMING_2                             0x100010040
 #define SHUB_MD_TIMING_2_TRCD4_SHIFT                 54 /* inferred */
 #define SHUB_MD_TIMING_2_TRCD4_MASK                  0x1ull
-#define SHUB_MD_TIMING_2_TRCD4_INPLACE               (SHUB_MD_TIMING_2_TRCD4_MASK << SHUB_MD_TIMING_2_TRCD4_SHIFT)
+#define SHUB_MD_TIMING_2_TRCD4_INPLACE (SHUB_MD_TIMING_2_TRCD4_MASK << SHUB_MD_TIMING_2_TRCD4_SHIFT)
 #define SHUB_MD_TIMING_2_TRCD2_SHIFT                 53 /* inferred */
 #define SHUB_MD_TIMING_2_TRCD2_MASK                  0x1ull
-#define SHUB_MD_TIMING_2_TRCD2_INPLACE               (SHUB_MD_TIMING_2_TRCD2_MASK << SHUB_MD_TIMING_2_TRCD2_SHIFT)
+#define SHUB_MD_TIMING_2_TRCD2_INPLACE (SHUB_MD_TIMING_2_TRCD2_MASK << SHUB_MD_TIMING_2_TRCD2_SHIFT)
 #define SHUB_MD_TIMING_2_TRCD3_SHIFT                 52 /* inferred */
 #define SHUB_MD_TIMING_2_TRCD3_MASK                  0x1ull
-#define SHUB_MD_TIMING_2_TRCD3_INPLACE               (SHUB_MD_TIMING_2_TRCD3_MASK << SHUB_MD_TIMING_2_TRCD3_SHIFT)
+#define SHUB_MD_TIMING_2_TRCD3_INPLACE (SHUB_MD_TIMING_2_TRCD3_MASK << SHUB_MD_TIMING_2_TRCD3_SHIFT)
 #define SHUB_MD_TIMING_2_ROW_C_SHIFT                 48 /* established */
 #define SHUB_MD_TIMING_2_ROW_C_MASK                  0xfull
-#define SHUB_MD_TIMING_2_ROW_C_INPLACE               (SHUB_MD_TIMING_2_ROW_C_MASK << SHUB_MD_TIMING_2_ROW_C_SHIFT)
+#define SHUB_MD_TIMING_2_ROW_C_INPLACE (SHUB_MD_TIMING_2_ROW_C_MASK << SHUB_MD_TIMING_2_ROW_C_SHIFT)
 #define SHUB_MD_TIMING_2_ROW_B_SHIFT                 44 /* established */
 #define SHUB_MD_TIMING_2_ROW_B_MASK                  0xfull
-#define SHUB_MD_TIMING_2_ROW_B_INPLACE               (SHUB_MD_TIMING_2_ROW_B_MASK << SHUB_MD_TIMING_2_ROW_B_SHIFT)
+#define SHUB_MD_TIMING_2_ROW_B_INPLACE (SHUB_MD_TIMING_2_ROW_B_MASK << SHUB_MD_TIMING_2_ROW_B_SHIFT)
 #define SHUB_MD_TIMING_2_ROW_A_SHIFT                 40 /* established */
 #define SHUB_MD_TIMING_2_ROW_A_MASK                  0xfull
-#define SHUB_MD_TIMING_2_ROW_A_INPLACE               (SHUB_MD_TIMING_2_ROW_A_MASK << SHUB_MD_TIMING_2_ROW_A_SHIFT)
+#define SHUB_MD_TIMING_2_ROW_A_INPLACE (SHUB_MD_TIMING_2_ROW_A_MASK << SHUB_MD_TIMING_2_ROW_A_SHIFT)
 #define SHUB_MD_TIMING_2_ROW_LO_SHIFT                8 /* established */
 #define SHUB_MD_TIMING_2_ROW_LO_MASK                 0xffffffffull
-#define SHUB_MD_TIMING_2_ROW_LO_INPLACE              (SHUB_MD_TIMING_2_ROW_LO_MASK << SHUB_MD_TIMING_2_ROW_LO_SHIFT)
+#define SHUB_MD_TIMING_2_ROW_LO_INPLACE (SHUB_MD_TIMING_2_ROW_LO_MASK << SHUB_MD_TIMING_2_ROW_LO_SHIFT)
 #define SHUB_MD_TIMING_2_CONST_LO_SHIFT              1 /* established */
 #define SHUB_MD_TIMING_2_CONST_LO_MASK               0x7full
-#define SHUB_MD_TIMING_2_CONST_LO_INPLACE            (SHUB_MD_TIMING_2_CONST_LO_MASK << SHUB_MD_TIMING_2_CONST_LO_SHIFT)
+#define SHUB_MD_TIMING_2_CONST_LO_INPLACE (SHUB_MD_TIMING_2_CONST_LO_MASK << SHUB_MD_TIMING_2_CONST_LO_SHIFT)
 
 /*
- * Memory controller register, unnamed; the name is ours. Six 4-bit timing fields from the 16-bit values at offsets 14, 16, 18, 20, 22 and 24 of the timing-table row; the other bits keep the old value read from _0048 (site 0xffa76c6c). One of two registers (_0028 and _0048) that carry the same word. Read once before the write, so any value is accepted before the first write. See memory-init.md.
+ * Memory controller register, unnamed; the name is ours. Six 4-bit timing
+ * fields from the 16-bit values at offsets 14, 16, 18, 20, 22 and 24 of the
+ * timing-table row; the other bits keep the old value read from _0048 (site
+ * 0xffa76c6c). One of two registers (_0028 and _0048) that carry the same word.
+ * Read once before the write, so any value is accepted before the first write.
+ * See memory-init.md.
  */
-/* md_timing_3: rw64, reset unknown; SAL 5.04 PROM site 0xffa76c6c (read), 0xffa770dc (write); no Linux v5.3 name */
-#define SHUB_MD_TIMING_3                             0x100010048 /* established */
+/* md_timing_3: rw64, reset unknown; SAL 5.04 PROM site 0xffa76c6c (read),
+ * 0xffa770dc (write); no Linux v5.3 name */
+/* established */
+#define SHUB_MD_TIMING_3                             0x100010048
 #define SHUB_MD_TIMING_3_U5_SHIFT                    20 /* established */
 #define SHUB_MD_TIMING_3_U5_MASK                     0xfull
-#define SHUB_MD_TIMING_3_U5_INPLACE                  (SHUB_MD_TIMING_3_U5_MASK << SHUB_MD_TIMING_3_U5_SHIFT)
+#define SHUB_MD_TIMING_3_U5_INPLACE (SHUB_MD_TIMING_3_U5_MASK << SHUB_MD_TIMING_3_U5_SHIFT)
 #define SHUB_MD_TIMING_3_U4_SHIFT                    16 /* established */
 #define SHUB_MD_TIMING_3_U4_MASK                     0xfull
-#define SHUB_MD_TIMING_3_U4_INPLACE                  (SHUB_MD_TIMING_3_U4_MASK << SHUB_MD_TIMING_3_U4_SHIFT)
+#define SHUB_MD_TIMING_3_U4_INPLACE (SHUB_MD_TIMING_3_U4_MASK << SHUB_MD_TIMING_3_U4_SHIFT)
 #define SHUB_MD_TIMING_3_U3_SHIFT                    12 /* established */
 #define SHUB_MD_TIMING_3_U3_MASK                     0xfull
-#define SHUB_MD_TIMING_3_U3_INPLACE                  (SHUB_MD_TIMING_3_U3_MASK << SHUB_MD_TIMING_3_U3_SHIFT)
+#define SHUB_MD_TIMING_3_U3_INPLACE (SHUB_MD_TIMING_3_U3_MASK << SHUB_MD_TIMING_3_U3_SHIFT)
 #define SHUB_MD_TIMING_3_U2_SHIFT                    8 /* established */
 #define SHUB_MD_TIMING_3_U2_MASK                     0xfull
-#define SHUB_MD_TIMING_3_U2_INPLACE                  (SHUB_MD_TIMING_3_U2_MASK << SHUB_MD_TIMING_3_U2_SHIFT)
+#define SHUB_MD_TIMING_3_U2_INPLACE (SHUB_MD_TIMING_3_U2_MASK << SHUB_MD_TIMING_3_U2_SHIFT)
 #define SHUB_MD_TIMING_3_U1_SHIFT                    4 /* established */
 #define SHUB_MD_TIMING_3_U1_MASK                     0xfull
-#define SHUB_MD_TIMING_3_U1_INPLACE                  (SHUB_MD_TIMING_3_U1_MASK << SHUB_MD_TIMING_3_U1_SHIFT)
+#define SHUB_MD_TIMING_3_U1_INPLACE (SHUB_MD_TIMING_3_U1_MASK << SHUB_MD_TIMING_3_U1_SHIFT)
 #define SHUB_MD_TIMING_3_U0_SHIFT                    0 /* established */
 #define SHUB_MD_TIMING_3_U0_MASK                     0xfull
-#define SHUB_MD_TIMING_3_U0_INPLACE                  (SHUB_MD_TIMING_3_U0_MASK << SHUB_MD_TIMING_3_U0_SHIFT)
+#define SHUB_MD_TIMING_3_U0_INPLACE (SHUB_MD_TIMING_3_U0_MASK << SHUB_MD_TIMING_3_U0_SHIFT)
 
 /*
- * Memory controller register, unnamed; the name is ours. One word is written to both _0030 and _0050, once, after the eight DRAM initialisation runs: it starts as the old value of _0050 with bit 23 cleared and these fields deposited. Read once, before the write; keep what was written. See memory-init.md.
+ * Memory controller register, unnamed; the name is ours. One word is written to
+ * both _0030 and _0050, once, after the eight DRAM initialisation runs: it
+ * starts as the old value of _0050 with bit 23 cleared and these fields
+ * deposited. Read once, before the write; keep what was written. See
+ * memory-init.md.
  */
-/* md_refresh_1: rw64, reset unknown; SAL 5.04 PROM site 0xffa7761c (read), 0xffa77b0c (write); no Linux v5.3 name */
-#define SHUB_MD_REFRESH_1                            0x100010050 /* established */
+/* md_refresh_1: rw64, reset unknown; SAL 5.04 PROM site 0xffa7761c (read),
+ * 0xffa77b0c (write); no Linux v5.3 name */
+/* established */
+#define SHUB_MD_REFRESH_1                            0x100010050
 #define SHUB_MD_REFRESH_1_BANK_SMALL_SHIFT           24 /* established */
 #define SHUB_MD_REFRESH_1_BANK_SMALL_MASK            0xfull
-#define SHUB_MD_REFRESH_1_BANK_SMALL_INPLACE         (SHUB_MD_REFRESH_1_BANK_SMALL_MASK << SHUB_MD_REFRESH_1_BANK_SMALL_SHIFT)
+#define SHUB_MD_REFRESH_1_BANK_SMALL_INPLACE (SHUB_MD_REFRESH_1_BANK_SMALL_MASK << SHUB_MD_REFRESH_1_BANK_SMALL_SHIFT)
 #define SHUB_MD_REFRESH_1_TRFC_SHIFT                 17 /* inferred */
 #define SHUB_MD_REFRESH_1_TRFC_MASK                  0x3full
-#define SHUB_MD_REFRESH_1_TRFC_INPLACE               (SHUB_MD_REFRESH_1_TRFC_MASK << SHUB_MD_REFRESH_1_TRFC_SHIFT)
+#define SHUB_MD_REFRESH_1_TRFC_INPLACE (SHUB_MD_REFRESH_1_TRFC_MASK << SHUB_MD_REFRESH_1_TRFC_SHIFT)
 #define SHUB_MD_REFRESH_1_INTERVAL_SHIFT             8 /* inferred */
 #define SHUB_MD_REFRESH_1_INTERVAL_MASK              0x1ffull
-#define SHUB_MD_REFRESH_1_INTERVAL_INPLACE           (SHUB_MD_REFRESH_1_INTERVAL_MASK << SHUB_MD_REFRESH_1_INTERVAL_SHIFT)
+#define SHUB_MD_REFRESH_1_INTERVAL_INPLACE (SHUB_MD_REFRESH_1_INTERVAL_MASK << SHUB_MD_REFRESH_1_INTERVAL_SHIFT)
 #define SHUB_MD_REFRESH_1_CS_ENABLE_SHIFT            0 /* inferred */
 #define SHUB_MD_REFRESH_1_CS_ENABLE_MASK             0xffull
-#define SHUB_MD_REFRESH_1_CS_ENABLE_INPLACE          (SHUB_MD_REFRESH_1_CS_ENABLE_MASK << SHUB_MD_REFRESH_1_CS_ENABLE_SHIFT)
+#define SHUB_MD_REFRESH_1_CS_ENABLE_INPLACE (SHUB_MD_REFRESH_1_CS_ENABLE_MASK << SHUB_MD_REFRESH_1_CS_ENABLE_SHIFT)
 
 /*
- * Memory controller register, unnamed; the name is ours. Written once with the constant 0x4004e20; never read. Role unknown. See memory-init.md.
+ * Memory controller register, unnamed; the name is ours. Written once with the
+ * constant 0x4004e20; never read. Role unknown. See memory-init.md.
  */
-/* md_const_58: w64, reset unknown; SAL 5.04 PROM site 0xffa7745c (write); no Linux v5.3 name */
-#define SHUB_MD_CONST_58                             0x100010058 /* established */
+/* md_const_58: w64, reset unknown; SAL 5.04 PROM site 0xffa7745c (write); no
+ * Linux v5.3 name */
+/* established */
+#define SHUB_MD_CONST_58                             0x100010058
 
 /*
- * Memory controller register, unnamed; the name is ours. Written 0x4047 when the SHub ID revision (bits 31:28 of 0x1_1006_0580) is above 2 and 0x4045 otherwise; never read. Role unknown. See memory-init.md.
+ * Memory controller register, unnamed; the name is ours. Written 0x4047 when
+ * the SHub ID revision (bits 31:28 of 0x1_1006_0580) is above 2 and 0x4045
+ * otherwise; never read. Role unknown. See memory-init.md.
  */
-/* md_ctl_60: w64, reset unknown; SAL 5.04 PROM site 0xffa773cc (write), 0xffa7738c (revision read); no Linux v5.3 name */
-#define SHUB_MD_CTL_60                               0x100010060 /* established */
+/* md_ctl_60: w64, reset unknown; SAL 5.04 PROM site 0xffa773cc (write),
+ * 0xffa7738c (revision read); no Linux v5.3 name */
+/* established */
+#define SHUB_MD_CTL_60                               0x100010060
 
 /*
- * Memory controller register, unnamed; the name is ours. The credit routine (site 0xffa7a960) reads it for the first flagged bank, reads md_bank_cfg1, and compares the 32-bit value with its argument, 4 when called from the memory test and 2 from Initializing memory (which always runs). Equal: nothing. Value below the argument: zero-fills the last 1/32 of the bank with engine operation 48, then writes the argument back (sign-extended from 32 bits), then zero-fills with the block transfer engine (IBLS0 written 0x100000 plus twice the difference, polled for bit 20 to clear; a timeout prints a message and returns). Value above: writes the argument back and zero-fills (value minus argument) times 32 8-byte words at the bank base with operation 48. The routine returns at once, touching nothing, when cpuid[2] equals 0xaeeeeeee8badbeef or no bank is flagged present. The register must read back what was written; the role of the value is unknown (a credit-like count, inferred from the comparison). See memory-init.md.
+ * Memory controller register, unnamed; the name is ours. The credit routine
+ * (site 0xffa7a960) reads it for the first flagged bank, reads md_bank_cfg1,
+ * and compares the 32-bit value with its argument, 4 when called from the
+ * memory test and 2 from Initializing memory (which always runs). Equal:
+ * nothing. Value below the argument: zero-fills the last 1/32 of the bank with
+ * engine operation 48, then writes the argument back (sign-extended from 32
+ * bits), then zero-fills with the block transfer engine (IBLS0 written 0x100000
+ * plus twice the difference, polled for bit 20 to clear; a timeout prints a
+ * message and returns). Value above: writes the argument back and zero-fills
+ * (value minus argument) times 32 8-byte words at the bank base with operation
+ * 48. The routine returns at once, touching nothing, when cpuid[2] equals
+ * 0xaeeeeeee8badbeef or no bank is flagged present. The register must read back
+ * what was written; the role of the value is unknown (a credit-like count,
+ * inferred from the comparison). See memory-init.md.
  */
-/* md_reg_0001_0068: rw64, reset unknown; SAL 5.04 PROM site 0xffa7ab6c (read), 0xffa7acdc and 0xffa7ad9c (writes) */
-#define SHUB_MD_REG_0001_0068                        0x100010068 /* established */
+/* md_reg_0001_0068: rw64, reset unknown; SAL 5.04 PROM site 0xffa7ab6c (read),
+ * 0xffa7acdc and 0xffa7ad9c (writes) */
+/* established */
+#define SHUB_MD_REG_0001_0068                        0x100010068
 
 /*
- * Memory controller register, unnamed; the name is ours. Written once with the constant 0x24; never read. Role unknown. See memory-init.md.
+ * Memory controller register, unnamed; the name is ours. Written once with the
+ * constant 0x24; never read. Role unknown. See memory-init.md.
  */
-/* md_const_78: w64, reset unknown; SAL 5.04 PROM site 0xffa7748c (write); no Linux v5.3 name */
-#define SHUB_MD_CONST_78                             0x100010078 /* established */
+/* md_const_78: w64, reset unknown; SAL 5.04 PROM site 0xffa7748c (write); no
+ * Linux v5.3 name */
+/* established */
+#define SHUB_MD_CONST_78                             0x100010078
 
 /*
- * Memory test and DRAM initialisation engine, command or address word; the name is ours. Written with the caller's 64-bit word before the status and control writes of every engine start: for operations 48 and 16 the byte address within the node where the pass starts (bank << 34, plus 32 times the pass number for operation 16), for operation 64 the directory address, for the DRAM initialisation commands (operations 7, 2, 1, 0) a command word. Never read in the passing path. Must return: plain storage. See memory-init.md.
+ * Memory test and DRAM initialisation engine, command or address word; the name
+ * is ours. Written with the caller's 64-bit word before the status and control
+ * writes of every engine start: for operations 48 and 16 the byte address
+ * within the node where the pass starts (bank << 34, plus 32 times the pass
+ * number for operation 16), for operation 64 the directory address, for the
+ * DRAM initialisation commands (operations 7, 2, 1, 0) a command word. Never
+ * read in the passing path. Must return: plain storage. See memory-init.md.
  */
-/* md_mbist_cmd: w64, reset unknown; SAL 5.04 PROM site 0xffa6fb7c (written first when the engine starts); no Linux v5.3 name */
-#define SHUB_MD_MBIST_CMD                            0x100020080 /* established */
+/* md_mbist_cmd: w64, reset unknown; SAL 5.04 PROM site 0xffa6fb7c (written
+ * first when the engine starts); no Linux v5.3 name */
+/* established */
+#define SHUB_MD_MBIST_CMD                            0x100020080
 
 /*
- * Memory test and DRAM initialisation engine control; the name is ours. The PROM starts the engine by writing md_mbist_cmd, then 0 to md_mbist_status and all ones to md_mbist_mask, then this register with go set, an operation code in bits 38:32 and a 31-bit value. It then polls, keeping bits 41:40: it leaves the loop when they are not 01 (go set, fail clear), so 00 is done, 10 is done and failed, 11 is failed with go still set (the PROM then stores the value it read back with bit 40 cleared and polls bit 40 to clear), 01 is busy. The deadline is 20,000,000 microseconds, scaled from the real-time clock by the period in rtc_ctl. An expiry returns -3 (printed as MBIST TIMEOUT). Callers test bit 41 afterwards. Bits 38:0 are never read. A model where go clears at once and fail never sets satisfies the code. See memory-init.md.
+ * Memory test and DRAM initialisation engine control; the name is ours. The
+ * PROM starts the engine by writing md_mbist_cmd, then 0 to md_mbist_status and
+ * all ones to md_mbist_mask, then this register with go set, an operation code
+ * in bits 38:32 and a 31-bit value. It then polls, keeping bits 41:40: it
+ * leaves the loop when they are not 01 (go set, fail clear), so 00 is done, 10
+ * is done and failed, 11 is failed with go still set (the PROM then stores the
+ * value it read back with bit 40 cleared and polls bit 40 to clear), 01 is
+ * busy. The deadline is 20,000,000 microseconds, scaled from the real-time
+ * clock by the period in rtc_ctl. An expiry returns -3 (printed as MBIST
+ * TIMEOUT). Callers test bit 41 afterwards. Bits 38:0 are never read. A model
+ * where go clears at once and fail never sets satisfies the code. See
+ * memory-init.md.
  */
-/* md_mbist_ctl: rw64, reset unknown; SAL 5.04 PROM site 0xffa6fc3c (start), 0xffa6fd3c and 0xffa6fddc (poll), 0xffa6b1dc (failure test); no Linux v5.3 name */
-#define SHUB_MD_MBIST_CTL                            0x100020088 /* established */
+/* md_mbist_ctl: rw64, reset unknown; SAL 5.04 PROM site 0xffa6fc3c (start),
+ * 0xffa6fd3c and 0xffa6fddc (poll), 0xffa6b1dc (failure test); no Linux v5.3
+ * name */
+/* established */
+#define SHUB_MD_MBIST_CTL                            0x100020088
 #define SHUB_MD_MBIST_CTL_FAIL_SHIFT                 41 /* established */
 #define SHUB_MD_MBIST_CTL_FAIL_MASK                  0x1ull
-#define SHUB_MD_MBIST_CTL_FAIL_INPLACE               (SHUB_MD_MBIST_CTL_FAIL_MASK << SHUB_MD_MBIST_CTL_FAIL_SHIFT)
+#define SHUB_MD_MBIST_CTL_FAIL_INPLACE (SHUB_MD_MBIST_CTL_FAIL_MASK << SHUB_MD_MBIST_CTL_FAIL_SHIFT)
 #define SHUB_MD_MBIST_CTL_GO_SHIFT                   40 /* established */
 #define SHUB_MD_MBIST_CTL_GO_MASK                    0x1ull
-#define SHUB_MD_MBIST_CTL_GO_INPLACE                 (SHUB_MD_MBIST_CTL_GO_MASK << SHUB_MD_MBIST_CTL_GO_SHIFT)
+#define SHUB_MD_MBIST_CTL_GO_INPLACE (SHUB_MD_MBIST_CTL_GO_MASK << SHUB_MD_MBIST_CTL_GO_SHIFT)
 #define SHUB_MD_MBIST_CTL_OP_SHIFT                   32 /* established */
 #define SHUB_MD_MBIST_CTL_OP_MASK                    0x7full
-#define SHUB_MD_MBIST_CTL_OP_INPLACE                 (SHUB_MD_MBIST_CTL_OP_MASK << SHUB_MD_MBIST_CTL_OP_SHIFT)
+#define SHUB_MD_MBIST_CTL_OP_INPLACE (SHUB_MD_MBIST_CTL_OP_MASK << SHUB_MD_MBIST_CTL_OP_SHIFT)
 #define SHUB_MD_MBIST_CTL_VALUE_SHIFT                0 /* established */
 #define SHUB_MD_MBIST_CTL_VALUE_MASK                 0x7fffffffull
-#define SHUB_MD_MBIST_CTL_VALUE_INPLACE              (SHUB_MD_MBIST_CTL_VALUE_MASK << SHUB_MD_MBIST_CTL_VALUE_SHIFT)
+#define SHUB_MD_MBIST_CTL_VALUE_INPLACE (SHUB_MD_MBIST_CTL_VALUE_MASK << SHUB_MD_MBIST_CTL_VALUE_SHIFT)
 
 /*
- * MD block register, unnamed; the name is ours. Initializing memory (site 0xffa782c0, which always runs) reads it, sets bit 3 and writes the result to this register and to md_reg_0005_0000. A routine reached only through a function-descriptor table (site 0xffa733d0) writes a size class from 0 to 4 into bits 2:0 of both; another (site 0xffa78f70) reads bits 2:0 plus one as a shift. Whether the table path runs on a single node was not traced. Must return the stored value. The 2.4 header names this offset SH_MD_DQLP_MMR_DIR_CONFIG (mask 0x1f, INIT 0x10): bits 2:0 SYS_SIZE (system size code), bit 3 EN_DIRECC (enable directory ECC correction), bit 4 EN_DIRPOIS.
+ * MD block register, unnamed; the name is ours. Initializing memory (site
+ * 0xffa782c0, which always runs) reads it, sets bit 3 and writes the result to
+ * this register and to md_reg_0005_0000. A routine reached only through a
+ * function-descriptor table (site 0xffa733d0) writes a size class from 0 to 4
+ * into bits 2:0 of both; another (site 0xffa78f70) reads bits 2:0 plus one as a
+ * shift. Whether the table path runs on a single node was not traced. Must
+ * return the stored value. The 2.4 header names this offset
+ * SH_MD_DQLP_MMR_DIR_CONFIG (mask 0x1f, INIT 0x10): bits 2:0 SYS_SIZE (system
+ * size code), bit 3 EN_DIRECC (enable directory ECC correction), bit 4
+ * EN_DIRPOIS.
  */
-/* md_reg_0003_0000: rw64, reset unknown; SAL 5.04 PROM sites 0xffa785cc (read) and 0xffa785ec (write); no Linux v5.3 name */
-#define SHUB_MD_REG_0003_0000                        0x100030000 /* established */
+/* md_reg_0003_0000: rw64, reset unknown; SAL 5.04 PROM sites 0xffa785cc (read)
+ * and 0xffa785ec (write); no Linux v5.3 name */
+/* established */
+#define SHUB_MD_REG_0003_0000                        0x100030000
 
 /*
- * Directory presence vector words 0 to 3 of the left directory queue port. The PROM writes the bit mask of present nodes: for each present NASID n in block A's node table it sets one bit (word and bit from n, the mode in SHUB_ID bits 45:44 and the node's position); for NASID 0 alone word 0 is 1 and words 1 to 3 are 0 in every mode. The same four values go to md_dqrp_dir_presvec and shubs_present. Never read back. The header says: node [63:0] presence bits, 1 = present (INIT 0). The loop includes a node other than the local one only when 0xffa129f0 returns 0 for it.
+ * Directory presence vector words 0 to 3 of the left directory queue port. The
+ * PROM writes the bit mask of present nodes: for each present NASID n in block
+ * A's node table it sets one bit (word and bit from n, the mode in SHUB_ID bits
+ * 45:44 and the node's position); for NASID 0 alone word 0 is 1 and words 1 to
+ * 3 are 0 in every mode. The same four values go to md_dqrp_dir_presvec and
+ * shubs_present. Never read back. The header says: node [63:0] presence bits, 1
+ * = present (INIT 0). The loop includes a node other than the local one only
+ * when 0xffa129f0 returns 0 for it.
  */
-/* md_dqlp_dir_presvec: w64, reset unknown; SAL 5.04 PROM site 0xffa79310 (stores after the node-table loop; names SH_MD_DQLP_MMR_DIR_PRESVEC0 to 3 in the PROM table) */
-#define SHUB_MD_DQLP_DIR_PRESVEC                     0x100030100 /* established */
+/* md_dqlp_dir_presvec: w64, reset unknown; SAL 5.04 PROM site 0xffa79310
+ * (stores after the node-table loop; names SH_MD_DQLP_MMR_DIR_PRESVEC0 to 3 in
+ * the PROM table) */
+/* established */
+#define SHUB_MD_DQLP_DIR_PRESVEC                     0x100030100
 #define SHUB_MD_DQLP_DIR_PRESVEC_COUNT               4
 #define SHUB_MD_DQLP_DIR_PRESVEC_STRIDE              16
 
 /*
- * MD block registers, unnamed; the name is ours. Eight words at stride 0x10 that the memory set-up fills with all ones, once each, through the global window. Never read. The PROM table names them SH_MD_DQLP_MMR_DIR_LOCVEC0 to 7 (right port: DQRP). The node memory set-up (site 0xffa78f60, slot 97 of the class-0 methods) writes all eight again with the node mask, one bit per group of present nodes (1 for NASID 0 alone). See memory-init.md.
+ * MD block registers, unnamed; the name is ours. Eight words at stride 0x10
+ * that the memory set-up fills with all ones, once each, through the global
+ * window. Never read. The PROM table names them SH_MD_DQLP_MMR_DIR_LOCVEC0 to 7
+ * (right port: DQRP). The node memory set-up (site 0xffa78f60, slot 97 of the
+ * class-0 methods) writes all eight again with the node mask, one bit per group
+ * of present nodes (1 for NASID 0 alone). See memory-init.md.
  */
-/* md_reg_0003_0200: w64, reset unknown; SAL 5.04 PROM site 0xffa7729c (write loop); no Linux v5.3 name */
-#define SHUB_MD_REG_0003_0200                        0x100030200 /* established */
+/* md_reg_0003_0200: w64, reset unknown; SAL 5.04 PROM site 0xffa7729c (write
+ * loop); no Linux v5.3 name */
+/* established */
+#define SHUB_MD_REG_0003_0200                        0x100030200
 #define SHUB_MD_REG_0003_0200_COUNT                  8
 #define SHUB_MD_REG_0003_0200_STRIDE                 16
 
 /*
- * Memory and directory unit: privilege vector for access class 0 of the left directory queue port (header SH1_MD_DQLP_MMR_DIR_PRIVEC0, title 'privilege vector for acc=0'). Defined by the header; no use in any kernel file read. Layout and role unknown.
+ * Memory and directory unit: privilege vector for access class 0 of the left
+ * directory queue port (header SH1_MD_DQLP_MMR_DIR_PRIVEC0, title 'privilege
+ * vector for acc=0'). Defined by the header; no use in any kernel file read.
+ * Layout and role unknown.
  */
-/* md_dqlp_dir_privilege_vector: rw64, reset unknown; Linux v5.3 SGI SN2 platform MMR header (GPL): name and offset */
-#define SHUB_MD_DQLP_DIR_PRIVILEGE_VECTOR            0x100030300 /* established */
+/* md_dqlp_dir_privilege_vector: rw64, reset unknown; Linux v5.3 SGI SN2
+ * platform MMR header (GPL): name and offset */
+/* established */
+#define SHUB_MD_DQLP_DIR_PRIVILEGE_VECTOR            0x100030300
 
 /*
- * Privilege vectors 1 to 7 of the left directory queue port (vector 0 is md_dqlp_dir_privilege_vector at 0x1_0003_0300). The PROM writes constants, the same pair of values to the left and right ports: vec 0 0x4bfff, 1 0xc96f25b, 2 0xfffffff, 3 0x96ffff, 4 0, 5 0, 6 0x4803f, 7 0x48000 (the list is vec 0 to 7 at 0x1_0003_0300 to 0x370). Never read back. The header (SH_MD_DQLP_MMR_DIR_PRIVEC1..7, mask 0xfffffff, INIT 0) splits each word into IN, bits 13:0, in-partition privileges for locvec bit = 1, and OUT, bits 27:14, out-of-partition privileges for locvec bit = 0; one vector per access class.
+ * Privilege vectors 1 to 7 of the left directory queue port (vector 0 is
+ * md_dqlp_dir_privilege_vector at 0x1_0003_0300). The PROM writes constants,
+ * the same pair of values to the left and right ports: vec 0 0x4bfff, 1
+ * 0xc96f25b, 2 0xfffffff, 3 0x96ffff, 4 0, 5 0, 6 0x4803f, 7 0x48000 (the list
+ * is vec 0 to 7 at 0x1_0003_0300 to 0x370). Never read back. The header
+ * (SH_MD_DQLP_MMR_DIR_PRIVEC1..7, mask 0xfffffff, INIT 0) splits each word into
+ * IN, bits 13:0, in-partition privileges for locvec bit = 1, and OUT, bits
+ * 27:14, out-of-partition privileges for locvec bit = 0; one vector per access
+ * class.
  */
-/* md_dqlp_dir_privec: w64, reset unknown; SAL 5.04 PROM site 0xffa79960 (constants), names SH_MD_DQLP_MMR_DIR_PRIVEC1 to 7 in the PROM table */
-#define SHUB_MD_DQLP_DIR_PRIVEC                      0x100030310 /* established */
+/* md_dqlp_dir_privec: w64, reset unknown; SAL 5.04 PROM site 0xffa79960
+ * (constants), names SH_MD_DQLP_MMR_DIR_PRIVEC1 to 7 in the PROM table */
+/* established */
+#define SHUB_MD_DQLP_DIR_PRIVEC                      0x100030310
 #define SHUB_MD_DQLP_DIR_PRIVEC_COUNT                7
 #define SHUB_MD_DQLP_DIR_PRIVEC_STRIDE               16
 
 /*
- * Memory and directory block register, unnamed; the name is ours. The memory controller set-up writes 0x1000 (bit 12) to it through the global window, between the control register md_ctl_60 and md_const_58. It is 0x100 above SH1_MD_DQLP_MMR_DIR_PRIVEC0 (md_dqlp_dir_privilege_vector); that it is the next privilege vector is not shown. Never read. A write-accepting register satisfies the PROM; the role is unknown.
+ * Memory and directory block register, unnamed; the name is ours. The memory
+ * controller set-up writes 0x1000 (bit 12) to it through the global window,
+ * between the control register md_ctl_60 and md_const_58. It is 0x100 above
+ * SH1_MD_DQLP_MMR_DIR_PRIVEC0 (md_dqlp_dir_privilege_vector); that it is the
+ * next privilege vector is not shown. Never read. A write-accepting register
+ * satisfies the PROM; the role is unknown.
  */
-/* md_reg_0003_0400: w64, reset unknown; SAL 5.04 PROM site 0xffa773fc (write); the only reference to the address in SAL_A and SAL_B */
-#define SHUB_MD_REG_0003_0400                        0x100030400 /* established */
+/* md_reg_0003_0400: w64, reset unknown; SAL 5.04 PROM site 0xffa773fc (write);
+ * the only reference to the address in SAL_A and SAL_B */
+/* established */
+#define SHUB_MD_REG_0003_0400                        0x100030400
 
 /*
- * Directory memory initial-value write, left queue port block (the block is the one the Linux header calls SH1_MD_DQLP_MMR_DIR_PRIVEC0 at the 0x300 offset; the left reading is inferred from that name); the name is ours. The PROM stores the value shifted left 55 here and to md_dir_access_rp, then runs the engine with operation code 64. No separate initialise register for directory ECC was seen. The routine fails on a -3 timeout or bit 41 of md_mbist_ctl and does not test bit 36 of md_mbist_status. Never read; plain storage satisfies the PROM. Callers pass the value 7 for the first 64 KiB of node 0 and 6 for the 6 MiB PROM image copy (argument positions inferred). See memory-init.md.
+ * Directory memory initial-value write, left queue port block (the block is the
+ * one the Linux header calls SH1_MD_DQLP_MMR_DIR_PRIVEC0 at the 0x300 offset;
+ * the left reading is inferred from that name); the name is ours. The PROM
+ * stores the value shifted left 55 here and to md_dir_access_rp, then runs the
+ * engine with operation code 64. No separate initialise register for directory
+ * ECC was seen. The routine fails on a -3 timeout or bit 41 of md_mbist_ctl and
+ * does not test bit 36 of md_mbist_status. Never read; plain storage satisfies
+ * the PROM. Callers pass the value 7 for the first 64 KiB of node 0 and 6 for
+ * the 6 MiB PROM image copy (argument positions inferred). See memory-init.md.
  */
-/* md_dir_access_lp: w64, reset unknown; SAL 5.04 PROM site 0xffa6b10c (memctl_write_dir_access, the string the routine prints); no Linux v5.3 name */
-#define SHUB_MD_DIR_ACCESS_LP                        0x100031000 /* established */
+/* md_dir_access_lp: w64, reset unknown; SAL 5.04 PROM site 0xffa6b10c
+ * (memctl_write_dir_access, the string the routine prints); no Linux v5.3 name
+ */
+/* established */
+#define SHUB_MD_DIR_ACCESS_LP                        0x100031000
 #define SHUB_MD_DIR_ACCESS_LP_VALUE_SHIFT            55 /* inferred */
 #define SHUB_MD_DIR_ACCESS_LP_VALUE_MASK             0x1ffull
-#define SHUB_MD_DIR_ACCESS_LP_VALUE_INPLACE          (SHUB_MD_DIR_ACCESS_LP_VALUE_MASK << SHUB_MD_DIR_ACCESS_LP_VALUE_SHIFT)
+#define SHUB_MD_DIR_ACCESS_LP_VALUE_INPLACE (SHUB_MD_DIR_ACCESS_LP_VALUE_MASK << SHUB_MD_DIR_ACCESS_LP_VALUE_SHIFT)
 
 /*
- * Memory test data pattern word (first A word of each block), one in each of the blocks 0x3, 0x4, 0x5 and 0x6 (stride 0x1_0000); the name is ours. Programmed before every engine operation 48 or 16: the A words get the 40-bit pattern with bit 42 set, the B words the pattern or its 40-bit complement. Never read. Must return: plain storage. See memory-init.md.
+ * Memory test data pattern word (first A word of each block), one in each of
+ * the blocks 0x3, 0x4, 0x5 and 0x6 (stride 0x1_0000); the name is ours.
+ * Programmed before every engine operation 48 or 16: the A words get the 40-bit
+ * pattern with bit 42 set, the B words the pattern or its 40-bit complement.
+ * Never read. Must return: plain storage. See memory-init.md.
  */
-/* md_bist_data_a0: w64, reset unknown; SAL 5.04 PROM site 0xffa703d0 (the pattern programming routine); no Linux v5.3 name */
-#define SHUB_MD_BIST_DATA_A0                         0x100038000 /* established */
+/* md_bist_data_a0: w64, reset unknown; SAL 5.04 PROM site 0xffa703d0 (the
+ * pattern programming routine); no Linux v5.3 name */
+/* established */
+#define SHUB_MD_BIST_DATA_A0                         0x100038000
 #define SHUB_MD_BIST_DATA_A0_COUNT                   4
 #define SHUB_MD_BIST_DATA_A0_STRIDE                  65536
 
 /*
- * Memory test data pattern word (first B word of each block), one in each of the blocks 0x3, 0x4, 0x5 and 0x6 (stride 0x1_0000); the name is ours. Programmed before every engine operation 48 or 16: the A words get the 40-bit pattern with bit 42 set, the B words the pattern or its 40-bit complement. Never read. Must return: plain storage. See memory-init.md.
+ * Memory test data pattern word (first B word of each block), one in each of
+ * the blocks 0x3, 0x4, 0x5 and 0x6 (stride 0x1_0000); the name is ours.
+ * Programmed before every engine operation 48 or 16: the A words get the 40-bit
+ * pattern with bit 42 set, the B words the pattern or its 40-bit complement.
+ * Never read. Must return: plain storage. See memory-init.md.
  */
-/* md_bist_data_b0: w64, reset unknown; SAL 5.04 PROM site 0xffa703d0 (the pattern programming routine); no Linux v5.3 name */
-#define SHUB_MD_BIST_DATA_B0                         0x100038010 /* established */
+/* md_bist_data_b0: w64, reset unknown; SAL 5.04 PROM site 0xffa703d0 (the
+ * pattern programming routine); no Linux v5.3 name */
+/* established */
+#define SHUB_MD_BIST_DATA_B0                         0x100038010
 #define SHUB_MD_BIST_DATA_B0_COUNT                   4
 #define SHUB_MD_BIST_DATA_B0_STRIDE                  65536
 
 /*
- * Memory test data pattern word (second A word of each block), one in each of the blocks 0x3, 0x4, 0x5 and 0x6 (stride 0x1_0000); the name is ours. Programmed before every engine operation 48 or 16: the A words get the 40-bit pattern with bit 42 set, the B words the pattern or its 40-bit complement. Never read. Must return: plain storage. See memory-init.md.
+ * Memory test data pattern word (second A word of each block), one in each of
+ * the blocks 0x3, 0x4, 0x5 and 0x6 (stride 0x1_0000); the name is ours.
+ * Programmed before every engine operation 48 or 16: the A words get the 40-bit
+ * pattern with bit 42 set, the B words the pattern or its 40-bit complement.
+ * Never read. Must return: plain storage. See memory-init.md.
  */
-/* md_bist_data_a1: w64, reset unknown; SAL 5.04 PROM site 0xffa703d0 (the pattern programming routine); no Linux v5.3 name */
-#define SHUB_MD_BIST_DATA_A1                         0x100038800 /* established */
+/* md_bist_data_a1: w64, reset unknown; SAL 5.04 PROM site 0xffa703d0 (the
+ * pattern programming routine); no Linux v5.3 name */
+/* established */
+#define SHUB_MD_BIST_DATA_A1                         0x100038800
 #define SHUB_MD_BIST_DATA_A1_COUNT                   4
 #define SHUB_MD_BIST_DATA_A1_STRIDE                  65536
 
 /*
- * Memory test data pattern word (second B word of each block), one in each of the blocks 0x3, 0x4, 0x5 and 0x6 (stride 0x1_0000); the name is ours. Programmed before every engine operation 48 or 16: the A words get the 40-bit pattern with bit 42 set, the B words the pattern or its 40-bit complement. Never read. Must return: plain storage. See memory-init.md.
+ * Memory test data pattern word (second B word of each block), one in each of
+ * the blocks 0x3, 0x4, 0x5 and 0x6 (stride 0x1_0000); the name is ours.
+ * Programmed before every engine operation 48 or 16: the A words get the 40-bit
+ * pattern with bit 42 set, the B words the pattern or its 40-bit complement.
+ * Never read. Must return: plain storage. See memory-init.md.
  */
-/* md_bist_data_b1: w64, reset unknown; SAL 5.04 PROM site 0xffa703d0 (the pattern programming routine); no Linux v5.3 name */
-#define SHUB_MD_BIST_DATA_B1                         0x100038810 /* established */
+/* md_bist_data_b1: w64, reset unknown; SAL 5.04 PROM site 0xffa703d0 (the
+ * pattern programming routine); no Linux v5.3 name */
+/* established */
+#define SHUB_MD_BIST_DATA_B1                         0x100038810
 #define SHUB_MD_BIST_DATA_B1_COUNT                   4
 #define SHUB_MD_BIST_DATA_B1_STRIDE                  65536
 
 /*
- * As md_reg_0003_0000 for the right queue port block; the PROM only writes it, with the value it read from md_reg_0003_0000 with bit 3 set. The name is ours.
+ * As md_reg_0003_0000 for the right queue port block; the PROM only writes it,
+ * with the value it read from md_reg_0003_0000 with bit 3 set. The name is
+ * ours.
  */
-/* md_reg_0005_0000: w64, reset unknown; SAL 5.04 PROM site 0xffa7861c (write); no Linux v5.3 name */
-#define SHUB_MD_REG_0005_0000                        0x100050000 /* established */
+/* md_reg_0005_0000: w64, reset unknown; SAL 5.04 PROM site 0xffa7861c (write);
+ * no Linux v5.3 name */
+/* established */
+#define SHUB_MD_REG_0005_0000                        0x100050000
 
 /*
- * Presence vector words 0 to 3 of the right directory queue port: the same values as md_dqlp_dir_presvec, written beside them. Never read back. Header title: node [63:0] presence bits, 1 = present; INIT 0.
+ * Presence vector words 0 to 3 of the right directory queue port: the same
+ * values as md_dqlp_dir_presvec, written beside them. Never read back. Header
+ * title: node [63:0] presence bits, 1 = present; INIT 0.
  */
-/* md_dqrp_dir_presvec: w64, reset unknown; SAL 5.04 PROM site 0xffa79310 (names SH_MD_DQRP_MMR_DIR_PRESVEC0 to 3 in the PROM table) */
-#define SHUB_MD_DQRP_DIR_PRESVEC                     0x100050100 /* established */
+/* md_dqrp_dir_presvec: w64, reset unknown; SAL 5.04 PROM site 0xffa79310 (names
+ * SH_MD_DQRP_MMR_DIR_PRESVEC0 to 3 in the PROM table) */
+/* established */
+#define SHUB_MD_DQRP_DIR_PRESVEC                     0x100050100
 #define SHUB_MD_DQRP_DIR_PRESVEC_COUNT               4
 #define SHUB_MD_DQRP_DIR_PRESVEC_STRIDE              16
 
 /*
  * As md_reg_0003_0200 for the right queue port block. The name is ours.
  */
-/* md_reg_0005_0200: w64, reset unknown; SAL 5.04 PROM site 0xffa7732c (write loop); no Linux v5.3 name */
-#define SHUB_MD_REG_0005_0200                        0x100050200 /* established */
+/* md_reg_0005_0200: w64, reset unknown; SAL 5.04 PROM site 0xffa7732c (write
+ * loop); no Linux v5.3 name */
+/* established */
+#define SHUB_MD_REG_0005_0200                        0x100050200
 #define SHUB_MD_REG_0005_0200_COUNT                  8
 #define SHUB_MD_REG_0005_0200_STRIDE                 16
 
 /*
- * Same, right queue port (header SH1_MD_DQRP_MMR_DIR_PRIVEC0). The reading of DQLP and DQRP as left and right ports is inferred from the names.
+ * Same, right queue port (header SH1_MD_DQRP_MMR_DIR_PRIVEC0). The reading of
+ * DQLP and DQRP as left and right ports is inferred from the names.
  */
-/* md_dqrp_dir_privilege_vector: rw64, reset unknown; Linux v5.3 SGI SN2 platform MMR header (GPL): name and offset */
-#define SHUB_MD_DQRP_DIR_PRIVILEGE_VECTOR            0x100050300 /* established */
+/* md_dqrp_dir_privilege_vector: rw64, reset unknown; Linux v5.3 SGI SN2
+ * platform MMR header (GPL): name and offset */
+/* established */
+#define SHUB_MD_DQRP_DIR_PRIVILEGE_VECTOR            0x100050300
 
 /*
- * Privilege vectors 1 to 7 of the right directory queue port: the same constants as md_dqlp_dir_privec, written right after each left word.
+ * Privilege vectors 1 to 7 of the right directory queue port: the same
+ * constants as md_dqlp_dir_privec, written right after each left word.
  */
-/* md_dqrp_dir_privec: w64, reset unknown; SAL 5.04 PROM site 0xffa79960, names SH_MD_DQRP_MMR_DIR_PRIVEC1 to 7 in the PROM table */
-#define SHUB_MD_DQRP_DIR_PRIVEC                      0x100050310 /* established */
+/* md_dqrp_dir_privec: w64, reset unknown; SAL 5.04 PROM site 0xffa79960, names
+ * SH_MD_DQRP_MMR_DIR_PRIVEC1 to 7 in the PROM table */
+/* established */
+#define SHUB_MD_DQRP_DIR_PRIVEC                      0x100050310
 #define SHUB_MD_DQRP_DIR_PRIVEC_COUNT                7
 #define SHUB_MD_DQRP_DIR_PRIVEC_STRIDE               16
 
 /*
- * Same as md_reg_0003_0400 for the right queue port block, 0x100 above SH1_MD_DQRP_MMR_DIR_PRIVEC0 (md_dqrp_dir_privilege_vector). The same routine writes 0x1000 to it straight after md_reg_0003_0400. The name is ours; the role is unknown.
+ * Same as md_reg_0003_0400 for the right queue port block, 0x100 above
+ * SH1_MD_DQRP_MMR_DIR_PRIVEC0 (md_dqrp_dir_privilege_vector). The same routine
+ * writes 0x1000 to it straight after md_reg_0003_0400. The name is ours; the
+ * role is unknown.
  */
-/* md_reg_0005_0400: w64, reset unknown; SAL 5.04 PROM site 0xffa7742c (write); the only reference to the address in SAL_A and SAL_B */
-#define SHUB_MD_REG_0005_0400                        0x100050400 /* established */
+/* md_reg_0005_0400: w64, reset unknown; SAL 5.04 PROM site 0xffa7742c (write);
+ * the only reference to the address in SAL_A and SAL_B */
+/* established */
+#define SHUB_MD_REG_0005_0400                        0x100050400
 
 /*
- * As md_dir_access_lp for the right queue port block (SH1_MD_DQRP_MMR_DIR_PRIVEC0's block); the name is ours.
+ * As md_dir_access_lp for the right queue port block
+ * (SH1_MD_DQRP_MMR_DIR_PRIVEC0's block); the name is ours.
  */
-/* md_dir_access_rp: w64, reset unknown; SAL 5.04 PROM site 0xffa6b14c; no Linux v5.3 name */
-#define SHUB_MD_DIR_ACCESS_RP                        0x100051000 /* established */
+/* md_dir_access_rp: w64, reset unknown; SAL 5.04 PROM site 0xffa6b14c; no Linux
+ * v5.3 name */
+/* established */
+#define SHUB_MD_DIR_ACCESS_RP                        0x100051000
 #define SHUB_MD_DIR_ACCESS_RP_VALUE_SHIFT            55 /* inferred */
 #define SHUB_MD_DIR_ACCESS_RP_VALUE_MASK             0x1ffull
-#define SHUB_MD_DIR_ACCESS_RP_VALUE_INPLACE          (SHUB_MD_DIR_ACCESS_RP_VALUE_MASK << SHUB_MD_DIR_ACCESS_RP_VALUE_SHIFT)
+#define SHUB_MD_DIR_ACCESS_RP_VALUE_INPLACE (SHUB_MD_DIR_ACCESS_RP_VALUE_MASK << SHUB_MD_DIR_ACCESS_RP_VALUE_SHIFT)
 
 /*
- * I/O interface interrupt 0 and 1 (SH_II_INT0, SH_II_INT1): the register a PIC's interrupt write lands on, through the Crosstalk address nasid << 36 | 1 << 47 | offset. Bits 7:0 are the processor vector, bit 8 sends it to the processor interface (header: a pulse). The data a PIC writes is inferred to be 0x100 | vector. Not accessed by the PROM.
+ * I/O interface interrupt 0 and 1 (SH_II_INT0, SH_II_INT1): the register a
+ * PIC's interrupt write lands on, through the Crosstalk address nasid << 36 | 1
+ * << 47 | offset. Bits 7:0 are the processor vector, bit 8 sends it to the
+ * processor interface (header: a pulse). The data a PIC writes is inferred to
+ * be 0x100 | vector. Not accessed by the PROM.
  */
 /* ii_int: w64, reset unknown */
-#define SHUB_II_INT                                  0x110000000 /* established */
+/* established */
+#define SHUB_II_INT                                  0x110000000
 #define SHUB_II_INT_COUNT                            2
 #define SHUB_II_INT_STRIDE                           256
 #define SHUB_II_INT_SEND_SHIFT                       8 /* established */
 #define SHUB_II_INT_SEND_MASK                        0x1ull
-#define SHUB_II_INT_SEND_INPLACE                     (SHUB_II_INT_SEND_MASK << SHUB_II_INT_SEND_SHIFT)
+#define SHUB_II_INT_SEND_INPLACE (SHUB_II_INT_SEND_MASK << SHUB_II_INT_SEND_SHIFT)
 #define SHUB_II_INT_IDX_SHIFT                        0 /* established */
 #define SHUB_II_INT_IDX_MASK                         0xffull
-#define SHUB_II_INT_IDX_INPLACE                      (SHUB_II_INT_IDX_MASK << SHUB_II_INT_IDX_SHIFT)
+#define SHUB_II_INT_IDX_INPLACE (SHUB_II_INT_IDX_MASK << SHUB_II_INT_IDX_SHIFT)
 
 /*
- * Destination of the I/O interface interrupt n (SH_II_INTn_CONFIG): delivery type, target processor id and optional vector base, the ipi_int layout without send or vector. The PROM writes the processor id of slice 0 to n = 0 and of slice 2 to n = 1 and never reads them.
+ * Destination of the I/O interface interrupt n (SH_II_INTn_CONFIG): delivery
+ * type, target processor id and optional vector base, the ipi_int layout
+ * without send or vector. The PROM writes the processor id of slice 0 to n = 0
+ * and of slice 2 to n = 1 and never reads them.
  */
 /* ii_int_config: rw64, reset unknown */
-#define SHUB_II_INT_CONFIG                           0x110000080 /* established */
+/* established */
+#define SHUB_II_INT_CONFIG                           0x110000080
 #define SHUB_II_INT_CONFIG_COUNT                     2
 #define SHUB_II_INT_CONFIG_STRIDE                    256
 #define SHUB_II_INT_CONFIG_BASE_SHIFT                21 /* established */
 #define SHUB_II_INT_CONFIG_BASE_MASK                 0x1fffffffull
-#define SHUB_II_INT_CONFIG_BASE_INPLACE              (SHUB_II_INT_CONFIG_BASE_MASK << SHUB_II_INT_CONFIG_BASE_SHIFT)
+#define SHUB_II_INT_CONFIG_BASE_INPLACE (SHUB_II_INT_CONFIG_BASE_MASK << SHUB_II_INT_CONFIG_BASE_SHIFT)
 #define SHUB_II_INT_CONFIG_PID_SHIFT                 4 /* established */
 #define SHUB_II_INT_CONFIG_PID_MASK                  0xffffull
-#define SHUB_II_INT_CONFIG_PID_INPLACE               (SHUB_II_INT_CONFIG_PID_MASK << SHUB_II_INT_CONFIG_PID_SHIFT)
+#define SHUB_II_INT_CONFIG_PID_INPLACE (SHUB_II_INT_CONFIG_PID_MASK << SHUB_II_INT_CONFIG_PID_SHIFT)
 #define SHUB_II_INT_CONFIG_AGENT_SHIFT               3 /* established */
 #define SHUB_II_INT_CONFIG_AGENT_MASK                0x1ull
-#define SHUB_II_INT_CONFIG_AGENT_INPLACE             (SHUB_II_INT_CONFIG_AGENT_MASK << SHUB_II_INT_CONFIG_AGENT_SHIFT)
+#define SHUB_II_INT_CONFIG_AGENT_INPLACE (SHUB_II_INT_CONFIG_AGENT_MASK << SHUB_II_INT_CONFIG_AGENT_SHIFT)
 #define SHUB_II_INT_CONFIG_TYPE_SHIFT                0 /* established */
 #define SHUB_II_INT_CONFIG_TYPE_MASK                 0x7ull
-#define SHUB_II_INT_CONFIG_TYPE_INPLACE              (SHUB_II_INT_CONFIG_TYPE_MASK << SHUB_II_INT_CONFIG_TYPE_SHIFT)
+#define SHUB_II_INT_CONFIG_TYPE_INPLACE (SHUB_II_INT_CONFIG_TYPE_MASK << SHUB_II_INT_CONFIG_TYPE_SHIFT)
 
 /*
- * Bit 0 enables the I/O interface interrupt n. The PROM writes 1 to both and never reads them.
+ * Bit 0 enables the I/O interface interrupt n. The PROM writes 1 to both and
+ * never reads them.
  */
 /* ii_int_enable: rw64, reset unknown */
-#define SHUB_II_INT_ENABLE                           0x110000200 /* established */
+/* established */
+#define SHUB_II_INT_ENABLE                           0x110000200
 #define SHUB_II_INT_ENABLE_COUNT                     2
 #define SHUB_II_INT_ENABLE_STRIDE                    128
 #define SHUB_II_INT_ENABLE_ENABLE_SHIFT              0 /* established */
 #define SHUB_II_INT_ENABLE_ENABLE_MASK               0x1ull
-#define SHUB_II_INT_ENABLE_ENABLE_INPLACE            (SHUB_II_INT_ENABLE_ENABLE_MASK << SHUB_II_INT_ENABLE_ENABLE_SHIFT)
+#define SHUB_II_INT_ENABLE_ENABLE_INPLACE (SHUB_II_INT_ENABLE_ENABLE_MASK << SHUB_II_INT_ENABLE_ENABLE_SHIFT)
 
 /*
- * Selects the node whose processors take this node's interrupts when it has none of its own (the PROM's table names it SH_INT_NODE_ID_CONFIG). Role inferred.
+ * Selects the node whose processors take this node's interrupts when it has
+ * none of its own (the PROM's table names it SH_INT_NODE_ID_CONFIG). Role
+ * inferred.
  */
-/* int_node_id_config: rw64, reset unknown; SAL 5.04 PROM site 0xffb73d76 and 0xffa23b16 (0x800 plus the target NASID in bits 10:0) */
-#define SHUB_INT_NODE_ID_CONFIG                      0x110000300 /* established */
+/* int_node_id_config: rw64, reset unknown; SAL 5.04 PROM site 0xffb73d76 and
+ * 0xffa23b16 (0x800 plus the target NASID in bits 10:0) */
+/* established */
+#define SHUB_INT_NODE_ID_CONFIG                      0x110000300
 
 /*
- * Send an interprocessor interrupt (processor interface or local block, inferred). The sender writes this register in the target node's global MMR window with send set, the target's physical processor id, a delivery type, a vector and a fixed base. The kernel stores through uncached physical mode with release ordering, after a memory barrier. On a SHub 1 revision 2 or lower it holds a global lock around the store and waits for the PIO write status to drain.
+ * Send an interprocessor interrupt (processor interface or local block,
+ * inferred). The sender writes this register in the target node's global MMR
+ * window with send set, the target's physical processor id, a delivery type, a
+ * vector and a fixed base. The kernel stores through uncached physical mode
+ * with release ordering, after a memory barrier. On a SHub 1 revision 2 or
+ * lower it holds a global lock around the store and waits for the PIO write
+ * status to drain.
  */
-/* ipi_int: w64, reset unknown; Linux v5.3 SGI SN2 platform MMR header (GPL): name and offset */
-#define SHUB_IPI_INT                                 0x110000380 /* established */
+/* ipi_int: w64, reset unknown; Linux v5.3 SGI SN2 platform MMR header (GPL):
+ * name and offset */
+/* established */
+#define SHUB_IPI_INT                                 0x110000380
 #define SHUB_IPI_INT_SEND_SHIFT                      63 /* established */
 #define SHUB_IPI_INT_SEND_MASK                       0x1ull
-#define SHUB_IPI_INT_SEND_INPLACE                    (SHUB_IPI_INT_SEND_MASK << SHUB_IPI_INT_SEND_SHIFT)
+#define SHUB_IPI_INT_SEND_INPLACE (SHUB_IPI_INT_SEND_MASK << SHUB_IPI_INT_SEND_SHIFT)
 #define SHUB_IPI_INT_IDX_SHIFT                       52 /* established */
 #define SHUB_IPI_INT_IDX_MASK                        0xffull
-#define SHUB_IPI_INT_IDX_INPLACE                     (SHUB_IPI_INT_IDX_MASK << SHUB_IPI_INT_IDX_SHIFT)
+#define SHUB_IPI_INT_IDX_INPLACE (SHUB_IPI_INT_IDX_MASK << SHUB_IPI_INT_IDX_SHIFT)
 #define SHUB_IPI_INT_BASE_SHIFT                      21 /* established */
 #define SHUB_IPI_INT_BASE_MASK                       0x1fffffffull
-#define SHUB_IPI_INT_BASE_INPLACE                    (SHUB_IPI_INT_BASE_MASK << SHUB_IPI_INT_BASE_SHIFT)
+#define SHUB_IPI_INT_BASE_INPLACE (SHUB_IPI_INT_BASE_MASK << SHUB_IPI_INT_BASE_SHIFT)
 #define SHUB_IPI_INT_PID_SHIFT                       4 /* established */
 #define SHUB_IPI_INT_PID_MASK                        0xffffull
-#define SHUB_IPI_INT_PID_INPLACE                     (SHUB_IPI_INT_PID_MASK << SHUB_IPI_INT_PID_SHIFT)
+#define SHUB_IPI_INT_PID_INPLACE (SHUB_IPI_INT_PID_MASK << SHUB_IPI_INT_PID_SHIFT)
 #define SHUB_IPI_INT_AGENT_SHIFT                     3 /* established */
 #define SHUB_IPI_INT_AGENT_MASK                      0x1ull
-#define SHUB_IPI_INT_AGENT_INPLACE                   (SHUB_IPI_INT_AGENT_MASK << SHUB_IPI_INT_AGENT_SHIFT)
+#define SHUB_IPI_INT_AGENT_INPLACE (SHUB_IPI_INT_AGENT_MASK << SHUB_IPI_INT_AGENT_SHIFT)
 #define SHUB_IPI_INT_TYPE_SHIFT                      0 /* established */
 #define SHUB_IPI_INT_TYPE_MASK                       0x7ull
-#define SHUB_IPI_INT_TYPE_INPLACE                    (SHUB_IPI_INT_TYPE_MASK << SHUB_IPI_INT_TYPE_SHIFT)
+#define SHUB_IPI_INT_TYPE_INPLACE (SHUB_IPI_INT_TYPE_MASK << SHUB_IPI_INT_TYPE_SHIFT)
 
 /*
- * Enable for ipi_int delivery (the PROM's table names it SH_IPI_INT_ENABLE). The PROM writes 1 before it sends wake-up messages and never reads it. That delivery depends on it is inferred.
+ * Enable for ipi_int delivery (the PROM's table names it SH_IPI_INT_ENABLE).
+ * The PROM writes 1 before it sends wake-up messages and never reads it. That
+ * delivery depends on it is inferred.
  */
-/* ipi_int_enable: rw64, reset unknown; SAL 5.04 PROM site 0xffa11056 (wake-up of the other processors) and 0xffa314a6; runtime cpu_launch_slave_threads */
-#define SHUB_IPI_INT_ENABLE                          0x110000400 /* established */
+/* ipi_int_enable: rw64, reset unknown; SAL 5.04 PROM site 0xffa11056 (wake-up
+ * of the other processors) and 0xffa314a6; runtime cpu_launch_slave_threads */
+/* established */
+#define SHUB_IPI_INT_ENABLE                          0x110000400
 
 /*
- * Destination of local interrupt n (0 to 5): the ipi_int message layout without the send bit. The PROM writes type 2 (PMI) vector 1 to interrupts 0 and 1 (slice pairs 0/1 and 2/3), type 5 (INIT) to interrupts 2 and 3 (slices 0 and 2) and vector 0xe9 (Linux SGI_UART_VECTOR) to interrupt 5. Never read. The pairing of these offsets with the PROM's SH_LOCAL_INTn_CONFIG names is by table order (inferred).
+ * Destination of local interrupt n (0 to 5): the ipi_int message layout without
+ * the send bit. The PROM writes type 2 (PMI) vector 1 to interrupts 0 and 1
+ * (slice pairs 0/1 and 2/3), type 5 (INIT) to interrupts 2 and 3 (slices 0 and
+ * 2) and vector 0xe9 (Linux SGI_UART_VECTOR) to interrupt 5. Never read. The
+ * pairing of these offsets with the PROM's SH_LOCAL_INTn_CONFIG names is by
+ * table order (inferred).
  */
-/* local_int_config: rw64, reset unknown; SAL 5.04 PROM sites 0xffa23a20 (interrupts 0 and 1, PMI vector 1), 0xffa31290 (interrupts 2 and 3, INIT), 0xffb73b86 (interrupt 5, vector 0xe9) */
-#define SHUB_LOCAL_INT_CONFIG                        0x110000480 /* established */
+/* local_int_config: rw64, reset unknown; SAL 5.04 PROM sites 0xffa23a20
+ * (interrupts 0 and 1, PMI vector 1), 0xffa31290 (interrupts 2 and 3, INIT),
+ * 0xffb73b86 (interrupt 5, vector 0xe9) */
+/* established */
+#define SHUB_LOCAL_INT_CONFIG                        0x110000480
 #define SHUB_LOCAL_INT_CONFIG_COUNT                  6
 #define SHUB_LOCAL_INT_CONFIG_STRIDE                 256
 #define SHUB_LOCAL_INT_CONFIG_IDX_SHIFT              52 /* established */
 #define SHUB_LOCAL_INT_CONFIG_IDX_MASK               0xffull
-#define SHUB_LOCAL_INT_CONFIG_IDX_INPLACE            (SHUB_LOCAL_INT_CONFIG_IDX_MASK << SHUB_LOCAL_INT_CONFIG_IDX_SHIFT)
+#define SHUB_LOCAL_INT_CONFIG_IDX_INPLACE (SHUB_LOCAL_INT_CONFIG_IDX_MASK << SHUB_LOCAL_INT_CONFIG_IDX_SHIFT)
 #define SHUB_LOCAL_INT_CONFIG_BASE_SHIFT             21 /* established */
 #define SHUB_LOCAL_INT_CONFIG_BASE_MASK              0x1fffffffull
-#define SHUB_LOCAL_INT_CONFIG_BASE_INPLACE           (SHUB_LOCAL_INT_CONFIG_BASE_MASK << SHUB_LOCAL_INT_CONFIG_BASE_SHIFT)
+#define SHUB_LOCAL_INT_CONFIG_BASE_INPLACE (SHUB_LOCAL_INT_CONFIG_BASE_MASK << SHUB_LOCAL_INT_CONFIG_BASE_SHIFT)
 #define SHUB_LOCAL_INT_CONFIG_PID_SHIFT              4 /* established */
 #define SHUB_LOCAL_INT_CONFIG_PID_MASK               0xffffull
-#define SHUB_LOCAL_INT_CONFIG_PID_INPLACE            (SHUB_LOCAL_INT_CONFIG_PID_MASK << SHUB_LOCAL_INT_CONFIG_PID_SHIFT)
+#define SHUB_LOCAL_INT_CONFIG_PID_INPLACE (SHUB_LOCAL_INT_CONFIG_PID_MASK << SHUB_LOCAL_INT_CONFIG_PID_SHIFT)
 #define SHUB_LOCAL_INT_CONFIG_AGENT_SHIFT            3 /* established */
 #define SHUB_LOCAL_INT_CONFIG_AGENT_MASK             0x1ull
-#define SHUB_LOCAL_INT_CONFIG_AGENT_INPLACE          (SHUB_LOCAL_INT_CONFIG_AGENT_MASK << SHUB_LOCAL_INT_CONFIG_AGENT_SHIFT)
+#define SHUB_LOCAL_INT_CONFIG_AGENT_INPLACE (SHUB_LOCAL_INT_CONFIG_AGENT_MASK << SHUB_LOCAL_INT_CONFIG_AGENT_SHIFT)
 #define SHUB_LOCAL_INT_CONFIG_TYPE_SHIFT             0 /* established */
 #define SHUB_LOCAL_INT_CONFIG_TYPE_MASK              0x7ull
-#define SHUB_LOCAL_INT_CONFIG_TYPE_INPLACE           (SHUB_LOCAL_INT_CONFIG_TYPE_MASK << SHUB_LOCAL_INT_CONFIG_TYPE_SHIFT)
+#define SHUB_LOCAL_INT_CONFIG_TYPE_INPLACE (SHUB_LOCAL_INT_CONFIG_TYPE_MASK << SHUB_LOCAL_INT_CONFIG_TYPE_SHIFT)
 
 /*
- * Mask of event sources that raise local interrupt n. The PROM writes 0x7ef (the bits it treats as error events), 0x4000 and 0x2000. How a mask bit maps to an event_occurred bit is unknown. Never read.
+ * Mask of event sources that raise local interrupt n. The PROM writes 0x7ef
+ * (the bits it treats as error events), 0x4000 and 0x2000. How a mask bit maps
+ * to an event_occurred bit is unknown. Never read.
  */
-/* local_int_enable: rw64, reset unknown; SAL 5.04 PROM sites 0xffa23a20 (0x7ef to interrupts 0 and 1), 0xffa31290 (0x4000 to interrupts 2 and 3), 0xffb73bc6 (0x2000 to interrupt 5) */
-#define SHUB_LOCAL_INT_ENABLE                        0x110000500 /* established */
+/* local_int_enable: rw64, reset unknown; SAL 5.04 PROM sites 0xffa23a20 (0x7ef
+ * to interrupts 0 and 1), 0xffa31290 (0x4000 to interrupts 2 and 3), 0xffb73bc6
+ * (0x2000 to interrupt 5) */
+/* established */
+#define SHUB_LOCAL_INT_ENABLE                        0x110000500
 #define SHUB_LOCAL_INT_ENABLE_COUNT                  6
 #define SHUB_LOCAL_INT_ENABLE_STRIDE                 256
 
 /*
- * Destination of the error interrupt of processor n (0 to 3): the local_int_config layout. The stride 0x80 and the four offsets come from the PROM's name table and its interrupt pair table; the header was read for n = 0 only. The NASID-change routine rewrites bits 19:4 (pid) with the new NASID when the matching enable register is non-zero. The PROM's other uses are not traced.
+ * Destination of the error interrupt of processor n (0 to 3): the
+ * local_int_config layout. The stride 0x80 and the four offsets come from the
+ * PROM's name table and its interrupt pair table; the header was read for n = 0
+ * only. The NASID-change routine rewrites bits 19:4 (pid) with the new NASID
+ * when the matching enable register is non-zero. The PROM's other uses are not
+ * traced.
  */
 /* proc_err_int_config: rw64, reset unknown */
-#define SHUB_PROC_ERR_INT_CONFIG                     0x110000a80 /* established */
+/* established */
+#define SHUB_PROC_ERR_INT_CONFIG                     0x110000a80
 #define SHUB_PROC_ERR_INT_CONFIG_COUNT               4
 #define SHUB_PROC_ERR_INT_CONFIG_STRIDE              128
 
 /*
- * Destination of the advisory interrupt of processor n (0 to 3), the local_int_config layout (name only; the meaning of advisory is not in the sources read). Rewritten by the NASID-change routine as proc_err_int_config is.
+ * Destination of the advisory interrupt of processor n (0 to 3), the
+ * local_int_config layout (name only; the meaning of advisory is not in the
+ * sources read). Rewritten by the NASID-change routine as proc_err_int_config
+ * is.
  */
 /* proc_adv_int_config: rw64, reset unknown */
-#define SHUB_PROC_ADV_INT_CONFIG                     0x110000c80 /* established */
+/* established */
+#define SHUB_PROC_ADV_INT_CONFIG                     0x110000c80
 #define SHUB_PROC_ADV_INT_CONFIG_COUNT               4
 #define SHUB_PROC_ADV_INT_CONFIG_STRIDE              128
 
 /*
- * Enable of the processor n error interrupt. The NASID-change routine reads it in the new global window and skips the matching config register when it reads 0.
+ * Enable of the processor n error interrupt. The NASID-change routine reads it
+ * in the new global window and skips the matching config register when it reads
+ * 0.
  */
 /* proc_err_int_enable: rw64, reset unknown */
-#define SHUB_PROC_ERR_INT_ENABLE                     0x110000e80 /* established */
+/* established */
+#define SHUB_PROC_ERR_INT_ENABLE                     0x110000e80
 #define SHUB_PROC_ERR_INT_ENABLE_COUNT               4
 #define SHUB_PROC_ERR_INT_ENABLE_STRIDE              128
 
 /*
- * Enable of the processor n advisory interrupt; read by the NASID-change routine as proc_err_int_enable is.
+ * Enable of the processor n advisory interrupt; read by the NASID-change
+ * routine as proc_err_int_enable is.
  */
 /* proc_adv_int_enable: rw64, reset unknown */
-#define SHUB_PROC_ADV_INT_ENABLE                     0x110001080 /* established */
+/* established */
+#define SHUB_PROC_ADV_INT_ENABLE                     0x110001080
 #define SHUB_PROC_ADV_INT_ENABLE_COUNT               4
 #define SHUB_PROC_ADV_INT_ENABLE_STRIDE              128
 
 /*
- * Destination of the profiling interrupt, the local_int_config layout (name only). Rewritten by the NASID-change routine when profile_int_enable is non-zero.
+ * Destination of the profiling interrupt, the local_int_config layout (name
+ * only). Rewritten by the NASID-change routine when profile_int_enable is
+ * non-zero.
  */
 /* profile_int_config: rw64, reset unknown */
-#define SHUB_PROFILE_INT_CONFIG                      0x110001280 /* established */
+/* established */
+#define SHUB_PROFILE_INT_CONFIG                      0x110001280
 
 /*
  * Enable of the profiling interrupt; read by the NASID-change routine.
  */
 /* profile_int_enable: rw64, reset unknown */
-#define SHUB_PROFILE_INT_ENABLE                      0x110001300 /* established */
+/* established */
+#define SHUB_PROFILE_INT_ENABLE                      0x110001300
 
 /*
- * Destination of comparator RTC0's interrupt, which the SAL keeps for a delayed bus-error assertion (Linux mmtimer: RTC0 is used by SAL). Layout as rtc_int_config. Never read.
+ * Destination of comparator RTC0's interrupt, which the SAL keeps for a delayed
+ * bus-error assertion (Linux mmtimer: RTC0 is used by SAL). Layout as
+ * rtc_int_config. Never read.
  */
-/* rtc0_int_config: rw64, reset unknown; SAL 5.04 PROM site 0xffa31966 (pid << 4 plus 8: agent bit set, type 0, vector 0); runtime plat_assert_berr */
-#define SHUB_RTC0_INT_CONFIG                         0x110001380 /* established */
+/* rtc0_int_config: rw64, reset unknown; SAL 5.04 PROM site 0xffa31966 (pid << 4
+ * plus 8: agent bit set, type 0, vector 0); runtime plat_assert_berr */
+/* established */
+#define SHUB_RTC0_INT_CONFIG                         0x110001380
 
 /*
- * Enable for comparator RTC0; written after the compare value, cleared first on undo. Never read.
+ * Enable for comparator RTC0; written after the compare value, cleared first on
+ * undo. Never read.
  */
-/* rtc0_int_enable: rw64, reset unknown; SAL 5.04 PROM site 0xffa31a06 (write 1), 0xffa31d76 (write 0) */
-#define SHUB_RTC0_INT_ENABLE                         0x110001400 /* established */
+/* rtc0_int_enable: rw64, reset unknown; SAL 5.04 PROM site 0xffa31a06 (write
+ * 1), 0xffa31d76 (write 0) */
+/* established */
+#define SHUB_RTC0_INT_ENABLE                         0x110001400
 
 /*
- * Where the comparator interrupt of RTC 1, 2 and 3 is sent: type, target processor id, vector area and vector. The mmtimer driver writes the vector and processor id fields and leaves type, agent and base zero. The register has the same layout as the IPI message, without the send bit. A fourth comparator (RTC 0) exists; the driver comment says firmware uses it, and the header defines nothing for it.
+ * Where the comparator interrupt of RTC 1, 2 and 3 is sent: type, target
+ * processor id, vector area and vector. The mmtimer driver writes the vector
+ * and processor id fields and leaves type, agent and base zero. The register
+ * has the same layout as the IPI message, without the send bit. A fourth
+ * comparator (RTC 0) exists; the driver comment says firmware uses it, and the
+ * header defines nothing for it.
  */
-/* rtc_int_config: rw64, reset 0x0; Linux v5.3 SGI SN2 platform MMR header (GPL): name and offset */
-#define SHUB_RTC_INT_CONFIG                          0x110001480 /* established */
+/* rtc_int_config: rw64, reset 0x0; Linux v5.3 SGI SN2 platform MMR header
+ * (GPL): name and offset */
+/* established */
+#define SHUB_RTC_INT_CONFIG                          0x110001480
 #define SHUB_RTC_INT_CONFIG_COUNT                    3
 #define SHUB_RTC_INT_CONFIG_STRIDE                   256
 #define SHUB_RTC_INT_CONFIG_IDX_SHIFT                52 /* established */
 #define SHUB_RTC_INT_CONFIG_IDX_MASK                 0xffull
-#define SHUB_RTC_INT_CONFIG_IDX_INPLACE              (SHUB_RTC_INT_CONFIG_IDX_MASK << SHUB_RTC_INT_CONFIG_IDX_SHIFT)
+#define SHUB_RTC_INT_CONFIG_IDX_INPLACE (SHUB_RTC_INT_CONFIG_IDX_MASK << SHUB_RTC_INT_CONFIG_IDX_SHIFT)
 #define SHUB_RTC_INT_CONFIG_BASE_SHIFT               21 /* established */
 #define SHUB_RTC_INT_CONFIG_BASE_MASK                0x1fffffffull
-#define SHUB_RTC_INT_CONFIG_BASE_INPLACE             (SHUB_RTC_INT_CONFIG_BASE_MASK << SHUB_RTC_INT_CONFIG_BASE_SHIFT)
+#define SHUB_RTC_INT_CONFIG_BASE_INPLACE (SHUB_RTC_INT_CONFIG_BASE_MASK << SHUB_RTC_INT_CONFIG_BASE_SHIFT)
 #define SHUB_RTC_INT_CONFIG_PID_SHIFT                4 /* established */
 #define SHUB_RTC_INT_CONFIG_PID_MASK                 0xffffull
-#define SHUB_RTC_INT_CONFIG_PID_INPLACE              (SHUB_RTC_INT_CONFIG_PID_MASK << SHUB_RTC_INT_CONFIG_PID_SHIFT)
+#define SHUB_RTC_INT_CONFIG_PID_INPLACE (SHUB_RTC_INT_CONFIG_PID_MASK << SHUB_RTC_INT_CONFIG_PID_SHIFT)
 #define SHUB_RTC_INT_CONFIG_AGENT_SHIFT              3 /* established */
 #define SHUB_RTC_INT_CONFIG_AGENT_MASK               0x1ull
-#define SHUB_RTC_INT_CONFIG_AGENT_INPLACE            (SHUB_RTC_INT_CONFIG_AGENT_MASK << SHUB_RTC_INT_CONFIG_AGENT_SHIFT)
+#define SHUB_RTC_INT_CONFIG_AGENT_INPLACE (SHUB_RTC_INT_CONFIG_AGENT_MASK << SHUB_RTC_INT_CONFIG_AGENT_SHIFT)
 #define SHUB_RTC_INT_CONFIG_TYPE_SHIFT               0 /* established */
 #define SHUB_RTC_INT_CONFIG_TYPE_MASK                0x7ull
-#define SHUB_RTC_INT_CONFIG_TYPE_INPLACE             (SHUB_RTC_INT_CONFIG_TYPE_MASK << SHUB_RTC_INT_CONFIG_TYPE_SHIFT)
+#define SHUB_RTC_INT_CONFIG_TYPE_INPLACE (SHUB_RTC_INT_CONFIG_TYPE_MASK << SHUB_RTC_INT_CONFIG_TYPE_SHIFT)
 
 /*
- * Enable for the comparator interrupt of RTC 1, 2 and 3. The mmtimer driver disables it, sets the comparator to all ones, clears the pending bit, writes the configuration, enables, and only then writes the real expiry, in that order.
+ * Enable for the comparator interrupt of RTC 1, 2 and 3. The mmtimer driver
+ * disables it, sets the comparator to all ones, clears the pending bit, writes
+ * the configuration, enables, and only then writes the real expiry, in that
+ * order.
  */
-/* rtc_int_enable: rw64, reset 0x0; Linux v5.3 SGI SN2 platform MMR header (GPL): name and offset */
-#define SHUB_RTC_INT_ENABLE                          0x110001500 /* established */
+/* rtc_int_enable: rw64, reset 0x0; Linux v5.3 SGI SN2 platform MMR header
+ * (GPL): name and offset */
+/* established */
+#define SHUB_RTC_INT_ENABLE                          0x110001500
 #define SHUB_RTC_INT_ENABLE_COUNT                    3
 #define SHUB_RTC_INT_ENABLE_STRIDE                   256
 #define SHUB_RTC_INT_ENABLE_ENABLE_SHIFT             0 /* established */
 #define SHUB_RTC_INT_ENABLE_ENABLE_MASK              0x1ull
-#define SHUB_RTC_INT_ENABLE_ENABLE_INPLACE           (SHUB_RTC_INT_ENABLE_ENABLE_MASK << SHUB_RTC_INT_ENABLE_ENABLE_SHIFT)
+#define SHUB_RTC_INT_ENABLE_ENABLE_INPLACE (SHUB_RTC_INT_ENABLE_ENABLE_MASK << SHUB_RTC_INT_ENABLE_ENABLE_SHIFT)
 
 /*
- * Pending interrupt events for the node (SHub interrupt event occurred). The kernel's interrupt acknowledge reads it, keeps the bits in the mask of the junk-bus UART, IPI and the two II interrupts, and writes that value to the alias to clear them; Linux only reads it. Bits the header names are established. SAL 5.04 reads it for the error bits (mask 0x7ef, sites 0xffa239a0 and 0xffa23fd6) and for bit 21 (site 0xffa31506), and writes bits 5 and 8 to this register itself (sites 0xffa32816 and 0xffa32996); a model should OR written bits in (inferred). Zero from reset is tolerated; the reset value is unknown. Bit 21 must read 0 for the PROM's INIT handling. See interrupts.md.
+ * Pending interrupt events for the node (SHub interrupt event occurred). The
+ * kernel's interrupt acknowledge reads it, keeps the bits in the mask of the
+ * junk-bus UART, IPI and the two II interrupts, and writes that value to the
+ * alias to clear them; Linux only reads it. Bits the header names are
+ * established. SAL 5.04 reads it for the error bits (mask 0x7ef, sites
+ * 0xffa239a0 and 0xffa23fd6) and for bit 21 (site 0xffa31506), and writes bits
+ * 5 and 8 to this register itself (sites 0xffa32816 and 0xffa32996); a model
+ * should OR written bits in (inferred). Zero from reset is tolerated; the reset
+ * value is unknown. Bit 21 must read 0 for the PROM's INIT handling. See
+ * interrupts.md.
  */
-/* event_occurred: rw64, reset unknown; Linux v5.3 SGI SN2 platform MMR header (GPL): name and offset */
-#define SHUB_EVENT_OCCURRED                          0x110010000 /* established */
+/* event_occurred: rw64, reset unknown; Linux v5.3 SGI SN2 platform MMR header
+ * (GPL): name and offset */
+/* established */
+#define SHUB_EVENT_OCCURRED                          0x110010000
 #define SHUB_EVENT_OCCURRED_II_INT1_SHIFT            30 /* established */
 #define SHUB_EVENT_OCCURRED_II_INT1_MASK             0x1ull
-#define SHUB_EVENT_OCCURRED_II_INT1_INPLACE          (SHUB_EVENT_OCCURRED_II_INT1_MASK << SHUB_EVENT_OCCURRED_II_INT1_SHIFT)
+#define SHUB_EVENT_OCCURRED_II_INT1_INPLACE (SHUB_EVENT_OCCURRED_II_INT1_MASK << SHUB_EVENT_OCCURRED_II_INT1_SHIFT)
 #define SHUB_EVENT_OCCURRED_II_INT0_SHIFT            29 /* established */
 #define SHUB_EVENT_OCCURRED_II_INT0_MASK             0x1ull
-#define SHUB_EVENT_OCCURRED_II_INT0_INPLACE          (SHUB_EVENT_OCCURRED_II_INT0_MASK << SHUB_EVENT_OCCURRED_II_INT0_SHIFT)
+#define SHUB_EVENT_OCCURRED_II_INT0_INPLACE (SHUB_EVENT_OCCURRED_II_INT0_MASK << SHUB_EVENT_OCCURRED_II_INT0_SHIFT)
 #define SHUB_EVENT_OCCURRED_IPI_INT_SHIFT            28 /* established */
 #define SHUB_EVENT_OCCURRED_IPI_INT_MASK             0x1ull
-#define SHUB_EVENT_OCCURRED_IPI_INT_INPLACE          (SHUB_EVENT_OCCURRED_IPI_INT_MASK << SHUB_EVENT_OCCURRED_IPI_INT_SHIFT)
+#define SHUB_EVENT_OCCURRED_IPI_INT_INPLACE (SHUB_EVENT_OCCURRED_IPI_INT_MASK << SHUB_EVENT_OCCURRED_IPI_INT_SHIFT)
 #define SHUB_EVENT_OCCURRED_RTC3_INT_SHIFT           26 /* established */
 #define SHUB_EVENT_OCCURRED_RTC3_INT_MASK            0x1ull
-#define SHUB_EVENT_OCCURRED_RTC3_INT_INPLACE         (SHUB_EVENT_OCCURRED_RTC3_INT_MASK << SHUB_EVENT_OCCURRED_RTC3_INT_SHIFT)
+#define SHUB_EVENT_OCCURRED_RTC3_INT_INPLACE (SHUB_EVENT_OCCURRED_RTC3_INT_MASK << SHUB_EVENT_OCCURRED_RTC3_INT_SHIFT)
 #define SHUB_EVENT_OCCURRED_RTC2_INT_SHIFT           25 /* established */
 #define SHUB_EVENT_OCCURRED_RTC2_INT_MASK            0x1ull
-#define SHUB_EVENT_OCCURRED_RTC2_INT_INPLACE         (SHUB_EVENT_OCCURRED_RTC2_INT_MASK << SHUB_EVENT_OCCURRED_RTC2_INT_SHIFT)
+#define SHUB_EVENT_OCCURRED_RTC2_INT_INPLACE (SHUB_EVENT_OCCURRED_RTC2_INT_MASK << SHUB_EVENT_OCCURRED_RTC2_INT_SHIFT)
 #define SHUB_EVENT_OCCURRED_RTC1_INT_SHIFT           24 /* established */
 #define SHUB_EVENT_OCCURRED_RTC1_INT_MASK            0x1ull
-#define SHUB_EVENT_OCCURRED_RTC1_INT_INPLACE         (SHUB_EVENT_OCCURRED_RTC1_INT_MASK << SHUB_EVENT_OCCURRED_RTC1_INT_SHIFT)
+#define SHUB_EVENT_OCCURRED_RTC1_INT_INPLACE (SHUB_EVENT_OCCURRED_RTC1_INT_MASK << SHUB_EVENT_OCCURRED_RTC1_INT_SHIFT)
 #define SHUB_EVENT_OCCURRED_RTC0_INT_SHIFT           23 /* inferred */
 #define SHUB_EVENT_OCCURRED_RTC0_INT_MASK            0x1ull
-#define SHUB_EVENT_OCCURRED_RTC0_INT_INPLACE         (SHUB_EVENT_OCCURRED_RTC0_INT_MASK << SHUB_EVENT_OCCURRED_RTC0_INT_SHIFT)
+#define SHUB_EVENT_OCCURRED_RTC0_INT_INPLACE (SHUB_EVENT_OCCURRED_RTC0_INT_MASK << SHUB_EVENT_OCCURRED_RTC0_INT_SHIFT)
 #define SHUB_EVENT_OCCURRED_BIT21_SHIFT              21 /* inferred */
 #define SHUB_EVENT_OCCURRED_BIT21_MASK               0x1ull
-#define SHUB_EVENT_OCCURRED_BIT21_INPLACE            (SHUB_EVENT_OCCURRED_BIT21_MASK << SHUB_EVENT_OCCURRED_BIT21_SHIFT)
+#define SHUB_EVENT_OCCURRED_BIT21_INPLACE (SHUB_EVENT_OCCURRED_BIT21_MASK << SHUB_EVENT_OCCURRED_BIT21_SHIFT)
 #define SHUB_EVENT_OCCURRED_UART_INT_SHIFT           20 /* established */
 #define SHUB_EVENT_OCCURRED_UART_INT_MASK            0x1ull
-#define SHUB_EVENT_OCCURRED_UART_INT_INPLACE         (SHUB_EVENT_OCCURRED_UART_INT_MASK << SHUB_EVENT_OCCURRED_UART_INT_SHIFT)
+#define SHUB_EVENT_OCCURRED_UART_INT_INPLACE (SHUB_EVENT_OCCURRED_UART_INT_MASK << SHUB_EVENT_OCCURRED_UART_INT_SHIFT)
 #define SHUB_EVENT_OCCURRED_BIT8_SHIFT               8 /* inferred */
 #define SHUB_EVENT_OCCURRED_BIT8_MASK                0x1ull
-#define SHUB_EVENT_OCCURRED_BIT8_INPLACE             (SHUB_EVENT_OCCURRED_BIT8_MASK << SHUB_EVENT_OCCURRED_BIT8_SHIFT)
+#define SHUB_EVENT_OCCURRED_BIT8_INPLACE (SHUB_EVENT_OCCURRED_BIT8_MASK << SHUB_EVENT_OCCURRED_BIT8_SHIFT)
 #define SHUB_EVENT_OCCURRED_BIT5_SHIFT               5 /* inferred */
 #define SHUB_EVENT_OCCURRED_BIT5_MASK                0x1ull
-#define SHUB_EVENT_OCCURRED_BIT5_INPLACE             (SHUB_EVENT_OCCURRED_BIT5_MASK << SHUB_EVENT_OCCURRED_BIT5_SHIFT)
+#define SHUB_EVENT_OCCURRED_BIT5_INPLACE (SHUB_EVENT_OCCURRED_BIT5_MASK << SHUB_EVENT_OCCURRED_BIT5_SHIFT)
 #define SHUB_EVENT_OCCURRED_BIT3_SHIFT               3 /* inferred */
 #define SHUB_EVENT_OCCURRED_BIT3_MASK                0x1ull
-#define SHUB_EVENT_OCCURRED_BIT3_INPLACE             (SHUB_EVENT_OCCURRED_BIT3_MASK << SHUB_EVENT_OCCURRED_BIT3_SHIFT)
+#define SHUB_EVENT_OCCURRED_BIT3_INPLACE (SHUB_EVENT_OCCURRED_BIT3_MASK << SHUB_EVENT_OCCURRED_BIT3_SHIFT)
 
 /*
- * Clears pending events: the kernel writes the bits it wants cleared here and never reads it. That a one clears and a zero leaves a bit alone is inferred from the kernel writing back exactly the bits it read as set (interrupt acknowledge) and a single bit to clear one RTC event (the mmtimer driver). Neither the kernel nor the header says what a read returns.
+ * Clears pending events: the kernel writes the bits it wants cleared here and
+ * never reads it. That a one clears and a zero leaves a bit alone is inferred
+ * from the kernel writing back exactly the bits it read as set (interrupt
+ * acknowledge) and a single bit to clear one RTC event (the mmtimer driver).
+ * Neither the kernel nor the header says what a read returns.
  */
-/* event_occurred_alias: w64, reset unknown; Linux v5.3 SGI SN2 platform MMR header (GPL): name and offset */
-#define SHUB_EVENT_OCCURRED_ALIAS                    0x110010008 /* established */
+/* event_occurred_alias: w64, reset unknown; Linux v5.3 SGI SN2 platform MMR
+ * header (GPL): name and offset */
+/* established */
+#define SHUB_EVENT_OCCURRED_ALIAS                    0x110010008
 
 /*
- * Second event word next to event_occurred; only its alias is written by the PROM.
+ * Second event word next to event_occurred; only its alias is written by the
+ * PROM.
  */
-/* event_overflow: rw64, reset unknown; SAL 5.04 PROM register-name table (SH_EVENT_OVERFLOW, pairing by table order); the PROM never accesses it */
+/* event_overflow: rw64, reset unknown; SAL 5.04 PROM register-name table
+ * (SH_EVENT_OVERFLOW, pairing by table order); the PROM never accesses it */
 #define SHUB_EVENT_OVERFLOW                          0x110010080 /* inferred */
 
 /*
- * Clear alias of event_overflow. The PROM writes 8 together with the same write to event_occurred_alias. Accepting the write is enough.
+ * Clear alias of event_overflow. The PROM writes 8 together with the same write
+ * to event_occurred_alias. Accepting the write is enough.
  */
-/* event_overflow_alias: w64, reset unknown; SAL 5.04 PROM site 0xffa0bb46 (write 8) */
-#define SHUB_EVENT_OVERFLOW_ALIAS                    0x110010088 /* established */
+/* event_overflow_alias: w64, reset unknown; SAL 5.04 PROM site 0xffa0bb46
+ * (write 8) */
+/* established */
+#define SHUB_EVENT_OVERFLOW_ALIAS                    0x110010088
 
 /*
- * Local block register, unnamed; the name is ours (address). SAL_A writes 0x15031010 to it on each of its two entries (reason 3 and reason 0). The image holds no other reference to the address, so it is never read back. The meaning of the value is unknown; a plain write-accepting register satisfies the PROM.
+ * Local block register, unnamed; the name is ours (address). SAL_A writes
+ * 0x15031010 to it on each of its two entries (reason 3 and reason 0). The
+ * image holds no other reference to the address, so it is never read back. The
+ * meaning of the value is unknown; a plain write-accepting register satisfies
+ * the PROM.
  */
-/* lb_reg_1002_0000: w64, reset unknown; SAL 5.04 PROM site 0xffc4e7f0 (offset and use); no Linux v5.3 name */
-#define SHUB_LB_REG_1002_0000                        0x110020000 /* established */
+/* lb_reg_1002_0000: w64, reset unknown; SAL 5.04 PROM site 0xffc4e7f0 (offset
+ * and use); no Linux v5.3 name */
+/* established */
+#define SHUB_LB_REG_1002_0000                        0x110020000
 
 /*
- * Per-slice local block record, 128 bytes apart (index = slice & 3); the name is ours. SAL_B reads the running processor's entry in the lock routine and writes its low byte as a progress code, so any value is accepted; SAL_A reads it into r31 for reasons 1 and 2 and for a reason above 3, not for reason 0 (or 3). The meaning of the value is unknown.
+ * Per-slice local block record, 128 bytes apart (index = slice & 3); the name
+ * is ours. SAL_B reads the running processor's entry in the lock routine and
+ * writes its low byte as a progress code, so any value is accepted; SAL_A reads
+ * it into r31 for reasons 1 and 2 and for a reason above 3, not for reason 0
+ * (or 3). The meaning of the value is unknown.
  */
-/* lb_slice_rec: r64, reset unknown; SAL 5.04 PROM site 0xffa0e020 (read of the running processor's entry), 0xffc4e570 (not reached for reason 0) */
-#define SHUB_LB_SLICE_REC                            0x110030000 /* established */
+/* lb_slice_rec: r64, reset unknown; SAL 5.04 PROM site 0xffa0e020 (read of the
+ * running processor's entry), 0xffc4e570 (not reached for reason 0) */
+/* established */
+#define SHUB_LB_SLICE_REC                            0x110030000
 #define SHUB_LB_SLICE_REC_COUNT                      4
 #define SHUB_LB_SLICE_REC_STRIDE                     128
 
 /*
- * Local block LIQ control: request control in bits 4:0, reply control in bits 11:8 and three force-credit bits. The node set-up method (slot 34 of the chip-object table, site 0xffa95c20) reads it once, ORs bit 18 and writes the same value back 63 times in a row; nothing tests the value read. If each write adds one credit to the LINVV credit counter (6 bits wide in lb_credit_status in the header), 63 writes fill it; that role is inferred.
+ * Local block LIQ control: request control in bits 4:0, reply control in bits
+ * 11:8 and three force-credit bits. The node set-up method (slot 34 of the
+ * chip-object table, site 0xffa95c20) reads it once, ORs bit 18 and writes the
+ * same value back 63 times in a row; nothing tests the value read. If each
+ * write adds one credit to the LINVV credit counter (6 bits wide in
+ * lb_credit_status in the header), 63 writes fill it; that role is inferred.
  */
-/* lb_liq_ctl: rw64, reset 0x0; SGI Linux 2.4 ia64 SN2 platform MMR header (linux-2.4 branch of the MIPS-tree mirror, commit 8ef7d46c94d5): SH_LB_LIQ_CTL, 'Local Block LIQ Control' (name, offset, mask 0x70f1f, fields); the PROM's register-name table carries the name (SAL 5.04 image, record 132 of the table from 0xffbfabb0); SAL 5.04 PROM site 0xffa95ccc (read), 0xffa95cfc (write) */
-#define SHUB_LB_LIQ_CTL                              0x110040000 /* established */
+/* lb_liq_ctl: rw64, reset 0x0; SGI Linux 2.4 ia64 SN2 platform MMR header
+ * (linux-2.4 branch of the MIPS-tree mirror, commit 8ef7d46c94d5):
+ * SH_LB_LIQ_CTL, 'Local Block LIQ Control' (name, offset, mask 0x70f1f,
+ * fields); the PROM's register-name table carries the name (SAL 5.04 image,
+ * record 132 of the table from 0xffbfabb0); SAL 5.04 PROM site 0xffa95ccc
+ * (read), 0xffa95cfc (write) */
+/* established */
+#define SHUB_LB_LIQ_CTL                              0x110040000
 #define SHUB_LB_LIQ_CTL_FORCE_LINVV_CREDIT_SHIFT     18 /* established */
 #define SHUB_LB_LIQ_CTL_FORCE_LINVV_CREDIT_MASK      0x1ull
-#define SHUB_LB_LIQ_CTL_FORCE_LINVV_CREDIT_INPLACE   (SHUB_LB_LIQ_CTL_FORCE_LINVV_CREDIT_MASK << SHUB_LB_LIQ_CTL_FORCE_LINVV_CREDIT_SHIFT)
+#define SHUB_LB_LIQ_CTL_FORCE_LINVV_CREDIT_INPLACE (SHUB_LB_LIQ_CTL_FORCE_LINVV_CREDIT_MASK << SHUB_LB_LIQ_CTL_FORCE_LINVV_CREDIT_SHIFT)
 #define SHUB_LB_LIQ_CTL_FORCE_RP_CREDIT_SHIFT        17 /* established */
 #define SHUB_LB_LIQ_CTL_FORCE_RP_CREDIT_MASK         0x1ull
-#define SHUB_LB_LIQ_CTL_FORCE_RP_CREDIT_INPLACE      (SHUB_LB_LIQ_CTL_FORCE_RP_CREDIT_MASK << SHUB_LB_LIQ_CTL_FORCE_RP_CREDIT_SHIFT)
+#define SHUB_LB_LIQ_CTL_FORCE_RP_CREDIT_INPLACE (SHUB_LB_LIQ_CTL_FORCE_RP_CREDIT_MASK << SHUB_LB_LIQ_CTL_FORCE_RP_CREDIT_SHIFT)
 #define SHUB_LB_LIQ_CTL_FORCE_RQ_CREDIT_SHIFT        16 /* established */
 #define SHUB_LB_LIQ_CTL_FORCE_RQ_CREDIT_MASK         0x1ull
-#define SHUB_LB_LIQ_CTL_FORCE_RQ_CREDIT_INPLACE      (SHUB_LB_LIQ_CTL_FORCE_RQ_CREDIT_MASK << SHUB_LB_LIQ_CTL_FORCE_RQ_CREDIT_SHIFT)
+#define SHUB_LB_LIQ_CTL_FORCE_RQ_CREDIT_INPLACE (SHUB_LB_LIQ_CTL_FORCE_RQ_CREDIT_MASK << SHUB_LB_LIQ_CTL_FORCE_RQ_CREDIT_SHIFT)
 #define SHUB_LB_LIQ_CTL_LIQ_RPL_CTL_SHIFT            8 /* established */
 #define SHUB_LB_LIQ_CTL_LIQ_RPL_CTL_MASK             0xfull
-#define SHUB_LB_LIQ_CTL_LIQ_RPL_CTL_INPLACE          (SHUB_LB_LIQ_CTL_LIQ_RPL_CTL_MASK << SHUB_LB_LIQ_CTL_LIQ_RPL_CTL_SHIFT)
+#define SHUB_LB_LIQ_CTL_LIQ_RPL_CTL_INPLACE (SHUB_LB_LIQ_CTL_LIQ_RPL_CTL_MASK << SHUB_LB_LIQ_CTL_LIQ_RPL_CTL_SHIFT)
 #define SHUB_LB_LIQ_CTL_LIQ_REQ_CTL_SHIFT            0 /* established */
 #define SHUB_LB_LIQ_CTL_LIQ_REQ_CTL_MASK             0x1full
-#define SHUB_LB_LIQ_CTL_LIQ_REQ_CTL_INPLACE          (SHUB_LB_LIQ_CTL_LIQ_REQ_CTL_MASK << SHUB_LB_LIQ_CTL_LIQ_REQ_CTL_SHIFT)
+#define SHUB_LB_LIQ_CTL_LIQ_REQ_CTL_INPLACE (SHUB_LB_LIQ_CTL_LIQ_REQ_CTL_MASK << SHUB_LB_LIQ_CTL_LIQ_REQ_CTL_SHIFT)
 
 /*
- * Maximum number of reply credits from the crossbar. The node set-up method (site 0xffa95c20) reads it, deposits 12 into bits 4:0 and writes it back, once, after the CRB set-up.
+ * Maximum number of reply credits from the crossbar. The node set-up method
+ * (site 0xffa95c20) reads it, deposits 12 into bits 4:0 and writes it back,
+ * once, after the CRB set-up.
  */
-/* lb_max_rep_credit_cnt: rw64, reset 0x1f; SGI Linux 2.4 ia64 SN2 platform MMR header (linux-2.4 branch of the MIPS-tree mirror, commit 8ef7d46c94d5): SH_LB_MAX_REP_CREDIT_CNT (name, offset, mask 0x1f, field); the PROM's register-name table carries the name (record 134); SAL 5.04 PROM site 0xffa95f3c (read), 0xffa95f6c (write) */
-#define SHUB_LB_MAX_REP_CREDIT_CNT                   0x110040100 /* established */
+/* lb_max_rep_credit_cnt: rw64, reset 0x1f; SGI Linux 2.4 ia64 SN2 platform MMR
+ * header (linux-2.4 branch of the MIPS-tree mirror, commit 8ef7d46c94d5):
+ * SH_LB_MAX_REP_CREDIT_CNT (name, offset, mask 0x1f, field); the PROM's
+ * register-name table carries the name (record 134); SAL 5.04 PROM site
+ * 0xffa95f3c (read), 0xffa95f6c (write) */
+/* established */
+#define SHUB_LB_MAX_REP_CREDIT_CNT                   0x110040100
 #define SHUB_LB_MAX_REP_CREDIT_CNT_MAX_CNT_SHIFT     0 /* established */
 #define SHUB_LB_MAX_REP_CREDIT_CNT_MAX_CNT_MASK      0x1full
-#define SHUB_LB_MAX_REP_CREDIT_CNT_MAX_CNT_INPLACE   (SHUB_LB_MAX_REP_CREDIT_CNT_MAX_CNT_MASK << SHUB_LB_MAX_REP_CREDIT_CNT_MAX_CNT_SHIFT)
+#define SHUB_LB_MAX_REP_CREDIT_CNT_MAX_CNT_INPLACE (SHUB_LB_MAX_REP_CREDIT_CNT_MAX_CNT_MASK << SHUB_LB_MAX_REP_CREDIT_CNT_MAX_CNT_SHIFT)
 
 /*
- * Maximum number of request credits from the crossbar. The node set-up method (site 0xffa95c20) reads it, deposits 12 into bits 4:0 and writes it back, once.
+ * Maximum number of request credits from the crossbar. The node set-up method
+ * (site 0xffa95c20) reads it, deposits 12 into bits 4:0 and writes it back,
+ * once.
  */
-/* lb_max_req_credit_cnt: rw64, reset 0x1f; SGI Linux 2.4 ia64 SN2 platform MMR header (linux-2.4 branch of the MIPS-tree mirror, commit 8ef7d46c94d5): SH_LB_MAX_REQ_CREDIT_CNT (name, offset, mask 0x1f, field); the PROM's register-name table carries the name (record 135); SAL 5.04 PROM site 0xffa95f7c (read), 0xffa95fbc (write) */
-#define SHUB_LB_MAX_REQ_CREDIT_CNT                   0x110040180 /* established */
+/* lb_max_req_credit_cnt: rw64, reset 0x1f; SGI Linux 2.4 ia64 SN2 platform MMR
+ * header (linux-2.4 branch of the MIPS-tree mirror, commit 8ef7d46c94d5):
+ * SH_LB_MAX_REQ_CREDIT_CNT (name, offset, mask 0x1f, field); the PROM's
+ * register-name table carries the name (record 135); SAL 5.04 PROM site
+ * 0xffa95f7c (read), 0xffa95fbc (write) */
+/* established */
+#define SHUB_LB_MAX_REQ_CREDIT_CNT                   0x110040180
 #define SHUB_LB_MAX_REQ_CREDIT_CNT_MAX_CNT_SHIFT     0 /* established */
 #define SHUB_LB_MAX_REQ_CREDIT_CNT_MAX_CNT_MASK      0x1full
-#define SHUB_LB_MAX_REQ_CREDIT_CNT_MAX_CNT_INPLACE   (SHUB_LB_MAX_REQ_CREDIT_CNT_MAX_CNT_MASK << SHUB_LB_MAX_REQ_CREDIT_CNT_MAX_CNT_SHIFT)
+#define SHUB_LB_MAX_REQ_CREDIT_CNT_MAX_CNT_INPLACE (SHUB_LB_MAX_REQ_CREDIT_CNT_MAX_CNT_MASK << SHUB_LB_MAX_REQ_CREDIT_CNT_MAX_CNT_SHIFT)
 
 /*
- * Local block conveyor belt time-out. The node set-up method (site 0xffa95c20) reads it last and writes it back with 0x3e8 (1000) in bits 11:0, the field the header gives.
+ * Local block conveyor belt time-out. The node set-up method (site 0xffa95c20)
+ * reads it last and writes it back with 0x3e8 (1000) in bits 11:0, the field
+ * the header gives.
  */
-/* conveyor_belt_time_out: rw64, reset 0x0; SGI Linux 2.4 ia64 SN2 platform MMR header (linux-2.4 branch of the MIPS-tree mirror, commit 8ef7d46c94d5): SH_CONVEYOR_BELT_TIME_OUT (name, offset, mask 0xfff, field); the PROM's register-name table carries the name (record 138); SAL 5.04 PROM site 0xffa9613c (read), 0xffa9615c (write) */
-#define SHUB_CONVEYOR_BELT_TIME_OUT                  0x110040300 /* established */
+/* conveyor_belt_time_out: rw64, reset 0x0; SGI Linux 2.4 ia64 SN2 platform MMR
+ * header (linux-2.4 branch of the MIPS-tree mirror, commit 8ef7d46c94d5):
+ * SH_CONVEYOR_BELT_TIME_OUT (name, offset, mask 0xfff, field); the PROM's
+ * register-name table carries the name (record 138); SAL 5.04 PROM site
+ * 0xffa9613c (read), 0xffa9615c (write) */
+/* established */
+#define SHUB_CONVEYOR_BELT_TIME_OUT                  0x110040300
 #define SHUB_CONVEYOR_BELT_TIME_OUT_VALUE_SHIFT      0 /* established */
 #define SHUB_CONVEYOR_BELT_TIME_OUT_VALUE_MASK       0xfffull
-#define SHUB_CONVEYOR_BELT_TIME_OUT_VALUE_INPLACE    (SHUB_CONVEYOR_BELT_TIME_OUT_VALUE_MASK << SHUB_CONVEYOR_BELT_TIME_OUT_VALUE_SHIFT)
+#define SHUB_CONVEYOR_BELT_TIME_OUT_VALUE_INPLACE (SHUB_CONVEYOR_BELT_TIME_OUT_VALUE_MASK << SHUB_CONVEYOR_BELT_TIME_OUT_VALUE_SHIFT)
 
 /*
- * Local block error detail words 1 to 5. After its forced PIO write error (see lb_reg_1005_0608) the PROM reads detail 1 (low byte 0xe9 or 0xea) and detail 2 ((value & 0x3fffffff) equal to 0x2200a0c1, the error address >> 3); either match sets bit 3 of the event mask for 0xffa30b40.  A vector read that ends in an error leaves 0xe9 in the low byte of detail 1 (a write 0xea); the PROM then writes 0 to all five and to 0x1_1007_1100, and goes on. Never read otherwise. A plain read/write register that reads 0 satisfies it.
+ * Local block error detail words 1 to 5. After its forced PIO write error (see
+ * lb_reg_1005_0608) the PROM reads detail 1 (low byte 0xe9 or 0xea) and detail
+ * 2 ((value & 0x3fffffff) equal to 0x2200a0c1, the error address >> 3); either
+ * match sets bit 3 of the event mask for 0xffa30b40.  A vector read that ends
+ * in an error leaves 0xe9 in the low byte of detail 1 (a write 0xea); the PROM
+ * then writes 0 to all five and to 0x1_1007_1100, and goes on. Never read
+ * otherwise. A plain read/write register that reads 0 satisfies it.
  */
 /* lb_error_detail: rw64, reset 0x0 */
-#define SHUB_LB_ERROR_DETAIL                         0x110050200 /* established */
+/* established */
+#define SHUB_LB_ERROR_DETAIL                         0x110050200
 #define SHUB_LB_ERROR_DETAIL_COUNT                   5
 #define SHUB_LB_ERROR_DETAIL_STRIDE                  128
 
 /*
- * Local block error summary. The PROM tests bit 16 only: set before a vector request means an old error (it writes the alias at +8 and the mask at 0x1_1005_0508 with 0x10000, clears the detail registers and retries); set while waiting for a reply means the reply status is not examined that pass. A model returns 0.
+ * Local block error summary. The PROM tests bit 16 only: set before a vector
+ * request means an old error (it writes the alias at +8 and the mask at
+ * 0x1_1005_0508 with 0x10000, clears the detail registers and retries); set
+ * while waiting for a reply means the reply status is not examined that pass. A
+ * model returns 0.
  */
 /* lb_error_summary: r64, reset 0x0 */
-#define SHUB_LB_ERROR_SUMMARY                        0x110050580 /* established */
+/* established */
+#define SHUB_LB_ERROR_SUMMARY                        0x110050580
 
 /*
- * Not a register: an unmapped offset in the local block that the PROM stores 0 to on purpose, to force a PIO write error (inferred; the error mechanism is not documented). The store must set pio_write_status bit 2 (or bit 0) of the issuing slice: the PROM then spins with no delay and no deadline until it does (established as code). The PROM later expects lb_error_detail 2 to hold 0x110050608 >> 3 in its low 30 bits, pi_error_detail_1 to hold 0x110050608 in bits 32:3, and lb_error_detail 1 to end in 0xe9 or 0xea; none is required, and zero in all three skips the error-clear lists. Runs on every slice after the node set-up barrier, unless cpuid[2] is 0xaeeeeeee8badbeef. The name is ours.
+ * Not a register: an unmapped offset in the local block that the PROM stores 0
+ * to on purpose, to force a PIO write error (inferred; the error mechanism is
+ * not documented). The store must set pio_write_status bit 2 (or bit 0) of the
+ * issuing slice: the PROM then spins with no delay and no deadline until it
+ * does (established as code). The PROM later expects lb_error_detail 2 to hold
+ * 0x110050608 >> 3 in its low 30 bits, pi_error_detail_1 to hold 0x110050608 in
+ * bits 32:3, and lb_error_detail 1 to end in 0xe9 or 0xea; none is required,
+ * and zero in all three skips the error-clear lists. Runs on every slice after
+ * the node set-up barrier, unless cpuid[2] is 0xaeeeeeee8badbeef. The name is
+ * ours.
  */
-/* lb_reg_1005_0608: w64, reset unknown; SAL 5.04 PROM site 0xffa24dec (store 0 through 0xffa0e640, in pio_wt_st_force_err 0xffa24cc0); no register at this offset in the SGI 2.4 SN2 header (Linux/MIPS tree, commit 8ef7d46c94d5; SH_LB_FIRST_ERROR is 0x600, SH_LB_LAST_CREDIT 0x680), none in Linux v5.3, none in the PROM's register name table (0xffbfb460) */
+/* lb_reg_1005_0608: w64, reset unknown; SAL 5.04 PROM site 0xffa24dec (store 0
+ * through 0xffa0e640, in pio_wt_st_force_err 0xffa24cc0); no register at this
+ * offset in the SGI 2.4 SN2 header (Linux/MIPS tree, commit 8ef7d46c94d5;
+ * SH_LB_FIRST_ERROR is 0x600, SH_LB_LAST_CREDIT 0x680), none in Linux v5.3,
+ * none in the PROM's register name table (0xffbfb460) */
 #define SHUB_LB_REG_1005_0608                        0x110050608 /* inferred */
 
 /*
- * CPU MMR access permission bits: one access bit per group of nodes (header field ACCESS_BITS, all 64 bits). Bit meaning and what a cleared bit blocks are not in any source read. The SHub 1 node permission set-up (site 0xffa97960): the PROM writes the node mask (one bit per group of nodes, see prom-reset.md); for NASID 0 alone, 1; no read-back.
+ * CPU MMR access permission bits: one access bit per group of nodes (header
+ * field ACCESS_BITS, all 64 bits). Bit meaning and what a cleared bit blocks
+ * are not in any source read. The SHub 1 node permission set-up (site
+ * 0xffa97960): the PROM writes the node mask (one bit per group of nodes, see
+ * prom-reset.md); for NASID 0 alone, 1; no read-back.
  */
-/* cpu_perm: rw64, reset 0xffffffffffffffff; SGI Linux 2.4 ia64 SN2 platform MMR header (linux-2.4 branch of the MIPS-tree mirror, commit 8ef7d46c94d5): SH_CPU_PERM (name, offset, mask 0xffffffffffffffff, field ACCESS_BITS, INIT 0xffffffffffffffff); the PROM's register-name table carries the name (SAL 5.04 image, record 529 of the table from 0xffbfabb0); SAL 5.04 PROM site 0xffa97bbc (write) */
-#define SHUB_CPU_PERM                                0x110060000 /* established */
+/* cpu_perm: rw64, reset 0xffffffffffffffff; SGI Linux 2.4 ia64 SN2 platform MMR
+ * header (linux-2.4 branch of the MIPS-tree mirror, commit 8ef7d46c94d5):
+ * SH_CPU_PERM (name, offset, mask 0xffffffffffffffff, field ACCESS_BITS, INIT
+ * 0xffffffffffffffff); the PROM's register-name table carries the name (SAL
+ * 5.04 image, record 529 of the table from 0xffbfabb0); SAL 5.04 PROM site
+ * 0xffa97bbc (write) */
+/* established */
+#define SHUB_CPU_PERM                                0x110060000
 
 /*
- * External I/O MMR access permission bits: one access bit per group of nodes (header field ACCESS_BITS, all 64 bits). Bit meaning and what a cleared bit blocks are not in any source read. The SHub 1 node permission set-up (site 0xffa97960): the PROM writes 0; no read-back.
+ * External I/O MMR access permission bits: one access bit per group of nodes
+ * (header field ACCESS_BITS, all 64 bits). Bit meaning and what a cleared bit
+ * blocks are not in any source read. The SHub 1 node permission set-up (site
+ * 0xffa97960): the PROM writes 0; no read-back.
  */
-/* ext_io_perm: rw64, reset 0x0; SGI Linux 2.4 ia64 SN2 platform MMR header (linux-2.4 branch of the MIPS-tree mirror, commit 8ef7d46c94d5): SH_EXT_IO_PERM (name, offset, mask 0xffffffffffffffff, field ACCESS_BITS, INIT 0); the PROM's register-name table carries the name (SAL 5.04 image, record 531 of the table from 0xffbfabb0); SAL 5.04 PROM site 0xffa97cac (write) */
-#define SHUB_EXT_IO_PERM                             0x110060100 /* established */
+/* ext_io_perm: rw64, reset 0x0; SGI Linux 2.4 ia64 SN2 platform MMR header
+ * (linux-2.4 branch of the MIPS-tree mirror, commit 8ef7d46c94d5):
+ * SH_EXT_IO_PERM (name, offset, mask 0xffffffffffffffff, field ACCESS_BITS,
+ * INIT 0); the PROM's register-name table carries the name (SAL 5.04 image,
+ * record 531 of the table from 0xffbfabb0); SAL 5.04 PROM site 0xffa97cac
+ * (write) */
+/* established */
+#define SHUB_EXT_IO_PERM                             0x110060100
 
 /*
- * External I/O interrupt access permission bits: one access bit per group of nodes (header field ACCESS_BITS, all 64 bits). Bit meaning and what a cleared bit blocks are not in any source read. The SHub 1 node permission set-up (site 0xffa97960): the PROM writes the node mask (one bit per group of nodes, see prom-reset.md); for NASID 0 alone, 1; no read-back.
+ * External I/O interrupt access permission bits: one access bit per group of
+ * nodes (header field ACCESS_BITS, all 64 bits). Bit meaning and what a cleared
+ * bit blocks are not in any source read. The SHub 1 node permission set-up
+ * (site 0xffa97960): the PROM writes the node mask (one bit per group of nodes,
+ * see prom-reset.md); for NASID 0 alone, 1; no read-back.
  */
-/* ext_ioi_access: rw64, reset 0xffffffffffffffff; SGI Linux 2.4 ia64 SN2 platform MMR header (linux-2.4 branch of the MIPS-tree mirror, commit 8ef7d46c94d5): SH_EXT_IOI_ACCESS (name, offset, mask 0xffffffffffffffff, field ACCESS_BITS, INIT 0xffffffffffffffff); the PROM's register-name table carries the name (SAL 5.04 image, record 532 of the table from 0xffbfabb0); SAL 5.04 PROM site 0xffa97c1c (write) */
-#define SHUB_EXT_IOI_ACCESS                          0x110060180 /* established */
+/* ext_ioi_access: rw64, reset 0xffffffffffffffff; SGI Linux 2.4 ia64 SN2
+ * platform MMR header (linux-2.4 branch of the MIPS-tree mirror, commit
+ * 8ef7d46c94d5): SH_EXT_IOI_ACCESS (name, offset, mask 0xffffffffffffffff,
+ * field ACCESS_BITS, INIT 0xffffffffffffffff); the PROM's register-name table
+ * carries the name (SAL 5.04 image, record 532 of the table from 0xffbfabb0);
+ * SAL 5.04 PROM site 0xffa97c1c (write) */
+/* established */
+#define SHUB_EXT_IOI_ACCESS                          0x110060180
 
 /*
- * Real-time clock control; the name is ours. The PROM writes 0x100000000, then writes 0 to rtc, then writes 0x100000041, all at the SAL_B reset entry, before any read. The tick period in nanoseconds is 10 times (the period field + 1); with the PROM's write the field is 4, 50 ns, 20 MHz, which is also what SAL_FREQ_BASE for the real-time clock returns (1,000,000,000 divided by the period). The reset value never reaches the PROM. The PROM's own name table and the 2.4 header call this offset SH_GC_SRC_CTRL ('SHub Global Clock Control', mask 0x313ff3ff1, INIT 0x100000000: enable counter bit 0, max count bits 13:4, counter 25:16, toggle bit 28, source select 33:32); the 0x100000041 write is enable plus max count 4. Roles of the other bits are inferred only. If a read returned 0 the PROM would assume a 10 ns period (100 MHz); every PROM deadline is in microseconds scaled by this period, so the counter must tick at the rate the field gives.
+ * Real-time clock control; the name is ours. The PROM writes 0x100000000, then
+ * writes 0 to rtc, then writes 0x100000041, all at the SAL_B reset entry,
+ * before any read. The tick period in nanoseconds is 10 times (the period field
+ * + 1); with the PROM's write the field is 4, 50 ns, 20 MHz, which is also what
+ * SAL_FREQ_BASE for the real-time clock returns (1,000,000,000 divided by the
+ * period). The reset value never reaches the PROM. The PROM's own name table
+ * and the 2.4 header call this offset SH_GC_SRC_CTRL ('SHub Global Clock
+ * Control', mask 0x313ff3ff1, INIT 0x100000000: enable counter bit 0, max count
+ * bits 13:4, counter 25:16, toggle bit 28, source select 33:32); the
+ * 0x100000041 write is enable plus max count 4. Roles of the other bits are
+ * inferred only. If a read returned 0 the PROM would assume a 10 ns period (100
+ * MHz); every PROM deadline is in microseconds scaled by this period, so the
+ * counter must tick at the rate the field gives.
  */
-/* rtc_ctl: rw64, reset 0x100000000; SAL 5.04 PROM site 0xffa94d06, 0xffa94d26 (writes), 0xffa0da00 (read of the period); the SAL runtime component's chipset_rtc_period reads the same field */
-#define SHUB_RTC_CTL                                 0x110060280 /* established */
+/* rtc_ctl: rw64, reset 0x100000000; SAL 5.04 PROM site 0xffa94d06, 0xffa94d26
+ * (writes), 0xffa0da00 (read of the period); the SAL runtime component's
+ * chipset_rtc_period reads the same field */
+/* established */
+#define SHUB_RTC_CTL                                 0x110060280
 #define SHUB_RTC_CTL_MODE_SHIFT                      32 /* inferred */
 #define SHUB_RTC_CTL_MODE_MASK                       0x3ull
-#define SHUB_RTC_CTL_MODE_INPLACE                    (SHUB_RTC_CTL_MODE_MASK << SHUB_RTC_CTL_MODE_SHIFT)
+#define SHUB_RTC_CTL_MODE_INPLACE (SHUB_RTC_CTL_MODE_MASK << SHUB_RTC_CTL_MODE_SHIFT)
 #define SHUB_RTC_CTL_TOGGLE_BIT_SHIFT                28 /* inferred */
 #define SHUB_RTC_CTL_TOGGLE_BIT_MASK                 0x1ull
-#define SHUB_RTC_CTL_TOGGLE_BIT_INPLACE              (SHUB_RTC_CTL_TOGGLE_BIT_MASK << SHUB_RTC_CTL_TOGGLE_BIT_SHIFT)
+#define SHUB_RTC_CTL_TOGGLE_BIT_INPLACE (SHUB_RTC_CTL_TOGGLE_BIT_MASK << SHUB_RTC_CTL_TOGGLE_BIT_SHIFT)
 #define SHUB_RTC_CTL_COUNTER_SHIFT                   16 /* inferred */
 #define SHUB_RTC_CTL_COUNTER_MASK                    0x3ffull
-#define SHUB_RTC_CTL_COUNTER_INPLACE                 (SHUB_RTC_CTL_COUNTER_MASK << SHUB_RTC_CTL_COUNTER_SHIFT)
+#define SHUB_RTC_CTL_COUNTER_INPLACE (SHUB_RTC_CTL_COUNTER_MASK << SHUB_RTC_CTL_COUNTER_SHIFT)
 #define SHUB_RTC_CTL_PERIOD_SHIFT                    4 /* inferred */
 #define SHUB_RTC_CTL_PERIOD_MASK                     0x3ffull
-#define SHUB_RTC_CTL_PERIOD_INPLACE                  (SHUB_RTC_CTL_PERIOD_MASK << SHUB_RTC_CTL_PERIOD_SHIFT)
+#define SHUB_RTC_CTL_PERIOD_INPLACE (SHUB_RTC_CTL_PERIOD_MASK << SHUB_RTC_CTL_PERIOD_SHIFT)
 #define SHUB_RTC_CTL_RUN_SHIFT                       0 /* inferred */
 #define SHUB_RTC_CTL_RUN_MASK                        0x1ull
-#define SHUB_RTC_CTL_RUN_INPLACE                     (SHUB_RTC_CTL_RUN_MASK << SHUB_RTC_CTL_RUN_SHIFT)
+#define SHUB_RTC_CTL_RUN_INPLACE (SHUB_RTC_CTL_RUN_MASK << SHUB_RTC_CTL_RUN_SHIFT)
 
 /*
- * I/O interface (II) MMR access permission bits: one access bit per group of nodes (header field ACCESS_BITS, all 64 bits). Bit meaning and what a cleared bit blocks are not in any source read. The SHub 1 node permission set-up (site 0xffa97960): the PROM writes the node mask (one bit per group of nodes, see prom-reset.md); for NASID 0 alone, 1; no read-back.
+ * I/O interface (II) MMR access permission bits: one access bit per group of
+ * nodes (header field ACCESS_BITS, all 64 bits). Bit meaning and what a cleared
+ * bit blocks are not in any source read. The SHub 1 node permission set-up
+ * (site 0xffa97960): the PROM writes the node mask (one bit per group of nodes,
+ * see prom-reset.md); for NASID 0 alone, 1; no read-back.
  */
-/* io_perm: rw64, reset 0x0; SGI Linux 2.4 ia64 SN2 platform MMR header (linux-2.4 branch of the MIPS-tree mirror, commit 8ef7d46c94d5): SH_IO_PERM (name, offset, mask 0xffffffffffffffff, field ACCESS_BITS, INIT 0); the PROM's register-name table carries the name (SAL 5.04 image, record 536 of the table from 0xffbfabb0); SAL 5.04 PROM site 0xffa97c4c (write) */
-#define SHUB_IO_PERM                                 0x110060380 /* established */
+/* io_perm: rw64, reset 0x0; SGI Linux 2.4 ia64 SN2 platform MMR header
+ * (linux-2.4 branch of the MIPS-tree mirror, commit 8ef7d46c94d5): SH_IO_PERM
+ * (name, offset, mask 0xffffffffffffffff, field ACCESS_BITS, INIT 0); the
+ * PROM's register-name table carries the name (SAL 5.04 image, record 536 of
+ * the table from 0xffbfabb0); SAL 5.04 PROM site 0xffa97c4c (write) */
+/* established */
+#define SHUB_IO_PERM                                 0x110060380
 
 /*
- * I/O interface (II) interrupt access permission bits: one access bit per group of nodes (header field ACCESS_BITS, all 64 bits). Bit meaning and what a cleared bit blocks are not in any source read. The SHub 1 node permission set-up (site 0xffa97960): the PROM writes the node mask (one bit per group of nodes, see prom-reset.md); for NASID 0 alone, 1; no read-back.
+ * I/O interface (II) interrupt access permission bits: one access bit per group
+ * of nodes (header field ACCESS_BITS, all 64 bits). Bit meaning and what a
+ * cleared bit blocks are not in any source read. The SHub 1 node permission
+ * set-up (site 0xffa97960): the PROM writes the node mask (one bit per group of
+ * nodes, see prom-reset.md); for NASID 0 alone, 1; no read-back.
  */
-/* ioi_access: rw64, reset 0xffffffffffffffff; SGI Linux 2.4 ia64 SN2 platform MMR header (linux-2.4 branch of the MIPS-tree mirror, commit 8ef7d46c94d5): SH_IOI_ACCESS (name, offset, mask 0xffffffffffffffff, field ACCESS_BITS, INIT 0xffffffffffffffff); the PROM's register-name table carries the name (SAL 5.04 image, record 537 of the table from 0xffbfabb0); SAL 5.04 PROM site 0xffa97bec (write) */
-#define SHUB_IOI_ACCESS                              0x110060400 /* established */
+/* ioi_access: rw64, reset 0xffffffffffffffff; SGI Linux 2.4 ia64 SN2 platform
+ * MMR header (linux-2.4 branch of the MIPS-tree mirror, commit 8ef7d46c94d5):
+ * SH_IOI_ACCESS (name, offset, mask 0xffffffffffffffff, field ACCESS_BITS, INIT
+ * 0xffffffffffffffff); the PROM's register-name table carries the name (SAL
+ * 5.04 image, record 537 of the table from 0xffbfabb0); SAL 5.04 PROM site
+ * 0xffa97bec (write) */
+/* established */
+#define SHUB_IOI_ACCESS                              0x110060400
 
 /*
- * Which processors may send interprocessor interrupts to this one (header title: CPU interrupt access permission bits). The only use found is the cross-partition driver reading it as the target of a protected remote read; the driver comment says there is no special reason for that choice. So the register can be read without harm; its bit layout and write behaviour are unknown. The SHub 1 PROM writes 1 here once, as the winner of the node election in SAL_A (SAL 5.04 PROM site 0xffc4ea40); the meaning of 1 is unknown. The node set-up (site 0xffa97c7c) later writes the node mask of the permission registers here too (see prom-reset.md); the header gives INIT 0xffffffffffffffff and a 64-bit ACCESS_BITS field.
+ * Which processors may send interprocessor interrupts to this one (header
+ * title: CPU interrupt access permission bits). The only use found is the
+ * cross-partition driver reading it as the target of a protected remote read;
+ * the driver comment says there is no special reason for that choice. So the
+ * register can be read without harm; its bit layout and write behaviour are
+ * unknown. The SHub 1 PROM writes 1 here once, as the winner of the node
+ * election in SAL_A (SAL 5.04 PROM site 0xffc4ea40); the meaning of 1 is
+ * unknown. The node set-up (site 0xffa97c7c) later writes the node mask of the
+ * permission registers here too (see prom-reset.md); the header gives INIT
+ * 0xffffffffffffffff and a 64-bit ACCESS_BITS field.
  */
-/* ipi_access: rw64, reset unknown; Linux v5.3 SGI SN2 platform MMR header (GPL): name and offset */
-#define SHUB_IPI_ACCESS                              0x110060480 /* established */
+/* ipi_access: rw64, reset unknown; Linux v5.3 SGI SN2 platform MMR header
+ * (GPL): name and offset */
+/* established */
+#define SHUB_IPI_ACCESS                              0x110060480
 
 /*
- * DRAM bus clock select; the name is ours. The memory-controller set-up reads it and uses bits 1:0 as an index into a four-entry table held in flash (200, 160, 133 and 100 MHz for 0 to 3, table read). The chosen clock and the DIMM's CAS latency must be a pair the PROM supports or it prints that the memory bus speed is not supported and goes on with unusable timing values. Never written by the PROM. Must return: any value whose bits 1:0 give a supported pair; zero (200 MHz) is the simplest. In the local block by address. Linux does not define it: the position and use are as observed in the PROM, the meaning (bus clock select) is inferred. See memory-init.md.
+ * DRAM bus clock select; the name is ours. The memory-controller set-up reads
+ * it and uses bits 1:0 as an index into a four-entry table held in flash (200,
+ * 160, 133 and 100 MHz for 0 to 3, table read). The chosen clock and the DIMM's
+ * CAS latency must be a pair the PROM supports or it prints that the memory bus
+ * speed is not supported and goes on with unusable timing values. Never written
+ * by the PROM. Must return: any value whose bits 1:0 give a supported pair;
+ * zero (200 MHz) is the simplest. In the local block by address. Linux does not
+ * define it: the position and use are as observed in the PROM, the meaning (bus
+ * clock select) is inferred. See memory-init.md.
  */
-/* md_clk_sel: r64, reset unknown; SAL 5.04 PROM site 0xffa77e0c (read through the node's global window), 0xffa77e20 (mask); no Linux v5.3 name */
+/* md_clk_sel: r64, reset unknown; SAL 5.04 PROM site 0xffa77e0c (read through
+ * the node's global window), 0xffa77e20 (mask); no Linux v5.3 name */
 #define SHUB_MD_CLK_SEL                              0x110060500 /* inferred */
 #define SHUB_MD_CLK_SEL_SEL_SHIFT                    0 /* inferred */
 #define SHUB_MD_CLK_SEL_SEL_MASK                     0x3ull
-#define SHUB_MD_CLK_SEL_SEL_INPLACE                  (SHUB_MD_CLK_SEL_SEL_MASK << SHUB_MD_CLK_SEL_SEL_SHIFT)
+#define SHUB_MD_CLK_SEL_SEL_INPLACE (SHUB_MD_CLK_SEL_SEL_MASK << SHUB_MD_CLK_SEL_SEL_SHIFT)
 
 /*
- * SHub identification (local block, inferred). The kernel reads only the revision, to switch on its SHub 1.1 workarounds when it is 2 or lower, and in the fallback for an old PROM the nodes-per-bit field, which it reports as the region size. SHub 2's counterpart is not named in the header. The SHub 1 PROM also writes it (SAL 5.04 PROM site 0xffa95a30, reached from 0xffa5f84c): it reads the word, replaces bits 42:32 with the node id, bits 45:44 with a size code and bits 52:48 with a nodes-per-bit code, and writes the word back; the other bits are stored as read, so they may be read only. After the write the three fields must read back as written. The first read, at main start, needs any node id in bits 42:32. The header gives MASK 0x011f37ffffffffff; its INIT has bits 31:0 clear, nodes-per-bit 1 and size code 3. The PROM expects revision 3 and part 0x4363; those are PROM expectations, not header facts. See prom-reset.md.
+ * SHub identification (local block, inferred). The kernel reads only the
+ * revision, to switch on its SHub 1.1 workarounds when it is 2 or lower, and in
+ * the fallback for an old PROM the nodes-per-bit field, which it reports as the
+ * region size. SHub 2's counterpart is not named in the header. The SHub 1 PROM
+ * also writes it (SAL 5.04 PROM site 0xffa95a30, reached from 0xffa5f84c): it
+ * reads the word, replaces bits 42:32 with the node id, bits 45:44 with a size
+ * code and bits 52:48 with a nodes-per-bit code, and writes the word back; the
+ * other bits are stored as read, so they may be read only. After the write the
+ * three fields must read back as written. The first read, at main start, needs
+ * any node id in bits 42:32. The header gives MASK 0x011f37ffffffffff; its INIT
+ * has bits 31:0 clear, nodes-per-bit 1 and size code 3. The PROM expects
+ * revision 3 and part 0x4363; those are PROM expectations, not header facts.
+ * See prom-reset.md.
  */
-/* shub_id: rw64, reset 0x10300000000000; Linux v5.3 SGI SN2 platform MMR header (GPL): name and offset */
-#define SHUB_SHUB_ID                                 0x110060580 /* established */
+/* shub_id: rw64, reset 0x10300000000000; Linux v5.3 SGI SN2 platform MMR header
+ * (GPL): name and offset */
+/* established */
+#define SHUB_SHUB_ID                                 0x110060580
 #define SHUB_SHUB_ID_NODES_PER_BIT_SHIFT             48 /* established */
 #define SHUB_SHUB_ID_NODES_PER_BIT_MASK              0x1full
-#define SHUB_SHUB_ID_NODES_PER_BIT_INPLACE           (SHUB_SHUB_ID_NODES_PER_BIT_MASK << SHUB_SHUB_ID_NODES_PER_BIT_SHIFT)
+#define SHUB_SHUB_ID_NODES_PER_BIT_INPLACE (SHUB_SHUB_ID_NODES_PER_BIT_MASK << SHUB_SHUB_ID_NODES_PER_BIT_SHIFT)
 #define SHUB_SHUB_ID_SIZE_CODE_SHIFT                 44 /* inferred */
 #define SHUB_SHUB_ID_SIZE_CODE_MASK                  0x3ull
-#define SHUB_SHUB_ID_SIZE_CODE_INPLACE               (SHUB_SHUB_ID_SIZE_CODE_MASK << SHUB_SHUB_ID_SIZE_CODE_SHIFT)
+#define SHUB_SHUB_ID_SIZE_CODE_INPLACE (SHUB_SHUB_ID_SIZE_CODE_MASK << SHUB_SHUB_ID_SIZE_CODE_SHIFT)
 #define SHUB_SHUB_ID_NASID_SHIFT                     32 /* inferred */
 #define SHUB_SHUB_ID_NASID_MASK                      0x7ffull
-#define SHUB_SHUB_ID_NASID_INPLACE                   (SHUB_SHUB_ID_NASID_MASK << SHUB_SHUB_ID_NASID_SHIFT)
+#define SHUB_SHUB_ID_NASID_INPLACE (SHUB_SHUB_ID_NASID_MASK << SHUB_SHUB_ID_NASID_SHIFT)
 #define SHUB_SHUB_ID_REVISION_SHIFT                  28 /* established */
 #define SHUB_SHUB_ID_REVISION_MASK                   0xfull
-#define SHUB_SHUB_ID_REVISION_INPLACE                (SHUB_SHUB_ID_REVISION_MASK << SHUB_SHUB_ID_REVISION_SHIFT)
+#define SHUB_SHUB_ID_REVISION_INPLACE (SHUB_SHUB_ID_REVISION_MASK << SHUB_SHUB_ID_REVISION_SHIFT)
 
 /*
- * Present-SHub vector words 0 to 3 in the processor interface block: the same values as md_dqlp_dir_presvec, written third in each group. Never read back. Header title: Shubs 0 - 63 Present, used for invalidate generation; header INIT 0xffffffffffffffff (macro only, no power-on claim).
+ * Present-SHub vector words 0 to 3 in the processor interface block: the same
+ * values as md_dqlp_dir_presvec, written third in each group. Never read back.
+ * Header title: Shubs 0 - 63 Present, used for invalidate generation; header
+ * INIT 0xffffffffffffffff (macro only, no power-on claim).
  */
-/* shubs_present: w64, reset unknown; SAL 5.04 PROM site 0xffa79310 (names SH_SHUBS_PRESENT0 to 3 in the PROM table) */
-#define SHUB_SHUBS_PRESENT                           0x110060600 /* established */
+/* shubs_present: w64, reset unknown; SAL 5.04 PROM site 0xffa79310 (names
+ * SH_SHUBS_PRESENT0 to 3 in the PROM table) */
+/* established */
+#define SHUB_SHUBS_PRESENT                           0x110060600
 #define SHUB_SHUBS_PRESENT_COUNT                     4
 #define SHUB_SHUBS_PRESENT_STRIDE                    128
 
 /*
- * Data word of a vector request message. The PROM stores the value to write before arming SH_VEC_PARMS for a write request (a read request stores nothing here; see SH_VEC_RDDATA). Not read back. Used only for a record that has a route (a remote node); the local node is reached through its own global window instead.
+ * Data word of a vector request message. The PROM stores the value to write
+ * before arming SH_VEC_PARMS for a write request (a read request stores nothing
+ * here; see SH_VEC_RDDATA). Not read back. Used only for a record that has a
+ * route (a remote node); the local node is reached through its own global
+ * window instead.
  */
 /* vec_data: w64, reset 0x0 */
-#define SHUB_VEC_DATA                                0x110066000 /* established */
+/* established */
+#define SHUB_VEC_DATA                                0x110066000
 
 /*
- * Vector request parameters and the start/busy handshake. TYPE bit 0 (0 read, 1 write), NI_PORT bit 1, ADDRESS bits 34:3 (the register offset bits 34:3), PIO_ID bits 45:35, START bit 62, BUSY bit 63 (header). The PROM first polls bit 63 until clear (at most 1024 reads), then writes (hops - 1) * 2 | offset AND 0x7fffffff8 | 0x40000e4000000000 for a read (PIO_ID 0x1c8) or | 0x400003d800000001 for a write (PIO_ID 0x7b); START (bit 62) launches the message. The PROM never reads BUSY again after the write; completion is read from SH_VEC_STATUS.
+ * Vector request parameters and the start/busy handshake. TYPE bit 0 (0 read, 1
+ * write), NI_PORT bit 1, ADDRESS bits 34:3 (the register offset bits 34:3),
+ * PIO_ID bits 45:35, START bit 62, BUSY bit 63 (header). The PROM first polls
+ * bit 63 until clear (at most 1024 reads), then writes (hops - 1) * 2 | offset
+ * AND 0x7fffffff8 | 0x40000e4000000000 for a read (PIO_ID 0x1c8) or |
+ * 0x400003d800000001 for a write (PIO_ID 0x7b); START (bit 62) launches the
+ * message. The PROM never reads BUSY again after the write; completion is read
+ * from SH_VEC_STATUS.
  */
 /* vec_parms: rw64, reset 0x0 */
-#define SHUB_VEC_PARMS                               0x110066080 /* established */
+/* established */
+#define SHUB_VEC_PARMS                               0x110066080
 
 /*
- * Route of a vector request: the 16-nibble route word shifted down 4 bits (the first nibble goes to SH_VEC_PARMS NI_PORT instead). When the record has no remaining hops the PROM stores 0xf00000000 (a 0xf in nibble 8). Not read back.
+ * Route of a vector request: the 16-nibble route word shifted down 4 bits (the
+ * first nibble goes to SH_VEC_PARMS NI_PORT instead). When the record has no
+ * remaining hops the PROM stores 0xf00000000 (a 0xf in nibble 8). Not read
+ * back.
  */
 /* vec_route: w64, reset 0x0 */
-#define SHUB_VEC_ROUTE                               0x110066100 /* established */
+/* established */
+#define SHUB_VEC_ROUTE                               0x110066100
 
 /*
- * Data of a vector reply. Read once, after SH_VEC_STATUS shows a valid reply for a read request, and stored as the result. Before arming a read request the PROM also stores 0xdeadbeefdeadbeef here (a PROM write; the register is listed read-only because that is how the header treats it, whether the hardware accepts the store is unknown).
+ * Data of a vector reply. Read once, after SH_VEC_STATUS shows a valid reply
+ * for a read request, and stored as the result. Before arming a read request
+ * the PROM also stores 0xdeadbeefdeadbeef here (a PROM write; the register is
+ * listed read-only because that is how the header treats it, whether the
+ * hardware accepts the store is unknown).
  */
 /* vec_rddata: r64, reset 0x0 */
-#define SHUB_VEC_RDDATA                              0x110074000 /* established */
+/* established */
+#define SHUB_VEC_RDDATA                              0x110074000
 
 /*
- * Vector reply status. TYPE bits 2:0, ADDRESS bits 34:3, PIO_ID bits 45:35, SOURCE bits 59:46 (header), OVERRUN bit 62, STATUS_VALID bit 63. The PROM writes 0 before each request and reads it: bit 63 already set at that point makes the request fail with -1. After the request it polls (100 microseconds apart, at most 1024 times) until bit 63 is set. The reply is a success only when OVERRUN is clear, TYPE is 0 for a read or 1 for a write, PIO_ID is 0x1c8 (read) or 0x7b (write) and ADDRESS equals the request address bits; OVERRUN gives -2, TYPE 4, 5 or 6 give -4, -5, -6, anything else -3. Writing 0 must clear bit 63.
+ * Vector reply status. TYPE bits 2:0, ADDRESS bits 34:3, PIO_ID bits 45:35,
+ * SOURCE bits 59:46 (header), OVERRUN bit 62, STATUS_VALID bit 63. The PROM
+ * writes 0 before each request and reads it: bit 63 already set at that point
+ * makes the request fail with -1. After the request it polls (100 microseconds
+ * apart, at most 1024 times) until bit 63 is set. The reply is a success only
+ * when OVERRUN is clear, TYPE is 0 for a read or 1 for a write, PIO_ID is 0x1c8
+ * (read) or 0x7b (write) and ADDRESS equals the request address bits; OVERRUN
+ * gives -2, TYPE 4, 5 or 6 give -4, -5, -6, anything else -3. Writing 0 must
+ * clear bit 63.
  */
 /* vec_status: rw64, reset 0x0 */
-#define SHUB_VEC_STATUS                              0x110074100 /* established */
+/* established */
+#define SHUB_VEC_STATUS                              0x110074100
 
 /*
- * Purge translation cache message, SHub 1 (header SH1_PTC_0 and SH1_PTC_1). To purge a virtual address range on every processor of a node the kernel writes the two registers of that node's global window back to back with interrupts and interruption collection off, the first with a type bit, the page-size exponent, the region id and a start bit, the second with the virtual address and a start bit; both stores are in one atomic assembly sequence. It does this once per page of the range, after taking a global lock, for every node that has the mm's processors, except the local node which uses the processor's own global purge instruction instead. Entry 0 is the control word and entry 1 the address word. After a batch of nodes it waits on the PIO write status.
+ * Purge translation cache message, SHub 1 (header SH1_PTC_0 and SH1_PTC_1). To
+ * purge a virtual address range on every processor of a node the kernel writes
+ * the two registers of that node's global window back to back with interrupts
+ * and interruption collection off, the first with a type bit, the page-size
+ * exponent, the region id and a start bit, the second with the virtual address
+ * and a start bit; both stores are in one atomic assembly sequence. It does
+ * this once per page of the range, after taking a global lock, for every node
+ * that has the mm's processors, except the local node which uses the
+ * processor's own global purge instruction instead. Entry 0 is the control word
+ * and entry 1 the address word. After a batch of nodes it waits on the PIO
+ * write status.
  */
-/* ptc: w64, reset unknown; Linux v5.3 SGI SN2 platform MMR header (GPL): name and offset */
-#define SHUB_PTC                                     0x1101a0000 /* established */
+/* ptc: w64, reset unknown; Linux v5.3 SGI SN2 platform MMR header (GPL): name
+ * and offset */
+/* established */
+#define SHUB_PTC                                     0x1101a0000
 #define SHUB_PTC_COUNT                               2
 #define SHUB_PTC_STRIDE                              128
 #define SHUB_PTC_START_SHIFT                         63 /* established */
 #define SHUB_PTC_START_MASK                          0x1ull
-#define SHUB_PTC_START_INPLACE                       (SHUB_PTC_START_MASK << SHUB_PTC_START_SHIFT)
+#define SHUB_PTC_START_INPLACE (SHUB_PTC_START_MASK << SHUB_PTC_START_SHIFT)
 #define SHUB_PTC_RID_SHIFT                           8 /* inferred */
 #define SHUB_PTC_RID_MASK                            0x7fffffffffffffull
-#define SHUB_PTC_RID_INPLACE                         (SHUB_PTC_RID_MASK << SHUB_PTC_RID_SHIFT)
+#define SHUB_PTC_RID_INPLACE (SHUB_PTC_RID_MASK << SHUB_PTC_RID_SHIFT)
 #define SHUB_PTC_PS_SHIFT                            2 /* inferred */
 #define SHUB_PTC_PS_MASK                             0x3full
-#define SHUB_PTC_PS_INPLACE                          (SHUB_PTC_PS_MASK << SHUB_PTC_PS_SHIFT)
+#define SHUB_PTC_PS_INPLACE (SHUB_PTC_PS_MASK << SHUB_PTC_PS_SHIFT)
 #define SHUB_PTC_TYPE_BIT_SHIFT                      0 /* inferred */
 #define SHUB_PTC_TYPE_BIT_MASK                       0x1ull
-#define SHUB_PTC_TYPE_BIT_INPLACE                    (SHUB_PTC_TYPE_BIT_MASK << SHUB_PTC_TYPE_BIT_SHIFT)
+#define SHUB_PTC_TYPE_BIT_INPLACE (SHUB_PTC_TYPE_BIT_MASK << SHUB_PTC_TYPE_BIT_SHIFT)
 
 /*
- * Purge translation cache parameters, next to SH1_PTC_0 and SH1_PTC_1. The PROM writes a value built from a value it read and the constant 0x23c34600 (used when bit 31 of a call result is set) and reads it back; the header splits the word into PTC_TO_WRAP (bits 23:0, time-out period) and PTC_TO_VAL (bits 35:24, time-out valid); what the PROM's value means is not decoded. Neither the PROM nor the runtime stores to ptc itself.
+ * Purge translation cache parameters, next to SH1_PTC_0 and SH1_PTC_1. The PROM
+ * writes a value built from a value it read and the constant 0x23c34600 (used
+ * when bit 31 of a call result is set) and reads it back; the header splits the
+ * word into PTC_TO_WRAP (bits 23:0, time-out period) and PTC_TO_VAL (bits
+ * 35:24, time-out valid); what the PROM's value means is not decoded. Neither
+ * the PROM nor the runtime stores to ptc itself.
  */
-/* ptc_parms: rw64, reset 0x7ffffffff; SAL 5.04 PROM site 0xffa960a6 (write, then read back); the PROM's table lists it as SH_PTC_PARMS */
+/* ptc_parms: rw64, reset 0x7ffffffff; SAL 5.04 PROM site 0xffa960a6 (write,
+ * then read back); the PROM's table lists it as SH_PTC_PARMS */
 #define SHUB_PTC_PARMS                               0x1101a0100 /* inferred */
 #define SHUB_PTC_PARMS_PTC_TO_VAL_SHIFT              24 /* inferred */
 #define SHUB_PTC_PARMS_PTC_TO_VAL_MASK               0xfffull
-#define SHUB_PTC_PARMS_PTC_TO_VAL_INPLACE            (SHUB_PTC_PARMS_PTC_TO_VAL_MASK << SHUB_PTC_PARMS_PTC_TO_VAL_SHIFT)
+#define SHUB_PTC_PARMS_PTC_TO_VAL_INPLACE (SHUB_PTC_PARMS_PTC_TO_VAL_MASK << SHUB_PTC_PARMS_PTC_TO_VAL_SHIFT)
 #define SHUB_PTC_PARMS_PTC_TO_WRAP_SHIFT             0 /* inferred */
 #define SHUB_PTC_PARMS_PTC_TO_WRAP_MASK              0xffffffull
-#define SHUB_PTC_PARMS_PTC_TO_WRAP_INPLACE           (SHUB_PTC_PARMS_PTC_TO_WRAP_MASK << SHUB_PTC_PARMS_PTC_TO_WRAP_SHIFT)
+#define SHUB_PTC_PARMS_PTC_TO_WRAP_INPLACE (SHUB_PTC_PARMS_PTC_TO_WRAP_MASK << SHUB_PTC_PARMS_PTC_TO_WRAP_SHIFT)
 
 /*
- * Compare value of RTC0 (55 bits). Never read. Whether a value already below the counter fires is unknown.
+ * Compare value of RTC0 (55 bits). Never read. Whether a value already below
+ * the counter fires is unknown.
  */
-/* int_cmpa: rw64, reset unknown; SAL 5.04 PROM site 0xffa319e6 (the counter plus the delay in ticks) */
-#define SHUB_INT_CMPA                                0x1101b0000 /* established */
+/* int_cmpa: rw64, reset unknown; SAL 5.04 PROM site 0xffa319e6 (the counter
+ * plus the delay in ticks) */
+/* established */
+#define SHUB_INT_CMPA                                0x1101b0000
 
 /*
- * Compare values for RTC comparators 1, 2 and 3 (header names SH_INT_CMPB, SH_INT_CMPC, SH_INT_CMPD; the header titles them 'RTC compare value for processor B, C, D'). The interrupt fires when the clock reaches the value. The comparator for RTC 0 would sit 0x80 below these and is not defined in the header (unknown).
+ * Compare values for RTC comparators 1, 2 and 3 (header names SH_INT_CMPB,
+ * SH_INT_CMPC, SH_INT_CMPD; the header titles them 'RTC compare value for
+ * processor B, C, D'). The interrupt fires when the clock reaches the value.
+ * The comparator for RTC 0 would sit 0x80 below these and is not defined in the
+ * header (unknown).
  */
-/* int_cmp: rw64, reset 0x0; Linux v5.3 SGI SN2 platform MMR header (GPL): name and offset */
-#define SHUB_INT_CMP                                 0x1101b0080 /* established */
+/* int_cmp: rw64, reset 0x0; Linux v5.3 SGI SN2 platform MMR header (GPL): name
+ * and offset */
+/* established */
+#define SHUB_INT_CMP                                 0x1101b0080
 #define SHUB_INT_CMP_COUNT                           3
 #define SHUB_INT_CMP_STRIDE                          128
 #define SHUB_INT_CMP_COMPARE_SHIFT                   0 /* established */
 #define SHUB_INT_CMP_COMPARE_MASK                    0x7fffffffffffffull
-#define SHUB_INT_CMP_COMPARE_INPLACE                 (SHUB_INT_CMP_COMPARE_MASK << SHUB_INT_CMP_COMPARE_SHIFT)
+#define SHUB_INT_CMP_COMPARE_INPLACE (SHUB_INT_CMP_COMPARE_MASK << SHUB_INT_CMP_COMPARE_SHIFT)
 
 /*
- * Real-time clock: a 55-bit counter, read by the kernel as its clock source (clock source rating 450, mask 55 bits) and for microsecond delays, because the CPU cycle counters are not synchronised across processors. The frequency is not in a register; the kernel asks firmware for it. The driver comment says the clock registers sit alone on a 64 KiB page, which is what lets user space map it read-only. The SHub 1 PROM (SAL 5.04) writes 0 to it at the SAL_B reset entry (0xffa94d20) and again to a node's counter in the interconnect phase, then reads it on every delay and timeout, so it must advance. Its tick period comes from rtc_ctl (SHub 1: 10 ns times the field plus one, 50 ns after the PROM's own write). See prom-reset.md.
+ * Real-time clock: a 55-bit counter, read by the kernel as its clock source
+ * (clock source rating 450, mask 55 bits) and for microsecond delays, because
+ * the CPU cycle counters are not synchronised across processors. The frequency
+ * is not in a register; the kernel asks firmware for it. The driver comment
+ * says the clock registers sit alone on a 64 KiB page, which is what lets user
+ * space map it read-only. The SHub 1 PROM (SAL 5.04) writes 0 to it at the
+ * SAL_B reset entry (0xffa94d20) and again to a node's counter in the
+ * interconnect phase, then reads it on every delay and timeout, so it must
+ * advance. Its tick period comes from rtc_ctl (SHub 1: 10 ns times the field
+ * plus one, 50 ns after the PROM's own write). See prom-reset.md.
  */
-/* rtc: rw64, reset unknown; Linux v5.3 SGI SN2 platform MMR header (GPL): name and offset */
-#define SHUB_RTC                                     0x1101c0000 /* established */
+/* rtc: rw64, reset unknown; Linux v5.3 SGI SN2 platform MMR header (GPL): name
+ * and offset */
+/* established */
+#define SHUB_RTC                                     0x1101c0000
 #define SHUB_RTC_COUNTER_SHIFT                       0 /* established */
 #define SHUB_RTC_COUNTER_MASK                        0x7fffffffffffffull
-#define SHUB_RTC_COUNTER_INPLACE                     (SHUB_RTC_COUNTER_MASK << SHUB_RTC_COUNTER_SHIFT)
+#define SHUB_RTC_COUNTER_INPLACE (SHUB_RTC_COUNTER_MASK << SHUB_RTC_COUNTER_SHIFT)
 
 /*
- * SH_SCRATCH1: 64-bit scratch word, per node, that the firmware uses for the node election and for per-node state bits. Reset 0 is the header's INIT (the early election needs a zero word, inferred); the header gives no fields. Hardware sets no bit: every bit is stored by firmware. Early election (0xffc4e970): each processor stores slice + 1 to the alias, reads this register and wins when the value equals slice + 1 exactly; 0xffc4e730 repeats the exact compare, so bits 39 to 41 must still be clear then. Read-modify-write bits (all other bits kept): 41 (0xffa0b0f0, local, only when no other processor position is flagged), 39 (0xffa0aee0, global window), 40 (0xffa4eb40, global window). The discovery path reaches the register through the vector engine at its literal address, never the alias: 0xffa5d2a0 polls it until it reads 0 or bit 39 or 41 is set (any other value is polled every 10000 microseconds for up to 300000000 microseconds, 300 s, or until the console interrupt check fires, then forced to 0x20000000000), returns at once when bits 55:54 are nonzero, then stores the word with bit 39 set and bits 55:54 replaced by the NI port-probe result; 0xffa1a6d0 test-and-sets bit 56 under a firmware lock. The node set-up method 0xffacc6e0 sets bits 57 and 40. The error and park paths (0xffaf5c80, 0xffc4e030) OR in bits 41 and 39. Bits 20, 23, 25 and 33 of 0x2_0290_0000 are written by no SHub 1 site in the image. Bit 58 and the field at 30:23 appear only in the twin routine for the other chip type (0xffa60a70 at 0x4_0901_d0080).
+ * SH_SCRATCH1: 64-bit scratch word, per node, that the firmware uses for the
+ * node election and for per-node state bits. Reset 0 is the header's INIT (the
+ * early election needs a zero word, inferred); the header gives no fields.
+ * Hardware sets no bit: every bit is stored by firmware. Early election
+ * (0xffc4e970): each processor stores slice + 1 to the alias, reads this
+ * register and wins when the value equals slice + 1 exactly; 0xffc4e730 repeats
+ * the exact compare, so bits 39 to 41 must still be clear then.
+ * Read-modify-write bits (all other bits kept): 41 (0xffa0b0f0, local, only
+ * when no other processor position is flagged), 39 (0xffa0aee0, global window),
+ * 40 (0xffa4eb40, global window). The discovery path reaches the register
+ * through the vector engine at its literal address, never the alias: 0xffa5d2a0
+ * polls it until it reads 0 or bit 39 or 41 is set (any other value is polled
+ * every 10000 microseconds for up to 300000000 microseconds, 300 s, or until
+ * the console interrupt check fires, then forced to 0x20000000000), returns at
+ * once when bits 55:54 are nonzero, then stores the word with bit 39 set and
+ * bits 55:54 replaced by the NI port-probe result; 0xffa1a6d0 test-and-sets bit
+ * 56 under a firmware lock. The node set-up method 0xffacc6e0 sets bits 57 and
+ * 40. The error and park paths (0xffaf5c80, 0xffc4e030) OR in bits 41 and 39.
+ * Bits 20, 23, 25 and 33 of 0x2_0290_0000 are written by no SHub 1 site in the
+ * image. Bit 58 and the field at 30:23 appear only in the twin routine for the
+ * other chip type (0xffa60a70 at 0x4_0901_d0080).
  */
 /* scratch1: rw64, reset 0x0 */
-#define SHUB_SCRATCH1                                0x1101d0080 /* established */
+/* established */
+#define SHUB_SCRATCH1                                0x1101d0080
 #define SHUB_SCRATCH1_BIT57_SHIFT                    57 /* inferred */
 #define SHUB_SCRATCH1_BIT57_MASK                     0x1ull
-#define SHUB_SCRATCH1_BIT57_INPLACE                  (SHUB_SCRATCH1_BIT57_MASK << SHUB_SCRATCH1_BIT57_SHIFT)
+#define SHUB_SCRATCH1_BIT57_INPLACE (SHUB_SCRATCH1_BIT57_MASK << SHUB_SCRATCH1_BIT57_SHIFT)
 #define SHUB_SCRATCH1_BIT56_SHIFT                    56 /* inferred */
 #define SHUB_SCRATCH1_BIT56_MASK                     0x1ull
-#define SHUB_SCRATCH1_BIT56_INPLACE                  (SHUB_SCRATCH1_BIT56_MASK << SHUB_SCRATCH1_BIT56_SHIFT)
+#define SHUB_SCRATCH1_BIT56_INPLACE (SHUB_SCRATCH1_BIT56_MASK << SHUB_SCRATCH1_BIT56_SHIFT)
 #define SHUB_SCRATCH1_PORT_PROBE_SHIFT               54 /* inferred */
 #define SHUB_SCRATCH1_PORT_PROBE_MASK                0x3ull
-#define SHUB_SCRATCH1_PORT_PROBE_INPLACE             (SHUB_SCRATCH1_PORT_PROBE_MASK << SHUB_SCRATCH1_PORT_PROBE_SHIFT)
+#define SHUB_SCRATCH1_PORT_PROBE_INPLACE (SHUB_SCRATCH1_PORT_PROBE_MASK << SHUB_SCRATCH1_PORT_PROBE_SHIFT)
 #define SHUB_SCRATCH1_BIT41_SHIFT                    41 /* inferred */
 #define SHUB_SCRATCH1_BIT41_MASK                     0x1ull
-#define SHUB_SCRATCH1_BIT41_INPLACE                  (SHUB_SCRATCH1_BIT41_MASK << SHUB_SCRATCH1_BIT41_SHIFT)
+#define SHUB_SCRATCH1_BIT41_INPLACE (SHUB_SCRATCH1_BIT41_MASK << SHUB_SCRATCH1_BIT41_SHIFT)
 #define SHUB_SCRATCH1_BIT40_SHIFT                    40 /* inferred */
 #define SHUB_SCRATCH1_BIT40_MASK                     0x1ull
-#define SHUB_SCRATCH1_BIT40_INPLACE                  (SHUB_SCRATCH1_BIT40_MASK << SHUB_SCRATCH1_BIT40_SHIFT)
+#define SHUB_SCRATCH1_BIT40_INPLACE (SHUB_SCRATCH1_BIT40_MASK << SHUB_SCRATCH1_BIT40_SHIFT)
 #define SHUB_SCRATCH1_NODE_CLAIMED_SHIFT             39 /* inferred */
 #define SHUB_SCRATCH1_NODE_CLAIMED_MASK              0x1ull
-#define SHUB_SCRATCH1_NODE_CLAIMED_INPLACE           (SHUB_SCRATCH1_NODE_CLAIMED_MASK << SHUB_SCRATCH1_NODE_CLAIMED_SHIFT)
+#define SHUB_SCRATCH1_NODE_CLAIMED_INPLACE (SHUB_SCRATCH1_NODE_CLAIMED_MASK << SHUB_SCRATCH1_NODE_CLAIMED_SHIFT)
 
 /*
- * SH_SCRATCH1_ALIAS: the header gives the address and no description, and Linux v5.3 has no name. Established: the first stage stores slice + 1 here and then reads SH_SCRATCH1 expecting exactly that value, so the alias cannot be write-one-to-clear (a clear of a zero word would never read back equal). Inferred, from that single use: the store lands in the SH_SCRATCH1 word (either as a plain store or as an OR; a lone processor cannot tell them apart). Unknown: whether a second writer is blocked or OR-merged. A model keeps both addresses on one 64-bit cell; reads of the alias are never issued by the PROM.
+ * SH_SCRATCH1_ALIAS: the header gives the address and no description, and Linux
+ * v5.3 has no name. Established: the first stage stores slice + 1 here and then
+ * reads SH_SCRATCH1 expecting exactly that value, so the alias cannot be
+ * write-one-to-clear (a clear of a zero word would never read back equal).
+ * Inferred, from that single use: the store lands in the SH_SCRATCH1 word
+ * (either as a plain store or as an OR; a lone processor cannot tell them
+ * apart). Unknown: whether a second writer is blocked or OR-merged. A model
+ * keeps both addresses on one 64-bit cell; reads of the alias are never issued
+ * by the PROM.
  */
 /* scratch1_alias: w64, reset unknown */
-#define SHUB_SCRATCH1_ALIAS                          0x1101d0088 /* established */
+/* established */
+#define SHUB_SCRATCH1_ALIAS                          0x1101d0088
 
 /*
- * L1 link state word in the local block; the name is ours. The header calls this offset SH_SCRATCH2 (one 64-bit field, MASK all ones, INIT 0); its alias SH_SCRATCH2_ALIAS is at +8 (0x1101d0108). SAL_A's election winner sets bits 41:39 to 7 by read-modify-write, keeping the other bits. An earlier reading says the L1 start checks bits 41:39 for 7; a later review found no reader that does, so that requirement is unconfirmed and plain storage satisfies the write. Other bits are used by the L1 transport and are not decoded here. The PROM's node-object builder (site 0xffa8b5d0, run for the local node by main, slot 95 and slot 81) tests bits 41:39 for 7 and, if so, clears them, saves bits 49:42 from the register, rewrites bits 49:42 incremented modulo 256, then clears bit 63; so the second run finds 0 in bits 41:39 (review of the node set-up traces).
+ * L1 link state word in the local block; the name is ours. The header calls
+ * this offset SH_SCRATCH2 (one 64-bit field, MASK all ones, INIT 0); its alias
+ * SH_SCRATCH2_ALIAS is at +8 (0x1101d0108). SAL_A's election winner sets bits
+ * 41:39 to 7 by read-modify-write, keeping the other bits. An earlier reading
+ * says the L1 start checks bits 41:39 for 7; a later review found no reader
+ * that does, so that requirement is unconfirmed and plain storage satisfies the
+ * write. Other bits are used by the L1 transport and are not decoded here. The
+ * PROM's node-object builder (site 0xffa8b5d0, run for the local node by main,
+ * slot 95 and slot 81) tests bits 41:39 for 7 and, if so, clears them, saves
+ * bits 49:42 from the register, rewrites bits 49:42 incremented modulo 256,
+ * then clears bit 63; so the second run finds 0 in bits 41:39 (review of the
+ * node set-up traces).
  */
-/* lb_l1_state: rw64, reset 0x0; SAL 5.04 PROM site 0xffc4e790 and 0xffc4e7a0 (read-modify-write); the PROM's runtime also names the word sc_shub_state_reg and sc_shub_pushed_data_reg */
-#define SHUB_LB_L1_STATE                             0x1101d0100 /* established */
+/* lb_l1_state: rw64, reset 0x0; SAL 5.04 PROM site 0xffc4e790 and 0xffc4e7a0
+ * (read-modify-write); the PROM's runtime also names the word sc_shub_state_reg
+ * and sc_shub_pushed_data_reg */
+/* established */
+#define SHUB_LB_L1_STATE                             0x1101d0100
 #define SHUB_LB_L1_STATE_LINK_SHIFT                  39 /* inferred */
 #define SHUB_LB_L1_STATE_LINK_MASK                   0x7ull
-#define SHUB_LB_L1_STATE_LINK_INPLACE                (SHUB_LB_L1_STATE_LINK_MASK << SHUB_LB_L1_STATE_LINK_SHIFT)
+#define SHUB_LB_L1_STATE_LINK_INPLACE (SHUB_LB_L1_STATE_LINK_MASK << SHUB_LB_L1_STATE_LINK_SHIFT)
 
 /*
- * Second firmware lock pair, release side. The header names this offset SH_SCRATCH3, a one-bit scratch register (mask 0x1, INIT 0) with its alias at 0x188 (lb_lock2_status); the lock use is the PROM's, and our name stays for that role. The methods of the chip object take it around read-modify-writes of fw_word_1540 by the same routines that take lb_lock (site 0xffa0ed30 on this node, 0xffa0ee90 on another): poll lb_lock2_status, do the work, write 0 here. On this node a status that does not read 0 within 1,000,000 microseconds makes the PROM write 0 here and keep polling; the other-node form gives up after its deadline and returns -9 without writing. Whether a read of the status takes the lock in hardware is unknown; a plain register pair where the status always reads 0 satisfies every access read. Linux v5.3 does not define the lock; the behaviour is as observed at the access and the meaning is inferred.
+ * Second firmware lock pair, release side. The header names this offset
+ * SH_SCRATCH3, a one-bit scratch register (mask 0x1, INIT 0) with its alias at
+ * 0x188 (lb_lock2_status); the lock use is the PROM's, and our name stays for
+ * that role. The methods of the chip object take it around read-modify-writes
+ * of fw_word_1540 by the same routines that take lb_lock (site 0xffa0ed30 on
+ * this node, 0xffa0ee90 on another): poll lb_lock2_status, do the work, write 0
+ * here. On this node a status that does not read 0 within 1,000,000
+ * microseconds makes the PROM write 0 here and keep polling; the other-node
+ * form gives up after its deadline and returns -9 without writing. Whether a
+ * read of the status takes the lock in hardware is unknown; a plain register
+ * pair where the status always reads 0 satisfies every access read. Linux v5.3
+ * does not define the lock; the behaviour is as observed at the access and the
+ * meaning is inferred.
  */
 /* lb_lock2: w64, reset 0x0 */
 #define SHUB_LB_LOCK2                                0x1101d0180 /* inferred */
 
 /*
- * Second firmware lock status. The header names this offset SH_SCRATCH3_ALIAS and gives no description; the other-node routine tests bit 0 only, which is the one bit of SH_SCRATCH3. The lock use is the PROM's and our name stays for that role. This-node polls proceed when the whole 64-bit value reads 0 (the same routine as lb_lock_status). The other-node routine, reading it through the node-object read, proceeds when bit 0 reads 0 and ignores the other bits, so a model must keep bit 0 at 0 when the lock is free. A status that never reads 0 times out after 1,000,000 microseconds (forced release on this node, error -9 on another). A read side effect is unknown. Linux v5.3 does not define the lock; the meaning is inferred.
+ * Second firmware lock status. The header names this offset SH_SCRATCH3_ALIAS
+ * and gives no description; the other-node routine tests bit 0 only, which is
+ * the one bit of SH_SCRATCH3. The lock use is the PROM's and our name stays for
+ * that role. This-node polls proceed when the whole 64-bit value reads 0 (the
+ * same routine as lb_lock_status). The other-node routine, reading it through
+ * the node-object read, proceeds when bit 0 reads 0 and ignores the other bits,
+ * so a model must keep bit 0 at 0 when the lock is free. A status that never
+ * reads 0 times out after 1,000,000 microseconds (forced release on this node,
+ * error -9 on another). A read side effect is unknown. Linux v5.3 does not
+ * define the lock; the meaning is inferred.
  */
 /* lb_lock2_status: r64, reset unknown */
 #define SHUB_LB_LOCK2_STATUS                         0x1101d0188 /* inferred */
 
 /*
- * Firmware lock pair, release side. The header names this offset SH_SCRATCH4, a one-bit scratch register (mask 0x1, INIT 0) with its alias at 0x208 (lb_lock_status); the lock use is the PROM's, and our name stays for that role. The PROM takes the lock by polling lb_lock_status until it reads 0, does a read-modify-write of cpu_bits, then writes 0 here. If the status does not read 0 within 1,000,000 microseconds it writes 0 here and polls again. Whether a read of lb_lock_status takes the lock in hardware is unknown; a plain register pair where the status always reads 0 satisfies every access read. The same lock guards the field setter of fw_debug_word (site 0xffa974d0). Linux v5.3 does not define the lock; the PROM behaviour above is as observed at the access and the meaning is inferred.
+ * Firmware lock pair, release side. The header names this offset SH_SCRATCH4, a
+ * one-bit scratch register (mask 0x1, INIT 0) with its alias at 0x208
+ * (lb_lock_status); the lock use is the PROM's, and our name stays for that
+ * role. The PROM takes the lock by polling lb_lock_status until it reads 0,
+ * does a read-modify-write of cpu_bits, then writes 0 here. If the status does
+ * not read 0 within 1,000,000 microseconds it writes 0 here and polls again.
+ * Whether a read of lb_lock_status takes the lock in hardware is unknown; a
+ * plain register pair where the status always reads 0 satisfies every access
+ * read. The same lock guards the field setter of fw_debug_word (site
+ * 0xffa974d0). Linux v5.3 does not define the lock; the PROM behaviour above is
+ * as observed at the access and the meaning is inferred.
  */
 /* lb_lock: rw64, reset 0x0 */
 #define SHUB_LB_LOCK                                 0x1101d0200 /* inferred */
 
 /*
- * Firmware lock status. The header names this offset SH_SCRATCH4_ALIAS and gives no description, so what a read does is unknown; the lock use is the PROM's and our name stays for that role. The bit it tests is the one bit of SH_SCRATCH4. The PROM polls it with a short delay until it reads 0; any non-zero value keeps it waiting until the 1,000,000 microsecond deadline, then it writes 0 to lb_lock and keeps polling, so a status that never reads 0 hangs the PROM. A read side effect is unknown. Linux v5.3 does not define the lock; the PROM behaviour above is as observed at the access and the meaning is inferred.
+ * Firmware lock status. The header names this offset SH_SCRATCH4_ALIAS and
+ * gives no description, so what a read does is unknown; the lock use is the
+ * PROM's and our name stays for that role. The bit it tests is the one bit of
+ * SH_SCRATCH4. The PROM polls it with a short delay until it reads 0; any
+ * non-zero value keeps it waiting until the 1,000,000 microsecond deadline,
+ * then it writes 0 to lb_lock and keeps polling, so a status that never reads 0
+ * hangs the PROM. A read side effect is unknown. Linux v5.3 does not define the
+ * lock; the PROM behaviour above is as observed at the access and the meaning
+ * is inferred.
  */
 /* lb_lock_status: r64, reset unknown */
 #define SHUB_LB_LOCK_STATUS                          0x1101d0208 /* inferred */
 
 /*
- * SHub 1 coherent request buffer message control: coherence and speculation enables, mismatch checks and the invalidate-acknowledge (IVACK) throttle. A SAL_B routine sets bit 24 of pi_reg_2001_0100, reads this register, ORs in 0x3b03f7 when the SHub ID revision (bits 31:28 of shub_id) is above 2 and 0x3f1 otherwise, writes it, then writes the saved value back with bit 24 cleared; 0x3f1 sets bits 0 and 9:4, and the 0x3b0000 half of the other value sets bits 21, 20, 19, 17 and 16, which the 2.4 header lists as reserved (the PROM table names fields the header lacks: SYSTEM_FLUSH_DURATION, SYSTEM_FLUSH_INTERVAL, ENABLE_PIPE_SNOOP_ERRORS; their positions are not decoded). SAL_A's error path stores 0x1_0001_0000_0000 here with a plain 64-bit store, and the SAL_B park path passes the same address and value to a write helper (not read): the value clears bits 11:0 (system coherence included) and sets IVACK stall count 1 and throttle control 1. Nothing in the header makes a bit of this register reset the node (inferred).
+ * SHub 1 coherent request buffer message control: coherence and speculation
+ * enables, mismatch checks and the invalidate-acknowledge (IVACK) throttle. A
+ * SAL_B routine sets bit 24 of pi_reg_2001_0100, reads this register, ORs in
+ * 0x3b03f7 when the SHub ID revision (bits 31:28 of shub_id) is above 2 and
+ * 0x3f1 otherwise, writes it, then writes the saved value back with bit 24
+ * cleared; 0x3f1 sets bits 0 and 9:4, and the 0x3b0000 half of the other value
+ * sets bits 21, 20, 19, 17 and 16, which the 2.4 header lists as reserved (the
+ * PROM table names fields the header lacks: SYSTEM_FLUSH_DURATION,
+ * SYSTEM_FLUSH_INTERVAL, ENABLE_PIPE_SNOOP_ERRORS; their positions are not
+ * decoded). SAL_A's error path stores 0x1_0001_0000_0000 here with a plain
+ * 64-bit store, and the SAL_B park path passes the same address and value to a
+ * write helper (not read): the value clears bits 11:0 (system coherence
+ * included) and sets IVACK stall count 1 and throttle control 1. Nothing in the
+ * header makes a bit of this register reset the node (inferred).
  */
-/* crb_message_control: rw64, reset 0x6; SGI Linux 2.4 ia64 SN2 platform MMR header (linux-2.4 branch of the MIPS-tree mirror, commit 8ef7d46c94d5): SH_CRB_MESSAGE_CONTROL, 'Coherent Request Buffer Message Control' (name, offset, bits 11:0 and 63:32); the PROM's own register-name table carries the same name (SAL 5.04 image, table site 0xffbfd280, followed by NACK_LIMIT and TIMEOUT_PRESCALE in the header's order); SAL 5.04 PROM site 0xffa97796 to 0xffa97916 (read, OR, write) and site 0xffc4e276 (SAL_A error path). Linux v5.3 dropped the register */
-#define SHUB_CRB_MESSAGE_CONTROL                     0x120000000 /* established */
-#define SHUB_CRB_MESSAGE_CONTROL_IVACK_THROTTLE_CONTROL_SHIFT 48 /* established */
+/* crb_message_control: rw64, reset 0x6; SGI Linux 2.4 ia64 SN2 platform MMR
+ * header (linux-2.4 branch of the MIPS-tree mirror, commit 8ef7d46c94d5):
+ * SH_CRB_MESSAGE_CONTROL, 'Coherent Request Buffer Message Control' (name,
+ * offset, bits 11:0 and 63:32); the PROM's own register-name table carries the
+ * same name (SAL 5.04 image, table site 0xffbfd280, followed by NACK_LIMIT and
+ * TIMEOUT_PRESCALE in the header's order); SAL 5.04 PROM site 0xffa97796 to
+ * 0xffa97916 (read, OR, write) and site 0xffc4e276 (SAL_A error path). Linux
+ * v5.3 dropped the register */
+/* established */
+#define SHUB_CRB_MESSAGE_CONTROL                     0x120000000
+/* established */
+#define SHUB_CRB_MESSAGE_CONTROL_IVACK_THROTTLE_CONTROL_SHIFT 48
 #define SHUB_CRB_MESSAGE_CONTROL_IVACK_THROTTLE_CONTROL_MASK 0xffffull
 #define SHUB_CRB_MESSAGE_CONTROL_IVACK_THROTTLE_CONTROL_INPLACE (SHUB_CRB_MESSAGE_CONTROL_IVACK_THROTTLE_CONTROL_MASK << SHUB_CRB_MESSAGE_CONTROL_IVACK_THROTTLE_CONTROL_SHIFT)
 #define SHUB_CRB_MESSAGE_CONTROL_IVACK_STALL_COUNT_SHIFT 32 /* established */
 #define SHUB_CRB_MESSAGE_CONTROL_IVACK_STALL_COUNT_MASK 0xffffull
 #define SHUB_CRB_MESSAGE_CONTROL_IVACK_STALL_COUNT_INPLACE (SHUB_CRB_MESSAGE_CONTROL_IVACK_STALL_COUNT_MASK << SHUB_CRB_MESSAGE_CONTROL_IVACK_STALL_COUNT_SHIFT)
-#define SHUB_CRB_MESSAGE_CONTROL_ENABLE_IVACK_CONSOLIDATION_SHIFT 11 /* established */
+/* established */
+#define SHUB_CRB_MESSAGE_CONTROL_ENABLE_IVACK_CONSOLIDATION_SHIFT 11
 #define SHUB_CRB_MESSAGE_CONTROL_ENABLE_IVACK_CONSOLIDATION_MASK 0x1ull
 #define SHUB_CRB_MESSAGE_CONTROL_ENABLE_IVACK_CONSOLIDATION_INPLACE (SHUB_CRB_MESSAGE_CONTROL_ENABLE_IVACK_CONSOLIDATION_MASK << SHUB_CRB_MESSAGE_CONTROL_ENABLE_IVACK_CONSOLIDATION_SHIFT)
-#define SHUB_CRB_MESSAGE_CONTROL_SUPPRESS_BOGUS_WRITES_SHIFT 10 /* established */
+/* established */
+#define SHUB_CRB_MESSAGE_CONTROL_SUPPRESS_BOGUS_WRITES_SHIFT 10
 #define SHUB_CRB_MESSAGE_CONTROL_SUPPRESS_BOGUS_WRITES_MASK 0x1ull
 #define SHUB_CRB_MESSAGE_CONTROL_SUPPRESS_BOGUS_WRITES_INPLACE (SHUB_CRB_MESSAGE_CONTROL_SUPPRESS_BOGUS_WRITES_MASK << SHUB_CRB_MESSAGE_CONTROL_SUPPRESS_BOGUS_WRITES_SHIFT)
-#define SHUB_CRB_MESSAGE_CONTROL_WRB_ATTRIBUTE_MISMATCH_XB_ENABLE_SHIFT 9 /* established */
+/* established */
+#define SHUB_CRB_MESSAGE_CONTROL_WRB_ATTRIBUTE_MISMATCH_XB_ENABLE_SHIFT 9
 #define SHUB_CRB_MESSAGE_CONTROL_WRB_ATTRIBUTE_MISMATCH_XB_ENABLE_MASK 0x1ull
 #define SHUB_CRB_MESSAGE_CONTROL_WRB_ATTRIBUTE_MISMATCH_XB_ENABLE_INPLACE (SHUB_CRB_MESSAGE_CONTROL_WRB_ATTRIBUTE_MISMATCH_XB_ENABLE_MASK << SHUB_CRB_MESSAGE_CONTROL_WRB_ATTRIBUTE_MISMATCH_XB_ENABLE_SHIFT)
-#define SHUB_CRB_MESSAGE_CONTROL_RRB_ATTRIBUTE_MISMATCH_XB_ENABLE_SHIFT 8 /* established */
+/* established */
+#define SHUB_CRB_MESSAGE_CONTROL_RRB_ATTRIBUTE_MISMATCH_XB_ENABLE_SHIFT 8
 #define SHUB_CRB_MESSAGE_CONTROL_RRB_ATTRIBUTE_MISMATCH_XB_ENABLE_MASK 0x1ull
 #define SHUB_CRB_MESSAGE_CONTROL_RRB_ATTRIBUTE_MISMATCH_XB_ENABLE_INPLACE (SHUB_CRB_MESSAGE_CONTROL_RRB_ATTRIBUTE_MISMATCH_XB_ENABLE_MASK << SHUB_CRB_MESSAGE_CONTROL_RRB_ATTRIBUTE_MISMATCH_XB_ENABLE_SHIFT)
-#define SHUB_CRB_MESSAGE_CONTROL_IRB_ATTRIBUTE_MISMATCH_FSB_ENABLE_SHIFT 7 /* established */
+/* established */
+#define SHUB_CRB_MESSAGE_CONTROL_IRB_ATTRIBUTE_MISMATCH_FSB_ENABLE_SHIFT 7
 #define SHUB_CRB_MESSAGE_CONTROL_IRB_ATTRIBUTE_MISMATCH_FSB_ENABLE_MASK 0x1ull
 #define SHUB_CRB_MESSAGE_CONTROL_IRB_ATTRIBUTE_MISMATCH_FSB_ENABLE_INPLACE (SHUB_CRB_MESSAGE_CONTROL_IRB_ATTRIBUTE_MISMATCH_FSB_ENABLE_MASK << SHUB_CRB_MESSAGE_CONTROL_IRB_ATTRIBUTE_MISMATCH_FSB_ENABLE_SHIFT)
-#define SHUB_CRB_MESSAGE_CONTROL_WRB_ATTRIBUTE_MISMATCH_FSB_ENABLE_SHIFT 6 /* established */
+/* established */
+#define SHUB_CRB_MESSAGE_CONTROL_WRB_ATTRIBUTE_MISMATCH_FSB_ENABLE_SHIFT 6
 #define SHUB_CRB_MESSAGE_CONTROL_WRB_ATTRIBUTE_MISMATCH_FSB_ENABLE_MASK 0x1ull
 #define SHUB_CRB_MESSAGE_CONTROL_WRB_ATTRIBUTE_MISMATCH_FSB_ENABLE_INPLACE (SHUB_CRB_MESSAGE_CONTROL_WRB_ATTRIBUTE_MISMATCH_FSB_ENABLE_MASK << SHUB_CRB_MESSAGE_CONTROL_WRB_ATTRIBUTE_MISMATCH_FSB_ENABLE_SHIFT)
-#define SHUB_CRB_MESSAGE_CONTROL_RRB_ATTRIBUTE_MISMATCH_FSB_ENABLE_SHIFT 5 /* established */
+/* established */
+#define SHUB_CRB_MESSAGE_CONTROL_RRB_ATTRIBUTE_MISMATCH_FSB_ENABLE_SHIFT 5
 #define SHUB_CRB_MESSAGE_CONTROL_RRB_ATTRIBUTE_MISMATCH_FSB_ENABLE_MASK 0x1ull
 #define SHUB_CRB_MESSAGE_CONTROL_RRB_ATTRIBUTE_MISMATCH_FSB_ENABLE_INPLACE (SHUB_CRB_MESSAGE_CONTROL_RRB_ATTRIBUTE_MISMATCH_FSB_ENABLE_MASK << SHUB_CRB_MESSAGE_CONTROL_RRB_ATTRIBUTE_MISMATCH_FSB_ENABLE_SHIFT)
 #define SHUB_CRB_MESSAGE_CONTROL_MESSAGE_COLOR_ENABLE_SHIFT 4 /* established */
@@ -1130,167 +1839,312 @@
 #define SHUB_CRB_MESSAGE_CONTROL_MESSAGE_COLOR_SHIFT 3 /* established */
 #define SHUB_CRB_MESSAGE_CONTROL_MESSAGE_COLOR_MASK  0x1ull
 #define SHUB_CRB_MESSAGE_CONTROL_MESSAGE_COLOR_INPLACE (SHUB_CRB_MESSAGE_CONTROL_MESSAGE_COLOR_MASK << SHUB_CRB_MESSAGE_CONTROL_MESSAGE_COLOR_SHIFT)
-#define SHUB_CRB_MESSAGE_CONTROL_REMOTE_SPECULATIVE_MESSAGE_ENABLE_SHIFT 2 /* established */
+/* established */
+#define SHUB_CRB_MESSAGE_CONTROL_REMOTE_SPECULATIVE_MESSAGE_ENABLE_SHIFT 2
 #define SHUB_CRB_MESSAGE_CONTROL_REMOTE_SPECULATIVE_MESSAGE_ENABLE_MASK 0x1ull
 #define SHUB_CRB_MESSAGE_CONTROL_REMOTE_SPECULATIVE_MESSAGE_ENABLE_INPLACE (SHUB_CRB_MESSAGE_CONTROL_REMOTE_SPECULATIVE_MESSAGE_ENABLE_MASK << SHUB_CRB_MESSAGE_CONTROL_REMOTE_SPECULATIVE_MESSAGE_ENABLE_SHIFT)
-#define SHUB_CRB_MESSAGE_CONTROL_LOCAL_SPECULATIVE_MESSAGE_ENABLE_SHIFT 1 /* established */
+/* established */
+#define SHUB_CRB_MESSAGE_CONTROL_LOCAL_SPECULATIVE_MESSAGE_ENABLE_SHIFT 1
 #define SHUB_CRB_MESSAGE_CONTROL_LOCAL_SPECULATIVE_MESSAGE_ENABLE_MASK 0x1ull
 #define SHUB_CRB_MESSAGE_CONTROL_LOCAL_SPECULATIVE_MESSAGE_ENABLE_INPLACE (SHUB_CRB_MESSAGE_CONTROL_LOCAL_SPECULATIVE_MESSAGE_ENABLE_MASK << SHUB_CRB_MESSAGE_CONTROL_LOCAL_SPECULATIVE_MESSAGE_ENABLE_SHIFT)
-#define SHUB_CRB_MESSAGE_CONTROL_SYSTEM_COHERENCE_ENABLE_SHIFT 0 /* established */
+/* established */
+#define SHUB_CRB_MESSAGE_CONTROL_SYSTEM_COHERENCE_ENABLE_SHIFT 0
 #define SHUB_CRB_MESSAGE_CONTROL_SYSTEM_COHERENCE_ENABLE_MASK 0x1ull
 #define SHUB_CRB_MESSAGE_CONTROL_SYSTEM_COHERENCE_ENABLE_INPLACE (SHUB_CRB_MESSAGE_CONTROL_SYSTEM_COHERENCE_ENABLE_MASK << SHUB_CRB_MESSAGE_CONTROL_SYSTEM_COHERENCE_ENABLE_SHIFT)
 
 /*
- * Coherent request buffer NACK limit: a 12-bit count limit, a 4-bit frequency for the priority count and an enable in bit 63. The node set-up method (slot 34 of the chip-object table, site 0xffa95c20) reads it (site 0xffa95fcc) and writes it back (0xffa9601c) with bit 63 cleared and bits 15:0 set to 0xffff: a 0xfff limit and a 0xf frequency, enable off.
+ * Coherent request buffer NACK limit: a 12-bit count limit, a 4-bit frequency
+ * for the priority count and an enable in bit 63. The node set-up method (slot
+ * 34 of the chip-object table, site 0xffa95c20) reads it (site 0xffa95fcc) and
+ * writes it back (0xffa9601c) with bit 63 cleared and bits 15:0 set to 0xffff:
+ * a 0xfff limit and a 0xf frequency, enable off.
  */
-/* crb_nack_limit: rw64, reset 0x0; SGI Linux 2.4 ia64 SN2 platform MMR header (linux-2.4 branch of the MIPS-tree mirror, commit 8ef7d46c94d5): SH_CRB_NACK_LIMIT (name, offset, fields); the PROM's register-name table carries the name at the next entry after SH_CRB_MESSAGE_CONTROL */
-#define SHUB_CRB_NACK_LIMIT                          0x120000080 /* established */
+/* crb_nack_limit: rw64, reset 0x0; SGI Linux 2.4 ia64 SN2 platform MMR header
+ * (linux-2.4 branch of the MIPS-tree mirror, commit 8ef7d46c94d5):
+ * SH_CRB_NACK_LIMIT (name, offset, fields); the PROM's register-name table
+ * carries the name at the next entry after SH_CRB_MESSAGE_CONTROL */
+/* established */
+#define SHUB_CRB_NACK_LIMIT                          0x120000080
 #define SHUB_CRB_NACK_LIMIT_ENABLE_SHIFT             63 /* established */
 #define SHUB_CRB_NACK_LIMIT_ENABLE_MASK              0x1ull
-#define SHUB_CRB_NACK_LIMIT_ENABLE_INPLACE           (SHUB_CRB_NACK_LIMIT_ENABLE_MASK << SHUB_CRB_NACK_LIMIT_ENABLE_SHIFT)
+#define SHUB_CRB_NACK_LIMIT_ENABLE_INPLACE (SHUB_CRB_NACK_LIMIT_ENABLE_MASK << SHUB_CRB_NACK_LIMIT_ENABLE_SHIFT)
 #define SHUB_CRB_NACK_LIMIT_PRI_FREQ_SHIFT           12 /* established */
 #define SHUB_CRB_NACK_LIMIT_PRI_FREQ_MASK            0xfull
-#define SHUB_CRB_NACK_LIMIT_PRI_FREQ_INPLACE         (SHUB_CRB_NACK_LIMIT_PRI_FREQ_MASK << SHUB_CRB_NACK_LIMIT_PRI_FREQ_SHIFT)
+#define SHUB_CRB_NACK_LIMIT_PRI_FREQ_INPLACE (SHUB_CRB_NACK_LIMIT_PRI_FREQ_MASK << SHUB_CRB_NACK_LIMIT_PRI_FREQ_SHIFT)
 #define SHUB_CRB_NACK_LIMIT_LIMIT_SHIFT              0 /* established */
 #define SHUB_CRB_NACK_LIMIT_LIMIT_MASK               0xfffull
-#define SHUB_CRB_NACK_LIMIT_LIMIT_INPLACE            (SHUB_CRB_NACK_LIMIT_LIMIT_MASK << SHUB_CRB_NACK_LIMIT_LIMIT_SHIFT)
+#define SHUB_CRB_NACK_LIMIT_LIMIT_INPLACE (SHUB_CRB_NACK_LIMIT_LIMIT_MASK << SHUB_CRB_NACK_LIMIT_LIMIT_SHIFT)
 
 /*
- * Coherent request buffer timeout prescale: one 32-bit scaling factor in bits 31:0. The node set-up method (site 0xffa95c20) reads it (site 0xffa9608c) and rewrites bits 31:0 (store site 0xffa960cc, a mix4.l keeping bits 63:32): 0x23c34600 (600,000,000) unless the environment attribute NoTimeouts is found, in which case 0. The attribute lookup call is site 0xffa9605c.
+ * Coherent request buffer timeout prescale: one 32-bit scaling factor in bits
+ * 31:0. The node set-up method (site 0xffa95c20) reads it (site 0xffa9608c) and
+ * rewrites bits 31:0 (store site 0xffa960cc, a mix4.l keeping bits 63:32):
+ * 0x23c34600 (600,000,000) unless the environment attribute NoTimeouts is
+ * found, in which case 0. The attribute lookup call is site 0xffa9605c.
  */
-/* crb_timeout_prescale: rw64, reset 0x0; SGI Linux 2.4 ia64 SN2 platform MMR header (linux-2.4 branch of the MIPS-tree mirror, commit 8ef7d46c94d5): SH_CRB_TIMEOUT_PRESCALE (name, offset, field); the PROM's register-name table carries the name two entries after SH_CRB_MESSAGE_CONTROL */
-#define SHUB_CRB_TIMEOUT_PRESCALE                    0x120000100 /* established */
+/* crb_timeout_prescale: rw64, reset 0x0; SGI Linux 2.4 ia64 SN2 platform MMR
+ * header (linux-2.4 branch of the MIPS-tree mirror, commit 8ef7d46c94d5):
+ * SH_CRB_TIMEOUT_PRESCALE (name, offset, field); the PROM's register-name table
+ * carries the name two entries after SH_CRB_MESSAGE_CONTROL */
+/* established */
+#define SHUB_CRB_TIMEOUT_PRESCALE                    0x120000100
 #define SHUB_CRB_TIMEOUT_PRESCALE_SCALING_FACTOR_SHIFT 0 /* established */
 #define SHUB_CRB_TIMEOUT_PRESCALE_SCALING_FACTOR_MASK 0xffffffffull
 #define SHUB_CRB_TIMEOUT_PRESCALE_SCALING_FACTOR_INPLACE (SHUB_CRB_TIMEOUT_PRESCALE_SCALING_FACTOR_MASK << SHUB_CRB_TIMEOUT_PRESCALE_SCALING_FACTOR_SHIFT)
 
 /*
- * Coherent request buffer timeout skid limit: a 6-bit skid in bits 5:0 and a reset-skid-counter bit in bit 63. A routine reached through a table that also writes pi_cam_control reads this register and writes it back with bit 63 set. The node set-up method (site 0xffa95c20) (read 0xffa95d4c, write 0xffa95dcc) also clears bits 63 and 62, sets bits 11:8 and deposits 2 into bits 5:0; the 2.4 header's mask 0x800000000000003f has no bits 11:8 or 62, so those writes are outside the header's layout.
+ * Coherent request buffer timeout skid limit: a 6-bit skid in bits 5:0 and a
+ * reset-skid-counter bit in bit 63. A routine reached through a table that also
+ * writes pi_cam_control reads this register and writes it back with bit 63 set.
+ * The node set-up method (site 0xffa95c20) (read 0xffa95d4c, write 0xffa95dcc)
+ * also clears bits 63 and 62, sets bits 11:8 and deposits 2 into bits 5:0; the
+ * 2.4 header's mask 0x800000000000003f has no bits 11:8 or 62, so those writes
+ * are outside the header's layout.
  */
-/* crb_timeout_skid: rw64, reset 0x7; SGI Linux 2.4 ia64 SN2 platform MMR header (linux-2.4 branch of the MIPS-tree mirror, commit 8ef7d46c94d5): SH_CRB_TIMEOUT_SKID (name, offset, fields); SAL 5.04 PROM site 0xffa2459c to 0xffa245cc (read, OR bit 63, write); other sites site 0xffae3696 */
-#define SHUB_CRB_TIMEOUT_SKID                        0x120000180 /* established */
+/* crb_timeout_skid: rw64, reset 0x7; SGI Linux 2.4 ia64 SN2 platform MMR header
+ * (linux-2.4 branch of the MIPS-tree mirror, commit 8ef7d46c94d5):
+ * SH_CRB_TIMEOUT_SKID (name, offset, fields); SAL 5.04 PROM site 0xffa2459c to
+ * 0xffa245cc (read, OR bit 63, write); other sites site 0xffae3696 */
+/* established */
+#define SHUB_CRB_TIMEOUT_SKID                        0x120000180
 #define SHUB_CRB_TIMEOUT_SKID_RESET_SKID_COUNT_SHIFT 63 /* established */
 #define SHUB_CRB_TIMEOUT_SKID_RESET_SKID_COUNT_MASK  0x1ull
 #define SHUB_CRB_TIMEOUT_SKID_RESET_SKID_COUNT_INPLACE (SHUB_CRB_TIMEOUT_SKID_RESET_SKID_COUNT_MASK << SHUB_CRB_TIMEOUT_SKID_RESET_SKID_COUNT_SHIFT)
 #define SHUB_CRB_TIMEOUT_SKID_SKID_SHIFT             0 /* established */
 #define SHUB_CRB_TIMEOUT_SKID_SKID_MASK              0x3full
-#define SHUB_CRB_TIMEOUT_SKID_SKID_INPLACE           (SHUB_CRB_TIMEOUT_SKID_SKID_MASK << SHUB_CRB_TIMEOUT_SKID_SKID_SHIFT)
+#define SHUB_CRB_TIMEOUT_SKID_SKID_INPLACE (SHUB_CRB_TIMEOUT_SKID_SKID_MASK << SHUB_CRB_TIMEOUT_SKID_SKID_SHIFT)
 
 /*
- * FSB system agent configuration (SH_FSB_SYSTEM_AGENT_CONFIG in the SGI 2.4 SN2 header at Linux/MIPS tree, linux-2.4 branch, commit 8ef7d46c94d5 and in the PROM's name table; the key is our earlier label). SAL_A reads it and writes it back with bit 24 (serialize_fsb_en) set, using the read value for nothing else. The PROM sets bit 24 around the NASID change in 0xffa976e0 and around writes to 0x120000000. Any reset value is tolerated; bit 24 must be settable and read back as written.
+ * FSB system agent configuration (SH_FSB_SYSTEM_AGENT_CONFIG in the SGI 2.4 SN2
+ * header at Linux/MIPS tree, linux-2.4 branch, commit 8ef7d46c94d5 and in the
+ * PROM's name table; the key is our earlier label). SAL_A reads it and writes
+ * it back with bit 24 (serialize_fsb_en) set, using the read value for nothing
+ * else. The PROM sets bit 24 around the NASID change in 0xffa976e0 and around
+ * writes to 0x120000000. Any reset value is tolerated; bit 24 must be settable
+ * and read back as written.
  */
-/* pi_reg_2001_0100: rw64, reset unknown; SAL 5.04 PROM site 0xffc4e800 and 0xffc4e816 (read-modify-write); Linux v5.3 defines no name */
-#define SHUB_PI_REG_2001_0100                        0x120010100 /* established */
+/* pi_reg_2001_0100: rw64, reset unknown; SAL 5.04 PROM site 0xffc4e800 and
+ * 0xffc4e816 (read-modify-write); Linux v5.3 defines no name */
+/* established */
+#define SHUB_PI_REG_2001_0100                        0x120010100
 #define SHUB_PI_REG_2001_0100_BIT24_SHIFT            24 /* established */
 #define SHUB_PI_REG_2001_0100_BIT24_MASK             0x1ull
-#define SHUB_PI_REG_2001_0100_BIT24_INPLACE          (SHUB_PI_REG_2001_0100_BIT24_MASK << SHUB_PI_REG_2001_0100_BIT24_SHIFT)
+#define SHUB_PI_REG_2001_0100_BIT24_INPLACE (SHUB_PI_REG_2001_0100_BIT24_MASK << SHUB_PI_REG_2001_0100_BIT24_SHIFT)
 #define SHUB_PI_REG_2001_0100_BIT17_SHIFT            17 /* established */
 #define SHUB_PI_REG_2001_0100_BIT17_MASK             0x1ull
-#define SHUB_PI_REG_2001_0100_BIT17_INPLACE          (SHUB_PI_REG_2001_0100_BIT17_MASK << SHUB_PI_REG_2001_0100_BIT17_SHIFT)
+#define SHUB_PI_REG_2001_0100_BIT17_INPLACE (SHUB_PI_REG_2001_0100_BIT17_MASK << SHUB_PI_REG_2001_0100_BIT17_SHIFT)
 #define SHUB_PI_REG_2001_0100_BIT3_SHIFT             3 /* established */
 #define SHUB_PI_REG_2001_0100_BIT3_MASK              0x1ull
-#define SHUB_PI_REG_2001_0100_BIT3_INPLACE           (SHUB_PI_REG_2001_0100_BIT3_MASK << SHUB_PI_REG_2001_0100_BIT3_SHIFT)
+#define SHUB_PI_REG_2001_0100_BIT3_INPLACE (SHUB_PI_REG_2001_0100_BIT3_MASK << SHUB_PI_REG_2001_0100_BIT3_SHIFT)
 
 /*
- * FSB VGA address space remap, next to pi_reg_2001_0100 in the FSB block. One PROM routine (0xffaeb1f0, called from the SAL shadow copy routine 0xfface570, after the copy) reads it, clears bits 60:49, ORs in bits 35:24 of the masked block A word at offset 0x28 moved to bit 49 (zero on the stock path, inferred), writes it back, then sets bit 17 of pi_reg_2001_0100. The read value is used only as the base of that write; nothing tests it and nothing reads the register again. Any value is tolerated; a plain write-accepting 64-bit register passes. The PROM's field 60:49 lies inside the header's reserved bits 61:49.
+ * FSB VGA address space remap, next to pi_reg_2001_0100 in the FSB block. One
+ * PROM routine (0xffaeb1f0, called from the SAL shadow copy routine 0xfface570,
+ * after the copy) reads it, clears bits 60:49, ORs in bits 35:24 of the masked
+ * block A word at offset 0x28 moved to bit 49 (zero on the stock path,
+ * inferred), writes it back, then sets bit 17 of pi_reg_2001_0100. The read
+ * value is used only as the base of that write; nothing tests it and nothing
+ * reads the register again. Any value is tolerated; a plain write-accepting
+ * 64-bit register passes. The PROM's field 60:49 lies inside the header's
+ * reserved bits 61:49.
  */
-/* fsb_vga_remap: rw64, reset 0x0; SGI Linux 2.4 ia64 SN2 platform MMR header (linux-2.4 branch of the MIPS-tree mirror, commit 8ef7d46c94d5), SH_FSB_VGA_REMAP (header macro mask 0x4001fffffffe0000); Linux v5.3 does not define it; SAL 5.04 / 10.54 PROM site 0xffaeb22c (read) and 0xffaeb26c (write) */
-#define SHUB_FSB_VGA_REMAP                           0x120010180 /* established */
+/* fsb_vga_remap: rw64, reset 0x0; SGI Linux 2.4 ia64 SN2 platform MMR header
+ * (linux-2.4 branch of the MIPS-tree mirror, commit 8ef7d46c94d5),
+ * SH_FSB_VGA_REMAP (header macro mask 0x4001fffffffe0000); Linux v5.3 does not
+ * define it; SAL 5.04 / 10.54 PROM site 0xffaeb22c (read) and 0xffaeb26c
+ * (write) */
+/* established */
+#define SHUB_FSB_VGA_REMAP                           0x120010180
 #define SHUB_FSB_VGA_REMAP_VGA_REMAPPING_ENABLED_SHIFT 62 /* established */
 #define SHUB_FSB_VGA_REMAP_VGA_REMAPPING_ENABLED_MASK 0x1ull
 #define SHUB_FSB_VGA_REMAP_VGA_REMAPPING_ENABLED_INPLACE (SHUB_FSB_VGA_REMAP_VGA_REMAPPING_ENABLED_MASK << SHUB_FSB_VGA_REMAP_VGA_REMAPPING_ENABLED_SHIFT)
 #define SHUB_FSB_VGA_REMAP_NID_SHIFT                 38 /* established */
 #define SHUB_FSB_VGA_REMAP_NID_MASK                  0x7ffull
-#define SHUB_FSB_VGA_REMAP_NID_INPLACE               (SHUB_FSB_VGA_REMAP_NID_MASK << SHUB_FSB_VGA_REMAP_NID_SHIFT)
+#define SHUB_FSB_VGA_REMAP_NID_INPLACE (SHUB_FSB_VGA_REMAP_NID_MASK << SHUB_FSB_VGA_REMAP_NID_SHIFT)
 #define SHUB_FSB_VGA_REMAP_ASID_SHIFT                36 /* established */
 #define SHUB_FSB_VGA_REMAP_ASID_MASK                 0x3ull
-#define SHUB_FSB_VGA_REMAP_ASID_INPLACE              (SHUB_FSB_VGA_REMAP_ASID_MASK << SHUB_FSB_VGA_REMAP_ASID_SHIFT)
+#define SHUB_FSB_VGA_REMAP_ASID_INPLACE (SHUB_FSB_VGA_REMAP_ASID_MASK << SHUB_FSB_VGA_REMAP_ASID_SHIFT)
 #define SHUB_FSB_VGA_REMAP_OFFSET_SHIFT              17 /* established */
 #define SHUB_FSB_VGA_REMAP_OFFSET_MASK               0x7ffffull
-#define SHUB_FSB_VGA_REMAP_OFFSET_INPLACE            (SHUB_FSB_VGA_REMAP_OFFSET_MASK << SHUB_FSB_VGA_REMAP_OFFSET_SHIFT)
+#define SHUB_FSB_VGA_REMAP_OFFSET_INPLACE (SHUB_FSB_VGA_REMAP_OFFSET_MASK << SHUB_FSB_VGA_REMAP_OFFSET_SHIFT)
 
 /*
- * Per-slice flags in the processor interface; the name is ours. The local-master arbitration reads it for slices 0 and 1 other than the running one and tests bit slice; a set bit makes the PROM count that processor present and wait for it (up to 5,000,000 microseconds). On a one-processor node the bit for every other slice must read 0. The meaning (processor present) is inferred from that use. Later CPU-enumeration callers of the same word read bits 0 and 1 (first processor of slices 0 and 1) and bits 4 and 5 (second processor); the own-slice bit they expect was not traced, so a model should set it.
+ * Per-slice flags in the processor interface; the name is ours. The
+ * local-master arbitration reads it for slices 0 and 1 other than the running
+ * one and tests bit slice; a set bit makes the PROM count that processor
+ * present and wait for it (up to 5,000,000 microseconds). On a one-processor
+ * node the bit for every other slice must read 0. The meaning (processor
+ * present) is inferred from that use. Later CPU-enumeration callers of the same
+ * word read bits 0 and 1 (first processor of slices 0 and 1) and bits 4 and 5
+ * (second processor); the own-slice bit they expect was not traced, so a model
+ * should set it.
  */
-/* pi_slice_present: r64, reset unknown; SAL 5.04 PROM site 0xffa115ac (read through the global window of the node), 0xffa99e2c (caller) */
-#define SHUB_PI_SLICE_PRESENT                        0x120020080 /* established */
+/* pi_slice_present: r64, reset unknown; SAL 5.04 PROM site 0xffa115ac (read
+ * through the global window of the node), 0xffa99e2c (caller) */
+/* established */
+#define SHUB_PI_SLICE_PRESENT                        0x120020080
 #define SHUB_PI_SLICE_PRESENT_PRESENT2_SHIFT         4 /* inferred */
 #define SHUB_PI_SLICE_PRESENT_PRESENT2_MASK          0x3ull
-#define SHUB_PI_SLICE_PRESENT_PRESENT2_INPLACE       (SHUB_PI_SLICE_PRESENT_PRESENT2_MASK << SHUB_PI_SLICE_PRESENT_PRESENT2_SHIFT)
+#define SHUB_PI_SLICE_PRESENT_PRESENT2_INPLACE (SHUB_PI_SLICE_PRESENT_PRESENT2_MASK << SHUB_PI_SLICE_PRESENT_PRESENT2_SHIFT)
 #define SHUB_PI_SLICE_PRESENT_PRESENT_SHIFT          0 /* inferred */
 #define SHUB_PI_SLICE_PRESENT_PRESENT_MASK           0x3ull
-#define SHUB_PI_SLICE_PRESENT_PRESENT_INPLACE        (SHUB_PI_SLICE_PRESENT_PRESENT_MASK << SHUB_PI_SLICE_PRESENT_PRESENT_SHIFT)
+#define SHUB_PI_SLICE_PRESENT_PRESENT_INPLACE (SHUB_PI_SLICE_PRESENT_PRESENT_MASK << SHUB_PI_SLICE_PRESENT_PRESENT_SHIFT)
 
 /*
- * PI AFI error mask (SH_PI_AFI_ERROR_MASK, valid bits 34:21). The header gives INIT as all valid bits set and describes each bit as masking detection of its source, so a set bit masks. The PROM writes it twice from lists, both at the node own NASID in the global window with an 8-byte store and no read-back: early in main (chip-object method 0xffa236f0) the same value as pi_error_mask, then from main_three (0xffa23600, called from 0xffae3160) the same value as pi_error_mask. The default lists are chosen by the environment variable AttrCheck: absent gives the first value, present the second. Bits outside the valid mask have no register bit.
+ * PI AFI error mask (SH_PI_AFI_ERROR_MASK, valid bits 34:21). The header gives
+ * INIT as all valid bits set and describes each bit as masking detection of its
+ * source, so a set bit masks. The PROM writes it twice from lists, both at the
+ * node own NASID in the global window with an 8-byte store and no read-back:
+ * early in main (chip-object method 0xffa236f0) the same value as
+ * pi_error_mask, then from main_three (0xffa23600, called from 0xffae3160) the
+ * same value as pi_error_mask. The default lists are chosen by the environment
+ * variable AttrCheck: absent gives the first value, present the second. Bits
+ * outside the valid mask have no register bit.
  */
-/* pi_afi_error_mask: rw64, reset 0x7ffe00000; SGI Linux 2.4 ia64 SN2 header (name, offset, valid bits, INIT); SAL 5.04 PROM sites 0xffa236f0 (early list) and 0xffa23600 (main_three list), both through the list writer 0xffae3f50 */
-#define SHUB_PI_AFI_ERROR_MASK                       0x120050080 /* established */
+/* pi_afi_error_mask: rw64, reset 0x7ffe00000; SGI Linux 2.4 ia64 SN2 header
+ * (name, offset, valid bits, INIT); SAL 5.04 PROM sites 0xffa236f0 (early list)
+ * and 0xffa23600 (main_three list), both through the list writer 0xffae3f50 */
+/* established */
+#define SHUB_PI_AFI_ERROR_MASK                       0x120050080
 
 /*
- * Control of CRB CAM access (header title; processor interface, inferred). The only use is a SHub 1.1 workaround: on a chip of revision 2 or lower the kernel writes 0x8000000000000010 here on every timer tick, through the address of its own node. What the value does is unknown. The SHub 1 PROM (SAL 5.04) also writes it, from two routines reached through tables (site 0xffa24510 and 0xffa245f0, order not located): the low 7 bits of an argument with bit 63 set, plus bit 8 (and bit 9 when bit 5 of the argument is set) in the first, and with bits 9:8 clear in the second; the second then reads pi_reg_2006_0100, pi_reg_2006_0180 and pi_reg_2006_0200. Meaning of the fields is unknown.
+ * Control of CRB CAM access (header title; processor interface, inferred). The
+ * only use is a SHub 1.1 workaround: on a chip of revision 2 or lower the
+ * kernel writes 0x8000000000000010 here on every timer tick, through the
+ * address of its own node. What the value does is unknown. The SHub 1 PROM (SAL
+ * 5.04) also writes it, from two routines reached through tables (site
+ * 0xffa24510 and 0xffa245f0, order not located): the low 7 bits of an argument
+ * with bit 63 set, plus bit 8 (and bit 9 when bit 5 of the argument is set) in
+ * the first, and with bits 9:8 clear in the second; the second then reads
+ * pi_reg_2006_0100, pi_reg_2006_0180 and pi_reg_2006_0200. Meaning of the
+ * fields is unknown.
  */
-/* pi_cam_control: w64, reset unknown; Linux v5.3 SGI SN2 platform MMR header (GPL): name and offset */
-#define SHUB_PI_CAM_CONTROL                          0x120050300 /* established */
+/* pi_cam_control: w64, reset unknown; Linux v5.3 SGI SN2 platform MMR header
+ * (GPL): name and offset */
+/* established */
+#define SHUB_PI_CAM_CONTROL                          0x120050300
 
 /*
- * PI CRBP error mask (SH_PI_CRBP_ERROR_MASK, valid bits 20:0). The header gives INIT as all valid bits set and describes each bit as masking detection of its source, so a set bit masks. The PROM writes it twice from lists, both at the node own NASID in the global window with an 8-byte store and no read-back: early in main (chip-object method 0xffa236f0) the same value as pi_error_mask (no bit of it is in the valid range), then from main_three (0xffa23600, called from 0xffae3160) the same value as pi_error_mask (no bit of it is in the valid range). The default lists are chosen by the environment variable AttrCheck: absent gives the first value, present the second. Bits outside the valid mask have no register bit.
+ * PI CRBP error mask (SH_PI_CRBP_ERROR_MASK, valid bits 20:0). The header gives
+ * INIT as all valid bits set and describes each bit as masking detection of its
+ * source, so a set bit masks. The PROM writes it twice from lists, both at the
+ * node own NASID in the global window with an 8-byte store and no read-back:
+ * early in main (chip-object method 0xffa236f0) the same value as pi_error_mask
+ * (no bit of it is in the valid range), then from main_three (0xffa23600,
+ * called from 0xffae3160) the same value as pi_error_mask (no bit of it is in
+ * the valid range). The default lists are chosen by the environment variable
+ * AttrCheck: absent gives the first value, present the second. Bits outside the
+ * valid mask have no register bit.
  */
-/* pi_crbp_error_mask: rw64, reset 0x1fffff; SGI Linux 2.4 ia64 SN2 header (name, offset, valid bits, INIT); SAL 5.04 PROM sites 0xffa236f0 (early list) and 0xffa23600 (main_three list), both through the list writer 0xffae3f50 */
-#define SHUB_PI_CRBP_ERROR_MASK                      0x120050500 /* established */
+/* pi_crbp_error_mask: rw64, reset 0x1fffff; SGI Linux 2.4 ia64 SN2 header
+ * (name, offset, valid bits, INIT); SAL 5.04 PROM sites 0xffa236f0 (early list)
+ * and 0xffa23600 (main_three list), both through the list writer 0xffae3f50 */
+/* established */
+#define SHUB_PI_CRBP_ERROR_MASK                      0x120050500
 
 /*
- * PI error mask (header name SH_PI_ERROR_MASK, valid bits 34:0). The header gives INIT as all valid bits set and describes each bit as masking detection of its source, so a set bit masks. The PROM writes it twice from lists, both at the node own NASID in the global window with an 8-byte store and no read-back: early in main (chip-object method 0xffa236f0) 0x1_8320_0000 (0x1_8020_0000 with AttrCheck), then from main_three (0xffa23600, called from 0xffae3160) 0x8320_0000 (0x8020_0000 with AttrCheck), which unmasks bad_snoop (bit 32); 0x8320_0000 is livelock, addr_access, req_format and hung_bus. The default lists are chosen by the environment variable AttrCheck: absent gives the first value, present the second. Bits outside the valid mask have no register bit.
+ * PI error mask (header name SH_PI_ERROR_MASK, valid bits 34:0). The header
+ * gives INIT as all valid bits set and describes each bit as masking detection
+ * of its source, so a set bit masks. The PROM writes it twice from lists, both
+ * at the node own NASID in the global window with an 8-byte store and no
+ * read-back: early in main (chip-object method 0xffa236f0) 0x1_8320_0000
+ * (0x1_8020_0000 with AttrCheck), then from main_three (0xffa23600, called from
+ * 0xffae3160) 0x8320_0000 (0x8020_0000 with AttrCheck), which unmasks bad_snoop
+ * (bit 32); 0x8320_0000 is livelock, addr_access, req_format and hung_bus. The
+ * default lists are chosen by the environment variable AttrCheck: absent gives
+ * the first value, present the second. Bits outside the valid mask have no
+ * register bit.
  */
-/* pi_error_mask: rw64, reset 0x7ffffffff; SGI Linux 2.4 ia64 SN2 header (name, offset, valid bits, INIT); SAL 5.04 PROM sites 0xffa236f0 (early list) and 0xffa23600 (main_three list), both through the list writer 0xffae3f50 */
-#define SHUB_PI_ERROR_MASK                           0x120050a80 /* established */
+/* pi_error_mask: rw64, reset 0x7ffffffff; SGI Linux 2.4 ia64 SN2 header (name,
+ * offset, valid bits, INIT); SAL 5.04 PROM sites 0xffa236f0 (early list) and
+ * 0xffa23600 (main_three list), both through the list writer 0xffae3f50 */
+/* established */
+#define SHUB_PI_ERROR_MASK                           0x120050a80
 
 /*
- * PI AFI first error (SH_PI_AFI_FIRST_ERROR, valid bits 34:21 and 8:7, INIT 0). The PROM writes it from the same lists as the PI error masks: 0x6_7cdf_ffff (0x6_7fdf_ffff with AttrCheck) early in main, 0x7_7cdf_ffff (0x7_7fdf_ffff with AttrCheck) from main_three, and the same constants as the block summary aliases in the event-clear lists (0xffbdc1d8 and the following). Written in the global window, 8-byte store, never read back by these routines. What a write does is not stated by the header; the PROM uses it like the write-one-to-clear aliases, so bit 32 (bad_snoop) in the later value clears a recorded first error (inferred).
+ * PI AFI first error (SH_PI_AFI_FIRST_ERROR, valid bits 34:21 and 8:7, INIT 0).
+ * The PROM writes it from the same lists as the PI error masks: 0x6_7cdf_ffff
+ * (0x6_7fdf_ffff with AttrCheck) early in main, 0x7_7cdf_ffff (0x7_7fdf_ffff
+ * with AttrCheck) from main_three, and the same constants as the block summary
+ * aliases in the event-clear lists (0xffbdc1d8 and the following). Written in
+ * the global window, 8-byte store, never read back by these routines. What a
+ * write does is not stated by the header; the PROM uses it like the
+ * write-one-to-clear aliases, so bit 32 (bad_snoop) in the later value clears a
+ * recorded first error (inferred).
  */
-/* pi_afi_first_error: rw64, reset unknown; SGI Linux 2.4 ia64 SN2 header (name, offset, valid bits, INIT); SAL 5.04 PROM sites 0xffa236f0 (early list) and 0xffa23600 (main_three list), both through the list writer 0xffae3f50 */
+/* pi_afi_first_error: rw64, reset unknown; SGI Linux 2.4 ia64 SN2 header (name,
+ * offset, valid bits, INIT); SAL 5.04 PROM sites 0xffa236f0 (early list) and
+ * 0xffa23600 (main_three list), both through the list writer 0xffae3f50 */
 #define SHUB_PI_AFI_FIRST_ERROR                      0x120060080 /* inferred */
 
 /*
- * Processor interface register, unnamed; the name is ours. Read once, with pi_reg_2006_0180 and pi_reg_2006_0200, right after the second pi_cam_control write; the value is stored for a later report. Any value is tolerated (inferred; the consumer was not traced).
+ * Processor interface register, unnamed; the name is ours. Read once, with
+ * pi_reg_2006_0180 and pi_reg_2006_0200, right after the second pi_cam_control
+ * write; the value is stored for a later report. Any value is tolerated
+ * (inferred; the consumer was not traced).
  */
-/* pi_reg_2006_0100: r64, reset unknown; SAL 5.04 PROM site 0xffa246a6 (read after the pi_cam_control write); no Linux v5.3 name */
+/* pi_reg_2006_0100: r64, reset unknown; SAL 5.04 PROM site 0xffa246a6 (read
+ * after the pi_cam_control write); no Linux v5.3 name */
 #define SHUB_PI_REG_2006_0100                        0x120060100 /* inferred */
 
 /*
- * Processor interface register, unnamed; the name is ours. See pi_reg_2006_0100.
+ * Processor interface register, unnamed; the name is ours. See
+ * pi_reg_2006_0100.
  */
-/* pi_reg_2006_0180: r64, reset unknown; SAL 5.04 PROM site 0xffa246d6; no Linux v5.3 name */
+/* pi_reg_2006_0180: r64, reset unknown; SAL 5.04 PROM site 0xffa246d6; no Linux
+ * v5.3 name */
 #define SHUB_PI_REG_2006_0180                        0x120060180 /* inferred */
 
 /*
- * Processor interface register, unnamed; the name is ours. See pi_reg_2006_0100.
+ * Processor interface register, unnamed; the name is ours. See
+ * pi_reg_2006_0100.
  */
-/* pi_reg_2006_0200: r64, reset unknown; SAL 5.04 PROM site 0xffa246f6; no Linux v5.3 name */
+/* pi_reg_2006_0200: r64, reset unknown; SAL 5.04 PROM site 0xffa246f6; no Linux
+ * v5.3 name */
 #define SHUB_PI_REG_2006_0200                        0x120060200 /* inferred */
 
 /*
- * PI CRBP first error (SH_PI_CRBP_FIRST_ERROR, valid bits 20:0, INIT 0). The PROM writes it from the same lists as the PI error masks: 0x6_7cdf_ffff (0x6_7fdf_ffff with AttrCheck) early in main, 0x7_7cdf_ffff (0x7_7fdf_ffff with AttrCheck) from main_three, and the same constants as the block summary aliases in the event-clear lists (0xffbdc1d8 and the following). Written in the global window, 8-byte store, never read back by these routines. What a write does is not stated by the header; the PROM uses it like the write-one-to-clear aliases, so bit 32 (bad_snoop) in the later value clears a recorded first error (inferred).
+ * PI CRBP first error (SH_PI_CRBP_FIRST_ERROR, valid bits 20:0, INIT 0). The
+ * PROM writes it from the same lists as the PI error masks: 0x6_7cdf_ffff
+ * (0x6_7fdf_ffff with AttrCheck) early in main, 0x7_7cdf_ffff (0x7_7fdf_ffff
+ * with AttrCheck) from main_three, and the same constants as the block summary
+ * aliases in the event-clear lists (0xffbdc1d8 and the following). Written in
+ * the global window, 8-byte store, never read back by these routines. What a
+ * write does is not stated by the header; the PROM uses it like the
+ * write-one-to-clear aliases, so bit 32 (bad_snoop) in the later value clears a
+ * recorded first error (inferred).
  */
-/* pi_crbp_first_error: rw64, reset unknown; SGI Linux 2.4 ia64 SN2 header (name, offset, valid bits, INIT); SAL 5.04 PROM sites 0xffa236f0 (early list) and 0xffa23600 (main_three list), both through the list writer 0xffae3f50 */
+/* pi_crbp_first_error: rw64, reset unknown; SGI Linux 2.4 ia64 SN2 header
+ * (name, offset, valid bits, INIT); SAL 5.04 PROM sites 0xffa236f0 (early list)
+ * and 0xffa23600 (main_three list), both through the list writer 0xffae3f50 */
 #define SHUB_PI_CRBP_FIRST_ERROR                     0x120060480 /* inferred */
 
 /*
- * Processor interface error detail 1. The PROM reads it once, after the forced PIO write error: (value & 0x1_ffff_fff8) equal to 0x1_1005_0608 sets bit 0 of the event mask handed to the error-clear routine 0xffa30b40; nothing else in the value is tested. Field layout unknown.
+ * Processor interface error detail 1. The PROM reads it once, after the forced
+ * PIO write error: (value & 0x1_ffff_fff8) equal to 0x1_1005_0608 sets bit 0 of
+ * the event mask handed to the error-clear routine 0xffa30b40; nothing else in
+ * the value is tested. Field layout unknown.
  */
 /* pi_error_detail_1: r64, reset 0x0 */
-#define SHUB_PI_ERROR_DETAIL_1                       0x120060500 /* established */
+/* established */
+#define SHUB_PI_ERROR_DETAIL_1                       0x120060500
 
 /*
- * PIO write status, one per processor slice (header: PIO write status for CPU 0 and 1; processor interface, inferred). The kernel's memory-mapped-I/O write barrier spins until the pending write count shows idle. The kernel stores the address of the instance for its slice (the slice is the processor's position within the node) in its per-processor data.
+ * PIO write status, one per processor slice (header: PIO write status for CPU 0
+ * and 1; processor interface, inferred). The kernel's memory-mapped-I/O write
+ * barrier spins until the pending write count shows idle. The kernel stores the
+ * address of the instance for its slice (the slice is the processor's position
+ * within the node) in its per-processor data.
  */
-/* pio_write_status: r64, reset unknown; Linux v5.3 SGI SN2 platform MMR header (GPL): name and offset */
-#define SHUB_PIO_WRITE_STATUS                        0x120070200 /* established */
+/* pio_write_status: r64, reset unknown; Linux v5.3 SGI SN2 platform MMR header
+ * (GPL): name and offset */
+/* established */
+#define SHUB_PIO_WRITE_STATUS                        0x120070200
 #define SHUB_PIO_WRITE_STATUS_COUNT                  2
 #define SHUB_PIO_WRITE_STATUS_STRIDE                 128
 #define SHUB_PIO_WRITE_STATUS_WRITES_OK_SHIFT        63 /* established */
 #define SHUB_PIO_WRITE_STATUS_WRITES_OK_MASK         0x1ull
-#define SHUB_PIO_WRITE_STATUS_WRITES_OK_INPLACE      (SHUB_PIO_WRITE_STATUS_WRITES_OK_MASK << SHUB_PIO_WRITE_STATUS_WRITES_OK_SHIFT)
+#define SHUB_PIO_WRITE_STATUS_WRITES_OK_INPLACE (SHUB_PIO_WRITE_STATUS_WRITES_OK_MASK << SHUB_PIO_WRITE_STATUS_WRITES_OK_SHIFT)
 #define SHUB_PIO_WRITE_STATUS_PENDING_WRITE_COUNT_SHIFT 56 /* established */
 #define SHUB_PIO_WRITE_STATUS_PENDING_WRITE_COUNT_MASK 0x3full
 #define SHUB_PIO_WRITE_STATUS_PENDING_WRITE_COUNT_INPLACE (SHUB_PIO_WRITE_STATUS_PENDING_WRITE_COUNT_MASK << SHUB_PIO_WRITE_STATUS_PENDING_WRITE_COUNT_SHIFT)
@@ -1299,7 +2153,7 @@
 #define SHUB_PIO_WRITE_STATUS_WRITE_ERROR_ADDRESS_INPLACE (SHUB_PIO_WRITE_STATUS_WRITE_ERROR_ADDRESS_MASK << SHUB_PIO_WRITE_STATUS_WRITE_ERROR_ADDRESS_SHIFT)
 #define SHUB_PIO_WRITE_STATUS_WRITE_ERROR_SHIFT      2 /* established */
 #define SHUB_PIO_WRITE_STATUS_WRITE_ERROR_MASK       0x1ull
-#define SHUB_PIO_WRITE_STATUS_WRITE_ERROR_INPLACE    (SHUB_PIO_WRITE_STATUS_WRITE_ERROR_MASK << SHUB_PIO_WRITE_STATUS_WRITE_ERROR_SHIFT)
+#define SHUB_PIO_WRITE_STATUS_WRITE_ERROR_INPLACE (SHUB_PIO_WRITE_STATUS_WRITE_ERROR_MASK << SHUB_PIO_WRITE_STATUS_WRITE_ERROR_SHIFT)
 #define SHUB_PIO_WRITE_STATUS_WRITE_DEADLOCK_SHIFT   1 /* established */
 #define SHUB_PIO_WRITE_STATUS_WRITE_DEADLOCK_MASK    0x1ull
 #define SHUB_PIO_WRITE_STATUS_WRITE_DEADLOCK_INPLACE (SHUB_PIO_WRITE_STATUS_WRITE_DEADLOCK_MASK << SHUB_PIO_WRITE_STATUS_WRITE_DEADLOCK_SHIFT)
@@ -1308,605 +2162,1087 @@
 #define SHUB_PIO_WRITE_STATUS_MULTI_WRITE_ERROR_INPLACE (SHUB_PIO_WRITE_STATUS_MULTI_WRITE_ERROR_MASK << SHUB_PIO_WRITE_STATUS_MULTI_WRITE_ERROR_SHIFT)
 
 /*
- * Alias of the PIO write status. The header names only the instance for slice 0. The deadlock recovery assembly adds 8 to whichever status address it was given, so the alias for slice 1 is inferred. Writing 7 clears the deadlock, write error and multiple write error bits (assembly comment); the header names only bit 1 (deadlock), so which of bits 0 and 2 is which is unknown. The kernel does this on SHub 1 and reads the alias instead on SHub 2.
+ * Alias of the PIO write status. The header names only the instance for slice
+ * 0. The deadlock recovery assembly adds 8 to whichever status address it was
+ * given, so the alias for slice 1 is inferred. Writing 7 clears the deadlock,
+ * write error and multiple write error bits (assembly comment); the header
+ * names only bit 1 (deadlock), so which of bits 0 and 2 is which is unknown.
+ * The kernel does this on SHub 1 and reads the alias instead on SHub 2.
  */
-/* pio_write_status_alias: w64, reset unknown; Linux v5.3 SGI SN2 platform MMR header (GPL): name and offset */
+/* pio_write_status_alias: w64, reset unknown; Linux v5.3 SGI SN2 platform MMR
+ * header (GPL): name and offset */
 #define SHUB_PIO_WRITE_STATUS_ALIAS                  0x120070208 /* inferred */
 #define SHUB_PIO_WRITE_STATUS_ALIAS_COUNT            2
 #define SHUB_PIO_WRITE_STATUS_ALIAS_STRIDE           128
 
 /*
- * Port 0 at this offset, port 1 is the next register block, 0x2000 higher (SH_NI1_*). Network interface link state. The PROM reads it once per port in its link probe and compares the low nibble with 9, nothing else. 9 is taken as link up (inferred from the use: the probe then checks the link credit words and reports success). Any other value is a link that is not up; no PROM code separates a link that is down from a port with no cable. The INIT of zero is a not-up value, so a node with no NUMAlink cable keeps the hardware path.
+ * Port 0 at this offset, port 1 is the next register block, 0x2000 higher
+ * (SH_NI1_*). Network interface link state. The PROM reads it once per port in
+ * its link probe and compares the low nibble with 9, nothing else. 9 is taken
+ * as link up (inferred from the use: the probe then checks the link credit
+ * words and reports success). Any other value is a link that is not up; no PROM
+ * code separates a link that is down from a port with no cable. The INIT of
+ * zero is a not-up value, so a node with no NUMAlink cable keeps the hardware
+ * path.
  */
 /* ni_llp_stat: r64, reset 0x0 */
-#define SHUB_NI_LLP_STAT                             0x150000000 /* established */
+/* established */
+#define SHUB_NI_LLP_STAT                             0x150000000
 #define SHUB_NI_LLP_STAT_COUNT                       2
 #define SHUB_NI_LLP_STAT_STRIDE                      8192
 #define SHUB_NI_LLP_STAT_LINK_RESET_STATE_SHIFT      0 /* established */
 #define SHUB_NI_LLP_STAT_LINK_RESET_STATE_MASK       0xfull
-#define SHUB_NI_LLP_STAT_LINK_RESET_STATE_INPLACE    (SHUB_NI_LLP_STAT_LINK_RESET_STATE_MASK << SHUB_NI_LLP_STAT_LINK_RESET_STATE_SHIFT)
+#define SHUB_NI_LLP_STAT_LINK_RESET_STATE_INPLACE (SHUB_NI_LLP_STAT_LINK_RESET_STATE_MASK << SHUB_NI_LLP_STAT_LINK_RESET_STATE_SHIFT)
 
 /*
- * Port 0 at this offset, port 1 is the next register block, 0x2000 higher (SH_NI1_*). Writing issues a reset to the network interface; the header says bits generate pulses. The PROM writes 1 (link reset) to each port whose probe says not up, up to three times with delays of 100, 200 and 400 microseconds. A write must not make link_reset_state read 9. Never read.
+ * Port 0 at this offset, port 1 is the next register block, 0x2000 higher
+ * (SH_NI1_*). Writing issues a reset to the network interface; the header says
+ * bits generate pulses. The PROM writes 1 (link reset) to each port whose probe
+ * says not up, up to three times with delays of 100, 200 and 400 microseconds.
+ * A write must not make link_reset_state read 9. Never read.
  */
 /* ni_llp_reset: w64, reset 0x0 */
-#define SHUB_NI_LLP_RESET                            0x150000008 /* established */
+/* established */
+#define SHUB_NI_LLP_RESET                            0x150000008
 #define SHUB_NI_LLP_RESET_COUNT                      2
 #define SHUB_NI_LLP_RESET_STRIDE                     8192
 #define SHUB_NI_LLP_RESET_WARM_SHIFT                 1 /* established */
 #define SHUB_NI_LLP_RESET_WARM_MASK                  0x1ull
-#define SHUB_NI_LLP_RESET_WARM_INPLACE               (SHUB_NI_LLP_RESET_WARM_MASK << SHUB_NI_LLP_RESET_WARM_SHIFT)
+#define SHUB_NI_LLP_RESET_WARM_INPLACE (SHUB_NI_LLP_RESET_WARM_MASK << SHUB_NI_LLP_RESET_WARM_SHIFT)
 #define SHUB_NI_LLP_RESET_LINK_SHIFT                 0 /* established */
 #define SHUB_NI_LLP_RESET_LINK_MASK                  0x1ull
-#define SHUB_NI_LLP_RESET_LINK_INPLACE               (SHUB_NI_LLP_RESET_LINK_MASK << SHUB_NI_LLP_RESET_LINK_SHIFT)
+#define SHUB_NI_LLP_RESET_LINK_INPLACE (SHUB_NI_LLP_RESET_LINK_MASK << SHUB_NI_LLP_RESET_LINK_SHIFT)
 
 /*
- * Port 0 at this offset, port 1 is the next register block, 0x2000 higher (SH_NI1_*). The header calls it control of LLP warm reset propagation: bit 0 allows a warm reset received on the link to reset the SHub. The partition-fence routine writes 0 to the port of every link whose neighbour is absent or outside the node's partition, and 1 to the rest, once per boot, in port order, and never reads the register back. The port-fill method reads it only for a record whose SH_SCRATCH1 bit 40 is set, and keeps the complement of bit 0 as a per-port flag; that read is not on a lone node's path. A lone node needs one bit of storage that resets to 1 and reads back what was written. Whether a 0 stops the LLP warm reset (and nothing else) is inferred from the header text; the register does not touch the link state or LLP_RESET.
+ * Port 0 at this offset, port 1 is the next register block, 0x2000 higher
+ * (SH_NI1_*). The header calls it control of LLP warm reset propagation: bit 0
+ * allows a warm reset received on the link to reset the SHub. The
+ * partition-fence routine writes 0 to the port of every link whose neighbour is
+ * absent or outside the node's partition, and 1 to the rest, once per boot, in
+ * port order, and never reads the register back. The port-fill method reads it
+ * only for a record whose SH_SCRATCH1 bit 40 is set, and keeps the complement
+ * of bit 0 as a per-port flag; that read is not on a lone node's path. A lone
+ * node needs one bit of storage that resets to 1 and reads back what was
+ * written. Whether a 0 stops the LLP warm reset (and nothing else) is inferred
+ * from the header text; the register does not touch the link state or
+ * LLP_RESET.
  */
 /* ni_llp_reset_en: rw64, reset 0x1 */
-#define SHUB_NI_LLP_RESET_EN                         0x150000010 /* established */
+/* established */
+#define SHUB_NI_LLP_RESET_EN                         0x150000010
 #define SHUB_NI_LLP_RESET_EN_COUNT                   2
 #define SHUB_NI_LLP_RESET_EN_STRIDE                  8192
 #define SHUB_NI_LLP_RESET_EN_OK_SHIFT                0 /* established */
 #define SHUB_NI_LLP_RESET_EN_OK_MASK                 0x1ull
-#define SHUB_NI_LLP_RESET_EN_OK_INPLACE              (SHUB_NI_LLP_RESET_EN_OK_MASK << SHUB_NI_LLP_RESET_EN_OK_SHIFT)
+#define SHUB_NI_LLP_RESET_EN_OK_INPLACE (SHUB_NI_LLP_RESET_EN_OK_MASK << SHUB_NI_LLP_RESET_EN_OK_SHIFT)
 
 /*
- * Port 0 at this offset, port 1 is the next register block, 0x2000 higher (SH_NI1_*). Signalling mode of the LLP channel. The PROM reads it once per port and tests bit 0 (32-bit phits): clear selects test-control mode 3 and the link-retry loop, set selects mode 0 and no loop. The INIT of zero takes the loop. Never written.
+ * Port 0 at this offset, port 1 is the next register block, 0x2000 higher
+ * (SH_NI1_*). Signalling mode of the LLP channel. The PROM reads it once per
+ * port and tests bit 0 (32-bit phits): clear selects test-control mode 3 and
+ * the link-retry loop, set selects mode 0 and no loop. The INIT of zero takes
+ * the loop. Never written.
  */
 /* ni_llp_chan_mode: r64, reset 0x0 */
-#define SHUB_NI_LLP_CHAN_MODE                        0x150000018 /* established */
+/* established */
+#define SHUB_NI_LLP_CHAN_MODE                        0x150000018
 #define SHUB_NI_LLP_CHAN_MODE_COUNT                  2
 #define SHUB_NI_LLP_CHAN_MODE_STRIDE                 8192
 #define SHUB_NI_LLP_CHAN_MODE_BITMODE32_SHIFT        0 /* established */
 #define SHUB_NI_LLP_CHAN_MODE_BITMODE32_MASK         0x1ull
-#define SHUB_NI_LLP_CHAN_MODE_BITMODE32_INPLACE      (SHUB_NI_LLP_CHAN_MODE_BITMODE32_MASK << SHUB_NI_LLP_CHAN_MODE_BITMODE32_SHIFT)
+#define SHUB_NI_LLP_CHAN_MODE_BITMODE32_INPLACE (SHUB_NI_LLP_CHAN_MODE_BITMODE32_MASK << SHUB_NI_LLP_CHAN_MODE_BITMODE32_SHIFT)
 
 /*
- * Port 0 at this offset, port 1 is the next register block, 0x2000 higher (SH_NI1_*). LLP and channel configuration. The PROM reads it and writes it straight back with MAXBURST set to 400; no other bit changes and the value read is never tested, so a plain read/write register satisfies it. This is the read that stops a model at 0x1_5000_0020.
+ * Port 0 at this offset, port 1 is the next register block, 0x2000 higher
+ * (SH_NI1_*). LLP and channel configuration. The PROM reads it and writes it
+ * straight back with MAXBURST set to 400; no other bit changes and the value
+ * read is never tested, so a plain read/write register satisfies it. This is
+ * the read that stops a model at 0x1_5000_0020.
  */
 /* ni_llp_config: rw64, reset 0x7fc6ffd00 */
-#define SHUB_NI_LLP_CONFIG                           0x150000020 /* established */
+/* established */
+#define SHUB_NI_LLP_CONFIG                           0x150000020
 #define SHUB_NI_LLP_CONFIG_COUNT                     2
 #define SHUB_NI_LLP_CONFIG_STRIDE                    8192
 #define SHUB_NI_LLP_CONFIG_FTU_TIME_SHIFT            26 /* established */
 #define SHUB_NI_LLP_CONFIG_FTU_TIME_MASK             0x3ffull
-#define SHUB_NI_LLP_CONFIG_FTU_TIME_INPLACE          (SHUB_NI_LLP_CONFIG_FTU_TIME_MASK << SHUB_NI_LLP_CONFIG_FTU_TIME_SHIFT)
+#define SHUB_NI_LLP_CONFIG_FTU_TIME_INPLACE (SHUB_NI_LLP_CONFIG_FTU_TIME_MASK << SHUB_NI_LLP_CONFIG_FTU_TIME_SHIFT)
 #define SHUB_NI_LLP_CONFIG_NULLTIMEOUT_SHIFT         20 /* established */
 #define SHUB_NI_LLP_CONFIG_NULLTIMEOUT_MASK          0x3full
-#define SHUB_NI_LLP_CONFIG_NULLTIMEOUT_INPLACE       (SHUB_NI_LLP_CONFIG_NULLTIMEOUT_MASK << SHUB_NI_LLP_CONFIG_NULLTIMEOUT_SHIFT)
+#define SHUB_NI_LLP_CONFIG_NULLTIMEOUT_INPLACE (SHUB_NI_LLP_CONFIG_NULLTIMEOUT_MASK << SHUB_NI_LLP_CONFIG_NULLTIMEOUT_SHIFT)
 #define SHUB_NI_LLP_CONFIG_MAXRETRY_SHIFT            10 /* established */
 #define SHUB_NI_LLP_CONFIG_MAXRETRY_MASK             0x3ffull
-#define SHUB_NI_LLP_CONFIG_MAXRETRY_INPLACE          (SHUB_NI_LLP_CONFIG_MAXRETRY_MASK << SHUB_NI_LLP_CONFIG_MAXRETRY_SHIFT)
+#define SHUB_NI_LLP_CONFIG_MAXRETRY_INPLACE (SHUB_NI_LLP_CONFIG_MAXRETRY_MASK << SHUB_NI_LLP_CONFIG_MAXRETRY_SHIFT)
 #define SHUB_NI_LLP_CONFIG_MAXBURST_SHIFT            0 /* established */
 #define SHUB_NI_LLP_CONFIG_MAXBURST_MASK             0x3ffull
-#define SHUB_NI_LLP_CONFIG_MAXBURST_INPLACE          (SHUB_NI_LLP_CONFIG_MAXBURST_MASK << SHUB_NI_LLP_CONFIG_MAXBURST_SHIFT)
+#define SHUB_NI_LLP_CONFIG_MAXBURST_INPLACE (SHUB_NI_LLP_CONFIG_MAXBURST_MASK << SHUB_NI_LLP_CONFIG_MAXBURST_SHIFT)
 
 /*
- * Port 0 at this offset, port 1 is the next register block, 0x2000 higher (SH_NI1_*). LLP test control. The PROM reads it, clears bits 41:40 when a link retry is needed, and finally writes bits 41:40 to the mode chosen from chan_mode.bitmode32 (3 when that bit is clear, which is the INIT). Bits 41:40 are the header field SEND_TEST_MODE; why the PROM sets 3 on a link with no test running is unknown. A plain read/write register satisfies it.
+ * Port 0 at this offset, port 1 is the next register block, 0x2000 higher
+ * (SH_NI1_*). LLP test control. The PROM reads it, clears bits 41:40 when a
+ * link retry is needed, and finally writes bits 41:40 to the mode chosen from
+ * chan_mode.bitmode32 (3 when that bit is clear, which is the INIT). Bits 41:40
+ * are the header field SEND_TEST_MODE; why the PROM sets 3 on a link with no
+ * test running is unknown. A plain read/write register satisfies it.
  */
 /* ni_llp_test_ctl: rw64, reset 0xa5fffff */
-#define SHUB_NI_LLP_TEST_CTL                         0x150000028 /* established */
+/* established */
+#define SHUB_NI_LLP_TEST_CTL                         0x150000028
 #define SHUB_NI_LLP_TEST_CTL_COUNT                   2
 #define SHUB_NI_LLP_TEST_CTL_STRIDE                  8192
 #define SHUB_NI_LLP_TEST_CTL_SEND_TEST_MODE_SHIFT    40 /* established */
 #define SHUB_NI_LLP_TEST_CTL_SEND_TEST_MODE_MASK     0x3ull
-#define SHUB_NI_LLP_TEST_CTL_SEND_TEST_MODE_INPLACE  (SHUB_NI_LLP_TEST_CTL_SEND_TEST_MODE_MASK << SHUB_NI_LLP_TEST_CTL_SEND_TEST_MODE_SHIFT)
+#define SHUB_NI_LLP_TEST_CTL_SEND_TEST_MODE_INPLACE (SHUB_NI_LLP_TEST_CTL_SEND_TEST_MODE_MASK << SHUB_NI_LLP_TEST_CTL_SEND_TEST_MODE_SHIFT)
 
 /*
- * Port 0 at this offset, port 1 is the next register block, 0x2000 higher (SH_NI1_*). LLP error status. The PROM reads it; if bit 27 (the power_OK loss trap) is set it writes the word back with that bit clear and reads again; a bit still set makes the probe return 0 and the port counts as not ready. A model returns 0 and the probe goes on to the link state.
+ * Port 0 at this offset, port 1 is the next register block, 0x2000 higher
+ * (SH_NI1_*). LLP error status. The PROM reads it; if bit 27 (the power_OK loss
+ * trap) is set it writes the word back with that bit clear and reads again; a
+ * bit still set makes the probe return 0 and the port counts as not ready. A
+ * model returns 0 and the probe goes on to the link state.
  */
 /* ni_llp_err: rw64, reset 0x0 */
-#define SHUB_NI_LLP_ERR                              0x150000048 /* established */
+/* established */
+#define SHUB_NI_LLP_ERR                              0x150000048
 #define SHUB_NI_LLP_ERR_COUNT                        2
 #define SHUB_NI_LLP_ERR_STRIDE                       8192
 #define SHUB_NI_LLP_ERR_POWER_NOT_OK_SHIFT           27 /* established */
 #define SHUB_NI_LLP_ERR_POWER_NOT_OK_MASK            0x1ull
-#define SHUB_NI_LLP_ERR_POWER_NOT_OK_INPLACE         (SHUB_NI_LLP_ERR_POWER_NOT_OK_MASK << SHUB_NI_LLP_ERR_POWER_NOT_OK_SHIFT)
+#define SHUB_NI_LLP_ERR_POWER_NOT_OK_INPLACE (SHUB_NI_LLP_ERR_POWER_NOT_OK_MASK << SHUB_NI_LLP_ERR_POWER_NOT_OK_SHIFT)
 
 /*
- * Link flow words 0 to 3 of NI port 0. The PROM reads them only when ni_llp_stat reads 9 (and the CPU is not the simulator id), each up to 128 times until bits 22:16 (the dynamic vc0 credit, header CREDIT_VC0_DYN) are non-zero, and returns link-down if 128 reads do not. Not reached when the link state is not 9.
+ * Link flow words 0 to 3 of NI port 0. The PROM reads them only when
+ * ni_llp_stat reads 9 (and the CPU is not the simulator id), each up to 128
+ * times until bits 22:16 (the dynamic vc0 credit, header CREDIT_VC0_DYN) are
+ * non-zero, and returns link-down if 128 reads do not. Not reached when the
+ * link state is not 9.
  */
 /* xnni0_link_flow: r64, reset 0x1800 */
-#define SHUB_XNNI0_LINK_FLOW                         0x150001040 /* established */
+/* established */
+#define SHUB_XNNI0_LINK_FLOW                         0x150001040
 #define SHUB_XNNI0_LINK_FLOW_COUNT                   4
 #define SHUB_XNNI0_LINK_FLOW_STRIDE                  16
 
 /*
- * Link flow words 0 to 3 of NI port 1. The PROM reads them only when ni_llp_stat reads 9 (and the CPU is not the simulator id), each up to 128 times until bits 22:16 (the dynamic vc0 credit, header CREDIT_VC0_DYN) are non-zero, and returns link-down if 128 reads do not. Not reached when the link state is not 9.
+ * Link flow words 0 to 3 of NI port 1. The PROM reads them only when
+ * ni_llp_stat reads 9 (and the CPU is not the simulator id), each up to 128
+ * times until bits 22:16 (the dynamic vc0 credit, header CREDIT_VC0_DYN) are
+ * non-zero, and returns link-down if 128 reads do not. Not reached when the
+ * link state is not 9.
  */
 /* xnni1_link_flow: r64, reset 0x1800 */
-#define SHUB_XNNI1_LINK_FLOW                         0x150003040 /* established */
+/* established */
+#define SHUB_XNNI1_LINK_FLOW                         0x150003040
 #define SHUB_XNNI1_LINK_FLOW_COUNT                   4
 #define SHUB_XNNI1_LINK_FLOW_STRIDE                  16
 
 /*
- * Local routing table of the I/O-interface side local block: 128 doublewords, indexed by the low 7 bits of the destination NASID. Fields: DIR0 bits 3:0 (direction for the next chip), V0 bit 4, NI_SEL0 bit 5, VALID bit 63 (header). The PROM writes entry i as a direction nibble taken from its route table (0xf means no route) with bit 63 set for entry 0, for the entry equal to the node's own NASID modulo 128 and for any entry whose nibble is not 0xf; the tables written to IILB, PI and MD also carry a second direction in bits 13:8 (bit 13 = 0x20 when the second port has a route), which the header mask does not include. Plain storage for the PROM: it writes every entry and reads one back only when the record is flagged for read-and-compare (not the lone-node path). Entry contents for NASID 0 alone are unknown (they come from the PROM route calculation, which is not traced).
+ * Local routing table of the I/O-interface side local block: 128 doublewords,
+ * indexed by the low 7 bits of the destination NASID. Fields: DIR0 bits 3:0
+ * (direction for the next chip), V0 bit 4, NI_SEL0 bit 5, VALID bit 63
+ * (header). The PROM writes entry i as a direction nibble taken from its route
+ * table (0xf means no route) with bit 63 set for entry 0, for the entry equal
+ * to the node's own NASID modulo 128 and for any entry whose nibble is not 0xf;
+ * the tables written to IILB, PI and MD also carry a second direction in bits
+ * 13:8 (bit 13 = 0x20 when the second port has a route), which the header mask
+ * does not include. Plain storage for the PROM: it writes every entry and reads
+ * one back only when the record is flagged for read-and-compare (not the
+ * lone-node path). Entry contents for NASID 0 alone are unknown (they come from
+ * the PROM route calculation, which is not traced).
  */
 /* iilb_local_table: rw64, reset 0x0 */
-#define SHUB_IILB_LOCAL_TABLE                        0x150020000 /* established */
+/* established */
+#define SHUB_IILB_LOCAL_TABLE                        0x150020000
 #define SHUB_IILB_LOCAL_TABLE_COUNT                  128
 #define SHUB_IILB_LOCAL_TABLE_STRIDE                 8
 
 /*
- * Global routing table of the I/O-interface side local block: 16 doublewords, same entry layout as iilb_local_table, indexed by the high NASID bits (the PROM loops 0 to 15). Written with the same rule as the local table. Plain storage for the PROM.
+ * Global routing table of the I/O-interface side local block: 16 doublewords,
+ * same entry layout as iilb_local_table, indexed by the high NASID bits (the
+ * PROM loops 0 to 15). Written with the same rule as the local table. Plain
+ * storage for the PROM.
  */
 /* iilb_global_table: rw64, reset 0x0 */
-#define SHUB_IILB_GLOBAL_TABLE                       0x150020400 /* established */
+/* established */
+#define SHUB_IILB_GLOBAL_TABLE                       0x150020400
 #define SHUB_IILB_GLOBAL_TABLE_COUNT                 16
 #define SHUB_IILB_GLOBAL_TABLE_STRIDE                8
 
 /*
- * Route override entry of the I/O-interface side local block; bit 63 is ENABLE (header), and when set the entry bypasses the local and global tables. The header INIT is 0x8000000000000000 (enabled). The PROM writes 0 to disable it, once per walk after the tables. Plain storage.
+ * Route override entry of the I/O-interface side local block; bit 63 is ENABLE
+ * (header), and when set the entry bypasses the local and global tables. The
+ * header INIT is 0x8000000000000000 (enabled). The PROM writes 0 to disable it,
+ * once per walk after the tables. Plain storage.
  */
 /* iilb_over_ride_table: rw64, reset 0x8000000000000000 */
-#define SHUB_IILB_OVER_RIDE_TABLE                    0x150020480 /* established */
+/* established */
+#define SHUB_IILB_OVER_RIDE_TABLE                    0x150020480
 
 /*
- * Local routing table of the processor interface: 128 doublewords, indexed by the low 7 bits of the destination NASID. Fields: DIR0 bits 3:0 (direction for the next chip), V0 bit 4, NI_SEL0 bit 5, VALID bit 63 (header). The PROM writes entry i as a direction nibble taken from its route table (0xf means no route) with bit 63 set for entry 0, for the entry equal to the node's own NASID modulo 128 and for any entry whose nibble is not 0xf; the tables written to IILB, PI and MD also carry a second direction in bits 13:8 (bit 13 = 0x20 when the second port has a route), which the header mask does not include. Plain storage for the PROM: it writes every entry and reads one back only when the record is flagged for read-and-compare (not the lone-node path). Entry contents for NASID 0 alone are unknown (they come from the PROM route calculation, which is not traced).
+ * Local routing table of the processor interface: 128 doublewords, indexed by
+ * the low 7 bits of the destination NASID. Fields: DIR0 bits 3:0 (direction for
+ * the next chip), V0 bit 4, NI_SEL0 bit 5, VALID bit 63 (header). The PROM
+ * writes entry i as a direction nibble taken from its route table (0xf means no
+ * route) with bit 63 set for entry 0, for the entry equal to the node's own
+ * NASID modulo 128 and for any entry whose nibble is not 0xf; the tables
+ * written to IILB, PI and MD also carry a second direction in bits 13:8 (bit 13
+ * = 0x20 when the second port has a route), which the header mask does not
+ * include. Plain storage for the PROM: it writes every entry and reads one back
+ * only when the record is flagged for read-and-compare (not the lone-node
+ * path). Entry contents for NASID 0 alone are unknown (they come from the PROM
+ * route calculation, which is not traced).
  */
 /* pi_local_table: rw64, reset 0x0 */
-#define SHUB_PI_LOCAL_TABLE                          0x150021000 /* established */
+/* established */
+#define SHUB_PI_LOCAL_TABLE                          0x150021000
 #define SHUB_PI_LOCAL_TABLE_COUNT                    128
 #define SHUB_PI_LOCAL_TABLE_STRIDE                   8
 
 /*
- * Global routing table of the processor interface: 16 doublewords, same entry layout as pi_local_table, indexed by the high NASID bits (the PROM loops 0 to 15). Written with the same rule as the local table. Plain storage for the PROM.
+ * Global routing table of the processor interface: 16 doublewords, same entry
+ * layout as pi_local_table, indexed by the high NASID bits (the PROM loops 0 to
+ * 15). Written with the same rule as the local table. Plain storage for the
+ * PROM.
  */
 /* pi_global_table: rw64, reset 0x0 */
-#define SHUB_PI_GLOBAL_TABLE                         0x150021400 /* established */
+/* established */
+#define SHUB_PI_GLOBAL_TABLE                         0x150021400
 #define SHUB_PI_GLOBAL_TABLE_COUNT                   16
 #define SHUB_PI_GLOBAL_TABLE_STRIDE                  8
 
 /*
- * Route override entry of the processor interface; bit 63 is ENABLE (header), and when set the entry bypasses the local and global tables. The header INIT is 0x8000000000000000 (enabled). The PROM writes 0 to disable it, once per walk after the tables. Plain storage.
+ * Route override entry of the processor interface; bit 63 is ENABLE (header),
+ * and when set the entry bypasses the local and global tables. The header INIT
+ * is 0x8000000000000000 (enabled). The PROM writes 0 to disable it, once per
+ * walk after the tables. Plain storage.
  */
 /* pi_over_ride_table: rw64, reset 0x8000000000002000 */
-#define SHUB_PI_OVER_RIDE_TABLE                      0x150021480 /* established */
+/* established */
+#define SHUB_PI_OVER_RIDE_TABLE                      0x150021480
 
 /*
- * Local routing table of network interface port 0: 128 doublewords, indexed by the low 7 bits of the destination NASID. Fields: DIR0 bits 3:0 (direction for the next chip), V0 bit 4, NI_SEL0 bit 5, VALID bit 63 (header). The PROM writes entry i as a direction nibble taken from its route table (0xf means no route) with bit 63 set for entry 0, for the entry equal to the node's own NASID modulo 128 and for any entry whose nibble is not 0xf; the tables written to IILB, PI and MD also carry a second direction in bits 13:8 (bit 13 = 0x20 when the second port has a route), which the header mask does not include. Plain storage for the PROM: it writes every entry and reads one back only when the record is flagged for read-and-compare (not the lone-node path). Entry contents for NASID 0 alone are unknown (they come from the PROM route calculation, which is not traced).
+ * Local routing table of network interface port 0: 128 doublewords, indexed by
+ * the low 7 bits of the destination NASID. Fields: DIR0 bits 3:0 (direction for
+ * the next chip), V0 bit 4, NI_SEL0 bit 5, VALID bit 63 (header). The PROM
+ * writes entry i as a direction nibble taken from its route table (0xf means no
+ * route) with bit 63 set for entry 0, for the entry equal to the node's own
+ * NASID modulo 128 and for any entry whose nibble is not 0xf; the tables
+ * written to IILB, PI and MD also carry a second direction in bits 13:8 (bit 13
+ * = 0x20 when the second port has a route), which the header mask does not
+ * include. Plain storage for the PROM: it writes every entry and reads one back
+ * only when the record is flagged for read-and-compare (not the lone-node
+ * path). Entry contents for NASID 0 alone are unknown (they come from the PROM
+ * route calculation, which is not traced).
  */
 /* ni0_local_table: rw64, reset 0x0 */
-#define SHUB_NI0_LOCAL_TABLE                         0x150022000 /* established */
+/* established */
+#define SHUB_NI0_LOCAL_TABLE                         0x150022000
 #define SHUB_NI0_LOCAL_TABLE_COUNT                   128
 #define SHUB_NI0_LOCAL_TABLE_STRIDE                  8
 
 /*
- * Global routing table of network interface port 0: 16 doublewords, same entry layout as ni0_local_table, indexed by the high NASID bits (the PROM loops 0 to 15). Written with the same rule as the local table. Plain storage for the PROM.
+ * Global routing table of network interface port 0: 16 doublewords, same entry
+ * layout as ni0_local_table, indexed by the high NASID bits (the PROM loops 0
+ * to 15). Written with the same rule as the local table. Plain storage for the
+ * PROM.
  */
 /* ni0_global_table: rw64, reset 0x0 */
-#define SHUB_NI0_GLOBAL_TABLE                        0x150022400 /* established */
+/* established */
+#define SHUB_NI0_GLOBAL_TABLE                        0x150022400
 #define SHUB_NI0_GLOBAL_TABLE_COUNT                  16
 #define SHUB_NI0_GLOBAL_TABLE_STRIDE                 8
 
 /*
- * Route override entry of network interface port 0; bit 63 is ENABLE (header), and when set the entry bypasses the local and global tables. The header INIT is 0x8000000000000000 (enabled). The PROM writes 0 to disable it, once per walk after the tables. Plain storage.
+ * Route override entry of network interface port 0; bit 63 is ENABLE (header),
+ * and when set the entry bypasses the local and global tables. The header INIT
+ * is 0x8000000000000000 (enabled). The PROM writes 0 to disable it, once per
+ * walk after the tables. Plain storage.
  */
 /* ni0_over_ride_table: rw64, reset 0x8000000000000000 */
-#define SHUB_NI0_OVER_RIDE_TABLE                     0x150022480 /* established */
+/* established */
+#define SHUB_NI0_OVER_RIDE_TABLE                     0x150022480
 
 /*
- * Local routing table of network interface port 1: 128 doublewords, indexed by the low 7 bits of the destination NASID. Fields: DIR0 bits 3:0 (direction for the next chip), V0 bit 4, NI_SEL0 bit 5, VALID bit 63 (header). The PROM writes entry i as a direction nibble taken from its route table (0xf means no route) with bit 63 set for entry 0, for the entry equal to the node's own NASID modulo 128 and for any entry whose nibble is not 0xf; the tables written to IILB, PI and MD also carry a second direction in bits 13:8 (bit 13 = 0x20 when the second port has a route), which the header mask does not include. Plain storage for the PROM: it writes every entry and reads one back only when the record is flagged for read-and-compare (not the lone-node path). Entry contents for NASID 0 alone are unknown (they come from the PROM route calculation, which is not traced).
+ * Local routing table of network interface port 1: 128 doublewords, indexed by
+ * the low 7 bits of the destination NASID. Fields: DIR0 bits 3:0 (direction for
+ * the next chip), V0 bit 4, NI_SEL0 bit 5, VALID bit 63 (header). The PROM
+ * writes entry i as a direction nibble taken from its route table (0xf means no
+ * route) with bit 63 set for entry 0, for the entry equal to the node's own
+ * NASID modulo 128 and for any entry whose nibble is not 0xf; the tables
+ * written to IILB, PI and MD also carry a second direction in bits 13:8 (bit 13
+ * = 0x20 when the second port has a route), which the header mask does not
+ * include. Plain storage for the PROM: it writes every entry and reads one back
+ * only when the record is flagged for read-and-compare (not the lone-node
+ * path). Entry contents for NASID 0 alone are unknown (they come from the PROM
+ * route calculation, which is not traced).
  */
 /* ni1_local_table: rw64, reset 0x0 */
-#define SHUB_NI1_LOCAL_TABLE                         0x150023000 /* established */
+/* established */
+#define SHUB_NI1_LOCAL_TABLE                         0x150023000
 #define SHUB_NI1_LOCAL_TABLE_COUNT                   128
 #define SHUB_NI1_LOCAL_TABLE_STRIDE                  8
 
 /*
- * Global routing table of network interface port 1: 16 doublewords, same entry layout as ni1_local_table, indexed by the high NASID bits (the PROM loops 0 to 15). Written with the same rule as the local table. Plain storage for the PROM.
+ * Global routing table of network interface port 1: 16 doublewords, same entry
+ * layout as ni1_local_table, indexed by the high NASID bits (the PROM loops 0
+ * to 15). Written with the same rule as the local table. Plain storage for the
+ * PROM.
  */
 /* ni1_global_table: rw64, reset 0x0 */
-#define SHUB_NI1_GLOBAL_TABLE                        0x150023400 /* established */
+/* established */
+#define SHUB_NI1_GLOBAL_TABLE                        0x150023400
 #define SHUB_NI1_GLOBAL_TABLE_COUNT                  16
 #define SHUB_NI1_GLOBAL_TABLE_STRIDE                 8
 
 /*
- * Route override entry of network interface port 1; bit 63 is ENABLE (header), and when set the entry bypasses the local and global tables. The header INIT is 0x8000000000000000 (enabled). The PROM writes 0 to disable it, once per walk after the tables. Plain storage.
+ * Route override entry of network interface port 1; bit 63 is ENABLE (header),
+ * and when set the entry bypasses the local and global tables. The header INIT
+ * is 0x8000000000000000 (enabled). The PROM writes 0 to disable it, once per
+ * walk after the tables. Plain storage.
  */
 /* ni1_over_ride_table: rw64, reset 0x8000000000000000 */
-#define SHUB_NI1_OVER_RIDE_TABLE                     0x150023480 /* established */
+/* established */
+#define SHUB_NI1_OVER_RIDE_TABLE                     0x150023480
 
 /*
- * Local routing table of the memory and directory unit: 128 doublewords, indexed by the low 7 bits of the destination NASID. Fields: DIR0 bits 3:0 (direction for the next chip), V0 bit 4, NI_SEL0 bit 5, VALID bit 63 (header). The PROM writes entry i as a direction nibble taken from its route table (0xf means no route) with bit 63 set for entry 0, for the entry equal to the node's own NASID modulo 128 and for any entry whose nibble is not 0xf; the tables written to IILB, PI and MD also carry a second direction in bits 13:8 (bit 13 = 0x20 when the second port has a route), which the header mask does not include. Plain storage for the PROM: it writes every entry and reads one back only when the record is flagged for read-and-compare (not the lone-node path). Entry contents for NASID 0 alone are unknown (they come from the PROM route calculation, which is not traced).
+ * Local routing table of the memory and directory unit: 128 doublewords,
+ * indexed by the low 7 bits of the destination NASID. Fields: DIR0 bits 3:0
+ * (direction for the next chip), V0 bit 4, NI_SEL0 bit 5, VALID bit 63
+ * (header). The PROM writes entry i as a direction nibble taken from its route
+ * table (0xf means no route) with bit 63 set for entry 0, for the entry equal
+ * to the node's own NASID modulo 128 and for any entry whose nibble is not 0xf;
+ * the tables written to IILB, PI and MD also carry a second direction in bits
+ * 13:8 (bit 13 = 0x20 when the second port has a route), which the header mask
+ * does not include. Plain storage for the PROM: it writes every entry and reads
+ * one back only when the record is flagged for read-and-compare (not the
+ * lone-node path). Entry contents for NASID 0 alone are unknown (they come from
+ * the PROM route calculation, which is not traced).
  */
 /* md_local_table: rw64, reset 0x0 */
-#define SHUB_MD_LOCAL_TABLE                          0x150024000 /* established */
+/* established */
+#define SHUB_MD_LOCAL_TABLE                          0x150024000
 #define SHUB_MD_LOCAL_TABLE_COUNT                    128
 #define SHUB_MD_LOCAL_TABLE_STRIDE                   8
 
 /*
- * Global routing table of the memory and directory unit: 16 doublewords, same entry layout as md_local_table, indexed by the high NASID bits (the PROM loops 0 to 15). Written with the same rule as the local table. Plain storage for the PROM.
+ * Global routing table of the memory and directory unit: 16 doublewords, same
+ * entry layout as md_local_table, indexed by the high NASID bits (the PROM
+ * loops 0 to 15). Written with the same rule as the local table. Plain storage
+ * for the PROM.
  */
 /* md_global_table: rw64, reset 0x0 */
-#define SHUB_MD_GLOBAL_TABLE                         0x150024400 /* established */
+/* established */
+#define SHUB_MD_GLOBAL_TABLE                         0x150024400
 #define SHUB_MD_GLOBAL_TABLE_COUNT                   16
 #define SHUB_MD_GLOBAL_TABLE_STRIDE                  8
 
 /*
- * Route override entry of the memory and directory unit; bit 63 is ENABLE (header), and when set the entry bypasses the local and global tables. The header INIT is 0x8000000000000000 (enabled). The PROM writes 0 to disable it, once per walk after the tables. Plain storage.
+ * Route override entry of the memory and directory unit; bit 63 is ENABLE
+ * (header), and when set the entry bypasses the local and global tables. The
+ * header INIT is 0x8000000000000000 (enabled). The PROM writes 0 to disable it,
+ * once per walk after the tables. Plain storage.
  */
 /* md_over_ride_table: rw64, reset 0x8000000000002000 */
-#define SHUB_MD_OVER_RIDE_TABLE                      0x150024480 /* established */
+/* established */
+#define SHUB_MD_OVER_RIDE_TABLE                      0x150024480
 
 /*
- * NI port 0 at this offset, port 1 is 0x200 higher (SH_XNNI1_*; the PROM addresses it as base + port * 0x200). Virtual-channel switch control of the crossbar-to-NI path: bit 0 NI_VCFIFO_DATELINE_SWITCH, bit 8 PI_VCFIFO_SWITCH, bit 16 MD_VCFIFO_SWITCH, bit 24 IILB_VCFIFO_SWITCH (each swaps VC0/2 with VC1/3), bits 34:32 sync-bypass and async-fifo controls (header). 0xffa5c900 reads it and writes it back with bit 24 inverted, runs the neighbour loop, and inverts it again (on a lone node the loop does nothing, so the register ends where it began). Slot 59 reads it and ORs 0x100 (0x101 when the port record has flag 0x20 set). A plain read/write register satisfies both.
+ * NI port 0 at this offset, port 1 is 0x200 higher (SH_XNNI1_*; the PROM
+ * addresses it as base + port * 0x200). Virtual-channel switch control of the
+ * crossbar-to-NI path: bit 0 NI_VCFIFO_DATELINE_SWITCH, bit 8 PI_VCFIFO_SWITCH,
+ * bit 16 MD_VCFIFO_SWITCH, bit 24 IILB_VCFIFO_SWITCH (each swaps VC0/2 with
+ * VC1/3), bits 34:32 sync-bypass and async-fifo controls (header). 0xffa5c900
+ * reads it and writes it back with bit 24 inverted, runs the neighbour loop,
+ * and inverts it again (on a lone node the loop does nothing, so the register
+ * ends where it began). Slot 59 reads it and ORs 0x100 (0x101 when the port
+ * record has flag 0x20 set). A plain read/write register satisfies both.
  */
 /* xnni_vcswitch_flow: rw64, reset 0x0 */
-#define SHUB_XNNI_VCSWITCH_FLOW                      0x1500303a0 /* established */
+/* established */
+#define SHUB_XNNI_VCSWITCH_FLOW                      0x1500303a0
 #define SHUB_XNNI_VCSWITCH_FLOW_COUNT                2
 #define SHUB_XNNI_VCSWITCH_FLOW_STRIDE               512
 
 /*
- * NI port 0 at this offset, port 1 is 0x200 higher (SH_XNNI1_*, PROM-confirmed for DEAD_FLOW at 0x1_5003_05f0). FIFO 0/2 flow limits of the crossbar-to-NI path (vc limit, dynamic and captured counters; a zero limit disables the check, header). The PROM reads it and writes it back ANDed with 0xfffffffff0fffff0, which clears the limit fields (and the vc counters shown in the same nibbles). A plain read/write register satisfies it.
+ * NI port 0 at this offset, port 1 is 0x200 higher (SH_XNNI1_*, PROM-confirmed
+ * for DEAD_FLOW at 0x1_5003_05f0). FIFO 0/2 flow limits of the crossbar-to-NI
+ * path (vc limit, dynamic and captured counters; a zero limit disables the
+ * check, header). The PROM reads it and writes it back ANDed with
+ * 0xfffffffff0fffff0, which clears the limit fields (and the vc counters shown
+ * in the same nibbles). A plain read/write register satisfies it.
  */
 /* xnni_fifo02_flow: rw64, reset 0x0 */
-#define SHUB_XNNI_FIFO02_FLOW                        0x1500303c0 /* established */
+/* established */
+#define SHUB_XNNI_FIFO02_FLOW                        0x1500303c0
 #define SHUB_XNNI_FIFO02_FLOW_COUNT                  2
 #define SHUB_XNNI_FIFO02_FLOW_STRIDE                 512
 
 /*
- * NI port 0 at this offset, port 1 is 0x200 higher (SH_XNNI1_*, PROM-confirmed for DEAD_FLOW at 0x1_5003_05f0). FIFO 1/3 flow limits of the crossbar-to-NI path (vc limit, dynamic and captured counters; a zero limit disables the check, header). The PROM reads it and writes it back ANDed with 0xfffffffff0fffff0, which clears the limit fields (and the vc counters shown in the same nibbles). A plain read/write register satisfies it.
+ * NI port 0 at this offset, port 1 is 0x200 higher (SH_XNNI1_*, PROM-confirmed
+ * for DEAD_FLOW at 0x1_5003_05f0). FIFO 1/3 flow limits of the crossbar-to-NI
+ * path (vc limit, dynamic and captured counters; a zero limit disables the
+ * check, header). The PROM reads it and writes it back ANDed with
+ * 0xfffffffff0fffff0, which clears the limit fields (and the vc counters shown
+ * in the same nibbles). A plain read/write register satisfies it.
  */
 /* xnni_fifo13_flow: rw64, reset 0x0 */
-#define SHUB_XNNI_FIFO13_FLOW                        0x1500303d0 /* established */
+/* established */
+#define SHUB_XNNI_FIFO13_FLOW                        0x1500303d0
 #define SHUB_XNNI_FIFO13_FLOW_COUNT                  2
 #define SHUB_XNNI_FIFO13_FLOW_STRIDE                 512
 
 /*
- * NI port 0 at this offset, port 1 is 0x200 higher (SH_XNNI1_*, PROM-confirmed for DEAD_FLOW at 0x1_5003_05f0). NI flow limits of the crossbar-to-NI path (vc limit, dynamic and captured counters; a zero limit disables the check, header). The PROM reads it and writes it back ANDed with 0xfff0fff0fff0fff0, which clears the limit fields (and the vc counters shown in the same nibbles). A plain read/write register satisfies it. Only touched when the environment variable NoTimeouts is set.
+ * NI port 0 at this offset, port 1 is 0x200 higher (SH_XNNI1_*, PROM-confirmed
+ * for DEAD_FLOW at 0x1_5003_05f0). NI flow limits of the crossbar-to-NI path
+ * (vc limit, dynamic and captured counters; a zero limit disables the check,
+ * header). The PROM reads it and writes it back ANDed with 0xfff0fff0fff0fff0,
+ * which clears the limit fields (and the vc counters shown in the same
+ * nibbles). A plain read/write register satisfies it. Only touched when the
+ * environment variable NoTimeouts is set.
  */
 /* xnni_ni_flow: rw64, reset 0x0 */
-#define SHUB_XNNI_NI_FLOW                            0x1500303e0 /* established */
+/* established */
+#define SHUB_XNNI_NI_FLOW                            0x1500303e0
 #define SHUB_XNNI_NI_FLOW_COUNT                      2
 #define SHUB_XNNI_NI_FLOW_STRIDE                     512
 
 /*
- * NI port 0 at this offset, port 1 is 0x200 higher (SH_XNNI1_*, PROM-confirmed for DEAD_FLOW at 0x1_5003_05f0). dead-lock flow limits of the crossbar-to-NI path (vc limit, dynamic and captured counters; a zero limit disables the check, header). The PROM reads it and writes it back ANDed with 0xfff0fff0fff0fff0, which clears the limit fields (and the vc counters shown in the same nibbles). A plain read/write register satisfies it.
+ * NI port 0 at this offset, port 1 is 0x200 higher (SH_XNNI1_*, PROM-confirmed
+ * for DEAD_FLOW at 0x1_5003_05f0). dead-lock flow limits of the crossbar-to-NI
+ * path (vc limit, dynamic and captured counters; a zero limit disables the
+ * check, header). The PROM reads it and writes it back ANDed with
+ * 0xfff0fff0fff0fff0, which clears the limit fields (and the vc counters shown
+ * in the same nibbles). A plain read/write register satisfies it.
  */
 /* xnni_dead_flow: rw64, reset 0x0 */
-#define SHUB_XNNI_DEAD_FLOW                          0x1500303f0 /* established */
+/* established */
+#define SHUB_XNNI_DEAD_FLOW                          0x1500303f0
 #define SHUB_XNNI_DEAD_FLOW_COUNT                    2
 #define SHUB_XNNI_DEAD_FLOW_STRIDE                   512
 
 /*
- * NI port 0 at this offset, port 1 is 0x200 higher. Age value stamped on outgoing packets: REQUEST_INJECT bits 7:0, REPLY_INJECT bits 15:8 (header). Slot 59 reads it and writes it back with bits 15:8 set to 0xc0 (value AND 0xffffffffffff00ff OR 0xc000), only when the node has no NUMAlink 4 router entry (count 0), which is the case for a lone node. A plain read/write register satisfies it.
+ * NI port 0 at this offset, port 1 is 0x200 higher. Age value stamped on
+ * outgoing packets: REQUEST_INJECT bits 7:0, REPLY_INJECT bits 15:8 (header).
+ * Slot 59 reads it and writes it back with bits 15:8 set to 0xc0 (value AND
+ * 0xffffffffffff00ff OR 0xc000), only when the node has no NUMAlink 4 router
+ * entry (count 0), which is the case for a lone node. A plain read/write
+ * register satisfies it.
  */
 /* xnni_inject_age: rw64, reset 0x0 */
-#define SHUB_XNNI_INJECT_AGE                         0x150030400 /* established */
+/* established */
+#define SHUB_XNNI_INJECT_AGE                         0x150030400
 #define SHUB_XNNI_INJECT_AGE_COUNT                   2
 #define SHUB_XNNI_INJECT_AGE_STRIDE                  512
 
 /*
- * A debug-compare word of the node crossbar. The PROM writes 0 to it once per node, as an 8-byte store through the global window, in the lists it zeroes after 15a0, 1360 and 1370. No read-back was found. Whether a non-zero value arms a hardware compare trigger is unknown.
+ * A debug-compare word of the node crossbar. The PROM writes 0 to it once per
+ * node, as an 8-byte store through the global window, in the lists it zeroes
+ * after 15a0, 1360 and 1370. No read-back was found. Whether a non-zero value
+ * arms a hardware compare trigger is unknown.
  */
 /* xn_iilb_lb_cmp_exp_data1: rw64, reset 0x0 */
-#define SHUB_XN_IILB_LB_CMP_EXP_DATA1                0x150031110 /* established */
+/* established */
+#define SHUB_XN_IILB_LB_CMP_EXP_DATA1                0x150031110
 
 /*
- * A debug-compare word of the node crossbar. The PROM writes 0 to it once per node, as an 8-byte store through the global window, in the lists it zeroes after 15a0, 1360 and 1370. No read-back was found. Whether a non-zero value arms a hardware compare trigger is unknown.
+ * A debug-compare word of the node crossbar. The PROM writes 0 to it once per
+ * node, as an 8-byte store through the global window, in the lists it zeroes
+ * after 15a0, 1360 and 1370. No read-back was found. Whether a non-zero value
+ * arms a hardware compare trigger is unknown.
  */
 /* xn_iilb_lb_cmp_enable0: rw64, reset 0x0 */
-#define SHUB_XN_IILB_LB_CMP_ENABLE0                  0x150031120 /* established */
+/* established */
+#define SHUB_XN_IILB_LB_CMP_ENABLE0                  0x150031120
 
 /*
- * A debug-compare word of the node crossbar. The PROM writes 0 to it once per node, as an 8-byte store through the global window, in the lists it zeroes after 15a0, 1360 and 1370. No read-back was found. Whether a non-zero value arms a hardware compare trigger is unknown.
+ * A debug-compare word of the node crossbar. The PROM writes 0 to it once per
+ * node, as an 8-byte store through the global window, in the lists it zeroes
+ * after 15a0, 1360 and 1370. No read-back was found. Whether a non-zero value
+ * arms a hardware compare trigger is unknown.
  */
 /* xn_iilb_lb_cmp_enable1: rw64, reset 0x0 */
-#define SHUB_XN_IILB_LB_CMP_ENABLE1                  0x150031130 /* established */
+/* established */
+#define SHUB_XN_IILB_LB_CMP_ENABLE1                  0x150031130
 
 /*
- * A debug-compare word of the node crossbar. The PROM writes 0 to it once per node, as an 8-byte store through the global window, in the lists it zeroes after 15a0, 1360 and 1370. No read-back was found. Whether a non-zero value arms a hardware compare trigger is unknown.
+ * A debug-compare word of the node crossbar. The PROM writes 0 to it once per
+ * node, as an 8-byte store through the global window, in the lists it zeroes
+ * after 15a0, 1360 and 1370. No read-back was found. Whether a non-zero value
+ * arms a hardware compare trigger is unknown.
  */
 /* xn_iilb_ii_cmp_exp_data0: rw64, reset 0x0 */
-#define SHUB_XN_IILB_II_CMP_EXP_DATA0                0x150031140 /* established */
+/* established */
+#define SHUB_XN_IILB_II_CMP_EXP_DATA0                0x150031140
 
 /*
- * A debug-compare word of the node crossbar. The PROM writes 0 to it once per node, as an 8-byte store through the global window, in the lists it zeroes after 15a0, 1360 and 1370. No read-back was found. Whether a non-zero value arms a hardware compare trigger is unknown.
+ * A debug-compare word of the node crossbar. The PROM writes 0 to it once per
+ * node, as an 8-byte store through the global window, in the lists it zeroes
+ * after 15a0, 1360 and 1370. No read-back was found. Whether a non-zero value
+ * arms a hardware compare trigger is unknown.
  */
 /* xn_iilb_ii_cmp_exp_data1: rw64, reset 0x0 */
-#define SHUB_XN_IILB_II_CMP_EXP_DATA1                0x150031150 /* established */
+/* established */
+#define SHUB_XN_IILB_II_CMP_EXP_DATA1                0x150031150
 
 /*
- * A debug-compare word of the node crossbar. The PROM writes 0 to it once per node, as an 8-byte store through the global window, in the lists it zeroes after 15a0, 1360 and 1370. No read-back was found. Whether a non-zero value arms a hardware compare trigger is unknown.
+ * A debug-compare word of the node crossbar. The PROM writes 0 to it once per
+ * node, as an 8-byte store through the global window, in the lists it zeroes
+ * after 15a0, 1360 and 1370. No read-back was found. Whether a non-zero value
+ * arms a hardware compare trigger is unknown.
  */
 /* xn_iilb_ii_cmp_enable0: rw64, reset 0x0 */
-#define SHUB_XN_IILB_II_CMP_ENABLE0                  0x150031160 /* established */
+/* established */
+#define SHUB_XN_IILB_II_CMP_ENABLE0                  0x150031160
 
 /*
- * A debug-compare word of the node crossbar. The PROM writes 0 to it once per node, as an 8-byte store through the global window, in the lists it zeroes after 15a0, 1360 and 1370. No read-back was found. Whether a non-zero value arms a hardware compare trigger is unknown.
+ * A debug-compare word of the node crossbar. The PROM writes 0 to it once per
+ * node, as an 8-byte store through the global window, in the lists it zeroes
+ * after 15a0, 1360 and 1370. No read-back was found. Whether a non-zero value
+ * arms a hardware compare trigger is unknown.
  */
 /* xn_iilb_ii_cmp_enable1: rw64, reset 0x0 */
-#define SHUB_XN_IILB_II_CMP_ENABLE1                  0x150031170 /* established */
+/* established */
+#define SHUB_XN_IILB_II_CMP_ENABLE1                  0x150031170
 
 /*
- * A debug-compare word of the node crossbar. The PROM writes 0 to it once per node, as an 8-byte store through the global window, in the lists it zeroes after 15a0, 1360 and 1370. No read-back was found. Whether a non-zero value arms a hardware compare trigger is unknown.
+ * A debug-compare word of the node crossbar. The PROM writes 0 to it once per
+ * node, as an 8-byte store through the global window, in the lists it zeroes
+ * after 15a0, 1360 and 1370. No read-back was found. Whether a non-zero value
+ * arms a hardware compare trigger is unknown.
  */
 /* xn_iilb_md_cmp_exp_data0: rw64, reset 0x0 */
-#define SHUB_XN_IILB_MD_CMP_EXP_DATA0                0x150031180 /* established */
+/* established */
+#define SHUB_XN_IILB_MD_CMP_EXP_DATA0                0x150031180
 
 /*
- * A debug-compare word of the node crossbar. The PROM writes 0 to it once per node, as an 8-byte store through the global window, in the lists it zeroes after 15a0, 1360 and 1370. No read-back was found. Whether a non-zero value arms a hardware compare trigger is unknown.
+ * A debug-compare word of the node crossbar. The PROM writes 0 to it once per
+ * node, as an 8-byte store through the global window, in the lists it zeroes
+ * after 15a0, 1360 and 1370. No read-back was found. Whether a non-zero value
+ * arms a hardware compare trigger is unknown.
  */
 /* xn_iilb_md_cmp_exp_data1: rw64, reset 0x0 */
-#define SHUB_XN_IILB_MD_CMP_EXP_DATA1                0x150031190 /* established */
+/* established */
+#define SHUB_XN_IILB_MD_CMP_EXP_DATA1                0x150031190
 
 /*
- * A debug-compare word of the node crossbar. The PROM writes 0 to it once per node, as an 8-byte store through the global window, in the lists it zeroes after 15a0, 1360 and 1370. No read-back was found. Whether a non-zero value arms a hardware compare trigger is unknown.
+ * A debug-compare word of the node crossbar. The PROM writes 0 to it once per
+ * node, as an 8-byte store through the global window, in the lists it zeroes
+ * after 15a0, 1360 and 1370. No read-back was found. Whether a non-zero value
+ * arms a hardware compare trigger is unknown.
  */
 /* xn_iilb_md_cmp_enable0: rw64, reset 0x0 */
-#define SHUB_XN_IILB_MD_CMP_ENABLE0                  0x1500311a0 /* established */
+/* established */
+#define SHUB_XN_IILB_MD_CMP_ENABLE0                  0x1500311a0
 
 /*
- * A debug-compare word of the node crossbar. The PROM writes 0 to it once per node, as an 8-byte store through the global window, in the lists it zeroes after 15a0, 1360 and 1370. No read-back was found. Whether a non-zero value arms a hardware compare trigger is unknown.
+ * A debug-compare word of the node crossbar. The PROM writes 0 to it once per
+ * node, as an 8-byte store through the global window, in the lists it zeroes
+ * after 15a0, 1360 and 1370. No read-back was found. Whether a non-zero value
+ * arms a hardware compare trigger is unknown.
  */
 /* xn_iilb_md_cmp_enable1: rw64, reset 0x0 */
-#define SHUB_XN_IILB_MD_CMP_ENABLE1                  0x1500311b0 /* established */
+/* established */
+#define SHUB_XN_IILB_MD_CMP_ENABLE1                  0x1500311b0
 
 /*
- * A debug-compare word of the node crossbar. The PROM writes 0 to it once per node, as an 8-byte store through the global window, in the lists it zeroes after 15a0, 1360 and 1370. No read-back was found. Whether a non-zero value arms a hardware compare trigger is unknown.
+ * A debug-compare word of the node crossbar. The PROM writes 0 to it once per
+ * node, as an 8-byte store through the global window, in the lists it zeroes
+ * after 15a0, 1360 and 1370. No read-back was found. Whether a non-zero value
+ * arms a hardware compare trigger is unknown.
  */
 /* xn_iilb_pi_cmp_exp_data0: rw64, reset 0x0 */
-#define SHUB_XN_IILB_PI_CMP_EXP_DATA0                0x1500311c0 /* established */
+/* established */
+#define SHUB_XN_IILB_PI_CMP_EXP_DATA0                0x1500311c0
 
 /*
- * A debug-compare word of the node crossbar. The PROM writes 0 to it once per node, as an 8-byte store through the global window, in the lists it zeroes after 15a0, 1360 and 1370. No read-back was found. Whether a non-zero value arms a hardware compare trigger is unknown.
+ * A debug-compare word of the node crossbar. The PROM writes 0 to it once per
+ * node, as an 8-byte store through the global window, in the lists it zeroes
+ * after 15a0, 1360 and 1370. No read-back was found. Whether a non-zero value
+ * arms a hardware compare trigger is unknown.
  */
 /* xn_iilb_pi_cmp_exp_data1: rw64, reset 0x0 */
-#define SHUB_XN_IILB_PI_CMP_EXP_DATA1                0x1500311d0 /* established */
+/* established */
+#define SHUB_XN_IILB_PI_CMP_EXP_DATA1                0x1500311d0
 
 /*
- * A debug-compare word of the node crossbar. The PROM writes 0 to it once per node, as an 8-byte store through the global window, in the lists it zeroes after 15a0, 1360 and 1370. No read-back was found. Whether a non-zero value arms a hardware compare trigger is unknown.
+ * A debug-compare word of the node crossbar. The PROM writes 0 to it once per
+ * node, as an 8-byte store through the global window, in the lists it zeroes
+ * after 15a0, 1360 and 1370. No read-back was found. Whether a non-zero value
+ * arms a hardware compare trigger is unknown.
  */
 /* xn_iilb_pi_cmp_enable0: rw64, reset 0x0 */
-#define SHUB_XN_IILB_PI_CMP_ENABLE0                  0x1500311e0 /* established */
+/* established */
+#define SHUB_XN_IILB_PI_CMP_ENABLE0                  0x1500311e0
 
 /*
- * A debug-compare word of the node crossbar. The PROM writes 0 to it once per node, as an 8-byte store through the global window, in the lists it zeroes after 15a0, 1360 and 1370. No read-back was found. Whether a non-zero value arms a hardware compare trigger is unknown.
+ * A debug-compare word of the node crossbar. The PROM writes 0 to it once per
+ * node, as an 8-byte store through the global window, in the lists it zeroes
+ * after 15a0, 1360 and 1370. No read-back was found. Whether a non-zero value
+ * arms a hardware compare trigger is unknown.
  */
 /* xn_iilb_pi_cmp_enable1: rw64, reset 0x0 */
-#define SHUB_XN_IILB_PI_CMP_ENABLE1                  0x1500311f0 /* established */
+/* established */
+#define SHUB_XN_IILB_PI_CMP_ENABLE1                  0x1500311f0
 
 /*
- * A debug-compare word of the node crossbar. The PROM writes 0 to it once per node, as an 8-byte store through the global window, in the lists it zeroes after 15a0, 1360 and 1370. No read-back was found. Whether a non-zero value arms a hardware compare trigger is unknown.
+ * A debug-compare word of the node crossbar. The PROM writes 0 to it once per
+ * node, as an 8-byte store through the global window, in the lists it zeroes
+ * after 15a0, 1360 and 1370. No read-back was found. Whether a non-zero value
+ * arms a hardware compare trigger is unknown.
  */
 /* xn_iilb_ni0_cmp_exp_data0: rw64, reset 0x0 */
-#define SHUB_XN_IILB_NI0_CMP_EXP_DATA0               0x150031200 /* established */
+/* established */
+#define SHUB_XN_IILB_NI0_CMP_EXP_DATA0               0x150031200
 
 /*
- * A debug-compare word of the node crossbar. The PROM writes 0 to it once per node, as an 8-byte store through the global window, in the lists it zeroes after 15a0, 1360 and 1370. No read-back was found. Whether a non-zero value arms a hardware compare trigger is unknown.
+ * A debug-compare word of the node crossbar. The PROM writes 0 to it once per
+ * node, as an 8-byte store through the global window, in the lists it zeroes
+ * after 15a0, 1360 and 1370. No read-back was found. Whether a non-zero value
+ * arms a hardware compare trigger is unknown.
  */
 /* xn_iilb_ni0_cmp_exp_data1: rw64, reset 0x0 */
-#define SHUB_XN_IILB_NI0_CMP_EXP_DATA1               0x150031210 /* established */
+/* established */
+#define SHUB_XN_IILB_NI0_CMP_EXP_DATA1               0x150031210
 
 /*
- * A debug-compare word of the node crossbar, in the block the PROM also uses for plain storage (0x1500 to 0x1560). The PROM writes 0 to it twice from a routine in the SAL_B image; no reader was found. Whether a non-zero value arms a hardware compare trigger is unknown.
+ * A debug-compare word of the node crossbar, in the block the PROM also uses
+ * for plain storage (0x1500 to 0x1560). The PROM writes 0 to it twice from a
+ * routine in the SAL_B image; no reader was found. Whether a non-zero value
+ * arms a hardware compare trigger is unknown.
  */
 /* xn_iilb_ni0_cmp_enable0: rw64, reset 0x0 */
-#define SHUB_XN_IILB_NI0_CMP_ENABLE0                 0x150031220 /* established */
+/* established */
+#define SHUB_XN_IILB_NI0_CMP_ENABLE0                 0x150031220
 
 /*
- * A debug-compare word of the node crossbar, in the block the PROM also uses for plain storage (0x1500 to 0x1560). The PROM writes 0 to it twice from a routine in the SAL_B image; no reader was found. Whether a non-zero value arms a hardware compare trigger is unknown.
+ * A debug-compare word of the node crossbar, in the block the PROM also uses
+ * for plain storage (0x1500 to 0x1560). The PROM writes 0 to it twice from a
+ * routine in the SAL_B image; no reader was found. Whether a non-zero value
+ * arms a hardware compare trigger is unknown.
  */
 /* xn_iilb_ni0_cmp_enable1: rw64, reset 0x0 */
-#define SHUB_XN_IILB_NI0_CMP_ENABLE1                 0x150031230 /* established */
+/* established */
+#define SHUB_XN_IILB_NI0_CMP_ENABLE1                 0x150031230
 
 /*
- * A debug-compare word of the node crossbar. The PROM writes 0 to it once per node, as an 8-byte store through the global window, in the lists it zeroes after 15a0, 1360 and 1370. No read-back was found. Whether a non-zero value arms a hardware compare trigger is unknown.
+ * A debug-compare word of the node crossbar. The PROM writes 0 to it once per
+ * node, as an 8-byte store through the global window, in the lists it zeroes
+ * after 15a0, 1360 and 1370. No read-back was found. Whether a non-zero value
+ * arms a hardware compare trigger is unknown.
  */
 /* xn_iilb_ni1_cmp_exp_data0: rw64, reset 0x0 */
-#define SHUB_XN_IILB_NI1_CMP_EXP_DATA0               0x150031240 /* established */
+/* established */
+#define SHUB_XN_IILB_NI1_CMP_EXP_DATA0               0x150031240
 
 /*
- * A debug-compare word of the node crossbar. The PROM writes 0 to it once per node, as an 8-byte store through the global window, in the lists it zeroes after 15a0, 1360 and 1370. No read-back was found. Whether a non-zero value arms a hardware compare trigger is unknown.
+ * A debug-compare word of the node crossbar. The PROM writes 0 to it once per
+ * node, as an 8-byte store through the global window, in the lists it zeroes
+ * after 15a0, 1360 and 1370. No read-back was found. Whether a non-zero value
+ * arms a hardware compare trigger is unknown.
  */
 /* xn_iilb_ni1_cmp_enable0: rw64, reset 0x0 */
-#define SHUB_XN_IILB_NI1_CMP_ENABLE0                 0x150031260 /* established */
+/* established */
+#define SHUB_XN_IILB_NI1_CMP_ENABLE0                 0x150031260
 
 /*
- * A debug-compare word of the node crossbar. The PROM writes 0 to it twice per node (first and last of the five lists), as an 8-byte store through the global window, in the lists it zeroes after 15a0, 1360 and 1370. No read-back was found. Whether a non-zero value arms a hardware compare trigger is unknown.
+ * A debug-compare word of the node crossbar. The PROM writes 0 to it twice per
+ * node (first and last of the five lists), as an 8-byte store through the
+ * global window, in the lists it zeroes after 15a0, 1360 and 1370. No read-back
+ * was found. Whether a non-zero value arms a hardware compare trigger is
+ * unknown.
  */
 /* xn_iilb_ni1_cmp_enable1: rw64, reset 0x0 */
-#define SHUB_XN_IILB_NI1_CMP_ENABLE1                 0x150031270 /* established */
+/* established */
+#define SHUB_XN_IILB_NI1_CMP_ENABLE1                 0x150031270
 
 /*
- * A debug-compare word of the node crossbar. The PROM writes 0 to it once per node, as an 8-byte store through the global window, in the lists it zeroes after 15a0, 1360 and 1370. No read-back was found. Whether a non-zero value arms a hardware compare trigger is unknown.
+ * A debug-compare word of the node crossbar. The PROM writes 0 to it once per
+ * node, as an 8-byte store through the global window, in the lists it zeroes
+ * after 15a0, 1360 and 1370. No read-back was found. Whether a non-zero value
+ * arms a hardware compare trigger is unknown.
  */
 /* xn_pi_iilb_cmp_exp_data0: rw64, reset 0x0 */
-#define SHUB_XN_PI_IILB_CMP_EXP_DATA0                0x150031300 /* established */
+/* established */
+#define SHUB_XN_PI_IILB_CMP_EXP_DATA0                0x150031300
 
 /*
- * A debug-compare word of the node crossbar. The PROM writes 0 to it once per node, as an 8-byte store through the global window, in the lists it zeroes after 15a0, 1360 and 1370. No read-back was found. Whether a non-zero value arms a hardware compare trigger is unknown.
+ * A debug-compare word of the node crossbar. The PROM writes 0 to it once per
+ * node, as an 8-byte store through the global window, in the lists it zeroes
+ * after 15a0, 1360 and 1370. No read-back was found. Whether a non-zero value
+ * arms a hardware compare trigger is unknown.
  */
 /* xn_pi_iilb_cmp_exp_data1: rw64, reset 0x0 */
-#define SHUB_XN_PI_IILB_CMP_EXP_DATA1                0x150031310 /* established */
+/* established */
+#define SHUB_XN_PI_IILB_CMP_EXP_DATA1                0x150031310
 
 /*
- * A debug-compare word of the node crossbar. The PROM writes 0 to it once per node, as an 8-byte store through the global window, in the lists it zeroes after 15a0, 1360 and 1370. No read-back was found. Whether a non-zero value arms a hardware compare trigger is unknown.
+ * A debug-compare word of the node crossbar. The PROM writes 0 to it once per
+ * node, as an 8-byte store through the global window, in the lists it zeroes
+ * after 15a0, 1360 and 1370. No read-back was found. Whether a non-zero value
+ * arms a hardware compare trigger is unknown.
  */
 /* xn_pi_iilb_cmp_enable0: rw64, reset 0x0 */
-#define SHUB_XN_PI_IILB_CMP_ENABLE0                  0x150031320 /* established */
+/* established */
+#define SHUB_XN_PI_IILB_CMP_ENABLE0                  0x150031320
 
 /*
- * A debug-compare word of the node crossbar. The PROM writes 0 to it once per node, as an 8-byte store through the global window, in the lists it zeroes after 15a0, 1360 and 1370. No read-back was found. Whether a non-zero value arms a hardware compare trigger is unknown.
+ * A debug-compare word of the node crossbar. The PROM writes 0 to it once per
+ * node, as an 8-byte store through the global window, in the lists it zeroes
+ * after 15a0, 1360 and 1370. No read-back was found. Whether a non-zero value
+ * arms a hardware compare trigger is unknown.
  */
 /* xn_pi_iilb_cmp_enable1: rw64, reset 0x0 */
-#define SHUB_XN_PI_IILB_CMP_ENABLE1                  0x150031330 /* established */
+/* established */
+#define SHUB_XN_PI_IILB_CMP_ENABLE1                  0x150031330
 
 /*
- * A debug-compare word of the node crossbar. The PROM writes 0 to it once per node, as an 8-byte store through the global window, in the lists it zeroes after 15a0, 1360 and 1370. No read-back was found. Whether a non-zero value arms a hardware compare trigger is unknown.
+ * A debug-compare word of the node crossbar. The PROM writes 0 to it once per
+ * node, as an 8-byte store through the global window, in the lists it zeroes
+ * after 15a0, 1360 and 1370. No read-back was found. Whether a non-zero value
+ * arms a hardware compare trigger is unknown.
  */
 /* xn_pi_ni0_cmp_exp_data0: rw64, reset 0x0 */
-#define SHUB_XN_PI_NI0_CMP_EXP_DATA0                 0x150031340 /* established */
+/* established */
+#define SHUB_XN_PI_NI0_CMP_EXP_DATA0                 0x150031340
 
 /*
- * A debug-compare word of the node crossbar that the PROM uses as plain storage. Zeroed once per node, then read back by an error-record routine: 15a0 as a test-and-set flag word (bits 0x20, 0x40, 0x80, 0x100, 0x400), 1360 as a write-if-zero word and 1370 as an OR-accumulating word. A model must return what was written, all 64 bits. Whether a non-zero value arms a hardware compare trigger is unknown.
+ * A debug-compare word of the node crossbar that the PROM uses as plain
+ * storage. Zeroed once per node, then read back by an error-record routine:
+ * 15a0 as a test-and-set flag word (bits 0x20, 0x40, 0x80, 0x100, 0x400), 1360
+ * as a write-if-zero word and 1370 as an OR-accumulating word. A model must
+ * return what was written, all 64 bits. Whether a non-zero value arms a
+ * hardware compare trigger is unknown.
  */
 /* xn_pi_ni0_cmp_enable0: rw64, reset 0x0 */
-#define SHUB_XN_PI_NI0_CMP_ENABLE0                   0x150031360 /* established */
+/* established */
+#define SHUB_XN_PI_NI0_CMP_ENABLE0                   0x150031360
 
 /*
- * A debug-compare word of the node crossbar that the PROM uses as plain storage. Zeroed once per node, then read back by an error-record routine: 15a0 as a test-and-set flag word (bits 0x20, 0x40, 0x80, 0x100, 0x400), 1360 as a write-if-zero word and 1370 as an OR-accumulating word. A model must return what was written, all 64 bits. Whether a non-zero value arms a hardware compare trigger is unknown.
+ * A debug-compare word of the node crossbar that the PROM uses as plain
+ * storage. Zeroed once per node, then read back by an error-record routine:
+ * 15a0 as a test-and-set flag word (bits 0x20, 0x40, 0x80, 0x100, 0x400), 1360
+ * as a write-if-zero word and 1370 as an OR-accumulating word. A model must
+ * return what was written, all 64 bits. Whether a non-zero value arms a
+ * hardware compare trigger is unknown.
  */
 /* xn_pi_ni0_cmp_enable1: rw64, reset 0x0 */
-#define SHUB_XN_PI_NI0_CMP_ENABLE1                   0x150031370 /* established */
+/* established */
+#define SHUB_XN_PI_NI0_CMP_ENABLE1                   0x150031370
 
 /*
- * A debug-compare word of the node crossbar, in the block the PROM also uses for plain storage (0x1500 to 0x1560). The PROM writes 0 to it twice from a routine in the SAL_B image; no reader was found. Whether a non-zero value arms a hardware compare trigger is unknown.
+ * A debug-compare word of the node crossbar, in the block the PROM also uses
+ * for plain storage (0x1500 to 0x1560). The PROM writes 0 to it twice from a
+ * routine in the SAL_B image; no reader was found. Whether a non-zero value
+ * arms a hardware compare trigger is unknown.
  */
 /* xn_pi_sic_cmp_exp_hdr0: rw64, reset 0x0 */
-#define SHUB_XN_PI_SIC_CMP_EXP_HDR0                  0x1500313c0 /* established */
+/* established */
+#define SHUB_XN_PI_SIC_CMP_EXP_HDR0                  0x1500313c0
 
 /*
- * A debug-compare word of the node crossbar that the PROM uses as plain storage: storage the PROM zeroes once per node; no reader was found. A model must return what was written, all 64 bits. Whether a non-zero value arms a hardware compare trigger is unknown.
+ * A debug-compare word of the node crossbar that the PROM uses as plain
+ * storage: storage the PROM zeroes once per node; no reader was found. A model
+ * must return what was written, all 64 bits. Whether a non-zero value arms a
+ * hardware compare trigger is unknown.
  */
 /* xn_pi_sic_cmp_exp_hdr1: rw64, reset 0x0 */
-#define SHUB_XN_PI_SIC_CMP_EXP_HDR1                  0x1500313d0 /* established */
+/* established */
+#define SHUB_XN_PI_SIC_CMP_EXP_HDR1                  0x1500313d0
 
 /*
- * A debug-compare word of the node crossbar, in the block the PROM also uses for plain storage (0x1500 to 0x1560). The PROM writes 0 to it twice from a routine in the SAL_B image; no reader was found. Whether a non-zero value arms a hardware compare trigger is unknown.
+ * A debug-compare word of the node crossbar, in the block the PROM also uses
+ * for plain storage (0x1500 to 0x1560). The PROM writes 0 to it twice from a
+ * routine in the SAL_B image; no reader was found. Whether a non-zero value
+ * arms a hardware compare trigger is unknown.
  */
 /* xn_pi_sic_cmp_hdr_enable0: rw64, reset 0x0 */
-#define SHUB_XN_PI_SIC_CMP_HDR_ENABLE0               0x1500313e0 /* established */
+/* established */
+#define SHUB_XN_PI_SIC_CMP_HDR_ENABLE0               0x1500313e0
 
 /*
- * A debug-compare word of the node crossbar that the PROM uses as plain storage: storage the PROM zeroes once per node; no reader was found. A model must return what was written, all 64 bits. Whether a non-zero value arms a hardware compare trigger is unknown.
+ * A debug-compare word of the node crossbar that the PROM uses as plain
+ * storage: storage the PROM zeroes once per node; no reader was found. A model
+ * must return what was written, all 64 bits. Whether a non-zero value arms a
+ * hardware compare trigger is unknown.
  */
 /* xn_pi_sic_cmp_hdr_enable1: rw64, reset 0x0 */
-#define SHUB_XN_PI_SIC_CMP_HDR_ENABLE1               0x1500313f0 /* established */
+/* established */
+#define SHUB_XN_PI_SIC_CMP_HDR_ENABLE1               0x1500313f0
 
 /*
- * Progress history of processor slice n (n = cr.lid bits 26:23, 0 to 3), 16 bytes apart; the name is ours. Every progress code is written as: read the word, shift it left 8, put the code in the low byte, write it back. The code is never read for a decision; any reset value is tolerated and the register must return what was last written. SAL_A also reads slice 1 and slice 3 words (0x150031510, 0x150031530) and copies them, ORed with 0x60, to LED registers. The block is the network interface's by address; the PROM uses it as plain storage (inferred). The SGI 2.4 SN2 header names this offset SH_XN_MD_IILB_CMP_EXP_DATA0 at 0x1_5003_1500, SH_XN_MD_IILB_CMP_EXP_DATA1 at 1510, SH_XN_MD_IILB_CMP_ENABLE0 at 1520 and SH_XN_MD_IILB_CMP_ENABLE1 at 1530: a 64-bit debug-compare register of the node crossbar (header text: 'MD compare ... input expected data' and 'enable'; reset 0, all 64 bits implemented). The PROM uses it as plain storage (inferred from its use; a model must keep all 64 bits). Whether a non-zero compare value or enable arms a hardware debug trigger is unknown.
+ * Progress history of processor slice n (n = cr.lid bits 26:23, 0 to 3), 16
+ * bytes apart; the name is ours. Every progress code is written as: read the
+ * word, shift it left 8, put the code in the low byte, write it back. The code
+ * is never read for a decision; any reset value is tolerated and the register
+ * must return what was last written. SAL_A also reads slice 1 and slice 3 words
+ * (0x150031510, 0x150031530) and copies them, ORed with 0x60, to LED registers.
+ * The block is the network interface's by address; the PROM uses it as plain
+ * storage (inferred). The SGI 2.4 SN2 header names this offset
+ * SH_XN_MD_IILB_CMP_EXP_DATA0 at 0x1_5003_1500, SH_XN_MD_IILB_CMP_EXP_DATA1 at
+ * 1510, SH_XN_MD_IILB_CMP_ENABLE0 at 1520 and SH_XN_MD_IILB_CMP_ENABLE1 at
+ * 1530: a 64-bit debug-compare register of the node crossbar (header text: 'MD
+ * compare ... input expected data' and 'enable'; reset 0, all 64 bits
+ * implemented). The PROM uses it as plain storage (inferred from its use; a
+ * model must keep all 64 bits). Whether a non-zero compare value or enable arms
+ * a hardware debug trigger is unknown.
  */
-/* cpu_hist: rw64, reset unknown; SAL 5.04 PROM site 0xffc4e5c6 and 0xffc4e5e0 (progress write), 0xffa0ddb0; no Linux v5.3 name; SGI 2.4 SN2 header (Linux/MIPS tree, linux-2.4 branch, commit 8ef7d46c94d5) names the offset */
-#define SHUB_CPU_HIST                                0x150031500 /* established */
+/* cpu_hist: rw64, reset unknown; SAL 5.04 PROM site 0xffc4e5c6 and 0xffc4e5e0
+ * (progress write), 0xffa0ddb0; no Linux v5.3 name; SGI 2.4 SN2 header
+ * (Linux/MIPS tree, linux-2.4 branch, commit 8ef7d46c94d5) names the offset */
+/* established */
+#define SHUB_CPU_HIST                                0x150031500
 #define SHUB_CPU_HIST_COUNT                          4
 #define SHUB_CPU_HIST_STRIDE                         16
 
 /*
- * Firmware flag word; the name is ours. SAL_A's election winner writes 0 to it, and a later routine writes 0 to it on another node through the node-object write (site 0xffa5d48c). No read exists on the direct-call reset path. The method tables reached through the chip object hold methods that treat it as a set of flags indexed by a bit number: claim bit n (wait until it reads clear, set it, with an optional deadline in microseconds; returns -1 on timeout), test bit n, and clear bit n, each as a read-modify-write under the lock pair lb_lock2 and lb_lock2_status, on this node (site 0xffa0efd0, 0xffa0f580) or through the global window of another (site 0xffa0f1a0, 0xffa0f3a0, 0xffa0f430, 0xffa0f650). That the flags are claims is inferred from the sequence; which bit numbers callers use was not traced, and whether any of these methods runs before the console start is unknown. The word must read back what was written. The SGI 2.4 SN2 header names this offset SH_XN_MD_NI0_CMP_EXP_DATA0: a 64-bit debug-compare register of the node crossbar (header text: 'MD compare ... input expected data' and 'enable'; reset 0, all 64 bits implemented). The PROM uses it as plain storage (inferred from its use; a model must keep all 64 bits). Whether a non-zero compare value or enable arms a hardware debug trigger is unknown.
+ * Firmware flag word; the name is ours. SAL_A's election winner writes 0 to it,
+ * and a later routine writes 0 to it on another node through the node-object
+ * write (site 0xffa5d48c). No read exists on the direct-call reset path. The
+ * method tables reached through the chip object hold methods that treat it as a
+ * set of flags indexed by a bit number: claim bit n (wait until it reads clear,
+ * set it, with an optional deadline in microseconds; returns -1 on timeout),
+ * test bit n, and clear bit n, each as a read-modify-write under the lock pair
+ * lb_lock2 and lb_lock2_status, on this node (site 0xffa0efd0, 0xffa0f580) or
+ * through the global window of another (site 0xffa0f1a0, 0xffa0f3a0,
+ * 0xffa0f430, 0xffa0f650). That the flags are claims is inferred from the
+ * sequence; which bit numbers callers use was not traced, and whether any of
+ * these methods runs before the console start is unknown. The word must read
+ * back what was written. The SGI 2.4 SN2 header names this offset
+ * SH_XN_MD_NI0_CMP_EXP_DATA0: a 64-bit debug-compare register of the node
+ * crossbar (header text: 'MD compare ... input expected data' and 'enable';
+ * reset 0, all 64 bits implemented). The PROM uses it as plain storage
+ * (inferred from its use; a model must keep all 64 bits). Whether a non-zero
+ * compare value or enable arms a hardware debug trigger is unknown.
  */
-/* fw_word_1540: rw64, reset unknown; SAL 5.04 PROM site 0xffc4ea06 (zeroed by the election winner), 0xffa0efd0 to 0xffa0f640 (bit methods), 0xffa5d48c (zeroed on another node); no Linux v5.3 name; SGI 2.4 SN2 header (Linux/MIPS tree, linux-2.4 branch, commit 8ef7d46c94d5) names the offset */
+/* fw_word_1540: rw64, reset unknown; SAL 5.04 PROM site 0xffc4ea06 (zeroed by
+ * the election winner), 0xffa0efd0 to 0xffa0f640 (bit methods), 0xffa5d48c
+ * (zeroed on another node); no Linux v5.3 name; SGI 2.4 SN2 header (Linux/MIPS
+ * tree, linux-2.4 branch, commit 8ef7d46c94d5) names the offset */
 #define SHUB_FW_WORD_1540                            0x150031540 /* inferred */
 
 /*
- * Firmware per-processor state word; the name is ours. The winner of the SAL_A election zeroes it. Bits the PROM uses: 21 + slice (tested in 0xffa1d430, set in the SAL_B reset entry), 26 + slice (set by the local-master arbitration, polled until the other present processors have set theirs), 30 + slice and bit 34 (a second barrier), 35 + slice (set in the SAL_B reset entry), and a 3-bit count at bit 47 (even slice) or bit 50 (odd slice) that each present slice publishes from a PAL call and the master waits for as that many ready bits among 29:26 (inferred). Bits are set and cleared by read-modify-write under the lock pair lb_lock and lb_lock_status. The SAL_A error path clears bits 29:26. The meanings are inferred from use; the word must read back what was written. The SGI 2.4 SN2 header names this offset SH_XN_MD_NI0_CMP_EXP_DATA1: a 64-bit debug-compare register of the node crossbar (header text: 'MD compare ... input expected data' and 'enable'; reset 0, all 64 bits implemented). The PROM uses it as plain storage (inferred from its use; a model must keep all 64 bits). Whether a non-zero compare value or enable arms a hardware debug trigger is unknown.
+ * Firmware per-processor state word; the name is ours. The winner of the SAL_A
+ * election zeroes it. Bits the PROM uses: 21 + slice (tested in 0xffa1d430, set
+ * in the SAL_B reset entry), 26 + slice (set by the local-master arbitration,
+ * polled until the other present processors have set theirs), 30 + slice and
+ * bit 34 (a second barrier), 35 + slice (set in the SAL_B reset entry), and a
+ * 3-bit count at bit 47 (even slice) or bit 50 (odd slice) that each present
+ * slice publishes from a PAL call and the master waits for as that many ready
+ * bits among 29:26 (inferred). Bits are set and cleared by read-modify-write
+ * under the lock pair lb_lock and lb_lock_status. The SAL_A error path clears
+ * bits 29:26. The meanings are inferred from use; the word must read back what
+ * was written. The SGI 2.4 SN2 header names this offset
+ * SH_XN_MD_NI0_CMP_EXP_DATA1: a 64-bit debug-compare register of the node
+ * crossbar (header text: 'MD compare ... input expected data' and 'enable';
+ * reset 0, all 64 bits implemented). The PROM uses it as plain storage
+ * (inferred from its use; a model must keep all 64 bits). Whether a non-zero
+ * compare value or enable arms a hardware debug trigger is unknown.
  */
-/* cpu_bits: rw64, reset unknown; SAL 5.04 PROM site 0xffc4ea00 (zeroed), 0xffa0e730 (set and clear a bit under the lock), 0xffa1d430 (test), 0xffa99cf0 and 0xffa9a130 (arbitration); no Linux v5.3 name; SGI 2.4 SN2 header (Linux/MIPS tree, linux-2.4 branch, commit 8ef7d46c94d5) names the offset */
-#define SHUB_CPU_BITS                                0x150031550 /* established */
+/* cpu_bits: rw64, reset unknown; SAL 5.04 PROM site 0xffc4ea00 (zeroed),
+ * 0xffa0e730 (set and clear a bit under the lock), 0xffa1d430 (test),
+ * 0xffa99cf0 and 0xffa9a130 (arbitration); no Linux v5.3 name; SGI 2.4 SN2
+ * header (Linux/MIPS tree, linux-2.4 branch, commit 8ef7d46c94d5) names the
+ * offset */
+/* established */
+#define SHUB_CPU_BITS                                0x150031550
 
 /*
- * Firmware debug-switch word; the name is ours. SAL_A's election winner zeroes it; the PROM later stores the L1's reply to request 0x0001 and tests bits of it (bit 11 selects the single-node route, bit 14 skips I/O initialisation). A field setter (site 0xffa974d0, call sites 0xffa1a51c and 0xffa1a58c, both with a width of 16) replaces a bit field of it with a 16-bit value under the lb_lock and lb_lock_status lock: take the lock, read the word, clear the field, OR in the value, write, release. Plain storage. The SGI 2.4 SN2 header names this offset SH_XN_MD_NI0_CMP_ENABLE0: a 64-bit debug-compare register of the node crossbar (header text: 'MD compare ... input expected data' and 'enable'; reset 0, all 64 bits implemented). The PROM uses it as plain storage (inferred from its use; a model must keep all 64 bits). Whether a non-zero compare value or enable arms a hardware debug trigger is unknown.
+ * Firmware debug-switch word; the name is ours. SAL_A's election winner zeroes
+ * it; the PROM later stores the L1's reply to request 0x0001 and tests bits of
+ * it (bit 11 selects the single-node route, bit 14 skips I/O initialisation). A
+ * field setter (site 0xffa974d0, call sites 0xffa1a51c and 0xffa1a58c, both
+ * with a width of 16) replaces a bit field of it with a 16-bit value under the
+ * lb_lock and lb_lock_status lock: take the lock, read the word, clear the
+ * field, OR in the value, write, release. Plain storage. The SGI 2.4 SN2 header
+ * names this offset SH_XN_MD_NI0_CMP_ENABLE0: a 64-bit debug-compare register
+ * of the node crossbar (header text: 'MD compare ... input expected data' and
+ * 'enable'; reset 0, all 64 bits implemented). The PROM uses it as plain
+ * storage (inferred from its use; a model must keep all 64 bits). Whether a
+ * non-zero compare value or enable arms a hardware debug trigger is unknown.
  */
-/* fw_debug_word: rw64, reset unknown; SAL 5.04 PROM site 0xffc4ea10 (zeroed in SAL_A), 0xffa19e50 (loaded from the L1 reply in phase 0xe), 0xffa975e0 (bit test), 0xffa974d0 (field setter) */
+/* fw_debug_word: rw64, reset unknown; SAL 5.04 PROM site 0xffc4ea10 (zeroed in
+ * SAL_A), 0xffa19e50 (loaded from the L1 reply in phase 0xe), 0xffa975e0 (bit
+ * test), 0xffa974d0 (field setter) */
 #define SHUB_FW_DEBUG_WORD                           0x150031560 /* inferred */
 
 /*
- * A debug-compare word of the node crossbar that the PROM uses as plain storage: storage the PROM loads, stores and zeroes; the values it keeps are not decoded. A model must return what was written, all 64 bits. Whether a non-zero value arms a hardware compare trigger is unknown.
+ * A debug-compare word of the node crossbar that the PROM uses as plain
+ * storage: storage the PROM loads, stores and zeroes; the values it keeps are
+ * not decoded. A model must return what was written, all 64 bits. Whether a
+ * non-zero value arms a hardware compare trigger is unknown.
  */
 /* xn_md_ni0_cmp_enable1: rw64, reset 0x0 */
-#define SHUB_XN_MD_NI0_CMP_ENABLE1                   0x150031570 /* established */
+/* established */
+#define SHUB_XN_MD_NI0_CMP_ENABLE1                   0x150031570
 
 /*
- * A debug-compare word of the node crossbar that the PROM uses as plain storage: storage the PROM uses as a counter, loading it and storing the value plus one. A model must return what was written, all 64 bits. Whether a non-zero value arms a hardware compare trigger is unknown.
+ * A debug-compare word of the node crossbar that the PROM uses as plain
+ * storage: storage the PROM uses as a counter, loading it and storing the value
+ * plus one. A model must return what was written, all 64 bits. Whether a
+ * non-zero value arms a hardware compare trigger is unknown.
  */
 /* xn_md_ni1_cmp_exp_data0: rw64, reset 0x0 */
-#define SHUB_XN_MD_NI1_CMP_EXP_DATA0                 0x150031580 /* established */
+/* established */
+#define SHUB_XN_MD_NI1_CMP_EXP_DATA0                 0x150031580
 
 /*
- * A debug-compare word of the node crossbar that the PROM uses as plain storage: storage the PROM sets to 0xff00000000 and reads back per slice. A model must return what was written, all 64 bits. Whether a non-zero value arms a hardware compare trigger is unknown.
+ * A debug-compare word of the node crossbar that the PROM uses as plain
+ * storage: storage the PROM sets to 0xff00000000 and reads back per slice. A
+ * model must return what was written, all 64 bits. Whether a non-zero value
+ * arms a hardware compare trigger is unknown.
  */
 /* xn_md_ni1_cmp_exp_data1: rw64, reset 0x0 */
-#define SHUB_XN_MD_NI1_CMP_EXP_DATA1                 0x150031590 /* established */
+/* established */
+#define SHUB_XN_MD_NI1_CMP_EXP_DATA1                 0x150031590
 
 /*
- * A debug-compare word of the node crossbar that the PROM uses as plain storage. Zeroed once per node, then read back by an error-record routine: 15a0 as a test-and-set flag word (bits 0x20, 0x40, 0x80, 0x100, 0x400), 1360 as a write-if-zero word and 1370 as an OR-accumulating word. A model must return what was written, all 64 bits. Whether a non-zero value arms a hardware compare trigger is unknown.
+ * A debug-compare word of the node crossbar that the PROM uses as plain
+ * storage. Zeroed once per node, then read back by an error-record routine:
+ * 15a0 as a test-and-set flag word (bits 0x20, 0x40, 0x80, 0x100, 0x400), 1360
+ * as a write-if-zero word and 1370 as an OR-accumulating word. A model must
+ * return what was written, all 64 bits. Whether a non-zero value arms a
+ * hardware compare trigger is unknown.
  */
 /* xn_md_ni1_cmp_enable0: rw64, reset 0x0 */
-#define SHUB_XN_MD_NI1_CMP_ENABLE0                   0x1500315a0 /* established */
+/* established */
+#define SHUB_XN_MD_NI1_CMP_ENABLE0                   0x1500315a0
 
 /*
- * A debug-compare word of the node crossbar, in the block the PROM also uses for plain storage (0x1500 to 0x1560). The PROM writes 0 to it twice from a routine in the SAL_B image; no reader was found. Whether a non-zero value arms a hardware compare trigger is unknown.
+ * A debug-compare word of the node crossbar, in the block the PROM also uses
+ * for plain storage (0x1500 to 0x1560). The PROM writes 0 to it twice from a
+ * routine in the SAL_B image; no reader was found. Whether a non-zero value
+ * arms a hardware compare trigger is unknown.
  */
 /* xn_md_ni1_cmp_enable1: rw64, reset 0x0 */
-#define SHUB_XN_MD_NI1_CMP_ENABLE1                   0x1500315b0 /* established */
+/* established */
+#define SHUB_XN_MD_NI1_CMP_ENABLE1                   0x1500315b0
 
 /*
- * A debug-compare word of the node crossbar, in the block the PROM also uses for plain storage (0x1500 to 0x1560). The PROM writes 0 to it twice from a routine in the SAL_B image; no reader was found. Whether a non-zero value arms a hardware compare trigger is unknown.
+ * A debug-compare word of the node crossbar, in the block the PROM also uses
+ * for plain storage (0x1500 to 0x1560). The PROM writes 0 to it twice from a
+ * routine in the SAL_B image; no reader was found. Whether a non-zero value
+ * arms a hardware compare trigger is unknown.
  */
 /* xn_md_sic_cmp_exp_hdr0: rw64, reset 0x0 */
-#define SHUB_XN_MD_SIC_CMP_EXP_HDR0                  0x1500315c0 /* established */
+/* established */
+#define SHUB_XN_MD_SIC_CMP_EXP_HDR0                  0x1500315c0
 
 /*
- * A debug-compare word of the node crossbar that the PROM uses as plain storage: storage the PROM sets to 0xff00000000 and reads back per slice. A model must return what was written, all 64 bits. Whether a non-zero value arms a hardware compare trigger is unknown.
+ * A debug-compare word of the node crossbar that the PROM uses as plain
+ * storage: storage the PROM sets to 0xff00000000 and reads back per slice. A
+ * model must return what was written, all 64 bits. Whether a non-zero value
+ * arms a hardware compare trigger is unknown.
  */
 /* xn_md_sic_cmp_hdr_enable0: rw64, reset 0x0 */
-#define SHUB_XN_MD_SIC_CMP_HDR_ENABLE0               0x1500315e0 /* established */
+/* established */
+#define SHUB_XN_MD_SIC_CMP_HDR_ENABLE0               0x1500315e0
 
 /*
- * A debug-compare word of the node crossbar that the PROM uses as plain storage: a word the PROM only reads, through the global window of a NASID it is given; the value is not decoded. A model must return what was written, all 64 bits. Whether a non-zero value arms a hardware compare trigger is unknown.
+ * A debug-compare word of the node crossbar that the PROM uses as plain
+ * storage: a word the PROM only reads, through the global window of a NASID it
+ * is given; the value is not decoded. A model must return what was written, all
+ * 64 bits. Whether a non-zero value arms a hardware compare trigger is unknown.
  */
 /* xn_md_sic_cmp_data0: rw64, reset 0x0 */
-#define SHUB_XN_MD_SIC_CMP_DATA0                     0x150031600 /* established */
+/* established */
+#define SHUB_XN_MD_SIC_CMP_DATA0                     0x150031600
 
 /*
- * A debug-compare word of the node crossbar. The PROM writes 0 to it once per node, as an 8-byte store through the global window, in the lists it zeroes after 15a0, 1360 and 1370. No read-back was found. Whether a non-zero value arms a hardware compare trigger is unknown.
+ * A debug-compare word of the node crossbar. The PROM writes 0 to it once per
+ * node, as an 8-byte store through the global window, in the lists it zeroes
+ * after 15a0, 1360 and 1370. No read-back was found. Whether a non-zero value
+ * arms a hardware compare trigger is unknown.
  */
 /* xn_md_sic_cmp_data1: rw64, reset 0x0 */
-#define SHUB_XN_MD_SIC_CMP_DATA1                     0x150031610 /* established */
+/* established */
+#define SHUB_XN_MD_SIC_CMP_DATA1                     0x150031610
 
 /*
- * A debug-compare word of the node crossbar. The PROM writes 0 to it once per node, as an 8-byte store through the global window, in the lists it zeroes after 15a0, 1360 and 1370. No read-back was found. Whether a non-zero value arms a hardware compare trigger is unknown.
+ * A debug-compare word of the node crossbar. The PROM writes 0 to it once per
+ * node, as an 8-byte store through the global window, in the lists it zeroes
+ * after 15a0, 1360 and 1370. No read-back was found. Whether a non-zero value
+ * arms a hardware compare trigger is unknown.
  */
 /* xn_md_sic_cmp_data2: rw64, reset 0x0 */
-#define SHUB_XN_MD_SIC_CMP_DATA2                     0x150031620 /* established */
+/* established */
+#define SHUB_XN_MD_SIC_CMP_DATA2                     0x150031620
 
 /*
- * A debug-compare word of the node crossbar. The PROM writes 0 to it once per node, as an 8-byte store through the global window, in the lists it zeroes after 15a0, 1360 and 1370. No read-back was found. Whether a non-zero value arms a hardware compare trigger is unknown.
+ * A debug-compare word of the node crossbar. The PROM writes 0 to it once per
+ * node, as an 8-byte store through the global window, in the lists it zeroes
+ * after 15a0, 1360 and 1370. No read-back was found. Whether a non-zero value
+ * arms a hardware compare trigger is unknown.
  */
 /* xn_md_sic_cmp_data3: rw64, reset 0x0 */
-#define SHUB_XN_MD_SIC_CMP_DATA3                     0x150031630 /* established */
+/* established */
+#define SHUB_XN_MD_SIC_CMP_DATA3                     0x150031630
 
 /*
- * A debug-compare word of the node crossbar. The PROM writes 0 to it once per node, as an 8-byte store through the global window, in the lists it zeroes after 15a0, 1360 and 1370. No read-back was found. Whether a non-zero value arms a hardware compare trigger is unknown.
+ * A debug-compare word of the node crossbar. The PROM writes 0 to it once per
+ * node, as an 8-byte store through the global window, in the lists it zeroes
+ * after 15a0, 1360 and 1370. No read-back was found. Whether a non-zero value
+ * arms a hardware compare trigger is unknown.
  */
 /* xn_md_sic_cmp_data_enable0: rw64, reset 0x0 */
-#define SHUB_XN_MD_SIC_CMP_DATA_ENABLE0              0x150031640 /* established */
+/* established */
+#define SHUB_XN_MD_SIC_CMP_DATA_ENABLE0              0x150031640
 
 /*
- * A debug-compare word of the node crossbar. The PROM writes 0 to it once per node, as an 8-byte store through the global window, in the lists it zeroes after 15a0, 1360 and 1370. No read-back was found. Whether a non-zero value arms a hardware compare trigger is unknown.
+ * A debug-compare word of the node crossbar. The PROM writes 0 to it once per
+ * node, as an 8-byte store through the global window, in the lists it zeroes
+ * after 15a0, 1360 and 1370. No read-back was found. Whether a non-zero value
+ * arms a hardware compare trigger is unknown.
  */
 /* xn_md_sic_cmp_data_enable1: rw64, reset 0x0 */
-#define SHUB_XN_MD_SIC_CMP_DATA_ENABLE1              0x150031650 /* established */
+/* established */
+#define SHUB_XN_MD_SIC_CMP_DATA_ENABLE1              0x150031650
 
 /*
- * A debug-compare word of the node crossbar. The PROM writes 0 to it once per node, as an 8-byte store through the global window, in the lists it zeroes after 15a0, 1360 and 1370. No read-back was found. Whether a non-zero value arms a hardware compare trigger is unknown.
+ * A debug-compare word of the node crossbar. The PROM writes 0 to it once per
+ * node, as an 8-byte store through the global window, in the lists it zeroes
+ * after 15a0, 1360 and 1370. No read-back was found. Whether a non-zero value
+ * arms a hardware compare trigger is unknown.
  */
 /* xn_md_sic_cmp_data_enable2: rw64, reset 0x0 */
-#define SHUB_XN_MD_SIC_CMP_DATA_ENABLE2              0x150031660 /* established */
+/* established */
+#define SHUB_XN_MD_SIC_CMP_DATA_ENABLE2              0x150031660
 
 /*
- * A debug-compare word of the node crossbar. The PROM writes 0 to it once per node, as an 8-byte store through the global window, in the lists it zeroes after 15a0, 1360 and 1370. No read-back was found. Whether a non-zero value arms a hardware compare trigger is unknown.
+ * A debug-compare word of the node crossbar. The PROM writes 0 to it once per
+ * node, as an 8-byte store through the global window, in the lists it zeroes
+ * after 15a0, 1360 and 1370. No read-back was found. Whether a non-zero value
+ * arms a hardware compare trigger is unknown.
  */
 /* xn_md_sic_cmp_data_enable3: rw64, reset 0x0 */
-#define SHUB_XN_MD_SIC_CMP_DATA_ENABLE3              0x150031670 /* established */
+/* established */
+#define SHUB_XN_MD_SIC_CMP_DATA_ENABLE3              0x150031670
 
 /*
- * Junk bus LED registers, one per processor slice (header SH1_REAL_JUNK_BUS_LED0 to 3, 64 KiB apart). The kernel keeps an 8-bit LED state per processor and stores it with a 16-bit write at LED0 plus slice times 64 KiB: bit 0 is the heartbeat, toggled twice a second from the timer interrupt, bit 1 an activity flag. The junk bus also holds the UART whose interrupt is event_occurred bit 20.
+ * Junk bus LED registers, one per processor slice (header
+ * SH1_REAL_JUNK_BUS_LED0 to 3, 64 KiB apart). The kernel keeps an 8-bit LED
+ * state per processor and stores it with a 16-bit write at LED0 plus slice
+ * times 64 KiB: bit 0 is the heartbeat, toggled twice a second from the timer
+ * interrupt, bit 1 an activity flag. The junk bus also holds the UART whose
+ * interrupt is event_occurred bit 20.
  */
-/* junk_bus_led: w16, reset unknown; Linux v5.3 SGI SN2 platform MMR header (GPL): name and offset */
-#define SHUB_JUNK_BUS_LED                            0x7fed00000 /* established */
+/* junk_bus_led: w16, reset unknown; Linux v5.3 SGI SN2 platform MMR header
+ * (GPL): name and offset */
+/* established */
+#define SHUB_JUNK_BUS_LED                            0x7fed00000
 #define SHUB_JUNK_BUS_LED_COUNT                      4
 #define SHUB_JUNK_BUS_LED_STRIDE                     65536
 
 #define SHUB_IPI_BASE_VALUE                          0xfeeu /* established */
 #define SHUB_PIO_WRITE_STATUS_ALIAS_CLEAR            0x7u /* established */
-#define SHUB_PIO_WRITE_STATUS_IDLE                   0x3f00000000000000ull /* established */
-#define SHUB_PI_CAM_WAR_VALUE                        0x8000000000000010ull /* established */
-#define SHUB_RTC_CONFIG_MASK                         0xff3ffffffefffffull /* established */
+/* established */
+#define SHUB_PIO_WRITE_STATUS_IDLE                   0x3f00000000000000ull
+/* established */
+#define SHUB_PI_CAM_WAR_VALUE                        0x8000000000000010ull
+/* established */
+#define SHUB_RTC_CONFIG_MASK                         0xff3ffffffefffffull
 #define SHUB_RTC_ENABLE_MASK                         0x1u /* established */
-#define SHUB_RTC_MASK                                0x7fffffffffffffull /* established */
+/* established */
+#define SHUB_RTC_MASK                                0x7fffffffffffffull
 #define SHUB_SHUB_1_1_MAX_REVISION                   0x2u /* established */
 
 #endif /* SHUB_GEN_H */

@@ -1,8 +1,10 @@
-// generated from devices/bridge/registers-extra.toml by defs-gen - do not edit, change the source
-// defs-gen 2
+// @generated from devices/bridge/registers-extra.toml by defs-gen - do not edit, change the source
+// defs-gen 3
 // input sha256 d79809f695c80a0f37db113eb9f4cd966cf14bc3f14cab4c534195c46a2ac4f8
 // Bridge-family registers and bits outside the census
 #![allow(dead_code)]
+#![allow(clippy::doc_markdown)]
+#![cfg_attr(rustfmt, rustfmt_skip)]
 
 /// The widget identification word as the shipped IRIX kernel reads it for the Bridge family. The kernel reads the 32-bit word at byte offset 4 of the wid (established)
 pub mod wid_id_format {

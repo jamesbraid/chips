@@ -1,8 +1,10 @@
-// generated from devices/hub_windows/registers.toml by defs-gen - do not edit, change the source
-// defs-gen 2
+// @generated from devices/hub_windows/registers.toml by defs-gen - do not edit, change the source
+// defs-gen 3
 // input sha256 433dec6921b0152c218127b867a36172e0ae5ba71149fa793336f17dac3023f3
 // Hub register arrays whose extent is a fact of its own
 #![allow(dead_code)]
+#![allow(clippy::doc_markdown)]
+#![cfg_attr(rustfmt, rustfmt_skip)]
 
 pub mod enums {
     pub mod iio_prb_mode {
@@ -114,6 +116,7 @@ pub mod iio_ioprb {
         pub const fn set(v: u64, x: u64) -> u64 {
             (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
         }
+        #[allow(unused_imports)]
         pub use super::super::enums::iio_prb_mode::Value;
     }
     pub mod bnakctr { // bits 37:24, established

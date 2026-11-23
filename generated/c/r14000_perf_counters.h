@@ -1,7 +1,9 @@
-/* generated from devices/r14000_perf_counters/registers.toml by defs-gen - do not edit, change the source */
-/* defs-gen 2 */
+/* generated from devices/r14000_perf_counters/registers.toml by defs-gen - do
+ * not edit, change the source */
+/* defs-gen 3 */
 /* input sha256 7eecccb8ac094c1de6c36069e754426c42e0d4e6a5dc0a503425e631c68b20df */
-/* R14000 CP0 performance counters: selectors, control fields and event numbers */
+/* R14000 CP0 performance counters: selectors, control fields and event numbers
+ */
 #ifndef R14KPC_GEN_H
 #define R14KPC_GEN_H
 

@@ -1,8 +1,10 @@
-// generated from devices/mbcs/registers.toml by defs-gen - do not edit, change the source
-// defs-gen 2
+// @generated from devices/mbcs/registers.toml by defs-gen - do not edit, change the source
+// defs-gen 3
 // input sha256 0847561578f481d3b528ba1836bd648ede84991c3f4dec9b2e42af20cca4328d
 // RASC Core Services (MBCS): the register block a Core Services FPGA bitstream presents on the TIO FPGA port, as SGI's Linux driver defines it
 #![allow(dead_code)]
+#![allow(clippy::doc_markdown)]
+#![cfg_attr(rustfmt, rustfmt_skip)]
 
 /// Identification word of the core. Its low bits are the same widget identification layout the TIO driver reads at offset 0 of the port's window: bit 0 i (established)
 pub mod id {

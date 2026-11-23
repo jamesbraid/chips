@@ -1,6 +1,6 @@
 <?xml version="1.0" ?>
 <!-- generated from devices/hub_md/registers-extra.toml by defs-gen - do not edit, change the source -->
-<!-- defs-gen 2 -->
+<!-- defs-gen 3 -->
 <!-- input sha256 df97b661d44b747c810d4490e53a5804b7bb12cb4a2de043edf26b3990c7f0d1 -->
 <genxml unit="hub_md_extra" prefix="HUB" title="Hub memory and directory register layouts and constants outside the census" from="public Linux SN0 Hub memory/directory header, pinned linux tree (field masks, shifts and default constants)">
   <enum name="md_bank_size">

@@ -1,6 +1,6 @@
 <?xml version="1.0" ?>
 <!-- generated from devices/router_sn1/registers.toml by defs-gen - do not edit, change the source -->
-<!-- defs-gen 2 -->
+<!-- defs-gen 3 -->
 <!-- input sha256 b70f66625e769d9712121c425a33c1e848b0297d809537cea42eec8674d89524 -->
 <genxml unit="router_sn1" prefix="ROUTER_SN1" title="SN1 network router: port block, local routing table and remote reset mask (public header positions)" from="Linux 2.5.40 ia64 SN router header (RR_LOCAL_TABLE0, RR_LOCAL_TABLE, RR_RESET_MASK, RRM_RESETOK, RTABLE_SHFT, RTABLE_MASK, MAX_ROUTER_PORTS, RR_LOCAL_ENTRIES, RR_META_ENTRIES)">
   <doc>Addresses are port-relative: a port's block starts at the base the header computes from the link number L (1 to 8), ((L+1) &amp; 0xe) &lt;&lt; 15 | ((L+1) &amp; 1) &lt;&lt; 11. Field positions, entry counts and offsets come from the public Linux 2.5.40 ia64 SN router header, so they are established as header positions, following the convention for the other SN1 units. What a header macro computes is established only as arithmetic; what the hardware does with a table value is not stated by the header and is unknown. No router specification is held, so every reset is unknown. The census of the kernels does not reach the routing tables; their layout here comes from the header alone. The prose is in devices/router/README.md.</doc>

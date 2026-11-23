@@ -1,8 +1,10 @@
-// generated from devices/hub_pi/registers-extra.toml by defs-gen - do not edit, change the source
-// defs-gen 2
+// @generated from devices/hub_pi/registers-extra.toml by defs-gen - do not edit, change the source
+// defs-gen 3
 // input sha256 6bd43d1a2beced09685294a1651d96ebd8187133f5b5a5408a19ea14d79ea62b
 // Hub processor interface registers, bit layouts and constants outside the census
 #![allow(dead_code)]
+#![allow(clippy::doc_markdown)]
+#![cfg_attr(rustfmt, rustfmt_skip)]
 
 pub mod enums {
     pub mod pi_calias_size {
@@ -117,6 +119,7 @@ pub mod pi_calias_size {
         pub const fn set(v: u64, x: u64) -> u64 {
             (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
         }
+        #[allow(unused_imports)]
         pub use super::super::enums::pi_calias_size::Value;
     }
 }

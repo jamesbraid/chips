@@ -1,5 +1,6 @@
-/* generated from devices/bridge/registers.toml by defs-gen - do not edit, change the source */
-/* defs-gen 2 */
+/* generated from devices/bridge/registers.toml by defs-gen - do not edit,
+ * change the source */
+/* defs-gen 3 */
 /* input sha256 5c857fc18475a73158d341e50faa7869fa17c1d787b05a3b26772bf0b11b8e3b */
 /* Bridge (XIO-to-PCI bridge), Origin 2000 and Octane */
 #ifndef BRIDGE_GEN_H

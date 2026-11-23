@@ -1,8 +1,10 @@
-// generated from devices/bedrock_lb/registers.toml by defs-gen - do not edit, change the source
-// defs-gen 2
+// @generated from devices/bedrock_lb/registers.toml by defs-gen - do not edit, change the source
+// defs-gen 3
 // input sha256 b37d365dbb57af8f38c2d786617250b65c049cb8d901dc94e622247577944aba
 // Bedrock local block (LB) registers: field layouts, reset statements and the vector engine
 #![allow(dead_code)]
+#![allow(clippy::doc_markdown)]
+#![cfg_attr(rustfmt, rustfmt_skip)]
 
 pub mod enums {
     pub mod region_size {
@@ -138,6 +140,7 @@ pub mod rev_id {
         pub const fn set(v: u64, x: u64) -> u64 {
             (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
         }
+        #[allow(unused_imports)]
         pub use super::super::enums::region_size::Value;
     }
     pub mod node_id { // bits 39:32, established
@@ -217,6 +220,7 @@ pub mod io_permission {
     }
 }
 /// A write to bit 0 resets the Bedrock with a soft reset. The header does not say which state survives it. Reset unknown. (established)
+#[allow(clippy::module_inception)]
 pub mod soft_reset {
     pub const WIDTH: u32 = 64;
     pub const OFFSET: u64 = 0x604018;
@@ -974,6 +978,7 @@ pub mod vector_parms {
         pub const fn set(v: u64, x: u64) -> u64 {
             (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
         }
+        #[allow(unused_imports)]
         pub use super::super::enums::vector_op::Value;
     }
 }
@@ -1060,6 +1065,7 @@ pub mod vector_status {
         pub const fn set(v: u64, x: u64) -> u64 {
             (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
         }
+        #[allow(unused_imports)]
         pub use super::super::enums::vector_reply_type::Value;
     }
 }
@@ -1146,6 +1152,7 @@ pub mod vector_status_clear {
         pub const fn set(v: u64, x: u64) -> u64 {
             (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
         }
+        #[allow(unused_imports)]
         pub use super::super::enums::vector_reply_type::Value;
     }
 }

@@ -1,8 +1,10 @@
-// generated from devices/r10000_cp0/registers.toml by defs-gen - do not edit, change the source
-// defs-gen 2
+// @generated from devices/r10000_cp0/registers.toml by defs-gen - do not edit, change the source
+// defs-gen 3
 // input sha256 ac3e03c75ed94daca87b077b35f60770d6347248765e51833d4b0943ef3eb864
 // R10000 CP0 Count and Compare timer interrupt and TLB geometry
 #![allow(dead_code)]
+#![allow(clippy::doc_markdown)]
+#![cfg_attr(rustfmt, rustfmt_skip)]
 
 /// The Cause register bit that carries the Count and Compare timer interrupt. (established)
 pub mod cause_timer {

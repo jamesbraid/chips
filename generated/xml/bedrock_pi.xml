@@ -1,6 +1,6 @@
 <?xml version="1.0" ?>
 <!-- generated from devices/bedrock_pi/registers.toml by defs-gen - do not edit, change the source -->
-<!-- defs-gen 2 -->
+<!-- defs-gen 3 -->
 <!-- input sha256 56a9d9b03087a7970d1facfa6db42468dac86685a2fa0f13c9d816cce0e4d02e -->
 <genxml unit="bedrock_pi" prefix="BEDROCK_PI" title="Bedrock processor interface (PI) registers: field layouts, interrupt banks, real-time clock, graphics credits and error capture" from="Linux 2.5.40 SN1 processor-interface register header: names, offsets and field layouts">
   <doc>Offsets are hub-relative inside one processor interface. The second interface repeats the same layout 2 MiB higher in the node window (see the processor-interface page). Register names, offsets, widths and field positions come from the public Linux 2.5.40 SN1 processor-interface register header, so they are established as header facts. Behaviour the header gives only in its comments is inferred. Access modes the header does not state are assumed read and write and labelled so in the text. The header gives no reset value for any register, so every reset is unknown.</doc>

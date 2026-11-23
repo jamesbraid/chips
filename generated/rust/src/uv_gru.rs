@@ -1,8 +1,10 @@
-// generated from devices/uv_gru/registers.toml by defs-gen - do not edit, change the source
-// defs-gen 2
+// @generated from devices/uv_gru/registers.toml by defs-gen - do not edit, change the source
+// defs-gen 3
 // input sha256 9fd998eb93a63f0428f5eca34e50f2c7058b2d23a787c4039f35569109e1a020
 // UV global reference unit (GRU): chiplet memory map, handles and instruction word
 #![allow(dead_code)]
+#![allow(clippy::doc_markdown)]
+#![cfg_attr(rustfmt, rustfmt_skip)]
 
 /// Control block extended handle, dword 7: the hardware's view of the active control block. (inferred)
 pub mod cbe_dw7 {

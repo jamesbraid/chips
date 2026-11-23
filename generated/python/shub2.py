@@ -1,5 +1,5 @@
 """generated from devices/shub/registers.shub2.toml by defs-gen - do not edit, change the source
-defs-gen 2
+defs-gen 3
 input sha256 25a65e6adabd41724ca20aa7682efa4524185c9de88bf41c87116f7cdc9663a8
 SHub 2 registers outside the I/O interface, differences from SHub 1"""
 

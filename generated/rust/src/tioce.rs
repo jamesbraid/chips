@@ -1,8 +1,10 @@
-// generated from devices/tioce/registers.toml by defs-gen - do not edit, change the source
-// defs-gen 2
+// @generated from devices/tioce/registers.toml by defs-gen - do not edit, change the source
+// defs-gen 3
 // input sha256 52905da533c0fdd4266ab81f4644ea275734bd46daf5436fb5dcce504d25b373
 // TIOCE (TIO PCI Express bridge), as SGI's Linux Altix platform code defines it
 #![allow(dead_code)]
+#![allow(clippy::doc_markdown)]
+#![cfg_attr(rustfmt, rustfmt_skip)]
 
 pub mod enums {
     pub mod ure_pagesize {
@@ -3985,6 +3987,7 @@ pub mod ure_page_map {
         pub const fn set(v: u64, x: u64) -> u64 {
             (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
         }
+        #[allow(unused_imports)]
         pub use super::super::enums::ure_pagesize::Value;
     }
     pub mod ate40_enable { // bits 1:1, established

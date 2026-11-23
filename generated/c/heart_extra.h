@@ -1,5 +1,6 @@
-/* generated from devices/heart/registers-extra.toml by defs-gen - do not edit, change the source */
-/* defs-gen 2 */
+/* generated from devices/heart/registers-extra.toml by defs-gen - do not edit,
+ * change the source */
+/* defs-gen 3 */
 /* input sha256 189e7fa9ecefa172f0e241d791ba09c972fbdd69db03706a5ac043de76587a1e */
 /* HEART registers outside the census */
 #ifndef HEART_GEN_H
@@ -14,7 +15,8 @@
 /* mem_ref: w64, reset unknown */
 #define HEART_MEM_REF                                0x000010 /* established */
 
-/* mlan_ctl: rw64, reset unknown; OpenBSD SGI Crossbow HEART driver at 7011342f6a72: one 64-bit uncached access per pulse, no other user */
+/* mlan_ctl: rw64, reset unknown; OpenBSD SGI Crossbow HEART driver at
+ * 7011342f6a72: one 64-bit uncached access per pulse, no other user */
 #define HEART_MLAN_CTL                               0x0000b8 /* inferred */
 
 #define HEART_MEMCFG_ADDR_MASK                       0x1ffu /* inferred */

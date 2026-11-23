@@ -1,8 +1,10 @@
-// generated from devices/piix4/registers.toml by defs-gen - do not edit, change the source
-// defs-gen 2
+// @generated from devices/piix4/registers.toml by defs-gen - do not edit, change the source
+// defs-gen 3
 // input sha256 9419598440ab2c5e0a78081f4f4024eecd7686d44a9b3e8d221f0b1de5cd234d
 // Intel 82371AB PIIX4 (PCI-to-ISA bridge, IDE, USB, power management and SMBus) as wired in the Visual Workstation 320 and 540
 #![allow(dead_code)]
+#![allow(clippy::doc_markdown)]
+#![cfg_attr(rustfmt, rustfmt_skip)]
 
 /// Bus-master IDE command, primary channel; the secondary channel's is at +8 (bm_cmd_sec). (established)
 pub mod bm_cmd {

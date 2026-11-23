@@ -1,8 +1,10 @@
-// generated from devices/dm2/registers.toml by defs-gen - do not edit, change the source
-// defs-gen 2
+// @generated from devices/dm2/registers.toml by defs-gen - do not edit, change the source
+// defs-gen 3
 // input sha256 534766be60c23e754f44497a1ac59c97d036d7a9c9fb7fc107d2d08156f5526b
 // DMediaPro DM2 (XT-DIGVID) XIO video board: widget window, XG block, FPGA load, GIF register file and word layouts
 #![allow(dead_code)]
+#![allow(clippy::doc_markdown)]
+#![cfg_attr(rustfmt, rustfmt_skip)]
 
 pub mod enums {
     pub mod fpga_kind {
@@ -315,6 +317,7 @@ pub mod xg_config {
         pub const fn set(v: u32, x: u32) -> u32 {
             (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
         }
+        #[allow(unused_imports)]
         pub use super::super::enums::xg_mapram_type::Value;
     }
     pub mod mapram_size_code { // bits 5:3, established
@@ -2247,6 +2250,7 @@ pub mod fpga_info_kind {
         pub const fn set(v: u32, x: u32) -> u32 {
             (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
         }
+        #[allow(unused_imports)]
         pub use super::super::enums::fpga_kind::Value;
     }
 }
@@ -2522,6 +2526,7 @@ pub mod vbob_msg_header {
         pub const fn set(v: u32, x: u32) -> u32 {
             (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
         }
+        #[allow(unused_imports)]
         pub use super::super::enums::vbob_pipe::Value;
     }
     pub mod write { // bits 15:15, established

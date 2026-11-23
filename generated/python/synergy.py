@@ -1,5 +1,5 @@
 """generated from devices/synergy/registers.toml by defs-gen - do not edit, change the source
-defs-gen 2
+defs-gen 3
 input sha256 4c3ea2546f72bcace270f575e55b39b69ccbbb218f4ea2c4bd2699014b6f3a17
 Synergy: the Itanium processor-bus ASIC of the SN1 IA-64 node (register offsets the Linux port uses)"""
 

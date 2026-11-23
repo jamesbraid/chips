@@ -1,7 +1,9 @@
-/* generated from devices/r5000_identity/registers.toml by defs-gen - do not edit, change the source */
-/* defs-gen 2 */
+/* generated from devices/r5000_identity/registers.toml by defs-gen - do not
+ * edit, change the source */
+/* defs-gen 3 */
 /* input sha256 07e1068ce26ce0f77cf78067f4062c9a866cd127df6ad62dd0ea79185aebe2d0 */
-/* MIPS R5000 family processor identity, reset entries, cache geometry and TLB size */
+/* MIPS R5000 family processor identity, reset entries, cache geometry and TLB
+ * size */
 #ifndef R5K_GEN_H
 #define R5K_GEN_H
 
@@ -21,7 +23,8 @@
 #define R5K_R5K_PRIMARY_LINE_BYTES                   0x20u /* established */
 #define R5K_R5K_PRIMARY_SETS                         0x200u /* established */
 #define R5K_R5K_PRIMARY_WAYS                         0x2u /* established */
-#define R5K_R5K_RESET_VECTOR                         0xffffffffbfc00000ull /* established */
+/* established */
+#define R5K_R5K_RESET_VECTOR                         0xffffffffbfc00000ull
 #define R5K_R5K_SECONDARY_LINE_BYTES                 0x20u /* established */
 #define R5K_R5K_SECONDARY_WAYS                       0x1u /* established */
 #define R5K_R5K_SYSCLK_MAX_MHZ                       0x64u /* established */

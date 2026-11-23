@@ -1,5 +1,5 @@
 """generated from devices/mace/registers-extra.toml by defs-gen - do not edit, change the source
-defs-gen 2
+defs-gen 3
 input sha256 490c88a36f70908dd2b884bf6a6cb452f78c4406765832d4e82eb4098f24c841
 MACE register bits the census does not name"""
 

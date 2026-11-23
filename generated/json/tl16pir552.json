@@ -1,5 +1,5 @@
 {
- "generator": "defs-gen 2",
+ "generator": "defs-gen 3",
  "input_sha256": "3e2e50de5e5e0e4fa39c8450ad2520b250adcd93013d4b878cacd3fb64dce4f0",
  "schema": "defs-flat/1",
  "source": "devices/tl16pir552/registers.toml",

@@ -1,8 +1,10 @@
-// generated from devices/bedrock_pi/registers.toml by defs-gen - do not edit, change the source
-// defs-gen 2
+// @generated from devices/bedrock_pi/registers.toml by defs-gen - do not edit, change the source
+// defs-gen 3
 // input sha256 56a9d9b03087a7970d1facfa6db42468dac86685a2fa0f13c9d816cce0e4d02e
 // Bedrock processor interface (PI) registers: field layouts, interrupt banks, real-time clock, graphics credits and error capture
 #![allow(dead_code)]
+#![allow(clippy::doc_markdown)]
+#![cfg_attr(rustfmt, rustfmt_skip)]
 
 /// One bit per region. A set bit lets the processor in that region reach this interface's local registers. A denied access gets a protection error reply. (established)
 pub mod cpu_protect {

@@ -1,8 +1,10 @@
-// generated from devices/router_origin3000_rbrick/registers.toml by defs-gen - do not edit, change the source
-// defs-gen 2
+// @generated from devices/router_origin3000_rbrick/registers.toml by defs-gen - do not edit, change the source
+// defs-gen 3
 // input sha256 5be86454e6c098bd3031660190833330588ae9a2328ee39958e21d60c7e0f456
 // Origin 3000 R-brick router registers outside the census (vector space)
 #![allow(dead_code)]
+#![allow(clippy::doc_markdown)]
+#![cfg_attr(rustfmt, rustfmt_skip)]
 
 pub mod enums {
     pub mod link_state {
@@ -54,6 +56,7 @@ pub mod status {
         pub const fn set(v: u64, x: u64) -> u64 {
             (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
         }
+        #[allow(unused_imports)]
         pub use super::super::enums::link_state::Value;
     }
     pub mod link7_state { // bits 49:48, inferred
@@ -65,6 +68,7 @@ pub mod status {
         pub const fn set(v: u64, x: u64) -> u64 {
             (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
         }
+        #[allow(unused_imports)]
         pub use super::super::enums::link_state::Value;
     }
     pub mod link6_state { // bits 47:46, inferred
@@ -76,6 +80,7 @@ pub mod status {
         pub const fn set(v: u64, x: u64) -> u64 {
             (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
         }
+        #[allow(unused_imports)]
         pub use super::super::enums::link_state::Value;
     }
     pub mod link5_state { // bits 45:44, inferred
@@ -87,6 +92,7 @@ pub mod status {
         pub const fn set(v: u64, x: u64) -> u64 {
             (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
         }
+        #[allow(unused_imports)]
         pub use super::super::enums::link_state::Value;
     }
     pub mod link4_state { // bits 43:42, inferred
@@ -98,6 +104,7 @@ pub mod status {
         pub const fn set(v: u64, x: u64) -> u64 {
             (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
         }
+        #[allow(unused_imports)]
         pub use super::super::enums::link_state::Value;
     }
     pub mod link3_state { // bits 41:40, inferred
@@ -109,6 +116,7 @@ pub mod status {
         pub const fn set(v: u64, x: u64) -> u64 {
             (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
         }
+        #[allow(unused_imports)]
         pub use super::super::enums::link_state::Value;
     }
     pub mod link2_state { // bits 39:38, inferred
@@ -120,6 +128,7 @@ pub mod status {
         pub const fn set(v: u64, x: u64) -> u64 {
             (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
         }
+        #[allow(unused_imports)]
         pub use super::super::enums::link_state::Value;
     }
     pub mod link1_state { // bits 37:36, inferred
@@ -131,6 +140,7 @@ pub mod status {
         pub const fn set(v: u64, x: u64) -> u64 {
             (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
         }
+        #[allow(unused_imports)]
         pub use super::super::enums::link_state::Value;
     }
     pub mod rev { // bits 31:28, inferred

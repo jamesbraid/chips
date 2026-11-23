@@ -1,5 +1,5 @@
 {
- "generator": "defs-gen 2",
+ "generator": "defs-gen 3",
  "input_sha256": "52905da533c0fdd4266ab81f4644ea275734bd46daf5436fb5dcce504d25b373",
  "schema": "defs-flat/1",
  "source": "devices/tioce/registers.toml",

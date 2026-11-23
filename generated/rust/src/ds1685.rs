@@ -1,8 +1,10 @@
-// generated from devices/ds1685/registers.toml by defs-gen - do not edit, change the source
-// defs-gen 2
+// @generated from devices/ds1685/registers.toml by defs-gen - do not edit, change the source
+// defs-gen 3
 // input sha256 2d03aff8397fa4913c718e61cdbc7f8b15ad4905a2ec4a42ae8709b19c99ca92
 // Dallas DS1685/DS1687 real-time clock and battery-backed RAM (Octane and Octane2 system boards)
 #![allow(dead_code)]
+#![allow(clippy::doc_markdown)]
+#![cfg_attr(rustfmt, rustfmt_skip)]
 
 /// Bank-0 user RAM, 114 bytes. The driver's write loop covers a 50-byte run from 0Eh and a 64-byte run from 40h, whose sum is 114, so the block runs from (inferred)
 pub mod user_ram {

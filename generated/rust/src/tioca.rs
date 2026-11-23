@@ -1,8 +1,10 @@
-// generated from devices/tioca/registers.toml by defs-gen - do not edit, change the source
-// defs-gen 2
+// @generated from devices/tioca/registers.toml by defs-gen - do not edit, change the source
+// defs-gen 3
 // input sha256 2b0f87fc2049e975dc7d32a6177c47d984f40da6459eabf218c44e458d55da3a
 // TIOCA (TIO AGP bridge), as SGI's Linux Altix platform code defines it
 #![allow(dead_code)]
+#![allow(clippy::doc_markdown)]
+#![cfg_attr(rustfmt, rustfmt_skip)]
 
 /// Widget identification word (part 0xe020, manufacturer 0x24, revision A = 1 per the header constants). The kernel keeps the revision the firmware repor (established)
 pub mod id {
@@ -3205,6 +3207,7 @@ pub mod gart_ptr_table {
     }
 }
 /// Name and offset are the vendor header's definition (struct member ca_gart_tlb_addr). Software never touches this register in the code read, so access  (established)
+#[allow(clippy::module_inception)]
 pub mod gart_tlb_addr {
     pub const WIDTH: u32 = 64;
     pub const OFFSET: u64 = 0x208;

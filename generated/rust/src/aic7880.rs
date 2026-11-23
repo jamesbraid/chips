@@ -1,8 +1,10 @@
-// generated from devices/aic7880/registers.toml by defs-gen - do not edit, change the source
-// defs-gen 2
+// @generated from devices/aic7880/registers.toml by defs-gen - do not edit, change the source
+// defs-gen 3
 // input sha256 ac8f8281afc714636b4ace8e210fce455439bfb20a364794f5b732f8998e4655
 // Adaptec AIC-7880 SCSI controller on the O2: host DMA and SCB register contract
 #![allow(dead_code)]
+#![allow(clippy::doc_markdown)]
+#![cfg_attr(rustfmt, rustfmt_skip)]
 
 /// SCSI sequence control. Each bit enables one hardware selection or reselection sequence, or drives SCSI RESET#. A SCSI bus reset clears every bit excep (inferred)
 pub mod scsiseq {
@@ -487,6 +489,7 @@ pub mod shaddr {
     pub const STRIDE: u64 = 1;
 }
 /// Selection and reselection ID. Holds the ID of the device that selected or reselected this controller on the last such phase. (inferred)
+#[allow(clippy::module_inception)]
 pub mod selid {
     pub const WIDTH: u32 = 8;
     pub const OFFSET: u64 = 0x19;

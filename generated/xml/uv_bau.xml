@@ -1,6 +1,6 @@
 <?xml version="1.0" ?>
 <!-- generated from devices/uv_bau/registers.toml by defs-gen - do not edit, change the source -->
-<!-- defs-gen 2 -->
+<!-- defs-gen 3 -->
 <!-- input sha256 2daabcb00ca4cf0ccb9e7ae19034116a669196719e08dfd2559a070a278bfaa3 -->
 <genxml unit="uv_bau" prefix="UV_BAU" title="UV broadcast assist unit (BAU): descriptor, payload queue and constants" from="Linux v5.4 SGI UV broadcast assist unit header and TLB shootdown driver (GPL)">
   <doc>The BAU registers are in the per-generation hub units (names containing BAU). This unit holds what the registers point at: the 64-byte activation descriptor and the destination payload queue entry, plus the constants the TLB shootdown driver uses. Positions come from the driver's bitfield structs, packed least-significant first in 32-bit units. Role text paraphrases the driver and is inferred.</doc>

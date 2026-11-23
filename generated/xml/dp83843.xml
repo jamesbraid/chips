@@ -1,6 +1,6 @@
 <?xml version="1.0" ?>
 <!-- generated from devices/dp83843/registers.toml by defs-gen - do not edit, change the source -->
-<!-- defs-gen 2 -->
+<!-- defs-gen 3 -->
 <!-- input sha256 8d5ca437e90248734cb54e922a124cf2ba5d1c698e8782ae4e9c09b4cb04c693 -->
 <genxml unit="dp83843" prefix="DP83843" title="National DP83843 PHYTER 10/100 Mb/s transceiver, MII registers (Origin 300 IO-8)" from="DP83843 revision B datasheet">
   <doc>The MII management registers of the DP83843 transceiver on the Origin 300 IO-8 board. The IOC3 Ethernet controller reaches the part through its MII port, so only the registers a guest can read or write through that port are here. Offsets are MII register numbers, one per 16-bit register. The registers below are the ones the DP83843 datasheet, revision B, describes with bit meanings or reset values; the rest of the register map is not transcribed. The DP83840A that the Origin 200 carries is a different part with its own bit meanings for registers 0x17 and 0x18, and it is not described by this unit. Grades say how each item was derived from the datasheet; none of it was measured on a board, and reset values are unknown unless stated.</doc>

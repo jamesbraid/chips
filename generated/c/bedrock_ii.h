@@ -1,7 +1,9 @@
-/* generated from devices/bedrock_ii/registers.toml by defs-gen - do not edit, change the source */
-/* defs-gen 2 */
+/* generated from devices/bedrock_ii/registers.toml by defs-gen - do not edit,
+ * change the source */
+/* defs-gen 3 */
 /* input sha256 e92c529cb2bbb265e3723d89fc5bd3d81da1e957ab0763d431d0d757616456a0 */
-/* Bedrock I/O interface (II) registers: field layouts, block transfer engines and reset values */
+/* Bedrock I/O interface (II) registers: field layouts, block transfer engines
+ * and reset values */
 #ifndef BEDROCK_II_GEN_H
 #define BEDROCK_II_GEN_H
 
@@ -9,89 +11,126 @@
 
 
 /*
- * Widget identification. Echoes the manufacturer and revision fields of the local block's revision register and carries the Bedrock's crosstalk part. Its value follows the local revision register.
+ * Widget identification. Echoes the manufacturer and revision fields of the
+ * local block's revision register and carries the Bedrock's crosstalk part. Its
+ * value follows the local revision register.
  */
-/* widget_id: r64, reset 0x1c110049; Linux 2.5.40 SN1 register headers: names, offsets and field layouts */
+/* widget_id: r64, reset 0x1c110049; Linux 2.5.40 SN1 register headers: names,
+ * offsets and field layouts */
 #define BEDROCK_II_WIDGET_ID                         0x400000 /* established */
 #define BEDROCK_II_WIDGET_ID_REVISION_SHIFT          28 /* established */
 #define BEDROCK_II_WIDGET_ID_REVISION_MASK           0xfull
-#define BEDROCK_II_WIDGET_ID_REVISION_INPLACE        (BEDROCK_II_WIDGET_ID_REVISION_MASK << BEDROCK_II_WIDGET_ID_REVISION_SHIFT)
+#define BEDROCK_II_WIDGET_ID_REVISION_INPLACE (BEDROCK_II_WIDGET_ID_REVISION_MASK << BEDROCK_II_WIDGET_ID_REVISION_SHIFT)
 #define BEDROCK_II_WIDGET_ID_PART_SHIFT              12 /* established */
 #define BEDROCK_II_WIDGET_ID_PART_MASK               0xffffull
-#define BEDROCK_II_WIDGET_ID_PART_INPLACE            (BEDROCK_II_WIDGET_ID_PART_MASK << BEDROCK_II_WIDGET_ID_PART_SHIFT)
+#define BEDROCK_II_WIDGET_ID_PART_INPLACE (BEDROCK_II_WIDGET_ID_PART_MASK << BEDROCK_II_WIDGET_ID_PART_SHIFT)
 #define BEDROCK_II_WIDGET_ID_MANUFACTURER_SHIFT      1 /* established */
 #define BEDROCK_II_WIDGET_ID_MANUFACTURER_MASK       0x7ffull
-#define BEDROCK_II_WIDGET_ID_MANUFACTURER_INPLACE    (BEDROCK_II_WIDGET_ID_MANUFACTURER_MASK << BEDROCK_II_WIDGET_ID_MANUFACTURER_SHIFT)
+#define BEDROCK_II_WIDGET_ID_MANUFACTURER_INPLACE (BEDROCK_II_WIDGET_ID_MANUFACTURER_MASK << BEDROCK_II_WIDGET_ID_MANUFACTURER_SHIFT)
 
 /*
- * Crosstalk widget status. The register's name and layout are from the header; the header gives no access type, so the census reads it as read-only and the register is graded inferred. The shipped kernel's I/O error handlers only read it, which agrees with r but does not show the register cannot be written. The reset is the power-on table value recorded for this offset in the census unit. The rsvd mask is the structure's members named reserved; it is the header's naming only. The register name is ours, spelled out from the header's description of IIO_WSTAT; the header's short name is WSTAT.
+ * Crosstalk widget status. The register's name and layout are from the header;
+ * the header gives no access type, so the census reads it as read-only and the
+ * register is graded inferred. The shipped kernel's I/O error handlers only
+ * read it, which agrees with r but does not show the register cannot be
+ * written. The reset is the power-on table value recorded for this offset in
+ * the census unit. The rsvd mask is the structure's members named reserved; it
+ * is the header's naming only. The register name is ours, spelled out from the
+ * header's description of IIO_WSTAT; the header's short name is WSTAT.
  */
-/* widget_status: r64, reset 0x0; Linux 2.5.40 SN1 register headers: IIO_WSTAT (name and offset), ii_wstat structure; shipped IRIX kernel I/O error handlers (read sites) */
+/* widget_status: r64, reset 0x0; Linux 2.5.40 SN1 register headers: IIO_WSTAT
+ * (name and offset), ii_wstat structure; shipped IRIX kernel I/O error handlers
+ * (read sites) */
 #define BEDROCK_II_WIDGET_STATUS                     0x400008 /* inferred */
 #define BEDROCK_II_WIDGET_STATUS_CRAZY_SHIFT         32 /* established */
 #define BEDROCK_II_WIDGET_STATUS_CRAZY_MASK          0x1ull
-#define BEDROCK_II_WIDGET_STATUS_CRAZY_INPLACE       (BEDROCK_II_WIDGET_STATUS_CRAZY_MASK << BEDROCK_II_WIDGET_STATUS_CRAZY_SHIFT)
+#define BEDROCK_II_WIDGET_STATUS_CRAZY_INPLACE (BEDROCK_II_WIDGET_STATUS_CRAZY_MASK << BEDROCK_II_WIDGET_STATUS_CRAZY_SHIFT)
 #define BEDROCK_II_WIDGET_STATUS_LLP_TX_CNT_SHIFT    16 /* established */
 #define BEDROCK_II_WIDGET_STATUS_LLP_TX_CNT_MASK     0xffull
-#define BEDROCK_II_WIDGET_STATUS_LLP_TX_CNT_INPLACE  (BEDROCK_II_WIDGET_STATUS_LLP_TX_CNT_MASK << BEDROCK_II_WIDGET_STATUS_LLP_TX_CNT_SHIFT)
+#define BEDROCK_II_WIDGET_STATUS_LLP_TX_CNT_INPLACE (BEDROCK_II_WIDGET_STATUS_LLP_TX_CNT_MASK << BEDROCK_II_WIDGET_STATUS_LLP_TX_CNT_SHIFT)
 #define BEDROCK_II_WIDGET_STATUS_TX_MX_RTY_SHIFT     9 /* established */
 #define BEDROCK_II_WIDGET_STATUS_TX_MX_RTY_MASK      0x1ull
-#define BEDROCK_II_WIDGET_STATUS_TX_MX_RTY_INPLACE   (BEDROCK_II_WIDGET_STATUS_TX_MX_RTY_MASK << BEDROCK_II_WIDGET_STATUS_TX_MX_RTY_SHIFT)
+#define BEDROCK_II_WIDGET_STATUS_TX_MX_RTY_INPLACE (BEDROCK_II_WIDGET_STATUS_TX_MX_RTY_MASK << BEDROCK_II_WIDGET_STATUS_TX_MX_RTY_SHIFT)
 #define BEDROCK_II_WIDGET_STATUS_XT_TAIL_TO_SHIFT    5 /* established */
 #define BEDROCK_II_WIDGET_STATUS_XT_TAIL_TO_MASK     0x1ull
-#define BEDROCK_II_WIDGET_STATUS_XT_TAIL_TO_INPLACE  (BEDROCK_II_WIDGET_STATUS_XT_TAIL_TO_MASK << BEDROCK_II_WIDGET_STATUS_XT_TAIL_TO_SHIFT)
+#define BEDROCK_II_WIDGET_STATUS_XT_TAIL_TO_INPLACE (BEDROCK_II_WIDGET_STATUS_XT_TAIL_TO_MASK << BEDROCK_II_WIDGET_STATUS_XT_TAIL_TO_SHIFT)
 #define BEDROCK_II_WIDGET_STATUS_XT_CRD_TO_SHIFT     4 /* established */
 #define BEDROCK_II_WIDGET_STATUS_XT_CRD_TO_MASK      0x1ull
-#define BEDROCK_II_WIDGET_STATUS_XT_CRD_TO_INPLACE   (BEDROCK_II_WIDGET_STATUS_XT_CRD_TO_MASK << BEDROCK_II_WIDGET_STATUS_XT_CRD_TO_SHIFT)
+#define BEDROCK_II_WIDGET_STATUS_XT_CRD_TO_INPLACE (BEDROCK_II_WIDGET_STATUS_XT_CRD_TO_MASK << BEDROCK_II_WIDGET_STATUS_XT_CRD_TO_SHIFT)
 #define BEDROCK_II_WIDGET_STATUS_PENDING_SHIFT       0 /* established */
 #define BEDROCK_II_WIDGET_STATUS_PENDING_MASK        0xfull
-#define BEDROCK_II_WIDGET_STATUS_PENDING_INPLACE     (BEDROCK_II_WIDGET_STATUS_PENDING_MASK << BEDROCK_II_WIDGET_STATUS_PENDING_SHIFT)
+#define BEDROCK_II_WIDGET_STATUS_PENDING_INPLACE (BEDROCK_II_WIDGET_STATUS_PENDING_MASK << BEDROCK_II_WIDGET_STATUS_PENDING_SHIFT)
 
 /*
- * Crosstalk widget control register (the header's IO widget control). The header states no access type, so rw is assumed. No field layout is recorded here. Field layout added from the header's structure; the rsvd mask is its members named reserved (header naming only).
+ * Crosstalk widget control register (the header's IO widget control). The
+ * header states no access type, so rw is assumed. No field layout is recorded
+ * here. Field layout added from the header's structure; the rsvd mask is its
+ * members named reserved (header naming only).
  */
 /* widget_control: rw64, reset 0x4011 */
 #define BEDROCK_II_WIDGET_CONTROL                    0x400020 /* inferred */
 #define BEDROCK_II_WIDGET_CONTROL_E_THRESH_SHIFT     18 /* established */
 #define BEDROCK_II_WIDGET_CONTROL_E_THRESH_MASK      0x1full
-#define BEDROCK_II_WIDGET_CONTROL_E_THRESH_INPLACE   (BEDROCK_II_WIDGET_CONTROL_E_THRESH_MASK << BEDROCK_II_WIDGET_CONTROL_E_THRESH_SHIFT)
+#define BEDROCK_II_WIDGET_CONTROL_E_THRESH_INPLACE (BEDROCK_II_WIDGET_CONTROL_E_THRESH_MASK << BEDROCK_II_WIDGET_CONTROL_E_THRESH_SHIFT)
 #define BEDROCK_II_WIDGET_CONTROL_DIR_CON_SHIFT      17 /* established */
 #define BEDROCK_II_WIDGET_CONTROL_DIR_CON_MASK       0x1ull
-#define BEDROCK_II_WIDGET_CONTROL_DIR_CON_INPLACE    (BEDROCK_II_WIDGET_CONTROL_DIR_CON_MASK << BEDROCK_II_WIDGET_CONTROL_DIR_CON_SHIFT)
+#define BEDROCK_II_WIDGET_CONTROL_DIR_CON_INPLACE (BEDROCK_II_WIDGET_CONTROL_DIR_CON_MASK << BEDROCK_II_WIDGET_CONTROL_DIR_CON_SHIFT)
 #define BEDROCK_II_WIDGET_CONTROL_F_BAD_PKT_SHIFT    16 /* established */
 #define BEDROCK_II_WIDGET_CONTROL_F_BAD_PKT_MASK     0x1ull
-#define BEDROCK_II_WIDGET_CONTROL_F_BAD_PKT_INPLACE  (BEDROCK_II_WIDGET_CONTROL_F_BAD_PKT_MASK << BEDROCK_II_WIDGET_CONTROL_F_BAD_PKT_SHIFT)
+#define BEDROCK_II_WIDGET_CONTROL_F_BAD_PKT_INPLACE (BEDROCK_II_WIDGET_CONTROL_F_BAD_PKT_MASK << BEDROCK_II_WIDGET_CONTROL_F_BAD_PKT_SHIFT)
 #define BEDROCK_II_WIDGET_CONTROL_DST_CREDIT_SHIFT   13 /* established */
 #define BEDROCK_II_WIDGET_CONTROL_DST_CREDIT_MASK    0x7ull
 #define BEDROCK_II_WIDGET_CONTROL_DST_CREDIT_INPLACE (BEDROCK_II_WIDGET_CONTROL_DST_CREDIT_MASK << BEDROCK_II_WIDGET_CONTROL_DST_CREDIT_SHIFT)
 #define BEDROCK_II_WIDGET_CONTROL_TAG_MODE_SHIFT     4 /* established */
 #define BEDROCK_II_WIDGET_CONTROL_TAG_MODE_MASK      0x1ull
-#define BEDROCK_II_WIDGET_CONTROL_TAG_MODE_INPLACE   (BEDROCK_II_WIDGET_CONTROL_TAG_MODE_MASK << BEDROCK_II_WIDGET_CONTROL_TAG_MODE_SHIFT)
+#define BEDROCK_II_WIDGET_CONTROL_TAG_MODE_INPLACE (BEDROCK_II_WIDGET_CONTROL_TAG_MODE_MASK << BEDROCK_II_WIDGET_CONTROL_TAG_MODE_SHIFT)
 #define BEDROCK_II_WIDGET_CONTROL_WIDGET_ID_SHIFT    0 /* established */
 #define BEDROCK_II_WIDGET_CONTROL_WIDGET_ID_MASK     0xfull
-#define BEDROCK_II_WIDGET_CONTROL_WIDGET_ID_INPLACE  (BEDROCK_II_WIDGET_CONTROL_WIDGET_ID_MASK << BEDROCK_II_WIDGET_CONTROL_WIDGET_ID_SHIFT)
+#define BEDROCK_II_WIDGET_CONTROL_WIDGET_ID_INPLACE (BEDROCK_II_WIDGET_CONTROL_WIDGET_ID_MASK << BEDROCK_II_WIDGET_CONTROL_WIDGET_ID_SHIFT)
 
 /*
- * One enable bit per processor region. The header states that at reset every region is permitted, and gives no number. The shipped Origin 350 PROM register table gives sixty set bits, 0x0fffffffffffffff, so the top four bits of the 64-bit field are clear at reset; that value is used. A processor PIO is performed only when the requester's region bit is set; otherwise it gets an error response. Readable only by permitted regions or through the local alias. The table record behind this reset (decoded from the firmware image) is one field spanning bits 63:0 whose reset is 0x0fffffffffffffff; the same record appears for this register, the local block's processor permission and its region present register, and the table does write 64 set bits for single 64-bit fields elsewhere (three registers of the processor interface block and the first register of the memory-directory block), so the four clear bits are not how the table writes all-ones. Whether the silicon reads them clear is not settled by any public source.
+ * One enable bit per processor region. The header states that at reset every
+ * region is permitted, and gives no number. The shipped Origin 350 PROM
+ * register table gives sixty set bits, 0x0fffffffffffffff, so the top four bits
+ * of the 64-bit field are clear at reset; that value is used. A processor PIO
+ * is performed only when the requester's region bit is set; otherwise it gets
+ * an error response. Readable only by permitted regions or through the local
+ * alias. The table record behind this reset (decoded from the firmware image)
+ * is one field spanning bits 63:0 whose reset is 0x0fffffffffffffff; the same
+ * record appears for this register, the local block's processor permission and
+ * its region present register, and the table does write 64 set bits for single
+ * 64-bit fields elsewhere (three registers of the processor interface block and
+ * the first register of the memory-directory block), so the four clear bits are
+ * not how the table writes all-ones. Whether the silicon reads them clear is
+ * not settled by any public source.
  */
-/* local_access_protection: rw64, reset 0xfffffffffffffff; Linux 2.5.40 SN1 register headers: names, offsets and field layouts */
+/* local_access_protection: rw64, reset 0xfffffffffffffff; Linux 2.5.40 SN1
+ * register headers: names, offsets and field layouts */
 #define BEDROCK_II_LOCAL_ACCESS_PROTECTION           0x400100 /* established */
-#define BEDROCK_II_LOCAL_ACCESS_PROTECTION_REGION_ENABLE_SHIFT 0 /* established */
+/* established */
+#define BEDROCK_II_LOCAL_ACCESS_PROTECTION_REGION_ENABLE_SHIFT 0
 #define BEDROCK_II_LOCAL_ACCESS_PROTECTION_REGION_ENABLE_MASK 0xffffffffffffffffull
 #define BEDROCK_II_LOCAL_ACCESS_PROTECTION_REGION_ENABLE_INPLACE (BEDROCK_II_LOCAL_ACCESS_PROTECTION_REGION_ENABLE_MASK << BEDROCK_II_LOCAL_ACCESS_PROTECTION_REGION_ENABLE_SHIFT)
 
 /*
- * Writing the 64-bit ASCII key the SN1 tree names sets the writer's own region bit in local access protection. A write through the local alias does nothing. The header union gives a nine-bit field while its description says a 64-bit key, a self-contradiction. No public consumer writes the register.
+ * Writing the 64-bit ASCII key the SN1 tree names sets the writer's own region
+ * bit in local access protection. A write through the local alias does nothing.
+ * The header union gives a nine-bit field while its description says a 64-bit
+ * key, a self-contradiction. No public consumer writes the register.
  */
 /* protection_override: w64, reset unknown */
 #define BEDROCK_II_PROTECTION_OVERRIDE               0x400108 /* inferred */
 
 /*
- * Qualifies every PIO and graphics write the Bedrock launches toward a widget. The stock PROM enables widget 0 and widgets 8 to F in it; IRIX saves it, writes zero and restores it around PIO request-buffer programming.
+ * Qualifies every PIO and graphics write the Bedrock launches toward a widget.
+ * The stock PROM enables widget 0 and widgets 8 to F in it; IRIX saves it,
+ * writes zero and restores it around PIO request-buffer programming.
  */
-/* outbound_widget_access: rw64, reset 0x0; Linux 2.5.40 SN1 register headers: names, offsets and field layouts */
+/* outbound_widget_access: rw64, reset 0x0; Linux 2.5.40 SN1 register headers:
+ * names, offsets and field layouts */
 #define BEDROCK_II_OUTBOUND_WIDGET_ACCESS            0x400110 /* established */
-#define BEDROCK_II_OUTBOUND_WIDGET_ACCESS_WIDGETS_8_TO_F_SHIFT 8 /* established */
+/* established */
+#define BEDROCK_II_OUTBOUND_WIDGET_ACCESS_WIDGETS_8_TO_F_SHIFT 8
 #define BEDROCK_II_OUTBOUND_WIDGET_ACCESS_WIDGETS_8_TO_F_MASK 0xffull
 #define BEDROCK_II_OUTBOUND_WIDGET_ACCESS_WIDGETS_8_TO_F_INPLACE (BEDROCK_II_OUTBOUND_WIDGET_ACCESS_WIDGETS_8_TO_F_MASK << BEDROCK_II_OUTBOUND_WIDGET_ACCESS_WIDGETS_8_TO_F_SHIFT)
 #define BEDROCK_II_OUTBOUND_WIDGET_ACCESS_WIDGET_0_SHIFT 0 /* established */
@@ -99,11 +138,16 @@
 #define BEDROCK_II_OUTBOUND_WIDGET_ACCESS_WIDGET_0_INPLACE (BEDROCK_II_OUTBOUND_WIDGET_ACCESS_WIDGET_0_MASK << BEDROCK_II_OUTBOUND_WIDGET_ACCESS_WIDGET_0_SHIFT)
 
 /*
- * Qualifies every request a widget launches at the Bedrock, including DMA and interrupt writes. The stock PROM enables widget 0 and widgets 8 to F. IRIX and the Itanium port read it only. The header's text also exempts incoming replies from the mask.
+ * Qualifies every request a widget launches at the Bedrock, including DMA and
+ * interrupt writes. The stock PROM enables widget 0 and widgets 8 to F. IRIX
+ * and the Itanium port read it only. The header's text also exempts incoming
+ * replies from the mask.
  */
-/* inbound_widget_access: rw64, reset 0x0; Linux 2.5.40 SN1 register headers: names, offsets and field layouts */
+/* inbound_widget_access: rw64, reset 0x0; Linux 2.5.40 SN1 register headers:
+ * names, offsets and field layouts */
 #define BEDROCK_II_INBOUND_WIDGET_ACCESS             0x400118 /* established */
-#define BEDROCK_II_INBOUND_WIDGET_ACCESS_WIDGETS_8_TO_F_SHIFT 8 /* established */
+/* established */
+#define BEDROCK_II_INBOUND_WIDGET_ACCESS_WIDGETS_8_TO_F_SHIFT 8
 #define BEDROCK_II_INBOUND_WIDGET_ACCESS_WIDGETS_8_TO_F_MASK 0xffull
 #define BEDROCK_II_INBOUND_WIDGET_ACCESS_WIDGETS_8_TO_F_INPLACE (BEDROCK_II_INBOUND_WIDGET_ACCESS_WIDGETS_8_TO_F_MASK << BEDROCK_II_INBOUND_WIDGET_ACCESS_WIDGETS_8_TO_F_SHIFT)
 #define BEDROCK_II_INBOUND_WIDGET_ACCESS_WIDGET_0_SHIFT 0 /* established */
@@ -111,26 +155,38 @@
 #define BEDROCK_II_INBOUND_WIDGET_ACCESS_WIDGET_0_INPLACE (BEDROCK_II_INBOUND_WIDGET_ACCESS_WIDGET_0_MASK << BEDROCK_II_INBOUND_WIDGET_ACCESS_WIDGET_0_SHIFT)
 
 /*
- * Eight bits per widget, one per DMA master (device) 0 to 7. A request passes when its device bit and the widget's inbound bit are both set. The header says the bits are set by writing a one. IRIX clears a device by writing back the old value with the device bit cleared, which under write-one-to-set clears nothing. Which behaviour the hardware has is unknown. Hardware clears a bit itself when an error requires the device to be shut out.
+ * Eight bits per widget, one per DMA master (device) 0 to 7. A request passes
+ * when its device bit and the widget's inbound bit are both set. The header
+ * says the bits are set by writing a one. IRIX clears a device by writing back
+ * the old value with the device bit cleared, which under write-one-to-set
+ * clears nothing. Which behaviour the hardware has is unknown. Hardware clears
+ * a bit itself when an error requires the device to be shut out.
  */
-/* inbound_device_error_mask: rw64, reset 0xffffffffffffffff; Linux 2.5.40 SN1 register headers: names, offsets and field layouts */
+/* inbound_device_error_mask: rw64, reset 0xffffffffffffffff; Linux 2.5.40 SN1
+ * register headers: names, offsets and field layouts */
 #define BEDROCK_II_INBOUND_DEVICE_ERROR_MASK         0x400120 /* established */
-#define BEDROCK_II_INBOUND_DEVICE_ERROR_MASK_WIDGET_15_SHIFT 56 /* established */
+/* established */
+#define BEDROCK_II_INBOUND_DEVICE_ERROR_MASK_WIDGET_15_SHIFT 56
 #define BEDROCK_II_INBOUND_DEVICE_ERROR_MASK_WIDGET_15_MASK 0xffull
 #define BEDROCK_II_INBOUND_DEVICE_ERROR_MASK_WIDGET_15_INPLACE (BEDROCK_II_INBOUND_DEVICE_ERROR_MASK_WIDGET_15_MASK << BEDROCK_II_INBOUND_DEVICE_ERROR_MASK_WIDGET_15_SHIFT)
-#define BEDROCK_II_INBOUND_DEVICE_ERROR_MASK_WIDGET_14_SHIFT 48 /* established */
+/* established */
+#define BEDROCK_II_INBOUND_DEVICE_ERROR_MASK_WIDGET_14_SHIFT 48
 #define BEDROCK_II_INBOUND_DEVICE_ERROR_MASK_WIDGET_14_MASK 0xffull
 #define BEDROCK_II_INBOUND_DEVICE_ERROR_MASK_WIDGET_14_INPLACE (BEDROCK_II_INBOUND_DEVICE_ERROR_MASK_WIDGET_14_MASK << BEDROCK_II_INBOUND_DEVICE_ERROR_MASK_WIDGET_14_SHIFT)
-#define BEDROCK_II_INBOUND_DEVICE_ERROR_MASK_WIDGET_13_SHIFT 40 /* established */
+/* established */
+#define BEDROCK_II_INBOUND_DEVICE_ERROR_MASK_WIDGET_13_SHIFT 40
 #define BEDROCK_II_INBOUND_DEVICE_ERROR_MASK_WIDGET_13_MASK 0xffull
 #define BEDROCK_II_INBOUND_DEVICE_ERROR_MASK_WIDGET_13_INPLACE (BEDROCK_II_INBOUND_DEVICE_ERROR_MASK_WIDGET_13_MASK << BEDROCK_II_INBOUND_DEVICE_ERROR_MASK_WIDGET_13_SHIFT)
-#define BEDROCK_II_INBOUND_DEVICE_ERROR_MASK_WIDGET_12_SHIFT 32 /* established */
+/* established */
+#define BEDROCK_II_INBOUND_DEVICE_ERROR_MASK_WIDGET_12_SHIFT 32
 #define BEDROCK_II_INBOUND_DEVICE_ERROR_MASK_WIDGET_12_MASK 0xffull
 #define BEDROCK_II_INBOUND_DEVICE_ERROR_MASK_WIDGET_12_INPLACE (BEDROCK_II_INBOUND_DEVICE_ERROR_MASK_WIDGET_12_MASK << BEDROCK_II_INBOUND_DEVICE_ERROR_MASK_WIDGET_12_SHIFT)
-#define BEDROCK_II_INBOUND_DEVICE_ERROR_MASK_WIDGET_11_SHIFT 24 /* established */
+/* established */
+#define BEDROCK_II_INBOUND_DEVICE_ERROR_MASK_WIDGET_11_SHIFT 24
 #define BEDROCK_II_INBOUND_DEVICE_ERROR_MASK_WIDGET_11_MASK 0xffull
 #define BEDROCK_II_INBOUND_DEVICE_ERROR_MASK_WIDGET_11_INPLACE (BEDROCK_II_INBOUND_DEVICE_ERROR_MASK_WIDGET_11_MASK << BEDROCK_II_INBOUND_DEVICE_ERROR_MASK_WIDGET_11_SHIFT)
-#define BEDROCK_II_INBOUND_DEVICE_ERROR_MASK_WIDGET_10_SHIFT 16 /* established */
+/* established */
+#define BEDROCK_II_INBOUND_DEVICE_ERROR_MASK_WIDGET_10_SHIFT 16
 #define BEDROCK_II_INBOUND_DEVICE_ERROR_MASK_WIDGET_10_MASK 0xffull
 #define BEDROCK_II_INBOUND_DEVICE_ERROR_MASK_WIDGET_10_INPLACE (BEDROCK_II_INBOUND_DEVICE_ERROR_MASK_WIDGET_10_MASK << BEDROCK_II_INBOUND_DEVICE_ERROR_MASK_WIDGET_10_SHIFT)
 #define BEDROCK_II_INBOUND_DEVICE_ERROR_MASK_WIDGET_9_SHIFT 8 /* established */
@@ -141,53 +197,68 @@
 #define BEDROCK_II_INBOUND_DEVICE_ERROR_MASK_WIDGET_8_INPLACE (BEDROCK_II_INBOUND_DEVICE_ERROR_MASK_WIDGET_8_MASK << BEDROCK_II_INBOUND_DEVICE_ERROR_MASK_WIDGET_8_SHIFT)
 
 /*
- * Link control and status. Both public Linux ports read bit 13 and skip the node's crosstalk when it is clear. The stock PROM reads it before touching any widget and then sets bit 8. The header gives no meaning for the four values of the status field, and its remote-power bit has no text. That the bit means link up is inferred from how the I/O error interrupt set-up uses it.
+ * Link control and status. Both public Linux ports read bit 13 and skip the
+ * node's crosstalk when it is clear. The stock PROM reads it before touching
+ * any widget and then sets bit 8. The header gives no meaning for the four
+ * values of the status field, and its remote-power bit has no text. That the
+ * bit means link up is inferred from how the I/O error interrupt set-up uses
+ * it.
  */
-/* link_control: rw64, reset 0x3fc03ff040a; Linux 2.5.40 SN1 register headers: names, offsets and field layouts */
+/* link_control: rw64, reset 0x3fc03ff040a; Linux 2.5.40 SN1 register headers:
+ * names, offsets and field layouts */
 #define BEDROCK_II_LINK_CONTROL                      0x400128 /* established */
 #define BEDROCK_II_LINK_CONTROL_MAX_BURST_SHIFT      32 /* established */
 #define BEDROCK_II_LINK_CONTROL_MAX_BURST_MASK       0x3ffull
-#define BEDROCK_II_LINK_CONTROL_MAX_BURST_INPLACE    (BEDROCK_II_LINK_CONTROL_MAX_BURST_MASK << BEDROCK_II_LINK_CONTROL_MAX_BURST_SHIFT)
+#define BEDROCK_II_LINK_CONTROL_MAX_BURST_INPLACE (BEDROCK_II_LINK_CONTROL_MAX_BURST_MASK << BEDROCK_II_LINK_CONTROL_MAX_BURST_SHIFT)
 #define BEDROCK_II_LINK_CONTROL_DATA_AVAILABLE_SELECT_SHIFT 26 /* established */
 #define BEDROCK_II_LINK_CONTROL_DATA_AVAILABLE_SELECT_MASK 0x3ull
 #define BEDROCK_II_LINK_CONTROL_DATA_AVAILABLE_SELECT_INPLACE (BEDROCK_II_LINK_CONTROL_DATA_AVAILABLE_SELECT_MASK << BEDROCK_II_LINK_CONTROL_DATA_AVAILABLE_SELECT_SHIFT)
 #define BEDROCK_II_LINK_CONTROL_MAX_RETRY_SHIFT      16 /* established */
 #define BEDROCK_II_LINK_CONTROL_MAX_RETRY_MASK       0x3ffull
-#define BEDROCK_II_LINK_CONTROL_MAX_RETRY_INPLACE    (BEDROCK_II_LINK_CONTROL_MAX_RETRY_MASK << BEDROCK_II_LINK_CONTROL_MAX_RETRY_SHIFT)
+#define BEDROCK_II_LINK_CONTROL_MAX_RETRY_INPLACE (BEDROCK_II_LINK_CONTROL_MAX_RETRY_MASK << BEDROCK_II_LINK_CONTROL_MAX_RETRY_SHIFT)
 #define BEDROCK_II_LINK_CONTROL_REMOTE_POWER_SHIFT   14 /* inferred */
 #define BEDROCK_II_LINK_CONTROL_REMOTE_POWER_MASK    0x1ull
 #define BEDROCK_II_LINK_CONTROL_REMOTE_POWER_INPLACE (BEDROCK_II_LINK_CONTROL_REMOTE_POWER_MASK << BEDROCK_II_LINK_CONTROL_REMOTE_POWER_SHIFT)
 #define BEDROCK_II_LINK_CONTROL_LINK_STATUS_SHIFT    12 /* established */
 #define BEDROCK_II_LINK_CONTROL_LINK_STATUS_MASK     0x3ull
-#define BEDROCK_II_LINK_CONTROL_LINK_STATUS_INPLACE  (BEDROCK_II_LINK_CONTROL_LINK_STATUS_MASK << BEDROCK_II_LINK_CONTROL_LINK_STATUS_SHIFT)
+#define BEDROCK_II_LINK_CONTROL_LINK_STATUS_INPLACE (BEDROCK_II_LINK_CONTROL_LINK_STATUS_MASK << BEDROCK_II_LINK_CONTROL_LINK_STATUS_SHIFT)
 #define BEDROCK_II_LINK_CONTROL_EIGHT_BIT_MODE_SHIFT 11 /* established */
 #define BEDROCK_II_LINK_CONTROL_EIGHT_BIT_MODE_MASK  0x1ull
 #define BEDROCK_II_LINK_CONTROL_EIGHT_BIT_MODE_INPLACE (BEDROCK_II_LINK_CONTROL_EIGHT_BIT_MODE_MASK << BEDROCK_II_LINK_CONTROL_EIGHT_BIT_MODE_SHIFT)
 #define BEDROCK_II_LINK_CONTROL_LINK_ENABLE_SHIFT    10 /* established */
 #define BEDROCK_II_LINK_CONTROL_LINK_ENABLE_MASK     0x1ull
-#define BEDROCK_II_LINK_CONTROL_LINK_ENABLE_INPLACE  (BEDROCK_II_LINK_CONTROL_LINK_ENABLE_MASK << BEDROCK_II_LINK_CONTROL_LINK_ENABLE_SHIFT)
+#define BEDROCK_II_LINK_CONTROL_LINK_ENABLE_INPLACE (BEDROCK_II_LINK_CONTROL_LINK_ENABLE_MASK << BEDROCK_II_LINK_CONTROL_LINK_ENABLE_SHIFT)
 #define BEDROCK_II_LINK_CONTROL_WARM_RESET_SHIFT     8 /* established */
 #define BEDROCK_II_LINK_CONTROL_WARM_RESET_MASK      0x1ull
-#define BEDROCK_II_LINK_CONTROL_WARM_RESET_INPLACE   (BEDROCK_II_LINK_CONTROL_WARM_RESET_MASK << BEDROCK_II_LINK_CONTROL_WARM_RESET_SHIFT)
+#define BEDROCK_II_LINK_CONTROL_WARM_RESET_INPLACE (BEDROCK_II_LINK_CONTROL_WARM_RESET_MASK << BEDROCK_II_LINK_CONTROL_WARM_RESET_SHIFT)
 #define BEDROCK_II_LINK_CONTROL_NULL_TIMEOUT_SHIFT   0 /* established */
 #define BEDROCK_II_LINK_CONTROL_NULL_TIMEOUT_MASK    0x3full
 #define BEDROCK_II_LINK_CONTROL_NULL_TIMEOUT_INPLACE (BEDROCK_II_LINK_CONTROL_NULL_TIMEOUT_MASK << BEDROCK_II_LINK_CONTROL_NULL_TIMEOUT_SHIFT)
 
 /*
- * IO LLP log register: the link-level protocol log, next to link_control. The header states no access type, so rw is assumed. No field layout is recorded here.
+ * IO LLP log register: the link-level protocol log, next to link_control. The
+ * header states no access type, so rw is assumed. No field layout is recorded
+ * here.
  */
 /* llp_log: rw64, reset 0x0 */
 #define BEDROCK_II_LLP_LOG                           0x400130 /* inferred */
 
 /*
- * Destination of every II-detected non-BTE error interrupt. The header's struct puts the node at bits 16:9 and the PI select at bit 8; its companion macros put the node at 15:8. The struct governs: the Itanium consumer writes through it. The PI register address is hard-coded per PI select (see the PI0 and PI1 constants).
+ * Destination of every II-detected non-BTE error interrupt. The header's struct
+ * puts the node at bits 16:9 and the PI select at bit 8; its companion macros
+ * put the node at 15:8. The struct governs: the Itanium consumer writes through
+ * it. The PI register address is hard-coded per PI select (see the PI0 and PI1
+ * constants).
  */
-/* interrupt_destination: rw64, reset 0x0; Linux 2.5.40 SN1 register headers: names, offsets and field layouts */
+/* interrupt_destination: rw64, reset 0x0; Linux 2.5.40 SN1 register headers:
+ * names, offsets and field layouts */
 #define BEDROCK_II_INTERRUPT_DESTINATION             0x400138 /* established */
-#define BEDROCK_II_INTERRUPT_DESTINATION_FORWARDED_PI1_SHIFT 33 /* established */
+/* established */
+#define BEDROCK_II_INTERRUPT_DESTINATION_FORWARDED_PI1_SHIFT 33
 #define BEDROCK_II_INTERRUPT_DESTINATION_FORWARDED_PI1_MASK 0x1ull
 #define BEDROCK_II_INTERRUPT_DESTINATION_FORWARDED_PI1_INPLACE (BEDROCK_II_INTERRUPT_DESTINATION_FORWARDED_PI1_MASK << BEDROCK_II_INTERRUPT_DESTINATION_FORWARDED_PI1_SHIFT)
-#define BEDROCK_II_INTERRUPT_DESTINATION_FORWARDED_PI0_SHIFT 32 /* established */
+/* established */
+#define BEDROCK_II_INTERRUPT_DESTINATION_FORWARDED_PI0_SHIFT 32
 #define BEDROCK_II_INTERRUPT_DESTINATION_FORWARDED_PI0_MASK 0x1ull
 #define BEDROCK_II_INTERRUPT_DESTINATION_FORWARDED_PI0_INPLACE (BEDROCK_II_INTERRUPT_DESTINATION_FORWARDED_PI0_MASK << BEDROCK_II_INTERRUPT_DESTINATION_FORWARDED_PI0_SHIFT)
 #define BEDROCK_II_INTERRUPT_DESTINATION_SENT_SHIFT  28 /* inferred */
@@ -207,7 +278,9 @@
 #define BEDROCK_II_INTERRUPT_DESTINATION_LEVEL_INPLACE (BEDROCK_II_INTERRUPT_DESTINATION_LEVEL_MASK << BEDROCK_II_INTERRUPT_DESTINATION_LEVEL_SHIFT)
 
 /*
- * IO graphics node-widget map, two registers (0 and 1) eight bytes apart. The header states no access type, so rw is assumed. No field layout is recorded here.
+ * IO graphics node-widget map, two registers (0 and 1) eight bytes apart. The
+ * header states no access type, so rw is assumed. No field layout is recorded
+ * here.
  */
 /* graphics_map: rw64, reset 0x0 */
 #define BEDROCK_II_GRAPHICS_MAP                      0x400140 /* inferred */
@@ -215,7 +288,8 @@
 #define BEDROCK_II_GRAPHICS_MAP_STRIDE               8
 
 /*
- * IO scratch registers 0 and 1, eight bytes apart. The header states no access type, so rw is assumed. No field layout is recorded here.
+ * IO scratch registers 0 and 1, eight bytes apart. The header states no access
+ * type, so rw is assumed. No field layout is recorded here.
  */
 /* scratch: rw64, reset 0x0 */
 #define BEDROCK_II_SCRATCH                           0x400150 /* inferred */
@@ -223,7 +297,10 @@
 #define BEDROCK_II_SCRATCH_STRIDE                    8
 
 /*
- * IO translation table entries 1 to 7, eight bytes apart; the first is entry 1. The header states no access type, so rw is assumed. No field layout is recorded here. Field layout added from the header's structure; the rsvd mask is its members named reserved (header naming only).
+ * IO translation table entries 1 to 7, eight bytes apart; the first is entry 1.
+ * The header states no access type, so rw is assumed. No field layout is
+ * recorded here. Field layout added from the header's structure; the rsvd mask
+ * is its members named reserved (header naming only).
  */
 /* translation_table_entry: rw64, reset 0x0 */
 #define BEDROCK_II_TRANSLATION_TABLE_ENTRY           0x400160 /* inferred */
@@ -232,7 +309,8 @@
 #define BEDROCK_II_TRANSLATION_TABLE_ENTRY_IO_SPACE_SHIFT 12 /* established */
 #define BEDROCK_II_TRANSLATION_TABLE_ENTRY_IO_SPACE_MASK 0x1ull
 #define BEDROCK_II_TRANSLATION_TABLE_ENTRY_IO_SPACE_INPLACE (BEDROCK_II_TRANSLATION_TABLE_ENTRY_IO_SPACE_MASK << BEDROCK_II_TRANSLATION_TABLE_ENTRY_IO_SPACE_SHIFT)
-#define BEDROCK_II_TRANSLATION_TABLE_ENTRY_WIDGET_NUMBER_SHIFT 8 /* established */
+/* established */
+#define BEDROCK_II_TRANSLATION_TABLE_ENTRY_WIDGET_NUMBER_SHIFT 8
 #define BEDROCK_II_TRANSLATION_TABLE_ENTRY_WIDGET_NUMBER_MASK 0xfull
 #define BEDROCK_II_TRANSLATION_TABLE_ENTRY_WIDGET_NUMBER_INPLACE (BEDROCK_II_TRANSLATION_TABLE_ENTRY_WIDGET_NUMBER_MASK << BEDROCK_II_TRANSLATION_TABLE_ENTRY_WIDGET_NUMBER_SHIFT)
 #define BEDROCK_II_TRANSLATION_TABLE_ENTRY_OFFSET_SHIFT 0 /* established */
@@ -240,17 +318,24 @@
 #define BEDROCK_II_TRANSLATION_TABLE_ENTRY_OFFSET_INPLACE (BEDROCK_II_TRANSLATION_TABLE_ENTRY_OFFSET_MASK << BEDROCK_II_TRANSLATION_TABLE_ENTRY_OFFSET_SHIFT)
 
 /*
- * Per-widget PIO flow control for widget 0. Writing the credit field re-arms the spurious-write detector, which persists until the register is written again even when error clear is used. The Itanium probe writes credits 1 for a crossbar at widget 0 and 3 when the widget is directly connected.
+ * Per-widget PIO flow control for widget 0. Writing the credit field re-arms
+ * the spurious-write detector, which persists until the register is written
+ * again even when error clear is used. The Itanium probe writes credits 1 for a
+ * crossbar at widget 0 and 3 when the widget is directly connected.
  */
-/* pio_request_buffer_w0: rw64, reset 0xf; Linux 2.5.40 SN1 register headers: names, offsets and field layouts */
+/* pio_request_buffer_w0: rw64, reset 0xf; Linux 2.5.40 SN1 register headers:
+ * names, offsets and field layouts */
 #define BEDROCK_II_PIO_REQUEST_BUFFER_W0             0x400198 /* established */
-#define BEDROCK_II_PIO_REQUEST_BUFFER_W0_MULTIPLE_ERRORS_SHIFT 63 /* established */
+/* established */
+#define BEDROCK_II_PIO_REQUEST_BUFFER_W0_MULTIPLE_ERRORS_SHIFT 63
 #define BEDROCK_II_PIO_REQUEST_BUFFER_W0_MULTIPLE_ERRORS_MASK 0x1ull
 #define BEDROCK_II_PIO_REQUEST_BUFFER_W0_MULTIPLE_ERRORS_INPLACE (BEDROCK_II_PIO_REQUEST_BUFFER_W0_MULTIPLE_ERRORS_MASK << BEDROCK_II_PIO_REQUEST_BUFFER_W0_MULTIPLE_ERRORS_SHIFT)
-#define BEDROCK_II_PIO_REQUEST_BUFFER_W0_SPURIOUS_READ_SHIFT 51 /* established */
+/* established */
+#define BEDROCK_II_PIO_REQUEST_BUFFER_W0_SPURIOUS_READ_SHIFT 51
 #define BEDROCK_II_PIO_REQUEST_BUFFER_W0_SPURIOUS_READ_MASK 0x1ull
 #define BEDROCK_II_PIO_REQUEST_BUFFER_W0_SPURIOUS_READ_INPLACE (BEDROCK_II_PIO_REQUEST_BUFFER_W0_SPURIOUS_READ_MASK << BEDROCK_II_PIO_REQUEST_BUFFER_W0_SPURIOUS_READ_SHIFT)
-#define BEDROCK_II_PIO_REQUEST_BUFFER_W0_SPURIOUS_WRITE_SHIFT 50 /* established */
+/* established */
+#define BEDROCK_II_PIO_REQUEST_BUFFER_W0_SPURIOUS_WRITE_SHIFT 50
 #define BEDROCK_II_PIO_REQUEST_BUFFER_W0_SPURIOUS_WRITE_MASK 0x1ull
 #define BEDROCK_II_PIO_REQUEST_BUFFER_W0_SPURIOUS_WRITE_INPLACE (BEDROCK_II_PIO_REQUEST_BUFFER_W0_SPURIOUS_WRITE_MASK << BEDROCK_II_PIO_REQUEST_BUFFER_W0_SPURIOUS_WRITE_SHIFT)
 #define BEDROCK_II_PIO_REQUEST_BUFFER_W0_READ_TIMEOUT_SHIFT 49 /* established */
@@ -259,19 +344,23 @@
 #define BEDROCK_II_PIO_REQUEST_BUFFER_W0_ERROR_SHIFT 48 /* established */
 #define BEDROCK_II_PIO_REQUEST_BUFFER_W0_ERROR_MASK  0x1ull
 #define BEDROCK_II_PIO_REQUEST_BUFFER_W0_ERROR_INPLACE (BEDROCK_II_PIO_REQUEST_BUFFER_W0_ERROR_MASK << BEDROCK_II_PIO_REQUEST_BUFFER_W0_ERROR_SHIFT)
-#define BEDROCK_II_PIO_REQUEST_BUFFER_W0_OVERFLOW_COUNT_SHIFT 43 /* established */
+/* established */
+#define BEDROCK_II_PIO_REQUEST_BUFFER_W0_OVERFLOW_COUNT_SHIFT 43
 #define BEDROCK_II_PIO_REQUEST_BUFFER_W0_OVERFLOW_COUNT_MASK 0x1full
 #define BEDROCK_II_PIO_REQUEST_BUFFER_W0_OVERFLOW_COUNT_INPLACE (BEDROCK_II_PIO_REQUEST_BUFFER_W0_OVERFLOW_COUNT_MASK << BEDROCK_II_PIO_REQUEST_BUFFER_W0_OVERFLOW_COUNT_SHIFT)
-#define BEDROCK_II_PIO_REQUEST_BUFFER_W0_FIRE_AND_FORGET_SHIFT 42 /* established */
+/* established */
+#define BEDROCK_II_PIO_REQUEST_BUFFER_W0_FIRE_AND_FORGET_SHIFT 42
 #define BEDROCK_II_PIO_REQUEST_BUFFER_W0_FIRE_AND_FORGET_MASK 0x1ull
 #define BEDROCK_II_PIO_REQUEST_BUFFER_W0_FIRE_AND_FORGET_INPLACE (BEDROCK_II_PIO_REQUEST_BUFFER_W0_FIRE_AND_FORGET_MASK << BEDROCK_II_PIO_REQUEST_BUFFER_W0_FIRE_AND_FORGET_SHIFT)
 #define BEDROCK_II_PIO_REQUEST_BUFFER_W0_MODE_SHIFT  40 /* established */
 #define BEDROCK_II_PIO_REQUEST_BUFFER_W0_MODE_MASK   0x3ull
 #define BEDROCK_II_PIO_REQUEST_BUFFER_W0_MODE_INPLACE (BEDROCK_II_PIO_REQUEST_BUFFER_W0_MODE_MASK << BEDROCK_II_PIO_REQUEST_BUFFER_W0_MODE_SHIFT)
-#define BEDROCK_II_PIO_REQUEST_BUFFER_W0_NACK_COUNTER_B_SHIFT 24 /* established */
+/* established */
+#define BEDROCK_II_PIO_REQUEST_BUFFER_W0_NACK_COUNTER_B_SHIFT 24
 #define BEDROCK_II_PIO_REQUEST_BUFFER_W0_NACK_COUNTER_B_MASK 0x3fffull
 #define BEDROCK_II_PIO_REQUEST_BUFFER_W0_NACK_COUNTER_B_INPLACE (BEDROCK_II_PIO_REQUEST_BUFFER_W0_NACK_COUNTER_B_MASK << BEDROCK_II_PIO_REQUEST_BUFFER_W0_NACK_COUNTER_B_SHIFT)
-#define BEDROCK_II_PIO_REQUEST_BUFFER_W0_NACK_COUNTER_A_SHIFT 8 /* established */
+/* established */
+#define BEDROCK_II_PIO_REQUEST_BUFFER_W0_NACK_COUNTER_A_SHIFT 8
 #define BEDROCK_II_PIO_REQUEST_BUFFER_W0_NACK_COUNTER_A_MASK 0x3fffull
 #define BEDROCK_II_PIO_REQUEST_BUFFER_W0_NACK_COUNTER_A_INPLACE (BEDROCK_II_PIO_REQUEST_BUFFER_W0_NACK_COUNTER_A_MASK << BEDROCK_II_PIO_REQUEST_BUFFER_W0_NACK_COUNTER_A_SHIFT)
 #define BEDROCK_II_PIO_REQUEST_BUFFER_W0_CREDITS_SHIFT 0 /* established */
@@ -279,19 +368,24 @@
 #define BEDROCK_II_PIO_REQUEST_BUFFER_W0_CREDITS_INPLACE (BEDROCK_II_PIO_REQUEST_BUFFER_W0_CREDITS_MASK << BEDROCK_II_PIO_REQUEST_BUFFER_W0_CREDITS_SHIFT)
 
 /*
- * PIO request buffers for widgets 8 to F, eight registers at a stride of eight bytes; the first is widget 8. Same layout as the widget 0 entry.
+ * PIO request buffers for widgets 8 to F, eight registers at a stride of eight
+ * bytes; the first is widget 8. Same layout as the widget 0 entry.
  */
-/* pio_request_buffer_w8: rw64, reset 0xf; Linux 2.5.40 SN1 register headers: names, offsets and field layouts */
+/* pio_request_buffer_w8: rw64, reset 0xf; Linux 2.5.40 SN1 register headers:
+ * names, offsets and field layouts */
 #define BEDROCK_II_PIO_REQUEST_BUFFER_W8             0x4001a0 /* established */
 #define BEDROCK_II_PIO_REQUEST_BUFFER_W8_COUNT       8
 #define BEDROCK_II_PIO_REQUEST_BUFFER_W8_STRIDE      8
-#define BEDROCK_II_PIO_REQUEST_BUFFER_W8_MULTIPLE_ERRORS_SHIFT 63 /* established */
+/* established */
+#define BEDROCK_II_PIO_REQUEST_BUFFER_W8_MULTIPLE_ERRORS_SHIFT 63
 #define BEDROCK_II_PIO_REQUEST_BUFFER_W8_MULTIPLE_ERRORS_MASK 0x1ull
 #define BEDROCK_II_PIO_REQUEST_BUFFER_W8_MULTIPLE_ERRORS_INPLACE (BEDROCK_II_PIO_REQUEST_BUFFER_W8_MULTIPLE_ERRORS_MASK << BEDROCK_II_PIO_REQUEST_BUFFER_W8_MULTIPLE_ERRORS_SHIFT)
-#define BEDROCK_II_PIO_REQUEST_BUFFER_W8_SPURIOUS_READ_SHIFT 51 /* established */
+/* established */
+#define BEDROCK_II_PIO_REQUEST_BUFFER_W8_SPURIOUS_READ_SHIFT 51
 #define BEDROCK_II_PIO_REQUEST_BUFFER_W8_SPURIOUS_READ_MASK 0x1ull
 #define BEDROCK_II_PIO_REQUEST_BUFFER_W8_SPURIOUS_READ_INPLACE (BEDROCK_II_PIO_REQUEST_BUFFER_W8_SPURIOUS_READ_MASK << BEDROCK_II_PIO_REQUEST_BUFFER_W8_SPURIOUS_READ_SHIFT)
-#define BEDROCK_II_PIO_REQUEST_BUFFER_W8_SPURIOUS_WRITE_SHIFT 50 /* established */
+/* established */
+#define BEDROCK_II_PIO_REQUEST_BUFFER_W8_SPURIOUS_WRITE_SHIFT 50
 #define BEDROCK_II_PIO_REQUEST_BUFFER_W8_SPURIOUS_WRITE_MASK 0x1ull
 #define BEDROCK_II_PIO_REQUEST_BUFFER_W8_SPURIOUS_WRITE_INPLACE (BEDROCK_II_PIO_REQUEST_BUFFER_W8_SPURIOUS_WRITE_MASK << BEDROCK_II_PIO_REQUEST_BUFFER_W8_SPURIOUS_WRITE_SHIFT)
 #define BEDROCK_II_PIO_REQUEST_BUFFER_W8_READ_TIMEOUT_SHIFT 49 /* established */
@@ -300,19 +394,23 @@
 #define BEDROCK_II_PIO_REQUEST_BUFFER_W8_ERROR_SHIFT 48 /* established */
 #define BEDROCK_II_PIO_REQUEST_BUFFER_W8_ERROR_MASK  0x1ull
 #define BEDROCK_II_PIO_REQUEST_BUFFER_W8_ERROR_INPLACE (BEDROCK_II_PIO_REQUEST_BUFFER_W8_ERROR_MASK << BEDROCK_II_PIO_REQUEST_BUFFER_W8_ERROR_SHIFT)
-#define BEDROCK_II_PIO_REQUEST_BUFFER_W8_OVERFLOW_COUNT_SHIFT 43 /* established */
+/* established */
+#define BEDROCK_II_PIO_REQUEST_BUFFER_W8_OVERFLOW_COUNT_SHIFT 43
 #define BEDROCK_II_PIO_REQUEST_BUFFER_W8_OVERFLOW_COUNT_MASK 0x1full
 #define BEDROCK_II_PIO_REQUEST_BUFFER_W8_OVERFLOW_COUNT_INPLACE (BEDROCK_II_PIO_REQUEST_BUFFER_W8_OVERFLOW_COUNT_MASK << BEDROCK_II_PIO_REQUEST_BUFFER_W8_OVERFLOW_COUNT_SHIFT)
-#define BEDROCK_II_PIO_REQUEST_BUFFER_W8_FIRE_AND_FORGET_SHIFT 42 /* established */
+/* established */
+#define BEDROCK_II_PIO_REQUEST_BUFFER_W8_FIRE_AND_FORGET_SHIFT 42
 #define BEDROCK_II_PIO_REQUEST_BUFFER_W8_FIRE_AND_FORGET_MASK 0x1ull
 #define BEDROCK_II_PIO_REQUEST_BUFFER_W8_FIRE_AND_FORGET_INPLACE (BEDROCK_II_PIO_REQUEST_BUFFER_W8_FIRE_AND_FORGET_MASK << BEDROCK_II_PIO_REQUEST_BUFFER_W8_FIRE_AND_FORGET_SHIFT)
 #define BEDROCK_II_PIO_REQUEST_BUFFER_W8_MODE_SHIFT  40 /* established */
 #define BEDROCK_II_PIO_REQUEST_BUFFER_W8_MODE_MASK   0x3ull
 #define BEDROCK_II_PIO_REQUEST_BUFFER_W8_MODE_INPLACE (BEDROCK_II_PIO_REQUEST_BUFFER_W8_MODE_MASK << BEDROCK_II_PIO_REQUEST_BUFFER_W8_MODE_SHIFT)
-#define BEDROCK_II_PIO_REQUEST_BUFFER_W8_NACK_COUNTER_B_SHIFT 24 /* established */
+/* established */
+#define BEDROCK_II_PIO_REQUEST_BUFFER_W8_NACK_COUNTER_B_SHIFT 24
 #define BEDROCK_II_PIO_REQUEST_BUFFER_W8_NACK_COUNTER_B_MASK 0x3fffull
 #define BEDROCK_II_PIO_REQUEST_BUFFER_W8_NACK_COUNTER_B_INPLACE (BEDROCK_II_PIO_REQUEST_BUFFER_W8_NACK_COUNTER_B_MASK << BEDROCK_II_PIO_REQUEST_BUFFER_W8_NACK_COUNTER_B_SHIFT)
-#define BEDROCK_II_PIO_REQUEST_BUFFER_W8_NACK_COUNTER_A_SHIFT 8 /* established */
+/* established */
+#define BEDROCK_II_PIO_REQUEST_BUFFER_W8_NACK_COUNTER_A_SHIFT 8
 #define BEDROCK_II_PIO_REQUEST_BUFFER_W8_NACK_COUNTER_A_MASK 0x3fffull
 #define BEDROCK_II_PIO_REQUEST_BUFFER_W8_NACK_COUNTER_A_INPLACE (BEDROCK_II_PIO_REQUEST_BUFFER_W8_NACK_COUNTER_A_MASK << BEDROCK_II_PIO_REQUEST_BUFFER_W8_NACK_COUNTER_A_SHIFT)
 #define BEDROCK_II_PIO_REQUEST_BUFFER_W8_CREDITS_SHIFT 0 /* established */
@@ -320,7 +418,10 @@
 #define BEDROCK_II_PIO_REQUEST_BUFFER_W8_CREDITS_INPLACE (BEDROCK_II_PIO_REQUEST_BUFFER_W8_CREDITS_MASK << BEDROCK_II_PIO_REQUEST_BUFFER_W8_CREDITS_SHIFT)
 
 /*
- * IO crosstalk credit count timeout. The header states no access type, so rw is assumed. No field layout is recorded here. Field layout added from the header's structure; the rsvd mask is its members named reserved (header naming only).
+ * IO crosstalk credit count timeout. The header states no access type, so rw is
+ * assumed. No field layout is recorded here. Field layout added from the
+ * header's structure; the rsvd mask is its members named reserved (header
+ * naming only).
  */
 /* credit_count_timeout: rw64, reset 0x3ffffff */
 #define BEDROCK_II_CREDIT_COUNT_TIMEOUT              0x4001e0 /* inferred */
@@ -329,7 +430,16 @@
 #define BEDROCK_II_CREDIT_COUNT_TIMEOUT_TIMEOUT_INPLACE (BEDROCK_II_CREDIT_COUNT_TIMEOUT_TIMEOUT_MASK << BEDROCK_II_CREDIT_COUNT_TIMEOUT_TIMEOUT_SHIFT)
 
 /*
- * Write-one-to-set per the header. The header's description says the hub clears each field when an error requires that source to be shut down and that software sets a field by writing one. The companion header's macro comments instead call bits 0, 4 and 8 shut-down flags, and the Itanium error handler reads them that way. The register description and the recovery write govern. No Linux header states the reset value. The later chip's recovery write re-enables a source by setting its bit, which agrees with the value in the PROM register table. The shipped kernel's I/O error handlers read this register; a hand-written row once recorded it as read-only on that basis, but reads alone do not show it cannot be written, so rw stays.
+ * Write-one-to-set per the header. The header's description says the hub clears
+ * each field when an error requires that source to be shut down and that
+ * software sets a field by writing one. The companion header's macro comments
+ * instead call bits 0, 4 and 8 shut-down flags, and the Itanium error handler
+ * reads them that way. The register description and the recovery write govern.
+ * No Linux header states the reset value. The later chip's recovery write
+ * re-enables a source by setting its bit, which agrees with the value in the
+ * PROM register table. The shipped kernel's I/O error handlers read this
+ * register; a hand-written row once recorded it as read-only on that basis, but
+ * reads alone do not show it cannot be written, so rw stays.
  */
 /* misc_error_mask: rw64, reset 0x111 */
 #define BEDROCK_II_MISC_ERROR_MASK                   0x4001e8 /* inferred */
@@ -347,24 +457,32 @@
 #define BEDROCK_II_MISC_ERROR_MASK_WIDGET_0_ENABLE_INPLACE (BEDROCK_II_MISC_ERROR_MASK_WIDGET_0_ENABLE_MASK << BEDROCK_II_MISC_ERROR_MASK_WIDGET_0_ENABLE_SHIFT)
 
 /*
- * IO crosstalk timeout threshold. The header states no access type, so rw is assumed. No field layout is recorded here. Field layout added from the header's structure; the rsvd mask is its members named reserved (header naming only).
+ * IO crosstalk timeout threshold. The header states no access type, so rw is
+ * assumed. No field layout is recorded here. Field layout added from the
+ * header's structure; the rsvd mask is its members named reserved (header
+ * naming only).
  */
 /* crosstalk_timeout_threshold: rw64, reset 0xfffffff03ffffff */
 #define BEDROCK_II_CROSSTALK_TIMEOUT_THRESHOLD       0x4001f0 /* inferred */
-#define BEDROCK_II_CROSSTALK_TIMEOUT_THRESHOLD_READ_RESPONSE_TIMEOUT_SHIFT 55 /* established */
+/* established */
+#define BEDROCK_II_CROSSTALK_TIMEOUT_THRESHOLD_READ_RESPONSE_TIMEOUT_SHIFT 55
 #define BEDROCK_II_CROSSTALK_TIMEOUT_THRESHOLD_READ_RESPONSE_TIMEOUT_MASK 0x1full
 #define BEDROCK_II_CROSSTALK_TIMEOUT_THRESHOLD_READ_RESPONSE_TIMEOUT_INPLACE (BEDROCK_II_CROSSTALK_TIMEOUT_THRESHOLD_READ_RESPONSE_TIMEOUT_MASK << BEDROCK_II_CROSSTALK_TIMEOUT_THRESHOLD_READ_RESPONSE_TIMEOUT_SHIFT)
-#define BEDROCK_II_CROSSTALK_TIMEOUT_THRESHOLD_READ_RESPONSE_PRESCALE_SHIFT 32 /* established */
+/* established */
+#define BEDROCK_II_CROSSTALK_TIMEOUT_THRESHOLD_READ_RESPONSE_PRESCALE_SHIFT 32
 #define BEDROCK_II_CROSSTALK_TIMEOUT_THRESHOLD_READ_RESPONSE_PRESCALE_MASK 0x7fffffull
 #define BEDROCK_II_CROSSTALK_TIMEOUT_THRESHOLD_READ_RESPONSE_PRESCALE_INPLACE (BEDROCK_II_CROSSTALK_TIMEOUT_THRESHOLD_READ_RESPONSE_PRESCALE_MASK << BEDROCK_II_CROSSTALK_TIMEOUT_THRESHOLD_READ_RESPONSE_PRESCALE_SHIFT)
-#define BEDROCK_II_CROSSTALK_TIMEOUT_THRESHOLD_TAIL_TIMEOUT_SHIFT 0 /* established */
+/* established */
+#define BEDROCK_II_CROSSTALK_TIMEOUT_THRESHOLD_TAIL_TIMEOUT_SHIFT 0
 #define BEDROCK_II_CROSSTALK_TIMEOUT_THRESHOLD_TAIL_TIMEOUT_MASK 0x3ffffffull
 #define BEDROCK_II_CROSSTALK_TIMEOUT_THRESHOLD_TAIL_TIMEOUT_INPLACE (BEDROCK_II_CROSSTALK_TIMEOUT_THRESHOLD_TAIL_TIMEOUT_MASK << BEDROCK_II_CROSSTALK_TIMEOUT_THRESHOLD_TAIL_TIMEOUT_SHIFT)
 
 /*
- * Write-one-to-clear. Clears the named bits elsewhere in the unit. The Itanium probe writes all ones; a bit written with one reads back as zero.
+ * Write-one-to-clear. Clears the named bits elsewhere in the unit. The Itanium
+ * probe writes all ones; a bit written with one reads back as zero.
  */
-/* error_clear: w64, reset 0x0; Linux 2.5.40 SN1 register headers: names, offsets and field layouts */
+/* error_clear: w64, reset 0x0; Linux 2.5.40 SN1 register headers: names,
+ * offsets and field layouts */
 #define BEDROCK_II_ERROR_CLEAR                       0x4001f8 /* established */
 #define BEDROCK_II_ERROR_CLEAR_FORWARDED_PI1_SHIFT   31 /* established */
 #define BEDROCK_II_ERROR_CLEAR_FORWARDED_PI1_MASK    0x1ull
@@ -377,16 +495,16 @@
 #define BEDROCK_II_ERROR_CLEAR_SPURIOUS_READ_HEADER_INPLACE (BEDROCK_II_ERROR_CLEAR_SPURIOUS_READ_HEADER_MASK << BEDROCK_II_ERROR_CLEAR_SPURIOUS_READ_HEADER_SHIFT)
 #define BEDROCK_II_ERROR_CLEAR_INTERNAL_SHIFT        28 /* established */
 #define BEDROCK_II_ERROR_CLEAR_INTERNAL_MASK         0x1ull
-#define BEDROCK_II_ERROR_CLEAR_INTERNAL_INPLACE      (BEDROCK_II_ERROR_CLEAR_INTERNAL_MASK << BEDROCK_II_ERROR_CLEAR_INTERNAL_SHIFT)
+#define BEDROCK_II_ERROR_CLEAR_INTERNAL_INPLACE (BEDROCK_II_ERROR_CLEAR_INTERNAL_MASK << BEDROCK_II_ERROR_CLEAR_INTERNAL_SHIFT)
 #define BEDROCK_II_ERROR_CLEAR_BTE_1_SHIFT           18 /* established */
 #define BEDROCK_II_ERROR_CLEAR_BTE_1_MASK            0x1ull
-#define BEDROCK_II_ERROR_CLEAR_BTE_1_INPLACE         (BEDROCK_II_ERROR_CLEAR_BTE_1_MASK << BEDROCK_II_ERROR_CLEAR_BTE_1_SHIFT)
+#define BEDROCK_II_ERROR_CLEAR_BTE_1_INPLACE (BEDROCK_II_ERROR_CLEAR_BTE_1_MASK << BEDROCK_II_ERROR_CLEAR_BTE_1_SHIFT)
 #define BEDROCK_II_ERROR_CLEAR_BTE_0_SHIFT           17 /* established */
 #define BEDROCK_II_ERROR_CLEAR_BTE_0_MASK            0x1ull
-#define BEDROCK_II_ERROR_CLEAR_BTE_0_INPLACE         (BEDROCK_II_ERROR_CLEAR_BTE_0_MASK << BEDROCK_II_ERROR_CLEAR_BTE_0_SHIFT)
+#define BEDROCK_II_ERROR_CLEAR_BTE_0_INPLACE (BEDROCK_II_ERROR_CLEAR_BTE_0_MASK << BEDROCK_II_ERROR_CLEAR_BTE_0_SHIFT)
 #define BEDROCK_II_ERROR_CLEAR_CRAZY_SHIFT           16 /* established */
 #define BEDROCK_II_ERROR_CLEAR_CRAZY_MASK            0x1ull
-#define BEDROCK_II_ERROR_CLEAR_CRAZY_INPLACE         (BEDROCK_II_ERROR_CLEAR_CRAZY_MASK << BEDROCK_II_ERROR_CLEAR_CRAZY_SHIFT)
+#define BEDROCK_II_ERROR_CLEAR_CRAZY_INPLACE (BEDROCK_II_ERROR_CLEAR_CRAZY_MASK << BEDROCK_II_ERROR_CLEAR_CRAZY_SHIFT)
 #define BEDROCK_II_ERROR_CLEAR_REQUEST_BUFFERS_8_TO_F_SHIFT 8 /* established */
 #define BEDROCK_II_ERROR_CLEAR_REQUEST_BUFFERS_8_TO_F_MASK 0xffull
 #define BEDROCK_II_ERROR_CLEAR_REQUEST_BUFFERS_8_TO_F_INPLACE (BEDROCK_II_ERROR_CLEAR_REQUEST_BUFFERS_8_TO_F_MASK << BEDROCK_II_ERROR_CLEAR_REQUEST_BUFFERS_8_TO_F_SHIFT)
@@ -395,21 +513,33 @@
 #define BEDROCK_II_ERROR_CLEAR_REQUEST_BUFFER_0_INPLACE (BEDROCK_II_ERROR_CLEAR_REQUEST_BUFFER_0_MASK << BEDROCK_II_ERROR_CLEAR_REQUEST_BUFFER_0_SHIFT)
 
 /*
- * IO BTE control register: the one register that controls both transfer engines, as against bte_control, which each engine has. The header states no access type, so rw is assumed. No field layout is recorded here. Field layout added from the header's structure; the rsvd mask is its members named reserved (header naming only).
+ * IO BTE control register: the one register that controls both transfer
+ * engines, as against bte_control, which each engine has. The header states no
+ * access type, so rw is assumed. No field layout is recorded here. Field layout
+ * added from the header's structure; the rsvd mask is its members named
+ * reserved (header naming only).
  */
-/* bte_global_control: rw64, reset 0x8; Linux 2.5.40 SN1 register headers: IIO_IBCR (name and offset) */
+/* bte_global_control: rw64, reset 0x8; Linux 2.5.40 SN1 register headers:
+ * IIO_IBCR (name and offset) */
 #define BEDROCK_II_BTE_GLOBAL_CONTROL                0x400200 /* inferred */
 #define BEDROCK_II_BTE_GLOBAL_CONTROL_SOFT_RESET_SHIFT 8 /* established */
 #define BEDROCK_II_BTE_GLOBAL_CONTROL_SOFT_RESET_MASK 0x1ull
 #define BEDROCK_II_BTE_GLOBAL_CONTROL_SOFT_RESET_INPLACE (BEDROCK_II_BTE_GLOBAL_CONTROL_SOFT_RESET_MASK << BEDROCK_II_BTE_GLOBAL_CONTROL_SOFT_RESET_SHIFT)
 #define BEDROCK_II_BTE_GLOBAL_CONTROL_COUNT_SHIFT    0 /* established */
 #define BEDROCK_II_BTE_GLOBAL_CONTROL_COUNT_MASK     0xfull
-#define BEDROCK_II_BTE_GLOBAL_CONTROL_COUNT_INPLACE  (BEDROCK_II_BTE_GLOBAL_CONTROL_COUNT_MASK << BEDROCK_II_BTE_GLOBAL_CONTROL_COUNT_SHIFT)
+#define BEDROCK_II_BTE_GLOBAL_CONTROL_COUNT_INPLACE (BEDROCK_II_BTE_GLOBAL_CONTROL_COUNT_MASK << BEDROCK_II_BTE_GLOBAL_CONTROL_COUNT_SHIFT)
 
 /*
- * Crosstalk spurious message: the header fields of the last incoming Crosstalk packet that was dropped. The register's name and layout are from the header; the header gives no access type, so rw is assumed and the register is graded inferred. No reset is recorded. The rsvd mask is the structure's members named reserved; it is the header's naming only. The register name is ours, spelled out from the header's description of IIO_IXSM; the header's short name is IXSM.
+ * Crosstalk spurious message: the header fields of the last incoming Crosstalk
+ * packet that was dropped. The register's name and layout are from the header;
+ * the header gives no access type, so rw is assumed and the register is graded
+ * inferred. No reset is recorded. The rsvd mask is the structure's members
+ * named reserved; it is the header's naming only. The register name is ours,
+ * spelled out from the header's description of IIO_IXSM; the header's short
+ * name is IXSM.
  */
-/* crosstalk_spurious_message: rw64, reset unknown; Linux 2.5.40 SN1 register headers: IIO_IXSM (name and offset), ii_ixsm structure */
+/* crosstalk_spurious_message: rw64, reset unknown; Linux 2.5.40 SN1 register
+ * headers: IIO_IXSM (name and offset), ii_ixsm structure */
 #define BEDROCK_II_CROSSTALK_SPURIOUS_MESSAGE        0x400208 /* inferred */
 #define BEDROCK_II_CROSSTALK_SPURIOUS_MESSAGE_DIDN_SHIFT 60 /* established */
 #define BEDROCK_II_CROSSTALK_SPURIOUS_MESSAGE_DIDN_MASK 0xfull
@@ -441,7 +571,8 @@
 #define BEDROCK_II_CROSSTALK_SPURIOUS_MESSAGE_BO_SHIFT 40 /* established */
 #define BEDROCK_II_CROSSTALK_SPURIOUS_MESSAGE_BO_MASK 0x1ull
 #define BEDROCK_II_CROSSTALK_SPURIOUS_MESSAGE_BO_INPLACE (BEDROCK_II_CROSSTALK_SPURIOUS_MESSAGE_BO_MASK << BEDROCK_II_CROSSTALK_SPURIOUS_MESSAGE_BO_SHIFT)
-#define BEDROCK_II_CROSSTALK_SPURIOUS_MESSAGE_ALT_PACTYP_SHIFT 36 /* established */
+/* established */
+#define BEDROCK_II_CROSSTALK_SPURIOUS_MESSAGE_ALT_PACTYP_SHIFT 36
 #define BEDROCK_II_CROSSTALK_SPURIOUS_MESSAGE_ALT_PACTYP_MASK 0xfull
 #define BEDROCK_II_CROSSTALK_SPURIOUS_MESSAGE_ALT_PACTYP_INPLACE (BEDROCK_II_CROSSTALK_SPURIOUS_MESSAGE_ALT_PACTYP_MASK << BEDROCK_II_CROSSTALK_SPURIOUS_MESSAGE_ALT_PACTYP_SHIFT)
 #define BEDROCK_II_CROSSTALK_SPURIOUS_MESSAGE_TAG_SHIFT 33 /* established */
@@ -452,21 +583,34 @@
 #define BEDROCK_II_CROSSTALK_SPURIOUS_MESSAGE_BYTE_EN_INPLACE (BEDROCK_II_CROSSTALK_SPURIOUS_MESSAGE_BYTE_EN_MASK << BEDROCK_II_CROSSTALK_SPURIOUS_MESSAGE_BYTE_EN_SHIFT)
 
 /*
- * Crosstalk spurious sideband. The register's name and layout are from the header; the header gives no access type, so rw is assumed and the register is graded inferred. No reset is recorded. The rsvd mask is the structure's members named reserved; it is the header's naming only. The register name is ours, spelled out from the header's description of IIO_IXSS; the header's short name is IXSS.
+ * Crosstalk spurious sideband. The register's name and layout are from the
+ * header; the header gives no access type, so rw is assumed and the register is
+ * graded inferred. No reset is recorded. The rsvd mask is the structure's
+ * members named reserved; it is the header's naming only. The register name is
+ * ours, spelled out from the header's description of IIO_IXSS; the header's
+ * short name is IXSS.
  */
-/* crosstalk_spurious_sideband: rw64, reset unknown; Linux 2.5.40 SN1 register headers: IIO_IXSS (name and offset), ii_ixss structure */
+/* crosstalk_spurious_sideband: rw64, reset unknown; Linux 2.5.40 SN1 register
+ * headers: IIO_IXSS (name and offset), ii_ixss structure */
 #define BEDROCK_II_CROSSTALK_SPURIOUS_SIDEBAND       0x400210 /* inferred */
 #define BEDROCK_II_CROSSTALK_SPURIOUS_SIDEBAND_VALID_SHIFT 63 /* established */
 #define BEDROCK_II_CROSSTALK_SPURIOUS_SIDEBAND_VALID_MASK 0x1ull
 #define BEDROCK_II_CROSSTALK_SPURIOUS_SIDEBAND_VALID_INPLACE (BEDROCK_II_CROSSTALK_SPURIOUS_SIDEBAND_VALID_MASK << BEDROCK_II_CROSSTALK_SPURIOUS_SIDEBAND_VALID_SHIFT)
-#define BEDROCK_II_CROSSTALK_SPURIOUS_SIDEBAND_SIDEBAND_SHIFT 0 /* established */
+/* established */
+#define BEDROCK_II_CROSSTALK_SPURIOUS_SIDEBAND_SIDEBAND_SHIFT 0
 #define BEDROCK_II_CROSSTALK_SPURIOUS_SIDEBAND_SIDEBAND_MASK 0xffull
 #define BEDROCK_II_CROSSTALK_SPURIOUS_SIDEBAND_SIDEBAND_INPLACE (BEDROCK_II_CROSSTALK_SPURIOUS_SIDEBAND_SIDEBAND_MASK << BEDROCK_II_CROSSTALK_SPURIOUS_SIDEBAND_SIDEBAND_SHIFT)
 
 /*
- * Link layer channel test. The register's name and layout are from the header; the header gives no access type, so rw is assumed and the register is graded inferred. No reset is recorded. The rsvd mask is the structure's members named reserved; it is the header's naming only. The register name is ours, spelled out from the header's description of IIO_ILCT; the header's short name is ILCT.
+ * Link layer channel test. The register's name and layout are from the header;
+ * the header gives no access type, so rw is assumed and the register is graded
+ * inferred. No reset is recorded. The rsvd mask is the structure's members
+ * named reserved; it is the header's naming only. The register name is ours,
+ * spelled out from the header's description of IIO_ILCT; the header's short
+ * name is ILCT.
  */
-/* llp_channel_test: rw64, reset unknown; Linux 2.5.40 SN1 register headers: IIO_ILCT (name and offset), ii_ilct structure */
+/* llp_channel_test: rw64, reset unknown; Linux 2.5.40 SN1 register headers:
+ * IIO_ILCT (name and offset), ii_ilct structure */
 #define BEDROCK_II_LLP_CHANNEL_TEST                  0x400218 /* inferred */
 #define BEDROCK_II_LLP_CHANNEL_TEST_TEST_ERR_CAPTURE_SHIFT 54 /* established */
 #define BEDROCK_II_LLP_CHANNEL_TEST_TEST_ERR_CAPTURE_MASK 0x1ull
@@ -494,9 +638,18 @@
 #define BEDROCK_II_LLP_CHANNEL_TEST_TEST_SEED_INPLACE (BEDROCK_II_LLP_CHANNEL_TEST_TEST_SEED_MASK << BEDROCK_II_LLP_CHANNEL_TEST_TEST_SEED_SHIFT)
 
 /*
- * Incoming error packet header, part 1. The register's name and layout are from the header; the header gives no access type. The shipped kernel's I/O error handlers only read it, so access is r; that is a reading of observed use, not a stated access, and the register stays graded inferred. The reset is the power-on table value recorded for this offset in the census unit. The rsvd mask is the structure's members named reserved; it is the header's naming only. The register name is ours, spelled out from the header's description of IIO_IIEPH1; the header's short name is IIEPH1.
+ * Incoming error packet header, part 1. The register's name and layout are from
+ * the header; the header gives no access type. The shipped kernel's I/O error
+ * handlers only read it, so access is r; that is a reading of observed use, not
+ * a stated access, and the register stays graded inferred. The reset is the
+ * power-on table value recorded for this offset in the census unit. The rsvd
+ * mask is the structure's members named reserved; it is the header's naming
+ * only. The register name is ours, spelled out from the header's description of
+ * IIO_IIEPH1; the header's short name is IIEPH1.
  */
-/* incoming_error_header_1: r64, reset 0x0; Linux 2.5.40 SN1 register headers: IIO_IIEPH1 (name and offset), ii_iieph1 structure; shipped IRIX kernel I/O error handlers (read sites) */
+/* incoming_error_header_1: r64, reset 0x0; Linux 2.5.40 SN1 register headers:
+ * IIO_IIEPH1 (name and offset), ii_iieph1 structure; shipped IRIX kernel I/O
+ * error handlers (read sites) */
 #define BEDROCK_II_INCOMING_ERROR_HEADER_1           0x400220 /* inferred */
 #define BEDROCK_II_INCOMING_ERROR_HEADER_1_VALID_SHIFT 44 /* established */
 #define BEDROCK_II_INCOMING_ERROR_HEADER_1_VALID_MASK 0x1ull
@@ -518,9 +671,18 @@
 #define BEDROCK_II_INCOMING_ERROR_HEADER_1_COMMAND_INPLACE (BEDROCK_II_INCOMING_ERROR_HEADER_1_COMMAND_MASK << BEDROCK_II_INCOMING_ERROR_HEADER_1_COMMAND_SHIFT)
 
 /*
- * Incoming error packet header, part 2. The register's name and layout are from the header; the header gives no access type. The shipped kernel's I/O error handlers only read it, so access is r; that is a reading of observed use, not a stated access, and the register stays graded inferred. The reset is the power-on table value recorded for this offset in the census unit. The rsvd mask is the structure's members named reserved; it is the header's naming only. The register name is ours, spelled out from the header's description of IIO_IIEPH2; the header's short name is IIEPH2.
+ * Incoming error packet header, part 2. The register's name and layout are from
+ * the header; the header gives no access type. The shipped kernel's I/O error
+ * handlers only read it, so access is r; that is a reading of observed use, not
+ * a stated access, and the register stays graded inferred. The reset is the
+ * power-on table value recorded for this offset in the census unit. The rsvd
+ * mask is the structure's members named reserved; it is the header's naming
+ * only. The register name is ours, spelled out from the header's description of
+ * IIO_IIEPH2; the header's short name is IIEPH2.
  */
-/* incoming_error_header_2: r64, reset 0x0; Linux 2.5.40 SN1 register headers: IIO_IIEPH2 (name and offset), ii_iieph2 structure; shipped IRIX kernel I/O error handlers (read sites) */
+/* incoming_error_header_2: r64, reset 0x0; Linux 2.5.40 SN1 register headers:
+ * IIO_IIEPH2 (name and offset), ii_iieph2 structure; shipped IRIX kernel I/O
+ * error handlers (read sites) */
 #define BEDROCK_II_INCOMING_ERROR_HEADER_2           0x400228 /* inferred */
 #define BEDROCK_II_INCOMING_ERROR_HEADER_2_TAIL_SHIFT 40 /* established */
 #define BEDROCK_II_INCOMING_ERROR_HEADER_2_TAIL_MASK 0x1ull
@@ -530,77 +692,103 @@
 #define BEDROCK_II_INCOMING_ERROR_HEADER_2_ADDRESS_INPLACE (BEDROCK_II_INCOMING_ERROR_HEADER_2_ADDRESS_MASK << BEDROCK_II_INCOMING_ERROR_HEADER_2_ADDRESS_SHIFT)
 
 /*
- * PRB counter adjust. The register's name and layout are from the header; the header gives no access type, so rw is assumed and the register is graded inferred. No reset is recorded. The rsvd mask is the structure's members named reserved; it is the header's naming only. The register name is ours, spelled out from the header's description of IIO_IPCA; the header's short name is IPCA.
+ * PRB counter adjust. The register's name and layout are from the header; the
+ * header gives no access type, so rw is assumed and the register is graded
+ * inferred. No reset is recorded. The rsvd mask is the structure's members
+ * named reserved; it is the header's naming only. The register name is ours,
+ * spelled out from the header's description of IIO_IPCA; the header's short
+ * name is IPCA.
  */
-/* prb_counter_adjust: rw64, reset unknown; Linux 2.5.40 SN1 register headers: IIO_IPCA (name and offset), ii_ipca structure */
+/* prb_counter_adjust: rw64, reset unknown; Linux 2.5.40 SN1 register headers:
+ * IIO_IPCA (name and offset), ii_ipca structure */
 #define BEDROCK_II_PRB_COUNTER_ADJUST                0x400300 /* inferred */
 #define BEDROCK_II_PRB_COUNTER_ADJUST_FIELD_SHIFT    8 /* established */
 #define BEDROCK_II_PRB_COUNTER_ADJUST_FIELD_MASK     0x3ull
-#define BEDROCK_II_PRB_COUNTER_ADJUST_FIELD_INPLACE  (BEDROCK_II_PRB_COUNTER_ADJUST_FIELD_MASK << BEDROCK_II_PRB_COUNTER_ADJUST_FIELD_SHIFT)
+#define BEDROCK_II_PRB_COUNTER_ADJUST_FIELD_INPLACE (BEDROCK_II_PRB_COUNTER_ADJUST_FIELD_MASK << BEDROCK_II_PRB_COUNTER_ADJUST_FIELD_SHIFT)
 #define BEDROCK_II_PRB_COUNTER_ADJUST_ADJUST_SHIFT   4 /* established */
 #define BEDROCK_II_PRB_COUNTER_ADJUST_ADJUST_MASK    0x1ull
 #define BEDROCK_II_PRB_COUNTER_ADJUST_ADJUST_INPLACE (BEDROCK_II_PRB_COUNTER_ADJUST_ADJUST_MASK << BEDROCK_II_PRB_COUNTER_ADJUST_ADJUST_SHIFT)
 #define BEDROCK_II_PRB_COUNTER_ADJUST_WID_SHIFT      0 /* established */
 #define BEDROCK_II_PRB_COUNTER_ADJUST_WID_MASK       0xfull
-#define BEDROCK_II_PRB_COUNTER_ADJUST_WID_INPLACE    (BEDROCK_II_PRB_COUNTER_ADJUST_WID_MASK << BEDROCK_II_PRB_COUNTER_ADJUST_WID_SHIFT)
+#define BEDROCK_II_PRB_COUNTER_ADJUST_WID_INPLACE (BEDROCK_II_PRB_COUNTER_ADJUST_WID_MASK << BEDROCK_II_PRB_COUNTER_ADJUST_WID_SHIFT)
 
 /*
- * Outstanding-read table that the read-response timeout works on. Access direction is not stated by the header. No consumer is recorded.
+ * Outstanding-read table that the read-response timeout works on. Access
+ * direction is not stated by the header. No consumer is recorded.
  */
-/* pio_read_address: rw64, reset 0x0; Linux 2.5.40 SN1 register headers: names, offsets and field layouts */
+/* pio_read_address: rw64, reset 0x0; Linux 2.5.40 SN1 register headers: names,
+ * offsets and field layouts */
 #define BEDROCK_II_PIO_READ_ADDRESS                  0x400308 /* established */
 #define BEDROCK_II_PIO_READ_ADDRESS_COUNT            8
 #define BEDROCK_II_PIO_READ_ADDRESS_STRIDE           8
 #define BEDROCK_II_PIO_READ_ADDRESS_VALID_SHIFT      63 /* established */
 #define BEDROCK_II_PIO_READ_ADDRESS_VALID_MASK       0x1ull
-#define BEDROCK_II_PIO_READ_ADDRESS_VALID_INPLACE    (BEDROCK_II_PIO_READ_ADDRESS_VALID_MASK << BEDROCK_II_PIO_READ_ADDRESS_VALID_SHIFT)
+#define BEDROCK_II_PIO_READ_ADDRESS_VALID_INPLACE (BEDROCK_II_PIO_READ_ADDRESS_VALID_MASK << BEDROCK_II_PIO_READ_ADDRESS_VALID_SHIFT)
 #define BEDROCK_II_PIO_READ_ADDRESS_TIMEOUT_COUNT_SHIFT 58 /* established */
 #define BEDROCK_II_PIO_READ_ADDRESS_TIMEOUT_COUNT_MASK 0x1full
 #define BEDROCK_II_PIO_READ_ADDRESS_TIMEOUT_COUNT_INPLACE (BEDROCK_II_PIO_READ_ADDRESS_TIMEOUT_COUNT_MASK << BEDROCK_II_PIO_READ_ADDRESS_TIMEOUT_COUNT_SHIFT)
 #define BEDROCK_II_PIO_READ_ADDRESS_WIDGET_SHIFT     54 /* established */
 #define BEDROCK_II_PIO_READ_ADDRESS_WIDGET_MASK      0xfull
-#define BEDROCK_II_PIO_READ_ADDRESS_WIDGET_INPLACE   (BEDROCK_II_PIO_READ_ADDRESS_WIDGET_MASK << BEDROCK_II_PIO_READ_ADDRESS_WIDGET_SHIFT)
+#define BEDROCK_II_PIO_READ_ADDRESS_WIDGET_INPLACE (BEDROCK_II_PIO_READ_ADDRESS_WIDGET_MASK << BEDROCK_II_PIO_READ_ADDRESS_WIDGET_SHIFT)
 #define BEDROCK_II_PIO_READ_ADDRESS_SOURCE_SHIFT     44 /* established */
 #define BEDROCK_II_PIO_READ_ADDRESS_SOURCE_MASK      0xffull
-#define BEDROCK_II_PIO_READ_ADDRESS_SOURCE_INPLACE   (BEDROCK_II_PIO_READ_ADDRESS_SOURCE_MASK << BEDROCK_II_PIO_READ_ADDRESS_SOURCE_SHIFT)
+#define BEDROCK_II_PIO_READ_ADDRESS_SOURCE_INPLACE (BEDROCK_II_PIO_READ_ADDRESS_SOURCE_MASK << BEDROCK_II_PIO_READ_ADDRESS_SOURCE_SHIFT)
 #define BEDROCK_II_PIO_READ_ADDRESS_INITIATOR_SHIFT  41 /* established */
 #define BEDROCK_II_PIO_READ_ADDRESS_INITIATOR_MASK   0x7ull
 #define BEDROCK_II_PIO_READ_ADDRESS_INITIATOR_INPLACE (BEDROCK_II_PIO_READ_ADDRESS_INITIATOR_MASK << BEDROCK_II_PIO_READ_ADDRESS_INITIATOR_SHIFT)
 #define BEDROCK_II_PIO_READ_ADDRESS_ADDRESS_SHIFT    3 /* established */
 #define BEDROCK_II_PIO_READ_ADDRESS_ADDRESS_MASK     0x3fffffffffull
-#define BEDROCK_II_PIO_READ_ADDRESS_ADDRESS_INPLACE  (BEDROCK_II_PIO_READ_ADDRESS_ADDRESS_MASK << BEDROCK_II_PIO_READ_ADDRESS_ADDRESS_SHIFT)
+#define BEDROCK_II_PIO_READ_ADDRESS_ADDRESS_INPLACE (BEDROCK_II_PIO_READ_ADDRESS_ADDRESS_MASK << BEDROCK_II_PIO_READ_ADDRESS_ADDRESS_SHIFT)
 
 /*
- * PIO deallocation. The register's name and layout are from the header; the header gives no access type, so rw is assumed and the register is graded inferred. No reset is recorded. The rsvd mask is the structure's members named reserved; it is the header's naming only. The register name is ours, spelled out from the header's description of IIO_IPDR; the header's short name is IPDR.
+ * PIO deallocation. The register's name and layout are from the header; the
+ * header gives no access type, so rw is assumed and the register is graded
+ * inferred. No reset is recorded. The rsvd mask is the structure's members
+ * named reserved; it is the header's naming only. The register name is ours,
+ * spelled out from the header's description of IIO_IPDR; the header's short
+ * name is IPDR.
  */
-/* pio_deallocation: rw64, reset unknown; Linux 2.5.40 SN1 register headers: IIO_IPDR (name and offset), ii_ipdr structure */
+/* pio_deallocation: rw64, reset unknown; Linux 2.5.40 SN1 register headers:
+ * IIO_IPDR (name and offset), ii_ipdr structure */
 #define BEDROCK_II_PIO_DEALLOCATION                  0x400388 /* inferred */
 #define BEDROCK_II_PIO_DEALLOCATION_INIT_RPCNT_SHIFT 5 /* established */
 #define BEDROCK_II_PIO_DEALLOCATION_INIT_RPCNT_MASK  0x1ull
 #define BEDROCK_II_PIO_DEALLOCATION_INIT_RPCNT_INPLACE (BEDROCK_II_PIO_DEALLOCATION_INIT_RPCNT_MASK << BEDROCK_II_PIO_DEALLOCATION_INIT_RPCNT_SHIFT)
 #define BEDROCK_II_PIO_DEALLOCATION_PND_SHIFT        4 /* established */
 #define BEDROCK_II_PIO_DEALLOCATION_PND_MASK         0x1ull
-#define BEDROCK_II_PIO_DEALLOCATION_PND_INPLACE      (BEDROCK_II_PIO_DEALLOCATION_PND_MASK << BEDROCK_II_PIO_DEALLOCATION_PND_SHIFT)
+#define BEDROCK_II_PIO_DEALLOCATION_PND_INPLACE (BEDROCK_II_PIO_DEALLOCATION_PND_MASK << BEDROCK_II_PIO_DEALLOCATION_PND_SHIFT)
 #define BEDROCK_II_PIO_DEALLOCATION_TE_SHIFT         0 /* established */
 #define BEDROCK_II_PIO_DEALLOCATION_TE_MASK          0x7ull
-#define BEDROCK_II_PIO_DEALLOCATION_TE_INPLACE       (BEDROCK_II_PIO_DEALLOCATION_TE_MASK << BEDROCK_II_PIO_DEALLOCATION_TE_SHIFT)
+#define BEDROCK_II_PIO_DEALLOCATION_TE_INPLACE (BEDROCK_II_PIO_DEALLOCATION_TE_MASK << BEDROCK_II_PIO_DEALLOCATION_TE_SHIFT)
 
 /*
- * CRB entry deallocation. The register's name and layout are from the header; the header gives no access type, so rw is assumed and the register is graded inferred. No reset is recorded. The rsvd mask is the structure's members named reserved; it is the header's naming only. The register name is ours, spelled out from the header's description of IIO_ICDR; the header's short name is ICDR.
+ * CRB entry deallocation. The register's name and layout are from the header;
+ * the header gives no access type, so rw is assumed and the register is graded
+ * inferred. No reset is recorded. The rsvd mask is the structure's members
+ * named reserved; it is the header's naming only. The register name is ours,
+ * spelled out from the header's description of IIO_ICDR; the header's short
+ * name is ICDR.
  */
-/* crb_deallocation: rw64, reset unknown; Linux 2.5.40 SN1 register headers: IIO_ICDR (name and offset), ii_icdr structure */
+/* crb_deallocation: rw64, reset unknown; Linux 2.5.40 SN1 register headers:
+ * IIO_ICDR (name and offset), ii_icdr structure */
 #define BEDROCK_II_CRB_DEALLOCATION                  0x400390 /* inferred */
 #define BEDROCK_II_CRB_DEALLOCATION_PND_SHIFT        4 /* established */
 #define BEDROCK_II_CRB_DEALLOCATION_PND_MASK         0x1ull
-#define BEDROCK_II_CRB_DEALLOCATION_PND_INPLACE      (BEDROCK_II_CRB_DEALLOCATION_PND_MASK << BEDROCK_II_CRB_DEALLOCATION_PND_SHIFT)
+#define BEDROCK_II_CRB_DEALLOCATION_PND_INPLACE (BEDROCK_II_CRB_DEALLOCATION_PND_MASK << BEDROCK_II_CRB_DEALLOCATION_PND_SHIFT)
 #define BEDROCK_II_CRB_DEALLOCATION_CRB_NUM_SHIFT    0 /* established */
 #define BEDROCK_II_CRB_DEALLOCATION_CRB_NUM_MASK     0xfull
-#define BEDROCK_II_CRB_DEALLOCATION_CRB_NUM_INPLACE  (BEDROCK_II_CRB_DEALLOCATION_CRB_NUM_MASK << BEDROCK_II_CRB_DEALLOCATION_CRB_NUM_SHIFT)
+#define BEDROCK_II_CRB_DEALLOCATION_CRB_NUM_INPLACE (BEDROCK_II_CRB_DEALLOCATION_CRB_NUM_MASK << BEDROCK_II_CRB_DEALLOCATION_CRB_NUM_SHIFT)
 
 /*
- * IOQ FIFO depth. The register's name and layout are from the header; the header gives no access type, so rw is assumed and the register is graded inferred. No reset is recorded. The rsvd mask is the structure's members named reserved; it is the header's naming only. The register name is ours, spelled out from the header's description of IIO_IFDR; the header's short name is IFDR.
+ * IOQ FIFO depth. The register's name and layout are from the header; the
+ * header gives no access type, so rw is assumed and the register is graded
+ * inferred. No reset is recorded. The rsvd mask is the structure's members
+ * named reserved; it is the header's naming only. The register name is ours,
+ * spelled out from the header's description of IIO_IFDR; the header's short
+ * name is IFDR.
  */
-/* ioq_fifo_depth: rw64, reset unknown; Linux 2.5.40 SN1 register headers: IIO_IFDR (name and offset), ii_ifdr structure */
+/* ioq_fifo_depth: rw64, reset unknown; Linux 2.5.40 SN1 register headers:
+ * IIO_IFDR (name and offset), ii_ifdr structure */
 #define BEDROCK_II_IOQ_FIFO_DEPTH                    0x400398 /* inferred */
 #define BEDROCK_II_IOQ_FIFO_DEPTH_SET_IOQ_RP_SHIFT   15 /* established */
 #define BEDROCK_II_IOQ_FIFO_DEPTH_SET_IOQ_RP_MASK    0x1ull
@@ -616,21 +804,30 @@
 #define BEDROCK_II_IOQ_FIFO_DEPTH_IOQ_MAX_RQ_INPLACE (BEDROCK_II_IOQ_FIFO_DEPTH_IOQ_MAX_RQ_MASK << BEDROCK_II_IOQ_FIFO_DEPTH_IOQ_MAX_RQ_SHIFT)
 
 /*
- * IIQ arbitration parameters. The register's name and layout are from the header; the header gives no access type, so rw is assumed and the register is graded inferred. No reset is recorded. The rsvd mask is the structure's members named reserved; it is the header's naming only. The register name is ours, spelled out from the header's description of IIO_IIAP; the header's short name is IIAP.
+ * IIQ arbitration parameters. The register's name and layout are from the
+ * header; the header gives no access type, so rw is assumed and the register is
+ * graded inferred. No reset is recorded. The rsvd mask is the structure's
+ * members named reserved; it is the header's naming only. The register name is
+ * ours, spelled out from the header's description of IIO_IIAP; the header's
+ * short name is IIAP.
  */
-/* iiq_arbitration: rw64, reset unknown; Linux 2.5.40 SN1 register headers: IIO_IIAP (name and offset), ii_iiap structure */
+/* iiq_arbitration: rw64, reset unknown; Linux 2.5.40 SN1 register headers:
+ * IIO_IIAP (name and offset), ii_iiap structure */
 #define BEDROCK_II_IIQ_ARBITRATION                   0x4003a0 /* inferred */
 #define BEDROCK_II_IIQ_ARBITRATION_RP_MLS_SHIFT      8 /* established */
 #define BEDROCK_II_IIQ_ARBITRATION_RP_MLS_MASK       0x3full
-#define BEDROCK_II_IIQ_ARBITRATION_RP_MLS_INPLACE    (BEDROCK_II_IIQ_ARBITRATION_RP_MLS_MASK << BEDROCK_II_IIQ_ARBITRATION_RP_MLS_SHIFT)
+#define BEDROCK_II_IIQ_ARBITRATION_RP_MLS_INPLACE (BEDROCK_II_IIQ_ARBITRATION_RP_MLS_MASK << BEDROCK_II_IIQ_ARBITRATION_RP_MLS_SHIFT)
 #define BEDROCK_II_IIQ_ARBITRATION_RQ_MLS_SHIFT      0 /* established */
 #define BEDROCK_II_IIQ_ARBITRATION_RQ_MLS_MASK       0x3full
-#define BEDROCK_II_IIQ_ARBITRATION_RQ_MLS_INPLACE    (BEDROCK_II_IIQ_ARBITRATION_RQ_MLS_MASK << BEDROCK_II_IIQ_ARBITRATION_RQ_MLS_SHIFT)
+#define BEDROCK_II_IIQ_ARBITRATION_RQ_MLS_INPLACE (BEDROCK_II_IIQ_ARBITRATION_RQ_MLS_MASK << BEDROCK_II_IIQ_ARBITRATION_RQ_MLS_SHIFT)
 
 /*
- * Request buffer management. The header warns that writing it while the buffers are not quiescent can have catastrophic side effects. The Itanium probe writes a count of 0xf and nothing else.
+ * Request buffer management. The header warns that writing it while the buffers
+ * are not quiescent can have catastrophic side effects. The Itanium probe
+ * writes a count of 0xf and nothing else.
  */
-/* request_buffer_management: rw64, reset unknown; Linux 2.5.40 SN1 register headers: names, offsets and field layouts */
+/* request_buffer_management: rw64, reset unknown; Linux 2.5.40 SN1 register
+ * headers: names, offsets and field layouts */
 #define BEDROCK_II_REQUEST_BUFFER_MANAGEMENT         0x4003a8 /* established */
 #define BEDROCK_II_REQUEST_BUFFER_MANAGEMENT_PRECISE_SHIFT 52 /* established */
 #define BEDROCK_II_REQUEST_BUFFER_MANAGEMENT_PRECISE_MASK 0x1ull
@@ -638,32 +835,41 @@
 #define BEDROCK_II_REQUEST_BUFFER_MANAGEMENT_MARKS_SHIFT 35 /* established */
 #define BEDROCK_II_REQUEST_BUFFER_MANAGEMENT_MARKS_MASK 0x7fffull
 #define BEDROCK_II_REQUEST_BUFFER_MANAGEMENT_MARKS_INPLACE (BEDROCK_II_REQUEST_BUFFER_MANAGEMENT_MARKS_MASK << BEDROCK_II_REQUEST_BUFFER_MANAGEMENT_MARKS_SHIFT)
-#define BEDROCK_II_REQUEST_BUFFER_MANAGEMENT_VALID_BITS_SHIFT 20 /* established */
+/* established */
+#define BEDROCK_II_REQUEST_BUFFER_MANAGEMENT_VALID_BITS_SHIFT 20
 #define BEDROCK_II_REQUEST_BUFFER_MANAGEMENT_VALID_BITS_MASK 0x7fffull
 #define BEDROCK_II_REQUEST_BUFFER_MANAGEMENT_VALID_BITS_INPLACE (BEDROCK_II_REQUEST_BUFFER_MANAGEMENT_VALID_BITS_MASK << BEDROCK_II_REQUEST_BUFFER_MANAGEMENT_VALID_BITS_SHIFT)
-#define BEDROCK_II_REQUEST_BUFFER_MANAGEMENT_FLOW_CONTROL_COUNT_SHIFT 16 /* established */
+/* established */
+#define BEDROCK_II_REQUEST_BUFFER_MANAGEMENT_FLOW_CONTROL_COUNT_SHIFT 16
 #define BEDROCK_II_REQUEST_BUFFER_MANAGEMENT_FLOW_CONTROL_COUNT_MASK 0xfull
 #define BEDROCK_II_REQUEST_BUFFER_MANAGEMENT_FLOW_CONTROL_COUNT_INPLACE (BEDROCK_II_REQUEST_BUFFER_MANAGEMENT_FLOW_CONTROL_COUNT_MASK << BEDROCK_II_REQUEST_BUFFER_MANAGEMENT_FLOW_CONTROL_COUNT_SHIFT)
-#define BEDROCK_II_REQUEST_BUFFER_MANAGEMENT_CLEAR_PENDING_BIT_13_SHIFT 13 /* established */
+/* established */
+#define BEDROCK_II_REQUEST_BUFFER_MANAGEMENT_CLEAR_PENDING_BIT_13_SHIFT 13
 #define BEDROCK_II_REQUEST_BUFFER_MANAGEMENT_CLEAR_PENDING_BIT_13_MASK 0x1ull
 #define BEDROCK_II_REQUEST_BUFFER_MANAGEMENT_CLEAR_PENDING_BIT_13_INPLACE (BEDROCK_II_REQUEST_BUFFER_MANAGEMENT_CLEAR_PENDING_BIT_13_MASK << BEDROCK_II_REQUEST_BUFFER_MANAGEMENT_CLEAR_PENDING_BIT_13_SHIFT)
-#define BEDROCK_II_REQUEST_BUFFER_MANAGEMENT_CLEAR_PENDING_BIT_12_SHIFT 12 /* established */
+/* established */
+#define BEDROCK_II_REQUEST_BUFFER_MANAGEMENT_CLEAR_PENDING_BIT_12_SHIFT 12
 #define BEDROCK_II_REQUEST_BUFFER_MANAGEMENT_CLEAR_PENDING_BIT_12_MASK 0x1ull
 #define BEDROCK_II_REQUEST_BUFFER_MANAGEMENT_CLEAR_PENDING_BIT_12_INPLACE (BEDROCK_II_REQUEST_BUFFER_MANAGEMENT_CLEAR_PENDING_BIT_12_MASK << BEDROCK_II_REQUEST_BUFFER_MANAGEMENT_CLEAR_PENDING_BIT_12_SHIFT)
 #define BEDROCK_II_REQUEST_BUFFER_MANAGEMENT_COUNT_SHIFT 4 /* established */
 #define BEDROCK_II_REQUEST_BUFFER_MANAGEMENT_COUNT_MASK 0xfull
 #define BEDROCK_II_REQUEST_BUFFER_MANAGEMENT_COUNT_INPLACE (BEDROCK_II_REQUEST_BUFFER_MANAGEMENT_COUNT_MASK << BEDROCK_II_REQUEST_BUFFER_MANAGEMENT_COUNT_SHIFT)
-#define BEDROCK_II_REQUEST_BUFFER_MANAGEMENT_READ_HEADER_SHIFT 1 /* established */
+/* established */
+#define BEDROCK_II_REQUEST_BUFFER_MANAGEMENT_READ_HEADER_SHIFT 1
 #define BEDROCK_II_REQUEST_BUFFER_MANAGEMENT_READ_HEADER_MASK 0x1ull
 #define BEDROCK_II_REQUEST_BUFFER_MANAGEMENT_READ_HEADER_INPLACE (BEDROCK_II_REQUEST_BUFFER_MANAGEMENT_READ_HEADER_MASK << BEDROCK_II_REQUEST_BUFFER_MANAGEMENT_READ_HEADER_SHIFT)
-#define BEDROCK_II_REQUEST_BUFFER_MANAGEMENT_SPURIOUS_MESSAGE_SHIFT 0 /* established */
+/* established */
+#define BEDROCK_II_REQUEST_BUFFER_MANAGEMENT_SPURIOUS_MESSAGE_SHIFT 0
 #define BEDROCK_II_REQUEST_BUFFER_MANAGEMENT_SPURIOUS_MESSAGE_MASK 0x1ull
 #define BEDROCK_II_REQUEST_BUFFER_MANAGEMENT_SPURIOUS_MESSAGE_INPLACE (BEDROCK_II_REQUEST_BUFFER_MANAGEMENT_SPURIOUS_MESSAGE_MASK << BEDROCK_II_REQUEST_BUFFER_MANAGEMENT_SPURIOUS_MESSAGE_SHIFT)
 
 /*
- * Software control of the request buffers. It has priority over crosstalk and BTE requests. The header names the commands nop, wake, timeout, eject and flush; their numeric codes are not given in the header and are unknown.
+ * Software control of the request buffers. It has priority over crosstalk and
+ * BTE requests. The header names the commands nop, wake, timeout, eject and
+ * flush; their numeric codes are not given in the header and are unknown.
  */
-/* request_buffer_control: rw64, reset 0x0; Linux 2.5.40 SN1 register headers: names, offsets and field layouts */
+/* request_buffer_control: rw64, reset 0x0; Linux 2.5.40 SN1 register headers:
+ * names, offsets and field layouts */
 #define BEDROCK_II_REQUEST_BUFFER_CONTROL            0x4003b0 /* established */
 #define BEDROCK_II_REQUEST_BUFFER_CONTROL_PENDING_SHIFT 16 /* established */
 #define BEDROCK_II_REQUEST_BUFFER_CONTROL_PENDING_MASK 0x1ull
@@ -676,16 +882,20 @@
 #define BEDROCK_II_REQUEST_BUFFER_CONTROL_ENTRY_INPLACE (BEDROCK_II_REQUEST_BUFFER_CONTROL_ENTRY_MASK << BEDROCK_II_REQUEST_BUFFER_CONTROL_ENTRY_SHIFT)
 
 /*
- * IO CRB timeout. The header states no access type, so rw is assumed. No field layout is recorded here. Field layout added from the header's structure; the rsvd mask is its members named reserved (header naming only).
+ * IO CRB timeout. The header states no access type, so rw is assumed. No field
+ * layout is recorded here. Field layout added from the header's structure; the
+ * rsvd mask is its members named reserved (header naming only).
  */
 /* crb_timeout: rw64, reset 0xff */
 #define BEDROCK_II_CRB_TIMEOUT                       0x4003b8 /* inferred */
 #define BEDROCK_II_CRB_TIMEOUT_TIMEOUT_SHIFT         0 /* established */
 #define BEDROCK_II_CRB_TIMEOUT_TIMEOUT_MASK          0xffull
-#define BEDROCK_II_CRB_TIMEOUT_TIMEOUT_INPLACE       (BEDROCK_II_CRB_TIMEOUT_TIMEOUT_MASK << BEDROCK_II_CRB_TIMEOUT_TIMEOUT_SHIFT)
+#define BEDROCK_II_CRB_TIMEOUT_TIMEOUT_INPLACE (BEDROCK_II_CRB_TIMEOUT_TIMEOUT_MASK << BEDROCK_II_CRB_TIMEOUT_TIMEOUT_SHIFT)
 
 /*
- * IO CRB timeout prescaler. The header states no access type, so rw is assumed. No field layout is recorded here. Field layout added from the header's structure; the rsvd mask is its members named reserved (header naming only).
+ * IO CRB timeout prescaler. The header states no access type, so rw is assumed.
+ * No field layout is recorded here. Field layout added from the header's
+ * structure; the rsvd mask is its members named reserved (header naming only).
  */
 /* crb_timeout_prescaler: rw64, reset 0xffffff */
 #define BEDROCK_II_CRB_TIMEOUT_PRESCALER             0x4003c0 /* inferred */
@@ -694,7 +904,10 @@
 #define BEDROCK_II_CRB_TIMEOUT_PRESCALER_PRESCALE_INPLACE (BEDROCK_II_CRB_TIMEOUT_PRESCALER_PRESCALE_MASK << BEDROCK_II_CRB_TIMEOUT_PRESCALER_PRESCALE_SHIFT)
 
 /*
- * First word of the request-buffer table. Entry i (0 to 14) has three 64-bit words, crb_a, crb_b and crb_c, at these offsets plus 0x20 times i. The header names the fourth word of each entry, crb_d, as well; the field meanings of the entry words are not given by any source held here.
+ * First word of the request-buffer table. Entry i (0 to 14) has three 64-bit
+ * words, crb_a, crb_b and crb_c, at these offsets plus 0x20 times i. The header
+ * names the fourth word of each entry, crb_d, as well; the field meanings of
+ * the entry words are not given by any source held here.
  */
 /* crb_a: r64, reset 0x0 */
 #define BEDROCK_II_CRB_A                             0x400400 /* inferred */
@@ -712,7 +925,9 @@
 #define BEDROCK_II_CRB_C_STRIDE                      32
 
 /*
- * Fourth word of each request-buffer entry. Entry i (0 to 14) is at this offset plus 0x20 times i. Read-only is carried over from the sibling words crb_a to crb_c and is inferred.
+ * Fourth word of each request-buffer entry. Entry i (0 to 14) is at this offset
+ * plus 0x20 times i. Read-only is carried over from the sibling words crb_a to
+ * crb_c and is inferred.
  */
 /* crb_d: r64, reset 0x0 */
 #define BEDROCK_II_CRB_D                             0x400418 /* inferred */
@@ -720,17 +935,25 @@
 #define BEDROCK_II_CRB_D_STRIDE                      32
 
 /*
- * CRB spurious message, low word. The register's name and layout are from the header; the header gives no access type, so rw is assumed and the register is graded inferred. No reset is recorded. The rsvd mask is the structure's members named reserved; it is the header's naming only. The register name is ours, spelled out from the header's description of IIO_ICSML; the header's short name is ICSML.
+ * CRB spurious message, low word. The register's name and layout are from the
+ * header; the header gives no access type, so rw is assumed and the register is
+ * graded inferred. No reset is recorded. The rsvd mask is the structure's
+ * members named reserved; it is the header's naming only. The register name is
+ * ours, spelled out from the header's description of IIO_ICSML; the header's
+ * short name is ICSML.
  */
-/* crb_spurious_message_low: rw64, reset unknown; Linux 2.5.40 SN1 register headers: IIO_ICSML (name and offset), ii_icsml structure */
+/* crb_spurious_message_low: rw64, reset unknown; Linux 2.5.40 SN1 register
+ * headers: IIO_ICSML (name and offset), ii_icsml structure */
 #define BEDROCK_II_CRB_SPURIOUS_MESSAGE_LOW          0x400600 /* inferred */
 #define BEDROCK_II_CRB_SPURIOUS_MESSAGE_LOW_OVERFLOW_SHIFT 63 /* established */
 #define BEDROCK_II_CRB_SPURIOUS_MESSAGE_LOW_OVERFLOW_MASK 0x1ull
 #define BEDROCK_II_CRB_SPURIOUS_MESSAGE_LOW_OVERFLOW_INPLACE (BEDROCK_II_CRB_SPURIOUS_MESSAGE_LOW_OVERFLOW_MASK << BEDROCK_II_CRB_SPURIOUS_MESSAGE_LOW_OVERFLOW_SHIFT)
-#define BEDROCK_II_CRB_SPURIOUS_MESSAGE_LOW_NEWSUPPL_EX_SHIFT 49 /* established */
+/* established */
+#define BEDROCK_II_CRB_SPURIOUS_MESSAGE_LOW_NEWSUPPL_EX_SHIFT 49
 #define BEDROCK_II_CRB_SPURIOUS_MESSAGE_LOW_NEWSUPPL_EX_MASK 0x7ffull
 #define BEDROCK_II_CRB_SPURIOUS_MESSAGE_LOW_NEWSUPPL_EX_INPLACE (BEDROCK_II_CRB_SPURIOUS_MESSAGE_LOW_NEWSUPPL_EX_MASK << BEDROCK_II_CRB_SPURIOUS_MESSAGE_LOW_NEWSUPPL_EX_SHIFT)
-#define BEDROCK_II_CRB_SPURIOUS_MESSAGE_LOW_TT_ACK_CNT_SHIFT 38 /* established */
+/* established */
+#define BEDROCK_II_CRB_SPURIOUS_MESSAGE_LOW_TT_ACK_CNT_SHIFT 38
 #define BEDROCK_II_CRB_SPURIOUS_MESSAGE_LOW_TT_ACK_CNT_MASK 0x7ffull
 #define BEDROCK_II_CRB_SPURIOUS_MESSAGE_LOW_TT_ACK_CNT_INPLACE (BEDROCK_II_CRB_SPURIOUS_MESSAGE_LOW_TT_ACK_CNT_MASK << BEDROCK_II_CRB_SPURIOUS_MESSAGE_LOW_TT_ACK_CNT_SHIFT)
 #define BEDROCK_II_CRB_SPURIOUS_MESSAGE_LOW_TT_ADDR_SHIFT 0 /* established */
@@ -738,44 +961,61 @@
 #define BEDROCK_II_CRB_SPURIOUS_MESSAGE_LOW_TT_ADDR_INPLACE (BEDROCK_II_CRB_SPURIOUS_MESSAGE_LOW_TT_ADDR_MASK << BEDROCK_II_CRB_SPURIOUS_MESSAGE_LOW_TT_ADDR_SHIFT)
 
 /*
- * CRB spurious message, high word. The register's name and layout are from the header; the header gives no access type, so rw is assumed and the register is graded inferred. No reset is recorded. The rsvd mask is the structure's members named reserved; it is the header's naming only. The register name is ours, spelled out from the header's description of IIO_ICSMH; the header's short name is ICSMH.
+ * CRB spurious message, high word. The register's name and layout are from the
+ * header; the header gives no access type, so rw is assumed and the register is
+ * graded inferred. No reset is recorded. The rsvd mask is the structure's
+ * members named reserved; it is the header's naming only. The register name is
+ * ours, spelled out from the header's description of IIO_ICSMH; the header's
+ * short name is ICSMH.
  */
-/* crb_spurious_message_high: rw64, reset unknown; Linux 2.5.40 SN1 register headers: IIO_ICSMH (name and offset), ii_icsmh structure */
+/* crb_spurious_message_high: rw64, reset unknown; Linux 2.5.40 SN1 register
+ * headers: IIO_ICSMH (name and offset), ii_icsmh structure */
 #define BEDROCK_II_CRB_SPURIOUS_MESSAGE_HIGH         0x400608 /* inferred */
 #define BEDROCK_II_CRB_SPURIOUS_MESSAGE_HIGH_TT_INIT_SHIFT 56 /* established */
 #define BEDROCK_II_CRB_SPURIOUS_MESSAGE_HIGH_TT_INIT_MASK 0x7ull
 #define BEDROCK_II_CRB_SPURIOUS_MESSAGE_HIGH_TT_INIT_INPLACE (BEDROCK_II_CRB_SPURIOUS_MESSAGE_HIGH_TT_INIT_MASK << BEDROCK_II_CRB_SPURIOUS_MESSAGE_HIGH_TT_INIT_SHIFT)
-#define BEDROCK_II_CRB_SPURIOUS_MESSAGE_HIGH_TT_DEVICE_SHIFT 49 /* established */
+/* established */
+#define BEDROCK_II_CRB_SPURIOUS_MESSAGE_HIGH_TT_DEVICE_SHIFT 49
 #define BEDROCK_II_CRB_SPURIOUS_MESSAGE_HIGH_TT_DEVICE_MASK 0x7full
 #define BEDROCK_II_CRB_SPURIOUS_MESSAGE_HIGH_TT_DEVICE_INPLACE (BEDROCK_II_CRB_SPURIOUS_MESSAGE_HIGH_TT_DEVICE_MASK << BEDROCK_II_CRB_SPURIOUS_MESSAGE_HIGH_TT_DEVICE_SHIFT)
-#define BEDROCK_II_CRB_SPURIOUS_MESSAGE_HIGH_RQCNT_GE_2_SHIFT 48 /* established */
+/* established */
+#define BEDROCK_II_CRB_SPURIOUS_MESSAGE_HIGH_RQCNT_GE_2_SHIFT 48
 #define BEDROCK_II_CRB_SPURIOUS_MESSAGE_HIGH_RQCNT_GE_2_MASK 0x1ull
 #define BEDROCK_II_CRB_SPURIOUS_MESSAGE_HIGH_RQCNT_GE_2_INPLACE (BEDROCK_II_CRB_SPURIOUS_MESSAGE_HIGH_RQCNT_GE_2_MASK << BEDROCK_II_CRB_SPURIOUS_MESSAGE_HIGH_RQCNT_GE_2_SHIFT)
-#define BEDROCK_II_CRB_SPURIOUS_MESSAGE_HIGH_RQCNT_LT_2_SHIFT 47 /* established */
+/* established */
+#define BEDROCK_II_CRB_SPURIOUS_MESSAGE_HIGH_RQCNT_LT_2_SHIFT 47
 #define BEDROCK_II_CRB_SPURIOUS_MESSAGE_HIGH_RQCNT_LT_2_MASK 0x1ull
 #define BEDROCK_II_CRB_SPURIOUS_MESSAGE_HIGH_RQCNT_LT_2_INPLACE (BEDROCK_II_CRB_SPURIOUS_MESSAGE_HIGH_RQCNT_LT_2_MASK << BEDROCK_II_CRB_SPURIOUS_MESSAGE_HIGH_RQCNT_LT_2_SHIFT)
-#define BEDROCK_II_CRB_SPURIOUS_MESSAGE_HIGH_RQCNT_GE_18_SHIFT 46 /* established */
+/* established */
+#define BEDROCK_II_CRB_SPURIOUS_MESSAGE_HIGH_RQCNT_GE_18_SHIFT 46
 #define BEDROCK_II_CRB_SPURIOUS_MESSAGE_HIGH_RQCNT_GE_18_MASK 0x1ull
 #define BEDROCK_II_CRB_SPURIOUS_MESSAGE_HIGH_RQCNT_GE_18_INPLACE (BEDROCK_II_CRB_SPURIOUS_MESSAGE_HIGH_RQCNT_GE_18_MASK << BEDROCK_II_CRB_SPURIOUS_MESSAGE_HIGH_RQCNT_GE_18_SHIFT)
-#define BEDROCK_II_CRB_SPURIOUS_MESSAGE_HIGH_RQCNT_LT_18_SHIFT 45 /* established */
+/* established */
+#define BEDROCK_II_CRB_SPURIOUS_MESSAGE_HIGH_RQCNT_LT_18_SHIFT 45
 #define BEDROCK_II_CRB_SPURIOUS_MESSAGE_HIGH_RQCNT_LT_18_MASK 0x1ull
 #define BEDROCK_II_CRB_SPURIOUS_MESSAGE_HIGH_RQCNT_LT_18_INPLACE (BEDROCK_II_CRB_SPURIOUS_MESSAGE_HIGH_RQCNT_LT_18_MASK << BEDROCK_II_CRB_SPURIOUS_MESSAGE_HIGH_RQCNT_LT_18_SHIFT)
-#define BEDROCK_II_CRB_SPURIOUS_MESSAGE_HIGH_RPCNT_GE_2_SHIFT 44 /* established */
+/* established */
+#define BEDROCK_II_CRB_SPURIOUS_MESSAGE_HIGH_RPCNT_GE_2_SHIFT 44
 #define BEDROCK_II_CRB_SPURIOUS_MESSAGE_HIGH_RPCNT_GE_2_MASK 0x1ull
 #define BEDROCK_II_CRB_SPURIOUS_MESSAGE_HIGH_RPCNT_GE_2_INPLACE (BEDROCK_II_CRB_SPURIOUS_MESSAGE_HIGH_RPCNT_GE_2_MASK << BEDROCK_II_CRB_SPURIOUS_MESSAGE_HIGH_RPCNT_GE_2_SHIFT)
-#define BEDROCK_II_CRB_SPURIOUS_MESSAGE_HIGH_RPCNT_LT_2_SHIFT 43 /* established */
+/* established */
+#define BEDROCK_II_CRB_SPURIOUS_MESSAGE_HIGH_RPCNT_LT_2_SHIFT 43
 #define BEDROCK_II_CRB_SPURIOUS_MESSAGE_HIGH_RPCNT_LT_2_MASK 0x1ull
 #define BEDROCK_II_CRB_SPURIOUS_MESSAGE_HIGH_RPCNT_LT_2_INPLACE (BEDROCK_II_CRB_SPURIOUS_MESSAGE_HIGH_RPCNT_LT_2_MASK << BEDROCK_II_CRB_SPURIOUS_MESSAGE_HIGH_RPCNT_LT_2_SHIFT)
-#define BEDROCK_II_CRB_SPURIOUS_MESSAGE_HIGH_RPCNT_GE_18_SHIFT 42 /* established */
+/* established */
+#define BEDROCK_II_CRB_SPURIOUS_MESSAGE_HIGH_RPCNT_GE_18_SHIFT 42
 #define BEDROCK_II_CRB_SPURIOUS_MESSAGE_HIGH_RPCNT_GE_18_MASK 0x1ull
 #define BEDROCK_II_CRB_SPURIOUS_MESSAGE_HIGH_RPCNT_GE_18_INPLACE (BEDROCK_II_CRB_SPURIOUS_MESSAGE_HIGH_RPCNT_GE_18_MASK << BEDROCK_II_CRB_SPURIOUS_MESSAGE_HIGH_RPCNT_GE_18_SHIFT)
-#define BEDROCK_II_CRB_SPURIOUS_MESSAGE_HIGH_RPCNT_LT_18_SHIFT 41 /* established */
+/* established */
+#define BEDROCK_II_CRB_SPURIOUS_MESSAGE_HIGH_RPCNT_LT_18_SHIFT 41
 #define BEDROCK_II_CRB_SPURIOUS_MESSAGE_HIGH_RPCNT_LT_18_MASK 0x1ull
 #define BEDROCK_II_CRB_SPURIOUS_MESSAGE_HIGH_RPCNT_LT_18_INPLACE (BEDROCK_II_CRB_SPURIOUS_MESSAGE_HIGH_RPCNT_LT_18_MASK << BEDROCK_II_CRB_SPURIOUS_MESSAGE_HIGH_RPCNT_LT_18_SHIFT)
-#define BEDROCK_II_CRB_SPURIOUS_MESSAGE_HIGH_RPCNT_GE_34_SHIFT 40 /* established */
+/* established */
+#define BEDROCK_II_CRB_SPURIOUS_MESSAGE_HIGH_RPCNT_GE_34_SHIFT 40
 #define BEDROCK_II_CRB_SPURIOUS_MESSAGE_HIGH_RPCNT_GE_34_MASK 0x1ull
 #define BEDROCK_II_CRB_SPURIOUS_MESSAGE_HIGH_RPCNT_GE_34_INPLACE (BEDROCK_II_CRB_SPURIOUS_MESSAGE_HIGH_RPCNT_GE_34_MASK << BEDROCK_II_CRB_SPURIOUS_MESSAGE_HIGH_RPCNT_GE_34_SHIFT)
-#define BEDROCK_II_CRB_SPURIOUS_MESSAGE_HIGH_RPCNT_LT_34_SHIFT 39 /* established */
+/* established */
+#define BEDROCK_II_CRB_SPURIOUS_MESSAGE_HIGH_RPCNT_LT_34_SHIFT 39
 #define BEDROCK_II_CRB_SPURIOUS_MESSAGE_HIGH_RPCNT_LT_34_MASK 0x1ull
 #define BEDROCK_II_CRB_SPURIOUS_MESSAGE_HIGH_RPCNT_LT_34_INPLACE (BEDROCK_II_CRB_SPURIOUS_MESSAGE_HIGH_RPCNT_LT_34_MASK << BEDROCK_II_CRB_SPURIOUS_MESSAGE_HIGH_RPCNT_LT_34_SHIFT)
 #define BEDROCK_II_CRB_SPURIOUS_MESSAGE_HIGH_MATCH_SHIFT 38 /* established */
@@ -784,31 +1024,39 @@
 #define BEDROCK_II_CRB_SPURIOUS_MESSAGE_HIGH_CBN_SHIFT 37 /* established */
 #define BEDROCK_II_CRB_SPURIOUS_MESSAGE_HIGH_CBN_MASK 0x1ull
 #define BEDROCK_II_CRB_SPURIOUS_MESSAGE_HIGH_CBN_INPLACE (BEDROCK_II_CRB_SPURIOUS_MESSAGE_HIGH_CBN_MASK << BEDROCK_II_CRB_SPURIOUS_MESSAGE_HIGH_CBN_SHIFT)
-#define BEDROCK_II_CRB_SPURIOUS_MESSAGE_HIGH_TT_BTE_NUM_SHIFT 36 /* established */
+/* established */
+#define BEDROCK_II_CRB_SPURIOUS_MESSAGE_HIGH_TT_BTE_NUM_SHIFT 36
 #define BEDROCK_II_CRB_SPURIOUS_MESSAGE_HIGH_TT_BTE_NUM_MASK 0x1ull
 #define BEDROCK_II_CRB_SPURIOUS_MESSAGE_HIGH_TT_BTE_NUM_INPLACE (BEDROCK_II_CRB_SPURIOUS_MESSAGE_HIGH_TT_BTE_NUM_MASK << BEDROCK_II_CRB_SPURIOUS_MESSAGE_HIGH_TT_BTE_NUM_SHIFT)
-#define BEDROCK_II_CRB_SPURIOUS_MESSAGE_HIGH_TT_RESPREQD_SHIFT 35 /* established */
+/* established */
+#define BEDROCK_II_CRB_SPURIOUS_MESSAGE_HIGH_TT_RESPREQD_SHIFT 35
 #define BEDROCK_II_CRB_SPURIOUS_MESSAGE_HIGH_TT_RESPREQD_MASK 0x1ull
 #define BEDROCK_II_CRB_SPURIOUS_MESSAGE_HIGH_TT_RESPREQD_INPLACE (BEDROCK_II_CRB_SPURIOUS_MESSAGE_HIGH_TT_RESPREQD_MASK << BEDROCK_II_CRB_SPURIOUS_MESSAGE_HIGH_TT_RESPREQD_SHIFT)
-#define BEDROCK_II_CRB_SPURIOUS_MESSAGE_HIGH_TT_USE_OLD_SHIFT 34 /* established */
+/* established */
+#define BEDROCK_II_CRB_SPURIOUS_MESSAGE_HIGH_TT_USE_OLD_SHIFT 34
 #define BEDROCK_II_CRB_SPURIOUS_MESSAGE_HIGH_TT_USE_OLD_MASK 0x1ull
 #define BEDROCK_II_CRB_SPURIOUS_MESSAGE_HIGH_TT_USE_OLD_INPLACE (BEDROCK_II_CRB_SPURIOUS_MESSAGE_HIGH_TT_USE_OLD_MASK << BEDROCK_II_CRB_SPURIOUS_MESSAGE_HIGH_TT_USE_OLD_SHIFT)
-#define BEDROCK_II_CRB_SPURIOUS_MESSAGE_HIGH_TT_IMSGTYPE_SHIFT 32 /* established */
+/* established */
+#define BEDROCK_II_CRB_SPURIOUS_MESSAGE_HIGH_TT_IMSGTYPE_SHIFT 32
 #define BEDROCK_II_CRB_SPURIOUS_MESSAGE_HIGH_TT_IMSGTYPE_MASK 0x3ull
 #define BEDROCK_II_CRB_SPURIOUS_MESSAGE_HIGH_TT_IMSGTYPE_INPLACE (BEDROCK_II_CRB_SPURIOUS_MESSAGE_HIGH_TT_IMSGTYPE_MASK << BEDROCK_II_CRB_SPURIOUS_MESSAGE_HIGH_TT_IMSGTYPE_SHIFT)
 #define BEDROCK_II_CRB_SPURIOUS_MESSAGE_HIGH_TT_IMSG_SHIFT 24 /* established */
 #define BEDROCK_II_CRB_SPURIOUS_MESSAGE_HIGH_TT_IMSG_MASK 0xffull
 #define BEDROCK_II_CRB_SPURIOUS_MESSAGE_HIGH_TT_IMSG_INPLACE (BEDROCK_II_CRB_SPURIOUS_MESSAGE_HIGH_TT_IMSG_MASK << BEDROCK_II_CRB_SPURIOUS_MESSAGE_HIGH_TT_IMSG_SHIFT)
-#define BEDROCK_II_CRB_SPURIOUS_MESSAGE_HIGH_G_STALL_IB_SHIFT 23 /* established */
+/* established */
+#define BEDROCK_II_CRB_SPURIOUS_MESSAGE_HIGH_G_STALL_IB_SHIFT 23
 #define BEDROCK_II_CRB_SPURIOUS_MESSAGE_HIGH_G_STALL_IB_MASK 0x1ull
 #define BEDROCK_II_CRB_SPURIOUS_MESSAGE_HIGH_G_STALL_IB_INPLACE (BEDROCK_II_CRB_SPURIOUS_MESSAGE_HIGH_G_STALL_IB_MASK << BEDROCK_II_CRB_SPURIOUS_MESSAGE_HIGH_G_STALL_IB_SHIFT)
-#define BEDROCK_II_CRB_SPURIOUS_MESSAGE_HIGH_G_STALL_IL_SHIFT 22 /* established */
+/* established */
+#define BEDROCK_II_CRB_SPURIOUS_MESSAGE_HIGH_G_STALL_IL_SHIFT 22
 #define BEDROCK_II_CRB_SPURIOUS_MESSAGE_HIGH_G_STALL_IL_MASK 0x1ull
 #define BEDROCK_II_CRB_SPURIOUS_MESSAGE_HIGH_G_STALL_IL_INPLACE (BEDROCK_II_CRB_SPURIOUS_MESSAGE_HIGH_G_STALL_IL_MASK << BEDROCK_II_CRB_SPURIOUS_MESSAGE_HIGH_G_STALL_IL_SHIFT)
-#define BEDROCK_II_CRB_SPURIOUS_MESSAGE_HIGH_G_STALL_BTE0_SHIFT 21 /* established */
+/* established */
+#define BEDROCK_II_CRB_SPURIOUS_MESSAGE_HIGH_G_STALL_BTE0_SHIFT 21
 #define BEDROCK_II_CRB_SPURIOUS_MESSAGE_HIGH_G_STALL_BTE0_MASK 0x1ull
 #define BEDROCK_II_CRB_SPURIOUS_MESSAGE_HIGH_G_STALL_BTE0_INPLACE (BEDROCK_II_CRB_SPURIOUS_MESSAGE_HIGH_G_STALL_BTE0_MASK << BEDROCK_II_CRB_SPURIOUS_MESSAGE_HIGH_G_STALL_BTE0_SHIFT)
-#define BEDROCK_II_CRB_SPURIOUS_MESSAGE_HIGH_G_STALL_BTE1_SHIFT 20 /* established */
+/* established */
+#define BEDROCK_II_CRB_SPURIOUS_MESSAGE_HIGH_G_STALL_BTE1_SHIFT 20
 #define BEDROCK_II_CRB_SPURIOUS_MESSAGE_HIGH_G_STALL_BTE1_MASK 0x1ull
 #define BEDROCK_II_CRB_SPURIOUS_MESSAGE_HIGH_G_STALL_BTE1_INPLACE (BEDROCK_II_CRB_SPURIOUS_MESSAGE_HIGH_G_STALL_BTE1_MASK << BEDROCK_II_CRB_SPURIOUS_MESSAGE_HIGH_G_STALL_BTE1_SHIFT)
 #define BEDROCK_II_CRB_SPURIOUS_MESSAGE_HIGH_TT_INTVN_SHIFT 19 /* established */
@@ -844,13 +1092,15 @@
 #define BEDROCK_II_CRB_SPURIOUS_MESSAGE_HIGH_SYNC_SHIFT 5 /* established */
 #define BEDROCK_II_CRB_SPURIOUS_MESSAGE_HIGH_SYNC_MASK 0x1ull
 #define BEDROCK_II_CRB_SPURIOUS_MESSAGE_HIGH_SYNC_INPLACE (BEDROCK_II_CRB_SPURIOUS_MESSAGE_HIGH_SYNC_MASK << BEDROCK_II_CRB_SPURIOUS_MESSAGE_HIGH_SYNC_SHIFT)
-#define BEDROCK_II_CRB_SPURIOUS_MESSAGE_HIGH_FT_ACTIVE_O_SHIFT 4 /* established */
+/* established */
+#define BEDROCK_II_CRB_SPURIOUS_MESSAGE_HIGH_FT_ACTIVE_O_SHIFT 4
 #define BEDROCK_II_CRB_SPURIOUS_MESSAGE_HIGH_FT_ACTIVE_O_MASK 0x1ull
 #define BEDROCK_II_CRB_SPURIOUS_MESSAGE_HIGH_FT_ACTIVE_O_INPLACE (BEDROCK_II_CRB_SPURIOUS_MESSAGE_HIGH_FT_ACTIVE_O_MASK << BEDROCK_II_CRB_SPURIOUS_MESSAGE_HIGH_FT_ACTIVE_O_SHIFT)
 #define BEDROCK_II_CRB_SPURIOUS_MESSAGE_HIGH_FT_WACT_O_SHIFT 3 /* established */
 #define BEDROCK_II_CRB_SPURIOUS_MESSAGE_HIGH_FT_WACT_O_MASK 0x1ull
 #define BEDROCK_II_CRB_SPURIOUS_MESSAGE_HIGH_FT_WACT_O_INPLACE (BEDROCK_II_CRB_SPURIOUS_MESSAGE_HIGH_FT_WACT_O_MASK << BEDROCK_II_CRB_SPURIOUS_MESSAGE_HIGH_FT_WACT_O_SHIFT)
-#define BEDROCK_II_CRB_SPURIOUS_MESSAGE_HIGH_FT_CWACT_O_SHIFT 2 /* established */
+/* established */
+#define BEDROCK_II_CRB_SPURIOUS_MESSAGE_HIGH_FT_CWACT_O_SHIFT 2
 #define BEDROCK_II_CRB_SPURIOUS_MESSAGE_HIGH_FT_CWACT_O_MASK 0x1ull
 #define BEDROCK_II_CRB_SPURIOUS_MESSAGE_HIGH_FT_CWACT_O_INPLACE (BEDROCK_II_CRB_SPURIOUS_MESSAGE_HIGH_FT_CWACT_O_MASK << BEDROCK_II_CRB_SPURIOUS_MESSAGE_HIGH_FT_CWACT_O_SHIFT)
 #define BEDROCK_II_CRB_SPURIOUS_MESSAGE_HIGH_XERR_SHIFT 1 /* established */
@@ -861,74 +1111,98 @@
 #define BEDROCK_II_CRB_SPURIOUS_MESSAGE_HIGH_TT_VLD_INPLACE (BEDROCK_II_CRB_SPURIOUS_MESSAGE_HIGH_TT_VLD_MASK << BEDROCK_II_CRB_SPURIOUS_MESSAGE_HIGH_TT_VLD_SHIFT)
 
 /*
- * Debug submenu select. The register's name and layout are from the header; the header gives no access type, so rw is assumed and the register is graded inferred. No reset is recorded. The rsvd mask is the structure's members named reserved; it is the header's naming only. The register name is ours, spelled out from the header's description of IIO_IDBSS; the header's short name is IDBSS.
+ * Debug submenu select. The register's name and layout are from the header; the
+ * header gives no access type, so rw is assumed and the register is graded
+ * inferred. No reset is recorded. The rsvd mask is the structure's members
+ * named reserved; it is the header's naming only. The register name is ours,
+ * spelled out from the header's description of IIO_IDBSS; the header's short
+ * name is IDBSS.
  */
-/* debug_submenu_select: rw64, reset unknown; Linux 2.5.40 SN1 register headers: IIO_IDBSS (name and offset), ii_idbss structure */
+/* debug_submenu_select: rw64, reset unknown; Linux 2.5.40 SN1 register headers:
+ * IIO_IDBSS (name and offset), ii_idbss structure */
 #define BEDROCK_II_DEBUG_SUBMENU_SELECT              0x400610 /* inferred */
 #define BEDROCK_II_DEBUG_SUBMENU_SELECT_SUBMENU_SHIFT 0 /* established */
 #define BEDROCK_II_DEBUG_SUBMENU_SELECT_SUBMENU_MASK 0x7ull
 #define BEDROCK_II_DEBUG_SUBMENU_SELECT_SUBMENU_INPLACE (BEDROCK_II_DEBUG_SUBMENU_SELECT_SUBMENU_MASK << BEDROCK_II_DEBUG_SUBMENU_SELECT_SUBMENU_SHIFT)
 
 /*
- * One copy per block transfer engine; engine 1's block is 64 KiB above engine 0's. A legitimate write sets busy and clears error, with the length loaded in cache lines; the engine decrements the length per line and clears busy at the end.
+ * One copy per block transfer engine; engine 1's block is 64 KiB above engine
+ * 0's. A legitimate write sets busy and clears error, with the length loaded in
+ * cache lines; the engine decrements the length per line and clears busy at the
+ * end.
  */
-/* bte_length_status: rw64, reset 0x0; Linux 2.5.40 SN1 register headers: names, offsets and field layouts */
+/* bte_length_status: rw64, reset 0x0; Linux 2.5.40 SN1 register headers: names,
+ * offsets and field layouts */
 #define BEDROCK_II_BTE_LENGTH_STATUS                 0x410000 /* established */
 #define BEDROCK_II_BTE_LENGTH_STATUS_COUNT           2
 #define BEDROCK_II_BTE_LENGTH_STATUS_STRIDE          65536
 #define BEDROCK_II_BTE_LENGTH_STATUS_BUSY_SHIFT      20 /* established */
 #define BEDROCK_II_BTE_LENGTH_STATUS_BUSY_MASK       0x1ull
-#define BEDROCK_II_BTE_LENGTH_STATUS_BUSY_INPLACE    (BEDROCK_II_BTE_LENGTH_STATUS_BUSY_MASK << BEDROCK_II_BTE_LENGTH_STATUS_BUSY_SHIFT)
+#define BEDROCK_II_BTE_LENGTH_STATUS_BUSY_INPLACE (BEDROCK_II_BTE_LENGTH_STATUS_BUSY_MASK << BEDROCK_II_BTE_LENGTH_STATUS_BUSY_SHIFT)
 #define BEDROCK_II_BTE_LENGTH_STATUS_ERROR_SHIFT     16 /* established */
 #define BEDROCK_II_BTE_LENGTH_STATUS_ERROR_MASK      0x1ull
-#define BEDROCK_II_BTE_LENGTH_STATUS_ERROR_INPLACE   (BEDROCK_II_BTE_LENGTH_STATUS_ERROR_MASK << BEDROCK_II_BTE_LENGTH_STATUS_ERROR_SHIFT)
+#define BEDROCK_II_BTE_LENGTH_STATUS_ERROR_INPLACE (BEDROCK_II_BTE_LENGTH_STATUS_ERROR_MASK << BEDROCK_II_BTE_LENGTH_STATUS_ERROR_SHIFT)
 #define BEDROCK_II_BTE_LENGTH_STATUS_LENGTH_LINES_SHIFT 0 /* established */
 #define BEDROCK_II_BTE_LENGTH_STATUS_LENGTH_LINES_MASK 0xffffull
 #define BEDROCK_II_BTE_LENGTH_STATUS_LENGTH_LINES_INPLACE (BEDROCK_II_BTE_LENGTH_STATUS_LENGTH_LINES_MASK << BEDROCK_II_BTE_LENGTH_STATUS_LENGTH_LINES_SHIFT)
 
 /*
- * Source physical address of the transfer. Low seven bits are zero (128-byte lines). After a transfer the register reads the address one line past the last line moved, or the failed line after a data error; hardware behaviour here is unknown.
+ * Source physical address of the transfer. Low seven bits are zero (128-byte
+ * lines). After a transfer the register reads the address one line past the
+ * last line moved, or the failed line after a data error; hardware behaviour
+ * here is unknown.
  */
-/* bte_source: rw64, reset 0x0; Linux 2.5.40 SN1 register headers: names, offsets and field layouts */
+/* bte_source: rw64, reset 0x0; Linux 2.5.40 SN1 register headers: names,
+ * offsets and field layouts */
 #define BEDROCK_II_BTE_SOURCE                        0x410008 /* established */
 #define BEDROCK_II_BTE_SOURCE_COUNT                  2
 #define BEDROCK_II_BTE_SOURCE_STRIDE                 65536
 #define BEDROCK_II_BTE_SOURCE_ADDRESS_SHIFT          7 /* established */
 #define BEDROCK_II_BTE_SOURCE_ADDRESS_MASK           0x1ffffffffull
-#define BEDROCK_II_BTE_SOURCE_ADDRESS_INPLACE        (BEDROCK_II_BTE_SOURCE_ADDRESS_MASK << BEDROCK_II_BTE_SOURCE_ADDRESS_SHIFT)
+#define BEDROCK_II_BTE_SOURCE_ADDRESS_INPLACE (BEDROCK_II_BTE_SOURCE_ADDRESS_MASK << BEDROCK_II_BTE_SOURCE_ADDRESS_SHIFT)
 
 /*
- * Destination physical address of the transfer. Same layout and end-of-transfer behaviour as the source register.
+ * Destination physical address of the transfer. Same layout and end-of-transfer
+ * behaviour as the source register.
  */
-/* bte_destination: rw64, reset 0x0; Linux 2.5.40 SN1 register headers: names, offsets and field layouts */
+/* bte_destination: rw64, reset 0x0; Linux 2.5.40 SN1 register headers: names,
+ * offsets and field layouts */
 #define BEDROCK_II_BTE_DESTINATION                   0x410010 /* established */
 #define BEDROCK_II_BTE_DESTINATION_COUNT             2
 #define BEDROCK_II_BTE_DESTINATION_STRIDE            65536
 #define BEDROCK_II_BTE_DESTINATION_ADDRESS_SHIFT     7 /* established */
 #define BEDROCK_II_BTE_DESTINATION_ADDRESS_MASK      0x1ffffffffull
-#define BEDROCK_II_BTE_DESTINATION_ADDRESS_INPLACE   (BEDROCK_II_BTE_DESTINATION_ADDRESS_MASK << BEDROCK_II_BTE_DESTINATION_ADDRESS_SHIFT)
+#define BEDROCK_II_BTE_DESTINATION_ADDRESS_INPLACE (BEDROCK_II_BTE_DESTINATION_ADDRESS_MASK << BEDROCK_II_BTE_DESTINATION_ADDRESS_SHIFT)
 
 /*
- * Writing this register starts the transfer. Reading it terminates any transfer in progress, and stopping one engine can disturb the other. The header states this protocol; the start-on-write and terminate-on-read behaviour is inferred from the header's comments, and whether busy is observable after a start is unknown.
+ * Writing this register starts the transfer. Reading it terminates any transfer
+ * in progress, and stopping one engine can disturb the other. The header states
+ * this protocol; the start-on-write and terminate-on-read behaviour is inferred
+ * from the header's comments, and whether busy is observable after a start is
+ * unknown.
  */
-/* bte_control: rw64, reset 0x0; Linux 2.5.40 SN1 register headers: names, offsets and field layouts */
+/* bte_control: rw64, reset 0x0; Linux 2.5.40 SN1 register headers: names,
+ * offsets and field layouts */
 #define BEDROCK_II_BTE_CONTROL                       0x410018 /* established */
 #define BEDROCK_II_BTE_CONTROL_COUNT                 2
 #define BEDROCK_II_BTE_CONTROL_STRIDE                65536
 #define BEDROCK_II_BTE_CONTROL_POISON_SHIFT          8 /* established */
 #define BEDROCK_II_BTE_CONTROL_POISON_MASK           0x1ull
-#define BEDROCK_II_BTE_CONTROL_POISON_INPLACE        (BEDROCK_II_BTE_CONTROL_POISON_MASK << BEDROCK_II_BTE_CONTROL_POISON_SHIFT)
+#define BEDROCK_II_BTE_CONTROL_POISON_INPLACE (BEDROCK_II_BTE_CONTROL_POISON_MASK << BEDROCK_II_BTE_CONTROL_POISON_SHIFT)
 #define BEDROCK_II_BTE_CONTROL_NOTIFY_SHIFT          4 /* established */
 #define BEDROCK_II_BTE_CONTROL_NOTIFY_MASK           0x1ull
-#define BEDROCK_II_BTE_CONTROL_NOTIFY_INPLACE        (BEDROCK_II_BTE_CONTROL_NOTIFY_MASK << BEDROCK_II_BTE_CONTROL_NOTIFY_SHIFT)
+#define BEDROCK_II_BTE_CONTROL_NOTIFY_INPLACE (BEDROCK_II_BTE_CONTROL_NOTIFY_MASK << BEDROCK_II_BTE_CONTROL_NOTIFY_SHIFT)
 #define BEDROCK_II_BTE_CONTROL_ZERO_FILL_SHIFT       0 /* established */
 #define BEDROCK_II_BTE_CONTROL_ZERO_FILL_MASK        0x1ull
-#define BEDROCK_II_BTE_CONTROL_ZERO_FILL_INPLACE     (BEDROCK_II_BTE_CONTROL_ZERO_FILL_MASK << BEDROCK_II_BTE_CONTROL_ZERO_FILL_SHIFT)
+#define BEDROCK_II_BTE_CONTROL_ZERO_FILL_INPLACE (BEDROCK_II_BTE_CONTROL_ZERO_FILL_MASK << BEDROCK_II_BTE_CONTROL_ZERO_FILL_SHIFT)
 
 /*
- * Address that receives the completion write-invalidate. The Itanium consumer sets its line to all ones before the start and expects the final length-status value to be deposited there.
+ * Address that receives the completion write-invalidate. The Itanium consumer
+ * sets its line to all ones before the start and expects the final
+ * length-status value to be deposited there.
  */
-/* bte_notification_address: rw64, reset 0x0; Linux 2.5.40 SN1 register headers: names, offsets and field layouts */
+/* bte_notification_address: rw64, reset 0x0; Linux 2.5.40 SN1 register headers:
+ * names, offsets and field layouts */
 #define BEDROCK_II_BTE_NOTIFICATION_ADDRESS          0x410020 /* established */
 #define BEDROCK_II_BTE_NOTIFICATION_ADDRESS_COUNT    2
 #define BEDROCK_II_BTE_NOTIFICATION_ADDRESS_STRIDE   65536
@@ -937,9 +1211,11 @@
 #define BEDROCK_II_BTE_NOTIFICATION_ADDRESS_ADDRESS_INPLACE (BEDROCK_II_BTE_NOTIFICATION_ADDRESS_ADDRESS_MASK << BEDROCK_II_BTE_NOTIFICATION_ADDRESS_ADDRESS_SHIFT)
 
 /*
- * Where the engine's completion interrupt goes. No public consumer programs it. The PROM's hub check does.
+ * Where the engine's completion interrupt goes. No public consumer programs it.
+ * The PROM's hub check does.
  */
-/* bte_interrupt_address: rw64, reset 0x0; Linux 2.5.40 SN1 register headers: names, offsets and field layouts */
+/* bte_interrupt_address: rw64, reset 0x0; Linux 2.5.40 SN1 register headers:
+ * names, offsets and field layouts */
 #define BEDROCK_II_BTE_INTERRUPT_ADDRESS             0x410028 /* established */
 #define BEDROCK_II_BTE_INTERRUPT_ADDRESS_COUNT       2
 #define BEDROCK_II_BTE_INTERRUPT_ADDRESS_STRIDE      65536
@@ -954,13 +1230,19 @@
 #define BEDROCK_II_BTE_INTERRUPT_ADDRESS_PI_SELECT_INPLACE (BEDROCK_II_BTE_INTERRUPT_ADDRESS_PI_SELECT_MASK << BEDROCK_II_BTE_INTERRUPT_ADDRESS_PI_SELECT_SHIFT)
 
 /*
- * Performance control. The register's name and layout are from the header; the header gives no access type, so rw is assumed and the register is graded inferred. No reset is recorded. The rsvd mask is the structure's members named reserved; it is the header's naming only. The register name is ours, spelled out from the header's description of IIO_IPCR; the header's short name is IPCR.
+ * Performance control. The register's name and layout are from the header; the
+ * header gives no access type, so rw is assumed and the register is graded
+ * inferred. No reset is recorded. The rsvd mask is the structure's members
+ * named reserved; it is the header's naming only. The register name is ours,
+ * spelled out from the header's description of IIO_IPCR; the header's short
+ * name is IPCR.
  */
-/* performance_control: rw64, reset unknown; Linux 2.5.40 SN1 register headers: IIO_IPCR (name and offset), ii_ipcr structure */
+/* performance_control: rw64, reset unknown; Linux 2.5.40 SN1 register headers:
+ * IIO_IPCR (name and offset), ii_ipcr structure */
 #define BEDROCK_II_PERFORMANCE_CONTROL               0x430000 /* inferred */
 #define BEDROCK_II_PERFORMANCE_CONTROL_ICCT_SHIFT    8 /* established */
 #define BEDROCK_II_PERFORMANCE_CONTROL_ICCT_MASK     0xffull
-#define BEDROCK_II_PERFORMANCE_CONTROL_ICCT_INPLACE  (BEDROCK_II_PERFORMANCE_CONTROL_ICCT_MASK << BEDROCK_II_PERFORMANCE_CONTROL_ICCT_SHIFT)
+#define BEDROCK_II_PERFORMANCE_CONTROL_ICCT_INPLACE (BEDROCK_II_PERFORMANCE_CONTROL_ICCT_MASK << BEDROCK_II_PERFORMANCE_CONTROL_ICCT_SHIFT)
 #define BEDROCK_II_PERFORMANCE_CONTROL_IPPR1_C_SHIFT 4 /* established */
 #define BEDROCK_II_PERFORMANCE_CONTROL_IPPR1_C_MASK  0xfull
 #define BEDROCK_II_PERFORMANCE_CONTROL_IPPR1_C_INPLACE (BEDROCK_II_PERFORMANCE_CONTROL_IPPR1_C_MASK << BEDROCK_II_PERFORMANCE_CONTROL_IPPR1_C_SHIFT)
@@ -969,9 +1251,15 @@
 #define BEDROCK_II_PERFORMANCE_CONTROL_IPPR0_C_INPLACE (BEDROCK_II_PERFORMANCE_CONTROL_IPPR0_C_MASK << BEDROCK_II_PERFORMANCE_CONTROL_IPPR0_C_SHIFT)
 
 /*
- * Performance profiling. The register's name and layout are from the header; the header gives no access type, so rw is assumed and the register is graded inferred. No reset is recorded. The rsvd mask is the structure's members named reserved; it is the header's naming only. The register name is ours, spelled out from the header's description of IIO_IPPR; the header's short name is IPPR.
+ * Performance profiling. The register's name and layout are from the header;
+ * the header gives no access type, so rw is assumed and the register is graded
+ * inferred. No reset is recorded. The rsvd mask is the structure's members
+ * named reserved; it is the header's naming only. The register name is ours,
+ * spelled out from the header's description of IIO_IPPR; the header's short
+ * name is IPPR.
  */
-/* performance_profiling: rw64, reset unknown; Linux 2.5.40 SN1 register headers: IIO_IPPR (name and offset), ii_ippr structure */
+/* performance_profiling: rw64, reset unknown; Linux 2.5.40 SN1 register
+ * headers: IIO_IPPR (name and offset), ii_ippr structure */
 #define BEDROCK_II_PERFORMANCE_PROFILING             0x430008 /* inferred */
 #define BEDROCK_II_PERFORMANCE_PROFILING_IPPR1_SHIFT 32 /* established */
 #define BEDROCK_II_PERFORMANCE_PROFILING_IPPR1_MASK  0xffffffffull
@@ -983,8 +1271,11 @@
 #define BEDROCK_II_BTE_REGISTER_SIZE                 0x30u /* inferred */
 #define BEDROCK_II_MANUFACTURER_BEDROCK              0x24u /* inferred */
 #define BEDROCK_II_PART_BEDROCK                      0xc110u /* inferred */
-#define BEDROCK_II_PI0_INTERRUPT_PENDING_MODIFY      0x1800090u /* established */
-#define BEDROCK_II_PI1_INTERRUPT_PENDING_MODIFY      0x1a00090u /* established */
-#define BEDROCK_II_PROTECTION_OVERRIDE_KEY           0x53474972756c6573ull /* established */
+/* established */
+#define BEDROCK_II_PI0_INTERRUPT_PENDING_MODIFY      0x1800090u
+/* established */
+#define BEDROCK_II_PI1_INTERRUPT_PENDING_MODIFY      0x1a00090u
+/* established */
+#define BEDROCK_II_PROTECTION_OVERRIDE_KEY           0x53474972756c6573ull
 
 #endif /* BEDROCK_II_GEN_H */

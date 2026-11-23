@@ -1,8 +1,10 @@
-// generated from devices/hub_md/registers-extra.toml by defs-gen - do not edit, change the source
-// defs-gen 2
+// @generated from devices/hub_md/registers-extra.toml by defs-gen - do not edit, change the source
+// defs-gen 3
 // input sha256 df97b661d44b747c810d4490e53a5804b7bb12cb4a2de043edf26b3990c7f0d1
 // Hub memory and directory register layouts and constants outside the census
 #![allow(dead_code)]
+#![allow(clippy::doc_markdown)]
+#![cfg_attr(rustfmt, rustfmt_skip)]
 
 pub mod enums {
     pub mod md_bank_size {
@@ -185,6 +187,7 @@ pub mod md_memory_config {
         pub const fn set(v: u64, x: u64) -> u64 {
             (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
         }
+        #[allow(unused_imports)]
         pub use super::super::enums::md_bank_size::Value;
     }
     pub mod bank6 { // bits 20:18, established
@@ -196,6 +199,7 @@ pub mod md_memory_config {
         pub const fn set(v: u64, x: u64) -> u64 {
             (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
         }
+        #[allow(unused_imports)]
         pub use super::super::enums::md_bank_size::Value;
     }
     pub mod bank5 { // bits 17:15, established
@@ -207,6 +211,7 @@ pub mod md_memory_config {
         pub const fn set(v: u64, x: u64) -> u64 {
             (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
         }
+        #[allow(unused_imports)]
         pub use super::super::enums::md_bank_size::Value;
     }
     pub mod bank4 { // bits 14:12, established
@@ -218,6 +223,7 @@ pub mod md_memory_config {
         pub const fn set(v: u64, x: u64) -> u64 {
             (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
         }
+        #[allow(unused_imports)]
         pub use super::super::enums::md_bank_size::Value;
     }
     pub mod bank3 { // bits 11:9, established
@@ -229,6 +235,7 @@ pub mod md_memory_config {
         pub const fn set(v: u64, x: u64) -> u64 {
             (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
         }
+        #[allow(unused_imports)]
         pub use super::super::enums::md_bank_size::Value;
     }
     pub mod bank2 { // bits 8:6, established
@@ -240,6 +247,7 @@ pub mod md_memory_config {
         pub const fn set(v: u64, x: u64) -> u64 {
             (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
         }
+        #[allow(unused_imports)]
         pub use super::super::enums::md_bank_size::Value;
     }
     pub mod bank1 { // bits 5:3, established
@@ -251,6 +259,7 @@ pub mod md_memory_config {
         pub const fn set(v: u64, x: u64) -> u64 {
             (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
         }
+        #[allow(unused_imports)]
         pub use super::super::enums::md_bank_size::Value;
     }
     pub mod bank0 { // bits 2:0, established
@@ -262,6 +271,7 @@ pub mod md_memory_config {
         pub const fn set(v: u64, x: u64) -> u64 {
             (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
         }
+        #[allow(unused_imports)]
         pub use super::super::enums::md_bank_size::Value;
     }
 }

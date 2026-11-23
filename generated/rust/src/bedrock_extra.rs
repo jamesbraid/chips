@@ -1,8 +1,10 @@
-// generated from devices/bedrock/registers-extra.toml by defs-gen - do not edit, change the source
-// defs-gen 2
+// @generated from devices/bedrock/registers-extra.toml by defs-gen - do not edit, change the source
+// defs-gen 3
 // input sha256 66f55031d6b9d645d30480ba1e0a6af5318d45684c099683530c5dd69e1b2d79
 // Hub and Bedrock network-controller registers outside the census
 #![allow(dead_code)]
+#![allow(clippy::doc_markdown)]
+#![cfg_attr(rustfmt, rustfmt_skip)]
 
 /// (established)
 pub mod node_region_mask {

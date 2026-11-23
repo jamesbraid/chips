@@ -1,5 +1,5 @@
 """generated from devices/uv4/registers.toml by defs-gen - do not edit, change the source
-defs-gen 2
+defs-gen 3
 input sha256 9e51e3f75eda9a3022a20854471f594497385127ba53339f369e77577b583af3
 UV4 (UV 400 generation, includes the UV4A revision) hub MMR map"""
 

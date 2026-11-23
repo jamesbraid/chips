@@ -1,8 +1,10 @@
-// generated from devices/bedrock_xb/registers.toml by defs-gen - do not edit, change the source
-// defs-gen 2
+// @generated from devices/bedrock_xb/registers.toml by defs-gen - do not edit, change the source
+// defs-gen 3
 // input sha256 ed209e81bcd3b4c09ee365d6ba1890e8b0e7509d8b2d283d8968ad81ab13d230
 // Bedrock internal crossbar (XB) registers outside the census
 #![allow(dead_code)]
+#![allow(clippy::doc_markdown)]
+#![cfg_attr(rustfmt, rustfmt_skip)]
 
 pub mod enums {
     pub mod first_error_source {
@@ -704,6 +706,7 @@ pub mod xb_first_error {
         pub const fn set(v: u64, x: u64) -> u64 {
             (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
         }
+        #[allow(unused_imports)]
         pub use super::super::enums::first_error_source::Value;
     }
     pub mod channel { // bits 7:4, inferred

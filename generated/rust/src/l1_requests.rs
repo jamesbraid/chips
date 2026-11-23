@@ -1,8 +1,10 @@
-// generated from formats/l1_requests/format.toml by defs-gen - do not edit, change the source
-// defs-gen 2
+// @generated from formats/l1_requests/format.toml by defs-gen - do not edit, change the source
+// defs-gen 3
 // input sha256 9b3aa784db21ee484f4206cd4dc8b9729cd11cf3f9d9d9a81598e181b6c4e09d
 // request codes the Origin 3000 kernel sends to the brick controller
 #![allow(dead_code)]
+#![allow(clippy::doc_markdown)]
+#![cfg_attr(rustfmt, rustfmt_skip)]
 
 pub const REQ_ELSC_CONS_NODE: u32 = 0x1003; // established
 pub const REQ_ELSC_CONS_SUBCH: u32 = 0x1002; // established

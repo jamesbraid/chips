@@ -1,8 +1,10 @@
-// generated from devices/seeq_8003/registers.toml by defs-gen - do not edit, change the source
-// defs-gen 2
+// @generated from devices/seeq_8003/registers.toml by defs-gen - do not edit, change the source
+// defs-gen 3
 // input sha256 46e4c83c2a7f9205b932e74d0bfe059d566640f9dd13045c1daa4fdc6db8b16f
 // SEEQ 8003 and 80C03 Ethernet data link controller (Indy)
 #![allow(dead_code)]
+#![allow(clippy::doc_markdown)]
+#![cfg_attr(rustfmt, rustfmt_skip)]
 
 pub mod enums {
     pub mod bank_select {
@@ -180,6 +182,7 @@ pub mod rx_command {
         pub const fn set(v: u32, x: u32) -> u32 {
             (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
         }
+        #[allow(unused_imports)]
         pub use super::super::enums::receive_match::Value;
     }
     pub mod int_good_frame { // bits 5:5, established
@@ -256,6 +259,7 @@ pub mod tx_command {
         pub const fn set(v: u32, x: u32) -> u32 {
             (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
         }
+        #[allow(unused_imports)]
         pub use super::super::enums::bank_select::Value;
     }
     pub mod int_success { // bits 3:3, established

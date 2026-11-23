@@ -1,8 +1,10 @@
-// generated from devices/ioc4/registers-extra.toml by defs-gen - do not edit, change the source
-// defs-gen 2
+// @generated from devices/ioc4/registers-extra.toml by defs-gen - do not edit, change the source
+// defs-gen 3
 // input sha256 c76a9ebe973b864f75d3bd181dbaa7e4ea1a9a32767fda897711641d5807f1b2
 // IOC4 registers outside the census
 #![allow(dead_code)]
+#![allow(clippy::doc_markdown)]
+#![cfg_attr(rustfmt, rustfmt_skip)]
 
 /// Generic pin data word. The SGI header defines it at 0x38 with bits 7:0 holding the state of the eight generic pins. Offset and name are established by (established)
 pub mod gpdr {

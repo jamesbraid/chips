@@ -1,5 +1,5 @@
 """generated from devices/ds1744/registers.toml by defs-gen - do not edit, change the source
-defs-gen 2
+defs-gen 3
 input sha256 b5d17eac59842695d624daaad596f06b877f17bfefcdbbe686446be878c5d4fe
 Dallas DS1744 nonvolatile timekeeping SRAM (32 KiB, byte-wide, with clock)"""
 

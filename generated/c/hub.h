@@ -1,5 +1,6 @@
-/* generated from devices/hub/registers.toml by defs-gen - do not edit, change the source */
-/* defs-gen 2 */
+/* generated from devices/hub/registers.toml by defs-gen - do not edit, change
+ * the source */
+/* defs-gen 3 */
 /* input sha256 b60d4fb7431ff51b63d99d670a08717509715e57155ebbd0e581bdd116cda08d */
 /* Hub (Origin 2000 node controller) */
 #ifndef HUB_GEN_H
@@ -8,7 +9,8 @@
 #include <stdint.h>
 
 
-/* pi_region_present: rw64, reset 0xffffffffffffffff; census: 1 sites, 1 routines (r); census: 1 sites, 1 routines (w, indexed) */
+/* pi_region_present: rw64, reset 0xffffffffffffffff; census: 1 sites, 1
+ * routines (r); census: 1 sites, 1 routines (w, indexed) */
 #define HUB_PI_REGION_PRESENT                        0x000018 /* established */
 
 /* pi_cpu_num: rw64, reset 0x0; census: 136 sites, 20 routines */
@@ -35,10 +37,12 @@
 /* pi_nmi_a: w64, reset unknown; census: 3 sites, 3 routines */
 #define HUB_PI_NMI_A                                 0x000070 /* established */
 
-/* pi_int_pend0: r64, reset 0x0; census: 11 sites, 8 routines (r); census: 2 sites, 2 routines (r, indexed) */
+/* pi_int_pend0: r64, reset 0x0; census: 11 sites, 8 routines (r); census: 2
+ * sites, 2 routines (r, indexed) */
 #define HUB_PI_INT_PEND0                             0x000098 /* established */
 
-/* pi_int_pend1: r64, reset 0x0; census: 5 sites, 4 routines (r); census: 1 sites, 1 routines (r, indexed) */
+/* pi_int_pend1: r64, reset 0x0; census: 5 sites, 4 routines (r); census: 1
+ * sites, 1 routines (r, indexed) */
 #define HUB_PI_INT_PEND1                             0x0000a0 /* established */
 
 /* pi_int_mask0_a: rw64, reset 0x0; census: 4 sites, 4 routines */
@@ -80,10 +84,12 @@
 /* pi_rt_en_b: w64, reset 0x0; census: 1 sites, 1 routines */
 #define HUB_PI_RT_EN_B                               0x000148 /* established */
 
-/* pi_prof_en_a: w64, reset 0x0; census: 2 sites, 2 routines (w); census: 1 sites, 1 routines (w, indexed) */
+/* pi_prof_en_a: w64, reset 0x0; census: 2 sites, 2 routines (w); census: 1
+ * sites, 1 routines (w, indexed) */
 #define HUB_PI_PROF_EN_A                             0x000150 /* established */
 
-/* pi_prof_en_b: w64, reset 0x0; census: 2 sites, 2 routines (w); census: 1 sites, 1 routines (w, indexed) */
+/* pi_prof_en_b: w64, reset 0x0; census: 2 sites, 2 routines (w); census: 1
+ * sites, 1 routines (w, indexed) */
 #define HUB_PI_PROF_EN_B                             0x000158 /* established */
 
 /* pi_gfx_int_cmp_a: w64, reset 0x0; census: 1 sites, 1 routines */
@@ -92,13 +98,15 @@
 /* pi_gfx_int_cmp_b: w64, reset 0x0; census: 1 sites, 1 routines */
 #define HUB_PI_GFX_INT_CMP_B                         0x000348 /* established */
 
-/* pi_err_stack_addr_a: rw64, reset 0x0; census: 4 sites, 3 routines (r); census: 2 sites, 1 routines (w, indexed) */
+/* pi_err_stack_addr_a: rw64, reset 0x0; census: 4 sites, 3 routines (r);
+ * census: 2 sites, 1 routines (w, indexed) */
 #define HUB_PI_ERR_STACK_ADDR_A                      0x000418 /* established */
 
 /* pi_err_stack_addr_b: rw64, reset 0x0; census: 7 sites, 3 routines */
 #define HUB_PI_ERR_STACK_ADDR_B                      0x000420 /* established */
 
-/* pi_err_stack_size: r64, reset 0x0; census: 2 sites, 1 routines (r); census: 2 sites, 1 routines (r, indexed) */
+/* pi_err_stack_size: r64, reset 0x0; census: 2 sites, 1 routines (r); census: 2
+ * sites, 1 routines (r, indexed) */
 #define HUB_PI_ERR_STACK_SIZE                        0x000428 /* established */
 
 /* pi_hardreset_bit: w64, reset 0x1; census: 1 sites, 1 routines */
@@ -110,13 +118,15 @@
 /* md_mig_candidate_clr: r64, reset unknown; census: 2 sites, 2 routines */
 #define HUB_MD_MIG_CANDIDATE_CLR                     0x200048 /* established */
 
-/* md_dir_error_clr: r64, reset unknown; census: 1 sites, 1 routines (r); census: 4 sites, 3 routines (r, indexed) */
+/* md_dir_error_clr: r64, reset unknown; census: 1 sites, 1 routines (r);
+ * census: 4 sites, 3 routines (r, indexed) */
 #define HUB_MD_DIR_ERROR_CLR                         0x200058 /* established */
 
 /* md_protocol_error_clr: r64, reset unknown; census: 2 sites, 2 routines */
 #define HUB_MD_PROTOCOL_ERROR_CLR                    0x200068 /* established */
 
-/* md_mem_error_clr: r64, reset unknown; census: 1 sites, 1 routines (r); census: 5 sites, 3 routines (r, indexed) */
+/* md_mem_error_clr: r64, reset unknown; census: 1 sites, 1 routines (r);
+ * census: 5 sites, 3 routines (r, indexed) */
 #define HUB_MD_MEM_ERROR_CLR                         0x200078 /* established */
 
 /* md_misc_error_clr: r64, reset unknown; census: 2 sites, 2 routines */
@@ -134,10 +144,12 @@
 /* hub_rev_war_ctrl: rw64, reset 0x0; census: 3 sites, 1 routines */
 #define HUB_HUB_REV_WAR_CTRL                         0x2000e0 /* established */
 
-/* md_ureg0_0: rw64, reset unknown; census: 6 sites, 2 routines (w); census: 22 sites, 6 routines (rw, indexed) */
+/* md_ureg0_0: rw64, reset unknown; census: 6 sites, 2 routines (w); census: 22
+ * sites, 6 routines (rw, indexed) */
 #define HUB_MD_UREG0_0                               0x220000 /* established */
 
-/* md_ureg0_1: rw64, reset unknown; census: 9 sites, 2 routines (w); census: 36 sites, 5 routines (rw, indexed) */
+/* md_ureg0_1: rw64, reset unknown; census: 9 sites, 2 routines (w); census: 36
+ * sites, 5 routines (rw, indexed) */
 #define HUB_MD_UREG0_1                               0x220008 /* established */
 
 /* md_ureg1_0: w64, reset 0x0; census: 38 sites, 9 routines */
@@ -196,10 +208,12 @@
 /* iio_ibda_0: r64, reset 0x0; census: 1 sites, 1 routines */
 #define HUB_IIO_IBDA_0                               0x410010 /* established */
 
-/* iio_ibsa_1: rw64, reset 0x0; census: 1 sites, 1 routines (r); census: 1 sites, 1 routines (w, indexed) */
+/* iio_ibsa_1: rw64, reset 0x0; census: 1 sites, 1 routines (r); census: 1
+ * sites, 1 routines (w, indexed) */
 #define HUB_IIO_IBSA_1                               0x420008 /* established */
 
-/* iio_ibda_1: rw64, reset unknown; census: 1 sites, 1 routines (r); census: 1 sites, 1 routines (w, indexed) */
+/* iio_ibda_1: rw64, reset unknown; census: 1 sites, 1 routines (r); census: 1
+ * sites, 1 routines (w, indexed) */
 #define HUB_IIO_IBDA_1                               0x420010 /* established */
 
 /* iio_ibna_1: w64, reset 0x0; census: 1 sites, 1 routines */

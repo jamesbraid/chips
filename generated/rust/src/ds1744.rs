@@ -1,8 +1,10 @@
-// generated from devices/ds1744/registers.toml by defs-gen - do not edit, change the source
-// defs-gen 2
+// @generated from devices/ds1744/registers.toml by defs-gen - do not edit, change the source
+// defs-gen 3
 // input sha256 b5d17eac59842695d624daaad596f06b877f17bfefcdbbe686446be878c5d4fe
 // Dallas DS1744 nonvolatile timekeeping SRAM (32 KiB, byte-wide, with clock)
 #![allow(dead_code)]
+#![allow(clippy::doc_markdown)]
+#![cfg_attr(rustfmt, rustfmt_skip)]
 
 /// Battery-backed RAM below the clock bytes. The sources give no layout inside it. The 32,760 is inferred from the clock placement, not stated by a sourc (inferred)
 pub mod ram {

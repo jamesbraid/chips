@@ -1,5 +1,5 @@
 {
- "generator": "defs-gen 2",
+ "generator": "defs-gen 3",
  "input_sha256": "94c049da8c3025db0a794be8a9ac86283932e63a700df777a6180f810e530ea9",
  "schema": "defs-flat/1",
  "source": "devices/tigon/registers.toml",

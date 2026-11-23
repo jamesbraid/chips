@@ -1,8 +1,10 @@
-// generated from devices/hub/registers-extra.toml by defs-gen - do not edit, change the source
-// defs-gen 2
+// @generated from devices/hub/registers-extra.toml by defs-gen - do not edit, change the source
+// defs-gen 3
 // input sha256 7704657248a0fc8036bec883c4fcec87a565d969ba87cc19c1e9bc8d2ae9aa05
 // Hub block transfer engine registers and control bits outside the census
 #![allow(dead_code)]
+#![allow(clippy::doc_markdown)]
+#![cfg_attr(rustfmt, rustfmt_skip)]
 
 pub mod enums {
     pub mod iio_lnk_stat {
@@ -287,6 +289,7 @@ pub mod iio_ilcsr {
         pub const fn set(v: u64, x: u64) -> u64 {
             (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
         }
+        #[allow(unused_imports)]
         pub use super::super::enums::iio_lnk_stat::Value;
     }
     pub mod bm8 { // bits 11:11, established

@@ -1,5 +1,5 @@
 """generated from devices/bedrock/registers-extra.toml by defs-gen - do not edit, change the source
-defs-gen 2
+defs-gen 3
 input sha256 66f55031d6b9d645d30480ba1e0a6af5318d45684c099683530c5dd69e1b2d79
 Hub and Bedrock network-controller registers outside the census"""
 

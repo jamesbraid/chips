@@ -1,7 +1,9 @@
-/* generated from devices/bedrock_ni/registers.toml by defs-gen - do not edit, change the source */
-/* defs-gen 2 */
+/* generated from devices/bedrock_ni/registers.toml by defs-gen - do not edit,
+ * change the source */
+/* defs-gen 3 */
 /* input sha256 04d5ffad594b1763f0ae5bf21018846c021831d98979a127f60036b8abad3823 */
-/* Bedrock network interface (NI) registers: field layouts, port error bits and routing tables */
+/* Bedrock network interface (NI) registers: field layouts, port error bits and
+ * routing tables */
 #ifndef BEDROCK_NI_GEN_H
 #define BEDROCK_NI_GEN_H
 
@@ -9,63 +11,77 @@
 
 
 /*
- * Link-level protocol status. The header calls bit 1 link up and bit 2 remote power; the header gives no encoding for the two-bit status, so the meaning of bit 1 is inferred from its name.
+ * Link-level protocol status. The header calls bit 1 link up and bit 2 remote
+ * power; the header gives no encoding for the two-bit status, so the meaning of
+ * bit 1 is inferred from its name.
  */
-/* port_status: r64, reset 0x0; Linux 2.5.40 SN1 register headers: names, offsets and field layouts */
+/* port_status: r64, reset 0x0; Linux 2.5.40 SN1 register headers: names,
+ * offsets and field layouts */
 #define BEDROCK_NI_PORT_STATUS                       0x680000 /* established */
 #define BEDROCK_NI_PORT_STATUS_REMOTE_POWER_SHIFT    2 /* inferred */
 #define BEDROCK_NI_PORT_STATUS_REMOTE_POWER_MASK     0x1ull
-#define BEDROCK_NI_PORT_STATUS_REMOTE_POWER_INPLACE  (BEDROCK_NI_PORT_STATUS_REMOTE_POWER_MASK << BEDROCK_NI_PORT_STATUS_REMOTE_POWER_SHIFT)
+#define BEDROCK_NI_PORT_STATUS_REMOTE_POWER_INPLACE (BEDROCK_NI_PORT_STATUS_REMOTE_POWER_MASK << BEDROCK_NI_PORT_STATUS_REMOTE_POWER_SHIFT)
 #define BEDROCK_NI_PORT_STATUS_LINK_UP_SHIFT         1 /* inferred */
 #define BEDROCK_NI_PORT_STATUS_LINK_UP_MASK          0x1ull
-#define BEDROCK_NI_PORT_STATUS_LINK_UP_INPLACE       (BEDROCK_NI_PORT_STATUS_LINK_UP_MASK << BEDROCK_NI_PORT_STATUS_LINK_UP_SHIFT)
+#define BEDROCK_NI_PORT_STATUS_LINK_UP_INPLACE (BEDROCK_NI_PORT_STATUS_LINK_UP_MASK << BEDROCK_NI_PORT_STATUS_LINK_UP_SHIFT)
 #define BEDROCK_NI_PORT_STATUS_STATUS_BIT0_SHIFT     0 /* unknown */
 #define BEDROCK_NI_PORT_STATUS_STATUS_BIT0_MASK      0x1ull
-#define BEDROCK_NI_PORT_STATUS_STATUS_BIT0_INPLACE   (BEDROCK_NI_PORT_STATUS_STATUS_BIT0_MASK << BEDROCK_NI_PORT_STATUS_STATUS_BIT0_SHIFT)
+#define BEDROCK_NI_PORT_STATUS_STATUS_BIT0_INPLACE (BEDROCK_NI_PORT_STATUS_STATUS_BIT0_MASK << BEDROCK_NI_PORT_STATUS_STATUS_BIT0_SHIFT)
 
 /*
- * Writing this register resets the network interface. The header's comments say bit 0 sends a link reset to the peer, bit 1 sends a warm reset over the link and bit 2 resets the local Bedrock. What the peer does with a link reset is not stated. Reset unknown.
+ * Writing this register resets the network interface. The header's comments say
+ * bit 0 sends a link reset to the peer, bit 1 sends a warm reset over the link
+ * and bit 2 resets the local Bedrock. What the peer does with a link reset is
+ * not stated. Reset unknown.
  */
-/* port_reset: w64, reset unknown; Linux 2.5.40 SN1 register headers: names, offsets and field layouts */
+/* port_reset: w64, reset unknown; Linux 2.5.40 SN1 register headers: names,
+ * offsets and field layouts */
 #define BEDROCK_NI_PORT_RESET                        0x680008 /* established */
 #define BEDROCK_NI_PORT_RESET_LOCAL_RESET_SHIFT      2 /* established */
 #define BEDROCK_NI_PORT_RESET_LOCAL_RESET_MASK       0x1ull
-#define BEDROCK_NI_PORT_RESET_LOCAL_RESET_INPLACE    (BEDROCK_NI_PORT_RESET_LOCAL_RESET_MASK << BEDROCK_NI_PORT_RESET_LOCAL_RESET_SHIFT)
+#define BEDROCK_NI_PORT_RESET_LOCAL_RESET_INPLACE (BEDROCK_NI_PORT_RESET_LOCAL_RESET_MASK << BEDROCK_NI_PORT_RESET_LOCAL_RESET_SHIFT)
 #define BEDROCK_NI_PORT_RESET_PORT_RESET_SHIFT       1 /* established */
 #define BEDROCK_NI_PORT_RESET_PORT_RESET_MASK        0x1ull
-#define BEDROCK_NI_PORT_RESET_PORT_RESET_INPLACE     (BEDROCK_NI_PORT_RESET_PORT_RESET_MASK << BEDROCK_NI_PORT_RESET_PORT_RESET_SHIFT)
+#define BEDROCK_NI_PORT_RESET_PORT_RESET_INPLACE (BEDROCK_NI_PORT_RESET_PORT_RESET_MASK << BEDROCK_NI_PORT_RESET_PORT_RESET_SHIFT)
 #define BEDROCK_NI_PORT_RESET_LINK_RESET_OUT_SHIFT   0 /* established */
 #define BEDROCK_NI_PORT_RESET_LINK_RESET_OUT_MASK    0x1ull
 #define BEDROCK_NI_PORT_RESET_LINK_RESET_OUT_INPLACE (BEDROCK_NI_PORT_RESET_LINK_RESET_OUT_MASK << BEDROCK_NI_PORT_RESET_LINK_RESET_OUT_SHIFT)
 
 /*
- * Warm reset enable. The header's comment says bit 0 lets a reset arriving over the link reset the Bedrock. The header does not say whether the bit also gates a local reset, so that is unknown.
+ * Warm reset enable. The header's comment says bit 0 lets a reset arriving over
+ * the link reset the Bedrock. The header does not say whether the bit also
+ * gates a local reset, so that is unknown.
  */
-/* reset_enable: rw64, reset 0x0; Linux 2.5.40 SN1 register headers: names, offsets and field layouts */
+/* reset_enable: rw64, reset 0x0; Linux 2.5.40 SN1 register headers: names,
+ * offsets and field layouts */
 #define BEDROCK_NI_RESET_ENABLE                      0x680010 /* established */
 #define BEDROCK_NI_RESET_ENABLE_RESET_OK_SHIFT       0 /* inferred */
 #define BEDROCK_NI_RESET_ENABLE_RESET_OK_MASK        0x1ull
-#define BEDROCK_NI_RESET_ENABLE_RESET_OK_INPLACE     (BEDROCK_NI_RESET_ENABLE_RESET_OK_MASK << BEDROCK_NI_RESET_ENABLE_RESET_OK_SHIFT)
+#define BEDROCK_NI_RESET_ENABLE_RESET_OK_INPLACE (BEDROCK_NI_RESET_ENABLE_RESET_OK_MASK << BEDROCK_NI_RESET_ENABLE_RESET_OK_SHIFT)
 
 /*
- * Diagnostic parameters. Field names are the header's; the header gives no operating description beyond them.
+ * Diagnostic parameters. Field names are the header's; the header gives no
+ * operating description beyond them.
  */
-/* diag_parms: rw64, reset 0x0; Linux 2.5.40 SN1 register headers: names, offsets and field layouts */
+/* diag_parms: rw64, reset 0x0; Linux 2.5.40 SN1 register headers: names,
+ * offsets and field layouts */
 #define BEDROCK_NI_DIAG_PARMS                        0x680018 /* established */
 #define BEDROCK_NI_DIAG_PARMS_SEND_ERR_OFF_SHIFT     2 /* inferred */
 #define BEDROCK_NI_DIAG_PARMS_SEND_ERR_OFF_MASK      0x1ull
-#define BEDROCK_NI_DIAG_PARMS_SEND_ERR_OFF_INPLACE   (BEDROCK_NI_DIAG_PARMS_SEND_ERR_OFF_MASK << BEDROCK_NI_DIAG_PARMS_SEND_ERR_OFF_SHIFT)
+#define BEDROCK_NI_DIAG_PARMS_SEND_ERR_OFF_INPLACE (BEDROCK_NI_DIAG_PARMS_SEND_ERR_OFF_MASK << BEDROCK_NI_DIAG_PARMS_SEND_ERR_OFF_SHIFT)
 #define BEDROCK_NI_DIAG_PARMS_PORT_DISABLE_SHIFT     1 /* inferred */
 #define BEDROCK_NI_DIAG_PARMS_PORT_DISABLE_MASK      0x1ull
-#define BEDROCK_NI_DIAG_PARMS_PORT_DISABLE_INPLACE   (BEDROCK_NI_DIAG_PARMS_PORT_DISABLE_MASK << BEDROCK_NI_DIAG_PARMS_PORT_DISABLE_SHIFT)
+#define BEDROCK_NI_DIAG_PARMS_PORT_DISABLE_INPLACE (BEDROCK_NI_DIAG_PARMS_PORT_DISABLE_MASK << BEDROCK_NI_DIAG_PARMS_PORT_DISABLE_SHIFT)
 #define BEDROCK_NI_DIAG_PARMS_SEND_DATA_ERROR_SHIFT  0 /* inferred */
 #define BEDROCK_NI_DIAG_PARMS_SEND_DATA_ERROR_MASK   0x1ull
 #define BEDROCK_NI_DIAG_PARMS_SEND_DATA_ERROR_INPLACE (BEDROCK_NI_DIAG_PARMS_SEND_DATA_ERROR_MASK << BEDROCK_NI_DIAG_PARMS_SEND_DATA_ERROR_SHIFT)
 
 /*
- * Virtual channel selection for outgoing messages. Bits 0 to 3 pick the channel for requests of each class and bits 4 to 7 for replies.
+ * Virtual channel selection for outgoing messages. Bits 0 to 3 pick the channel
+ * for requests of each class and bits 4 to 7 for replies.
  */
-/* channel_control: rw64, reset 0x100; Linux 2.5.40 SN1 register headers: names, offsets and field layouts */
+/* channel_control: rw64, reset 0x100; Linux 2.5.40 SN1 register headers: names,
+ * offsets and field layouts */
 #define BEDROCK_NI_CHANNEL_CONTROL                   0x680020 /* established */
 #define BEDROCK_NI_CHANNEL_CONTROL_SEND_VCH_SEL_SHIFT 8 /* established */
 #define BEDROCK_NI_CHANNEL_CONTROL_SEND_VCH_SEL_MASK 0x1ull
@@ -96,39 +112,44 @@
 #define BEDROCK_NI_CHANNEL_CONTROL_VCH_ONE_REQUEST_INPLACE (BEDROCK_NI_CHANNEL_CONTROL_VCH_ONE_REQUEST_MASK << BEDROCK_NI_CHANNEL_CONTROL_VCH_ONE_REQUEST_SHIFT)
 
 /*
- * Access to the link test logic: seed, mask, data, valid, error and flit fields, plus clear and error-capture controls. The header gives the field layout only. Reset unknown.
+ * Access to the link test logic: seed, mask, data, valid, error and flit
+ * fields, plus clear and error-capture controls. The header gives the field
+ * layout only. Reset unknown.
  */
-/* channel_test: rw64, reset unknown; Linux 2.5.40 SN1 register headers: names, offsets and field layouts */
+/* channel_test: rw64, reset unknown; Linux 2.5.40 SN1 register headers: names,
+ * offsets and field layouts */
 #define BEDROCK_NI_CHANNEL_TEST                      0x680028 /* established */
 #define BEDROCK_NI_CHANNEL_TEST_TEST_ERRCAPTURE_SHIFT 54 /* established */
 #define BEDROCK_NI_CHANNEL_TEST_TEST_ERRCAPTURE_MASK 0x1ull
 #define BEDROCK_NI_CHANNEL_TEST_TEST_ERRCAPTURE_INPLACE (BEDROCK_NI_CHANNEL_TEST_TEST_ERRCAPTURE_MASK << BEDROCK_NI_CHANNEL_TEST_TEST_ERRCAPTURE_SHIFT)
 #define BEDROCK_NI_CHANNEL_TEST_TEST_CLEAR_SHIFT     53 /* established */
 #define BEDROCK_NI_CHANNEL_TEST_TEST_CLEAR_MASK      0x1ull
-#define BEDROCK_NI_CHANNEL_TEST_TEST_CLEAR_INPLACE   (BEDROCK_NI_CHANNEL_TEST_TEST_CLEAR_MASK << BEDROCK_NI_CHANNEL_TEST_TEST_CLEAR_SHIFT)
+#define BEDROCK_NI_CHANNEL_TEST_TEST_CLEAR_INPLACE (BEDROCK_NI_CHANNEL_TEST_TEST_CLEAR_MASK << BEDROCK_NI_CHANNEL_TEST_TEST_CLEAR_SHIFT)
 #define BEDROCK_NI_CHANNEL_TEST_TEST_FLIT_SHIFT      50 /* established */
 #define BEDROCK_NI_CHANNEL_TEST_TEST_FLIT_MASK       0x7ull
-#define BEDROCK_NI_CHANNEL_TEST_TEST_FLIT_INPLACE    (BEDROCK_NI_CHANNEL_TEST_TEST_FLIT_MASK << BEDROCK_NI_CHANNEL_TEST_TEST_FLIT_SHIFT)
+#define BEDROCK_NI_CHANNEL_TEST_TEST_FLIT_INPLACE (BEDROCK_NI_CHANNEL_TEST_TEST_FLIT_MASK << BEDROCK_NI_CHANNEL_TEST_TEST_FLIT_SHIFT)
 #define BEDROCK_NI_CHANNEL_TEST_TEST_CBERR_SHIFT     49 /* established */
 #define BEDROCK_NI_CHANNEL_TEST_TEST_CBERR_MASK      0x1ull
-#define BEDROCK_NI_CHANNEL_TEST_TEST_CBERR_INPLACE   (BEDROCK_NI_CHANNEL_TEST_TEST_CBERR_MASK << BEDROCK_NI_CHANNEL_TEST_TEST_CBERR_SHIFT)
+#define BEDROCK_NI_CHANNEL_TEST_TEST_CBERR_INPLACE (BEDROCK_NI_CHANNEL_TEST_TEST_CBERR_MASK << BEDROCK_NI_CHANNEL_TEST_TEST_CBERR_SHIFT)
 #define BEDROCK_NI_CHANNEL_TEST_TEST_VALID_SHIFT     48 /* established */
 #define BEDROCK_NI_CHANNEL_TEST_TEST_VALID_MASK      0x1ull
-#define BEDROCK_NI_CHANNEL_TEST_TEST_VALID_INPLACE   (BEDROCK_NI_CHANNEL_TEST_TEST_VALID_MASK << BEDROCK_NI_CHANNEL_TEST_TEST_VALID_SHIFT)
+#define BEDROCK_NI_CHANNEL_TEST_TEST_VALID_INPLACE (BEDROCK_NI_CHANNEL_TEST_TEST_VALID_MASK << BEDROCK_NI_CHANNEL_TEST_TEST_VALID_SHIFT)
 #define BEDROCK_NI_CHANNEL_TEST_TEST_DATA_SHIFT      28 /* established */
 #define BEDROCK_NI_CHANNEL_TEST_TEST_DATA_MASK       0xfffffull
-#define BEDROCK_NI_CHANNEL_TEST_TEST_DATA_INPLACE    (BEDROCK_NI_CHANNEL_TEST_TEST_DATA_MASK << BEDROCK_NI_CHANNEL_TEST_TEST_DATA_SHIFT)
+#define BEDROCK_NI_CHANNEL_TEST_TEST_DATA_INPLACE (BEDROCK_NI_CHANNEL_TEST_TEST_DATA_MASK << BEDROCK_NI_CHANNEL_TEST_TEST_DATA_SHIFT)
 #define BEDROCK_NI_CHANNEL_TEST_TEST_MASK_SHIFT      20 /* established */
 #define BEDROCK_NI_CHANNEL_TEST_TEST_MASK_MASK       0xffull
-#define BEDROCK_NI_CHANNEL_TEST_TEST_MASK_INPLACE    (BEDROCK_NI_CHANNEL_TEST_TEST_MASK_MASK << BEDROCK_NI_CHANNEL_TEST_TEST_MASK_SHIFT)
+#define BEDROCK_NI_CHANNEL_TEST_TEST_MASK_INPLACE (BEDROCK_NI_CHANNEL_TEST_TEST_MASK_MASK << BEDROCK_NI_CHANNEL_TEST_TEST_MASK_SHIFT)
 #define BEDROCK_NI_CHANNEL_TEST_TEST_SEED_SHIFT      0 /* established */
 #define BEDROCK_NI_CHANNEL_TEST_TEST_SEED_MASK       0xfffffull
-#define BEDROCK_NI_CHANNEL_TEST_TEST_SEED_INPLACE    (BEDROCK_NI_CHANNEL_TEST_TEST_SEED_MASK << BEDROCK_NI_CHANNEL_TEST_TEST_SEED_SHIFT)
+#define BEDROCK_NI_CHANNEL_TEST_TEST_SEED_INPLACE (BEDROCK_NI_CHANNEL_TEST_TEST_SEED_MASK << BEDROCK_NI_CHANNEL_TEST_TEST_SEED_SHIFT)
 
 /*
- * Link-level protocol parameters and the enables for error header capture. The header gives field positions, and the reset-defaults constant above.
+ * Link-level protocol parameters and the enables for error header capture. The
+ * header gives field positions, and the reset-defaults constant above.
  */
-/* port_parms: rw64, reset 0x7a3ff1bf0; Linux 2.5.40 SN1 register headers: names, offsets and field layouts */
+/* port_parms: rw64, reset 0x7a3ff1bf0; Linux 2.5.40 SN1 register headers:
+ * names, offsets and field layouts */
 #define BEDROCK_NI_PORT_PARMS                        0x680030 /* established */
 #define BEDROCK_NI_PORT_PARMS_VCH_ERR_ENABLE_SHIFT   31 /* established */
 #define BEDROCK_NI_PORT_PARMS_VCH_ERR_ENABLE_MASK    0xfull
@@ -141,21 +162,24 @@
 #define BEDROCK_NI_PORT_PARMS_FIRST_ERR_ENABLE_INPLACE (BEDROCK_NI_PORT_PARMS_FIRST_ERR_ENABLE_MASK << BEDROCK_NI_PORT_PARMS_FIRST_ERR_ENABLE_SHIFT)
 #define BEDROCK_NI_PORT_PARMS_D_AVAIL_SEL_SHIFT      26 /* established */
 #define BEDROCK_NI_PORT_PARMS_D_AVAIL_SEL_MASK       0x3ull
-#define BEDROCK_NI_PORT_PARMS_D_AVAIL_SEL_INPLACE    (BEDROCK_NI_PORT_PARMS_D_AVAIL_SEL_MASK << BEDROCK_NI_PORT_PARMS_D_AVAIL_SEL_SHIFT)
+#define BEDROCK_NI_PORT_PARMS_D_AVAIL_SEL_INPLACE (BEDROCK_NI_PORT_PARMS_D_AVAIL_SEL_MASK << BEDROCK_NI_PORT_PARMS_D_AVAIL_SEL_SHIFT)
 #define BEDROCK_NI_PORT_PARMS_MAX_RETRY_SHIFT        16 /* established */
 #define BEDROCK_NI_PORT_PARMS_MAX_RETRY_MASK         0x3ffull
-#define BEDROCK_NI_PORT_PARMS_MAX_RETRY_INPLACE      (BEDROCK_NI_PORT_PARMS_MAX_RETRY_MASK << BEDROCK_NI_PORT_PARMS_MAX_RETRY_SHIFT)
+#define BEDROCK_NI_PORT_PARMS_MAX_RETRY_INPLACE (BEDROCK_NI_PORT_PARMS_MAX_RETRY_MASK << BEDROCK_NI_PORT_PARMS_MAX_RETRY_SHIFT)
 #define BEDROCK_NI_PORT_PARMS_NULL_TIMEOUT_SHIFT     10 /* established */
 #define BEDROCK_NI_PORT_PARMS_NULL_TIMEOUT_MASK      0x3full
-#define BEDROCK_NI_PORT_PARMS_NULL_TIMEOUT_INPLACE   (BEDROCK_NI_PORT_PARMS_NULL_TIMEOUT_MASK << BEDROCK_NI_PORT_PARMS_NULL_TIMEOUT_SHIFT)
+#define BEDROCK_NI_PORT_PARMS_NULL_TIMEOUT_INPLACE (BEDROCK_NI_PORT_PARMS_NULL_TIMEOUT_MASK << BEDROCK_NI_PORT_PARMS_NULL_TIMEOUT_SHIFT)
 #define BEDROCK_NI_PORT_PARMS_MAX_BURST_SHIFT        0 /* established */
 #define BEDROCK_NI_PORT_PARMS_MAX_BURST_MASK         0x3ffull
-#define BEDROCK_NI_PORT_PARMS_MAX_BURST_INPLACE      (BEDROCK_NI_PORT_PARMS_MAX_BURST_MASK << BEDROCK_NI_PORT_PARMS_MAX_BURST_SHIFT)
+#define BEDROCK_NI_PORT_PARMS_MAX_BURST_INPLACE (BEDROCK_NI_PORT_PARMS_MAX_BURST_MASK << BEDROCK_NI_PORT_PARMS_MAX_BURST_SHIFT)
 
 /*
- * Age at which request and reply packets enter the fabric. The header's comment says a higher reply age gives replies fixed priority over requests under saturation (inferred from the comment).
+ * Age at which request and reply packets enter the fabric. The header's comment
+ * says a higher reply age gives replies fixed priority over requests under
+ * saturation (inferred from the comment).
  */
-/* channel_age: rw64, reset 0x0; Linux 2.5.40 SN1 register headers: names, offsets and field layouts */
+/* channel_age: rw64, reset 0x0; Linux 2.5.40 SN1 register headers: names,
+ * offsets and field layouts */
 #define BEDROCK_NI_CHANNEL_AGE                       0x680038 /* established */
 #define BEDROCK_NI_CHANNEL_AGE_REPLY_INJECT_AGE_SHIFT 8 /* established */
 #define BEDROCK_NI_CHANNEL_AGE_REPLY_INJECT_AGE_MASK 0xffull
@@ -165,9 +189,13 @@
 #define BEDROCK_NI_CHANNEL_AGE_REQUEST_INJECT_AGE_INPLACE (BEDROCK_NI_CHANNEL_AGE_REQUEST_INJECT_AGE_MASK << BEDROCK_NI_CHANNEL_AGE_REQUEST_INJECT_AGE_SHIFT)
 
 /*
- * Latched link-port and problem-message errors. The header's comment says reads do not change the register and bits 52 to 24 assert the network interface interrupt (inferred from the comment). The header's comment says the eight-bit counters do not wrap.
+ * Latched link-port and problem-message errors. The header's comment says reads
+ * do not change the register and bits 52 to 24 assert the network interface
+ * interrupt (inferred from the comment). The header's comment says the
+ * eight-bit counters do not wrap.
  */
-/* port_errors: r64, reset 0x0; Linux 2.5.40 SN1 register headers: names, offsets and field layouts */
+/* port_errors: r64, reset 0x0; Linux 2.5.40 SN1 register headers: names,
+ * offsets and field layouts */
 #define BEDROCK_NI_PORT_ERRORS                       0x680100 /* established */
 #define BEDROCK_NI_PORT_ERRORS_LINK_RESET_IN_SHIFT   52 /* established */
 #define BEDROCK_NI_PORT_ERRORS_LINK_RESET_IN_MASK    0x1ull
@@ -192,10 +220,10 @@
 #define BEDROCK_NI_PORT_ERRORS_FIFO_OVERFLOW_INPLACE (BEDROCK_NI_PORT_ERRORS_FIFO_OVERFLOW_MASK << BEDROCK_NI_PORT_ERRORS_FIFO_OVERFLOW_SHIFT)
 #define BEDROCK_NI_PORT_ERRORS_TAIL_TIMEOUT_SHIFT    24 /* established */
 #define BEDROCK_NI_PORT_ERRORS_TAIL_TIMEOUT_MASK     0xfull
-#define BEDROCK_NI_PORT_ERRORS_TAIL_TIMEOUT_INPLACE  (BEDROCK_NI_PORT_ERRORS_TAIL_TIMEOUT_MASK << BEDROCK_NI_PORT_ERRORS_TAIL_TIMEOUT_SHIFT)
+#define BEDROCK_NI_PORT_ERRORS_TAIL_TIMEOUT_INPLACE (BEDROCK_NI_PORT_ERRORS_TAIL_TIMEOUT_MASK << BEDROCK_NI_PORT_ERRORS_TAIL_TIMEOUT_SHIFT)
 #define BEDROCK_NI_PORT_ERRORS_RETRY_COUNT_SHIFT     16 /* established */
 #define BEDROCK_NI_PORT_ERRORS_RETRY_COUNT_MASK      0xffull
-#define BEDROCK_NI_PORT_ERRORS_RETRY_COUNT_INPLACE   (BEDROCK_NI_PORT_ERRORS_RETRY_COUNT_MASK << BEDROCK_NI_PORT_ERRORS_RETRY_COUNT_SHIFT)
+#define BEDROCK_NI_PORT_ERRORS_RETRY_COUNT_INPLACE (BEDROCK_NI_PORT_ERRORS_RETRY_COUNT_MASK << BEDROCK_NI_PORT_ERRORS_RETRY_COUNT_SHIFT)
 #define BEDROCK_NI_PORT_ERRORS_CB_ERROR_COUNT_SHIFT  8 /* established */
 #define BEDROCK_NI_PORT_ERRORS_CB_ERROR_COUNT_MASK   0xffull
 #define BEDROCK_NI_PORT_ERRORS_CB_ERROR_COUNT_INPLACE (BEDROCK_NI_PORT_ERRORS_CB_ERROR_COUNT_MASK << BEDROCK_NI_PORT_ERRORS_CB_ERROR_COUNT_SHIFT)
@@ -204,9 +232,11 @@
 #define BEDROCK_NI_PORT_ERRORS_SN_ERROR_COUNT_INPLACE (BEDROCK_NI_PORT_ERRORS_SN_ERROR_COUNT_MASK << BEDROCK_NI_PORT_ERRORS_SN_ERROR_COUNT_SHIFT)
 
 /*
- * First half of the header of an erroring packet, as the header's union lays it out. The header's comment says it holds the captured header. Reset unknown.
+ * First half of the header of an erroring packet, as the header's union lays it
+ * out. The header's comment says it holds the captured header. Reset unknown.
  */
-/* port_header_a: r64, reset unknown; Linux 2.5.40 SN1 register headers: names, offsets and field layouts */
+/* port_header_a: r64, reset unknown; Linux 2.5.40 SN1 register headers: names,
+ * offsets and field layouts */
 #define BEDROCK_NI_PORT_HEADER_A                     0x680108 /* established */
 #define BEDROCK_NI_PORT_HEADER_A_PHA_ADDRESS_B_SHIFT 35 /* established */
 #define BEDROCK_NI_PORT_HEADER_A_PHA_ADDRESS_B_MASK  0x7ffffffull
@@ -225,15 +255,17 @@
 #define BEDROCK_NI_PORT_HEADER_A_PHA_DIRECTION_INPLACE (BEDROCK_NI_PORT_HEADER_A_PHA_DIRECTION_MASK << BEDROCK_NI_PORT_HEADER_A_PHA_DIRECTION_SHIFT)
 #define BEDROCK_NI_PORT_HEADER_A_PHA_AGE_SHIFT       1 /* established */
 #define BEDROCK_NI_PORT_HEADER_A_PHA_AGE_MASK        0xffull
-#define BEDROCK_NI_PORT_HEADER_A_PHA_AGE_INPLACE     (BEDROCK_NI_PORT_HEADER_A_PHA_AGE_MASK << BEDROCK_NI_PORT_HEADER_A_PHA_AGE_SHIFT)
+#define BEDROCK_NI_PORT_HEADER_A_PHA_AGE_INPLACE (BEDROCK_NI_PORT_HEADER_A_PHA_AGE_MASK << BEDROCK_NI_PORT_HEADER_A_PHA_AGE_SHIFT)
 #define BEDROCK_NI_PORT_HEADER_A_PHA_V_SHIFT         0 /* established */
 #define BEDROCK_NI_PORT_HEADER_A_PHA_V_MASK          0x1ull
-#define BEDROCK_NI_PORT_HEADER_A_PHA_V_INPLACE       (BEDROCK_NI_PORT_HEADER_A_PHA_V_MASK << BEDROCK_NI_PORT_HEADER_A_PHA_V_SHIFT)
+#define BEDROCK_NI_PORT_HEADER_A_PHA_V_INPLACE (BEDROCK_NI_PORT_HEADER_A_PHA_V_MASK << BEDROCK_NI_PORT_HEADER_A_PHA_V_SHIFT)
 
 /*
- * Second half of the header of an erroring packet, as the header's union lays it out. Reset unknown.
+ * Second half of the header of an erroring packet, as the header's union lays
+ * it out. Reset unknown.
  */
-/* port_header_b: r64, reset unknown; Linux 2.5.40 SN1 register headers: names, offsets and field layouts */
+/* port_header_b: r64, reset unknown; Linux 2.5.40 SN1 register headers: names,
+ * offsets and field layouts */
 #define BEDROCK_NI_PORT_HEADER_B                     0x680110 /* established */
 #define BEDROCK_NI_PORT_HEADER_B_PHB_ADDRESS_C_SHIFT 38 /* established */
 #define BEDROCK_NI_PORT_HEADER_B_PHB_ADDRESS_C_MASK  0xffull
@@ -243,51 +275,60 @@
 #define BEDROCK_NI_PORT_HEADER_B_PHB_ADDRESS_A_INPLACE (BEDROCK_NI_PORT_HEADER_B_PHB_ADDRESS_A_MASK << BEDROCK_NI_PORT_HEADER_B_PHB_ADDRESS_A_SHIFT)
 #define BEDROCK_NI_PORT_HEADER_B_PHB_SOURCE_SHIFT    16 /* established */
 #define BEDROCK_NI_PORT_HEADER_B_PHB_SOURCE_MASK     0x7ffull
-#define BEDROCK_NI_PORT_HEADER_B_PHB_SOURCE_INPLACE  (BEDROCK_NI_PORT_HEADER_B_PHB_SOURCE_MASK << BEDROCK_NI_PORT_HEADER_B_PHB_SOURCE_SHIFT)
+#define BEDROCK_NI_PORT_HEADER_B_PHB_SOURCE_INPLACE (BEDROCK_NI_PORT_HEADER_B_PHB_SOURCE_MASK << BEDROCK_NI_PORT_HEADER_B_PHB_SOURCE_SHIFT)
 #define BEDROCK_NI_PORT_HEADER_B_PHB_SUPPLEMENTAL_SHIFT 0 /* established */
 #define BEDROCK_NI_PORT_HEADER_B_PHB_SUPPLEMENTAL_MASK 0x7ffull
 #define BEDROCK_NI_PORT_HEADER_B_PHB_SUPPLEMENTAL_INPLACE (BEDROCK_NI_PORT_HEADER_B_PHB_SUPPLEMENTAL_MASK << BEDROCK_NI_PORT_HEADER_B_PHB_SUPPLEMENTAL_SHIFT)
 
 /*
- * Sideband data for the header registers and extra error data. The header says this register is not cleared on reset. Its write effect is not stated, so the access direction is taken from the header's description as data the port provides.
+ * Sideband data for the header registers and extra error data. The header says
+ * this register is not cleared on reset. Its write effect is not stated, so the
+ * access direction is taken from the header's description as data the port
+ * provides.
  */
-/* port_sideband: r64, reset 0x0; Linux 2.5.40 SN1 register headers: names, offsets and field layouts */
+/* port_sideband: r64, reset 0x0; Linux 2.5.40 SN1 register headers: names,
+ * offsets and field layouts */
 #define BEDROCK_NI_PORT_SIDEBAND                     0x680118 /* established */
 #define BEDROCK_NI_PORT_SIDEBAND_VCH_ACTIVE_SHIFT    16 /* established */
 #define BEDROCK_NI_PORT_SIDEBAND_VCH_ACTIVE_MASK     0xfull
-#define BEDROCK_NI_PORT_SIDEBAND_VCH_ACTIVE_INPLACE  (BEDROCK_NI_PORT_SIDEBAND_VCH_ACTIVE_MASK << BEDROCK_NI_PORT_SIDEBAND_VCH_ACTIVE_SHIFT)
+#define BEDROCK_NI_PORT_SIDEBAND_VCH_ACTIVE_INPLACE (BEDROCK_NI_PORT_SIDEBAND_VCH_ACTIVE_MASK << BEDROCK_NI_PORT_SIDEBAND_VCH_ACTIVE_SHIFT)
 #define BEDROCK_NI_PORT_SIDEBAND_SEND_ERROR_SHIFT    15 /* established */
 #define BEDROCK_NI_PORT_SIDEBAND_SEND_ERROR_MASK     0x1ull
-#define BEDROCK_NI_PORT_SIDEBAND_SEND_ERROR_INPLACE  (BEDROCK_NI_PORT_SIDEBAND_SEND_ERROR_MASK << BEDROCK_NI_PORT_SIDEBAND_SEND_ERROR_SHIFT)
+#define BEDROCK_NI_PORT_SIDEBAND_SEND_ERROR_INPLACE (BEDROCK_NI_PORT_SIDEBAND_SEND_ERROR_MASK << BEDROCK_NI_PORT_SIDEBAND_SEND_ERROR_SHIFT)
 #define BEDROCK_NI_PORT_SIDEBAND_CB_STATUS_SHIFT     14 /* established */
 #define BEDROCK_NI_PORT_SIDEBAND_CB_STATUS_MASK      0x1ull
-#define BEDROCK_NI_PORT_SIDEBAND_CB_STATUS_INPLACE   (BEDROCK_NI_PORT_SIDEBAND_CB_STATUS_MASK << BEDROCK_NI_PORT_SIDEBAND_CB_STATUS_SHIFT)
+#define BEDROCK_NI_PORT_SIDEBAND_CB_STATUS_INPLACE (BEDROCK_NI_PORT_SIDEBAND_CB_STATUS_MASK << BEDROCK_NI_PORT_SIDEBAND_CB_STATUS_SHIFT)
 #define BEDROCK_NI_PORT_SIDEBAND_SN_STATUS_SHIFT     13 /* established */
 #define BEDROCK_NI_PORT_SIDEBAND_SN_STATUS_MASK      0x1ull
-#define BEDROCK_NI_PORT_SIDEBAND_SN_STATUS_INPLACE   (BEDROCK_NI_PORT_SIDEBAND_SN_STATUS_MASK << BEDROCK_NI_PORT_SIDEBAND_SN_STATUS_SHIFT)
+#define BEDROCK_NI_PORT_SIDEBAND_SN_STATUS_INPLACE (BEDROCK_NI_PORT_SIDEBAND_SN_STATUS_MASK << BEDROCK_NI_PORT_SIDEBAND_SN_STATUS_SHIFT)
 #define BEDROCK_NI_PORT_SIDEBAND_SQUASH_SHIFT        12 /* established */
 #define BEDROCK_NI_PORT_SIDEBAND_SQUASH_MASK         0x1ull
-#define BEDROCK_NI_PORT_SIDEBAND_SQUASH_INPLACE      (BEDROCK_NI_PORT_SIDEBAND_SQUASH_MASK << BEDROCK_NI_PORT_SIDEBAND_SQUASH_SHIFT)
+#define BEDROCK_NI_PORT_SIDEBAND_SQUASH_INPLACE (BEDROCK_NI_PORT_SIDEBAND_SQUASH_MASK << BEDROCK_NI_PORT_SIDEBAND_SQUASH_SHIFT)
 #define BEDROCK_NI_PORT_SIDEBAND_BAD_MESSAGE_SHIFT   11 /* established */
 #define BEDROCK_NI_PORT_SIDEBAND_BAD_MESSAGE_MASK    0x1ull
 #define BEDROCK_NI_PORT_SIDEBAND_BAD_MESSAGE_INPLACE (BEDROCK_NI_PORT_SIDEBAND_BAD_MESSAGE_MASK << BEDROCK_NI_PORT_SIDEBAND_BAD_MESSAGE_SHIFT)
 #define BEDROCK_NI_PORT_SIDEBAND_RCV_ERROR_SHIFT     10 /* established */
 #define BEDROCK_NI_PORT_SIDEBAND_RCV_ERROR_MASK      0x1ull
-#define BEDROCK_NI_PORT_SIDEBAND_RCV_ERROR_INPLACE   (BEDROCK_NI_PORT_SIDEBAND_RCV_ERROR_MASK << BEDROCK_NI_PORT_SIDEBAND_RCV_ERROR_SHIFT)
+#define BEDROCK_NI_PORT_SIDEBAND_RCV_ERROR_INPLACE (BEDROCK_NI_PORT_SIDEBAND_RCV_ERROR_MASK << BEDROCK_NI_PORT_SIDEBAND_RCV_ERROR_SHIFT)
 #define BEDROCK_NI_PORT_SIDEBAND_BAD_PREXSEL_SHIFT   9 /* established */
 #define BEDROCK_NI_PORT_SIDEBAND_BAD_PREXSEL_MASK    0x1ull
 #define BEDROCK_NI_PORT_SIDEBAND_BAD_PREXSEL_INPLACE (BEDROCK_NI_PORT_SIDEBAND_BAD_PREXSEL_MASK << BEDROCK_NI_PORT_SIDEBAND_BAD_PREXSEL_SHIFT)
 #define BEDROCK_NI_PORT_SIDEBAND_BAD_DEST_SHIFT      8 /* established */
 #define BEDROCK_NI_PORT_SIDEBAND_BAD_DEST_MASK       0x1ull
-#define BEDROCK_NI_PORT_SIDEBAND_BAD_DEST_INPLACE    (BEDROCK_NI_PORT_SIDEBAND_BAD_DEST_MASK << BEDROCK_NI_PORT_SIDEBAND_BAD_DEST_SHIFT)
+#define BEDROCK_NI_PORT_SIDEBAND_BAD_DEST_INPLACE (BEDROCK_NI_PORT_SIDEBAND_BAD_DEST_MASK << BEDROCK_NI_PORT_SIDEBAND_BAD_DEST_SHIFT)
 #define BEDROCK_NI_PORT_SIDEBAND_SIDEBAND_SHIFT      0 /* established */
 #define BEDROCK_NI_PORT_SIDEBAND_SIDEBAND_MASK       0xffull
-#define BEDROCK_NI_PORT_SIDEBAND_SIDEBAND_INPLACE    (BEDROCK_NI_PORT_SIDEBAND_SIDEBAND_MASK << BEDROCK_NI_PORT_SIDEBAND_SIDEBAND_SHIFT)
+#define BEDROCK_NI_PORT_SIDEBAND_SIDEBAND_INPLACE (BEDROCK_NI_PORT_SIDEBAND_SIDEBAND_MASK << BEDROCK_NI_PORT_SIDEBAND_SIDEBAND_SHIFT)
 
 /*
- * The same information as port errors, with the same layout. The header's comment for this register repeats the port-errors comment, including that reads are non-destructive, which conflicts with the register name. The read effect is therefore unknown: the header does not settle whether a read clears the latched errors. Whether the read clears anything is unknown.
+ * The same information as port errors, with the same layout. The header's
+ * comment for this register repeats the port-errors comment, including that
+ * reads are non-destructive, which conflicts with the register name. The read
+ * effect is therefore unknown: the header does not settle whether a read clears
+ * the latched errors. Whether the read clears anything is unknown.
  */
-/* port_error_clear: r64, reset 0x0; Linux 2.5.40 SN1 register headers: names, offsets and field layouts */
+/* port_error_clear: r64, reset 0x0; Linux 2.5.40 SN1 register headers: names,
+ * offsets and field layouts */
 #define BEDROCK_NI_PORT_ERROR_CLEAR                  0x680120 /* established */
 #define BEDROCK_NI_PORT_ERROR_CLEAR_PEC_LINK_RESET_IN_SHIFT 52 /* established */
 #define BEDROCK_NI_PORT_ERROR_CLEAR_PEC_LINK_RESET_IN_MASK 0x1ull
@@ -295,16 +336,19 @@
 #define BEDROCK_NI_PORT_ERROR_CLEAR_PEC_INTERNAL_LONG_SHIFT 48 /* established */
 #define BEDROCK_NI_PORT_ERROR_CLEAR_PEC_INTERNAL_LONG_MASK 0xfull
 #define BEDROCK_NI_PORT_ERROR_CLEAR_PEC_INTERNAL_LONG_INPLACE (BEDROCK_NI_PORT_ERROR_CLEAR_PEC_INTERNAL_LONG_MASK << BEDROCK_NI_PORT_ERROR_CLEAR_PEC_INTERNAL_LONG_SHIFT)
-#define BEDROCK_NI_PORT_ERROR_CLEAR_PEC_INTERNAL_SHORT_SHIFT 44 /* established */
+/* established */
+#define BEDROCK_NI_PORT_ERROR_CLEAR_PEC_INTERNAL_SHORT_SHIFT 44
 #define BEDROCK_NI_PORT_ERROR_CLEAR_PEC_INTERNAL_SHORT_MASK 0xfull
 #define BEDROCK_NI_PORT_ERROR_CLEAR_PEC_INTERNAL_SHORT_INPLACE (BEDROCK_NI_PORT_ERROR_CLEAR_PEC_INTERNAL_SHORT_MASK << BEDROCK_NI_PORT_ERROR_CLEAR_PEC_INTERNAL_SHORT_SHIFT)
-#define BEDROCK_NI_PORT_ERROR_CLEAR_PEC_EXTERNAL_BAD_HEADER_SHIFT 40 /* established */
+/* established */
+#define BEDROCK_NI_PORT_ERROR_CLEAR_PEC_EXTERNAL_BAD_HEADER_SHIFT 40
 #define BEDROCK_NI_PORT_ERROR_CLEAR_PEC_EXTERNAL_BAD_HEADER_MASK 0xfull
 #define BEDROCK_NI_PORT_ERROR_CLEAR_PEC_EXTERNAL_BAD_HEADER_INPLACE (BEDROCK_NI_PORT_ERROR_CLEAR_PEC_EXTERNAL_BAD_HEADER_MASK << BEDROCK_NI_PORT_ERROR_CLEAR_PEC_EXTERNAL_BAD_HEADER_SHIFT)
 #define BEDROCK_NI_PORT_ERROR_CLEAR_PEC_EXTERNAL_LONG_SHIFT 36 /* established */
 #define BEDROCK_NI_PORT_ERROR_CLEAR_PEC_EXTERNAL_LONG_MASK 0xfull
 #define BEDROCK_NI_PORT_ERROR_CLEAR_PEC_EXTERNAL_LONG_INPLACE (BEDROCK_NI_PORT_ERROR_CLEAR_PEC_EXTERNAL_LONG_MASK << BEDROCK_NI_PORT_ERROR_CLEAR_PEC_EXTERNAL_LONG_SHIFT)
-#define BEDROCK_NI_PORT_ERROR_CLEAR_PEC_EXTERNAL_SHORT_SHIFT 32 /* established */
+/* established */
+#define BEDROCK_NI_PORT_ERROR_CLEAR_PEC_EXTERNAL_SHORT_SHIFT 32
 #define BEDROCK_NI_PORT_ERROR_CLEAR_PEC_EXTERNAL_SHORT_MASK 0xfull
 #define BEDROCK_NI_PORT_ERROR_CLEAR_PEC_EXTERNAL_SHORT_INPLACE (BEDROCK_NI_PORT_ERROR_CLEAR_PEC_EXTERNAL_SHORT_MASK << BEDROCK_NI_PORT_ERROR_CLEAR_PEC_EXTERNAL_SHORT_SHIFT)
 #define BEDROCK_NI_PORT_ERROR_CLEAR_PEC_FIFO_OVERFLOW_SHIFT 28 /* established */
@@ -324,23 +368,28 @@
 #define BEDROCK_NI_PORT_ERROR_CLEAR_PEC_SN_ERROR_COUNT_INPLACE (BEDROCK_NI_PORT_ERROR_CLEAR_PEC_SN_ERROR_COUNT_MASK << BEDROCK_NI_PORT_ERROR_CLEAR_PEC_SN_ERROR_COUNT_SHIFT)
 
 /*
- * Next-hop table for a local destination, one entry per 7-bit local destination at a stride of eight bytes; entry 0 is at the base. The header names the table and gives no access direction.
+ * Next-hop table for a local destination, one entry per 7-bit local destination
+ * at a stride of eight bytes; entry 0 is at the base. The header names the
+ * table and gives no access direction.
  */
-/* local_table: rw64, reset 0x0; Linux 2.5.40 SN1 register headers: names, offsets and field layouts */
+/* local_table: rw64, reset 0x0; Linux 2.5.40 SN1 register headers: names,
+ * offsets and field layouts */
 #define BEDROCK_NI_LOCAL_TABLE                       0x681000 /* established */
 #define BEDROCK_NI_LOCAL_TABLE_COUNT                 128
 #define BEDROCK_NI_LOCAL_TABLE_STRIDE                8
 #define BEDROCK_NI_LOCAL_TABLE_NEXT_VCH_LSB_SHIFT    4 /* established */
 #define BEDROCK_NI_LOCAL_TABLE_NEXT_VCH_LSB_MASK     0x1ull
-#define BEDROCK_NI_LOCAL_TABLE_NEXT_VCH_LSB_INPLACE  (BEDROCK_NI_LOCAL_TABLE_NEXT_VCH_LSB_MASK << BEDROCK_NI_LOCAL_TABLE_NEXT_VCH_LSB_SHIFT)
+#define BEDROCK_NI_LOCAL_TABLE_NEXT_VCH_LSB_INPLACE (BEDROCK_NI_LOCAL_TABLE_NEXT_VCH_LSB_MASK << BEDROCK_NI_LOCAL_TABLE_NEXT_VCH_LSB_SHIFT)
 #define BEDROCK_NI_LOCAL_TABLE_NEXT_EXIT_PORT_SHIFT  0 /* established */
 #define BEDROCK_NI_LOCAL_TABLE_NEXT_EXIT_PORT_MASK   0xfull
 #define BEDROCK_NI_LOCAL_TABLE_NEXT_EXIT_PORT_INPLACE (BEDROCK_NI_LOCAL_TABLE_NEXT_EXIT_PORT_MASK << BEDROCK_NI_LOCAL_TABLE_NEXT_EXIT_PORT_SHIFT)
 
 /*
- * Next-hop table for the one-bit meta destination. The header names the table and gives no access direction.
+ * Next-hop table for the one-bit meta destination. The header names the table
+ * and gives no access direction.
  */
-/* global_table: rw64, reset 0x0; Linux 2.5.40 SN1 register headers: names, offsets and field layouts */
+/* global_table: rw64, reset 0x0; Linux 2.5.40 SN1 register headers: names,
+ * offsets and field layouts */
 #define BEDROCK_NI_GLOBAL_TABLE                      0x682000 /* established */
 #define BEDROCK_NI_GLOBAL_TABLE_NEXT_VCH_LSB_SHIFT   4 /* established */
 #define BEDROCK_NI_GLOBAL_TABLE_NEXT_VCH_LSB_MASK    0x1ull
@@ -349,6 +398,7 @@
 #define BEDROCK_NI_GLOBAL_TABLE_NEXT_EXIT_PORT_MASK  0xfull
 #define BEDROCK_NI_GLOBAL_TABLE_NEXT_EXIT_PORT_INPLACE (BEDROCK_NI_GLOBAL_TABLE_NEXT_EXIT_PORT_MASK << BEDROCK_NI_GLOBAL_TABLE_NEXT_EXIT_PORT_SHIFT)
 
-#define BEDROCK_NI_PORT_PARMS_HEADER_DEFAULT         0x7a3ff1bf0ull /* inferred */
+/* inferred */
+#define BEDROCK_NI_PORT_PARMS_HEADER_DEFAULT         0x7a3ff1bf0ull
 
 #endif /* BEDROCK_NI_GEN_H */

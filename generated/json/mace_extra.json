@@ -1,5 +1,5 @@
 {
- "generator": "defs-gen 2",
+ "generator": "defs-gen 3",
  "input_sha256": "490c88a36f70908dd2b884bf6a6cb452f78c4406765832d4e82eb4098f24c841",
  "schema": "defs-flat/1",
  "source": "devices/mace/registers-extra.toml",

@@ -1,7 +1,9 @@
-/* generated from devices/router_nl4/registers.toml by defs-gen - do not edit, change the source */
-/* defs-gen 2 */
+/* generated from devices/router_nl4/registers.toml by defs-gen - do not edit,
+ * change the source */
+/* defs-gen 3 */
 /* input sha256 8b308a8b92038c2fa56d72eb843a6e1e2ec8301ecc496cafbe84909de51dcf9a */
-/* NUMAlink 4 router (R4): global, local-block and per-port registers, as the SN2 PROM's error and dump tables name them */
+/* NUMAlink 4 router (R4): global, local-block and per-port registers, as the
+ * SN2 PROM's error and dump tables name them */
 #ifndef ROUTER_NL4_GEN_H
 #define ROUTER_NL4_GEN_H
 
@@ -9,16 +11,17 @@
 
 
 /*
- * PROM register R4_STATUS_REV_ID. Offset and field positions read from the table; role inferred from the names.
+ * PROM register R4_STATUS_REV_ID. Offset and field positions read from the
+ * table; role inferred from the names.
  */
 /* status_rev_id: r64, reset unknown */
 #define ROUTER_NL4_STATUS_REV_ID_OFFSET              0x0u /* established */
 #define ROUTER_NL4_STATUS_REV_ID_LOCAL_POK_SHIFT     57 /* established */
 #define ROUTER_NL4_STATUS_REV_ID_LOCAL_POK_MASK      0x1ull
-#define ROUTER_NL4_STATUS_REV_ID_LOCAL_POK_INPLACE   (ROUTER_NL4_STATUS_REV_ID_LOCAL_POK_MASK << ROUTER_NL4_STATUS_REV_ID_LOCAL_POK_SHIFT)
+#define ROUTER_NL4_STATUS_REV_ID_LOCAL_POK_INPLACE (ROUTER_NL4_STATUS_REV_ID_LOCAL_POK_MASK << ROUTER_NL4_STATUS_REV_ID_LOCAL_POK_SHIFT)
 #define ROUTER_NL4_STATUS_REV_ID_LB_ERROR_SHIFT      56 /* established */
 #define ROUTER_NL4_STATUS_REV_ID_LB_ERROR_MASK       0x1ull
-#define ROUTER_NL4_STATUS_REV_ID_LB_ERROR_INPLACE    (ROUTER_NL4_STATUS_REV_ID_LB_ERROR_MASK << ROUTER_NL4_STATUS_REV_ID_LB_ERROR_SHIFT)
+#define ROUTER_NL4_STATUS_REV_ID_LB_ERROR_INPLACE (ROUTER_NL4_STATUS_REV_ID_LB_ERROR_MASK << ROUTER_NL4_STATUS_REV_ID_LB_ERROR_SHIFT)
 #define ROUTER_NL4_STATUS_REV_ID_PORTH_ERROR_SHIFT   55 /* established */
 #define ROUTER_NL4_STATUS_REV_ID_PORTH_ERROR_MASK    0x1ull
 #define ROUTER_NL4_STATUS_REV_ID_PORTH_ERROR_INPLACE (ROUTER_NL4_STATUS_REV_ID_PORTH_ERROR_MASK << ROUTER_NL4_STATUS_REV_ID_PORTH_ERROR_SHIFT)
@@ -45,10 +48,10 @@
 #define ROUTER_NL4_STATUS_REV_ID_PORTA_ERROR_INPLACE (ROUTER_NL4_STATUS_REV_ID_PORTA_ERROR_MASK << ROUTER_NL4_STATUS_REV_ID_PORTA_ERROR_SHIFT)
 #define ROUTER_NL4_STATUS_REV_ID_POSITION_SHIFT      44 /* established */
 #define ROUTER_NL4_STATUS_REV_ID_POSITION_MASK       0xfull
-#define ROUTER_NL4_STATUS_REV_ID_POSITION_INPLACE    (ROUTER_NL4_STATUS_REV_ID_POSITION_MASK << ROUTER_NL4_STATUS_REV_ID_POSITION_SHIFT)
+#define ROUTER_NL4_STATUS_REV_ID_POSITION_INPLACE (ROUTER_NL4_STATUS_REV_ID_POSITION_MASK << ROUTER_NL4_STATUS_REV_ID_POSITION_SHIFT)
 #define ROUTER_NL4_STATUS_REV_ID_INPORT_SHIFT        40 /* established */
 #define ROUTER_NL4_STATUS_REV_ID_INPORT_MASK         0xfull
-#define ROUTER_NL4_STATUS_REV_ID_INPORT_INPLACE      (ROUTER_NL4_STATUS_REV_ID_INPORT_MASK << ROUTER_NL4_STATUS_REV_ID_INPORT_SHIFT)
+#define ROUTER_NL4_STATUS_REV_ID_INPORT_INPLACE (ROUTER_NL4_STATUS_REV_ID_INPORT_MASK << ROUTER_NL4_STATUS_REV_ID_INPORT_SHIFT)
 #define ROUTER_NL4_STATUS_REV_ID_PORTH_LINK_UP_SHIFT 39 /* established */
 #define ROUTER_NL4_STATUS_REV_ID_PORTH_LINK_UP_MASK  0x1ull
 #define ROUTER_NL4_STATUS_REV_ID_PORTH_LINK_UP_INPLACE (ROUTER_NL4_STATUS_REV_ID_PORTH_LINK_UP_MASK << ROUTER_NL4_STATUS_REV_ID_PORTH_LINK_UP_SHIFT)
@@ -81,13 +84,14 @@
 #define ROUTER_NL4_STATUS_REV_ID_PART_NUMBER_INPLACE (ROUTER_NL4_STATUS_REV_ID_PART_NUMBER_MASK << ROUTER_NL4_STATUS_REV_ID_PART_NUMBER_SHIFT)
 #define ROUTER_NL4_STATUS_REV_ID_MFG_ID_SHIFT        1 /* established */
 #define ROUTER_NL4_STATUS_REV_ID_MFG_ID_MASK         0x7ffull
-#define ROUTER_NL4_STATUS_REV_ID_MFG_ID_INPLACE      (ROUTER_NL4_STATUS_REV_ID_MFG_ID_MASK << ROUTER_NL4_STATUS_REV_ID_MFG_ID_SHIFT)
+#define ROUTER_NL4_STATUS_REV_ID_MFG_ID_INPLACE (ROUTER_NL4_STATUS_REV_ID_MFG_ID_MASK << ROUTER_NL4_STATUS_REV_ID_MFG_ID_SHIFT)
 #define ROUTER_NL4_STATUS_REV_ID_FORCE1_SHIFT        0 /* established */
 #define ROUTER_NL4_STATUS_REV_ID_FORCE1_MASK         0x1ull
-#define ROUTER_NL4_STATUS_REV_ID_FORCE1_INPLACE      (ROUTER_NL4_STATUS_REV_ID_FORCE1_MASK << ROUTER_NL4_STATUS_REV_ID_FORCE1_SHIFT)
+#define ROUTER_NL4_STATUS_REV_ID_FORCE1_INPLACE (ROUTER_NL4_STATUS_REV_ID_FORCE1_MASK << ROUTER_NL4_STATUS_REV_ID_FORCE1_SHIFT)
 
 /*
- * PROM register R4_GLOBAL_PARM0. Offset and field positions read from the table; role inferred from the names.
+ * PROM register R4_GLOBAL_PARM0. Offset and field positions read from the
+ * table; role inferred from the names.
  */
 /* global_parm0: rw64, reset unknown */
 #define ROUTER_NL4_GLOBAL_PARM0_OFFSET               0x10u /* established */
@@ -120,7 +124,7 @@
 #define ROUTER_NL4_GLOBAL_PARM0_DEADLOCK_TO_VAL_INPLACE (ROUTER_NL4_GLOBAL_PARM0_DEADLOCK_TO_VAL_MASK << ROUTER_NL4_GLOBAL_PARM0_DEADLOCK_TO_VAL_SHIFT)
 #define ROUTER_NL4_GLOBAL_PARM0_TAIL_TO_VAL_SHIFT    8 /* established */
 #define ROUTER_NL4_GLOBAL_PARM0_TAIL_TO_VAL_MASK     0xfull
-#define ROUTER_NL4_GLOBAL_PARM0_TAIL_TO_VAL_INPLACE  (ROUTER_NL4_GLOBAL_PARM0_TAIL_TO_VAL_MASK << ROUTER_NL4_GLOBAL_PARM0_TAIL_TO_VAL_SHIFT)
+#define ROUTER_NL4_GLOBAL_PARM0_TAIL_TO_VAL_INPLACE (ROUTER_NL4_GLOBAL_PARM0_TAIL_TO_VAL_MASK << ROUTER_NL4_GLOBAL_PARM0_TAIL_TO_VAL_SHIFT)
 #define ROUTER_NL4_GLOBAL_PARM0_USE_OLDEST_AGE_ENABLE_SHIFT 5 /* established */
 #define ROUTER_NL4_GLOBAL_PARM0_USE_OLDEST_AGE_ENABLE_MASK 0x1ull
 #define ROUTER_NL4_GLOBAL_PARM0_USE_OLDEST_AGE_ENABLE_INPLACE (ROUTER_NL4_GLOBAL_PARM0_USE_OLDEST_AGE_ENABLE_MASK << ROUTER_NL4_GLOBAL_PARM0_USE_OLDEST_AGE_ENABLE_SHIFT)
@@ -141,7 +145,8 @@
 #define ROUTER_NL4_GLOBAL_PARM0_BYPASS_ENABLE_INPLACE (ROUTER_NL4_GLOBAL_PARM0_BYPASS_ENABLE_MASK << ROUTER_NL4_GLOBAL_PARM0_BYPASS_ENABLE_SHIFT)
 
 /*
- * PROM register R4_GLOBAL_PARM1. Offset and field positions read from the table; role inferred from the names.
+ * PROM register R4_GLOBAL_PARM1. Offset and field positions read from the
+ * table; role inferred from the names.
  */
 /* global_parm1: rw64, reset unknown */
 #define ROUTER_NL4_GLOBAL_PARM1_OFFSET               0x20u /* established */
@@ -156,52 +161,58 @@
 #define ROUTER_NL4_GLOBAL_PARM1_TAIL_TO_TICK_INPLACE (ROUTER_NL4_GLOBAL_PARM1_TAIL_TO_TICK_MASK << ROUTER_NL4_GLOBAL_PARM1_TAIL_TO_TICK_SHIFT)
 
 /*
- * PROM register R4_ASIC_TO_L1_STATUS. Offset and field positions read from the table; role inferred from the names.
+ * PROM register R4_ASIC_TO_L1_STATUS. Offset and field positions read from the
+ * table; role inferred from the names.
  */
 /* asic_to_l1_status: r64, reset unknown */
 #define ROUTER_NL4_ASIC_TO_L1_STATUS_OFFSET          0x30u /* established */
 #define ROUTER_NL4_ASIC_TO_L1_STATUS_STATUS_SHIFT    0 /* established */
 #define ROUTER_NL4_ASIC_TO_L1_STATUS_STATUS_MASK     0x1ull
-#define ROUTER_NL4_ASIC_TO_L1_STATUS_STATUS_INPLACE  (ROUTER_NL4_ASIC_TO_L1_STATUS_STATUS_MASK << ROUTER_NL4_ASIC_TO_L1_STATUS_STATUS_SHIFT)
+#define ROUTER_NL4_ASIC_TO_L1_STATUS_STATUS_INPLACE (ROUTER_NL4_ASIC_TO_L1_STATUS_STATUS_MASK << ROUTER_NL4_ASIC_TO_L1_STATUS_STATUS_SHIFT)
 
 /*
- * PROM register R4_ASIC_TO_L1_DATA. Offset and field positions read from the table; role inferred from the names.
+ * PROM register R4_ASIC_TO_L1_DATA. Offset and field positions read from the
+ * table; role inferred from the names.
  */
 /* asic_to_l1_data: rw64, reset unknown */
 #define ROUTER_NL4_ASIC_TO_L1_DATA_OFFSET            0x38u /* established */
 #define ROUTER_NL4_ASIC_TO_L1_DATA_DATA_SHIFT        0 /* established */
 #define ROUTER_NL4_ASIC_TO_L1_DATA_DATA_MASK         0xffffffffffffffffull
-#define ROUTER_NL4_ASIC_TO_L1_DATA_DATA_INPLACE      (ROUTER_NL4_ASIC_TO_L1_DATA_DATA_MASK << ROUTER_NL4_ASIC_TO_L1_DATA_DATA_SHIFT)
+#define ROUTER_NL4_ASIC_TO_L1_DATA_DATA_INPLACE (ROUTER_NL4_ASIC_TO_L1_DATA_DATA_MASK << ROUTER_NL4_ASIC_TO_L1_DATA_DATA_SHIFT)
 
 /*
- * PROM register R4_L1_TO_ASIC_STATUS. Offset and field positions read from the table; role inferred from the names.
+ * PROM register R4_L1_TO_ASIC_STATUS. Offset and field positions read from the
+ * table; role inferred from the names.
  */
 /* l1_to_asic_status: rw64, reset unknown */
 #define ROUTER_NL4_L1_TO_ASIC_STATUS_OFFSET          0x40u /* established */
 #define ROUTER_NL4_L1_TO_ASIC_STATUS_STATUS_SHIFT    0 /* established */
 #define ROUTER_NL4_L1_TO_ASIC_STATUS_STATUS_MASK     0x1ull
-#define ROUTER_NL4_L1_TO_ASIC_STATUS_STATUS_INPLACE  (ROUTER_NL4_L1_TO_ASIC_STATUS_STATUS_MASK << ROUTER_NL4_L1_TO_ASIC_STATUS_STATUS_SHIFT)
+#define ROUTER_NL4_L1_TO_ASIC_STATUS_STATUS_INPLACE (ROUTER_NL4_L1_TO_ASIC_STATUS_STATUS_MASK << ROUTER_NL4_L1_TO_ASIC_STATUS_STATUS_SHIFT)
 
 /*
- * PROM register R4_L1_TO_ASIC_DATA. Offset and field positions read from the table; role inferred from the names.
+ * PROM register R4_L1_TO_ASIC_DATA. Offset and field positions read from the
+ * table; role inferred from the names.
  */
 /* l1_to_asic_data: r64, reset unknown */
 #define ROUTER_NL4_L1_TO_ASIC_DATA_OFFSET            0x48u /* established */
 #define ROUTER_NL4_L1_TO_ASIC_DATA_DATA_SHIFT        0 /* established */
 #define ROUTER_NL4_L1_TO_ASIC_DATA_DATA_MASK         0xffffffffffffffffull
-#define ROUTER_NL4_L1_TO_ASIC_DATA_DATA_INPLACE      (ROUTER_NL4_L1_TO_ASIC_DATA_DATA_MASK << ROUTER_NL4_L1_TO_ASIC_DATA_DATA_SHIFT)
+#define ROUTER_NL4_L1_TO_ASIC_DATA_DATA_INPLACE (ROUTER_NL4_L1_TO_ASIC_DATA_DATA_MASK << ROUTER_NL4_L1_TO_ASIC_DATA_DATA_SHIFT)
 
 /*
- * PROM register R4_SCRATCH0. Offset and field positions read from the table; role inferred from the names.
+ * PROM register R4_SCRATCH0. Offset and field positions read from the table;
+ * role inferred from the names.
  */
 /* scratch0: rw64, reset unknown */
 #define ROUTER_NL4_SCRATCH0_OFFSET                   0x1000u /* established */
 #define ROUTER_NL4_SCRATCH0_SCRATCH_64_SHIFT         0 /* established */
 #define ROUTER_NL4_SCRATCH0_SCRATCH_64_MASK          0xffffffffffffffffull
-#define ROUTER_NL4_SCRATCH0_SCRATCH_64_INPLACE       (ROUTER_NL4_SCRATCH0_SCRATCH_64_MASK << ROUTER_NL4_SCRATCH0_SCRATCH_64_SHIFT)
+#define ROUTER_NL4_SCRATCH0_SCRATCH_64_INPLACE (ROUTER_NL4_SCRATCH0_SCRATCH_64_MASK << ROUTER_NL4_SCRATCH0_SCRATCH_64_SHIFT)
 
 /*
- * PROM register R4_SCRATCH0_ALIAS. Offset and field positions read from the table; role inferred from the names.
+ * PROM register R4_SCRATCH0_ALIAS. Offset and field positions read from the
+ * table; role inferred from the names.
  */
 /* scratch0_alias: r64, reset unknown */
 #define ROUTER_NL4_SCRATCH0_ALIAS_OFFSET             0x1008u /* established */
@@ -210,16 +221,18 @@
 #define ROUTER_NL4_SCRATCH0_ALIAS_SCRATCH_64_INPLACE (ROUTER_NL4_SCRATCH0_ALIAS_SCRATCH_64_MASK << ROUTER_NL4_SCRATCH0_ALIAS_SCRATCH_64_SHIFT)
 
 /*
- * PROM register R4_SCRATCH1. Offset and field positions read from the table; role inferred from the names.
+ * PROM register R4_SCRATCH1. Offset and field positions read from the table;
+ * role inferred from the names.
  */
 /* scratch1: rw64, reset unknown */
 #define ROUTER_NL4_SCRATCH1_OFFSET                   0x1010u /* established */
 #define ROUTER_NL4_SCRATCH1_SCRATCH_64_SHIFT         0 /* established */
 #define ROUTER_NL4_SCRATCH1_SCRATCH_64_MASK          0xffffffffffffffffull
-#define ROUTER_NL4_SCRATCH1_SCRATCH_64_INPLACE       (ROUTER_NL4_SCRATCH1_SCRATCH_64_MASK << ROUTER_NL4_SCRATCH1_SCRATCH_64_SHIFT)
+#define ROUTER_NL4_SCRATCH1_SCRATCH_64_INPLACE (ROUTER_NL4_SCRATCH1_SCRATCH_64_MASK << ROUTER_NL4_SCRATCH1_SCRATCH_64_SHIFT)
 
 /*
- * PROM register R4_SCRATCH1_ALIAS. Offset and field positions read from the table; role inferred from the names.
+ * PROM register R4_SCRATCH1_ALIAS. Offset and field positions read from the
+ * table; role inferred from the names.
  */
 /* scratch1_alias: r64, reset unknown */
 #define ROUTER_NL4_SCRATCH1_ALIAS_OFFSET             0x1018u /* established */
@@ -228,16 +241,18 @@
 #define ROUTER_NL4_SCRATCH1_ALIAS_SCRATCH_64_INPLACE (ROUTER_NL4_SCRATCH1_ALIAS_SCRATCH_64_MASK << ROUTER_NL4_SCRATCH1_ALIAS_SCRATCH_64_SHIFT)
 
 /*
- * PROM register R4_SCRATCH2. Offset and field positions read from the table; role inferred from the names.
+ * PROM register R4_SCRATCH2. Offset and field positions read from the table;
+ * role inferred from the names.
  */
 /* scratch2: rw64, reset unknown */
 #define ROUTER_NL4_SCRATCH2_OFFSET                   0x1020u /* established */
 #define ROUTER_NL4_SCRATCH2_SCRATCH_64_SHIFT         0 /* established */
 #define ROUTER_NL4_SCRATCH2_SCRATCH_64_MASK          0xffffffffffffffffull
-#define ROUTER_NL4_SCRATCH2_SCRATCH_64_INPLACE       (ROUTER_NL4_SCRATCH2_SCRATCH_64_MASK << ROUTER_NL4_SCRATCH2_SCRATCH_64_SHIFT)
+#define ROUTER_NL4_SCRATCH2_SCRATCH_64_INPLACE (ROUTER_NL4_SCRATCH2_SCRATCH_64_MASK << ROUTER_NL4_SCRATCH2_SCRATCH_64_SHIFT)
 
 /*
- * PROM register R4_SCRATCH2_ALIAS. Offset and field positions read from the table; role inferred from the names.
+ * PROM register R4_SCRATCH2_ALIAS. Offset and field positions read from the
+ * table; role inferred from the names.
  */
 /* scratch2_alias: r64, reset unknown */
 #define ROUTER_NL4_SCRATCH2_ALIAS_OFFSET             0x1028u /* established */
@@ -246,133 +261,148 @@
 #define ROUTER_NL4_SCRATCH2_ALIAS_SCRATCH_64_INPLACE (ROUTER_NL4_SCRATCH2_ALIAS_SCRATCH_64_MASK << ROUTER_NL4_SCRATCH2_ALIAS_SCRATCH_64_SHIFT)
 
 /*
- * PROM register R4_SCRATCH3. Offset and field positions read from the table; role inferred from the names.
+ * PROM register R4_SCRATCH3. Offset and field positions read from the table;
+ * role inferred from the names.
  */
 /* scratch3: rw64, reset unknown */
 #define ROUTER_NL4_SCRATCH3_OFFSET                   0x1030u /* established */
 #define ROUTER_NL4_SCRATCH3_SCRATCH_1_SHIFT          0 /* established */
 #define ROUTER_NL4_SCRATCH3_SCRATCH_1_MASK           0x1ull
-#define ROUTER_NL4_SCRATCH3_SCRATCH_1_INPLACE        (ROUTER_NL4_SCRATCH3_SCRATCH_1_MASK << ROUTER_NL4_SCRATCH3_SCRATCH_1_SHIFT)
+#define ROUTER_NL4_SCRATCH3_SCRATCH_1_INPLACE (ROUTER_NL4_SCRATCH3_SCRATCH_1_MASK << ROUTER_NL4_SCRATCH3_SCRATCH_1_SHIFT)
 
 /*
- * PROM register R4_SCRATCH3_ALIAS. Offset and field positions read from the table; role inferred from the names.
+ * PROM register R4_SCRATCH3_ALIAS. Offset and field positions read from the
+ * table; role inferred from the names.
  */
 /* scratch3_alias: rw64, reset unknown */
 #define ROUTER_NL4_SCRATCH3_ALIAS_OFFSET             0x1038u /* established */
 #define ROUTER_NL4_SCRATCH3_ALIAS_SCRATCH_1_SHIFT    0 /* established */
 #define ROUTER_NL4_SCRATCH3_ALIAS_SCRATCH_1_MASK     0x1ull
-#define ROUTER_NL4_SCRATCH3_ALIAS_SCRATCH_1_INPLACE  (ROUTER_NL4_SCRATCH3_ALIAS_SCRATCH_1_MASK << ROUTER_NL4_SCRATCH3_ALIAS_SCRATCH_1_SHIFT)
+#define ROUTER_NL4_SCRATCH3_ALIAS_SCRATCH_1_INPLACE (ROUTER_NL4_SCRATCH3_ALIAS_SCRATCH_1_MASK << ROUTER_NL4_SCRATCH3_ALIAS_SCRATCH_1_SHIFT)
 
 /*
- * PROM register R4_SCRATCH4. Offset and field positions read from the table; role inferred from the names.
+ * PROM register R4_SCRATCH4. Offset and field positions read from the table;
+ * role inferred from the names.
  */
 /* scratch4: rw64, reset unknown */
 #define ROUTER_NL4_SCRATCH4_OFFSET                   0x1040u /* established */
 #define ROUTER_NL4_SCRATCH4_SCRATCH_1_SHIFT          0 /* established */
 #define ROUTER_NL4_SCRATCH4_SCRATCH_1_MASK           0x1ull
-#define ROUTER_NL4_SCRATCH4_SCRATCH_1_INPLACE        (ROUTER_NL4_SCRATCH4_SCRATCH_1_MASK << ROUTER_NL4_SCRATCH4_SCRATCH_1_SHIFT)
+#define ROUTER_NL4_SCRATCH4_SCRATCH_1_INPLACE (ROUTER_NL4_SCRATCH4_SCRATCH_1_MASK << ROUTER_NL4_SCRATCH4_SCRATCH_1_SHIFT)
 
 /*
- * PROM register R4_SCRATCH4_ALIAS. Offset and field positions read from the table; role inferred from the names.
+ * PROM register R4_SCRATCH4_ALIAS. Offset and field positions read from the
+ * table; role inferred from the names.
  */
 /* scratch4_alias: rw64, reset unknown */
 #define ROUTER_NL4_SCRATCH4_ALIAS_OFFSET             0x1048u /* established */
 #define ROUTER_NL4_SCRATCH4_ALIAS_SCRATCH_1_SHIFT    0 /* established */
 #define ROUTER_NL4_SCRATCH4_ALIAS_SCRATCH_1_MASK     0x1ull
-#define ROUTER_NL4_SCRATCH4_ALIAS_SCRATCH_1_INPLACE  (ROUTER_NL4_SCRATCH4_ALIAS_SCRATCH_1_MASK << ROUTER_NL4_SCRATCH4_ALIAS_SCRATCH_1_SHIFT)
+#define ROUTER_NL4_SCRATCH4_ALIAS_SCRATCH_1_INPLACE (ROUTER_NL4_SCRATCH4_ALIAS_SCRATCH_1_MASK << ROUTER_NL4_SCRATCH4_ALIAS_SCRATCH_1_SHIFT)
 
 /*
- * PROM register R4_SCRATCH5. Offset and field positions read from the table; role inferred from the names.
+ * PROM register R4_SCRATCH5. Offset and field positions read from the table;
+ * role inferred from the names.
  */
 /* scratch5: rw64, reset unknown */
 #define ROUTER_NL4_SCRATCH5_OFFSET                   0x1050u /* established */
 #define ROUTER_NL4_SCRATCH5_SCRATCH_8_SHIFT          0 /* established */
 #define ROUTER_NL4_SCRATCH5_SCRATCH_8_MASK           0xffull
-#define ROUTER_NL4_SCRATCH5_SCRATCH_8_INPLACE        (ROUTER_NL4_SCRATCH5_SCRATCH_8_MASK << ROUTER_NL4_SCRATCH5_SCRATCH_8_SHIFT)
+#define ROUTER_NL4_SCRATCH5_SCRATCH_8_INPLACE (ROUTER_NL4_SCRATCH5_SCRATCH_8_MASK << ROUTER_NL4_SCRATCH5_SCRATCH_8_SHIFT)
 
 /*
- * PROM register R4_SCRATCH5_ALIAS. Offset and field positions read from the table; role inferred from the names.
+ * PROM register R4_SCRATCH5_ALIAS. Offset and field positions read from the
+ * table; role inferred from the names.
  */
 /* scratch5_alias: r64, reset unknown */
 #define ROUTER_NL4_SCRATCH5_ALIAS_OFFSET             0x1058u /* established */
 #define ROUTER_NL4_SCRATCH5_ALIAS_SCRATCH_8_SHIFT    0 /* established */
 #define ROUTER_NL4_SCRATCH5_ALIAS_SCRATCH_8_MASK     0xffull
-#define ROUTER_NL4_SCRATCH5_ALIAS_SCRATCH_8_INPLACE  (ROUTER_NL4_SCRATCH5_ALIAS_SCRATCH_8_MASK << ROUTER_NL4_SCRATCH5_ALIAS_SCRATCH_8_SHIFT)
+#define ROUTER_NL4_SCRATCH5_ALIAS_SCRATCH_8_INPLACE (ROUTER_NL4_SCRATCH5_ALIAS_SCRATCH_8_MASK << ROUTER_NL4_SCRATCH5_ALIAS_SCRATCH_8_SHIFT)
 
 /*
- * PROM register R4_SCRATCH6. Offset and field positions read from the table; role inferred from the names.
+ * PROM register R4_SCRATCH6. Offset and field positions read from the table;
+ * role inferred from the names.
  */
 /* scratch6: rw64, reset unknown */
 #define ROUTER_NL4_SCRATCH6_OFFSET                   0x1060u /* established */
 #define ROUTER_NL4_SCRATCH6_SCRATCH_8_SHIFT          0 /* established */
 #define ROUTER_NL4_SCRATCH6_SCRATCH_8_MASK           0xffull
-#define ROUTER_NL4_SCRATCH6_SCRATCH_8_INPLACE        (ROUTER_NL4_SCRATCH6_SCRATCH_8_MASK << ROUTER_NL4_SCRATCH6_SCRATCH_8_SHIFT)
+#define ROUTER_NL4_SCRATCH6_SCRATCH_8_INPLACE (ROUTER_NL4_SCRATCH6_SCRATCH_8_MASK << ROUTER_NL4_SCRATCH6_SCRATCH_8_SHIFT)
 
 /*
- * PROM register R4_SCRATCH6_ALIAS. Offset and field positions read from the table; role inferred from the names.
+ * PROM register R4_SCRATCH6_ALIAS. Offset and field positions read from the
+ * table; role inferred from the names.
  */
 /* scratch6_alias: r64, reset unknown */
 #define ROUTER_NL4_SCRATCH6_ALIAS_OFFSET             0x1068u /* established */
 #define ROUTER_NL4_SCRATCH6_ALIAS_SCRATCH_8_SHIFT    0 /* established */
 #define ROUTER_NL4_SCRATCH6_ALIAS_SCRATCH_8_MASK     0xffull
-#define ROUTER_NL4_SCRATCH6_ALIAS_SCRATCH_8_INPLACE  (ROUTER_NL4_SCRATCH6_ALIAS_SCRATCH_8_MASK << ROUTER_NL4_SCRATCH6_ALIAS_SCRATCH_8_SHIFT)
+#define ROUTER_NL4_SCRATCH6_ALIAS_SCRATCH_8_INPLACE (ROUTER_NL4_SCRATCH6_ALIAS_SCRATCH_8_MASK << ROUTER_NL4_SCRATCH6_ALIAS_SCRATCH_8_SHIFT)
 
 /*
- * PROM register R4_SCRATCH7. Offset and field positions read from the table; role inferred from the names.
+ * PROM register R4_SCRATCH7. Offset and field positions read from the table;
+ * role inferred from the names.
  */
 /* scratch7: rw64, reset unknown */
 #define ROUTER_NL4_SCRATCH7_OFFSET                   0x1070u /* established */
 #define ROUTER_NL4_SCRATCH7_SCRATCH_8_SHIFT          0 /* established */
 #define ROUTER_NL4_SCRATCH7_SCRATCH_8_MASK           0xffull
-#define ROUTER_NL4_SCRATCH7_SCRATCH_8_INPLACE        (ROUTER_NL4_SCRATCH7_SCRATCH_8_MASK << ROUTER_NL4_SCRATCH7_SCRATCH_8_SHIFT)
+#define ROUTER_NL4_SCRATCH7_SCRATCH_8_INPLACE (ROUTER_NL4_SCRATCH7_SCRATCH_8_MASK << ROUTER_NL4_SCRATCH7_SCRATCH_8_SHIFT)
 
 /*
- * PROM register R4_SCRATCH7_ALIAS. Offset and field positions read from the table; role inferred from the names.
+ * PROM register R4_SCRATCH7_ALIAS. Offset and field positions read from the
+ * table; role inferred from the names.
  */
 /* scratch7_alias: r64, reset unknown */
 #define ROUTER_NL4_SCRATCH7_ALIAS_OFFSET             0x1078u /* established */
 #define ROUTER_NL4_SCRATCH7_ALIAS_SCRATCH_8_SHIFT    0 /* established */
 #define ROUTER_NL4_SCRATCH7_ALIAS_SCRATCH_8_MASK     0xffull
-#define ROUTER_NL4_SCRATCH7_ALIAS_SCRATCH_8_INPLACE  (ROUTER_NL4_SCRATCH7_ALIAS_SCRATCH_8_MASK << ROUTER_NL4_SCRATCH7_ALIAS_SCRATCH_8_SHIFT)
+#define ROUTER_NL4_SCRATCH7_ALIAS_SCRATCH_8_INPLACE (ROUTER_NL4_SCRATCH7_ALIAS_SCRATCH_8_MASK << ROUTER_NL4_SCRATCH7_ALIAS_SCRATCH_8_SHIFT)
 
 /*
- * PROM register R4_SCRATCH8. Offset and field positions read from the table; role inferred from the names.
+ * PROM register R4_SCRATCH8. Offset and field positions read from the table;
+ * role inferred from the names.
  */
 /* scratch8: rw64, reset unknown */
 #define ROUTER_NL4_SCRATCH8_OFFSET                   0x1080u /* established */
 #define ROUTER_NL4_SCRATCH8_SCRATCH_8_SHIFT          0 /* established */
 #define ROUTER_NL4_SCRATCH8_SCRATCH_8_MASK           0xffull
-#define ROUTER_NL4_SCRATCH8_SCRATCH_8_INPLACE        (ROUTER_NL4_SCRATCH8_SCRATCH_8_MASK << ROUTER_NL4_SCRATCH8_SCRATCH_8_SHIFT)
+#define ROUTER_NL4_SCRATCH8_SCRATCH_8_INPLACE (ROUTER_NL4_SCRATCH8_SCRATCH_8_MASK << ROUTER_NL4_SCRATCH8_SCRATCH_8_SHIFT)
 
 /*
- * PROM register R4_SCRATCH8_ALIAS. Offset and field positions read from the table; role inferred from the names.
+ * PROM register R4_SCRATCH8_ALIAS. Offset and field positions read from the
+ * table; role inferred from the names.
  */
 /* scratch8_alias: r64, reset unknown */
 #define ROUTER_NL4_SCRATCH8_ALIAS_OFFSET             0x1088u /* established */
 #define ROUTER_NL4_SCRATCH8_ALIAS_SCRATCH_8_SHIFT    0 /* established */
 #define ROUTER_NL4_SCRATCH8_ALIAS_SCRATCH_8_MASK     0xffull
-#define ROUTER_NL4_SCRATCH8_ALIAS_SCRATCH_8_INPLACE  (ROUTER_NL4_SCRATCH8_ALIAS_SCRATCH_8_MASK << ROUTER_NL4_SCRATCH8_ALIAS_SCRATCH_8_SHIFT)
+#define ROUTER_NL4_SCRATCH8_ALIAS_SCRATCH_8_INPLACE (ROUTER_NL4_SCRATCH8_ALIAS_SCRATCH_8_MASK << ROUTER_NL4_SCRATCH8_ALIAS_SCRATCH_8_SHIFT)
 
 /*
- * PROM register R4_SCRATCH9. Offset and field positions read from the table; role inferred from the names.
+ * PROM register R4_SCRATCH9. Offset and field positions read from the table;
+ * role inferred from the names.
  */
 /* scratch9: rw64, reset unknown */
 #define ROUTER_NL4_SCRATCH9_OFFSET                   0x1090u /* established */
 #define ROUTER_NL4_SCRATCH9_SCRATCH_8_SHIFT          0 /* established */
 #define ROUTER_NL4_SCRATCH9_SCRATCH_8_MASK           0xffull
-#define ROUTER_NL4_SCRATCH9_SCRATCH_8_INPLACE        (ROUTER_NL4_SCRATCH9_SCRATCH_8_MASK << ROUTER_NL4_SCRATCH9_SCRATCH_8_SHIFT)
+#define ROUTER_NL4_SCRATCH9_SCRATCH_8_INPLACE (ROUTER_NL4_SCRATCH9_SCRATCH_8_MASK << ROUTER_NL4_SCRATCH9_SCRATCH_8_SHIFT)
 
 /*
- * PROM register R4_SCRATCH9_ALIAS. Offset and field positions read from the table; role inferred from the names.
+ * PROM register R4_SCRATCH9_ALIAS. Offset and field positions read from the
+ * table; role inferred from the names.
  */
 /* scratch9_alias: r64, reset unknown */
 #define ROUTER_NL4_SCRATCH9_ALIAS_OFFSET             0x1098u /* established */
 #define ROUTER_NL4_SCRATCH9_ALIAS_SCRATCH_8_SHIFT    0 /* established */
 #define ROUTER_NL4_SCRATCH9_ALIAS_SCRATCH_8_MASK     0xffull
-#define ROUTER_NL4_SCRATCH9_ALIAS_SCRATCH_8_INPLACE  (ROUTER_NL4_SCRATCH9_ALIAS_SCRATCH_8_MASK << ROUTER_NL4_SCRATCH9_ALIAS_SCRATCH_8_SHIFT)
+#define ROUTER_NL4_SCRATCH9_ALIAS_SCRATCH_8_INPLACE (ROUTER_NL4_SCRATCH9_ALIAS_SCRATCH_8_MASK << ROUTER_NL4_SCRATCH9_ALIAS_SCRATCH_8_SHIFT)
 
 /*
- * PROM register R4_ASIC_FIRST_ERROR. Offset and field positions read from the table; role inferred from the names.
+ * PROM register R4_ASIC_FIRST_ERROR. Offset and field positions read from the
+ * table; role inferred from the names.
  */
 /* asic_first_error: rw64, reset unknown */
 #define ROUTER_NL4_ASIC_FIRST_ERROR_OFFSET           0x2000u /* established */
@@ -405,16 +435,19 @@
 #define ROUTER_NL4_ASIC_FIRST_ERROR_PORTA_ERROR_INPLACE (ROUTER_NL4_ASIC_FIRST_ERROR_PORTA_ERROR_MASK << ROUTER_NL4_ASIC_FIRST_ERROR_PORTA_ERROR_SHIFT)
 
 /*
- * PROM register R4_ASIC_FIRST_ERROR_TIMESTAMP. Offset and field positions read from the table; role inferred from the names.
+ * PROM register R4_ASIC_FIRST_ERROR_TIMESTAMP. Offset and field positions read
+ * from the table; role inferred from the names.
  */
 /* asic_first_error_timestamp: rw64, reset unknown */
 #define ROUTER_NL4_ASIC_FIRST_ERROR_TIMESTAMP_OFFSET 0x2008u /* established */
-#define ROUTER_NL4_ASIC_FIRST_ERROR_TIMESTAMP_RTC_VALUE_SHIFT 0 /* established */
+/* established */
+#define ROUTER_NL4_ASIC_FIRST_ERROR_TIMESTAMP_RTC_VALUE_SHIFT 0
 #define ROUTER_NL4_ASIC_FIRST_ERROR_TIMESTAMP_RTC_VALUE_MASK 0xffffffffffffffffull
 #define ROUTER_NL4_ASIC_FIRST_ERROR_TIMESTAMP_RTC_VALUE_INPLACE (ROUTER_NL4_ASIC_FIRST_ERROR_TIMESTAMP_RTC_VALUE_MASK << ROUTER_NL4_ASIC_FIRST_ERROR_TIMESTAMP_RTC_VALUE_SHIFT)
 
 /*
- * PROM register R4_LB_ERROR_SUMMARY. Offset and field positions read from the table; role inferred from the names.
+ * PROM register R4_LB_ERROR_SUMMARY. Offset and field positions read from the
+ * table; role inferred from the names.
  */
 /* lb_error_summary: rw64, reset unknown */
 #define ROUTER_NL4_LB_ERROR_SUMMARY_OFFSET           0x2010u /* established */
@@ -483,7 +516,8 @@
 #define ROUTER_NL4_LB_ERROR_SUMMARY_REQ_SB_ERROR_INPLACE (ROUTER_NL4_LB_ERROR_SUMMARY_REQ_SB_ERROR_MASK << ROUTER_NL4_LB_ERROR_SUMMARY_REQ_SB_ERROR_SHIFT)
 
 /*
- * PROM register R4_LB_FIRST_ERROR. Offset and field positions read from the table; role inferred from the names.
+ * PROM register R4_LB_FIRST_ERROR. Offset and field positions read from the
+ * table; role inferred from the names.
  */
 /* lb_first_error: rw64, reset unknown */
 #define ROUTER_NL4_LB_FIRST_ERROR_OFFSET             0x2020u /* established */
@@ -504,7 +538,7 @@
 #define ROUTER_NL4_LB_FIRST_ERROR_GATHER_SPUR_ERR_INPLACE (ROUTER_NL4_LB_FIRST_ERROR_GATHER_SPUR_ERR_MASK << ROUTER_NL4_LB_FIRST_ERROR_GATHER_SPUR_ERR_SHIFT)
 #define ROUTER_NL4_LB_FIRST_ERROR_GATHER_TO_SHIFT    15 /* established */
 #define ROUTER_NL4_LB_FIRST_ERROR_GATHER_TO_MASK     0x1ull
-#define ROUTER_NL4_LB_FIRST_ERROR_GATHER_TO_INPLACE  (ROUTER_NL4_LB_FIRST_ERROR_GATHER_TO_MASK << ROUTER_NL4_LB_FIRST_ERROR_GATHER_TO_SHIFT)
+#define ROUTER_NL4_LB_FIRST_ERROR_GATHER_TO_INPLACE (ROUTER_NL4_LB_FIRST_ERROR_GATHER_TO_MASK << ROUTER_NL4_LB_FIRST_ERROR_GATHER_TO_SHIFT)
 #define ROUTER_NL4_LB_FIRST_ERROR_GATHER_ERR_SHIFT   14 /* established */
 #define ROUTER_NL4_LB_FIRST_ERROR_GATHER_ERR_MASK    0x1ull
 #define ROUTER_NL4_LB_FIRST_ERROR_GATHER_ERR_INPLACE (ROUTER_NL4_LB_FIRST_ERROR_GATHER_ERR_MASK << ROUTER_NL4_LB_FIRST_ERROR_GATHER_ERR_SHIFT)
@@ -552,23 +586,29 @@
 #define ROUTER_NL4_LB_FIRST_ERROR_REQ_SB_ERROR_INPLACE (ROUTER_NL4_LB_FIRST_ERROR_REQ_SB_ERROR_MASK << ROUTER_NL4_LB_FIRST_ERROR_REQ_SB_ERROR_SHIFT)
 
 /*
- * PROM register R4_LB_ERROR_REPORT_MASK. Offset and field positions read from the table; role inferred from the names.
+ * PROM register R4_LB_ERROR_REPORT_MASK. Offset and field positions read from
+ * the table; role inferred from the names.
  */
 /* lb_error_report_mask: rw64, reset unknown */
 #define ROUTER_NL4_LB_ERROR_REPORT_MASK_OFFSET       0x2030u /* established */
-#define ROUTER_NL4_LB_ERROR_REPORT_MASK_VCH3_DEADLOCK_TO_SHIFT 20 /* established */
+/* established */
+#define ROUTER_NL4_LB_ERROR_REPORT_MASK_VCH3_DEADLOCK_TO_SHIFT 20
 #define ROUTER_NL4_LB_ERROR_REPORT_MASK_VCH3_DEADLOCK_TO_MASK 0x1ull
 #define ROUTER_NL4_LB_ERROR_REPORT_MASK_VCH3_DEADLOCK_TO_INPLACE (ROUTER_NL4_LB_ERROR_REPORT_MASK_VCH3_DEADLOCK_TO_MASK << ROUTER_NL4_LB_ERROR_REPORT_MASK_VCH3_DEADLOCK_TO_SHIFT)
-#define ROUTER_NL4_LB_ERROR_REPORT_MASK_VCH2_DEADLOCK_TO_SHIFT 19 /* established */
+/* established */
+#define ROUTER_NL4_LB_ERROR_REPORT_MASK_VCH2_DEADLOCK_TO_SHIFT 19
 #define ROUTER_NL4_LB_ERROR_REPORT_MASK_VCH2_DEADLOCK_TO_MASK 0x1ull
 #define ROUTER_NL4_LB_ERROR_REPORT_MASK_VCH2_DEADLOCK_TO_INPLACE (ROUTER_NL4_LB_ERROR_REPORT_MASK_VCH2_DEADLOCK_TO_MASK << ROUTER_NL4_LB_ERROR_REPORT_MASK_VCH2_DEADLOCK_TO_SHIFT)
-#define ROUTER_NL4_LB_ERROR_REPORT_MASK_VCH1_DEADLOCK_TO_SHIFT 18 /* established */
+/* established */
+#define ROUTER_NL4_LB_ERROR_REPORT_MASK_VCH1_DEADLOCK_TO_SHIFT 18
 #define ROUTER_NL4_LB_ERROR_REPORT_MASK_VCH1_DEADLOCK_TO_MASK 0x1ull
 #define ROUTER_NL4_LB_ERROR_REPORT_MASK_VCH1_DEADLOCK_TO_INPLACE (ROUTER_NL4_LB_ERROR_REPORT_MASK_VCH1_DEADLOCK_TO_MASK << ROUTER_NL4_LB_ERROR_REPORT_MASK_VCH1_DEADLOCK_TO_SHIFT)
-#define ROUTER_NL4_LB_ERROR_REPORT_MASK_VCH0_DEADLOCK_TO_SHIFT 17 /* established */
+/* established */
+#define ROUTER_NL4_LB_ERROR_REPORT_MASK_VCH0_DEADLOCK_TO_SHIFT 17
 #define ROUTER_NL4_LB_ERROR_REPORT_MASK_VCH0_DEADLOCK_TO_MASK 0x1ull
 #define ROUTER_NL4_LB_ERROR_REPORT_MASK_VCH0_DEADLOCK_TO_INPLACE (ROUTER_NL4_LB_ERROR_REPORT_MASK_VCH0_DEADLOCK_TO_MASK << ROUTER_NL4_LB_ERROR_REPORT_MASK_VCH0_DEADLOCK_TO_SHIFT)
-#define ROUTER_NL4_LB_ERROR_REPORT_MASK_GATHER_SPUR_ERR_SHIFT 16 /* established */
+/* established */
+#define ROUTER_NL4_LB_ERROR_REPORT_MASK_GATHER_SPUR_ERR_SHIFT 16
 #define ROUTER_NL4_LB_ERROR_REPORT_MASK_GATHER_SPUR_ERR_MASK 0x1ull
 #define ROUTER_NL4_LB_ERROR_REPORT_MASK_GATHER_SPUR_ERR_INPLACE (ROUTER_NL4_LB_ERROR_REPORT_MASK_GATHER_SPUR_ERR_MASK << ROUTER_NL4_LB_ERROR_REPORT_MASK_GATHER_SPUR_ERR_SHIFT)
 #define ROUTER_NL4_LB_ERROR_REPORT_MASK_GATHER_TO_SHIFT 15 /* established */
@@ -577,13 +617,16 @@
 #define ROUTER_NL4_LB_ERROR_REPORT_MASK_GATHER_ERR_SHIFT 14 /* established */
 #define ROUTER_NL4_LB_ERROR_REPORT_MASK_GATHER_ERR_MASK 0x1ull
 #define ROUTER_NL4_LB_ERROR_REPORT_MASK_GATHER_ERR_INPLACE (ROUTER_NL4_LB_ERROR_REPORT_MASK_GATHER_ERR_MASK << ROUTER_NL4_LB_ERROR_REPORT_MASK_GATHER_ERR_SHIFT)
-#define ROUTER_NL4_LB_ERROR_REPORT_MASK_REP_BAD_NEXT_DIR_SHIFT 13 /* established */
+/* established */
+#define ROUTER_NL4_LB_ERROR_REPORT_MASK_REP_BAD_NEXT_DIR_SHIFT 13
 #define ROUTER_NL4_LB_ERROR_REPORT_MASK_REP_BAD_NEXT_DIR_MASK 0x1ull
 #define ROUTER_NL4_LB_ERROR_REPORT_MASK_REP_BAD_NEXT_DIR_INPLACE (ROUTER_NL4_LB_ERROR_REPORT_MASK_REP_BAD_NEXT_DIR_MASK << ROUTER_NL4_LB_ERROR_REPORT_MASK_REP_BAD_NEXT_DIR_SHIFT)
-#define ROUTER_NL4_LB_ERROR_REPORT_MASK_REP_BAD_THIS_DIR_SHIFT 12 /* established */
+/* established */
+#define ROUTER_NL4_LB_ERROR_REPORT_MASK_REP_BAD_THIS_DIR_SHIFT 12
 #define ROUTER_NL4_LB_ERROR_REPORT_MASK_REP_BAD_THIS_DIR_MASK 0x1ull
 #define ROUTER_NL4_LB_ERROR_REPORT_MASK_REP_BAD_THIS_DIR_INPLACE (ROUTER_NL4_LB_ERROR_REPORT_MASK_REP_BAD_THIS_DIR_MASK << ROUTER_NL4_LB_ERROR_REPORT_MASK_REP_BAD_THIS_DIR_SHIFT)
-#define ROUTER_NL4_LB_ERROR_REPORT_MASK_REP_MSG_LEN_ERR_SHIFT 11 /* established */
+/* established */
+#define ROUTER_NL4_LB_ERROR_REPORT_MASK_REP_MSG_LEN_ERR_SHIFT 11
 #define ROUTER_NL4_LB_ERROR_REPORT_MASK_REP_MSG_LEN_ERR_MASK 0x1ull
 #define ROUTER_NL4_LB_ERROR_REPORT_MASK_REP_MSG_LEN_ERR_INPLACE (ROUTER_NL4_LB_ERROR_REPORT_MASK_REP_MSG_LEN_ERR_MASK << ROUTER_NL4_LB_ERROR_REPORT_MASK_REP_MSG_LEN_ERR_SHIFT)
 #define ROUTER_NL4_LB_ERROR_REPORT_MASK_BAD_REP_MSG_SHIFT 10 /* established */
@@ -592,10 +635,12 @@
 #define ROUTER_NL4_LB_ERROR_REPORT_MASK_REP_SB_ERROR_SHIFT 9 /* established */
 #define ROUTER_NL4_LB_ERROR_REPORT_MASK_REP_SB_ERROR_MASK 0x1ull
 #define ROUTER_NL4_LB_ERROR_REPORT_MASK_REP_SB_ERROR_INPLACE (ROUTER_NL4_LB_ERROR_REPORT_MASK_REP_SB_ERROR_MASK << ROUTER_NL4_LB_ERROR_REPORT_MASK_REP_SB_ERROR_SHIFT)
-#define ROUTER_NL4_LB_ERROR_REPORT_MASK_REQ_BAD_NEXT_DIR_SHIFT 8 /* established */
+/* established */
+#define ROUTER_NL4_LB_ERROR_REPORT_MASK_REQ_BAD_NEXT_DIR_SHIFT 8
 #define ROUTER_NL4_LB_ERROR_REPORT_MASK_REQ_BAD_NEXT_DIR_MASK 0x1ull
 #define ROUTER_NL4_LB_ERROR_REPORT_MASK_REQ_BAD_NEXT_DIR_INPLACE (ROUTER_NL4_LB_ERROR_REPORT_MASK_REQ_BAD_NEXT_DIR_MASK << ROUTER_NL4_LB_ERROR_REPORT_MASK_REQ_BAD_NEXT_DIR_SHIFT)
-#define ROUTER_NL4_LB_ERROR_REPORT_MASK_REQ_BAD_THIS_DIR_SHIFT 7 /* established */
+/* established */
+#define ROUTER_NL4_LB_ERROR_REPORT_MASK_REQ_BAD_THIS_DIR_SHIFT 7
 #define ROUTER_NL4_LB_ERROR_REPORT_MASK_REQ_BAD_THIS_DIR_MASK 0x1ull
 #define ROUTER_NL4_LB_ERROR_REPORT_MASK_REQ_BAD_THIS_DIR_INPLACE (ROUTER_NL4_LB_ERROR_REPORT_MASK_REQ_BAD_THIS_DIR_MASK << ROUTER_NL4_LB_ERROR_REPORT_MASK_REQ_BAD_THIS_DIR_SHIFT)
 #define ROUTER_NL4_LB_ERROR_REPORT_MASK_JTAG_PIO_ERR_SHIFT 6 /* established */
@@ -604,13 +649,15 @@
 #define ROUTER_NL4_LB_ERROR_REPORT_MASK_PIO_CHN_TO_SHIFT 5 /* established */
 #define ROUTER_NL4_LB_ERROR_REPORT_MASK_PIO_CHN_TO_MASK 0x1ull
 #define ROUTER_NL4_LB_ERROR_REPORT_MASK_PIO_CHN_TO_INPLACE (ROUTER_NL4_LB_ERROR_REPORT_MASK_PIO_CHN_TO_MASK << ROUTER_NL4_LB_ERROR_REPORT_MASK_PIO_CHN_TO_SHIFT)
-#define ROUTER_NL4_LB_ERROR_REPORT_MASK_PIO_UNEXP_VALID_SHIFT 4 /* established */
+/* established */
+#define ROUTER_NL4_LB_ERROR_REPORT_MASK_PIO_UNEXP_VALID_SHIFT 4
 #define ROUTER_NL4_LB_ERROR_REPORT_MASK_PIO_UNEXP_VALID_MASK 0x1ull
 #define ROUTER_NL4_LB_ERROR_REPORT_MASK_PIO_UNEXP_VALID_INPLACE (ROUTER_NL4_LB_ERROR_REPORT_MASK_PIO_UNEXP_VALID_MASK << ROUTER_NL4_LB_ERROR_REPORT_MASK_PIO_UNEXP_VALID_SHIFT)
 #define ROUTER_NL4_LB_ERROR_REPORT_MASK_PIO_BAD_ADDR_SHIFT 3 /* established */
 #define ROUTER_NL4_LB_ERROR_REPORT_MASK_PIO_BAD_ADDR_MASK 0x1ull
 #define ROUTER_NL4_LB_ERROR_REPORT_MASK_PIO_BAD_ADDR_INPLACE (ROUTER_NL4_LB_ERROR_REPORT_MASK_PIO_BAD_ADDR_MASK << ROUTER_NL4_LB_ERROR_REPORT_MASK_PIO_BAD_ADDR_SHIFT)
-#define ROUTER_NL4_LB_ERROR_REPORT_MASK_REQ_MSG_LEN_ERR_SHIFT 2 /* established */
+/* established */
+#define ROUTER_NL4_LB_ERROR_REPORT_MASK_REQ_MSG_LEN_ERR_SHIFT 2
 #define ROUTER_NL4_LB_ERROR_REPORT_MASK_REQ_MSG_LEN_ERR_MASK 0x1ull
 #define ROUTER_NL4_LB_ERROR_REPORT_MASK_REQ_MSG_LEN_ERR_INPLACE (ROUTER_NL4_LB_ERROR_REPORT_MASK_REQ_MSG_LEN_ERR_MASK << ROUTER_NL4_LB_ERROR_REPORT_MASK_REQ_MSG_LEN_ERR_SHIFT)
 #define ROUTER_NL4_LB_ERROR_REPORT_MASK_BAD_REQ_MSG_SHIFT 1 /* established */
@@ -621,7 +668,8 @@
 #define ROUTER_NL4_LB_ERROR_REPORT_MASK_REQ_SB_ERROR_INPLACE (ROUTER_NL4_LB_ERROR_REPORT_MASK_REQ_SB_ERROR_MASK << ROUTER_NL4_LB_ERROR_REPORT_MASK_REQ_SB_ERROR_SHIFT)
 
 /*
- * PROM register R4_LB_ERROR_DETAIL_1. Offset and field positions read from the table; role inferred from the names.
+ * PROM register R4_LB_ERROR_DETAIL_1. Offset and field positions read from the
+ * table; role inferred from the names.
  */
 /* lb_error_detail_1: rw64, reset unknown */
 #define ROUTER_NL4_LB_ERROR_DETAIL_1_OFFSET          0x2050u /* established */
@@ -639,7 +687,8 @@
 #define ROUTER_NL4_LB_ERROR_DETAIL_1_DEST_CHIPLET_INPLACE (ROUTER_NL4_LB_ERROR_DETAIL_1_DEST_CHIPLET_MASK << ROUTER_NL4_LB_ERROR_DETAIL_1_DEST_CHIPLET_SHIFT)
 
 /*
- * PROM register R4_LB_ERROR_DETAIL_2. Offset and field positions read from the table; role inferred from the names.
+ * PROM register R4_LB_ERROR_DETAIL_2. Offset and field positions read from the
+ * table; role inferred from the names.
  */
 /* lb_error_detail_2: rw64, reset unknown */
 #define ROUTER_NL4_LB_ERROR_DETAIL_2_OFFSET          0x2060u /* established */
@@ -651,109 +700,130 @@
 #define ROUTER_NL4_LB_ERROR_DETAIL_2_SRC_CHIPLET_INPLACE (ROUTER_NL4_LB_ERROR_DETAIL_2_SRC_CHIPLET_MASK << ROUTER_NL4_LB_ERROR_DETAIL_2_SRC_CHIPLET_SHIFT)
 #define ROUTER_NL4_LB_ERROR_DETAIL_2_SOURCE_SHIFT    32 /* established */
 #define ROUTER_NL4_LB_ERROR_DETAIL_2_SOURCE_MASK     0x3fffull
-#define ROUTER_NL4_LB_ERROR_DETAIL_2_SOURCE_INPLACE  (ROUTER_NL4_LB_ERROR_DETAIL_2_SOURCE_MASK << ROUTER_NL4_LB_ERROR_DETAIL_2_SOURCE_SHIFT)
+#define ROUTER_NL4_LB_ERROR_DETAIL_2_SOURCE_INPLACE (ROUTER_NL4_LB_ERROR_DETAIL_2_SOURCE_MASK << ROUTER_NL4_LB_ERROR_DETAIL_2_SOURCE_SHIFT)
 #define ROUTER_NL4_LB_ERROR_DETAIL_2_DIR3_0_SHIFT    28 /* established */
 #define ROUTER_NL4_LB_ERROR_DETAIL_2_DIR3_0_MASK     0xfull
-#define ROUTER_NL4_LB_ERROR_DETAIL_2_DIR3_0_INPLACE  (ROUTER_NL4_LB_ERROR_DETAIL_2_DIR3_0_MASK << ROUTER_NL4_LB_ERROR_DETAIL_2_DIR3_0_SHIFT)
+#define ROUTER_NL4_LB_ERROR_DETAIL_2_DIR3_0_INPLACE (ROUTER_NL4_LB_ERROR_DETAIL_2_DIR3_0_MASK << ROUTER_NL4_LB_ERROR_DETAIL_2_DIR3_0_SHIFT)
 #define ROUTER_NL4_LB_ERROR_DETAIL_2_ECHO7_4_SHIFT   24 /* established */
 #define ROUTER_NL4_LB_ERROR_DETAIL_2_ECHO7_4_MASK    0xfull
 #define ROUTER_NL4_LB_ERROR_DETAIL_2_ECHO7_4_INPLACE (ROUTER_NL4_LB_ERROR_DETAIL_2_ECHO7_4_MASK << ROUTER_NL4_LB_ERROR_DETAIL_2_ECHO7_4_SHIFT)
 #define ROUTER_NL4_LB_ERROR_DETAIL_2_ECHO8_SHIFT     23 /* established */
 #define ROUTER_NL4_LB_ERROR_DETAIL_2_ECHO8_MASK      0x1ull
-#define ROUTER_NL4_LB_ERROR_DETAIL_2_ECHO8_INPLACE   (ROUTER_NL4_LB_ERROR_DETAIL_2_ECHO8_MASK << ROUTER_NL4_LB_ERROR_DETAIL_2_ECHO8_SHIFT)
+#define ROUTER_NL4_LB_ERROR_DETAIL_2_ECHO8_INPLACE (ROUTER_NL4_LB_ERROR_DETAIL_2_ECHO8_MASK << ROUTER_NL4_LB_ERROR_DETAIL_2_ECHO8_SHIFT)
 #define ROUTER_NL4_LB_ERROR_DETAIL_2_DIR4_SHIFT      22 /* established */
 #define ROUTER_NL4_LB_ERROR_DETAIL_2_DIR4_MASK       0x1ull
-#define ROUTER_NL4_LB_ERROR_DETAIL_2_DIR4_INPLACE    (ROUTER_NL4_LB_ERROR_DETAIL_2_DIR4_MASK << ROUTER_NL4_LB_ERROR_DETAIL_2_DIR4_SHIFT)
+#define ROUTER_NL4_LB_ERROR_DETAIL_2_DIR4_INPLACE (ROUTER_NL4_LB_ERROR_DETAIL_2_DIR4_MASK << ROUTER_NL4_LB_ERROR_DETAIL_2_DIR4_SHIFT)
 #define ROUTER_NL4_LB_ERROR_DETAIL_2_DESTINATION_SHIFT 8 /* established */
 #define ROUTER_NL4_LB_ERROR_DETAIL_2_DESTINATION_MASK 0x3fffull
 #define ROUTER_NL4_LB_ERROR_DETAIL_2_DESTINATION_INPLACE (ROUTER_NL4_LB_ERROR_DETAIL_2_DESTINATION_MASK << ROUTER_NL4_LB_ERROR_DETAIL_2_DESTINATION_SHIFT)
 #define ROUTER_NL4_LB_ERROR_DETAIL_2_AGE_SHIFT       0 /* established */
 #define ROUTER_NL4_LB_ERROR_DETAIL_2_AGE_MASK        0xffull
-#define ROUTER_NL4_LB_ERROR_DETAIL_2_AGE_INPLACE     (ROUTER_NL4_LB_ERROR_DETAIL_2_AGE_MASK << ROUTER_NL4_LB_ERROR_DETAIL_2_AGE_SHIFT)
+#define ROUTER_NL4_LB_ERROR_DETAIL_2_AGE_INPLACE (ROUTER_NL4_LB_ERROR_DETAIL_2_AGE_MASK << ROUTER_NL4_LB_ERROR_DETAIL_2_AGE_SHIFT)
 
 /*
- * PROM register R4_LB0_TEST_POINT_SELECT_512. Offset and field positions read from the table; role inferred from the names.
+ * PROM register R4_LB0_TEST_POINT_SELECT_512. Offset and field positions read
+ * from the table; role inferred from the names.
  */
 /* lb0_test_point_select_512: rw64, reset unknown */
 #define ROUTER_NL4_LB0_TEST_POINT_SELECT_512_OFFSET  0x2700u /* established */
-#define ROUTER_NL4_LB0_TEST_POINT_SELECT_512_NIBBLE7_NIBBLE_SEL_SHIFT 60 /* established */
+/* established */
+#define ROUTER_NL4_LB0_TEST_POINT_SELECT_512_NIBBLE7_NIBBLE_SEL_SHIFT 60
 #define ROUTER_NL4_LB0_TEST_POINT_SELECT_512_NIBBLE7_NIBBLE_SEL_MASK 0x7ull
 #define ROUTER_NL4_LB0_TEST_POINT_SELECT_512_NIBBLE7_NIBBLE_SEL_INPLACE (ROUTER_NL4_LB0_TEST_POINT_SELECT_512_NIBBLE7_NIBBLE_SEL_MASK << ROUTER_NL4_LB0_TEST_POINT_SELECT_512_NIBBLE7_NIBBLE_SEL_SHIFT)
-#define ROUTER_NL4_LB0_TEST_POINT_SELECT_512_NIBBLE7_CHIPLET_SEL_SHIFT 56 /* established */
+/* established */
+#define ROUTER_NL4_LB0_TEST_POINT_SELECT_512_NIBBLE7_CHIPLET_SEL_SHIFT 56
 #define ROUTER_NL4_LB0_TEST_POINT_SELECT_512_NIBBLE7_CHIPLET_SEL_MASK 0xfull
 #define ROUTER_NL4_LB0_TEST_POINT_SELECT_512_NIBBLE7_CHIPLET_SEL_INPLACE (ROUTER_NL4_LB0_TEST_POINT_SELECT_512_NIBBLE7_CHIPLET_SEL_MASK << ROUTER_NL4_LB0_TEST_POINT_SELECT_512_NIBBLE7_CHIPLET_SEL_SHIFT)
-#define ROUTER_NL4_LB0_TEST_POINT_SELECT_512_NIBBLE6_NIBBLE_SEL_SHIFT 52 /* established */
+/* established */
+#define ROUTER_NL4_LB0_TEST_POINT_SELECT_512_NIBBLE6_NIBBLE_SEL_SHIFT 52
 #define ROUTER_NL4_LB0_TEST_POINT_SELECT_512_NIBBLE6_NIBBLE_SEL_MASK 0x7ull
 #define ROUTER_NL4_LB0_TEST_POINT_SELECT_512_NIBBLE6_NIBBLE_SEL_INPLACE (ROUTER_NL4_LB0_TEST_POINT_SELECT_512_NIBBLE6_NIBBLE_SEL_MASK << ROUTER_NL4_LB0_TEST_POINT_SELECT_512_NIBBLE6_NIBBLE_SEL_SHIFT)
-#define ROUTER_NL4_LB0_TEST_POINT_SELECT_512_NIBBLE6_CHIPLET_SEL_SHIFT 48 /* established */
+/* established */
+#define ROUTER_NL4_LB0_TEST_POINT_SELECT_512_NIBBLE6_CHIPLET_SEL_SHIFT 48
 #define ROUTER_NL4_LB0_TEST_POINT_SELECT_512_NIBBLE6_CHIPLET_SEL_MASK 0xfull
 #define ROUTER_NL4_LB0_TEST_POINT_SELECT_512_NIBBLE6_CHIPLET_SEL_INPLACE (ROUTER_NL4_LB0_TEST_POINT_SELECT_512_NIBBLE6_CHIPLET_SEL_MASK << ROUTER_NL4_LB0_TEST_POINT_SELECT_512_NIBBLE6_CHIPLET_SEL_SHIFT)
-#define ROUTER_NL4_LB0_TEST_POINT_SELECT_512_NIBBLE5_NIBBLE_SEL_SHIFT 44 /* established */
+/* established */
+#define ROUTER_NL4_LB0_TEST_POINT_SELECT_512_NIBBLE5_NIBBLE_SEL_SHIFT 44
 #define ROUTER_NL4_LB0_TEST_POINT_SELECT_512_NIBBLE5_NIBBLE_SEL_MASK 0x7ull
 #define ROUTER_NL4_LB0_TEST_POINT_SELECT_512_NIBBLE5_NIBBLE_SEL_INPLACE (ROUTER_NL4_LB0_TEST_POINT_SELECT_512_NIBBLE5_NIBBLE_SEL_MASK << ROUTER_NL4_LB0_TEST_POINT_SELECT_512_NIBBLE5_NIBBLE_SEL_SHIFT)
-#define ROUTER_NL4_LB0_TEST_POINT_SELECT_512_NIBBLE5_CHIPLET_SEL_SHIFT 40 /* established */
+/* established */
+#define ROUTER_NL4_LB0_TEST_POINT_SELECT_512_NIBBLE5_CHIPLET_SEL_SHIFT 40
 #define ROUTER_NL4_LB0_TEST_POINT_SELECT_512_NIBBLE5_CHIPLET_SEL_MASK 0xfull
 #define ROUTER_NL4_LB0_TEST_POINT_SELECT_512_NIBBLE5_CHIPLET_SEL_INPLACE (ROUTER_NL4_LB0_TEST_POINT_SELECT_512_NIBBLE5_CHIPLET_SEL_MASK << ROUTER_NL4_LB0_TEST_POINT_SELECT_512_NIBBLE5_CHIPLET_SEL_SHIFT)
-#define ROUTER_NL4_LB0_TEST_POINT_SELECT_512_NIBBLE4_NIBBLE_SEL_SHIFT 36 /* established */
+/* established */
+#define ROUTER_NL4_LB0_TEST_POINT_SELECT_512_NIBBLE4_NIBBLE_SEL_SHIFT 36
 #define ROUTER_NL4_LB0_TEST_POINT_SELECT_512_NIBBLE4_NIBBLE_SEL_MASK 0x7ull
 #define ROUTER_NL4_LB0_TEST_POINT_SELECT_512_NIBBLE4_NIBBLE_SEL_INPLACE (ROUTER_NL4_LB0_TEST_POINT_SELECT_512_NIBBLE4_NIBBLE_SEL_MASK << ROUTER_NL4_LB0_TEST_POINT_SELECT_512_NIBBLE4_NIBBLE_SEL_SHIFT)
-#define ROUTER_NL4_LB0_TEST_POINT_SELECT_512_NIBBLE4_CHIPLET_SEL_SHIFT 32 /* established */
+/* established */
+#define ROUTER_NL4_LB0_TEST_POINT_SELECT_512_NIBBLE4_CHIPLET_SEL_SHIFT 32
 #define ROUTER_NL4_LB0_TEST_POINT_SELECT_512_NIBBLE4_CHIPLET_SEL_MASK 0xfull
 #define ROUTER_NL4_LB0_TEST_POINT_SELECT_512_NIBBLE4_CHIPLET_SEL_INPLACE (ROUTER_NL4_LB0_TEST_POINT_SELECT_512_NIBBLE4_CHIPLET_SEL_MASK << ROUTER_NL4_LB0_TEST_POINT_SELECT_512_NIBBLE4_CHIPLET_SEL_SHIFT)
-#define ROUTER_NL4_LB0_TEST_POINT_SELECT_512_NIBBLE3_NIBBLE_SEL_SHIFT 28 /* established */
+/* established */
+#define ROUTER_NL4_LB0_TEST_POINT_SELECT_512_NIBBLE3_NIBBLE_SEL_SHIFT 28
 #define ROUTER_NL4_LB0_TEST_POINT_SELECT_512_NIBBLE3_NIBBLE_SEL_MASK 0x7ull
 #define ROUTER_NL4_LB0_TEST_POINT_SELECT_512_NIBBLE3_NIBBLE_SEL_INPLACE (ROUTER_NL4_LB0_TEST_POINT_SELECT_512_NIBBLE3_NIBBLE_SEL_MASK << ROUTER_NL4_LB0_TEST_POINT_SELECT_512_NIBBLE3_NIBBLE_SEL_SHIFT)
-#define ROUTER_NL4_LB0_TEST_POINT_SELECT_512_NIBBLE3_CHIPLET_SEL_SHIFT 24 /* established */
+/* established */
+#define ROUTER_NL4_LB0_TEST_POINT_SELECT_512_NIBBLE3_CHIPLET_SEL_SHIFT 24
 #define ROUTER_NL4_LB0_TEST_POINT_SELECT_512_NIBBLE3_CHIPLET_SEL_MASK 0xfull
 #define ROUTER_NL4_LB0_TEST_POINT_SELECT_512_NIBBLE3_CHIPLET_SEL_INPLACE (ROUTER_NL4_LB0_TEST_POINT_SELECT_512_NIBBLE3_CHIPLET_SEL_MASK << ROUTER_NL4_LB0_TEST_POINT_SELECT_512_NIBBLE3_CHIPLET_SEL_SHIFT)
-#define ROUTER_NL4_LB0_TEST_POINT_SELECT_512_NIBBLE2_NIBBLE_SEL_SHIFT 20 /* established */
+/* established */
+#define ROUTER_NL4_LB0_TEST_POINT_SELECT_512_NIBBLE2_NIBBLE_SEL_SHIFT 20
 #define ROUTER_NL4_LB0_TEST_POINT_SELECT_512_NIBBLE2_NIBBLE_SEL_MASK 0x7ull
 #define ROUTER_NL4_LB0_TEST_POINT_SELECT_512_NIBBLE2_NIBBLE_SEL_INPLACE (ROUTER_NL4_LB0_TEST_POINT_SELECT_512_NIBBLE2_NIBBLE_SEL_MASK << ROUTER_NL4_LB0_TEST_POINT_SELECT_512_NIBBLE2_NIBBLE_SEL_SHIFT)
-#define ROUTER_NL4_LB0_TEST_POINT_SELECT_512_NIBBLE2_CHIPLET_SEL_SHIFT 16 /* established */
+/* established */
+#define ROUTER_NL4_LB0_TEST_POINT_SELECT_512_NIBBLE2_CHIPLET_SEL_SHIFT 16
 #define ROUTER_NL4_LB0_TEST_POINT_SELECT_512_NIBBLE2_CHIPLET_SEL_MASK 0xfull
 #define ROUTER_NL4_LB0_TEST_POINT_SELECT_512_NIBBLE2_CHIPLET_SEL_INPLACE (ROUTER_NL4_LB0_TEST_POINT_SELECT_512_NIBBLE2_CHIPLET_SEL_MASK << ROUTER_NL4_LB0_TEST_POINT_SELECT_512_NIBBLE2_CHIPLET_SEL_SHIFT)
-#define ROUTER_NL4_LB0_TEST_POINT_SELECT_512_NIBBLE1_NIBBLE_SEL_SHIFT 12 /* established */
+/* established */
+#define ROUTER_NL4_LB0_TEST_POINT_SELECT_512_NIBBLE1_NIBBLE_SEL_SHIFT 12
 #define ROUTER_NL4_LB0_TEST_POINT_SELECT_512_NIBBLE1_NIBBLE_SEL_MASK 0x7ull
 #define ROUTER_NL4_LB0_TEST_POINT_SELECT_512_NIBBLE1_NIBBLE_SEL_INPLACE (ROUTER_NL4_LB0_TEST_POINT_SELECT_512_NIBBLE1_NIBBLE_SEL_MASK << ROUTER_NL4_LB0_TEST_POINT_SELECT_512_NIBBLE1_NIBBLE_SEL_SHIFT)
-#define ROUTER_NL4_LB0_TEST_POINT_SELECT_512_NIBBLE1_CHIPLET_SEL_SHIFT 8 /* established */
+/* established */
+#define ROUTER_NL4_LB0_TEST_POINT_SELECT_512_NIBBLE1_CHIPLET_SEL_SHIFT 8
 #define ROUTER_NL4_LB0_TEST_POINT_SELECT_512_NIBBLE1_CHIPLET_SEL_MASK 0xfull
 #define ROUTER_NL4_LB0_TEST_POINT_SELECT_512_NIBBLE1_CHIPLET_SEL_INPLACE (ROUTER_NL4_LB0_TEST_POINT_SELECT_512_NIBBLE1_CHIPLET_SEL_MASK << ROUTER_NL4_LB0_TEST_POINT_SELECT_512_NIBBLE1_CHIPLET_SEL_SHIFT)
-#define ROUTER_NL4_LB0_TEST_POINT_SELECT_512_NIBBLE0_NIBBLE_SEL_SHIFT 4 /* established */
+/* established */
+#define ROUTER_NL4_LB0_TEST_POINT_SELECT_512_NIBBLE0_NIBBLE_SEL_SHIFT 4
 #define ROUTER_NL4_LB0_TEST_POINT_SELECT_512_NIBBLE0_NIBBLE_SEL_MASK 0x7ull
 #define ROUTER_NL4_LB0_TEST_POINT_SELECT_512_NIBBLE0_NIBBLE_SEL_INPLACE (ROUTER_NL4_LB0_TEST_POINT_SELECT_512_NIBBLE0_NIBBLE_SEL_MASK << ROUTER_NL4_LB0_TEST_POINT_SELECT_512_NIBBLE0_NIBBLE_SEL_SHIFT)
-#define ROUTER_NL4_LB0_TEST_POINT_SELECT_512_NIBBLE0_CHIPLET_SEL_SHIFT 0 /* established */
+/* established */
+#define ROUTER_NL4_LB0_TEST_POINT_SELECT_512_NIBBLE0_CHIPLET_SEL_SHIFT 0
 #define ROUTER_NL4_LB0_TEST_POINT_SELECT_512_NIBBLE0_CHIPLET_SEL_MASK 0xfull
 #define ROUTER_NL4_LB0_TEST_POINT_SELECT_512_NIBBLE0_CHIPLET_SEL_INPLACE (ROUTER_NL4_LB0_TEST_POINT_SELECT_512_NIBBLE0_CHIPLET_SEL_MASK << ROUTER_NL4_LB0_TEST_POINT_SELECT_512_NIBBLE0_CHIPLET_SEL_SHIFT)
 
 /*
- * PROM register R4_LB_DATELINE. Offset and field positions read from the table; role inferred from the names.
+ * PROM register R4_LB_DATELINE. Offset and field positions read from the table;
+ * role inferred from the names.
  */
 /* lb_dateline: rw64, reset unknown */
 #define ROUTER_NL4_LB_DATELINE_OFFSET                0x4000u /* established */
 #define ROUTER_NL4_LB_DATELINE_EN_SHIFT              0 /* established */
 #define ROUTER_NL4_LB_DATELINE_EN_MASK               0x1ull
-#define ROUTER_NL4_LB_DATELINE_EN_INPLACE            (ROUTER_NL4_LB_DATELINE_EN_MASK << ROUTER_NL4_LB_DATELINE_EN_SHIFT)
+#define ROUTER_NL4_LB_DATELINE_EN_INPLACE (ROUTER_NL4_LB_DATELINE_EN_MASK << ROUTER_NL4_LB_DATELINE_EN_SHIFT)
 
 /*
- * PROM register R4_LB_PREAGE. Offset and field positions read from the table; role inferred from the names.
+ * PROM register R4_LB_PREAGE. Offset and field positions read from the table;
+ * role inferred from the names.
  */
 /* lb_preage: rw64, reset unknown */
 #define ROUTER_NL4_LB_PREAGE_OFFSET                  0x4010u /* established */
 #define ROUTER_NL4_LB_PREAGE_AGE_SHIFT               0 /* established */
 #define ROUTER_NL4_LB_PREAGE_AGE_MASK                0xffull
-#define ROUTER_NL4_LB_PREAGE_AGE_INPLACE             (ROUTER_NL4_LB_PREAGE_AGE_MASK << ROUTER_NL4_LB_PREAGE_AGE_SHIFT)
+#define ROUTER_NL4_LB_PREAGE_AGE_INPLACE (ROUTER_NL4_LB_PREAGE_AGE_MASK << ROUTER_NL4_LB_PREAGE_AGE_SHIFT)
 
 /*
- * PROM register R4_PIO_TIME_OUT. Offset and field positions read from the table; role inferred from the names.
+ * PROM register R4_PIO_TIME_OUT. Offset and field positions read from the
+ * table; role inferred from the names.
  */
 /* pio_time_out: rw64, reset unknown */
 #define ROUTER_NL4_PIO_TIME_OUT_OFFSET               0x4020u /* established */
 #define ROUTER_NL4_PIO_TIME_OUT_VALUE_SHIFT          0 /* established */
 #define ROUTER_NL4_PIO_TIME_OUT_VALUE_MASK           0xffffull
-#define ROUTER_NL4_PIO_TIME_OUT_VALUE_INPLACE        (ROUTER_NL4_PIO_TIME_OUT_VALUE_MASK << ROUTER_NL4_PIO_TIME_OUT_VALUE_SHIFT)
+#define ROUTER_NL4_PIO_TIME_OUT_VALUE_INPLACE (ROUTER_NL4_PIO_TIME_OUT_VALUE_MASK << ROUTER_NL4_PIO_TIME_OUT_VALUE_SHIFT)
 
 /*
- * PROM register R4_MCAST_TRANS_TABLE_0. Offset and field positions read from the table; role inferred from the names.
+ * PROM register R4_MCAST_TRANS_TABLE_0. Offset and field positions read from
+ * the table; role inferred from the names.
  */
 /* mcast_trans_table_0: rw64, reset unknown */
 #define ROUTER_NL4_MCAST_TRANS_TABLE_0_OFFSET        0x4e00u /* established */
@@ -762,7 +832,7 @@
 #define ROUTER_NL4_MCAST_TRANS_TABLE_0_VALID_INPLACE (ROUTER_NL4_MCAST_TRANS_TABLE_0_VALID_MASK << ROUTER_NL4_MCAST_TRANS_TABLE_0_VALID_SHIFT)
 #define ROUTER_NL4_MCAST_TRANS_TABLE_0_TO_SHIFT      28 /* established */
 #define ROUTER_NL4_MCAST_TRANS_TABLE_0_TO_MASK       0xfull
-#define ROUTER_NL4_MCAST_TRANS_TABLE_0_TO_INPLACE    (ROUTER_NL4_MCAST_TRANS_TABLE_0_TO_MASK << ROUTER_NL4_MCAST_TRANS_TABLE_0_TO_SHIFT)
+#define ROUTER_NL4_MCAST_TRANS_TABLE_0_TO_INPLACE (ROUTER_NL4_MCAST_TRANS_TABLE_0_TO_MASK << ROUTER_NL4_MCAST_TRANS_TABLE_0_TO_SHIFT)
 #define ROUTER_NL4_MCAST_TRANS_TABLE_0_SELF_INC_EN_SHIFT 26 /* established */
 #define ROUTER_NL4_MCAST_TRANS_TABLE_0_SELF_INC_EN_MASK 0x1ull
 #define ROUTER_NL4_MCAST_TRANS_TABLE_0_SELF_INC_EN_INPLACE (ROUTER_NL4_MCAST_TRANS_TABLE_0_SELF_INC_EN_MASK << ROUTER_NL4_MCAST_TRANS_TABLE_0_SELF_INC_EN_SHIFT)
@@ -786,7 +856,8 @@
 #define ROUTER_NL4_MCAST_TRANS_TABLE_0_CMD_IN_INPLACE (ROUTER_NL4_MCAST_TRANS_TABLE_0_CMD_IN_MASK << ROUTER_NL4_MCAST_TRANS_TABLE_0_CMD_IN_SHIFT)
 
 /*
- * PROM register R4_MCAST_TRANS_TABLE_1. Offset and field positions read from the table; role inferred from the names.
+ * PROM register R4_MCAST_TRANS_TABLE_1. Offset and field positions read from
+ * the table; role inferred from the names.
  */
 /* mcast_trans_table_1: rw64, reset unknown */
 #define ROUTER_NL4_MCAST_TRANS_TABLE_1_OFFSET        0x4e08u /* established */
@@ -795,7 +866,7 @@
 #define ROUTER_NL4_MCAST_TRANS_TABLE_1_VALID_INPLACE (ROUTER_NL4_MCAST_TRANS_TABLE_1_VALID_MASK << ROUTER_NL4_MCAST_TRANS_TABLE_1_VALID_SHIFT)
 #define ROUTER_NL4_MCAST_TRANS_TABLE_1_TO_SHIFT      28 /* established */
 #define ROUTER_NL4_MCAST_TRANS_TABLE_1_TO_MASK       0xfull
-#define ROUTER_NL4_MCAST_TRANS_TABLE_1_TO_INPLACE    (ROUTER_NL4_MCAST_TRANS_TABLE_1_TO_MASK << ROUTER_NL4_MCAST_TRANS_TABLE_1_TO_SHIFT)
+#define ROUTER_NL4_MCAST_TRANS_TABLE_1_TO_INPLACE (ROUTER_NL4_MCAST_TRANS_TABLE_1_TO_MASK << ROUTER_NL4_MCAST_TRANS_TABLE_1_TO_SHIFT)
 #define ROUTER_NL4_MCAST_TRANS_TABLE_1_SELF_INC_EN_SHIFT 26 /* established */
 #define ROUTER_NL4_MCAST_TRANS_TABLE_1_SELF_INC_EN_MASK 0x1ull
 #define ROUTER_NL4_MCAST_TRANS_TABLE_1_SELF_INC_EN_INPLACE (ROUTER_NL4_MCAST_TRANS_TABLE_1_SELF_INC_EN_MASK << ROUTER_NL4_MCAST_TRANS_TABLE_1_SELF_INC_EN_SHIFT)
@@ -819,7 +890,8 @@
 #define ROUTER_NL4_MCAST_TRANS_TABLE_1_CMD_IN_INPLACE (ROUTER_NL4_MCAST_TRANS_TABLE_1_CMD_IN_MASK << ROUTER_NL4_MCAST_TRANS_TABLE_1_CMD_IN_SHIFT)
 
 /*
- * PROM register R4_MCAST_TRANS_TABLE_2. Offset and field positions read from the table; role inferred from the names.
+ * PROM register R4_MCAST_TRANS_TABLE_2. Offset and field positions read from
+ * the table; role inferred from the names.
  */
 /* mcast_trans_table_2: rw64, reset unknown */
 #define ROUTER_NL4_MCAST_TRANS_TABLE_2_OFFSET        0x4e10u /* established */
@@ -828,7 +900,7 @@
 #define ROUTER_NL4_MCAST_TRANS_TABLE_2_VALID_INPLACE (ROUTER_NL4_MCAST_TRANS_TABLE_2_VALID_MASK << ROUTER_NL4_MCAST_TRANS_TABLE_2_VALID_SHIFT)
 #define ROUTER_NL4_MCAST_TRANS_TABLE_2_TO_SHIFT      28 /* established */
 #define ROUTER_NL4_MCAST_TRANS_TABLE_2_TO_MASK       0xfull
-#define ROUTER_NL4_MCAST_TRANS_TABLE_2_TO_INPLACE    (ROUTER_NL4_MCAST_TRANS_TABLE_2_TO_MASK << ROUTER_NL4_MCAST_TRANS_TABLE_2_TO_SHIFT)
+#define ROUTER_NL4_MCAST_TRANS_TABLE_2_TO_INPLACE (ROUTER_NL4_MCAST_TRANS_TABLE_2_TO_MASK << ROUTER_NL4_MCAST_TRANS_TABLE_2_TO_SHIFT)
 #define ROUTER_NL4_MCAST_TRANS_TABLE_2_SELF_INC_EN_SHIFT 26 /* established */
 #define ROUTER_NL4_MCAST_TRANS_TABLE_2_SELF_INC_EN_MASK 0x1ull
 #define ROUTER_NL4_MCAST_TRANS_TABLE_2_SELF_INC_EN_INPLACE (ROUTER_NL4_MCAST_TRANS_TABLE_2_SELF_INC_EN_MASK << ROUTER_NL4_MCAST_TRANS_TABLE_2_SELF_INC_EN_SHIFT)
@@ -852,7 +924,8 @@
 #define ROUTER_NL4_MCAST_TRANS_TABLE_2_CMD_IN_INPLACE (ROUTER_NL4_MCAST_TRANS_TABLE_2_CMD_IN_MASK << ROUTER_NL4_MCAST_TRANS_TABLE_2_CMD_IN_SHIFT)
 
 /*
- * PROM register R4_MCAST_TRANS_TABLE_3. Offset and field positions read from the table; role inferred from the names.
+ * PROM register R4_MCAST_TRANS_TABLE_3. Offset and field positions read from
+ * the table; role inferred from the names.
  */
 /* mcast_trans_table_3: rw64, reset unknown */
 #define ROUTER_NL4_MCAST_TRANS_TABLE_3_OFFSET        0x4e18u /* established */
@@ -861,7 +934,7 @@
 #define ROUTER_NL4_MCAST_TRANS_TABLE_3_VALID_INPLACE (ROUTER_NL4_MCAST_TRANS_TABLE_3_VALID_MASK << ROUTER_NL4_MCAST_TRANS_TABLE_3_VALID_SHIFT)
 #define ROUTER_NL4_MCAST_TRANS_TABLE_3_TO_SHIFT      28 /* established */
 #define ROUTER_NL4_MCAST_TRANS_TABLE_3_TO_MASK       0xfull
-#define ROUTER_NL4_MCAST_TRANS_TABLE_3_TO_INPLACE    (ROUTER_NL4_MCAST_TRANS_TABLE_3_TO_MASK << ROUTER_NL4_MCAST_TRANS_TABLE_3_TO_SHIFT)
+#define ROUTER_NL4_MCAST_TRANS_TABLE_3_TO_INPLACE (ROUTER_NL4_MCAST_TRANS_TABLE_3_TO_MASK << ROUTER_NL4_MCAST_TRANS_TABLE_3_TO_SHIFT)
 #define ROUTER_NL4_MCAST_TRANS_TABLE_3_SELF_INC_EN_SHIFT 26 /* established */
 #define ROUTER_NL4_MCAST_TRANS_TABLE_3_SELF_INC_EN_MASK 0x1ull
 #define ROUTER_NL4_MCAST_TRANS_TABLE_3_SELF_INC_EN_INPLACE (ROUTER_NL4_MCAST_TRANS_TABLE_3_SELF_INC_EN_MASK << ROUTER_NL4_MCAST_TRANS_TABLE_3_SELF_INC_EN_SHIFT)
@@ -885,7 +958,8 @@
 #define ROUTER_NL4_MCAST_TRANS_TABLE_3_CMD_IN_INPLACE (ROUTER_NL4_MCAST_TRANS_TABLE_3_CMD_IN_MASK << ROUTER_NL4_MCAST_TRANS_TABLE_3_CMD_IN_SHIFT)
 
 /*
- * PROM register R4_MCAST_TRANS_TABLE_4. Offset and field positions read from the table; role inferred from the names.
+ * PROM register R4_MCAST_TRANS_TABLE_4. Offset and field positions read from
+ * the table; role inferred from the names.
  */
 /* mcast_trans_table_4: rw64, reset unknown */
 #define ROUTER_NL4_MCAST_TRANS_TABLE_4_OFFSET        0x4e20u /* established */
@@ -894,7 +968,7 @@
 #define ROUTER_NL4_MCAST_TRANS_TABLE_4_VALID_INPLACE (ROUTER_NL4_MCAST_TRANS_TABLE_4_VALID_MASK << ROUTER_NL4_MCAST_TRANS_TABLE_4_VALID_SHIFT)
 #define ROUTER_NL4_MCAST_TRANS_TABLE_4_TO_SHIFT      28 /* established */
 #define ROUTER_NL4_MCAST_TRANS_TABLE_4_TO_MASK       0xfull
-#define ROUTER_NL4_MCAST_TRANS_TABLE_4_TO_INPLACE    (ROUTER_NL4_MCAST_TRANS_TABLE_4_TO_MASK << ROUTER_NL4_MCAST_TRANS_TABLE_4_TO_SHIFT)
+#define ROUTER_NL4_MCAST_TRANS_TABLE_4_TO_INPLACE (ROUTER_NL4_MCAST_TRANS_TABLE_4_TO_MASK << ROUTER_NL4_MCAST_TRANS_TABLE_4_TO_SHIFT)
 #define ROUTER_NL4_MCAST_TRANS_TABLE_4_SELF_INC_EN_SHIFT 26 /* established */
 #define ROUTER_NL4_MCAST_TRANS_TABLE_4_SELF_INC_EN_MASK 0x1ull
 #define ROUTER_NL4_MCAST_TRANS_TABLE_4_SELF_INC_EN_INPLACE (ROUTER_NL4_MCAST_TRANS_TABLE_4_SELF_INC_EN_MASK << ROUTER_NL4_MCAST_TRANS_TABLE_4_SELF_INC_EN_SHIFT)
@@ -918,7 +992,8 @@
 #define ROUTER_NL4_MCAST_TRANS_TABLE_4_CMD_IN_INPLACE (ROUTER_NL4_MCAST_TRANS_TABLE_4_CMD_IN_MASK << ROUTER_NL4_MCAST_TRANS_TABLE_4_CMD_IN_SHIFT)
 
 /*
- * PROM register R4_MCAST_TRANS_TABLE_5. Offset and field positions read from the table; role inferred from the names.
+ * PROM register R4_MCAST_TRANS_TABLE_5. Offset and field positions read from
+ * the table; role inferred from the names.
  */
 /* mcast_trans_table_5: rw64, reset unknown */
 #define ROUTER_NL4_MCAST_TRANS_TABLE_5_OFFSET        0x4e28u /* established */
@@ -927,7 +1002,7 @@
 #define ROUTER_NL4_MCAST_TRANS_TABLE_5_VALID_INPLACE (ROUTER_NL4_MCAST_TRANS_TABLE_5_VALID_MASK << ROUTER_NL4_MCAST_TRANS_TABLE_5_VALID_SHIFT)
 #define ROUTER_NL4_MCAST_TRANS_TABLE_5_TO_SHIFT      28 /* established */
 #define ROUTER_NL4_MCAST_TRANS_TABLE_5_TO_MASK       0xfull
-#define ROUTER_NL4_MCAST_TRANS_TABLE_5_TO_INPLACE    (ROUTER_NL4_MCAST_TRANS_TABLE_5_TO_MASK << ROUTER_NL4_MCAST_TRANS_TABLE_5_TO_SHIFT)
+#define ROUTER_NL4_MCAST_TRANS_TABLE_5_TO_INPLACE (ROUTER_NL4_MCAST_TRANS_TABLE_5_TO_MASK << ROUTER_NL4_MCAST_TRANS_TABLE_5_TO_SHIFT)
 #define ROUTER_NL4_MCAST_TRANS_TABLE_5_SELF_INC_EN_SHIFT 26 /* established */
 #define ROUTER_NL4_MCAST_TRANS_TABLE_5_SELF_INC_EN_MASK 0x1ull
 #define ROUTER_NL4_MCAST_TRANS_TABLE_5_SELF_INC_EN_INPLACE (ROUTER_NL4_MCAST_TRANS_TABLE_5_SELF_INC_EN_MASK << ROUTER_NL4_MCAST_TRANS_TABLE_5_SELF_INC_EN_SHIFT)
@@ -951,7 +1026,8 @@
 #define ROUTER_NL4_MCAST_TRANS_TABLE_5_CMD_IN_INPLACE (ROUTER_NL4_MCAST_TRANS_TABLE_5_CMD_IN_MASK << ROUTER_NL4_MCAST_TRANS_TABLE_5_CMD_IN_SHIFT)
 
 /*
- * PROM register R4_MCAST_TRANS_TABLE_6. Offset and field positions read from the table; role inferred from the names.
+ * PROM register R4_MCAST_TRANS_TABLE_6. Offset and field positions read from
+ * the table; role inferred from the names.
  */
 /* mcast_trans_table_6: rw64, reset unknown */
 #define ROUTER_NL4_MCAST_TRANS_TABLE_6_OFFSET        0x4e30u /* established */
@@ -960,7 +1036,7 @@
 #define ROUTER_NL4_MCAST_TRANS_TABLE_6_VALID_INPLACE (ROUTER_NL4_MCAST_TRANS_TABLE_6_VALID_MASK << ROUTER_NL4_MCAST_TRANS_TABLE_6_VALID_SHIFT)
 #define ROUTER_NL4_MCAST_TRANS_TABLE_6_TO_SHIFT      28 /* established */
 #define ROUTER_NL4_MCAST_TRANS_TABLE_6_TO_MASK       0xfull
-#define ROUTER_NL4_MCAST_TRANS_TABLE_6_TO_INPLACE    (ROUTER_NL4_MCAST_TRANS_TABLE_6_TO_MASK << ROUTER_NL4_MCAST_TRANS_TABLE_6_TO_SHIFT)
+#define ROUTER_NL4_MCAST_TRANS_TABLE_6_TO_INPLACE (ROUTER_NL4_MCAST_TRANS_TABLE_6_TO_MASK << ROUTER_NL4_MCAST_TRANS_TABLE_6_TO_SHIFT)
 #define ROUTER_NL4_MCAST_TRANS_TABLE_6_SELF_INC_EN_SHIFT 26 /* established */
 #define ROUTER_NL4_MCAST_TRANS_TABLE_6_SELF_INC_EN_MASK 0x1ull
 #define ROUTER_NL4_MCAST_TRANS_TABLE_6_SELF_INC_EN_INPLACE (ROUTER_NL4_MCAST_TRANS_TABLE_6_SELF_INC_EN_MASK << ROUTER_NL4_MCAST_TRANS_TABLE_6_SELF_INC_EN_SHIFT)
@@ -984,7 +1060,8 @@
 #define ROUTER_NL4_MCAST_TRANS_TABLE_6_CMD_IN_INPLACE (ROUTER_NL4_MCAST_TRANS_TABLE_6_CMD_IN_MASK << ROUTER_NL4_MCAST_TRANS_TABLE_6_CMD_IN_SHIFT)
 
 /*
- * PROM register R4_MCAST_TRANS_TABLE_7. Offset and field positions read from the table; role inferred from the names.
+ * PROM register R4_MCAST_TRANS_TABLE_7. Offset and field positions read from
+ * the table; role inferred from the names.
  */
 /* mcast_trans_table_7: rw64, reset unknown */
 #define ROUTER_NL4_MCAST_TRANS_TABLE_7_OFFSET        0x4e38u /* established */
@@ -993,7 +1070,7 @@
 #define ROUTER_NL4_MCAST_TRANS_TABLE_7_VALID_INPLACE (ROUTER_NL4_MCAST_TRANS_TABLE_7_VALID_MASK << ROUTER_NL4_MCAST_TRANS_TABLE_7_VALID_SHIFT)
 #define ROUTER_NL4_MCAST_TRANS_TABLE_7_TO_SHIFT      28 /* established */
 #define ROUTER_NL4_MCAST_TRANS_TABLE_7_TO_MASK       0xfull
-#define ROUTER_NL4_MCAST_TRANS_TABLE_7_TO_INPLACE    (ROUTER_NL4_MCAST_TRANS_TABLE_7_TO_MASK << ROUTER_NL4_MCAST_TRANS_TABLE_7_TO_SHIFT)
+#define ROUTER_NL4_MCAST_TRANS_TABLE_7_TO_INPLACE (ROUTER_NL4_MCAST_TRANS_TABLE_7_TO_MASK << ROUTER_NL4_MCAST_TRANS_TABLE_7_TO_SHIFT)
 #define ROUTER_NL4_MCAST_TRANS_TABLE_7_SELF_INC_EN_SHIFT 26 /* established */
 #define ROUTER_NL4_MCAST_TRANS_TABLE_7_SELF_INC_EN_MASK 0x1ull
 #define ROUTER_NL4_MCAST_TRANS_TABLE_7_SELF_INC_EN_INPLACE (ROUTER_NL4_MCAST_TRANS_TABLE_7_SELF_INC_EN_MASK << ROUTER_NL4_MCAST_TRANS_TABLE_7_SELF_INC_EN_SHIFT)
@@ -1017,7 +1094,8 @@
 #define ROUTER_NL4_MCAST_TRANS_TABLE_7_CMD_IN_INPLACE (ROUTER_NL4_MCAST_TRANS_TABLE_7_CMD_IN_MASK << ROUTER_NL4_MCAST_TRANS_TABLE_7_CMD_IN_SHIFT)
 
 /*
- * PROM register R4_MCAST_TRANS_TABLE_8. Offset and field positions read from the table; role inferred from the names.
+ * PROM register R4_MCAST_TRANS_TABLE_8. Offset and field positions read from
+ * the table; role inferred from the names.
  */
 /* mcast_trans_table_8: rw64, reset unknown */
 #define ROUTER_NL4_MCAST_TRANS_TABLE_8_OFFSET        0x4e40u /* established */
@@ -1026,7 +1104,7 @@
 #define ROUTER_NL4_MCAST_TRANS_TABLE_8_VALID_INPLACE (ROUTER_NL4_MCAST_TRANS_TABLE_8_VALID_MASK << ROUTER_NL4_MCAST_TRANS_TABLE_8_VALID_SHIFT)
 #define ROUTER_NL4_MCAST_TRANS_TABLE_8_TO_SHIFT      28 /* established */
 #define ROUTER_NL4_MCAST_TRANS_TABLE_8_TO_MASK       0xfull
-#define ROUTER_NL4_MCAST_TRANS_TABLE_8_TO_INPLACE    (ROUTER_NL4_MCAST_TRANS_TABLE_8_TO_MASK << ROUTER_NL4_MCAST_TRANS_TABLE_8_TO_SHIFT)
+#define ROUTER_NL4_MCAST_TRANS_TABLE_8_TO_INPLACE (ROUTER_NL4_MCAST_TRANS_TABLE_8_TO_MASK << ROUTER_NL4_MCAST_TRANS_TABLE_8_TO_SHIFT)
 #define ROUTER_NL4_MCAST_TRANS_TABLE_8_SELF_INC_EN_SHIFT 26 /* established */
 #define ROUTER_NL4_MCAST_TRANS_TABLE_8_SELF_INC_EN_MASK 0x1ull
 #define ROUTER_NL4_MCAST_TRANS_TABLE_8_SELF_INC_EN_INPLACE (ROUTER_NL4_MCAST_TRANS_TABLE_8_SELF_INC_EN_MASK << ROUTER_NL4_MCAST_TRANS_TABLE_8_SELF_INC_EN_SHIFT)
@@ -1050,7 +1128,8 @@
 #define ROUTER_NL4_MCAST_TRANS_TABLE_8_CMD_IN_INPLACE (ROUTER_NL4_MCAST_TRANS_TABLE_8_CMD_IN_MASK << ROUTER_NL4_MCAST_TRANS_TABLE_8_CMD_IN_SHIFT)
 
 /*
- * PROM register R4_MCAST_TRANS_TABLE_9. Offset and field positions read from the table; role inferred from the names.
+ * PROM register R4_MCAST_TRANS_TABLE_9. Offset and field positions read from
+ * the table; role inferred from the names.
  */
 /* mcast_trans_table_9: rw64, reset unknown */
 #define ROUTER_NL4_MCAST_TRANS_TABLE_9_OFFSET        0x4e48u /* established */
@@ -1059,7 +1138,7 @@
 #define ROUTER_NL4_MCAST_TRANS_TABLE_9_VALID_INPLACE (ROUTER_NL4_MCAST_TRANS_TABLE_9_VALID_MASK << ROUTER_NL4_MCAST_TRANS_TABLE_9_VALID_SHIFT)
 #define ROUTER_NL4_MCAST_TRANS_TABLE_9_TO_SHIFT      28 /* established */
 #define ROUTER_NL4_MCAST_TRANS_TABLE_9_TO_MASK       0xfull
-#define ROUTER_NL4_MCAST_TRANS_TABLE_9_TO_INPLACE    (ROUTER_NL4_MCAST_TRANS_TABLE_9_TO_MASK << ROUTER_NL4_MCAST_TRANS_TABLE_9_TO_SHIFT)
+#define ROUTER_NL4_MCAST_TRANS_TABLE_9_TO_INPLACE (ROUTER_NL4_MCAST_TRANS_TABLE_9_TO_MASK << ROUTER_NL4_MCAST_TRANS_TABLE_9_TO_SHIFT)
 #define ROUTER_NL4_MCAST_TRANS_TABLE_9_SELF_INC_EN_SHIFT 26 /* established */
 #define ROUTER_NL4_MCAST_TRANS_TABLE_9_SELF_INC_EN_MASK 0x1ull
 #define ROUTER_NL4_MCAST_TRANS_TABLE_9_SELF_INC_EN_INPLACE (ROUTER_NL4_MCAST_TRANS_TABLE_9_SELF_INC_EN_MASK << ROUTER_NL4_MCAST_TRANS_TABLE_9_SELF_INC_EN_SHIFT)
@@ -1083,7 +1162,8 @@
 #define ROUTER_NL4_MCAST_TRANS_TABLE_9_CMD_IN_INPLACE (ROUTER_NL4_MCAST_TRANS_TABLE_9_CMD_IN_MASK << ROUTER_NL4_MCAST_TRANS_TABLE_9_CMD_IN_SHIFT)
 
 /*
- * PROM register R4_MCAST_TRANS_TABLE_10. Offset and field positions read from the table; role inferred from the names.
+ * PROM register R4_MCAST_TRANS_TABLE_10. Offset and field positions read from
+ * the table; role inferred from the names.
  */
 /* mcast_trans_table_10: rw64, reset unknown */
 #define ROUTER_NL4_MCAST_TRANS_TABLE_10_OFFSET       0x4e50u /* established */
@@ -1092,7 +1172,7 @@
 #define ROUTER_NL4_MCAST_TRANS_TABLE_10_VALID_INPLACE (ROUTER_NL4_MCAST_TRANS_TABLE_10_VALID_MASK << ROUTER_NL4_MCAST_TRANS_TABLE_10_VALID_SHIFT)
 #define ROUTER_NL4_MCAST_TRANS_TABLE_10_TO_SHIFT     28 /* established */
 #define ROUTER_NL4_MCAST_TRANS_TABLE_10_TO_MASK      0xfull
-#define ROUTER_NL4_MCAST_TRANS_TABLE_10_TO_INPLACE   (ROUTER_NL4_MCAST_TRANS_TABLE_10_TO_MASK << ROUTER_NL4_MCAST_TRANS_TABLE_10_TO_SHIFT)
+#define ROUTER_NL4_MCAST_TRANS_TABLE_10_TO_INPLACE (ROUTER_NL4_MCAST_TRANS_TABLE_10_TO_MASK << ROUTER_NL4_MCAST_TRANS_TABLE_10_TO_SHIFT)
 #define ROUTER_NL4_MCAST_TRANS_TABLE_10_SELF_INC_EN_SHIFT 26 /* established */
 #define ROUTER_NL4_MCAST_TRANS_TABLE_10_SELF_INC_EN_MASK 0x1ull
 #define ROUTER_NL4_MCAST_TRANS_TABLE_10_SELF_INC_EN_INPLACE (ROUTER_NL4_MCAST_TRANS_TABLE_10_SELF_INC_EN_MASK << ROUTER_NL4_MCAST_TRANS_TABLE_10_SELF_INC_EN_SHIFT)
@@ -1116,7 +1196,8 @@
 #define ROUTER_NL4_MCAST_TRANS_TABLE_10_CMD_IN_INPLACE (ROUTER_NL4_MCAST_TRANS_TABLE_10_CMD_IN_MASK << ROUTER_NL4_MCAST_TRANS_TABLE_10_CMD_IN_SHIFT)
 
 /*
- * PROM register R4_MCAST_TRANS_TABLE_11. Offset and field positions read from the table; role inferred from the names.
+ * PROM register R4_MCAST_TRANS_TABLE_11. Offset and field positions read from
+ * the table; role inferred from the names.
  */
 /* mcast_trans_table_11: rw64, reset unknown */
 #define ROUTER_NL4_MCAST_TRANS_TABLE_11_OFFSET       0x4e58u /* established */
@@ -1125,7 +1206,7 @@
 #define ROUTER_NL4_MCAST_TRANS_TABLE_11_VALID_INPLACE (ROUTER_NL4_MCAST_TRANS_TABLE_11_VALID_MASK << ROUTER_NL4_MCAST_TRANS_TABLE_11_VALID_SHIFT)
 #define ROUTER_NL4_MCAST_TRANS_TABLE_11_TO_SHIFT     28 /* established */
 #define ROUTER_NL4_MCAST_TRANS_TABLE_11_TO_MASK      0xfull
-#define ROUTER_NL4_MCAST_TRANS_TABLE_11_TO_INPLACE   (ROUTER_NL4_MCAST_TRANS_TABLE_11_TO_MASK << ROUTER_NL4_MCAST_TRANS_TABLE_11_TO_SHIFT)
+#define ROUTER_NL4_MCAST_TRANS_TABLE_11_TO_INPLACE (ROUTER_NL4_MCAST_TRANS_TABLE_11_TO_MASK << ROUTER_NL4_MCAST_TRANS_TABLE_11_TO_SHIFT)
 #define ROUTER_NL4_MCAST_TRANS_TABLE_11_SELF_INC_EN_SHIFT 26 /* established */
 #define ROUTER_NL4_MCAST_TRANS_TABLE_11_SELF_INC_EN_MASK 0x1ull
 #define ROUTER_NL4_MCAST_TRANS_TABLE_11_SELF_INC_EN_INPLACE (ROUTER_NL4_MCAST_TRANS_TABLE_11_SELF_INC_EN_MASK << ROUTER_NL4_MCAST_TRANS_TABLE_11_SELF_INC_EN_SHIFT)
@@ -1149,7 +1230,8 @@
 #define ROUTER_NL4_MCAST_TRANS_TABLE_11_CMD_IN_INPLACE (ROUTER_NL4_MCAST_TRANS_TABLE_11_CMD_IN_MASK << ROUTER_NL4_MCAST_TRANS_TABLE_11_CMD_IN_SHIFT)
 
 /*
- * PROM register R4_MCAST_TRANS_TABLE_12. Offset and field positions read from the table; role inferred from the names.
+ * PROM register R4_MCAST_TRANS_TABLE_12. Offset and field positions read from
+ * the table; role inferred from the names.
  */
 /* mcast_trans_table_12: rw64, reset unknown */
 #define ROUTER_NL4_MCAST_TRANS_TABLE_12_OFFSET       0x4e60u /* established */
@@ -1158,7 +1240,7 @@
 #define ROUTER_NL4_MCAST_TRANS_TABLE_12_VALID_INPLACE (ROUTER_NL4_MCAST_TRANS_TABLE_12_VALID_MASK << ROUTER_NL4_MCAST_TRANS_TABLE_12_VALID_SHIFT)
 #define ROUTER_NL4_MCAST_TRANS_TABLE_12_TO_SHIFT     28 /* established */
 #define ROUTER_NL4_MCAST_TRANS_TABLE_12_TO_MASK      0xfull
-#define ROUTER_NL4_MCAST_TRANS_TABLE_12_TO_INPLACE   (ROUTER_NL4_MCAST_TRANS_TABLE_12_TO_MASK << ROUTER_NL4_MCAST_TRANS_TABLE_12_TO_SHIFT)
+#define ROUTER_NL4_MCAST_TRANS_TABLE_12_TO_INPLACE (ROUTER_NL4_MCAST_TRANS_TABLE_12_TO_MASK << ROUTER_NL4_MCAST_TRANS_TABLE_12_TO_SHIFT)
 #define ROUTER_NL4_MCAST_TRANS_TABLE_12_SELF_INC_EN_SHIFT 26 /* established */
 #define ROUTER_NL4_MCAST_TRANS_TABLE_12_SELF_INC_EN_MASK 0x1ull
 #define ROUTER_NL4_MCAST_TRANS_TABLE_12_SELF_INC_EN_INPLACE (ROUTER_NL4_MCAST_TRANS_TABLE_12_SELF_INC_EN_MASK << ROUTER_NL4_MCAST_TRANS_TABLE_12_SELF_INC_EN_SHIFT)
@@ -1182,7 +1264,8 @@
 #define ROUTER_NL4_MCAST_TRANS_TABLE_12_CMD_IN_INPLACE (ROUTER_NL4_MCAST_TRANS_TABLE_12_CMD_IN_MASK << ROUTER_NL4_MCAST_TRANS_TABLE_12_CMD_IN_SHIFT)
 
 /*
- * PROM register R4_MCAST_TRANS_TABLE_13. Offset and field positions read from the table; role inferred from the names.
+ * PROM register R4_MCAST_TRANS_TABLE_13. Offset and field positions read from
+ * the table; role inferred from the names.
  */
 /* mcast_trans_table_13: rw64, reset unknown */
 #define ROUTER_NL4_MCAST_TRANS_TABLE_13_OFFSET       0x4e68u /* established */
@@ -1191,7 +1274,7 @@
 #define ROUTER_NL4_MCAST_TRANS_TABLE_13_VALID_INPLACE (ROUTER_NL4_MCAST_TRANS_TABLE_13_VALID_MASK << ROUTER_NL4_MCAST_TRANS_TABLE_13_VALID_SHIFT)
 #define ROUTER_NL4_MCAST_TRANS_TABLE_13_TO_SHIFT     28 /* established */
 #define ROUTER_NL4_MCAST_TRANS_TABLE_13_TO_MASK      0xfull
-#define ROUTER_NL4_MCAST_TRANS_TABLE_13_TO_INPLACE   (ROUTER_NL4_MCAST_TRANS_TABLE_13_TO_MASK << ROUTER_NL4_MCAST_TRANS_TABLE_13_TO_SHIFT)
+#define ROUTER_NL4_MCAST_TRANS_TABLE_13_TO_INPLACE (ROUTER_NL4_MCAST_TRANS_TABLE_13_TO_MASK << ROUTER_NL4_MCAST_TRANS_TABLE_13_TO_SHIFT)
 #define ROUTER_NL4_MCAST_TRANS_TABLE_13_SELF_INC_EN_SHIFT 26 /* established */
 #define ROUTER_NL4_MCAST_TRANS_TABLE_13_SELF_INC_EN_MASK 0x1ull
 #define ROUTER_NL4_MCAST_TRANS_TABLE_13_SELF_INC_EN_INPLACE (ROUTER_NL4_MCAST_TRANS_TABLE_13_SELF_INC_EN_MASK << ROUTER_NL4_MCAST_TRANS_TABLE_13_SELF_INC_EN_SHIFT)
@@ -1215,7 +1298,8 @@
 #define ROUTER_NL4_MCAST_TRANS_TABLE_13_CMD_IN_INPLACE (ROUTER_NL4_MCAST_TRANS_TABLE_13_CMD_IN_MASK << ROUTER_NL4_MCAST_TRANS_TABLE_13_CMD_IN_SHIFT)
 
 /*
- * PROM register R4_MCAST_TRANS_TABLE_14. Offset and field positions read from the table; role inferred from the names.
+ * PROM register R4_MCAST_TRANS_TABLE_14. Offset and field positions read from
+ * the table; role inferred from the names.
  */
 /* mcast_trans_table_14: rw64, reset unknown */
 #define ROUTER_NL4_MCAST_TRANS_TABLE_14_OFFSET       0x4e70u /* established */
@@ -1224,7 +1308,7 @@
 #define ROUTER_NL4_MCAST_TRANS_TABLE_14_VALID_INPLACE (ROUTER_NL4_MCAST_TRANS_TABLE_14_VALID_MASK << ROUTER_NL4_MCAST_TRANS_TABLE_14_VALID_SHIFT)
 #define ROUTER_NL4_MCAST_TRANS_TABLE_14_TO_SHIFT     28 /* established */
 #define ROUTER_NL4_MCAST_TRANS_TABLE_14_TO_MASK      0xfull
-#define ROUTER_NL4_MCAST_TRANS_TABLE_14_TO_INPLACE   (ROUTER_NL4_MCAST_TRANS_TABLE_14_TO_MASK << ROUTER_NL4_MCAST_TRANS_TABLE_14_TO_SHIFT)
+#define ROUTER_NL4_MCAST_TRANS_TABLE_14_TO_INPLACE (ROUTER_NL4_MCAST_TRANS_TABLE_14_TO_MASK << ROUTER_NL4_MCAST_TRANS_TABLE_14_TO_SHIFT)
 #define ROUTER_NL4_MCAST_TRANS_TABLE_14_SELF_INC_EN_SHIFT 26 /* established */
 #define ROUTER_NL4_MCAST_TRANS_TABLE_14_SELF_INC_EN_MASK 0x1ull
 #define ROUTER_NL4_MCAST_TRANS_TABLE_14_SELF_INC_EN_INPLACE (ROUTER_NL4_MCAST_TRANS_TABLE_14_SELF_INC_EN_MASK << ROUTER_NL4_MCAST_TRANS_TABLE_14_SELF_INC_EN_SHIFT)
@@ -1248,7 +1332,8 @@
 #define ROUTER_NL4_MCAST_TRANS_TABLE_14_CMD_IN_INPLACE (ROUTER_NL4_MCAST_TRANS_TABLE_14_CMD_IN_MASK << ROUTER_NL4_MCAST_TRANS_TABLE_14_CMD_IN_SHIFT)
 
 /*
- * PROM register R4_MCAST_TRANS_TABLE_15. Offset and field positions read from the table; role inferred from the names.
+ * PROM register R4_MCAST_TRANS_TABLE_15. Offset and field positions read from
+ * the table; role inferred from the names.
  */
 /* mcast_trans_table_15: rw64, reset unknown */
 #define ROUTER_NL4_MCAST_TRANS_TABLE_15_OFFSET       0x4e78u /* established */
@@ -1257,7 +1342,7 @@
 #define ROUTER_NL4_MCAST_TRANS_TABLE_15_VALID_INPLACE (ROUTER_NL4_MCAST_TRANS_TABLE_15_VALID_MASK << ROUTER_NL4_MCAST_TRANS_TABLE_15_VALID_SHIFT)
 #define ROUTER_NL4_MCAST_TRANS_TABLE_15_TO_SHIFT     28 /* established */
 #define ROUTER_NL4_MCAST_TRANS_TABLE_15_TO_MASK      0xfull
-#define ROUTER_NL4_MCAST_TRANS_TABLE_15_TO_INPLACE   (ROUTER_NL4_MCAST_TRANS_TABLE_15_TO_MASK << ROUTER_NL4_MCAST_TRANS_TABLE_15_TO_SHIFT)
+#define ROUTER_NL4_MCAST_TRANS_TABLE_15_TO_INPLACE (ROUTER_NL4_MCAST_TRANS_TABLE_15_TO_MASK << ROUTER_NL4_MCAST_TRANS_TABLE_15_TO_SHIFT)
 #define ROUTER_NL4_MCAST_TRANS_TABLE_15_SELF_INC_EN_SHIFT 26 /* established */
 #define ROUTER_NL4_MCAST_TRANS_TABLE_15_SELF_INC_EN_MASK 0x1ull
 #define ROUTER_NL4_MCAST_TRANS_TABLE_15_SELF_INC_EN_INPLACE (ROUTER_NL4_MCAST_TRANS_TABLE_15_SELF_INC_EN_MASK << ROUTER_NL4_MCAST_TRANS_TABLE_15_SELF_INC_EN_SHIFT)
@@ -1281,25 +1366,27 @@
 #define ROUTER_NL4_MCAST_TRANS_TABLE_15_CMD_IN_INPLACE (ROUTER_NL4_MCAST_TRANS_TABLE_15_CMD_IN_MASK << ROUTER_NL4_MCAST_TRANS_TABLE_15_CMD_IN_SHIFT)
 
 /*
- * PROM register R4_MCAST_DEST_TABLE. Offset and field positions read from the table; role inferred from the names.
+ * PROM register R4_MCAST_DEST_TABLE. Offset and field positions read from the
+ * table; role inferred from the names.
  */
 /* mcast_dest_table: rw64, reset unknown */
 #define ROUTER_NL4_MCAST_DEST_TABLE_OFFSET           0x4e80u /* established */
 #define ROUTER_NL4_MCAST_DEST_TABLE_VALID_SHIFT      63 /* established */
 #define ROUTER_NL4_MCAST_DEST_TABLE_VALID_MASK       0x1ull
-#define ROUTER_NL4_MCAST_DEST_TABLE_VALID_INPLACE    (ROUTER_NL4_MCAST_DEST_TABLE_VALID_MASK << ROUTER_NL4_MCAST_DEST_TABLE_VALID_SHIFT)
+#define ROUTER_NL4_MCAST_DEST_TABLE_VALID_INPLACE (ROUTER_NL4_MCAST_DEST_TABLE_VALID_MASK << ROUTER_NL4_MCAST_DEST_TABLE_VALID_SHIFT)
 #define ROUTER_NL4_MCAST_DEST_TABLE_DIR1_SHIFT       24 /* established */
 #define ROUTER_NL4_MCAST_DEST_TABLE_DIR1_MASK        0x1full
-#define ROUTER_NL4_MCAST_DEST_TABLE_DIR1_INPLACE     (ROUTER_NL4_MCAST_DEST_TABLE_DIR1_MASK << ROUTER_NL4_MCAST_DEST_TABLE_DIR1_SHIFT)
+#define ROUTER_NL4_MCAST_DEST_TABLE_DIR1_INPLACE (ROUTER_NL4_MCAST_DEST_TABLE_DIR1_MASK << ROUTER_NL4_MCAST_DEST_TABLE_DIR1_SHIFT)
 #define ROUTER_NL4_MCAST_DEST_TABLE_DIR0_SHIFT       16 /* established */
 #define ROUTER_NL4_MCAST_DEST_TABLE_DIR0_MASK        0x1full
-#define ROUTER_NL4_MCAST_DEST_TABLE_DIR0_INPLACE     (ROUTER_NL4_MCAST_DEST_TABLE_DIR0_MASK << ROUTER_NL4_MCAST_DEST_TABLE_DIR0_SHIFT)
+#define ROUTER_NL4_MCAST_DEST_TABLE_DIR0_INPLACE (ROUTER_NL4_MCAST_DEST_TABLE_DIR0_MASK << ROUTER_NL4_MCAST_DEST_TABLE_DIR0_SHIFT)
 #define ROUTER_NL4_MCAST_DEST_TABLE_NODE_ID_SHIFT    0 /* established */
 #define ROUTER_NL4_MCAST_DEST_TABLE_NODE_ID_MASK     0x3fffull
-#define ROUTER_NL4_MCAST_DEST_TABLE_NODE_ID_INPLACE  (ROUTER_NL4_MCAST_DEST_TABLE_NODE_ID_MASK << ROUTER_NL4_MCAST_DEST_TABLE_NODE_ID_SHIFT)
+#define ROUTER_NL4_MCAST_DEST_TABLE_NODE_ID_INPLACE (ROUTER_NL4_MCAST_DEST_TABLE_NODE_ID_MASK << ROUTER_NL4_MCAST_DEST_TABLE_NODE_ID_SHIFT)
 
 /*
- * PROM register R4_MCAST_REP_GATHER_BUF. Offset and field positions read from the table; role inferred from the names.
+ * PROM register R4_MCAST_REP_GATHER_BUF. Offset and field positions read from
+ * the table; role inferred from the names.
  */
 /* mcast_rep_gather_buf: rw64, reset unknown */
 #define ROUTER_NL4_MCAST_REP_GATHER_BUF_OFFSET       0x4f00u /* established */
@@ -1308,7 +1395,7 @@
 #define ROUTER_NL4_MCAST_REP_GATHER_BUF_FREE_INPLACE (ROUTER_NL4_MCAST_REP_GATHER_BUF_FREE_MASK << ROUTER_NL4_MCAST_REP_GATHER_BUF_FREE_SHIFT)
 #define ROUTER_NL4_MCAST_REP_GATHER_BUF_ERR_SHIFT    61 /* established */
 #define ROUTER_NL4_MCAST_REP_GATHER_BUF_ERR_MASK     0x1ull
-#define ROUTER_NL4_MCAST_REP_GATHER_BUF_ERR_INPLACE  (ROUTER_NL4_MCAST_REP_GATHER_BUF_ERR_MASK << ROUTER_NL4_MCAST_REP_GATHER_BUF_ERR_SHIFT)
+#define ROUTER_NL4_MCAST_REP_GATHER_BUF_ERR_INPLACE (ROUTER_NL4_MCAST_REP_GATHER_BUF_ERR_MASK << ROUTER_NL4_MCAST_REP_GATHER_BUF_ERR_SHIFT)
 #define ROUTER_NL4_MCAST_REP_GATHER_BUF_FORCED_SUPPL_SHIFT 60 /* established */
 #define ROUTER_NL4_MCAST_REP_GATHER_BUF_FORCED_SUPPL_MASK 0x1ull
 #define ROUTER_NL4_MCAST_REP_GATHER_BUF_FORCED_SUPPL_INPLACE (ROUTER_NL4_MCAST_REP_GATHER_BUF_FORCED_SUPPL_MASK << ROUTER_NL4_MCAST_REP_GATHER_BUF_FORCED_SUPPL_SHIFT)
@@ -1338,7 +1425,8 @@
 #define ROUTER_NL4_MCAST_REP_GATHER_BUF_ACT_SUPPL_INPLACE (ROUTER_NL4_MCAST_REP_GATHER_BUF_ACT_SUPPL_MASK << ROUTER_NL4_MCAST_REP_GATHER_BUF_ACT_SUPPL_SHIFT)
 
 /*
- * PROM register R4_MCAST_GATHER_CONFIG. Offset and field positions read from the table; role inferred from the names.
+ * PROM register R4_MCAST_GATHER_CONFIG. Offset and field positions read from
+ * the table; role inferred from the names.
  */
 /* mcast_gather_config: rw64, reset unknown */
 #define ROUTER_NL4_MCAST_GATHER_CONFIG_OFFSET        0x4f80u /* established */
@@ -1350,7 +1438,8 @@
 #define ROUTER_NL4_MCAST_GATHER_CONFIG_LUT_PAIR_INPLACE (ROUTER_NL4_MCAST_GATHER_CONFIG_LUT_PAIR_MASK << ROUTER_NL4_MCAST_GATHER_CONFIG_LUT_PAIR_SHIFT)
 
 /*
- * PROM register R4_MCAST_DEST_VEC_0. Offset and field positions read from the table; role inferred from the names.
+ * PROM register R4_MCAST_DEST_VEC_0. Offset and field positions read from the
+ * table; role inferred from the names.
  */
 /* mcast_dest_vec_0: rw64, reset unknown */
 #define ROUTER_NL4_MCAST_DEST_VEC_0_OFFSET           0x4f90u /* established */
@@ -1359,10 +1448,11 @@
 #define ROUTER_NL4_MCAST_DEST_VEC_0_EXP_COUNT_INPLACE (ROUTER_NL4_MCAST_DEST_VEC_0_EXP_COUNT_MASK << ROUTER_NL4_MCAST_DEST_VEC_0_EXP_COUNT_SHIFT)
 #define ROUTER_NL4_MCAST_DEST_VEC_0_BIT_MAP_SHIFT    0 /* established */
 #define ROUTER_NL4_MCAST_DEST_VEC_0_BIT_MAP_MASK     0xffffull
-#define ROUTER_NL4_MCAST_DEST_VEC_0_BIT_MAP_INPLACE  (ROUTER_NL4_MCAST_DEST_VEC_0_BIT_MAP_MASK << ROUTER_NL4_MCAST_DEST_VEC_0_BIT_MAP_SHIFT)
+#define ROUTER_NL4_MCAST_DEST_VEC_0_BIT_MAP_INPLACE (ROUTER_NL4_MCAST_DEST_VEC_0_BIT_MAP_MASK << ROUTER_NL4_MCAST_DEST_VEC_0_BIT_MAP_SHIFT)
 
 /*
- * PROM register R4_MCAST_DEST_VEC_1. Offset and field positions read from the table; role inferred from the names.
+ * PROM register R4_MCAST_DEST_VEC_1. Offset and field positions read from the
+ * table; role inferred from the names.
  */
 /* mcast_dest_vec_1: rw64, reset unknown */
 #define ROUTER_NL4_MCAST_DEST_VEC_1_OFFSET           0x4f98u /* established */
@@ -1371,10 +1461,11 @@
 #define ROUTER_NL4_MCAST_DEST_VEC_1_EXP_COUNT_INPLACE (ROUTER_NL4_MCAST_DEST_VEC_1_EXP_COUNT_MASK << ROUTER_NL4_MCAST_DEST_VEC_1_EXP_COUNT_SHIFT)
 #define ROUTER_NL4_MCAST_DEST_VEC_1_BIT_MAP_SHIFT    0 /* established */
 #define ROUTER_NL4_MCAST_DEST_VEC_1_BIT_MAP_MASK     0xffffull
-#define ROUTER_NL4_MCAST_DEST_VEC_1_BIT_MAP_INPLACE  (ROUTER_NL4_MCAST_DEST_VEC_1_BIT_MAP_MASK << ROUTER_NL4_MCAST_DEST_VEC_1_BIT_MAP_SHIFT)
+#define ROUTER_NL4_MCAST_DEST_VEC_1_BIT_MAP_INPLACE (ROUTER_NL4_MCAST_DEST_VEC_1_BIT_MAP_MASK << ROUTER_NL4_MCAST_DEST_VEC_1_BIT_MAP_SHIFT)
 
 /*
- * PROM register R4_MCAST_DEST_VEC_2. Offset and field positions read from the table; role inferred from the names.
+ * PROM register R4_MCAST_DEST_VEC_2. Offset and field positions read from the
+ * table; role inferred from the names.
  */
 /* mcast_dest_vec_2: rw64, reset unknown */
 #define ROUTER_NL4_MCAST_DEST_VEC_2_OFFSET           0x4fa0u /* established */
@@ -1383,10 +1474,11 @@
 #define ROUTER_NL4_MCAST_DEST_VEC_2_EXP_COUNT_INPLACE (ROUTER_NL4_MCAST_DEST_VEC_2_EXP_COUNT_MASK << ROUTER_NL4_MCAST_DEST_VEC_2_EXP_COUNT_SHIFT)
 #define ROUTER_NL4_MCAST_DEST_VEC_2_BIT_MAP_SHIFT    0 /* established */
 #define ROUTER_NL4_MCAST_DEST_VEC_2_BIT_MAP_MASK     0xffffull
-#define ROUTER_NL4_MCAST_DEST_VEC_2_BIT_MAP_INPLACE  (ROUTER_NL4_MCAST_DEST_VEC_2_BIT_MAP_MASK << ROUTER_NL4_MCAST_DEST_VEC_2_BIT_MAP_SHIFT)
+#define ROUTER_NL4_MCAST_DEST_VEC_2_BIT_MAP_INPLACE (ROUTER_NL4_MCAST_DEST_VEC_2_BIT_MAP_MASK << ROUTER_NL4_MCAST_DEST_VEC_2_BIT_MAP_SHIFT)
 
 /*
- * PROM register R4_MCAST_DEST_VEC_3. Offset and field positions read from the table; role inferred from the names.
+ * PROM register R4_MCAST_DEST_VEC_3. Offset and field positions read from the
+ * table; role inferred from the names.
  */
 /* mcast_dest_vec_3: rw64, reset unknown */
 #define ROUTER_NL4_MCAST_DEST_VEC_3_OFFSET           0x4fa8u /* established */
@@ -1395,37 +1487,41 @@
 #define ROUTER_NL4_MCAST_DEST_VEC_3_EXP_COUNT_INPLACE (ROUTER_NL4_MCAST_DEST_VEC_3_EXP_COUNT_MASK << ROUTER_NL4_MCAST_DEST_VEC_3_EXP_COUNT_SHIFT)
 #define ROUTER_NL4_MCAST_DEST_VEC_3_BIT_MAP_SHIFT    0 /* established */
 #define ROUTER_NL4_MCAST_DEST_VEC_3_BIT_MAP_MASK     0xffffull
-#define ROUTER_NL4_MCAST_DEST_VEC_3_BIT_MAP_INPLACE  (ROUTER_NL4_MCAST_DEST_VEC_3_BIT_MAP_MASK << ROUTER_NL4_MCAST_DEST_VEC_3_BIT_MAP_SHIFT)
+#define ROUTER_NL4_MCAST_DEST_VEC_3_BIT_MAP_INPLACE (ROUTER_NL4_MCAST_DEST_VEC_3_BIT_MAP_MASK << ROUTER_NL4_MCAST_DEST_VEC_3_BIT_MAP_SHIFT)
 
 /*
- * PROM register R4_LB_LOCAL_TABLE. Offset and field positions read from the table; role inferred from the names.
+ * PROM register R4_LB_LOCAL_TABLE. Offset and field positions read from the
+ * table; role inferred from the names.
  */
 /* lb_local_table: rw64, reset unknown */
 #define ROUTER_NL4_LB_LOCAL_TABLE_OFFSET             0x5000u /* established */
 #define ROUTER_NL4_LB_LOCAL_TABLE_VALID_SHIFT        63 /* established */
 #define ROUTER_NL4_LB_LOCAL_TABLE_VALID_MASK         0x1ull
-#define ROUTER_NL4_LB_LOCAL_TABLE_VALID_INPLACE      (ROUTER_NL4_LB_LOCAL_TABLE_VALID_MASK << ROUTER_NL4_LB_LOCAL_TABLE_VALID_SHIFT)
+#define ROUTER_NL4_LB_LOCAL_TABLE_VALID_INPLACE (ROUTER_NL4_LB_LOCAL_TABLE_VALID_MASK << ROUTER_NL4_LB_LOCAL_TABLE_VALID_SHIFT)
 #define ROUTER_NL4_LB_LOCAL_TABLE_DIR1_SHIFT         0 /* established */
 #define ROUTER_NL4_LB_LOCAL_TABLE_DIR1_MASK          0x1full
-#define ROUTER_NL4_LB_LOCAL_TABLE_DIR1_INPLACE       (ROUTER_NL4_LB_LOCAL_TABLE_DIR1_MASK << ROUTER_NL4_LB_LOCAL_TABLE_DIR1_SHIFT)
+#define ROUTER_NL4_LB_LOCAL_TABLE_DIR1_INPLACE (ROUTER_NL4_LB_LOCAL_TABLE_DIR1_MASK << ROUTER_NL4_LB_LOCAL_TABLE_DIR1_SHIFT)
 
 /*
- * PROM register R4_LB_GLOBAL_TABLE. Offset and field positions read from the table; role inferred from the names.
+ * PROM register R4_LB_GLOBAL_TABLE. Offset and field positions read from the
+ * table; role inferred from the names.
  */
 /* lb_global_table: rw64, reset unknown */
 #define ROUTER_NL4_LB_GLOBAL_TABLE_OFFSET            0x6000u /* established */
 #define ROUTER_NL4_LB_GLOBAL_TABLE_VALID_SHIFT       63 /* established */
 #define ROUTER_NL4_LB_GLOBAL_TABLE_VALID_MASK        0x1ull
-#define ROUTER_NL4_LB_GLOBAL_TABLE_VALID_INPLACE     (ROUTER_NL4_LB_GLOBAL_TABLE_VALID_MASK << ROUTER_NL4_LB_GLOBAL_TABLE_VALID_SHIFT)
+#define ROUTER_NL4_LB_GLOBAL_TABLE_VALID_INPLACE (ROUTER_NL4_LB_GLOBAL_TABLE_VALID_MASK << ROUTER_NL4_LB_GLOBAL_TABLE_VALID_SHIFT)
 #define ROUTER_NL4_LB_GLOBAL_TABLE_DIR1_SHIFT        0 /* established */
 #define ROUTER_NL4_LB_GLOBAL_TABLE_DIR1_MASK         0x1full
-#define ROUTER_NL4_LB_GLOBAL_TABLE_DIR1_INPLACE      (ROUTER_NL4_LB_GLOBAL_TABLE_DIR1_MASK << ROUTER_NL4_LB_GLOBAL_TABLE_DIR1_SHIFT)
+#define ROUTER_NL4_LB_GLOBAL_TABLE_DIR1_INPLACE (ROUTER_NL4_LB_GLOBAL_TABLE_DIR1_MASK << ROUTER_NL4_LB_GLOBAL_TABLE_DIR1_SHIFT)
 
 /*
- * PROM register R4_RTC_SOURCE. Offset and field positions read from the table; role inferred from the names.
+ * PROM register R4_RTC_SOURCE. Offset and field positions read from the table;
+ * role inferred from the names.
  */
 /* rtc_source: rw64, reset unknown */
-#define ROUTER_NL4_RTC_SOURCE_OFFSET                 0x1001900u /* established */
+/* established */
+#define ROUTER_NL4_RTC_SOURCE_OFFSET                 0x1001900u
 #define ROUTER_NL4_RTC_SOURCE_PORTH_RTC_SELECT_SHIFT 32 /* established */
 #define ROUTER_NL4_RTC_SOURCE_PORTH_RTC_SELECT_MASK  0xfull
 #define ROUTER_NL4_RTC_SOURCE_PORTH_RTC_SELECT_INPLACE (ROUTER_NL4_RTC_SOURCE_PORTH_RTC_SELECT_MASK << ROUTER_NL4_RTC_SOURCE_PORTH_RTC_SELECT_SHIFT)
@@ -1452,154 +1548,192 @@
 #define ROUTER_NL4_RTC_SOURCE_PORTA_RTC_SELECT_INPLACE (ROUTER_NL4_RTC_SOURCE_PORTA_RTC_SELECT_MASK << ROUTER_NL4_RTC_SOURCE_PORTA_RTC_SELECT_SHIFT)
 #define ROUTER_NL4_RTC_SOURCE_LB_RTC_SELECT_SHIFT    0 /* established */
 #define ROUTER_NL4_RTC_SOURCE_LB_RTC_SELECT_MASK     0xfull
-#define ROUTER_NL4_RTC_SOURCE_LB_RTC_SELECT_INPLACE  (ROUTER_NL4_RTC_SOURCE_LB_RTC_SELECT_MASK << ROUTER_NL4_RTC_SOURCE_LB_RTC_SELECT_SHIFT)
+#define ROUTER_NL4_RTC_SOURCE_LB_RTC_SELECT_INPLACE (ROUTER_NL4_RTC_SOURCE_LB_RTC_SELECT_MASK << ROUTER_NL4_RTC_SOURCE_LB_RTC_SELECT_SHIFT)
 
 /*
- * PROM register R4_RTC_INTRN_CNTRL. Offset and field positions read from the table; role inferred from the names.
+ * PROM register R4_RTC_INTRN_CNTRL. Offset and field positions read from the
+ * table; role inferred from the names.
  */
 /* rtc_intrn_cntrl: rw64, reset unknown */
-#define ROUTER_NL4_RTC_INTRN_CNTRL_OFFSET            0x1001908u /* established */
+/* established */
+#define ROUTER_NL4_RTC_INTRN_CNTRL_OFFSET            0x1001908u
 #define ROUTER_NL4_RTC_INTRN_CNTRL_COUNT_SHIFT       16 /* established */
 #define ROUTER_NL4_RTC_INTRN_CNTRL_COUNT_MASK        0x3ffull
-#define ROUTER_NL4_RTC_INTRN_CNTRL_COUNT_INPLACE     (ROUTER_NL4_RTC_INTRN_CNTRL_COUNT_MASK << ROUTER_NL4_RTC_INTRN_CNTRL_COUNT_SHIFT)
+#define ROUTER_NL4_RTC_INTRN_CNTRL_COUNT_INPLACE (ROUTER_NL4_RTC_INTRN_CNTRL_COUNT_MASK << ROUTER_NL4_RTC_INTRN_CNTRL_COUNT_SHIFT)
 #define ROUTER_NL4_RTC_INTRN_CNTRL_MAX_COUNT_SHIFT   0 /* established */
 #define ROUTER_NL4_RTC_INTRN_CNTRL_MAX_COUNT_MASK    0x3ffull
 #define ROUTER_NL4_RTC_INTRN_CNTRL_MAX_COUNT_INPLACE (ROUTER_NL4_RTC_INTRN_CNTRL_MAX_COUNT_MASK << ROUTER_NL4_RTC_INTRN_CNTRL_MAX_COUNT_SHIFT)
 
 /*
- * PROM register R4_THROTTLE_INTERVAL. Offset and field positions read from the table; role inferred from the names.
+ * PROM register R4_THROTTLE_INTERVAL. Offset and field positions read from the
+ * table; role inferred from the names.
  */
 /* throttle_interval: rw64, reset unknown */
-#define ROUTER_NL4_THROTTLE_INTERVAL_OFFSET          0x1001910u /* established */
+/* established */
+#define ROUTER_NL4_THROTTLE_INTERVAL_OFFSET          0x1001910u
 #define ROUTER_NL4_THROTTLE_INTERVAL_COUNT_SHIFT     0 /* established */
 #define ROUTER_NL4_THROTTLE_INTERVAL_COUNT_MASK      0x3fffffffull
-#define ROUTER_NL4_THROTTLE_INTERVAL_COUNT_INPLACE   (ROUTER_NL4_THROTTLE_INTERVAL_COUNT_MASK << ROUTER_NL4_THROTTLE_INTERVAL_COUNT_SHIFT)
+#define ROUTER_NL4_THROTTLE_INTERVAL_COUNT_INPLACE (ROUTER_NL4_THROTTLE_INTERVAL_COUNT_MASK << ROUTER_NL4_THROTTLE_INTERVAL_COUNT_SHIFT)
 
 /*
- * PROM register R4_THROTTLE_TIME. Offset and field positions read from the table; role inferred from the names.
+ * PROM register R4_THROTTLE_TIME. Offset and field positions read from the
+ * table; role inferred from the names.
  */
 /* throttle_time: rw64, reset unknown */
-#define ROUTER_NL4_THROTTLE_TIME_OFFSET              0x1001918u /* established */
+/* established */
+#define ROUTER_NL4_THROTTLE_TIME_OFFSET              0x1001918u
 #define ROUTER_NL4_THROTTLE_TIME_COUNT_SHIFT         0 /* established */
 #define ROUTER_NL4_THROTTLE_TIME_COUNT_MASK          0x3fffffffull
-#define ROUTER_NL4_THROTTLE_TIME_COUNT_INPLACE       (ROUTER_NL4_THROTTLE_TIME_COUNT_MASK << ROUTER_NL4_THROTTLE_TIME_COUNT_SHIFT)
+#define ROUTER_NL4_THROTTLE_TIME_COUNT_INPLACE (ROUTER_NL4_THROTTLE_TIME_COUNT_MASK << ROUTER_NL4_THROTTLE_TIME_COUNT_SHIFT)
 
 /*
- * PROM register R4_THROTTLE_STATUS. Offset and field positions read from the table; role inferred from the names.
+ * PROM register R4_THROTTLE_STATUS. Offset and field positions read from the
+ * table; role inferred from the names.
  */
 /* throttle_status: r64, reset unknown */
-#define ROUTER_NL4_THROTTLE_STATUS_OFFSET            0x1001920u /* established */
+/* established */
+#define ROUTER_NL4_THROTTLE_STATUS_OFFSET            0x1001920u
 #define ROUTER_NL4_THROTTLE_STATUS_TIME_SHIFT        32 /* established */
 #define ROUTER_NL4_THROTTLE_STATUS_TIME_MASK         0x3fffffffull
-#define ROUTER_NL4_THROTTLE_STATUS_TIME_INPLACE      (ROUTER_NL4_THROTTLE_STATUS_TIME_MASK << ROUTER_NL4_THROTTLE_STATUS_TIME_SHIFT)
+#define ROUTER_NL4_THROTTLE_STATUS_TIME_INPLACE (ROUTER_NL4_THROTTLE_STATUS_TIME_MASK << ROUTER_NL4_THROTTLE_STATUS_TIME_SHIFT)
 #define ROUTER_NL4_THROTTLE_STATUS_INTERVAL_SHIFT    0 /* established */
 #define ROUTER_NL4_THROTTLE_STATUS_INTERVAL_MASK     0x3fffffffull
-#define ROUTER_NL4_THROTTLE_STATUS_INTERVAL_INPLACE  (ROUTER_NL4_THROTTLE_STATUS_INTERVAL_MASK << ROUTER_NL4_THROTTLE_STATUS_INTERVAL_SHIFT)
+#define ROUTER_NL4_THROTTLE_STATUS_INTERVAL_INPLACE (ROUTER_NL4_THROTTLE_STATUS_INTERVAL_MASK << ROUTER_NL4_THROTTLE_STATUS_INTERVAL_SHIFT)
 
 /*
- * PROM register R4_THROTTLE_SKIP. Offset and field positions read from the table; role inferred from the names.
+ * PROM register R4_THROTTLE_SKIP. Offset and field positions read from the
+ * table; role inferred from the names.
  */
 /* throttle_skip: rw64, reset unknown */
-#define ROUTER_NL4_THROTTLE_SKIP_OFFSET              0x1001928u /* established */
+/* established */
+#define ROUTER_NL4_THROTTLE_SKIP_OFFSET              0x1001928u
 #define ROUTER_NL4_THROTTLE_SKIP_NEXT_SHIFT          0 /* established */
 #define ROUTER_NL4_THROTTLE_SKIP_NEXT_MASK           0x1ull
-#define ROUTER_NL4_THROTTLE_SKIP_NEXT_INPLACE        (ROUTER_NL4_THROTTLE_SKIP_NEXT_MASK << ROUTER_NL4_THROTTLE_SKIP_NEXT_SHIFT)
+#define ROUTER_NL4_THROTTLE_SKIP_NEXT_INPLACE (ROUTER_NL4_THROTTLE_SKIP_NEXT_MASK << ROUTER_NL4_THROTTLE_SKIP_NEXT_SHIFT)
 
 /*
- * PROM register R4_DEBUG_PORT_CONFIG. Offset and field positions read from the table; role inferred from the names.
+ * PROM register R4_DEBUG_PORT_CONFIG. Offset and field positions read from the
+ * table; role inferred from the names.
  */
 /* debug_port_config: rw64, reset unknown */
-#define ROUTER_NL4_DEBUG_PORT_CONFIG_OFFSET          0x1001930u /* established */
+/* established */
+#define ROUTER_NL4_DEBUG_PORT_CONFIG_OFFSET          0x1001930u
 #define ROUTER_NL4_DEBUG_PORT_CONFIG_EN_SHIFT        0 /* established */
 #define ROUTER_NL4_DEBUG_PORT_CONFIG_EN_MASK         0x1ull
-#define ROUTER_NL4_DEBUG_PORT_CONFIG_EN_INPLACE      (ROUTER_NL4_DEBUG_PORT_CONFIG_EN_MASK << ROUTER_NL4_DEBUG_PORT_CONFIG_EN_SHIFT)
+#define ROUTER_NL4_DEBUG_PORT_CONFIG_EN_INPLACE (ROUTER_NL4_DEBUG_PORT_CONFIG_EN_MASK << ROUTER_NL4_DEBUG_PORT_CONFIG_EN_SHIFT)
 
 /*
- * PROM register R4_VBIT_EMUL. Offset and field positions read from the table; role inferred from the names.
+ * PROM register R4_VBIT_EMUL. Offset and field positions read from the table;
+ * role inferred from the names.
  */
 /* vbit_emul: rw64, reset unknown */
-#define ROUTER_NL4_VBIT_EMUL_OFFSET                  0x1001938u /* established */
+/* established */
+#define ROUTER_NL4_VBIT_EMUL_OFFSET                  0x1001938u
 #define ROUTER_NL4_VBIT_EMUL_V_BIT_EMULATION_SHIFT   0 /* established */
 #define ROUTER_NL4_VBIT_EMUL_V_BIT_EMULATION_MASK    0x1ull
 #define ROUTER_NL4_VBIT_EMUL_V_BIT_EMULATION_INPLACE (ROUTER_NL4_VBIT_EMUL_V_BIT_EMULATION_MASK << ROUTER_NL4_VBIT_EMUL_V_BIT_EMULATION_SHIFT)
 
 /*
- * PROM register R4_LB1_TEST_POINT_SELECT_512. Offset and field positions read from the table; role inferred from the names.
+ * PROM register R4_LB1_TEST_POINT_SELECT_512. Offset and field positions read
+ * from the table; role inferred from the names.
  */
 /* lb1_test_point_select_512: rw64, reset unknown */
-#define ROUTER_NL4_LB1_TEST_POINT_SELECT_512_OFFSET  0x1002700u /* established */
-#define ROUTER_NL4_LB1_TEST_POINT_SELECT_512_NIBBLE7_NIBBLE_SEL_SHIFT 60 /* established */
+/* established */
+#define ROUTER_NL4_LB1_TEST_POINT_SELECT_512_OFFSET  0x1002700u
+/* established */
+#define ROUTER_NL4_LB1_TEST_POINT_SELECT_512_NIBBLE7_NIBBLE_SEL_SHIFT 60
 #define ROUTER_NL4_LB1_TEST_POINT_SELECT_512_NIBBLE7_NIBBLE_SEL_MASK 0x7ull
 #define ROUTER_NL4_LB1_TEST_POINT_SELECT_512_NIBBLE7_NIBBLE_SEL_INPLACE (ROUTER_NL4_LB1_TEST_POINT_SELECT_512_NIBBLE7_NIBBLE_SEL_MASK << ROUTER_NL4_LB1_TEST_POINT_SELECT_512_NIBBLE7_NIBBLE_SEL_SHIFT)
-#define ROUTER_NL4_LB1_TEST_POINT_SELECT_512_NIBBLE7_CHIPLET_SEL_SHIFT 56 /* established */
+/* established */
+#define ROUTER_NL4_LB1_TEST_POINT_SELECT_512_NIBBLE7_CHIPLET_SEL_SHIFT 56
 #define ROUTER_NL4_LB1_TEST_POINT_SELECT_512_NIBBLE7_CHIPLET_SEL_MASK 0xfull
 #define ROUTER_NL4_LB1_TEST_POINT_SELECT_512_NIBBLE7_CHIPLET_SEL_INPLACE (ROUTER_NL4_LB1_TEST_POINT_SELECT_512_NIBBLE7_CHIPLET_SEL_MASK << ROUTER_NL4_LB1_TEST_POINT_SELECT_512_NIBBLE7_CHIPLET_SEL_SHIFT)
-#define ROUTER_NL4_LB1_TEST_POINT_SELECT_512_NIBBLE6_NIBBLE_SEL_SHIFT 52 /* established */
+/* established */
+#define ROUTER_NL4_LB1_TEST_POINT_SELECT_512_NIBBLE6_NIBBLE_SEL_SHIFT 52
 #define ROUTER_NL4_LB1_TEST_POINT_SELECT_512_NIBBLE6_NIBBLE_SEL_MASK 0x7ull
 #define ROUTER_NL4_LB1_TEST_POINT_SELECT_512_NIBBLE6_NIBBLE_SEL_INPLACE (ROUTER_NL4_LB1_TEST_POINT_SELECT_512_NIBBLE6_NIBBLE_SEL_MASK << ROUTER_NL4_LB1_TEST_POINT_SELECT_512_NIBBLE6_NIBBLE_SEL_SHIFT)
-#define ROUTER_NL4_LB1_TEST_POINT_SELECT_512_NIBBLE6_CHIPLET_SEL_SHIFT 48 /* established */
+/* established */
+#define ROUTER_NL4_LB1_TEST_POINT_SELECT_512_NIBBLE6_CHIPLET_SEL_SHIFT 48
 #define ROUTER_NL4_LB1_TEST_POINT_SELECT_512_NIBBLE6_CHIPLET_SEL_MASK 0xfull
 #define ROUTER_NL4_LB1_TEST_POINT_SELECT_512_NIBBLE6_CHIPLET_SEL_INPLACE (ROUTER_NL4_LB1_TEST_POINT_SELECT_512_NIBBLE6_CHIPLET_SEL_MASK << ROUTER_NL4_LB1_TEST_POINT_SELECT_512_NIBBLE6_CHIPLET_SEL_SHIFT)
-#define ROUTER_NL4_LB1_TEST_POINT_SELECT_512_NIBBLE5_NIBBLE_SEL_SHIFT 44 /* established */
+/* established */
+#define ROUTER_NL4_LB1_TEST_POINT_SELECT_512_NIBBLE5_NIBBLE_SEL_SHIFT 44
 #define ROUTER_NL4_LB1_TEST_POINT_SELECT_512_NIBBLE5_NIBBLE_SEL_MASK 0x7ull
 #define ROUTER_NL4_LB1_TEST_POINT_SELECT_512_NIBBLE5_NIBBLE_SEL_INPLACE (ROUTER_NL4_LB1_TEST_POINT_SELECT_512_NIBBLE5_NIBBLE_SEL_MASK << ROUTER_NL4_LB1_TEST_POINT_SELECT_512_NIBBLE5_NIBBLE_SEL_SHIFT)
-#define ROUTER_NL4_LB1_TEST_POINT_SELECT_512_NIBBLE5_CHIPLET_SEL_SHIFT 40 /* established */
+/* established */
+#define ROUTER_NL4_LB1_TEST_POINT_SELECT_512_NIBBLE5_CHIPLET_SEL_SHIFT 40
 #define ROUTER_NL4_LB1_TEST_POINT_SELECT_512_NIBBLE5_CHIPLET_SEL_MASK 0xfull
 #define ROUTER_NL4_LB1_TEST_POINT_SELECT_512_NIBBLE5_CHIPLET_SEL_INPLACE (ROUTER_NL4_LB1_TEST_POINT_SELECT_512_NIBBLE5_CHIPLET_SEL_MASK << ROUTER_NL4_LB1_TEST_POINT_SELECT_512_NIBBLE5_CHIPLET_SEL_SHIFT)
-#define ROUTER_NL4_LB1_TEST_POINT_SELECT_512_NIBBLE4_NIBBLE_SEL_SHIFT 36 /* established */
+/* established */
+#define ROUTER_NL4_LB1_TEST_POINT_SELECT_512_NIBBLE4_NIBBLE_SEL_SHIFT 36
 #define ROUTER_NL4_LB1_TEST_POINT_SELECT_512_NIBBLE4_NIBBLE_SEL_MASK 0x7ull
 #define ROUTER_NL4_LB1_TEST_POINT_SELECT_512_NIBBLE4_NIBBLE_SEL_INPLACE (ROUTER_NL4_LB1_TEST_POINT_SELECT_512_NIBBLE4_NIBBLE_SEL_MASK << ROUTER_NL4_LB1_TEST_POINT_SELECT_512_NIBBLE4_NIBBLE_SEL_SHIFT)
-#define ROUTER_NL4_LB1_TEST_POINT_SELECT_512_NIBBLE4_CHIPLET_SEL_SHIFT 32 /* established */
+/* established */
+#define ROUTER_NL4_LB1_TEST_POINT_SELECT_512_NIBBLE4_CHIPLET_SEL_SHIFT 32
 #define ROUTER_NL4_LB1_TEST_POINT_SELECT_512_NIBBLE4_CHIPLET_SEL_MASK 0xfull
 #define ROUTER_NL4_LB1_TEST_POINT_SELECT_512_NIBBLE4_CHIPLET_SEL_INPLACE (ROUTER_NL4_LB1_TEST_POINT_SELECT_512_NIBBLE4_CHIPLET_SEL_MASK << ROUTER_NL4_LB1_TEST_POINT_SELECT_512_NIBBLE4_CHIPLET_SEL_SHIFT)
-#define ROUTER_NL4_LB1_TEST_POINT_SELECT_512_NIBBLE3_NIBBLE_SEL_SHIFT 28 /* established */
+/* established */
+#define ROUTER_NL4_LB1_TEST_POINT_SELECT_512_NIBBLE3_NIBBLE_SEL_SHIFT 28
 #define ROUTER_NL4_LB1_TEST_POINT_SELECT_512_NIBBLE3_NIBBLE_SEL_MASK 0x7ull
 #define ROUTER_NL4_LB1_TEST_POINT_SELECT_512_NIBBLE3_NIBBLE_SEL_INPLACE (ROUTER_NL4_LB1_TEST_POINT_SELECT_512_NIBBLE3_NIBBLE_SEL_MASK << ROUTER_NL4_LB1_TEST_POINT_SELECT_512_NIBBLE3_NIBBLE_SEL_SHIFT)
-#define ROUTER_NL4_LB1_TEST_POINT_SELECT_512_NIBBLE3_CHIPLET_SEL_SHIFT 24 /* established */
+/* established */
+#define ROUTER_NL4_LB1_TEST_POINT_SELECT_512_NIBBLE3_CHIPLET_SEL_SHIFT 24
 #define ROUTER_NL4_LB1_TEST_POINT_SELECT_512_NIBBLE3_CHIPLET_SEL_MASK 0xfull
 #define ROUTER_NL4_LB1_TEST_POINT_SELECT_512_NIBBLE3_CHIPLET_SEL_INPLACE (ROUTER_NL4_LB1_TEST_POINT_SELECT_512_NIBBLE3_CHIPLET_SEL_MASK << ROUTER_NL4_LB1_TEST_POINT_SELECT_512_NIBBLE3_CHIPLET_SEL_SHIFT)
-#define ROUTER_NL4_LB1_TEST_POINT_SELECT_512_NIBBLE2_NIBBLE_SEL_SHIFT 20 /* established */
+/* established */
+#define ROUTER_NL4_LB1_TEST_POINT_SELECT_512_NIBBLE2_NIBBLE_SEL_SHIFT 20
 #define ROUTER_NL4_LB1_TEST_POINT_SELECT_512_NIBBLE2_NIBBLE_SEL_MASK 0x7ull
 #define ROUTER_NL4_LB1_TEST_POINT_SELECT_512_NIBBLE2_NIBBLE_SEL_INPLACE (ROUTER_NL4_LB1_TEST_POINT_SELECT_512_NIBBLE2_NIBBLE_SEL_MASK << ROUTER_NL4_LB1_TEST_POINT_SELECT_512_NIBBLE2_NIBBLE_SEL_SHIFT)
-#define ROUTER_NL4_LB1_TEST_POINT_SELECT_512_NIBBLE2_CHIPLET_SEL_SHIFT 16 /* established */
+/* established */
+#define ROUTER_NL4_LB1_TEST_POINT_SELECT_512_NIBBLE2_CHIPLET_SEL_SHIFT 16
 #define ROUTER_NL4_LB1_TEST_POINT_SELECT_512_NIBBLE2_CHIPLET_SEL_MASK 0xfull
 #define ROUTER_NL4_LB1_TEST_POINT_SELECT_512_NIBBLE2_CHIPLET_SEL_INPLACE (ROUTER_NL4_LB1_TEST_POINT_SELECT_512_NIBBLE2_CHIPLET_SEL_MASK << ROUTER_NL4_LB1_TEST_POINT_SELECT_512_NIBBLE2_CHIPLET_SEL_SHIFT)
-#define ROUTER_NL4_LB1_TEST_POINT_SELECT_512_NIBBLE1_NIBBLE_SEL_SHIFT 12 /* established */
+/* established */
+#define ROUTER_NL4_LB1_TEST_POINT_SELECT_512_NIBBLE1_NIBBLE_SEL_SHIFT 12
 #define ROUTER_NL4_LB1_TEST_POINT_SELECT_512_NIBBLE1_NIBBLE_SEL_MASK 0x7ull
 #define ROUTER_NL4_LB1_TEST_POINT_SELECT_512_NIBBLE1_NIBBLE_SEL_INPLACE (ROUTER_NL4_LB1_TEST_POINT_SELECT_512_NIBBLE1_NIBBLE_SEL_MASK << ROUTER_NL4_LB1_TEST_POINT_SELECT_512_NIBBLE1_NIBBLE_SEL_SHIFT)
-#define ROUTER_NL4_LB1_TEST_POINT_SELECT_512_NIBBLE1_CHIPLET_SEL_SHIFT 8 /* established */
+/* established */
+#define ROUTER_NL4_LB1_TEST_POINT_SELECT_512_NIBBLE1_CHIPLET_SEL_SHIFT 8
 #define ROUTER_NL4_LB1_TEST_POINT_SELECT_512_NIBBLE1_CHIPLET_SEL_MASK 0xfull
 #define ROUTER_NL4_LB1_TEST_POINT_SELECT_512_NIBBLE1_CHIPLET_SEL_INPLACE (ROUTER_NL4_LB1_TEST_POINT_SELECT_512_NIBBLE1_CHIPLET_SEL_MASK << ROUTER_NL4_LB1_TEST_POINT_SELECT_512_NIBBLE1_CHIPLET_SEL_SHIFT)
-#define ROUTER_NL4_LB1_TEST_POINT_SELECT_512_NIBBLE0_NIBBLE_SEL_SHIFT 4 /* established */
+/* established */
+#define ROUTER_NL4_LB1_TEST_POINT_SELECT_512_NIBBLE0_NIBBLE_SEL_SHIFT 4
 #define ROUTER_NL4_LB1_TEST_POINT_SELECT_512_NIBBLE0_NIBBLE_SEL_MASK 0x7ull
 #define ROUTER_NL4_LB1_TEST_POINT_SELECT_512_NIBBLE0_NIBBLE_SEL_INPLACE (ROUTER_NL4_LB1_TEST_POINT_SELECT_512_NIBBLE0_NIBBLE_SEL_MASK << ROUTER_NL4_LB1_TEST_POINT_SELECT_512_NIBBLE0_NIBBLE_SEL_SHIFT)
-#define ROUTER_NL4_LB1_TEST_POINT_SELECT_512_NIBBLE0_CHIPLET_SEL_SHIFT 0 /* established */
+/* established */
+#define ROUTER_NL4_LB1_TEST_POINT_SELECT_512_NIBBLE0_CHIPLET_SEL_SHIFT 0
 #define ROUTER_NL4_LB1_TEST_POINT_SELECT_512_NIBBLE0_CHIPLET_SEL_MASK 0xfull
 #define ROUTER_NL4_LB1_TEST_POINT_SELECT_512_NIBBLE0_CHIPLET_SEL_INPLACE (ROUTER_NL4_LB1_TEST_POINT_SELECT_512_NIBBLE0_CHIPLET_SEL_MASK << ROUTER_NL4_LB1_TEST_POINT_SELECT_512_NIBBLE0_CHIPLET_SEL_SHIFT)
 
 /*
- * PROM register R4_HARD_RESET. Offset and field positions read from the table; role inferred from the names.
+ * PROM register R4_HARD_RESET. Offset and field positions read from the table;
+ * role inferred from the names.
  */
 /* hard_reset: rw64, reset unknown */
-#define ROUTER_NL4_HARD_RESET_OFFSET                 0x1003000u /* established */
+/* established */
+#define ROUTER_NL4_HARD_RESET_OFFSET                 0x1003000u
 #define ROUTER_NL4_HARD_RESET_HARD_RESET_SHIFT       0 /* established */
 #define ROUTER_NL4_HARD_RESET_HARD_RESET_MASK        0x1ull
-#define ROUTER_NL4_HARD_RESET_HARD_RESET_INPLACE     (ROUTER_NL4_HARD_RESET_HARD_RESET_MASK << ROUTER_NL4_HARD_RESET_HARD_RESET_SHIFT)
+#define ROUTER_NL4_HARD_RESET_HARD_RESET_INPLACE (ROUTER_NL4_HARD_RESET_HARD_RESET_MASK << ROUTER_NL4_HARD_RESET_HARD_RESET_SHIFT)
 
 /*
- * PROM register R4_SOFT_RESET. Offset and field positions read from the table; role inferred from the names.
+ * PROM register R4_SOFT_RESET. Offset and field positions read from the table;
+ * role inferred from the names.
  */
 /* soft_reset: rw64, reset unknown */
-#define ROUTER_NL4_SOFT_RESET_OFFSET                 0x1003008u /* established */
+/* established */
+#define ROUTER_NL4_SOFT_RESET_OFFSET                 0x1003008u
 #define ROUTER_NL4_SOFT_RESET_SOFT_RESET_SHIFT       0 /* established */
 #define ROUTER_NL4_SOFT_RESET_SOFT_RESET_MASK        0x1ull
-#define ROUTER_NL4_SOFT_RESET_SOFT_RESET_INPLACE     (ROUTER_NL4_SOFT_RESET_SOFT_RESET_MASK << ROUTER_NL4_SOFT_RESET_SOFT_RESET_SHIFT)
+#define ROUTER_NL4_SOFT_RESET_SOFT_RESET_INPLACE (ROUTER_NL4_SOFT_RESET_SOFT_RESET_MASK << ROUTER_NL4_SOFT_RESET_SOFT_RESET_SHIFT)
 
 /*
- * PROM register R4_PORT_RESET. Offset and field positions read from the table; role inferred from the names.
+ * PROM register R4_PORT_RESET. Offset and field positions read from the table;
+ * role inferred from the names.
  */
 /* port_reset: rw64, reset unknown */
-#define ROUTER_NL4_PORT_RESET_OFFSET                 0x1003010u /* established */
+/* established */
+#define ROUTER_NL4_PORT_RESET_OFFSET                 0x1003010u
 #define ROUTER_NL4_PORT_RESET_PORT_WARM_RESET_SHIFT  9 /* established */
 #define ROUTER_NL4_PORT_RESET_PORT_WARM_RESET_MASK   0x1ull
 #define ROUTER_NL4_PORT_RESET_PORT_WARM_RESET_INPLACE (ROUTER_NL4_PORT_RESET_PORT_WARM_RESET_MASK << ROUTER_NL4_PORT_RESET_PORT_WARM_RESET_SHIFT)
@@ -1629,129 +1763,156 @@
 #define ROUTER_NL4_PORT_RESET_PORTA_LINK_RESET_INPLACE (ROUTER_NL4_PORT_RESET_PORTA_LINK_RESET_MASK << ROUTER_NL4_PORT_RESET_PORTA_LINK_RESET_SHIFT)
 #define ROUTER_NL4_PORT_RESET_LB_RESET_SHIFT         0 /* established */
 #define ROUTER_NL4_PORT_RESET_LB_RESET_MASK          0x1ull
-#define ROUTER_NL4_PORT_RESET_LB_RESET_INPLACE       (ROUTER_NL4_PORT_RESET_LB_RESET_MASK << ROUTER_NL4_PORT_RESET_LB_RESET_SHIFT)
+#define ROUTER_NL4_PORT_RESET_LB_RESET_INPLACE (ROUTER_NL4_PORT_RESET_LB_RESET_MASK << ROUTER_NL4_PORT_RESET_LB_RESET_SHIFT)
 
 /*
- * PROM register R4_PROTECTION_CONFIG. Offset and field positions read from the table; role inferred from the names.
+ * PROM register R4_PROTECTION_CONFIG. Offset and field positions read from the
+ * table; role inferred from the names.
  */
 /* protection_config: rw64, reset unknown */
-#define ROUTER_NL4_PROTECTION_CONFIG_OFFSET          0x1003018u /* established */
-#define ROUTER_NL4_PROTECTION_CONFIG_LB_FORCE_LOCAL_LUT_SHIFT 30 /* established */
+/* established */
+#define ROUTER_NL4_PROTECTION_CONFIG_OFFSET          0x1003018u
+/* established */
+#define ROUTER_NL4_PROTECTION_CONFIG_LB_FORCE_LOCAL_LUT_SHIFT 30
 #define ROUTER_NL4_PROTECTION_CONFIG_LB_FORCE_LOCAL_LUT_MASK 0x1ull
 #define ROUTER_NL4_PROTECTION_CONFIG_LB_FORCE_LOCAL_LUT_INPLACE (ROUTER_NL4_PROTECTION_CONFIG_LB_FORCE_LOCAL_LUT_MASK << ROUTER_NL4_PROTECTION_CONFIG_LB_FORCE_LOCAL_LUT_SHIFT)
-#define ROUTER_NL4_PROTECTION_CONFIG_PORTH_FORCE_LOCAL_LUT_SHIFT 29 /* established */
+/* established */
+#define ROUTER_NL4_PROTECTION_CONFIG_PORTH_FORCE_LOCAL_LUT_SHIFT 29
 #define ROUTER_NL4_PROTECTION_CONFIG_PORTH_FORCE_LOCAL_LUT_MASK 0x1ull
 #define ROUTER_NL4_PROTECTION_CONFIG_PORTH_FORCE_LOCAL_LUT_INPLACE (ROUTER_NL4_PROTECTION_CONFIG_PORTH_FORCE_LOCAL_LUT_MASK << ROUTER_NL4_PROTECTION_CONFIG_PORTH_FORCE_LOCAL_LUT_SHIFT)
-#define ROUTER_NL4_PROTECTION_CONFIG_PORTG_FORCE_LOCAL_LUT_SHIFT 28 /* established */
+/* established */
+#define ROUTER_NL4_PROTECTION_CONFIG_PORTG_FORCE_LOCAL_LUT_SHIFT 28
 #define ROUTER_NL4_PROTECTION_CONFIG_PORTG_FORCE_LOCAL_LUT_MASK 0x1ull
 #define ROUTER_NL4_PROTECTION_CONFIG_PORTG_FORCE_LOCAL_LUT_INPLACE (ROUTER_NL4_PROTECTION_CONFIG_PORTG_FORCE_LOCAL_LUT_MASK << ROUTER_NL4_PROTECTION_CONFIG_PORTG_FORCE_LOCAL_LUT_SHIFT)
-#define ROUTER_NL4_PROTECTION_CONFIG_PORTF_FORCE_LOCAL_LUT_SHIFT 27 /* established */
+/* established */
+#define ROUTER_NL4_PROTECTION_CONFIG_PORTF_FORCE_LOCAL_LUT_SHIFT 27
 #define ROUTER_NL4_PROTECTION_CONFIG_PORTF_FORCE_LOCAL_LUT_MASK 0x1ull
 #define ROUTER_NL4_PROTECTION_CONFIG_PORTF_FORCE_LOCAL_LUT_INPLACE (ROUTER_NL4_PROTECTION_CONFIG_PORTF_FORCE_LOCAL_LUT_MASK << ROUTER_NL4_PROTECTION_CONFIG_PORTF_FORCE_LOCAL_LUT_SHIFT)
-#define ROUTER_NL4_PROTECTION_CONFIG_PORTE_FORCE_LOCAL_LUT_SHIFT 26 /* established */
+/* established */
+#define ROUTER_NL4_PROTECTION_CONFIG_PORTE_FORCE_LOCAL_LUT_SHIFT 26
 #define ROUTER_NL4_PROTECTION_CONFIG_PORTE_FORCE_LOCAL_LUT_MASK 0x1ull
 #define ROUTER_NL4_PROTECTION_CONFIG_PORTE_FORCE_LOCAL_LUT_INPLACE (ROUTER_NL4_PROTECTION_CONFIG_PORTE_FORCE_LOCAL_LUT_MASK << ROUTER_NL4_PROTECTION_CONFIG_PORTE_FORCE_LOCAL_LUT_SHIFT)
-#define ROUTER_NL4_PROTECTION_CONFIG_PORTD_FORCE_LOCAL_LUT_SHIFT 25 /* established */
+/* established */
+#define ROUTER_NL4_PROTECTION_CONFIG_PORTD_FORCE_LOCAL_LUT_SHIFT 25
 #define ROUTER_NL4_PROTECTION_CONFIG_PORTD_FORCE_LOCAL_LUT_MASK 0x1ull
 #define ROUTER_NL4_PROTECTION_CONFIG_PORTD_FORCE_LOCAL_LUT_INPLACE (ROUTER_NL4_PROTECTION_CONFIG_PORTD_FORCE_LOCAL_LUT_MASK << ROUTER_NL4_PROTECTION_CONFIG_PORTD_FORCE_LOCAL_LUT_SHIFT)
-#define ROUTER_NL4_PROTECTION_CONFIG_PORTC_FORCE_LOCAL_LUT_SHIFT 24 /* established */
+/* established */
+#define ROUTER_NL4_PROTECTION_CONFIG_PORTC_FORCE_LOCAL_LUT_SHIFT 24
 #define ROUTER_NL4_PROTECTION_CONFIG_PORTC_FORCE_LOCAL_LUT_MASK 0x1ull
 #define ROUTER_NL4_PROTECTION_CONFIG_PORTC_FORCE_LOCAL_LUT_INPLACE (ROUTER_NL4_PROTECTION_CONFIG_PORTC_FORCE_LOCAL_LUT_MASK << ROUTER_NL4_PROTECTION_CONFIG_PORTC_FORCE_LOCAL_LUT_SHIFT)
-#define ROUTER_NL4_PROTECTION_CONFIG_PORTB_FORCE_LOCAL_LUT_SHIFT 23 /* established */
+/* established */
+#define ROUTER_NL4_PROTECTION_CONFIG_PORTB_FORCE_LOCAL_LUT_SHIFT 23
 #define ROUTER_NL4_PROTECTION_CONFIG_PORTB_FORCE_LOCAL_LUT_MASK 0x1ull
 #define ROUTER_NL4_PROTECTION_CONFIG_PORTB_FORCE_LOCAL_LUT_INPLACE (ROUTER_NL4_PROTECTION_CONFIG_PORTB_FORCE_LOCAL_LUT_MASK << ROUTER_NL4_PROTECTION_CONFIG_PORTB_FORCE_LOCAL_LUT_SHIFT)
-#define ROUTER_NL4_PROTECTION_CONFIG_PORTA_FORCE_LOCAL_LUT_SHIFT 22 /* established */
+/* established */
+#define ROUTER_NL4_PROTECTION_CONFIG_PORTA_FORCE_LOCAL_LUT_SHIFT 22
 #define ROUTER_NL4_PROTECTION_CONFIG_PORTA_FORCE_LOCAL_LUT_MASK 0x1ull
 #define ROUTER_NL4_PROTECTION_CONFIG_PORTA_FORCE_LOCAL_LUT_INPLACE (ROUTER_NL4_PROTECTION_CONFIG_PORTA_FORCE_LOCAL_LUT_MASK << ROUTER_NL4_PROTECTION_CONFIG_PORTA_FORCE_LOCAL_LUT_SHIFT)
 #define ROUTER_NL4_PROTECTION_CONFIG_NODE_ID_SHIFT   8 /* established */
 #define ROUTER_NL4_PROTECTION_CONFIG_NODE_ID_MASK    0x3fffull
 #define ROUTER_NL4_PROTECTION_CONFIG_NODE_ID_INPLACE (ROUTER_NL4_PROTECTION_CONFIG_NODE_ID_MASK << ROUTER_NL4_PROTECTION_CONFIG_NODE_ID_SHIFT)
-#define ROUTER_NL4_PROTECTION_CONFIG_PORTH_LOCAL_RESET_EN_SHIFT 7 /* established */
+/* established */
+#define ROUTER_NL4_PROTECTION_CONFIG_PORTH_LOCAL_RESET_EN_SHIFT 7
 #define ROUTER_NL4_PROTECTION_CONFIG_PORTH_LOCAL_RESET_EN_MASK 0x1ull
 #define ROUTER_NL4_PROTECTION_CONFIG_PORTH_LOCAL_RESET_EN_INPLACE (ROUTER_NL4_PROTECTION_CONFIG_PORTH_LOCAL_RESET_EN_MASK << ROUTER_NL4_PROTECTION_CONFIG_PORTH_LOCAL_RESET_EN_SHIFT)
-#define ROUTER_NL4_PROTECTION_CONFIG_PORTG_LOCAL_RESET_EN_SHIFT 6 /* established */
+/* established */
+#define ROUTER_NL4_PROTECTION_CONFIG_PORTG_LOCAL_RESET_EN_SHIFT 6
 #define ROUTER_NL4_PROTECTION_CONFIG_PORTG_LOCAL_RESET_EN_MASK 0x1ull
 #define ROUTER_NL4_PROTECTION_CONFIG_PORTG_LOCAL_RESET_EN_INPLACE (ROUTER_NL4_PROTECTION_CONFIG_PORTG_LOCAL_RESET_EN_MASK << ROUTER_NL4_PROTECTION_CONFIG_PORTG_LOCAL_RESET_EN_SHIFT)
-#define ROUTER_NL4_PROTECTION_CONFIG_PORTF_LOCAL_RESET_EN_SHIFT 5 /* established */
+/* established */
+#define ROUTER_NL4_PROTECTION_CONFIG_PORTF_LOCAL_RESET_EN_SHIFT 5
 #define ROUTER_NL4_PROTECTION_CONFIG_PORTF_LOCAL_RESET_EN_MASK 0x1ull
 #define ROUTER_NL4_PROTECTION_CONFIG_PORTF_LOCAL_RESET_EN_INPLACE (ROUTER_NL4_PROTECTION_CONFIG_PORTF_LOCAL_RESET_EN_MASK << ROUTER_NL4_PROTECTION_CONFIG_PORTF_LOCAL_RESET_EN_SHIFT)
-#define ROUTER_NL4_PROTECTION_CONFIG_PORTE_LOCAL_RESET_EN_SHIFT 4 /* established */
+/* established */
+#define ROUTER_NL4_PROTECTION_CONFIG_PORTE_LOCAL_RESET_EN_SHIFT 4
 #define ROUTER_NL4_PROTECTION_CONFIG_PORTE_LOCAL_RESET_EN_MASK 0x1ull
 #define ROUTER_NL4_PROTECTION_CONFIG_PORTE_LOCAL_RESET_EN_INPLACE (ROUTER_NL4_PROTECTION_CONFIG_PORTE_LOCAL_RESET_EN_MASK << ROUTER_NL4_PROTECTION_CONFIG_PORTE_LOCAL_RESET_EN_SHIFT)
-#define ROUTER_NL4_PROTECTION_CONFIG_PORTD_LOCAL_RESET_EN_SHIFT 3 /* established */
+/* established */
+#define ROUTER_NL4_PROTECTION_CONFIG_PORTD_LOCAL_RESET_EN_SHIFT 3
 #define ROUTER_NL4_PROTECTION_CONFIG_PORTD_LOCAL_RESET_EN_MASK 0x1ull
 #define ROUTER_NL4_PROTECTION_CONFIG_PORTD_LOCAL_RESET_EN_INPLACE (ROUTER_NL4_PROTECTION_CONFIG_PORTD_LOCAL_RESET_EN_MASK << ROUTER_NL4_PROTECTION_CONFIG_PORTD_LOCAL_RESET_EN_SHIFT)
-#define ROUTER_NL4_PROTECTION_CONFIG_PORTC_LOCAL_RESET_EN_SHIFT 2 /* established */
+/* established */
+#define ROUTER_NL4_PROTECTION_CONFIG_PORTC_LOCAL_RESET_EN_SHIFT 2
 #define ROUTER_NL4_PROTECTION_CONFIG_PORTC_LOCAL_RESET_EN_MASK 0x1ull
 #define ROUTER_NL4_PROTECTION_CONFIG_PORTC_LOCAL_RESET_EN_INPLACE (ROUTER_NL4_PROTECTION_CONFIG_PORTC_LOCAL_RESET_EN_MASK << ROUTER_NL4_PROTECTION_CONFIG_PORTC_LOCAL_RESET_EN_SHIFT)
-#define ROUTER_NL4_PROTECTION_CONFIG_PORTB_LOCAL_RESET_EN_SHIFT 1 /* established */
+/* established */
+#define ROUTER_NL4_PROTECTION_CONFIG_PORTB_LOCAL_RESET_EN_SHIFT 1
 #define ROUTER_NL4_PROTECTION_CONFIG_PORTB_LOCAL_RESET_EN_MASK 0x1ull
 #define ROUTER_NL4_PROTECTION_CONFIG_PORTB_LOCAL_RESET_EN_INPLACE (ROUTER_NL4_PROTECTION_CONFIG_PORTB_LOCAL_RESET_EN_MASK << ROUTER_NL4_PROTECTION_CONFIG_PORTB_LOCAL_RESET_EN_SHIFT)
-#define ROUTER_NL4_PROTECTION_CONFIG_PORTA_LOCAL_RESET_EN_SHIFT 0 /* established */
+/* established */
+#define ROUTER_NL4_PROTECTION_CONFIG_PORTA_LOCAL_RESET_EN_SHIFT 0
 #define ROUTER_NL4_PROTECTION_CONFIG_PORTA_LOCAL_RESET_EN_MASK 0x1ull
 #define ROUTER_NL4_PROTECTION_CONFIG_PORTA_LOCAL_RESET_EN_INPLACE (ROUTER_NL4_PROTECTION_CONFIG_PORTA_LOCAL_RESET_EN_MASK << ROUTER_NL4_PROTECTION_CONFIG_PORTA_LOCAL_RESET_EN_SHIFT)
 
 /*
- * PROM register R4_PORTA_RST_MASK; one per port A to H. Offset and field positions read from the table; role inferred from the names.
+ * PROM register R4_PORTA_RST_MASK; one per port A to H. Offset and field
+ * positions read from the table; role inferred from the names.
  */
 /* port_rst_mask: rw64, reset unknown */
-#define ROUTER_NL4_PORT_RST_MASK_OFFSET              0x1003020u /* established */
+/* established */
+#define ROUTER_NL4_PORT_RST_MASK_OFFSET              0x1003020u
 #define ROUTER_NL4_PORT_RST_MASK_COUNT               8
 #define ROUTER_NL4_PORT_RST_MASK_STRIDE              8
 #define ROUTER_NL4_PORT_RST_MASK_FROM_PORTH_SHIFT    7 /* established */
 #define ROUTER_NL4_PORT_RST_MASK_FROM_PORTH_MASK     0x1ull
-#define ROUTER_NL4_PORT_RST_MASK_FROM_PORTH_INPLACE  (ROUTER_NL4_PORT_RST_MASK_FROM_PORTH_MASK << ROUTER_NL4_PORT_RST_MASK_FROM_PORTH_SHIFT)
+#define ROUTER_NL4_PORT_RST_MASK_FROM_PORTH_INPLACE (ROUTER_NL4_PORT_RST_MASK_FROM_PORTH_MASK << ROUTER_NL4_PORT_RST_MASK_FROM_PORTH_SHIFT)
 #define ROUTER_NL4_PORT_RST_MASK_FROM_PORTG_SHIFT    6 /* established */
 #define ROUTER_NL4_PORT_RST_MASK_FROM_PORTG_MASK     0x1ull
-#define ROUTER_NL4_PORT_RST_MASK_FROM_PORTG_INPLACE  (ROUTER_NL4_PORT_RST_MASK_FROM_PORTG_MASK << ROUTER_NL4_PORT_RST_MASK_FROM_PORTG_SHIFT)
+#define ROUTER_NL4_PORT_RST_MASK_FROM_PORTG_INPLACE (ROUTER_NL4_PORT_RST_MASK_FROM_PORTG_MASK << ROUTER_NL4_PORT_RST_MASK_FROM_PORTG_SHIFT)
 #define ROUTER_NL4_PORT_RST_MASK_FROM_PORTF_SHIFT    5 /* established */
 #define ROUTER_NL4_PORT_RST_MASK_FROM_PORTF_MASK     0x1ull
-#define ROUTER_NL4_PORT_RST_MASK_FROM_PORTF_INPLACE  (ROUTER_NL4_PORT_RST_MASK_FROM_PORTF_MASK << ROUTER_NL4_PORT_RST_MASK_FROM_PORTF_SHIFT)
+#define ROUTER_NL4_PORT_RST_MASK_FROM_PORTF_INPLACE (ROUTER_NL4_PORT_RST_MASK_FROM_PORTF_MASK << ROUTER_NL4_PORT_RST_MASK_FROM_PORTF_SHIFT)
 #define ROUTER_NL4_PORT_RST_MASK_FROM_PORTE_SHIFT    4 /* established */
 #define ROUTER_NL4_PORT_RST_MASK_FROM_PORTE_MASK     0x1ull
-#define ROUTER_NL4_PORT_RST_MASK_FROM_PORTE_INPLACE  (ROUTER_NL4_PORT_RST_MASK_FROM_PORTE_MASK << ROUTER_NL4_PORT_RST_MASK_FROM_PORTE_SHIFT)
+#define ROUTER_NL4_PORT_RST_MASK_FROM_PORTE_INPLACE (ROUTER_NL4_PORT_RST_MASK_FROM_PORTE_MASK << ROUTER_NL4_PORT_RST_MASK_FROM_PORTE_SHIFT)
 #define ROUTER_NL4_PORT_RST_MASK_FROM_PORTD_SHIFT    3 /* established */
 #define ROUTER_NL4_PORT_RST_MASK_FROM_PORTD_MASK     0x1ull
-#define ROUTER_NL4_PORT_RST_MASK_FROM_PORTD_INPLACE  (ROUTER_NL4_PORT_RST_MASK_FROM_PORTD_MASK << ROUTER_NL4_PORT_RST_MASK_FROM_PORTD_SHIFT)
+#define ROUTER_NL4_PORT_RST_MASK_FROM_PORTD_INPLACE (ROUTER_NL4_PORT_RST_MASK_FROM_PORTD_MASK << ROUTER_NL4_PORT_RST_MASK_FROM_PORTD_SHIFT)
 #define ROUTER_NL4_PORT_RST_MASK_FROM_PORTC_SHIFT    2 /* established */
 #define ROUTER_NL4_PORT_RST_MASK_FROM_PORTC_MASK     0x1ull
-#define ROUTER_NL4_PORT_RST_MASK_FROM_PORTC_INPLACE  (ROUTER_NL4_PORT_RST_MASK_FROM_PORTC_MASK << ROUTER_NL4_PORT_RST_MASK_FROM_PORTC_SHIFT)
+#define ROUTER_NL4_PORT_RST_MASK_FROM_PORTC_INPLACE (ROUTER_NL4_PORT_RST_MASK_FROM_PORTC_MASK << ROUTER_NL4_PORT_RST_MASK_FROM_PORTC_SHIFT)
 #define ROUTER_NL4_PORT_RST_MASK_FROM_PORTB_SHIFT    1 /* established */
 #define ROUTER_NL4_PORT_RST_MASK_FROM_PORTB_MASK     0x1ull
-#define ROUTER_NL4_PORT_RST_MASK_FROM_PORTB_INPLACE  (ROUTER_NL4_PORT_RST_MASK_FROM_PORTB_MASK << ROUTER_NL4_PORT_RST_MASK_FROM_PORTB_SHIFT)
+#define ROUTER_NL4_PORT_RST_MASK_FROM_PORTB_INPLACE (ROUTER_NL4_PORT_RST_MASK_FROM_PORTB_MASK << ROUTER_NL4_PORT_RST_MASK_FROM_PORTB_SHIFT)
 #define ROUTER_NL4_PORT_RST_MASK_FROM_PORTA_SHIFT    0 /* established */
 #define ROUTER_NL4_PORT_RST_MASK_FROM_PORTA_MASK     0x1ull
-#define ROUTER_NL4_PORT_RST_MASK_FROM_PORTA_INPLACE  (ROUTER_NL4_PORT_RST_MASK_FROM_PORTA_MASK << ROUTER_NL4_PORT_RST_MASK_FROM_PORTA_SHIFT)
+#define ROUTER_NL4_PORT_RST_MASK_FROM_PORTA_INPLACE (ROUTER_NL4_PORT_RST_MASK_FROM_PORTA_MASK << ROUTER_NL4_PORT_RST_MASK_FROM_PORTA_SHIFT)
 
 /*
- * PROM register R4_PORT_PERF_WIN. Offset and field positions read from the table; role inferred from the names.
+ * PROM register R4_PORT_PERF_WIN. Offset and field positions read from the
+ * table; role inferred from the names.
  */
 /* port_perf_win: rw64, reset unknown */
-#define ROUTER_NL4_PORT_PERF_WIN_OFFSET              0x1003100u /* established */
+/* established */
+#define ROUTER_NL4_PORT_PERF_WIN_OFFSET              0x1003100u
 #define ROUTER_NL4_PORT_PERF_WIN_FORCE_EN_SHIFT      63 /* established */
 #define ROUTER_NL4_PORT_PERF_WIN_FORCE_EN_MASK       0x1ull
-#define ROUTER_NL4_PORT_PERF_WIN_FORCE_EN_INPLACE    (ROUTER_NL4_PORT_PERF_WIN_FORCE_EN_MASK << ROUTER_NL4_PORT_PERF_WIN_FORCE_EN_SHIFT)
+#define ROUTER_NL4_PORT_PERF_WIN_FORCE_EN_INPLACE (ROUTER_NL4_PORT_PERF_WIN_FORCE_EN_MASK << ROUTER_NL4_PORT_PERF_WIN_FORCE_EN_SHIFT)
 #define ROUTER_NL4_PORT_PERF_WIN_CLEAR_SHIFT         62 /* established */
 #define ROUTER_NL4_PORT_PERF_WIN_CLEAR_MASK          0x1ull
-#define ROUTER_NL4_PORT_PERF_WIN_CLEAR_INPLACE       (ROUTER_NL4_PORT_PERF_WIN_CLEAR_MASK << ROUTER_NL4_PORT_PERF_WIN_CLEAR_SHIFT)
+#define ROUTER_NL4_PORT_PERF_WIN_CLEAR_INPLACE (ROUTER_NL4_PORT_PERF_WIN_CLEAR_MASK << ROUTER_NL4_PORT_PERF_WIN_CLEAR_SHIFT)
 #define ROUTER_NL4_PORT_PERF_WIN_CNT_SHIFT           0 /* established */
 #define ROUTER_NL4_PORT_PERF_WIN_CNT_MASK            0xfffffffffffffffull
-#define ROUTER_NL4_PORT_PERF_WIN_CNT_INPLACE         (ROUTER_NL4_PORT_PERF_WIN_CNT_MASK << ROUTER_NL4_PORT_PERF_WIN_CNT_SHIFT)
+#define ROUTER_NL4_PORT_PERF_WIN_CNT_INPLACE (ROUTER_NL4_PORT_PERF_WIN_CNT_MASK << ROUTER_NL4_PORT_PERF_WIN_CNT_SHIFT)
 
 /*
- * PROM register R4_TSF_ARM_MASK. Offset and field positions read from the table; role inferred from the names.
+ * PROM register R4_TSF_ARM_MASK. Offset and field positions read from the
+ * table; role inferred from the names.
  */
 /* tsf_arm_mask: rw64, reset unknown */
-#define ROUTER_NL4_TSF_ARM_MASK_OFFSET               0x1004000u /* established */
+/* established */
+#define ROUTER_NL4_TSF_ARM_MASK_OFFSET               0x1004000u
 #define ROUTER_NL4_TSF_ARM_MASK_MASK_SHIFT           0 /* established */
 #define ROUTER_NL4_TSF_ARM_MASK_MASK_MASK            0xffffffffffffffffull
-#define ROUTER_NL4_TSF_ARM_MASK_MASK_INPLACE         (ROUTER_NL4_TSF_ARM_MASK_MASK_MASK << ROUTER_NL4_TSF_ARM_MASK_MASK_SHIFT)
+#define ROUTER_NL4_TSF_ARM_MASK_MASK_INPLACE (ROUTER_NL4_TSF_ARM_MASK_MASK_MASK << ROUTER_NL4_TSF_ARM_MASK_MASK_SHIFT)
 
 /*
- * PROM register R4_TSF_COUNTER_PRESETS. Offset and field positions read from the table; role inferred from the names.
+ * PROM register R4_TSF_COUNTER_PRESETS. Offset and field positions read from
+ * the table; role inferred from the names.
  */
 /* tsf_counter_presets: rw64, reset unknown */
-#define ROUTER_NL4_TSF_COUNTER_PRESETS_OFFSET        0x1004080u /* established */
+/* established */
+#define ROUTER_NL4_TSF_COUNTER_PRESETS_OFFSET        0x1004080u
 #define ROUTER_NL4_TSF_COUNTER_PRESETS_COUNT_8A_SHIFT 56 /* established */
 #define ROUTER_NL4_TSF_COUNTER_PRESETS_COUNT_8A_MASK 0xffull
 #define ROUTER_NL4_TSF_COUNTER_PRESETS_COUNT_8A_INPLACE (ROUTER_NL4_TSF_COUNTER_PRESETS_COUNT_8A_MASK << ROUTER_NL4_TSF_COUNTER_PRESETS_COUNT_8A_SHIFT)
@@ -1766,106 +1927,120 @@
 #define ROUTER_NL4_TSF_COUNTER_PRESETS_COUNT_32_INPLACE (ROUTER_NL4_TSF_COUNTER_PRESETS_COUNT_32_MASK << ROUTER_NL4_TSF_COUNTER_PRESETS_COUNT_32_SHIFT)
 
 /*
- * PROM register R4_TSF_DECREMENT_CTL. Offset and field positions read from the table; role inferred from the names.
+ * PROM register R4_TSF_DECREMENT_CTL. Offset and field positions read from the
+ * table; role inferred from the names.
  */
 /* tsf_decrement_ctl: rw64, reset unknown */
-#define ROUTER_NL4_TSF_DECREMENT_CTL_OFFSET          0x1004100u /* established */
+/* established */
+#define ROUTER_NL4_TSF_DECREMENT_CTL_OFFSET          0x1004100u
 #define ROUTER_NL4_TSF_DECREMENT_CTL_CTL_SHIFT       0 /* established */
 #define ROUTER_NL4_TSF_DECREMENT_CTL_CTL_MASK        0xffffull
-#define ROUTER_NL4_TSF_DECREMENT_CTL_CTL_INPLACE     (ROUTER_NL4_TSF_DECREMENT_CTL_CTL_MASK << ROUTER_NL4_TSF_DECREMENT_CTL_CTL_SHIFT)
+#define ROUTER_NL4_TSF_DECREMENT_CTL_CTL_INPLACE (ROUTER_NL4_TSF_DECREMENT_CTL_CTL_MASK << ROUTER_NL4_TSF_DECREMENT_CTL_CTL_SHIFT)
 
 /*
- * PROM register R4_TSF_DIAG_MSG_CTL. Offset and field positions read from the table; role inferred from the names.
+ * PROM register R4_TSF_DIAG_MSG_CTL. Offset and field positions read from the
+ * table; role inferred from the names.
  */
 /* tsf_diag_msg_ctl: rw64, reset unknown */
-#define ROUTER_NL4_TSF_DIAG_MSG_CTL_OFFSET           0x1004180u /* established */
+/* established */
+#define ROUTER_NL4_TSF_DIAG_MSG_CTL_OFFSET           0x1004180u
 #define ROUTER_NL4_TSF_DIAG_MSG_CTL_ENABLE_SHIFT     0 /* established */
 #define ROUTER_NL4_TSF_DIAG_MSG_CTL_ENABLE_MASK      0xffull
-#define ROUTER_NL4_TSF_DIAG_MSG_CTL_ENABLE_INPLACE   (ROUTER_NL4_TSF_DIAG_MSG_CTL_ENABLE_MASK << ROUTER_NL4_TSF_DIAG_MSG_CTL_ENABLE_SHIFT)
+#define ROUTER_NL4_TSF_DIAG_MSG_CTL_ENABLE_INPLACE (ROUTER_NL4_TSF_DIAG_MSG_CTL_ENABLE_MASK << ROUTER_NL4_TSF_DIAG_MSG_CTL_ENABLE_SHIFT)
 
 /*
- * PROM register R4_TSF_DISARM_MASK. Offset and field positions read from the table; role inferred from the names.
+ * PROM register R4_TSF_DISARM_MASK. Offset and field positions read from the
+ * table; role inferred from the names.
  */
 /* tsf_disarm_mask: rw64, reset unknown */
-#define ROUTER_NL4_TSF_DISARM_MASK_OFFSET            0x1004200u /* established */
+/* established */
+#define ROUTER_NL4_TSF_DISARM_MASK_OFFSET            0x1004200u
 #define ROUTER_NL4_TSF_DISARM_MASK_MASK_SHIFT        0 /* established */
 #define ROUTER_NL4_TSF_DISARM_MASK_MASK_MASK         0xffffffffffffffffull
-#define ROUTER_NL4_TSF_DISARM_MASK_MASK_INPLACE      (ROUTER_NL4_TSF_DISARM_MASK_MASK_MASK << ROUTER_NL4_TSF_DISARM_MASK_MASK_SHIFT)
+#define ROUTER_NL4_TSF_DISARM_MASK_MASK_INPLACE (ROUTER_NL4_TSF_DISARM_MASK_MASK_MASK << ROUTER_NL4_TSF_DISARM_MASK_MASK_SHIFT)
 
 /*
- * PROM register R4_TSF_ENABLE_CTL. Offset and field positions read from the table; role inferred from the names.
+ * PROM register R4_TSF_ENABLE_CTL. Offset and field positions read from the
+ * table; role inferred from the names.
  */
 /* tsf_enable_ctl: rw64, reset unknown */
-#define ROUTER_NL4_TSF_ENABLE_CTL_OFFSET             0x1004280u /* established */
+/* established */
+#define ROUTER_NL4_TSF_ENABLE_CTL_OFFSET             0x1004280u
 #define ROUTER_NL4_TSF_ENABLE_CTL_CTL_SHIFT          0 /* established */
 #define ROUTER_NL4_TSF_ENABLE_CTL_CTL_MASK           0xffffull
-#define ROUTER_NL4_TSF_ENABLE_CTL_CTL_INPLACE        (ROUTER_NL4_TSF_ENABLE_CTL_CTL_MASK << ROUTER_NL4_TSF_ENABLE_CTL_CTL_SHIFT)
+#define ROUTER_NL4_TSF_ENABLE_CTL_CTL_INPLACE (ROUTER_NL4_TSF_ENABLE_CTL_CTL_MASK << ROUTER_NL4_TSF_ENABLE_CTL_CTL_SHIFT)
 
 /*
- * PROM register R4_TSF_SOFTWARE_ARM. Offset and field positions read from the table; role inferred from the names.
+ * PROM register R4_TSF_SOFTWARE_ARM. Offset and field positions read from the
+ * table; role inferred from the names.
  */
 /* tsf_software_arm: rw64, reset unknown */
-#define ROUTER_NL4_TSF_SOFTWARE_ARM_OFFSET           0x1004300u /* established */
+/* established */
+#define ROUTER_NL4_TSF_SOFTWARE_ARM_OFFSET           0x1004300u
 #define ROUTER_NL4_TSF_SOFTWARE_ARM_BIT7_SHIFT       7 /* established */
 #define ROUTER_NL4_TSF_SOFTWARE_ARM_BIT7_MASK        0x1ull
-#define ROUTER_NL4_TSF_SOFTWARE_ARM_BIT7_INPLACE     (ROUTER_NL4_TSF_SOFTWARE_ARM_BIT7_MASK << ROUTER_NL4_TSF_SOFTWARE_ARM_BIT7_SHIFT)
+#define ROUTER_NL4_TSF_SOFTWARE_ARM_BIT7_INPLACE (ROUTER_NL4_TSF_SOFTWARE_ARM_BIT7_MASK << ROUTER_NL4_TSF_SOFTWARE_ARM_BIT7_SHIFT)
 #define ROUTER_NL4_TSF_SOFTWARE_ARM_BIT6_SHIFT       6 /* established */
 #define ROUTER_NL4_TSF_SOFTWARE_ARM_BIT6_MASK        0x1ull
-#define ROUTER_NL4_TSF_SOFTWARE_ARM_BIT6_INPLACE     (ROUTER_NL4_TSF_SOFTWARE_ARM_BIT6_MASK << ROUTER_NL4_TSF_SOFTWARE_ARM_BIT6_SHIFT)
+#define ROUTER_NL4_TSF_SOFTWARE_ARM_BIT6_INPLACE (ROUTER_NL4_TSF_SOFTWARE_ARM_BIT6_MASK << ROUTER_NL4_TSF_SOFTWARE_ARM_BIT6_SHIFT)
 #define ROUTER_NL4_TSF_SOFTWARE_ARM_BIT5_SHIFT       5 /* established */
 #define ROUTER_NL4_TSF_SOFTWARE_ARM_BIT5_MASK        0x1ull
-#define ROUTER_NL4_TSF_SOFTWARE_ARM_BIT5_INPLACE     (ROUTER_NL4_TSF_SOFTWARE_ARM_BIT5_MASK << ROUTER_NL4_TSF_SOFTWARE_ARM_BIT5_SHIFT)
+#define ROUTER_NL4_TSF_SOFTWARE_ARM_BIT5_INPLACE (ROUTER_NL4_TSF_SOFTWARE_ARM_BIT5_MASK << ROUTER_NL4_TSF_SOFTWARE_ARM_BIT5_SHIFT)
 #define ROUTER_NL4_TSF_SOFTWARE_ARM_BIT4_SHIFT       4 /* established */
 #define ROUTER_NL4_TSF_SOFTWARE_ARM_BIT4_MASK        0x1ull
-#define ROUTER_NL4_TSF_SOFTWARE_ARM_BIT4_INPLACE     (ROUTER_NL4_TSF_SOFTWARE_ARM_BIT4_MASK << ROUTER_NL4_TSF_SOFTWARE_ARM_BIT4_SHIFT)
+#define ROUTER_NL4_TSF_SOFTWARE_ARM_BIT4_INPLACE (ROUTER_NL4_TSF_SOFTWARE_ARM_BIT4_MASK << ROUTER_NL4_TSF_SOFTWARE_ARM_BIT4_SHIFT)
 #define ROUTER_NL4_TSF_SOFTWARE_ARM_BIT3_SHIFT       3 /* established */
 #define ROUTER_NL4_TSF_SOFTWARE_ARM_BIT3_MASK        0x1ull
-#define ROUTER_NL4_TSF_SOFTWARE_ARM_BIT3_INPLACE     (ROUTER_NL4_TSF_SOFTWARE_ARM_BIT3_MASK << ROUTER_NL4_TSF_SOFTWARE_ARM_BIT3_SHIFT)
+#define ROUTER_NL4_TSF_SOFTWARE_ARM_BIT3_INPLACE (ROUTER_NL4_TSF_SOFTWARE_ARM_BIT3_MASK << ROUTER_NL4_TSF_SOFTWARE_ARM_BIT3_SHIFT)
 #define ROUTER_NL4_TSF_SOFTWARE_ARM_BIT2_SHIFT       2 /* established */
 #define ROUTER_NL4_TSF_SOFTWARE_ARM_BIT2_MASK        0x1ull
-#define ROUTER_NL4_TSF_SOFTWARE_ARM_BIT2_INPLACE     (ROUTER_NL4_TSF_SOFTWARE_ARM_BIT2_MASK << ROUTER_NL4_TSF_SOFTWARE_ARM_BIT2_SHIFT)
+#define ROUTER_NL4_TSF_SOFTWARE_ARM_BIT2_INPLACE (ROUTER_NL4_TSF_SOFTWARE_ARM_BIT2_MASK << ROUTER_NL4_TSF_SOFTWARE_ARM_BIT2_SHIFT)
 #define ROUTER_NL4_TSF_SOFTWARE_ARM_BIT1_SHIFT       1 /* established */
 #define ROUTER_NL4_TSF_SOFTWARE_ARM_BIT1_MASK        0x1ull
-#define ROUTER_NL4_TSF_SOFTWARE_ARM_BIT1_INPLACE     (ROUTER_NL4_TSF_SOFTWARE_ARM_BIT1_MASK << ROUTER_NL4_TSF_SOFTWARE_ARM_BIT1_SHIFT)
+#define ROUTER_NL4_TSF_SOFTWARE_ARM_BIT1_INPLACE (ROUTER_NL4_TSF_SOFTWARE_ARM_BIT1_MASK << ROUTER_NL4_TSF_SOFTWARE_ARM_BIT1_SHIFT)
 #define ROUTER_NL4_TSF_SOFTWARE_ARM_BIT0_SHIFT       0 /* established */
 #define ROUTER_NL4_TSF_SOFTWARE_ARM_BIT0_MASK        0x1ull
-#define ROUTER_NL4_TSF_SOFTWARE_ARM_BIT0_INPLACE     (ROUTER_NL4_TSF_SOFTWARE_ARM_BIT0_MASK << ROUTER_NL4_TSF_SOFTWARE_ARM_BIT0_SHIFT)
+#define ROUTER_NL4_TSF_SOFTWARE_ARM_BIT0_INPLACE (ROUTER_NL4_TSF_SOFTWARE_ARM_BIT0_MASK << ROUTER_NL4_TSF_SOFTWARE_ARM_BIT0_SHIFT)
 
 /*
- * PROM register R4_TSF_SOFTWARE_DISARM. Offset and field positions read from the table; role inferred from the names.
+ * PROM register R4_TSF_SOFTWARE_DISARM. Offset and field positions read from
+ * the table; role inferred from the names.
  */
 /* tsf_software_disarm: rw64, reset unknown */
-#define ROUTER_NL4_TSF_SOFTWARE_DISARM_OFFSET        0x1004380u /* established */
+/* established */
+#define ROUTER_NL4_TSF_SOFTWARE_DISARM_OFFSET        0x1004380u
 #define ROUTER_NL4_TSF_SOFTWARE_DISARM_BIT7_SHIFT    7 /* established */
 #define ROUTER_NL4_TSF_SOFTWARE_DISARM_BIT7_MASK     0x1ull
-#define ROUTER_NL4_TSF_SOFTWARE_DISARM_BIT7_INPLACE  (ROUTER_NL4_TSF_SOFTWARE_DISARM_BIT7_MASK << ROUTER_NL4_TSF_SOFTWARE_DISARM_BIT7_SHIFT)
+#define ROUTER_NL4_TSF_SOFTWARE_DISARM_BIT7_INPLACE (ROUTER_NL4_TSF_SOFTWARE_DISARM_BIT7_MASK << ROUTER_NL4_TSF_SOFTWARE_DISARM_BIT7_SHIFT)
 #define ROUTER_NL4_TSF_SOFTWARE_DISARM_BIT6_SHIFT    6 /* established */
 #define ROUTER_NL4_TSF_SOFTWARE_DISARM_BIT6_MASK     0x1ull
-#define ROUTER_NL4_TSF_SOFTWARE_DISARM_BIT6_INPLACE  (ROUTER_NL4_TSF_SOFTWARE_DISARM_BIT6_MASK << ROUTER_NL4_TSF_SOFTWARE_DISARM_BIT6_SHIFT)
+#define ROUTER_NL4_TSF_SOFTWARE_DISARM_BIT6_INPLACE (ROUTER_NL4_TSF_SOFTWARE_DISARM_BIT6_MASK << ROUTER_NL4_TSF_SOFTWARE_DISARM_BIT6_SHIFT)
 #define ROUTER_NL4_TSF_SOFTWARE_DISARM_BIT5_SHIFT    5 /* established */
 #define ROUTER_NL4_TSF_SOFTWARE_DISARM_BIT5_MASK     0x1ull
-#define ROUTER_NL4_TSF_SOFTWARE_DISARM_BIT5_INPLACE  (ROUTER_NL4_TSF_SOFTWARE_DISARM_BIT5_MASK << ROUTER_NL4_TSF_SOFTWARE_DISARM_BIT5_SHIFT)
+#define ROUTER_NL4_TSF_SOFTWARE_DISARM_BIT5_INPLACE (ROUTER_NL4_TSF_SOFTWARE_DISARM_BIT5_MASK << ROUTER_NL4_TSF_SOFTWARE_DISARM_BIT5_SHIFT)
 #define ROUTER_NL4_TSF_SOFTWARE_DISARM_BIT4_SHIFT    4 /* established */
 #define ROUTER_NL4_TSF_SOFTWARE_DISARM_BIT4_MASK     0x1ull
-#define ROUTER_NL4_TSF_SOFTWARE_DISARM_BIT4_INPLACE  (ROUTER_NL4_TSF_SOFTWARE_DISARM_BIT4_MASK << ROUTER_NL4_TSF_SOFTWARE_DISARM_BIT4_SHIFT)
+#define ROUTER_NL4_TSF_SOFTWARE_DISARM_BIT4_INPLACE (ROUTER_NL4_TSF_SOFTWARE_DISARM_BIT4_MASK << ROUTER_NL4_TSF_SOFTWARE_DISARM_BIT4_SHIFT)
 #define ROUTER_NL4_TSF_SOFTWARE_DISARM_BIT3_SHIFT    3 /* established */
 #define ROUTER_NL4_TSF_SOFTWARE_DISARM_BIT3_MASK     0x1ull
-#define ROUTER_NL4_TSF_SOFTWARE_DISARM_BIT3_INPLACE  (ROUTER_NL4_TSF_SOFTWARE_DISARM_BIT3_MASK << ROUTER_NL4_TSF_SOFTWARE_DISARM_BIT3_SHIFT)
+#define ROUTER_NL4_TSF_SOFTWARE_DISARM_BIT3_INPLACE (ROUTER_NL4_TSF_SOFTWARE_DISARM_BIT3_MASK << ROUTER_NL4_TSF_SOFTWARE_DISARM_BIT3_SHIFT)
 #define ROUTER_NL4_TSF_SOFTWARE_DISARM_BIT2_SHIFT    2 /* established */
 #define ROUTER_NL4_TSF_SOFTWARE_DISARM_BIT2_MASK     0x1ull
-#define ROUTER_NL4_TSF_SOFTWARE_DISARM_BIT2_INPLACE  (ROUTER_NL4_TSF_SOFTWARE_DISARM_BIT2_MASK << ROUTER_NL4_TSF_SOFTWARE_DISARM_BIT2_SHIFT)
+#define ROUTER_NL4_TSF_SOFTWARE_DISARM_BIT2_INPLACE (ROUTER_NL4_TSF_SOFTWARE_DISARM_BIT2_MASK << ROUTER_NL4_TSF_SOFTWARE_DISARM_BIT2_SHIFT)
 #define ROUTER_NL4_TSF_SOFTWARE_DISARM_BIT1_SHIFT    1 /* established */
 #define ROUTER_NL4_TSF_SOFTWARE_DISARM_BIT1_MASK     0x1ull
-#define ROUTER_NL4_TSF_SOFTWARE_DISARM_BIT1_INPLACE  (ROUTER_NL4_TSF_SOFTWARE_DISARM_BIT1_MASK << ROUTER_NL4_TSF_SOFTWARE_DISARM_BIT1_SHIFT)
+#define ROUTER_NL4_TSF_SOFTWARE_DISARM_BIT1_INPLACE (ROUTER_NL4_TSF_SOFTWARE_DISARM_BIT1_MASK << ROUTER_NL4_TSF_SOFTWARE_DISARM_BIT1_SHIFT)
 #define ROUTER_NL4_TSF_SOFTWARE_DISARM_BIT0_SHIFT    0 /* established */
 #define ROUTER_NL4_TSF_SOFTWARE_DISARM_BIT0_MASK     0x1ull
-#define ROUTER_NL4_TSF_SOFTWARE_DISARM_BIT0_INPLACE  (ROUTER_NL4_TSF_SOFTWARE_DISARM_BIT0_MASK << ROUTER_NL4_TSF_SOFTWARE_DISARM_BIT0_SHIFT)
+#define ROUTER_NL4_TSF_SOFTWARE_DISARM_BIT0_INPLACE (ROUTER_NL4_TSF_SOFTWARE_DISARM_BIT0_MASK << ROUTER_NL4_TSF_SOFTWARE_DISARM_BIT0_SHIFT)
 
 /*
- * PROM register R4_TSF_SOFTWARE_TRIGGERED. Offset and field positions read from the table; role inferred from the names.
+ * PROM register R4_TSF_SOFTWARE_TRIGGERED. Offset and field positions read from
+ * the table; role inferred from the names.
  */
 /* tsf_software_triggered: rw64, reset unknown */
-#define ROUTER_NL4_TSF_SOFTWARE_TRIGGERED_OFFSET     0x1004400u /* established */
+/* established */
+#define ROUTER_NL4_TSF_SOFTWARE_TRIGGERED_OFFSET     0x1004400u
 #define ROUTER_NL4_TSF_SOFTWARE_TRIGGERED_BIT7_SHIFT 7 /* established */
 #define ROUTER_NL4_TSF_SOFTWARE_TRIGGERED_BIT7_MASK  0x1ull
 #define ROUTER_NL4_TSF_SOFTWARE_TRIGGERED_BIT7_INPLACE (ROUTER_NL4_TSF_SOFTWARE_TRIGGERED_BIT7_MASK << ROUTER_NL4_TSF_SOFTWARE_TRIGGERED_BIT7_SHIFT)
@@ -1892,28 +2067,34 @@
 #define ROUTER_NL4_TSF_SOFTWARE_TRIGGERED_BIT0_INPLACE (ROUTER_NL4_TSF_SOFTWARE_TRIGGERED_BIT0_MASK << ROUTER_NL4_TSF_SOFTWARE_TRIGGERED_BIT0_SHIFT)
 
 /*
- * PROM register R4_TSF_TRIGGER_MASK. Offset and field positions read from the table; role inferred from the names.
+ * PROM register R4_TSF_TRIGGER_MASK. Offset and field positions read from the
+ * table; role inferred from the names.
  */
 /* tsf_trigger_mask: rw64, reset unknown */
-#define ROUTER_NL4_TSF_TRIGGER_MASK_OFFSET           0x1004480u /* established */
+/* established */
+#define ROUTER_NL4_TSF_TRIGGER_MASK_OFFSET           0x1004480u
 #define ROUTER_NL4_TSF_TRIGGER_MASK_MASK_SHIFT       0 /* established */
 #define ROUTER_NL4_TSF_TRIGGER_MASK_MASK_MASK        0xffffffffffffffffull
-#define ROUTER_NL4_TSF_TRIGGER_MASK_MASK_INPLACE     (ROUTER_NL4_TSF_TRIGGER_MASK_MASK_MASK << ROUTER_NL4_TSF_TRIGGER_MASK_MASK_SHIFT)
+#define ROUTER_NL4_TSF_TRIGGER_MASK_MASK_INPLACE (ROUTER_NL4_TSF_TRIGGER_MASK_MASK_MASK << ROUTER_NL4_TSF_TRIGGER_MASK_MASK_SHIFT)
 
 /*
- * PROM register R4_TSF_ARMED_STATE. Offset and field positions read from the table; role inferred from the names.
+ * PROM register R4_TSF_ARMED_STATE. Offset and field positions read from the
+ * table; role inferred from the names.
  */
 /* tsf_armed_state: rw64, reset unknown */
-#define ROUTER_NL4_TSF_ARMED_STATE_OFFSET            0x1005000u /* established */
+/* established */
+#define ROUTER_NL4_TSF_ARMED_STATE_OFFSET            0x1005000u
 #define ROUTER_NL4_TSF_ARMED_STATE_STATE_SHIFT       0 /* established */
 #define ROUTER_NL4_TSF_ARMED_STATE_STATE_MASK        0xffull
-#define ROUTER_NL4_TSF_ARMED_STATE_STATE_INPLACE     (ROUTER_NL4_TSF_ARMED_STATE_STATE_MASK << ROUTER_NL4_TSF_ARMED_STATE_STATE_SHIFT)
+#define ROUTER_NL4_TSF_ARMED_STATE_STATE_INPLACE (ROUTER_NL4_TSF_ARMED_STATE_STATE_MASK << ROUTER_NL4_TSF_ARMED_STATE_STATE_SHIFT)
 
 /*
- * PROM register R4_TSF_COUNTER_VALUE. Offset and field positions read from the table; role inferred from the names.
+ * PROM register R4_TSF_COUNTER_VALUE. Offset and field positions read from the
+ * table; role inferred from the names.
  */
 /* tsf_counter_value: rw64, reset unknown */
-#define ROUTER_NL4_TSF_COUNTER_VALUE_OFFSET          0x1005080u /* established */
+/* established */
+#define ROUTER_NL4_TSF_COUNTER_VALUE_OFFSET          0x1005080u
 #define ROUTER_NL4_TSF_COUNTER_VALUE_COUNT_8A_SHIFT  56 /* established */
 #define ROUTER_NL4_TSF_COUNTER_VALUE_COUNT_8A_MASK   0xffull
 #define ROUTER_NL4_TSF_COUNTER_VALUE_COUNT_8A_INPLACE (ROUTER_NL4_TSF_COUNTER_VALUE_COUNT_8A_MASK << ROUTER_NL4_TSF_COUNTER_VALUE_COUNT_8A_SHIFT)
@@ -1928,904 +2109,1163 @@
 #define ROUTER_NL4_TSF_COUNTER_VALUE_COUNT_32_INPLACE (ROUTER_NL4_TSF_COUNTER_VALUE_COUNT_32_MASK << ROUTER_NL4_TSF_COUNTER_VALUE_COUNT_32_SHIFT)
 
 /*
- * PROM register R4_TSF_TRIGGERED_STATE. Offset and field positions read from the table; role inferred from the names.
+ * PROM register R4_TSF_TRIGGERED_STATE. Offset and field positions read from
+ * the table; role inferred from the names.
  */
 /* tsf_triggered_state: rw64, reset unknown */
-#define ROUTER_NL4_TSF_TRIGGERED_STATE_OFFSET        0x1005100u /* established */
+/* established */
+#define ROUTER_NL4_TSF_TRIGGERED_STATE_OFFSET        0x1005100u
 #define ROUTER_NL4_TSF_TRIGGERED_STATE_STATE_SHIFT   0 /* established */
 #define ROUTER_NL4_TSF_TRIGGERED_STATE_STATE_MASK    0xffull
 #define ROUTER_NL4_TSF_TRIGGERED_STATE_STATE_INPLACE (ROUTER_NL4_TSF_TRIGGERED_STATE_STATE_MASK << ROUTER_NL4_TSF_TRIGGERED_STATE_STATE_SHIFT)
 
 /*
- * PROM register R4_ROOT_TEST_POINT_SELECT. Offset and field positions read from the table; role inferred from the names.
+ * PROM register R4_ROOT_TEST_POINT_SELECT. Offset and field positions read from
+ * the table; role inferred from the names.
  */
 /* root_test_point_select: rw64, reset unknown */
-#define ROUTER_NL4_ROOT_TEST_POINT_SELECT_OFFSET     0x1006000u /* established */
-#define ROUTER_NL4_ROOT_TEST_POINT_SELECT_TRIGGER_ENABLE_SHIFT 63 /* established */
+/* established */
+#define ROUTER_NL4_ROOT_TEST_POINT_SELECT_OFFSET     0x1006000u
+/* established */
+#define ROUTER_NL4_ROOT_TEST_POINT_SELECT_TRIGGER_ENABLE_SHIFT 63
 #define ROUTER_NL4_ROOT_TEST_POINT_SELECT_TRIGGER_ENABLE_MASK 0x1ull
 #define ROUTER_NL4_ROOT_TEST_POINT_SELECT_TRIGGER_ENABLE_INPLACE (ROUTER_NL4_ROOT_TEST_POINT_SELECT_TRIGGER_ENABLE_MASK << ROUTER_NL4_ROOT_TEST_POINT_SELECT_TRIGGER_ENABLE_SHIFT)
-#define ROUTER_NL4_ROOT_TEST_POINT_SELECT_NIBBLE7_NIBBLE_SEL_SHIFT 60 /* established */
+/* established */
+#define ROUTER_NL4_ROOT_TEST_POINT_SELECT_NIBBLE7_NIBBLE_SEL_SHIFT 60
 #define ROUTER_NL4_ROOT_TEST_POINT_SELECT_NIBBLE7_NIBBLE_SEL_MASK 0x7ull
 #define ROUTER_NL4_ROOT_TEST_POINT_SELECT_NIBBLE7_NIBBLE_SEL_INPLACE (ROUTER_NL4_ROOT_TEST_POINT_SELECT_NIBBLE7_NIBBLE_SEL_MASK << ROUTER_NL4_ROOT_TEST_POINT_SELECT_NIBBLE7_NIBBLE_SEL_SHIFT)
-#define ROUTER_NL4_ROOT_TEST_POINT_SELECT_NIBBLE7_CHIPLET_SEL_SHIFT 56 /* established */
+/* established */
+#define ROUTER_NL4_ROOT_TEST_POINT_SELECT_NIBBLE7_CHIPLET_SEL_SHIFT 56
 #define ROUTER_NL4_ROOT_TEST_POINT_SELECT_NIBBLE7_CHIPLET_SEL_MASK 0x7ull
 #define ROUTER_NL4_ROOT_TEST_POINT_SELECT_NIBBLE7_CHIPLET_SEL_INPLACE (ROUTER_NL4_ROOT_TEST_POINT_SELECT_NIBBLE7_CHIPLET_SEL_MASK << ROUTER_NL4_ROOT_TEST_POINT_SELECT_NIBBLE7_CHIPLET_SEL_SHIFT)
-#define ROUTER_NL4_ROOT_TEST_POINT_SELECT_NIBBLE6_NIBBLE_SEL_SHIFT 52 /* established */
+/* established */
+#define ROUTER_NL4_ROOT_TEST_POINT_SELECT_NIBBLE6_NIBBLE_SEL_SHIFT 52
 #define ROUTER_NL4_ROOT_TEST_POINT_SELECT_NIBBLE6_NIBBLE_SEL_MASK 0x7ull
 #define ROUTER_NL4_ROOT_TEST_POINT_SELECT_NIBBLE6_NIBBLE_SEL_INPLACE (ROUTER_NL4_ROOT_TEST_POINT_SELECT_NIBBLE6_NIBBLE_SEL_MASK << ROUTER_NL4_ROOT_TEST_POINT_SELECT_NIBBLE6_NIBBLE_SEL_SHIFT)
-#define ROUTER_NL4_ROOT_TEST_POINT_SELECT_NIBBLE6_CHIPLET_SEL_SHIFT 48 /* established */
+/* established */
+#define ROUTER_NL4_ROOT_TEST_POINT_SELECT_NIBBLE6_CHIPLET_SEL_SHIFT 48
 #define ROUTER_NL4_ROOT_TEST_POINT_SELECT_NIBBLE6_CHIPLET_SEL_MASK 0x7ull
 #define ROUTER_NL4_ROOT_TEST_POINT_SELECT_NIBBLE6_CHIPLET_SEL_INPLACE (ROUTER_NL4_ROOT_TEST_POINT_SELECT_NIBBLE6_CHIPLET_SEL_MASK << ROUTER_NL4_ROOT_TEST_POINT_SELECT_NIBBLE6_CHIPLET_SEL_SHIFT)
-#define ROUTER_NL4_ROOT_TEST_POINT_SELECT_NIBBLE5_NIBBLE_SEL_SHIFT 44 /* established */
+/* established */
+#define ROUTER_NL4_ROOT_TEST_POINT_SELECT_NIBBLE5_NIBBLE_SEL_SHIFT 44
 #define ROUTER_NL4_ROOT_TEST_POINT_SELECT_NIBBLE5_NIBBLE_SEL_MASK 0x7ull
 #define ROUTER_NL4_ROOT_TEST_POINT_SELECT_NIBBLE5_NIBBLE_SEL_INPLACE (ROUTER_NL4_ROOT_TEST_POINT_SELECT_NIBBLE5_NIBBLE_SEL_MASK << ROUTER_NL4_ROOT_TEST_POINT_SELECT_NIBBLE5_NIBBLE_SEL_SHIFT)
-#define ROUTER_NL4_ROOT_TEST_POINT_SELECT_NIBBLE5_CHIPLET_SEL_SHIFT 40 /* established */
+/* established */
+#define ROUTER_NL4_ROOT_TEST_POINT_SELECT_NIBBLE5_CHIPLET_SEL_SHIFT 40
 #define ROUTER_NL4_ROOT_TEST_POINT_SELECT_NIBBLE5_CHIPLET_SEL_MASK 0x7ull
 #define ROUTER_NL4_ROOT_TEST_POINT_SELECT_NIBBLE5_CHIPLET_SEL_INPLACE (ROUTER_NL4_ROOT_TEST_POINT_SELECT_NIBBLE5_CHIPLET_SEL_MASK << ROUTER_NL4_ROOT_TEST_POINT_SELECT_NIBBLE5_CHIPLET_SEL_SHIFT)
-#define ROUTER_NL4_ROOT_TEST_POINT_SELECT_NIBBLE4_NIBBLE_SEL_SHIFT 36 /* established */
+/* established */
+#define ROUTER_NL4_ROOT_TEST_POINT_SELECT_NIBBLE4_NIBBLE_SEL_SHIFT 36
 #define ROUTER_NL4_ROOT_TEST_POINT_SELECT_NIBBLE4_NIBBLE_SEL_MASK 0x7ull
 #define ROUTER_NL4_ROOT_TEST_POINT_SELECT_NIBBLE4_NIBBLE_SEL_INPLACE (ROUTER_NL4_ROOT_TEST_POINT_SELECT_NIBBLE4_NIBBLE_SEL_MASK << ROUTER_NL4_ROOT_TEST_POINT_SELECT_NIBBLE4_NIBBLE_SEL_SHIFT)
-#define ROUTER_NL4_ROOT_TEST_POINT_SELECT_NIBBLE4_CHIPLET_SEL_SHIFT 32 /* established */
+/* established */
+#define ROUTER_NL4_ROOT_TEST_POINT_SELECT_NIBBLE4_CHIPLET_SEL_SHIFT 32
 #define ROUTER_NL4_ROOT_TEST_POINT_SELECT_NIBBLE4_CHIPLET_SEL_MASK 0x7ull
 #define ROUTER_NL4_ROOT_TEST_POINT_SELECT_NIBBLE4_CHIPLET_SEL_INPLACE (ROUTER_NL4_ROOT_TEST_POINT_SELECT_NIBBLE4_CHIPLET_SEL_MASK << ROUTER_NL4_ROOT_TEST_POINT_SELECT_NIBBLE4_CHIPLET_SEL_SHIFT)
-#define ROUTER_NL4_ROOT_TEST_POINT_SELECT_NIBBLE3_NIBBLE_SEL_SHIFT 28 /* established */
+/* established */
+#define ROUTER_NL4_ROOT_TEST_POINT_SELECT_NIBBLE3_NIBBLE_SEL_SHIFT 28
 #define ROUTER_NL4_ROOT_TEST_POINT_SELECT_NIBBLE3_NIBBLE_SEL_MASK 0x7ull
 #define ROUTER_NL4_ROOT_TEST_POINT_SELECT_NIBBLE3_NIBBLE_SEL_INPLACE (ROUTER_NL4_ROOT_TEST_POINT_SELECT_NIBBLE3_NIBBLE_SEL_MASK << ROUTER_NL4_ROOT_TEST_POINT_SELECT_NIBBLE3_NIBBLE_SEL_SHIFT)
-#define ROUTER_NL4_ROOT_TEST_POINT_SELECT_NIBBLE3_CHIPLET_SEL_SHIFT 24 /* established */
+/* established */
+#define ROUTER_NL4_ROOT_TEST_POINT_SELECT_NIBBLE3_CHIPLET_SEL_SHIFT 24
 #define ROUTER_NL4_ROOT_TEST_POINT_SELECT_NIBBLE3_CHIPLET_SEL_MASK 0x7ull
 #define ROUTER_NL4_ROOT_TEST_POINT_SELECT_NIBBLE3_CHIPLET_SEL_INPLACE (ROUTER_NL4_ROOT_TEST_POINT_SELECT_NIBBLE3_CHIPLET_SEL_MASK << ROUTER_NL4_ROOT_TEST_POINT_SELECT_NIBBLE3_CHIPLET_SEL_SHIFT)
-#define ROUTER_NL4_ROOT_TEST_POINT_SELECT_NIBBLE2_NIBBLE_SEL_SHIFT 20 /* established */
+/* established */
+#define ROUTER_NL4_ROOT_TEST_POINT_SELECT_NIBBLE2_NIBBLE_SEL_SHIFT 20
 #define ROUTER_NL4_ROOT_TEST_POINT_SELECT_NIBBLE2_NIBBLE_SEL_MASK 0x7ull
 #define ROUTER_NL4_ROOT_TEST_POINT_SELECT_NIBBLE2_NIBBLE_SEL_INPLACE (ROUTER_NL4_ROOT_TEST_POINT_SELECT_NIBBLE2_NIBBLE_SEL_MASK << ROUTER_NL4_ROOT_TEST_POINT_SELECT_NIBBLE2_NIBBLE_SEL_SHIFT)
-#define ROUTER_NL4_ROOT_TEST_POINT_SELECT_NIBBLE2_CHIPLET_SEL_SHIFT 16 /* established */
+/* established */
+#define ROUTER_NL4_ROOT_TEST_POINT_SELECT_NIBBLE2_CHIPLET_SEL_SHIFT 16
 #define ROUTER_NL4_ROOT_TEST_POINT_SELECT_NIBBLE2_CHIPLET_SEL_MASK 0x7ull
 #define ROUTER_NL4_ROOT_TEST_POINT_SELECT_NIBBLE2_CHIPLET_SEL_INPLACE (ROUTER_NL4_ROOT_TEST_POINT_SELECT_NIBBLE2_CHIPLET_SEL_MASK << ROUTER_NL4_ROOT_TEST_POINT_SELECT_NIBBLE2_CHIPLET_SEL_SHIFT)
-#define ROUTER_NL4_ROOT_TEST_POINT_SELECT_NIBBLE1_NIBBLE_SEL_SHIFT 12 /* established */
+/* established */
+#define ROUTER_NL4_ROOT_TEST_POINT_SELECT_NIBBLE1_NIBBLE_SEL_SHIFT 12
 #define ROUTER_NL4_ROOT_TEST_POINT_SELECT_NIBBLE1_NIBBLE_SEL_MASK 0x7ull
 #define ROUTER_NL4_ROOT_TEST_POINT_SELECT_NIBBLE1_NIBBLE_SEL_INPLACE (ROUTER_NL4_ROOT_TEST_POINT_SELECT_NIBBLE1_NIBBLE_SEL_MASK << ROUTER_NL4_ROOT_TEST_POINT_SELECT_NIBBLE1_NIBBLE_SEL_SHIFT)
-#define ROUTER_NL4_ROOT_TEST_POINT_SELECT_NIBBLE1_CHIPLET_SEL_SHIFT 8 /* established */
+/* established */
+#define ROUTER_NL4_ROOT_TEST_POINT_SELECT_NIBBLE1_CHIPLET_SEL_SHIFT 8
 #define ROUTER_NL4_ROOT_TEST_POINT_SELECT_NIBBLE1_CHIPLET_SEL_MASK 0x7ull
 #define ROUTER_NL4_ROOT_TEST_POINT_SELECT_NIBBLE1_CHIPLET_SEL_INPLACE (ROUTER_NL4_ROOT_TEST_POINT_SELECT_NIBBLE1_CHIPLET_SEL_MASK << ROUTER_NL4_ROOT_TEST_POINT_SELECT_NIBBLE1_CHIPLET_SEL_SHIFT)
-#define ROUTER_NL4_ROOT_TEST_POINT_SELECT_NIBBLE0_NIBBLE_SEL_SHIFT 4 /* established */
+/* established */
+#define ROUTER_NL4_ROOT_TEST_POINT_SELECT_NIBBLE0_NIBBLE_SEL_SHIFT 4
 #define ROUTER_NL4_ROOT_TEST_POINT_SELECT_NIBBLE0_NIBBLE_SEL_MASK 0x7ull
 #define ROUTER_NL4_ROOT_TEST_POINT_SELECT_NIBBLE0_NIBBLE_SEL_INPLACE (ROUTER_NL4_ROOT_TEST_POINT_SELECT_NIBBLE0_NIBBLE_SEL_MASK << ROUTER_NL4_ROOT_TEST_POINT_SELECT_NIBBLE0_NIBBLE_SEL_SHIFT)
-#define ROUTER_NL4_ROOT_TEST_POINT_SELECT_NIBBLE0_CHIPLET_SEL_SHIFT 0 /* established */
+/* established */
+#define ROUTER_NL4_ROOT_TEST_POINT_SELECT_NIBBLE0_CHIPLET_SEL_SHIFT 0
 #define ROUTER_NL4_ROOT_TEST_POINT_SELECT_NIBBLE0_CHIPLET_SEL_MASK 0x7ull
 #define ROUTER_NL4_ROOT_TEST_POINT_SELECT_NIBBLE0_CHIPLET_SEL_INPLACE (ROUTER_NL4_ROOT_TEST_POINT_SELECT_NIBBLE0_CHIPLET_SEL_MASK << ROUTER_NL4_ROOT_TEST_POINT_SELECT_NIBBLE0_CHIPLET_SEL_SHIFT)
 
 /*
- * PROM register R4_ROOT_TEST_POINT_COMPARE. Offset and field positions read from the table; role inferred from the names.
+ * PROM register R4_ROOT_TEST_POINT_COMPARE. Offset and field positions read
+ * from the table; role inferred from the names.
  */
 /* root_test_point_compare: rw64, reset unknown */
-#define ROUTER_NL4_ROOT_TEST_POINT_COMPARE_OFFSET    0x1006008u /* established */
-#define ROUTER_NL4_ROOT_TEST_POINT_COMPARE_COMPARE_PATTERN_SHIFT 32 /* established */
+/* established */
+#define ROUTER_NL4_ROOT_TEST_POINT_COMPARE_OFFSET    0x1006008u
+/* established */
+#define ROUTER_NL4_ROOT_TEST_POINT_COMPARE_COMPARE_PATTERN_SHIFT 32
 #define ROUTER_NL4_ROOT_TEST_POINT_COMPARE_COMPARE_PATTERN_MASK 0xffffffffull
 #define ROUTER_NL4_ROOT_TEST_POINT_COMPARE_COMPARE_PATTERN_INPLACE (ROUTER_NL4_ROOT_TEST_POINT_COMPARE_COMPARE_PATTERN_MASK << ROUTER_NL4_ROOT_TEST_POINT_COMPARE_COMPARE_PATTERN_SHIFT)
-#define ROUTER_NL4_ROOT_TEST_POINT_COMPARE_COMPARE_MASK_SHIFT 0 /* established */
+/* established */
+#define ROUTER_NL4_ROOT_TEST_POINT_COMPARE_COMPARE_MASK_SHIFT 0
 #define ROUTER_NL4_ROOT_TEST_POINT_COMPARE_COMPARE_MASK_MASK 0xffffffffull
 #define ROUTER_NL4_ROOT_TEST_POINT_COMPARE_COMPARE_MASK_INPLACE (ROUTER_NL4_ROOT_TEST_POINT_COMPARE_COMPARE_MASK_MASK << ROUTER_NL4_ROOT_TEST_POINT_COMPARE_COMPARE_MASK_SHIFT)
 
 /*
- * PROM register R4_ROOT_TEST_POINT_TRIGGER_SELECT. Offset and field positions read from the table; role inferred from the names.
+ * PROM register R4_ROOT_TEST_POINT_TRIGGER_SELECT. Offset and field positions
+ * read from the table; role inferred from the names.
  */
 /* root_test_point_trigger_select: rw64, reset unknown */
-#define ROUTER_NL4_ROOT_TEST_POINT_TRIGGER_SELECT_OFFSET 0x1006010u /* established */
-#define ROUTER_NL4_ROOT_TEST_POINT_TRIGGER_SELECT_TRIGGER7_NIBBLE_SEL_SHIFT 60 /* established */
+/* established */
+#define ROUTER_NL4_ROOT_TEST_POINT_TRIGGER_SELECT_OFFSET 0x1006010u
+/* established */
+#define ROUTER_NL4_ROOT_TEST_POINT_TRIGGER_SELECT_TRIGGER7_NIBBLE_SEL_SHIFT 60
 #define ROUTER_NL4_ROOT_TEST_POINT_TRIGGER_SELECT_TRIGGER7_NIBBLE_SEL_MASK 0x7ull
 #define ROUTER_NL4_ROOT_TEST_POINT_TRIGGER_SELECT_TRIGGER7_NIBBLE_SEL_INPLACE (ROUTER_NL4_ROOT_TEST_POINT_TRIGGER_SELECT_TRIGGER7_NIBBLE_SEL_MASK << ROUTER_NL4_ROOT_TEST_POINT_TRIGGER_SELECT_TRIGGER7_NIBBLE_SEL_SHIFT)
-#define ROUTER_NL4_ROOT_TEST_POINT_TRIGGER_SELECT_TRIGGER7_CHIPLET_SEL_SHIFT 56 /* established */
+/* established */
+#define ROUTER_NL4_ROOT_TEST_POINT_TRIGGER_SELECT_TRIGGER7_CHIPLET_SEL_SHIFT 56
 #define ROUTER_NL4_ROOT_TEST_POINT_TRIGGER_SELECT_TRIGGER7_CHIPLET_SEL_MASK 0x7ull
 #define ROUTER_NL4_ROOT_TEST_POINT_TRIGGER_SELECT_TRIGGER7_CHIPLET_SEL_INPLACE (ROUTER_NL4_ROOT_TEST_POINT_TRIGGER_SELECT_TRIGGER7_CHIPLET_SEL_MASK << ROUTER_NL4_ROOT_TEST_POINT_TRIGGER_SELECT_TRIGGER7_CHIPLET_SEL_SHIFT)
-#define ROUTER_NL4_ROOT_TEST_POINT_TRIGGER_SELECT_TRIGGER6_NIBBLE_SEL_SHIFT 52 /* established */
+/* established */
+#define ROUTER_NL4_ROOT_TEST_POINT_TRIGGER_SELECT_TRIGGER6_NIBBLE_SEL_SHIFT 52
 #define ROUTER_NL4_ROOT_TEST_POINT_TRIGGER_SELECT_TRIGGER6_NIBBLE_SEL_MASK 0x7ull
 #define ROUTER_NL4_ROOT_TEST_POINT_TRIGGER_SELECT_TRIGGER6_NIBBLE_SEL_INPLACE (ROUTER_NL4_ROOT_TEST_POINT_TRIGGER_SELECT_TRIGGER6_NIBBLE_SEL_MASK << ROUTER_NL4_ROOT_TEST_POINT_TRIGGER_SELECT_TRIGGER6_NIBBLE_SEL_SHIFT)
-#define ROUTER_NL4_ROOT_TEST_POINT_TRIGGER_SELECT_TRIGGER6_CHIPLET_SEL_SHIFT 48 /* established */
+/* established */
+#define ROUTER_NL4_ROOT_TEST_POINT_TRIGGER_SELECT_TRIGGER6_CHIPLET_SEL_SHIFT 48
 #define ROUTER_NL4_ROOT_TEST_POINT_TRIGGER_SELECT_TRIGGER6_CHIPLET_SEL_MASK 0x7ull
 #define ROUTER_NL4_ROOT_TEST_POINT_TRIGGER_SELECT_TRIGGER6_CHIPLET_SEL_INPLACE (ROUTER_NL4_ROOT_TEST_POINT_TRIGGER_SELECT_TRIGGER6_CHIPLET_SEL_MASK << ROUTER_NL4_ROOT_TEST_POINT_TRIGGER_SELECT_TRIGGER6_CHIPLET_SEL_SHIFT)
-#define ROUTER_NL4_ROOT_TEST_POINT_TRIGGER_SELECT_TRIGGER5_NIBBLE_SEL_SHIFT 44 /* established */
+/* established */
+#define ROUTER_NL4_ROOT_TEST_POINT_TRIGGER_SELECT_TRIGGER5_NIBBLE_SEL_SHIFT 44
 #define ROUTER_NL4_ROOT_TEST_POINT_TRIGGER_SELECT_TRIGGER5_NIBBLE_SEL_MASK 0x7ull
 #define ROUTER_NL4_ROOT_TEST_POINT_TRIGGER_SELECT_TRIGGER5_NIBBLE_SEL_INPLACE (ROUTER_NL4_ROOT_TEST_POINT_TRIGGER_SELECT_TRIGGER5_NIBBLE_SEL_MASK << ROUTER_NL4_ROOT_TEST_POINT_TRIGGER_SELECT_TRIGGER5_NIBBLE_SEL_SHIFT)
-#define ROUTER_NL4_ROOT_TEST_POINT_TRIGGER_SELECT_TRIGGER5_CHIPLET_SEL_SHIFT 40 /* established */
+/* established */
+#define ROUTER_NL4_ROOT_TEST_POINT_TRIGGER_SELECT_TRIGGER5_CHIPLET_SEL_SHIFT 40
 #define ROUTER_NL4_ROOT_TEST_POINT_TRIGGER_SELECT_TRIGGER5_CHIPLET_SEL_MASK 0x7ull
 #define ROUTER_NL4_ROOT_TEST_POINT_TRIGGER_SELECT_TRIGGER5_CHIPLET_SEL_INPLACE (ROUTER_NL4_ROOT_TEST_POINT_TRIGGER_SELECT_TRIGGER5_CHIPLET_SEL_MASK << ROUTER_NL4_ROOT_TEST_POINT_TRIGGER_SELECT_TRIGGER5_CHIPLET_SEL_SHIFT)
-#define ROUTER_NL4_ROOT_TEST_POINT_TRIGGER_SELECT_TRIGGER4_NIBBLE_SEL_SHIFT 36 /* established */
+/* established */
+#define ROUTER_NL4_ROOT_TEST_POINT_TRIGGER_SELECT_TRIGGER4_NIBBLE_SEL_SHIFT 36
 #define ROUTER_NL4_ROOT_TEST_POINT_TRIGGER_SELECT_TRIGGER4_NIBBLE_SEL_MASK 0x7ull
 #define ROUTER_NL4_ROOT_TEST_POINT_TRIGGER_SELECT_TRIGGER4_NIBBLE_SEL_INPLACE (ROUTER_NL4_ROOT_TEST_POINT_TRIGGER_SELECT_TRIGGER4_NIBBLE_SEL_MASK << ROUTER_NL4_ROOT_TEST_POINT_TRIGGER_SELECT_TRIGGER4_NIBBLE_SEL_SHIFT)
-#define ROUTER_NL4_ROOT_TEST_POINT_TRIGGER_SELECT_TRIGGER4_CHIPLET_SEL_SHIFT 32 /* established */
+/* established */
+#define ROUTER_NL4_ROOT_TEST_POINT_TRIGGER_SELECT_TRIGGER4_CHIPLET_SEL_SHIFT 32
 #define ROUTER_NL4_ROOT_TEST_POINT_TRIGGER_SELECT_TRIGGER4_CHIPLET_SEL_MASK 0x7ull
 #define ROUTER_NL4_ROOT_TEST_POINT_TRIGGER_SELECT_TRIGGER4_CHIPLET_SEL_INPLACE (ROUTER_NL4_ROOT_TEST_POINT_TRIGGER_SELECT_TRIGGER4_CHIPLET_SEL_MASK << ROUTER_NL4_ROOT_TEST_POINT_TRIGGER_SELECT_TRIGGER4_CHIPLET_SEL_SHIFT)
-#define ROUTER_NL4_ROOT_TEST_POINT_TRIGGER_SELECT_TRIGGER3_NIBBLE_SEL_SHIFT 28 /* established */
+/* established */
+#define ROUTER_NL4_ROOT_TEST_POINT_TRIGGER_SELECT_TRIGGER3_NIBBLE_SEL_SHIFT 28
 #define ROUTER_NL4_ROOT_TEST_POINT_TRIGGER_SELECT_TRIGGER3_NIBBLE_SEL_MASK 0x7ull
 #define ROUTER_NL4_ROOT_TEST_POINT_TRIGGER_SELECT_TRIGGER3_NIBBLE_SEL_INPLACE (ROUTER_NL4_ROOT_TEST_POINT_TRIGGER_SELECT_TRIGGER3_NIBBLE_SEL_MASK << ROUTER_NL4_ROOT_TEST_POINT_TRIGGER_SELECT_TRIGGER3_NIBBLE_SEL_SHIFT)
-#define ROUTER_NL4_ROOT_TEST_POINT_TRIGGER_SELECT_TRIGGER3_CHIPLET_SEL_SHIFT 24 /* established */
+/* established */
+#define ROUTER_NL4_ROOT_TEST_POINT_TRIGGER_SELECT_TRIGGER3_CHIPLET_SEL_SHIFT 24
 #define ROUTER_NL4_ROOT_TEST_POINT_TRIGGER_SELECT_TRIGGER3_CHIPLET_SEL_MASK 0x7ull
 #define ROUTER_NL4_ROOT_TEST_POINT_TRIGGER_SELECT_TRIGGER3_CHIPLET_SEL_INPLACE (ROUTER_NL4_ROOT_TEST_POINT_TRIGGER_SELECT_TRIGGER3_CHIPLET_SEL_MASK << ROUTER_NL4_ROOT_TEST_POINT_TRIGGER_SELECT_TRIGGER3_CHIPLET_SEL_SHIFT)
-#define ROUTER_NL4_ROOT_TEST_POINT_TRIGGER_SELECT_TRIGGER2_NIBBLE_SEL_SHIFT 20 /* established */
+/* established */
+#define ROUTER_NL4_ROOT_TEST_POINT_TRIGGER_SELECT_TRIGGER2_NIBBLE_SEL_SHIFT 20
 #define ROUTER_NL4_ROOT_TEST_POINT_TRIGGER_SELECT_TRIGGER2_NIBBLE_SEL_MASK 0x7ull
 #define ROUTER_NL4_ROOT_TEST_POINT_TRIGGER_SELECT_TRIGGER2_NIBBLE_SEL_INPLACE (ROUTER_NL4_ROOT_TEST_POINT_TRIGGER_SELECT_TRIGGER2_NIBBLE_SEL_MASK << ROUTER_NL4_ROOT_TEST_POINT_TRIGGER_SELECT_TRIGGER2_NIBBLE_SEL_SHIFT)
-#define ROUTER_NL4_ROOT_TEST_POINT_TRIGGER_SELECT_TRIGGER2_CHIPLET_SEL_SHIFT 16 /* established */
+/* established */
+#define ROUTER_NL4_ROOT_TEST_POINT_TRIGGER_SELECT_TRIGGER2_CHIPLET_SEL_SHIFT 16
 #define ROUTER_NL4_ROOT_TEST_POINT_TRIGGER_SELECT_TRIGGER2_CHIPLET_SEL_MASK 0x7ull
 #define ROUTER_NL4_ROOT_TEST_POINT_TRIGGER_SELECT_TRIGGER2_CHIPLET_SEL_INPLACE (ROUTER_NL4_ROOT_TEST_POINT_TRIGGER_SELECT_TRIGGER2_CHIPLET_SEL_MASK << ROUTER_NL4_ROOT_TEST_POINT_TRIGGER_SELECT_TRIGGER2_CHIPLET_SEL_SHIFT)
-#define ROUTER_NL4_ROOT_TEST_POINT_TRIGGER_SELECT_TRIGGER1_NIBBLE_SEL_SHIFT 12 /* established */
+/* established */
+#define ROUTER_NL4_ROOT_TEST_POINT_TRIGGER_SELECT_TRIGGER1_NIBBLE_SEL_SHIFT 12
 #define ROUTER_NL4_ROOT_TEST_POINT_TRIGGER_SELECT_TRIGGER1_NIBBLE_SEL_MASK 0x7ull
 #define ROUTER_NL4_ROOT_TEST_POINT_TRIGGER_SELECT_TRIGGER1_NIBBLE_SEL_INPLACE (ROUTER_NL4_ROOT_TEST_POINT_TRIGGER_SELECT_TRIGGER1_NIBBLE_SEL_MASK << ROUTER_NL4_ROOT_TEST_POINT_TRIGGER_SELECT_TRIGGER1_NIBBLE_SEL_SHIFT)
-#define ROUTER_NL4_ROOT_TEST_POINT_TRIGGER_SELECT_TRIGGER1_CHIPLET_SEL_SHIFT 8 /* established */
+/* established */
+#define ROUTER_NL4_ROOT_TEST_POINT_TRIGGER_SELECT_TRIGGER1_CHIPLET_SEL_SHIFT 8
 #define ROUTER_NL4_ROOT_TEST_POINT_TRIGGER_SELECT_TRIGGER1_CHIPLET_SEL_MASK 0x7ull
 #define ROUTER_NL4_ROOT_TEST_POINT_TRIGGER_SELECT_TRIGGER1_CHIPLET_SEL_INPLACE (ROUTER_NL4_ROOT_TEST_POINT_TRIGGER_SELECT_TRIGGER1_CHIPLET_SEL_MASK << ROUTER_NL4_ROOT_TEST_POINT_TRIGGER_SELECT_TRIGGER1_CHIPLET_SEL_SHIFT)
-#define ROUTER_NL4_ROOT_TEST_POINT_TRIGGER_SELECT_TRIGGER0_NIBBLE_SEL_SHIFT 4 /* established */
+/* established */
+#define ROUTER_NL4_ROOT_TEST_POINT_TRIGGER_SELECT_TRIGGER0_NIBBLE_SEL_SHIFT 4
 #define ROUTER_NL4_ROOT_TEST_POINT_TRIGGER_SELECT_TRIGGER0_NIBBLE_SEL_MASK 0x7ull
 #define ROUTER_NL4_ROOT_TEST_POINT_TRIGGER_SELECT_TRIGGER0_NIBBLE_SEL_INPLACE (ROUTER_NL4_ROOT_TEST_POINT_TRIGGER_SELECT_TRIGGER0_NIBBLE_SEL_MASK << ROUTER_NL4_ROOT_TEST_POINT_TRIGGER_SELECT_TRIGGER0_NIBBLE_SEL_SHIFT)
-#define ROUTER_NL4_ROOT_TEST_POINT_TRIGGER_SELECT_TRIGGER0_CHIPLET_SEL_SHIFT 0 /* established */
+/* established */
+#define ROUTER_NL4_ROOT_TEST_POINT_TRIGGER_SELECT_TRIGGER0_CHIPLET_SEL_SHIFT 0
 #define ROUTER_NL4_ROOT_TEST_POINT_TRIGGER_SELECT_TRIGGER0_CHIPLET_SEL_MASK 0x7ull
 #define ROUTER_NL4_ROOT_TEST_POINT_TRIGGER_SELECT_TRIGGER0_CHIPLET_SEL_INPLACE (ROUTER_NL4_ROOT_TEST_POINT_TRIGGER_SELECT_TRIGGER0_CHIPLET_SEL_MASK << ROUTER_NL4_ROOT_TEST_POINT_TRIGGER_SELECT_TRIGGER0_CHIPLET_SEL_SHIFT)
 
 /*
- * PROM register R4_BRANCH1_TEST_POINT_SELECT. Offset and field positions read from the table; role inferred from the names.
+ * PROM register R4_BRANCH1_TEST_POINT_SELECT. Offset and field positions read
+ * from the table; role inferred from the names.
  */
 /* branch1_test_point_select: rw64, reset unknown */
-#define ROUTER_NL4_BRANCH1_TEST_POINT_SELECT_OFFSET  0x1006020u /* established */
-#define ROUTER_NL4_BRANCH1_TEST_POINT_SELECT_TRIGGER_ENABLE_SHIFT 63 /* established */
+/* established */
+#define ROUTER_NL4_BRANCH1_TEST_POINT_SELECT_OFFSET  0x1006020u
+/* established */
+#define ROUTER_NL4_BRANCH1_TEST_POINT_SELECT_TRIGGER_ENABLE_SHIFT 63
 #define ROUTER_NL4_BRANCH1_TEST_POINT_SELECT_TRIGGER_ENABLE_MASK 0x1ull
 #define ROUTER_NL4_BRANCH1_TEST_POINT_SELECT_TRIGGER_ENABLE_INPLACE (ROUTER_NL4_BRANCH1_TEST_POINT_SELECT_TRIGGER_ENABLE_MASK << ROUTER_NL4_BRANCH1_TEST_POINT_SELECT_TRIGGER_ENABLE_SHIFT)
-#define ROUTER_NL4_BRANCH1_TEST_POINT_SELECT_NIBBLE7_NIBBLE_SEL_SHIFT 60 /* established */
+/* established */
+#define ROUTER_NL4_BRANCH1_TEST_POINT_SELECT_NIBBLE7_NIBBLE_SEL_SHIFT 60
 #define ROUTER_NL4_BRANCH1_TEST_POINT_SELECT_NIBBLE7_NIBBLE_SEL_MASK 0x7ull
 #define ROUTER_NL4_BRANCH1_TEST_POINT_SELECT_NIBBLE7_NIBBLE_SEL_INPLACE (ROUTER_NL4_BRANCH1_TEST_POINT_SELECT_NIBBLE7_NIBBLE_SEL_MASK << ROUTER_NL4_BRANCH1_TEST_POINT_SELECT_NIBBLE7_NIBBLE_SEL_SHIFT)
-#define ROUTER_NL4_BRANCH1_TEST_POINT_SELECT_NIBBLE7_CHIPLET_SEL_SHIFT 56 /* established */
+/* established */
+#define ROUTER_NL4_BRANCH1_TEST_POINT_SELECT_NIBBLE7_CHIPLET_SEL_SHIFT 56
 #define ROUTER_NL4_BRANCH1_TEST_POINT_SELECT_NIBBLE7_CHIPLET_SEL_MASK 0x7ull
 #define ROUTER_NL4_BRANCH1_TEST_POINT_SELECT_NIBBLE7_CHIPLET_SEL_INPLACE (ROUTER_NL4_BRANCH1_TEST_POINT_SELECT_NIBBLE7_CHIPLET_SEL_MASK << ROUTER_NL4_BRANCH1_TEST_POINT_SELECT_NIBBLE7_CHIPLET_SEL_SHIFT)
-#define ROUTER_NL4_BRANCH1_TEST_POINT_SELECT_NIBBLE6_NIBBLE_SEL_SHIFT 52 /* established */
+/* established */
+#define ROUTER_NL4_BRANCH1_TEST_POINT_SELECT_NIBBLE6_NIBBLE_SEL_SHIFT 52
 #define ROUTER_NL4_BRANCH1_TEST_POINT_SELECT_NIBBLE6_NIBBLE_SEL_MASK 0x7ull
 #define ROUTER_NL4_BRANCH1_TEST_POINT_SELECT_NIBBLE6_NIBBLE_SEL_INPLACE (ROUTER_NL4_BRANCH1_TEST_POINT_SELECT_NIBBLE6_NIBBLE_SEL_MASK << ROUTER_NL4_BRANCH1_TEST_POINT_SELECT_NIBBLE6_NIBBLE_SEL_SHIFT)
-#define ROUTER_NL4_BRANCH1_TEST_POINT_SELECT_NIBBLE6_CHIPLET_SEL_SHIFT 48 /* established */
+/* established */
+#define ROUTER_NL4_BRANCH1_TEST_POINT_SELECT_NIBBLE6_CHIPLET_SEL_SHIFT 48
 #define ROUTER_NL4_BRANCH1_TEST_POINT_SELECT_NIBBLE6_CHIPLET_SEL_MASK 0x7ull
 #define ROUTER_NL4_BRANCH1_TEST_POINT_SELECT_NIBBLE6_CHIPLET_SEL_INPLACE (ROUTER_NL4_BRANCH1_TEST_POINT_SELECT_NIBBLE6_CHIPLET_SEL_MASK << ROUTER_NL4_BRANCH1_TEST_POINT_SELECT_NIBBLE6_CHIPLET_SEL_SHIFT)
-#define ROUTER_NL4_BRANCH1_TEST_POINT_SELECT_NIBBLE5_NIBBLE_SEL_SHIFT 44 /* established */
+/* established */
+#define ROUTER_NL4_BRANCH1_TEST_POINT_SELECT_NIBBLE5_NIBBLE_SEL_SHIFT 44
 #define ROUTER_NL4_BRANCH1_TEST_POINT_SELECT_NIBBLE5_NIBBLE_SEL_MASK 0x7ull
 #define ROUTER_NL4_BRANCH1_TEST_POINT_SELECT_NIBBLE5_NIBBLE_SEL_INPLACE (ROUTER_NL4_BRANCH1_TEST_POINT_SELECT_NIBBLE5_NIBBLE_SEL_MASK << ROUTER_NL4_BRANCH1_TEST_POINT_SELECT_NIBBLE5_NIBBLE_SEL_SHIFT)
-#define ROUTER_NL4_BRANCH1_TEST_POINT_SELECT_NIBBLE5_CHIPLET_SEL_SHIFT 40 /* established */
+/* established */
+#define ROUTER_NL4_BRANCH1_TEST_POINT_SELECT_NIBBLE5_CHIPLET_SEL_SHIFT 40
 #define ROUTER_NL4_BRANCH1_TEST_POINT_SELECT_NIBBLE5_CHIPLET_SEL_MASK 0x7ull
 #define ROUTER_NL4_BRANCH1_TEST_POINT_SELECT_NIBBLE5_CHIPLET_SEL_INPLACE (ROUTER_NL4_BRANCH1_TEST_POINT_SELECT_NIBBLE5_CHIPLET_SEL_MASK << ROUTER_NL4_BRANCH1_TEST_POINT_SELECT_NIBBLE5_CHIPLET_SEL_SHIFT)
-#define ROUTER_NL4_BRANCH1_TEST_POINT_SELECT_NIBBLE4_NIBBLE_SEL_SHIFT 36 /* established */
+/* established */
+#define ROUTER_NL4_BRANCH1_TEST_POINT_SELECT_NIBBLE4_NIBBLE_SEL_SHIFT 36
 #define ROUTER_NL4_BRANCH1_TEST_POINT_SELECT_NIBBLE4_NIBBLE_SEL_MASK 0x7ull
 #define ROUTER_NL4_BRANCH1_TEST_POINT_SELECT_NIBBLE4_NIBBLE_SEL_INPLACE (ROUTER_NL4_BRANCH1_TEST_POINT_SELECT_NIBBLE4_NIBBLE_SEL_MASK << ROUTER_NL4_BRANCH1_TEST_POINT_SELECT_NIBBLE4_NIBBLE_SEL_SHIFT)
-#define ROUTER_NL4_BRANCH1_TEST_POINT_SELECT_NIBBLE4_CHIPLET_SEL_SHIFT 32 /* established */
+/* established */
+#define ROUTER_NL4_BRANCH1_TEST_POINT_SELECT_NIBBLE4_CHIPLET_SEL_SHIFT 32
 #define ROUTER_NL4_BRANCH1_TEST_POINT_SELECT_NIBBLE4_CHIPLET_SEL_MASK 0x7ull
 #define ROUTER_NL4_BRANCH1_TEST_POINT_SELECT_NIBBLE4_CHIPLET_SEL_INPLACE (ROUTER_NL4_BRANCH1_TEST_POINT_SELECT_NIBBLE4_CHIPLET_SEL_MASK << ROUTER_NL4_BRANCH1_TEST_POINT_SELECT_NIBBLE4_CHIPLET_SEL_SHIFT)
-#define ROUTER_NL4_BRANCH1_TEST_POINT_SELECT_NIBBLE3_NIBBLE_SEL_SHIFT 28 /* established */
+/* established */
+#define ROUTER_NL4_BRANCH1_TEST_POINT_SELECT_NIBBLE3_NIBBLE_SEL_SHIFT 28
 #define ROUTER_NL4_BRANCH1_TEST_POINT_SELECT_NIBBLE3_NIBBLE_SEL_MASK 0x7ull
 #define ROUTER_NL4_BRANCH1_TEST_POINT_SELECT_NIBBLE3_NIBBLE_SEL_INPLACE (ROUTER_NL4_BRANCH1_TEST_POINT_SELECT_NIBBLE3_NIBBLE_SEL_MASK << ROUTER_NL4_BRANCH1_TEST_POINT_SELECT_NIBBLE3_NIBBLE_SEL_SHIFT)
-#define ROUTER_NL4_BRANCH1_TEST_POINT_SELECT_NIBBLE3_CHIPLET_SEL_SHIFT 24 /* established */
+/* established */
+#define ROUTER_NL4_BRANCH1_TEST_POINT_SELECT_NIBBLE3_CHIPLET_SEL_SHIFT 24
 #define ROUTER_NL4_BRANCH1_TEST_POINT_SELECT_NIBBLE3_CHIPLET_SEL_MASK 0x7ull
 #define ROUTER_NL4_BRANCH1_TEST_POINT_SELECT_NIBBLE3_CHIPLET_SEL_INPLACE (ROUTER_NL4_BRANCH1_TEST_POINT_SELECT_NIBBLE3_CHIPLET_SEL_MASK << ROUTER_NL4_BRANCH1_TEST_POINT_SELECT_NIBBLE3_CHIPLET_SEL_SHIFT)
-#define ROUTER_NL4_BRANCH1_TEST_POINT_SELECT_NIBBLE2_NIBBLE_SEL_SHIFT 20 /* established */
+/* established */
+#define ROUTER_NL4_BRANCH1_TEST_POINT_SELECT_NIBBLE2_NIBBLE_SEL_SHIFT 20
 #define ROUTER_NL4_BRANCH1_TEST_POINT_SELECT_NIBBLE2_NIBBLE_SEL_MASK 0x7ull
 #define ROUTER_NL4_BRANCH1_TEST_POINT_SELECT_NIBBLE2_NIBBLE_SEL_INPLACE (ROUTER_NL4_BRANCH1_TEST_POINT_SELECT_NIBBLE2_NIBBLE_SEL_MASK << ROUTER_NL4_BRANCH1_TEST_POINT_SELECT_NIBBLE2_NIBBLE_SEL_SHIFT)
-#define ROUTER_NL4_BRANCH1_TEST_POINT_SELECT_NIBBLE2_CHIPLET_SEL_SHIFT 16 /* established */
+/* established */
+#define ROUTER_NL4_BRANCH1_TEST_POINT_SELECT_NIBBLE2_CHIPLET_SEL_SHIFT 16
 #define ROUTER_NL4_BRANCH1_TEST_POINT_SELECT_NIBBLE2_CHIPLET_SEL_MASK 0x7ull
 #define ROUTER_NL4_BRANCH1_TEST_POINT_SELECT_NIBBLE2_CHIPLET_SEL_INPLACE (ROUTER_NL4_BRANCH1_TEST_POINT_SELECT_NIBBLE2_CHIPLET_SEL_MASK << ROUTER_NL4_BRANCH1_TEST_POINT_SELECT_NIBBLE2_CHIPLET_SEL_SHIFT)
-#define ROUTER_NL4_BRANCH1_TEST_POINT_SELECT_NIBBLE1_NIBBLE_SEL_SHIFT 12 /* established */
+/* established */
+#define ROUTER_NL4_BRANCH1_TEST_POINT_SELECT_NIBBLE1_NIBBLE_SEL_SHIFT 12
 #define ROUTER_NL4_BRANCH1_TEST_POINT_SELECT_NIBBLE1_NIBBLE_SEL_MASK 0x7ull
 #define ROUTER_NL4_BRANCH1_TEST_POINT_SELECT_NIBBLE1_NIBBLE_SEL_INPLACE (ROUTER_NL4_BRANCH1_TEST_POINT_SELECT_NIBBLE1_NIBBLE_SEL_MASK << ROUTER_NL4_BRANCH1_TEST_POINT_SELECT_NIBBLE1_NIBBLE_SEL_SHIFT)
-#define ROUTER_NL4_BRANCH1_TEST_POINT_SELECT_NIBBLE1_CHIPLET_SEL_SHIFT 8 /* established */
+/* established */
+#define ROUTER_NL4_BRANCH1_TEST_POINT_SELECT_NIBBLE1_CHIPLET_SEL_SHIFT 8
 #define ROUTER_NL4_BRANCH1_TEST_POINT_SELECT_NIBBLE1_CHIPLET_SEL_MASK 0x7ull
 #define ROUTER_NL4_BRANCH1_TEST_POINT_SELECT_NIBBLE1_CHIPLET_SEL_INPLACE (ROUTER_NL4_BRANCH1_TEST_POINT_SELECT_NIBBLE1_CHIPLET_SEL_MASK << ROUTER_NL4_BRANCH1_TEST_POINT_SELECT_NIBBLE1_CHIPLET_SEL_SHIFT)
-#define ROUTER_NL4_BRANCH1_TEST_POINT_SELECT_NIBBLE0_NIBBLE_SEL_SHIFT 4 /* established */
+/* established */
+#define ROUTER_NL4_BRANCH1_TEST_POINT_SELECT_NIBBLE0_NIBBLE_SEL_SHIFT 4
 #define ROUTER_NL4_BRANCH1_TEST_POINT_SELECT_NIBBLE0_NIBBLE_SEL_MASK 0x7ull
 #define ROUTER_NL4_BRANCH1_TEST_POINT_SELECT_NIBBLE0_NIBBLE_SEL_INPLACE (ROUTER_NL4_BRANCH1_TEST_POINT_SELECT_NIBBLE0_NIBBLE_SEL_MASK << ROUTER_NL4_BRANCH1_TEST_POINT_SELECT_NIBBLE0_NIBBLE_SEL_SHIFT)
-#define ROUTER_NL4_BRANCH1_TEST_POINT_SELECT_NIBBLE0_CHIPLET_SEL_SHIFT 0 /* established */
+/* established */
+#define ROUTER_NL4_BRANCH1_TEST_POINT_SELECT_NIBBLE0_CHIPLET_SEL_SHIFT 0
 #define ROUTER_NL4_BRANCH1_TEST_POINT_SELECT_NIBBLE0_CHIPLET_SEL_MASK 0x7ull
 #define ROUTER_NL4_BRANCH1_TEST_POINT_SELECT_NIBBLE0_CHIPLET_SEL_INPLACE (ROUTER_NL4_BRANCH1_TEST_POINT_SELECT_NIBBLE0_CHIPLET_SEL_MASK << ROUTER_NL4_BRANCH1_TEST_POINT_SELECT_NIBBLE0_CHIPLET_SEL_SHIFT)
 
 /*
- * PROM register R4_BRANCH1_TEST_POINT_COMPARE. Offset and field positions read from the table; role inferred from the names.
+ * PROM register R4_BRANCH1_TEST_POINT_COMPARE. Offset and field positions read
+ * from the table; role inferred from the names.
  */
 /* branch1_test_point_compare: rw64, reset unknown */
-#define ROUTER_NL4_BRANCH1_TEST_POINT_COMPARE_OFFSET 0x1006028u /* established */
-#define ROUTER_NL4_BRANCH1_TEST_POINT_COMPARE_COMPARE_PATTERN_SHIFT 32 /* established */
+/* established */
+#define ROUTER_NL4_BRANCH1_TEST_POINT_COMPARE_OFFSET 0x1006028u
+/* established */
+#define ROUTER_NL4_BRANCH1_TEST_POINT_COMPARE_COMPARE_PATTERN_SHIFT 32
 #define ROUTER_NL4_BRANCH1_TEST_POINT_COMPARE_COMPARE_PATTERN_MASK 0xffffffffull
 #define ROUTER_NL4_BRANCH1_TEST_POINT_COMPARE_COMPARE_PATTERN_INPLACE (ROUTER_NL4_BRANCH1_TEST_POINT_COMPARE_COMPARE_PATTERN_MASK << ROUTER_NL4_BRANCH1_TEST_POINT_COMPARE_COMPARE_PATTERN_SHIFT)
-#define ROUTER_NL4_BRANCH1_TEST_POINT_COMPARE_COMPARE_MASK_SHIFT 0 /* established */
+/* established */
+#define ROUTER_NL4_BRANCH1_TEST_POINT_COMPARE_COMPARE_MASK_SHIFT 0
 #define ROUTER_NL4_BRANCH1_TEST_POINT_COMPARE_COMPARE_MASK_MASK 0xffffffffull
 #define ROUTER_NL4_BRANCH1_TEST_POINT_COMPARE_COMPARE_MASK_INPLACE (ROUTER_NL4_BRANCH1_TEST_POINT_COMPARE_COMPARE_MASK_MASK << ROUTER_NL4_BRANCH1_TEST_POINT_COMPARE_COMPARE_MASK_SHIFT)
 
 /*
- * PROM register R4_BRANCH1_TEST_POINT_TRIGGER_SELECT. Offset and field positions read from the table; role inferred from the names.
+ * PROM register R4_BRANCH1_TEST_POINT_TRIGGER_SELECT. Offset and field
+ * positions read from the table; role inferred from the names.
  */
 /* branch1_test_point_trigger_select: rw64, reset unknown */
-#define ROUTER_NL4_BRANCH1_TEST_POINT_TRIGGER_SELECT_OFFSET 0x1006030u /* established */
-#define ROUTER_NL4_BRANCH1_TEST_POINT_TRIGGER_SELECT_TRIGGER7_NIBBLE_SEL_SHIFT 60 /* established */
+/* established */
+#define ROUTER_NL4_BRANCH1_TEST_POINT_TRIGGER_SELECT_OFFSET 0x1006030u
+/* established */
+#define ROUTER_NL4_BRANCH1_TEST_POINT_TRIGGER_SELECT_TRIGGER7_NIBBLE_SEL_SHIFT 60
 #define ROUTER_NL4_BRANCH1_TEST_POINT_TRIGGER_SELECT_TRIGGER7_NIBBLE_SEL_MASK 0x7ull
 #define ROUTER_NL4_BRANCH1_TEST_POINT_TRIGGER_SELECT_TRIGGER7_NIBBLE_SEL_INPLACE (ROUTER_NL4_BRANCH1_TEST_POINT_TRIGGER_SELECT_TRIGGER7_NIBBLE_SEL_MASK << ROUTER_NL4_BRANCH1_TEST_POINT_TRIGGER_SELECT_TRIGGER7_NIBBLE_SEL_SHIFT)
-#define ROUTER_NL4_BRANCH1_TEST_POINT_TRIGGER_SELECT_TRIGGER7_CHIPLET_SEL_SHIFT 56 /* established */
+/* established */
+#define ROUTER_NL4_BRANCH1_TEST_POINT_TRIGGER_SELECT_TRIGGER7_CHIPLET_SEL_SHIFT 56
 #define ROUTER_NL4_BRANCH1_TEST_POINT_TRIGGER_SELECT_TRIGGER7_CHIPLET_SEL_MASK 0x7ull
 #define ROUTER_NL4_BRANCH1_TEST_POINT_TRIGGER_SELECT_TRIGGER7_CHIPLET_SEL_INPLACE (ROUTER_NL4_BRANCH1_TEST_POINT_TRIGGER_SELECT_TRIGGER7_CHIPLET_SEL_MASK << ROUTER_NL4_BRANCH1_TEST_POINT_TRIGGER_SELECT_TRIGGER7_CHIPLET_SEL_SHIFT)
-#define ROUTER_NL4_BRANCH1_TEST_POINT_TRIGGER_SELECT_TRIGGER6_NIBBLE_SEL_SHIFT 52 /* established */
+/* established */
+#define ROUTER_NL4_BRANCH1_TEST_POINT_TRIGGER_SELECT_TRIGGER6_NIBBLE_SEL_SHIFT 52
 #define ROUTER_NL4_BRANCH1_TEST_POINT_TRIGGER_SELECT_TRIGGER6_NIBBLE_SEL_MASK 0x7ull
 #define ROUTER_NL4_BRANCH1_TEST_POINT_TRIGGER_SELECT_TRIGGER6_NIBBLE_SEL_INPLACE (ROUTER_NL4_BRANCH1_TEST_POINT_TRIGGER_SELECT_TRIGGER6_NIBBLE_SEL_MASK << ROUTER_NL4_BRANCH1_TEST_POINT_TRIGGER_SELECT_TRIGGER6_NIBBLE_SEL_SHIFT)
-#define ROUTER_NL4_BRANCH1_TEST_POINT_TRIGGER_SELECT_TRIGGER6_CHIPLET_SEL_SHIFT 48 /* established */
+/* established */
+#define ROUTER_NL4_BRANCH1_TEST_POINT_TRIGGER_SELECT_TRIGGER6_CHIPLET_SEL_SHIFT 48
 #define ROUTER_NL4_BRANCH1_TEST_POINT_TRIGGER_SELECT_TRIGGER6_CHIPLET_SEL_MASK 0x7ull
 #define ROUTER_NL4_BRANCH1_TEST_POINT_TRIGGER_SELECT_TRIGGER6_CHIPLET_SEL_INPLACE (ROUTER_NL4_BRANCH1_TEST_POINT_TRIGGER_SELECT_TRIGGER6_CHIPLET_SEL_MASK << ROUTER_NL4_BRANCH1_TEST_POINT_TRIGGER_SELECT_TRIGGER6_CHIPLET_SEL_SHIFT)
-#define ROUTER_NL4_BRANCH1_TEST_POINT_TRIGGER_SELECT_TRIGGER5_NIBBLE_SEL_SHIFT 44 /* established */
+/* established */
+#define ROUTER_NL4_BRANCH1_TEST_POINT_TRIGGER_SELECT_TRIGGER5_NIBBLE_SEL_SHIFT 44
 #define ROUTER_NL4_BRANCH1_TEST_POINT_TRIGGER_SELECT_TRIGGER5_NIBBLE_SEL_MASK 0x7ull
 #define ROUTER_NL4_BRANCH1_TEST_POINT_TRIGGER_SELECT_TRIGGER5_NIBBLE_SEL_INPLACE (ROUTER_NL4_BRANCH1_TEST_POINT_TRIGGER_SELECT_TRIGGER5_NIBBLE_SEL_MASK << ROUTER_NL4_BRANCH1_TEST_POINT_TRIGGER_SELECT_TRIGGER5_NIBBLE_SEL_SHIFT)
-#define ROUTER_NL4_BRANCH1_TEST_POINT_TRIGGER_SELECT_TRIGGER5_CHIPLET_SEL_SHIFT 40 /* established */
+/* established */
+#define ROUTER_NL4_BRANCH1_TEST_POINT_TRIGGER_SELECT_TRIGGER5_CHIPLET_SEL_SHIFT 40
 #define ROUTER_NL4_BRANCH1_TEST_POINT_TRIGGER_SELECT_TRIGGER5_CHIPLET_SEL_MASK 0x7ull
 #define ROUTER_NL4_BRANCH1_TEST_POINT_TRIGGER_SELECT_TRIGGER5_CHIPLET_SEL_INPLACE (ROUTER_NL4_BRANCH1_TEST_POINT_TRIGGER_SELECT_TRIGGER5_CHIPLET_SEL_MASK << ROUTER_NL4_BRANCH1_TEST_POINT_TRIGGER_SELECT_TRIGGER5_CHIPLET_SEL_SHIFT)
-#define ROUTER_NL4_BRANCH1_TEST_POINT_TRIGGER_SELECT_TRIGGER4_NIBBLE_SEL_SHIFT 36 /* established */
+/* established */
+#define ROUTER_NL4_BRANCH1_TEST_POINT_TRIGGER_SELECT_TRIGGER4_NIBBLE_SEL_SHIFT 36
 #define ROUTER_NL4_BRANCH1_TEST_POINT_TRIGGER_SELECT_TRIGGER4_NIBBLE_SEL_MASK 0x7ull
 #define ROUTER_NL4_BRANCH1_TEST_POINT_TRIGGER_SELECT_TRIGGER4_NIBBLE_SEL_INPLACE (ROUTER_NL4_BRANCH1_TEST_POINT_TRIGGER_SELECT_TRIGGER4_NIBBLE_SEL_MASK << ROUTER_NL4_BRANCH1_TEST_POINT_TRIGGER_SELECT_TRIGGER4_NIBBLE_SEL_SHIFT)
-#define ROUTER_NL4_BRANCH1_TEST_POINT_TRIGGER_SELECT_TRIGGER4_CHIPLET_SEL_SHIFT 32 /* established */
+/* established */
+#define ROUTER_NL4_BRANCH1_TEST_POINT_TRIGGER_SELECT_TRIGGER4_CHIPLET_SEL_SHIFT 32
 #define ROUTER_NL4_BRANCH1_TEST_POINT_TRIGGER_SELECT_TRIGGER4_CHIPLET_SEL_MASK 0x7ull
 #define ROUTER_NL4_BRANCH1_TEST_POINT_TRIGGER_SELECT_TRIGGER4_CHIPLET_SEL_INPLACE (ROUTER_NL4_BRANCH1_TEST_POINT_TRIGGER_SELECT_TRIGGER4_CHIPLET_SEL_MASK << ROUTER_NL4_BRANCH1_TEST_POINT_TRIGGER_SELECT_TRIGGER4_CHIPLET_SEL_SHIFT)
-#define ROUTER_NL4_BRANCH1_TEST_POINT_TRIGGER_SELECT_TRIGGER3_NIBBLE_SEL_SHIFT 28 /* established */
+/* established */
+#define ROUTER_NL4_BRANCH1_TEST_POINT_TRIGGER_SELECT_TRIGGER3_NIBBLE_SEL_SHIFT 28
 #define ROUTER_NL4_BRANCH1_TEST_POINT_TRIGGER_SELECT_TRIGGER3_NIBBLE_SEL_MASK 0x7ull
 #define ROUTER_NL4_BRANCH1_TEST_POINT_TRIGGER_SELECT_TRIGGER3_NIBBLE_SEL_INPLACE (ROUTER_NL4_BRANCH1_TEST_POINT_TRIGGER_SELECT_TRIGGER3_NIBBLE_SEL_MASK << ROUTER_NL4_BRANCH1_TEST_POINT_TRIGGER_SELECT_TRIGGER3_NIBBLE_SEL_SHIFT)
-#define ROUTER_NL4_BRANCH1_TEST_POINT_TRIGGER_SELECT_TRIGGER3_CHIPLET_SEL_SHIFT 24 /* established */
+/* established */
+#define ROUTER_NL4_BRANCH1_TEST_POINT_TRIGGER_SELECT_TRIGGER3_CHIPLET_SEL_SHIFT 24
 #define ROUTER_NL4_BRANCH1_TEST_POINT_TRIGGER_SELECT_TRIGGER3_CHIPLET_SEL_MASK 0x7ull
 #define ROUTER_NL4_BRANCH1_TEST_POINT_TRIGGER_SELECT_TRIGGER3_CHIPLET_SEL_INPLACE (ROUTER_NL4_BRANCH1_TEST_POINT_TRIGGER_SELECT_TRIGGER3_CHIPLET_SEL_MASK << ROUTER_NL4_BRANCH1_TEST_POINT_TRIGGER_SELECT_TRIGGER3_CHIPLET_SEL_SHIFT)
-#define ROUTER_NL4_BRANCH1_TEST_POINT_TRIGGER_SELECT_TRIGGER2_NIBBLE_SEL_SHIFT 20 /* established */
+/* established */
+#define ROUTER_NL4_BRANCH1_TEST_POINT_TRIGGER_SELECT_TRIGGER2_NIBBLE_SEL_SHIFT 20
 #define ROUTER_NL4_BRANCH1_TEST_POINT_TRIGGER_SELECT_TRIGGER2_NIBBLE_SEL_MASK 0x7ull
 #define ROUTER_NL4_BRANCH1_TEST_POINT_TRIGGER_SELECT_TRIGGER2_NIBBLE_SEL_INPLACE (ROUTER_NL4_BRANCH1_TEST_POINT_TRIGGER_SELECT_TRIGGER2_NIBBLE_SEL_MASK << ROUTER_NL4_BRANCH1_TEST_POINT_TRIGGER_SELECT_TRIGGER2_NIBBLE_SEL_SHIFT)
-#define ROUTER_NL4_BRANCH1_TEST_POINT_TRIGGER_SELECT_TRIGGER2_CHIPLET_SEL_SHIFT 16 /* established */
+/* established */
+#define ROUTER_NL4_BRANCH1_TEST_POINT_TRIGGER_SELECT_TRIGGER2_CHIPLET_SEL_SHIFT 16
 #define ROUTER_NL4_BRANCH1_TEST_POINT_TRIGGER_SELECT_TRIGGER2_CHIPLET_SEL_MASK 0x7ull
 #define ROUTER_NL4_BRANCH1_TEST_POINT_TRIGGER_SELECT_TRIGGER2_CHIPLET_SEL_INPLACE (ROUTER_NL4_BRANCH1_TEST_POINT_TRIGGER_SELECT_TRIGGER2_CHIPLET_SEL_MASK << ROUTER_NL4_BRANCH1_TEST_POINT_TRIGGER_SELECT_TRIGGER2_CHIPLET_SEL_SHIFT)
-#define ROUTER_NL4_BRANCH1_TEST_POINT_TRIGGER_SELECT_TRIGGER1_NIBBLE_SEL_SHIFT 12 /* established */
+/* established */
+#define ROUTER_NL4_BRANCH1_TEST_POINT_TRIGGER_SELECT_TRIGGER1_NIBBLE_SEL_SHIFT 12
 #define ROUTER_NL4_BRANCH1_TEST_POINT_TRIGGER_SELECT_TRIGGER1_NIBBLE_SEL_MASK 0x7ull
 #define ROUTER_NL4_BRANCH1_TEST_POINT_TRIGGER_SELECT_TRIGGER1_NIBBLE_SEL_INPLACE (ROUTER_NL4_BRANCH1_TEST_POINT_TRIGGER_SELECT_TRIGGER1_NIBBLE_SEL_MASK << ROUTER_NL4_BRANCH1_TEST_POINT_TRIGGER_SELECT_TRIGGER1_NIBBLE_SEL_SHIFT)
-#define ROUTER_NL4_BRANCH1_TEST_POINT_TRIGGER_SELECT_TRIGGER1_CHIPLET_SEL_SHIFT 8 /* established */
+/* established */
+#define ROUTER_NL4_BRANCH1_TEST_POINT_TRIGGER_SELECT_TRIGGER1_CHIPLET_SEL_SHIFT 8
 #define ROUTER_NL4_BRANCH1_TEST_POINT_TRIGGER_SELECT_TRIGGER1_CHIPLET_SEL_MASK 0x7ull
 #define ROUTER_NL4_BRANCH1_TEST_POINT_TRIGGER_SELECT_TRIGGER1_CHIPLET_SEL_INPLACE (ROUTER_NL4_BRANCH1_TEST_POINT_TRIGGER_SELECT_TRIGGER1_CHIPLET_SEL_MASK << ROUTER_NL4_BRANCH1_TEST_POINT_TRIGGER_SELECT_TRIGGER1_CHIPLET_SEL_SHIFT)
-#define ROUTER_NL4_BRANCH1_TEST_POINT_TRIGGER_SELECT_TRIGGER0_NIBBLE_SEL_SHIFT 4 /* established */
+/* established */
+#define ROUTER_NL4_BRANCH1_TEST_POINT_TRIGGER_SELECT_TRIGGER0_NIBBLE_SEL_SHIFT 4
 #define ROUTER_NL4_BRANCH1_TEST_POINT_TRIGGER_SELECT_TRIGGER0_NIBBLE_SEL_MASK 0x7ull
 #define ROUTER_NL4_BRANCH1_TEST_POINT_TRIGGER_SELECT_TRIGGER0_NIBBLE_SEL_INPLACE (ROUTER_NL4_BRANCH1_TEST_POINT_TRIGGER_SELECT_TRIGGER0_NIBBLE_SEL_MASK << ROUTER_NL4_BRANCH1_TEST_POINT_TRIGGER_SELECT_TRIGGER0_NIBBLE_SEL_SHIFT)
-#define ROUTER_NL4_BRANCH1_TEST_POINT_TRIGGER_SELECT_TRIGGER0_CHIPLET_SEL_SHIFT 0 /* established */
+/* established */
+#define ROUTER_NL4_BRANCH1_TEST_POINT_TRIGGER_SELECT_TRIGGER0_CHIPLET_SEL_SHIFT 0
 #define ROUTER_NL4_BRANCH1_TEST_POINT_TRIGGER_SELECT_TRIGGER0_CHIPLET_SEL_MASK 0x7ull
 #define ROUTER_NL4_BRANCH1_TEST_POINT_TRIGGER_SELECT_TRIGGER0_CHIPLET_SEL_INPLACE (ROUTER_NL4_BRANCH1_TEST_POINT_TRIGGER_SELECT_TRIGGER0_CHIPLET_SEL_MASK << ROUTER_NL4_BRANCH1_TEST_POINT_TRIGGER_SELECT_TRIGGER0_CHIPLET_SEL_SHIFT)
 
 /*
- * PROM register R4_BRANCH2_TEST_POINT_SELECT. Offset and field positions read from the table; role inferred from the names.
+ * PROM register R4_BRANCH2_TEST_POINT_SELECT. Offset and field positions read
+ * from the table; role inferred from the names.
  */
 /* branch2_test_point_select: rw64, reset unknown */
-#define ROUTER_NL4_BRANCH2_TEST_POINT_SELECT_OFFSET  0x1006040u /* established */
-#define ROUTER_NL4_BRANCH2_TEST_POINT_SELECT_TRIGGER_ENABLE_SHIFT 63 /* established */
+/* established */
+#define ROUTER_NL4_BRANCH2_TEST_POINT_SELECT_OFFSET  0x1006040u
+/* established */
+#define ROUTER_NL4_BRANCH2_TEST_POINT_SELECT_TRIGGER_ENABLE_SHIFT 63
 #define ROUTER_NL4_BRANCH2_TEST_POINT_SELECT_TRIGGER_ENABLE_MASK 0x1ull
 #define ROUTER_NL4_BRANCH2_TEST_POINT_SELECT_TRIGGER_ENABLE_INPLACE (ROUTER_NL4_BRANCH2_TEST_POINT_SELECT_TRIGGER_ENABLE_MASK << ROUTER_NL4_BRANCH2_TEST_POINT_SELECT_TRIGGER_ENABLE_SHIFT)
-#define ROUTER_NL4_BRANCH2_TEST_POINT_SELECT_NIBBLE7_NIBBLE_SEL_SHIFT 60 /* established */
+/* established */
+#define ROUTER_NL4_BRANCH2_TEST_POINT_SELECT_NIBBLE7_NIBBLE_SEL_SHIFT 60
 #define ROUTER_NL4_BRANCH2_TEST_POINT_SELECT_NIBBLE7_NIBBLE_SEL_MASK 0x7ull
 #define ROUTER_NL4_BRANCH2_TEST_POINT_SELECT_NIBBLE7_NIBBLE_SEL_INPLACE (ROUTER_NL4_BRANCH2_TEST_POINT_SELECT_NIBBLE7_NIBBLE_SEL_MASK << ROUTER_NL4_BRANCH2_TEST_POINT_SELECT_NIBBLE7_NIBBLE_SEL_SHIFT)
-#define ROUTER_NL4_BRANCH2_TEST_POINT_SELECT_NIBBLE7_CHIPLET_SEL_SHIFT 56 /* established */
+/* established */
+#define ROUTER_NL4_BRANCH2_TEST_POINT_SELECT_NIBBLE7_CHIPLET_SEL_SHIFT 56
 #define ROUTER_NL4_BRANCH2_TEST_POINT_SELECT_NIBBLE7_CHIPLET_SEL_MASK 0x7ull
 #define ROUTER_NL4_BRANCH2_TEST_POINT_SELECT_NIBBLE7_CHIPLET_SEL_INPLACE (ROUTER_NL4_BRANCH2_TEST_POINT_SELECT_NIBBLE7_CHIPLET_SEL_MASK << ROUTER_NL4_BRANCH2_TEST_POINT_SELECT_NIBBLE7_CHIPLET_SEL_SHIFT)
-#define ROUTER_NL4_BRANCH2_TEST_POINT_SELECT_NIBBLE6_NIBBLE_SEL_SHIFT 52 /* established */
+/* established */
+#define ROUTER_NL4_BRANCH2_TEST_POINT_SELECT_NIBBLE6_NIBBLE_SEL_SHIFT 52
 #define ROUTER_NL4_BRANCH2_TEST_POINT_SELECT_NIBBLE6_NIBBLE_SEL_MASK 0x7ull
 #define ROUTER_NL4_BRANCH2_TEST_POINT_SELECT_NIBBLE6_NIBBLE_SEL_INPLACE (ROUTER_NL4_BRANCH2_TEST_POINT_SELECT_NIBBLE6_NIBBLE_SEL_MASK << ROUTER_NL4_BRANCH2_TEST_POINT_SELECT_NIBBLE6_NIBBLE_SEL_SHIFT)
-#define ROUTER_NL4_BRANCH2_TEST_POINT_SELECT_NIBBLE6_CHIPLET_SEL_SHIFT 48 /* established */
+/* established */
+#define ROUTER_NL4_BRANCH2_TEST_POINT_SELECT_NIBBLE6_CHIPLET_SEL_SHIFT 48
 #define ROUTER_NL4_BRANCH2_TEST_POINT_SELECT_NIBBLE6_CHIPLET_SEL_MASK 0x7ull
 #define ROUTER_NL4_BRANCH2_TEST_POINT_SELECT_NIBBLE6_CHIPLET_SEL_INPLACE (ROUTER_NL4_BRANCH2_TEST_POINT_SELECT_NIBBLE6_CHIPLET_SEL_MASK << ROUTER_NL4_BRANCH2_TEST_POINT_SELECT_NIBBLE6_CHIPLET_SEL_SHIFT)
-#define ROUTER_NL4_BRANCH2_TEST_POINT_SELECT_NIBBLE5_NIBBLE_SEL_SHIFT 44 /* established */
+/* established */
+#define ROUTER_NL4_BRANCH2_TEST_POINT_SELECT_NIBBLE5_NIBBLE_SEL_SHIFT 44
 #define ROUTER_NL4_BRANCH2_TEST_POINT_SELECT_NIBBLE5_NIBBLE_SEL_MASK 0x7ull
 #define ROUTER_NL4_BRANCH2_TEST_POINT_SELECT_NIBBLE5_NIBBLE_SEL_INPLACE (ROUTER_NL4_BRANCH2_TEST_POINT_SELECT_NIBBLE5_NIBBLE_SEL_MASK << ROUTER_NL4_BRANCH2_TEST_POINT_SELECT_NIBBLE5_NIBBLE_SEL_SHIFT)
-#define ROUTER_NL4_BRANCH2_TEST_POINT_SELECT_NIBBLE5_CHIPLET_SEL_SHIFT 40 /* established */
+/* established */
+#define ROUTER_NL4_BRANCH2_TEST_POINT_SELECT_NIBBLE5_CHIPLET_SEL_SHIFT 40
 #define ROUTER_NL4_BRANCH2_TEST_POINT_SELECT_NIBBLE5_CHIPLET_SEL_MASK 0x7ull
 #define ROUTER_NL4_BRANCH2_TEST_POINT_SELECT_NIBBLE5_CHIPLET_SEL_INPLACE (ROUTER_NL4_BRANCH2_TEST_POINT_SELECT_NIBBLE5_CHIPLET_SEL_MASK << ROUTER_NL4_BRANCH2_TEST_POINT_SELECT_NIBBLE5_CHIPLET_SEL_SHIFT)
-#define ROUTER_NL4_BRANCH2_TEST_POINT_SELECT_NIBBLE4_NIBBLE_SEL_SHIFT 36 /* established */
+/* established */
+#define ROUTER_NL4_BRANCH2_TEST_POINT_SELECT_NIBBLE4_NIBBLE_SEL_SHIFT 36
 #define ROUTER_NL4_BRANCH2_TEST_POINT_SELECT_NIBBLE4_NIBBLE_SEL_MASK 0x7ull
 #define ROUTER_NL4_BRANCH2_TEST_POINT_SELECT_NIBBLE4_NIBBLE_SEL_INPLACE (ROUTER_NL4_BRANCH2_TEST_POINT_SELECT_NIBBLE4_NIBBLE_SEL_MASK << ROUTER_NL4_BRANCH2_TEST_POINT_SELECT_NIBBLE4_NIBBLE_SEL_SHIFT)
-#define ROUTER_NL4_BRANCH2_TEST_POINT_SELECT_NIBBLE4_CHIPLET_SEL_SHIFT 32 /* established */
+/* established */
+#define ROUTER_NL4_BRANCH2_TEST_POINT_SELECT_NIBBLE4_CHIPLET_SEL_SHIFT 32
 #define ROUTER_NL4_BRANCH2_TEST_POINT_SELECT_NIBBLE4_CHIPLET_SEL_MASK 0x7ull
 #define ROUTER_NL4_BRANCH2_TEST_POINT_SELECT_NIBBLE4_CHIPLET_SEL_INPLACE (ROUTER_NL4_BRANCH2_TEST_POINT_SELECT_NIBBLE4_CHIPLET_SEL_MASK << ROUTER_NL4_BRANCH2_TEST_POINT_SELECT_NIBBLE4_CHIPLET_SEL_SHIFT)
-#define ROUTER_NL4_BRANCH2_TEST_POINT_SELECT_NIBBLE3_NIBBLE_SEL_SHIFT 28 /* established */
+/* established */
+#define ROUTER_NL4_BRANCH2_TEST_POINT_SELECT_NIBBLE3_NIBBLE_SEL_SHIFT 28
 #define ROUTER_NL4_BRANCH2_TEST_POINT_SELECT_NIBBLE3_NIBBLE_SEL_MASK 0x7ull
 #define ROUTER_NL4_BRANCH2_TEST_POINT_SELECT_NIBBLE3_NIBBLE_SEL_INPLACE (ROUTER_NL4_BRANCH2_TEST_POINT_SELECT_NIBBLE3_NIBBLE_SEL_MASK << ROUTER_NL4_BRANCH2_TEST_POINT_SELECT_NIBBLE3_NIBBLE_SEL_SHIFT)
-#define ROUTER_NL4_BRANCH2_TEST_POINT_SELECT_NIBBLE3_CHIPLET_SEL_SHIFT 24 /* established */
+/* established */
+#define ROUTER_NL4_BRANCH2_TEST_POINT_SELECT_NIBBLE3_CHIPLET_SEL_SHIFT 24
 #define ROUTER_NL4_BRANCH2_TEST_POINT_SELECT_NIBBLE3_CHIPLET_SEL_MASK 0x7ull
 #define ROUTER_NL4_BRANCH2_TEST_POINT_SELECT_NIBBLE3_CHIPLET_SEL_INPLACE (ROUTER_NL4_BRANCH2_TEST_POINT_SELECT_NIBBLE3_CHIPLET_SEL_MASK << ROUTER_NL4_BRANCH2_TEST_POINT_SELECT_NIBBLE3_CHIPLET_SEL_SHIFT)
-#define ROUTER_NL4_BRANCH2_TEST_POINT_SELECT_NIBBLE2_NIBBLE_SEL_SHIFT 20 /* established */
+/* established */
+#define ROUTER_NL4_BRANCH2_TEST_POINT_SELECT_NIBBLE2_NIBBLE_SEL_SHIFT 20
 #define ROUTER_NL4_BRANCH2_TEST_POINT_SELECT_NIBBLE2_NIBBLE_SEL_MASK 0x7ull
 #define ROUTER_NL4_BRANCH2_TEST_POINT_SELECT_NIBBLE2_NIBBLE_SEL_INPLACE (ROUTER_NL4_BRANCH2_TEST_POINT_SELECT_NIBBLE2_NIBBLE_SEL_MASK << ROUTER_NL4_BRANCH2_TEST_POINT_SELECT_NIBBLE2_NIBBLE_SEL_SHIFT)
-#define ROUTER_NL4_BRANCH2_TEST_POINT_SELECT_NIBBLE2_CHIPLET_SEL_SHIFT 16 /* established */
+/* established */
+#define ROUTER_NL4_BRANCH2_TEST_POINT_SELECT_NIBBLE2_CHIPLET_SEL_SHIFT 16
 #define ROUTER_NL4_BRANCH2_TEST_POINT_SELECT_NIBBLE2_CHIPLET_SEL_MASK 0x7ull
 #define ROUTER_NL4_BRANCH2_TEST_POINT_SELECT_NIBBLE2_CHIPLET_SEL_INPLACE (ROUTER_NL4_BRANCH2_TEST_POINT_SELECT_NIBBLE2_CHIPLET_SEL_MASK << ROUTER_NL4_BRANCH2_TEST_POINT_SELECT_NIBBLE2_CHIPLET_SEL_SHIFT)
-#define ROUTER_NL4_BRANCH2_TEST_POINT_SELECT_NIBBLE1_NIBBLE_SEL_SHIFT 12 /* established */
+/* established */
+#define ROUTER_NL4_BRANCH2_TEST_POINT_SELECT_NIBBLE1_NIBBLE_SEL_SHIFT 12
 #define ROUTER_NL4_BRANCH2_TEST_POINT_SELECT_NIBBLE1_NIBBLE_SEL_MASK 0x7ull
 #define ROUTER_NL4_BRANCH2_TEST_POINT_SELECT_NIBBLE1_NIBBLE_SEL_INPLACE (ROUTER_NL4_BRANCH2_TEST_POINT_SELECT_NIBBLE1_NIBBLE_SEL_MASK << ROUTER_NL4_BRANCH2_TEST_POINT_SELECT_NIBBLE1_NIBBLE_SEL_SHIFT)
-#define ROUTER_NL4_BRANCH2_TEST_POINT_SELECT_NIBBLE1_CHIPLET_SEL_SHIFT 8 /* established */
+/* established */
+#define ROUTER_NL4_BRANCH2_TEST_POINT_SELECT_NIBBLE1_CHIPLET_SEL_SHIFT 8
 #define ROUTER_NL4_BRANCH2_TEST_POINT_SELECT_NIBBLE1_CHIPLET_SEL_MASK 0x7ull
 #define ROUTER_NL4_BRANCH2_TEST_POINT_SELECT_NIBBLE1_CHIPLET_SEL_INPLACE (ROUTER_NL4_BRANCH2_TEST_POINT_SELECT_NIBBLE1_CHIPLET_SEL_MASK << ROUTER_NL4_BRANCH2_TEST_POINT_SELECT_NIBBLE1_CHIPLET_SEL_SHIFT)
-#define ROUTER_NL4_BRANCH2_TEST_POINT_SELECT_NIBBLE0_NIBBLE_SEL_SHIFT 4 /* established */
+/* established */
+#define ROUTER_NL4_BRANCH2_TEST_POINT_SELECT_NIBBLE0_NIBBLE_SEL_SHIFT 4
 #define ROUTER_NL4_BRANCH2_TEST_POINT_SELECT_NIBBLE0_NIBBLE_SEL_MASK 0x7ull
 #define ROUTER_NL4_BRANCH2_TEST_POINT_SELECT_NIBBLE0_NIBBLE_SEL_INPLACE (ROUTER_NL4_BRANCH2_TEST_POINT_SELECT_NIBBLE0_NIBBLE_SEL_MASK << ROUTER_NL4_BRANCH2_TEST_POINT_SELECT_NIBBLE0_NIBBLE_SEL_SHIFT)
-#define ROUTER_NL4_BRANCH2_TEST_POINT_SELECT_NIBBLE0_CHIPLET_SEL_SHIFT 0 /* established */
+/* established */
+#define ROUTER_NL4_BRANCH2_TEST_POINT_SELECT_NIBBLE0_CHIPLET_SEL_SHIFT 0
 #define ROUTER_NL4_BRANCH2_TEST_POINT_SELECT_NIBBLE0_CHIPLET_SEL_MASK 0x7ull
 #define ROUTER_NL4_BRANCH2_TEST_POINT_SELECT_NIBBLE0_CHIPLET_SEL_INPLACE (ROUTER_NL4_BRANCH2_TEST_POINT_SELECT_NIBBLE0_CHIPLET_SEL_MASK << ROUTER_NL4_BRANCH2_TEST_POINT_SELECT_NIBBLE0_CHIPLET_SEL_SHIFT)
 
 /*
- * PROM register R4_BRANCH2_TEST_POINT_COMPARE. Offset and field positions read from the table; role inferred from the names.
+ * PROM register R4_BRANCH2_TEST_POINT_COMPARE. Offset and field positions read
+ * from the table; role inferred from the names.
  */
 /* branch2_test_point_compare: rw64, reset unknown */
-#define ROUTER_NL4_BRANCH2_TEST_POINT_COMPARE_OFFSET 0x1006048u /* established */
-#define ROUTER_NL4_BRANCH2_TEST_POINT_COMPARE_COMPARE_PATTERN_SHIFT 32 /* established */
+/* established */
+#define ROUTER_NL4_BRANCH2_TEST_POINT_COMPARE_OFFSET 0x1006048u
+/* established */
+#define ROUTER_NL4_BRANCH2_TEST_POINT_COMPARE_COMPARE_PATTERN_SHIFT 32
 #define ROUTER_NL4_BRANCH2_TEST_POINT_COMPARE_COMPARE_PATTERN_MASK 0xffffffffull
 #define ROUTER_NL4_BRANCH2_TEST_POINT_COMPARE_COMPARE_PATTERN_INPLACE (ROUTER_NL4_BRANCH2_TEST_POINT_COMPARE_COMPARE_PATTERN_MASK << ROUTER_NL4_BRANCH2_TEST_POINT_COMPARE_COMPARE_PATTERN_SHIFT)
-#define ROUTER_NL4_BRANCH2_TEST_POINT_COMPARE_COMPARE_MASK_SHIFT 0 /* established */
+/* established */
+#define ROUTER_NL4_BRANCH2_TEST_POINT_COMPARE_COMPARE_MASK_SHIFT 0
 #define ROUTER_NL4_BRANCH2_TEST_POINT_COMPARE_COMPARE_MASK_MASK 0xffffffffull
 #define ROUTER_NL4_BRANCH2_TEST_POINT_COMPARE_COMPARE_MASK_INPLACE (ROUTER_NL4_BRANCH2_TEST_POINT_COMPARE_COMPARE_MASK_MASK << ROUTER_NL4_BRANCH2_TEST_POINT_COMPARE_COMPARE_MASK_SHIFT)
 
 /*
- * PROM register R4_BRANCH2_TEST_POINT_TRIGGER_SELECT. Offset and field positions read from the table; role inferred from the names.
+ * PROM register R4_BRANCH2_TEST_POINT_TRIGGER_SELECT. Offset and field
+ * positions read from the table; role inferred from the names.
  */
 /* branch2_test_point_trigger_select: rw64, reset unknown */
-#define ROUTER_NL4_BRANCH2_TEST_POINT_TRIGGER_SELECT_OFFSET 0x1006050u /* established */
-#define ROUTER_NL4_BRANCH2_TEST_POINT_TRIGGER_SELECT_TRIGGER7_NIBBLE_SEL_SHIFT 60 /* established */
+/* established */
+#define ROUTER_NL4_BRANCH2_TEST_POINT_TRIGGER_SELECT_OFFSET 0x1006050u
+/* established */
+#define ROUTER_NL4_BRANCH2_TEST_POINT_TRIGGER_SELECT_TRIGGER7_NIBBLE_SEL_SHIFT 60
 #define ROUTER_NL4_BRANCH2_TEST_POINT_TRIGGER_SELECT_TRIGGER7_NIBBLE_SEL_MASK 0x7ull
 #define ROUTER_NL4_BRANCH2_TEST_POINT_TRIGGER_SELECT_TRIGGER7_NIBBLE_SEL_INPLACE (ROUTER_NL4_BRANCH2_TEST_POINT_TRIGGER_SELECT_TRIGGER7_NIBBLE_SEL_MASK << ROUTER_NL4_BRANCH2_TEST_POINT_TRIGGER_SELECT_TRIGGER7_NIBBLE_SEL_SHIFT)
-#define ROUTER_NL4_BRANCH2_TEST_POINT_TRIGGER_SELECT_TRIGGER7_CHIPLET_SEL_SHIFT 56 /* established */
+/* established */
+#define ROUTER_NL4_BRANCH2_TEST_POINT_TRIGGER_SELECT_TRIGGER7_CHIPLET_SEL_SHIFT 56
 #define ROUTER_NL4_BRANCH2_TEST_POINT_TRIGGER_SELECT_TRIGGER7_CHIPLET_SEL_MASK 0x7ull
 #define ROUTER_NL4_BRANCH2_TEST_POINT_TRIGGER_SELECT_TRIGGER7_CHIPLET_SEL_INPLACE (ROUTER_NL4_BRANCH2_TEST_POINT_TRIGGER_SELECT_TRIGGER7_CHIPLET_SEL_MASK << ROUTER_NL4_BRANCH2_TEST_POINT_TRIGGER_SELECT_TRIGGER7_CHIPLET_SEL_SHIFT)
-#define ROUTER_NL4_BRANCH2_TEST_POINT_TRIGGER_SELECT_TRIGGER6_NIBBLE_SEL_SHIFT 52 /* established */
+/* established */
+#define ROUTER_NL4_BRANCH2_TEST_POINT_TRIGGER_SELECT_TRIGGER6_NIBBLE_SEL_SHIFT 52
 #define ROUTER_NL4_BRANCH2_TEST_POINT_TRIGGER_SELECT_TRIGGER6_NIBBLE_SEL_MASK 0x7ull
 #define ROUTER_NL4_BRANCH2_TEST_POINT_TRIGGER_SELECT_TRIGGER6_NIBBLE_SEL_INPLACE (ROUTER_NL4_BRANCH2_TEST_POINT_TRIGGER_SELECT_TRIGGER6_NIBBLE_SEL_MASK << ROUTER_NL4_BRANCH2_TEST_POINT_TRIGGER_SELECT_TRIGGER6_NIBBLE_SEL_SHIFT)
-#define ROUTER_NL4_BRANCH2_TEST_POINT_TRIGGER_SELECT_TRIGGER6_CHIPLET_SEL_SHIFT 48 /* established */
+/* established */
+#define ROUTER_NL4_BRANCH2_TEST_POINT_TRIGGER_SELECT_TRIGGER6_CHIPLET_SEL_SHIFT 48
 #define ROUTER_NL4_BRANCH2_TEST_POINT_TRIGGER_SELECT_TRIGGER6_CHIPLET_SEL_MASK 0x7ull
 #define ROUTER_NL4_BRANCH2_TEST_POINT_TRIGGER_SELECT_TRIGGER6_CHIPLET_SEL_INPLACE (ROUTER_NL4_BRANCH2_TEST_POINT_TRIGGER_SELECT_TRIGGER6_CHIPLET_SEL_MASK << ROUTER_NL4_BRANCH2_TEST_POINT_TRIGGER_SELECT_TRIGGER6_CHIPLET_SEL_SHIFT)
-#define ROUTER_NL4_BRANCH2_TEST_POINT_TRIGGER_SELECT_TRIGGER5_NIBBLE_SEL_SHIFT 44 /* established */
+/* established */
+#define ROUTER_NL4_BRANCH2_TEST_POINT_TRIGGER_SELECT_TRIGGER5_NIBBLE_SEL_SHIFT 44
 #define ROUTER_NL4_BRANCH2_TEST_POINT_TRIGGER_SELECT_TRIGGER5_NIBBLE_SEL_MASK 0x7ull
 #define ROUTER_NL4_BRANCH2_TEST_POINT_TRIGGER_SELECT_TRIGGER5_NIBBLE_SEL_INPLACE (ROUTER_NL4_BRANCH2_TEST_POINT_TRIGGER_SELECT_TRIGGER5_NIBBLE_SEL_MASK << ROUTER_NL4_BRANCH2_TEST_POINT_TRIGGER_SELECT_TRIGGER5_NIBBLE_SEL_SHIFT)
-#define ROUTER_NL4_BRANCH2_TEST_POINT_TRIGGER_SELECT_TRIGGER5_CHIPLET_SEL_SHIFT 40 /* established */
+/* established */
+#define ROUTER_NL4_BRANCH2_TEST_POINT_TRIGGER_SELECT_TRIGGER5_CHIPLET_SEL_SHIFT 40
 #define ROUTER_NL4_BRANCH2_TEST_POINT_TRIGGER_SELECT_TRIGGER5_CHIPLET_SEL_MASK 0x7ull
 #define ROUTER_NL4_BRANCH2_TEST_POINT_TRIGGER_SELECT_TRIGGER5_CHIPLET_SEL_INPLACE (ROUTER_NL4_BRANCH2_TEST_POINT_TRIGGER_SELECT_TRIGGER5_CHIPLET_SEL_MASK << ROUTER_NL4_BRANCH2_TEST_POINT_TRIGGER_SELECT_TRIGGER5_CHIPLET_SEL_SHIFT)
-#define ROUTER_NL4_BRANCH2_TEST_POINT_TRIGGER_SELECT_TRIGGER4_NIBBLE_SEL_SHIFT 36 /* established */
+/* established */
+#define ROUTER_NL4_BRANCH2_TEST_POINT_TRIGGER_SELECT_TRIGGER4_NIBBLE_SEL_SHIFT 36
 #define ROUTER_NL4_BRANCH2_TEST_POINT_TRIGGER_SELECT_TRIGGER4_NIBBLE_SEL_MASK 0x7ull
 #define ROUTER_NL4_BRANCH2_TEST_POINT_TRIGGER_SELECT_TRIGGER4_NIBBLE_SEL_INPLACE (ROUTER_NL4_BRANCH2_TEST_POINT_TRIGGER_SELECT_TRIGGER4_NIBBLE_SEL_MASK << ROUTER_NL4_BRANCH2_TEST_POINT_TRIGGER_SELECT_TRIGGER4_NIBBLE_SEL_SHIFT)
-#define ROUTER_NL4_BRANCH2_TEST_POINT_TRIGGER_SELECT_TRIGGER4_CHIPLET_SEL_SHIFT 32 /* established */
+/* established */
+#define ROUTER_NL4_BRANCH2_TEST_POINT_TRIGGER_SELECT_TRIGGER4_CHIPLET_SEL_SHIFT 32
 #define ROUTER_NL4_BRANCH2_TEST_POINT_TRIGGER_SELECT_TRIGGER4_CHIPLET_SEL_MASK 0x7ull
 #define ROUTER_NL4_BRANCH2_TEST_POINT_TRIGGER_SELECT_TRIGGER4_CHIPLET_SEL_INPLACE (ROUTER_NL4_BRANCH2_TEST_POINT_TRIGGER_SELECT_TRIGGER4_CHIPLET_SEL_MASK << ROUTER_NL4_BRANCH2_TEST_POINT_TRIGGER_SELECT_TRIGGER4_CHIPLET_SEL_SHIFT)
-#define ROUTER_NL4_BRANCH2_TEST_POINT_TRIGGER_SELECT_TRIGGER3_NIBBLE_SEL_SHIFT 28 /* established */
+/* established */
+#define ROUTER_NL4_BRANCH2_TEST_POINT_TRIGGER_SELECT_TRIGGER3_NIBBLE_SEL_SHIFT 28
 #define ROUTER_NL4_BRANCH2_TEST_POINT_TRIGGER_SELECT_TRIGGER3_NIBBLE_SEL_MASK 0x7ull
 #define ROUTER_NL4_BRANCH2_TEST_POINT_TRIGGER_SELECT_TRIGGER3_NIBBLE_SEL_INPLACE (ROUTER_NL4_BRANCH2_TEST_POINT_TRIGGER_SELECT_TRIGGER3_NIBBLE_SEL_MASK << ROUTER_NL4_BRANCH2_TEST_POINT_TRIGGER_SELECT_TRIGGER3_NIBBLE_SEL_SHIFT)
-#define ROUTER_NL4_BRANCH2_TEST_POINT_TRIGGER_SELECT_TRIGGER3_CHIPLET_SEL_SHIFT 24 /* established */
+/* established */
+#define ROUTER_NL4_BRANCH2_TEST_POINT_TRIGGER_SELECT_TRIGGER3_CHIPLET_SEL_SHIFT 24
 #define ROUTER_NL4_BRANCH2_TEST_POINT_TRIGGER_SELECT_TRIGGER3_CHIPLET_SEL_MASK 0x7ull
 #define ROUTER_NL4_BRANCH2_TEST_POINT_TRIGGER_SELECT_TRIGGER3_CHIPLET_SEL_INPLACE (ROUTER_NL4_BRANCH2_TEST_POINT_TRIGGER_SELECT_TRIGGER3_CHIPLET_SEL_MASK << ROUTER_NL4_BRANCH2_TEST_POINT_TRIGGER_SELECT_TRIGGER3_CHIPLET_SEL_SHIFT)
-#define ROUTER_NL4_BRANCH2_TEST_POINT_TRIGGER_SELECT_TRIGGER2_NIBBLE_SEL_SHIFT 20 /* established */
+/* established */
+#define ROUTER_NL4_BRANCH2_TEST_POINT_TRIGGER_SELECT_TRIGGER2_NIBBLE_SEL_SHIFT 20
 #define ROUTER_NL4_BRANCH2_TEST_POINT_TRIGGER_SELECT_TRIGGER2_NIBBLE_SEL_MASK 0x7ull
 #define ROUTER_NL4_BRANCH2_TEST_POINT_TRIGGER_SELECT_TRIGGER2_NIBBLE_SEL_INPLACE (ROUTER_NL4_BRANCH2_TEST_POINT_TRIGGER_SELECT_TRIGGER2_NIBBLE_SEL_MASK << ROUTER_NL4_BRANCH2_TEST_POINT_TRIGGER_SELECT_TRIGGER2_NIBBLE_SEL_SHIFT)
-#define ROUTER_NL4_BRANCH2_TEST_POINT_TRIGGER_SELECT_TRIGGER2_CHIPLET_SEL_SHIFT 16 /* established */
+/* established */
+#define ROUTER_NL4_BRANCH2_TEST_POINT_TRIGGER_SELECT_TRIGGER2_CHIPLET_SEL_SHIFT 16
 #define ROUTER_NL4_BRANCH2_TEST_POINT_TRIGGER_SELECT_TRIGGER2_CHIPLET_SEL_MASK 0x7ull
 #define ROUTER_NL4_BRANCH2_TEST_POINT_TRIGGER_SELECT_TRIGGER2_CHIPLET_SEL_INPLACE (ROUTER_NL4_BRANCH2_TEST_POINT_TRIGGER_SELECT_TRIGGER2_CHIPLET_SEL_MASK << ROUTER_NL4_BRANCH2_TEST_POINT_TRIGGER_SELECT_TRIGGER2_CHIPLET_SEL_SHIFT)
-#define ROUTER_NL4_BRANCH2_TEST_POINT_TRIGGER_SELECT_TRIGGER1_NIBBLE_SEL_SHIFT 12 /* established */
+/* established */
+#define ROUTER_NL4_BRANCH2_TEST_POINT_TRIGGER_SELECT_TRIGGER1_NIBBLE_SEL_SHIFT 12
 #define ROUTER_NL4_BRANCH2_TEST_POINT_TRIGGER_SELECT_TRIGGER1_NIBBLE_SEL_MASK 0x7ull
 #define ROUTER_NL4_BRANCH2_TEST_POINT_TRIGGER_SELECT_TRIGGER1_NIBBLE_SEL_INPLACE (ROUTER_NL4_BRANCH2_TEST_POINT_TRIGGER_SELECT_TRIGGER1_NIBBLE_SEL_MASK << ROUTER_NL4_BRANCH2_TEST_POINT_TRIGGER_SELECT_TRIGGER1_NIBBLE_SEL_SHIFT)
-#define ROUTER_NL4_BRANCH2_TEST_POINT_TRIGGER_SELECT_TRIGGER1_CHIPLET_SEL_SHIFT 8 /* established */
+/* established */
+#define ROUTER_NL4_BRANCH2_TEST_POINT_TRIGGER_SELECT_TRIGGER1_CHIPLET_SEL_SHIFT 8
 #define ROUTER_NL4_BRANCH2_TEST_POINT_TRIGGER_SELECT_TRIGGER1_CHIPLET_SEL_MASK 0x7ull
 #define ROUTER_NL4_BRANCH2_TEST_POINT_TRIGGER_SELECT_TRIGGER1_CHIPLET_SEL_INPLACE (ROUTER_NL4_BRANCH2_TEST_POINT_TRIGGER_SELECT_TRIGGER1_CHIPLET_SEL_MASK << ROUTER_NL4_BRANCH2_TEST_POINT_TRIGGER_SELECT_TRIGGER1_CHIPLET_SEL_SHIFT)
-#define ROUTER_NL4_BRANCH2_TEST_POINT_TRIGGER_SELECT_TRIGGER0_NIBBLE_SEL_SHIFT 4 /* established */
+/* established */
+#define ROUTER_NL4_BRANCH2_TEST_POINT_TRIGGER_SELECT_TRIGGER0_NIBBLE_SEL_SHIFT 4
 #define ROUTER_NL4_BRANCH2_TEST_POINT_TRIGGER_SELECT_TRIGGER0_NIBBLE_SEL_MASK 0x7ull
 #define ROUTER_NL4_BRANCH2_TEST_POINT_TRIGGER_SELECT_TRIGGER0_NIBBLE_SEL_INPLACE (ROUTER_NL4_BRANCH2_TEST_POINT_TRIGGER_SELECT_TRIGGER0_NIBBLE_SEL_MASK << ROUTER_NL4_BRANCH2_TEST_POINT_TRIGGER_SELECT_TRIGGER0_NIBBLE_SEL_SHIFT)
-#define ROUTER_NL4_BRANCH2_TEST_POINT_TRIGGER_SELECT_TRIGGER0_CHIPLET_SEL_SHIFT 0 /* established */
+/* established */
+#define ROUTER_NL4_BRANCH2_TEST_POINT_TRIGGER_SELECT_TRIGGER0_CHIPLET_SEL_SHIFT 0
 #define ROUTER_NL4_BRANCH2_TEST_POINT_TRIGGER_SELECT_TRIGGER0_CHIPLET_SEL_MASK 0x7ull
 #define ROUTER_NL4_BRANCH2_TEST_POINT_TRIGGER_SELECT_TRIGGER0_CHIPLET_SEL_INPLACE (ROUTER_NL4_BRANCH2_TEST_POINT_TRIGGER_SELECT_TRIGGER0_CHIPLET_SEL_MASK << ROUTER_NL4_BRANCH2_TEST_POINT_TRIGGER_SELECT_TRIGGER0_CHIPLET_SEL_SHIFT)
 
 /*
- * PROM register R4_BRANCH1_DEBUG_DATA. Offset and field positions read from the table; role inferred from the names.
+ * PROM register R4_BRANCH1_DEBUG_DATA. Offset and field positions read from the
+ * table; role inferred from the names.
  */
 /* branch1_debug_data: r64, reset unknown */
-#define ROUTER_NL4_BRANCH1_DEBUG_DATA_OFFSET         0x1007100u /* established */
+/* established */
+#define ROUTER_NL4_BRANCH1_DEBUG_DATA_OFFSET         0x1007100u
 #define ROUTER_NL4_BRANCH1_DEBUG_DATA_TRIG_SHIFT     32 /* established */
 #define ROUTER_NL4_BRANCH1_DEBUG_DATA_TRIG_MASK      0xffffffffull
-#define ROUTER_NL4_BRANCH1_DEBUG_DATA_TRIG_INPLACE   (ROUTER_NL4_BRANCH1_DEBUG_DATA_TRIG_MASK << ROUTER_NL4_BRANCH1_DEBUG_DATA_TRIG_SHIFT)
+#define ROUTER_NL4_BRANCH1_DEBUG_DATA_TRIG_INPLACE (ROUTER_NL4_BRANCH1_DEBUG_DATA_TRIG_MASK << ROUTER_NL4_BRANCH1_DEBUG_DATA_TRIG_SHIFT)
 #define ROUTER_NL4_BRANCH1_DEBUG_DATA_DATA_SHIFT     0 /* established */
 #define ROUTER_NL4_BRANCH1_DEBUG_DATA_DATA_MASK      0xffffffffull
-#define ROUTER_NL4_BRANCH1_DEBUG_DATA_DATA_INPLACE   (ROUTER_NL4_BRANCH1_DEBUG_DATA_DATA_MASK << ROUTER_NL4_BRANCH1_DEBUG_DATA_DATA_SHIFT)
+#define ROUTER_NL4_BRANCH1_DEBUG_DATA_DATA_INPLACE (ROUTER_NL4_BRANCH1_DEBUG_DATA_DATA_MASK << ROUTER_NL4_BRANCH1_DEBUG_DATA_DATA_SHIFT)
 
 /*
- * PROM register R4_BRANCH2_DEBUG_DATA. Offset and field positions read from the table; role inferred from the names.
+ * PROM register R4_BRANCH2_DEBUG_DATA. Offset and field positions read from the
+ * table; role inferred from the names.
  */
 /* branch2_debug_data: r64, reset unknown */
-#define ROUTER_NL4_BRANCH2_DEBUG_DATA_OFFSET         0x1007108u /* established */
+/* established */
+#define ROUTER_NL4_BRANCH2_DEBUG_DATA_OFFSET         0x1007108u
 #define ROUTER_NL4_BRANCH2_DEBUG_DATA_TRIG_SHIFT     32 /* established */
 #define ROUTER_NL4_BRANCH2_DEBUG_DATA_TRIG_MASK      0xffffffffull
-#define ROUTER_NL4_BRANCH2_DEBUG_DATA_TRIG_INPLACE   (ROUTER_NL4_BRANCH2_DEBUG_DATA_TRIG_MASK << ROUTER_NL4_BRANCH2_DEBUG_DATA_TRIG_SHIFT)
+#define ROUTER_NL4_BRANCH2_DEBUG_DATA_TRIG_INPLACE (ROUTER_NL4_BRANCH2_DEBUG_DATA_TRIG_MASK << ROUTER_NL4_BRANCH2_DEBUG_DATA_TRIG_SHIFT)
 #define ROUTER_NL4_BRANCH2_DEBUG_DATA_DATA_SHIFT     0 /* established */
 #define ROUTER_NL4_BRANCH2_DEBUG_DATA_DATA_MASK      0xffffffffull
-#define ROUTER_NL4_BRANCH2_DEBUG_DATA_DATA_INPLACE   (ROUTER_NL4_BRANCH2_DEBUG_DATA_DATA_MASK << ROUTER_NL4_BRANCH2_DEBUG_DATA_DATA_SHIFT)
+#define ROUTER_NL4_BRANCH2_DEBUG_DATA_DATA_INPLACE (ROUTER_NL4_BRANCH2_DEBUG_DATA_DATA_MASK << ROUTER_NL4_BRANCH2_DEBUG_DATA_DATA_SHIFT)
 
 /*
- * PROM register R4_ROOT_DEBUG_DATA. Offset and field positions read from the table; role inferred from the names.
+ * PROM register R4_ROOT_DEBUG_DATA. Offset and field positions read from the
+ * table; role inferred from the names.
  */
 /* root_debug_data: r64, reset unknown */
-#define ROUTER_NL4_ROOT_DEBUG_DATA_OFFSET            0x1007110u /* established */
+/* established */
+#define ROUTER_NL4_ROOT_DEBUG_DATA_OFFSET            0x1007110u
 #define ROUTER_NL4_ROOT_DEBUG_DATA_TRIG_SHIFT        32 /* established */
 #define ROUTER_NL4_ROOT_DEBUG_DATA_TRIG_MASK         0xffffffffull
-#define ROUTER_NL4_ROOT_DEBUG_DATA_TRIG_INPLACE      (ROUTER_NL4_ROOT_DEBUG_DATA_TRIG_MASK << ROUTER_NL4_ROOT_DEBUG_DATA_TRIG_SHIFT)
+#define ROUTER_NL4_ROOT_DEBUG_DATA_TRIG_INPLACE (ROUTER_NL4_ROOT_DEBUG_DATA_TRIG_MASK << ROUTER_NL4_ROOT_DEBUG_DATA_TRIG_SHIFT)
 #define ROUTER_NL4_ROOT_DEBUG_DATA_DATA_SHIFT        0 /* established */
 #define ROUTER_NL4_ROOT_DEBUG_DATA_DATA_MASK         0xffffffffull
-#define ROUTER_NL4_ROOT_DEBUG_DATA_DATA_INPLACE      (ROUTER_NL4_ROOT_DEBUG_DATA_DATA_MASK << ROUTER_NL4_ROOT_DEBUG_DATA_DATA_SHIFT)
+#define ROUTER_NL4_ROOT_DEBUG_DATA_DATA_INPLACE (ROUTER_NL4_ROOT_DEBUG_DATA_DATA_MASK << ROUTER_NL4_ROOT_DEBUG_DATA_DATA_SHIFT)
 
 /*
- * PROM register R4_STOP_CLK_CONTROL. Offset and field positions read from the table; role inferred from the names.
+ * PROM register R4_STOP_CLK_CONTROL. Offset and field positions read from the
+ * table; role inferred from the names.
  */
 /* stop_clk_control: rw64, reset unknown */
-#define ROUTER_NL4_STOP_CLK_CONTROL_OFFSET           0x1008000u /* established */
+/* established */
+#define ROUTER_NL4_STOP_CLK_CONTROL_OFFSET           0x1008000u
 #define ROUTER_NL4_STOP_CLK_CONTROL_ENABLE_SHIFT     8 /* established */
 #define ROUTER_NL4_STOP_CLK_CONTROL_ENABLE_MASK      0x1ull
-#define ROUTER_NL4_STOP_CLK_CONTROL_ENABLE_INPLACE   (ROUTER_NL4_STOP_CLK_CONTROL_ENABLE_MASK << ROUTER_NL4_STOP_CLK_CONTROL_ENABLE_SHIFT)
+#define ROUTER_NL4_STOP_CLK_CONTROL_ENABLE_INPLACE (ROUTER_NL4_STOP_CLK_CONTROL_ENABLE_MASK << ROUTER_NL4_STOP_CLK_CONTROL_ENABLE_SHIFT)
 #define ROUTER_NL4_STOP_CLK_CONTROL_MODE_SHIFT       7 /* established */
 #define ROUTER_NL4_STOP_CLK_CONTROL_MODE_MASK        0x1ull
-#define ROUTER_NL4_STOP_CLK_CONTROL_MODE_INPLACE     (ROUTER_NL4_STOP_CLK_CONTROL_MODE_MASK << ROUTER_NL4_STOP_CLK_CONTROL_MODE_SHIFT)
+#define ROUTER_NL4_STOP_CLK_CONTROL_MODE_INPLACE (ROUTER_NL4_STOP_CLK_CONTROL_MODE_MASK << ROUTER_NL4_STOP_CLK_CONTROL_MODE_SHIFT)
 #define ROUTER_NL4_STOP_CLK_CONTROL_POLARITY_SHIFT   6 /* established */
 #define ROUTER_NL4_STOP_CLK_CONTROL_POLARITY_MASK    0x1ull
 #define ROUTER_NL4_STOP_CLK_CONTROL_POLARITY_INPLACE (ROUTER_NL4_STOP_CLK_CONTROL_POLARITY_MASK << ROUTER_NL4_STOP_CLK_CONTROL_POLARITY_SHIFT)
 #define ROUTER_NL4_STOP_CLK_CONTROL_EVENT_SHIFT      5 /* established */
 #define ROUTER_NL4_STOP_CLK_CONTROL_EVENT_MASK       0x1ull
-#define ROUTER_NL4_STOP_CLK_CONTROL_EVENT_INPLACE    (ROUTER_NL4_STOP_CLK_CONTROL_EVENT_MASK << ROUTER_NL4_STOP_CLK_CONTROL_EVENT_SHIFT)
+#define ROUTER_NL4_STOP_CLK_CONTROL_EVENT_INPLACE (ROUTER_NL4_STOP_CLK_CONTROL_EVENT_MASK << ROUTER_NL4_STOP_CLK_CONTROL_EVENT_SHIFT)
 #define ROUTER_NL4_STOP_CLK_CONTROL_STIMULUS_SHIFT   0 /* established */
 #define ROUTER_NL4_STOP_CLK_CONTROL_STIMULUS_MASK    0x1full
 #define ROUTER_NL4_STOP_CLK_CONTROL_STIMULUS_INPLACE (ROUTER_NL4_STOP_CLK_CONTROL_STIMULUS_MASK << ROUTER_NL4_STOP_CLK_CONTROL_STIMULUS_SHIFT)
 
 /*
- * PROM register R4_STOP_CLK_DELAY_PHASE. Offset and field positions read from the table; role inferred from the names.
+ * PROM register R4_STOP_CLK_DELAY_PHASE. Offset and field positions read from
+ * the table; role inferred from the names.
  */
 /* stop_clk_delay_phase: rw64, reset unknown */
-#define ROUTER_NL4_STOP_CLK_DELAY_PHASE_OFFSET       0x1008080u /* established */
+/* established */
+#define ROUTER_NL4_STOP_CLK_DELAY_PHASE_OFFSET       0x1008080u
 #define ROUTER_NL4_STOP_CLK_DELAY_PHASE_DELAY_SHIFT  0 /* established */
 #define ROUTER_NL4_STOP_CLK_DELAY_PHASE_DELAY_MASK   0xffull
 #define ROUTER_NL4_STOP_CLK_DELAY_PHASE_DELAY_INPLACE (ROUTER_NL4_STOP_CLK_DELAY_PHASE_DELAY_MASK << ROUTER_NL4_STOP_CLK_DELAY_PHASE_DELAY_SHIFT)
 
 /*
- * PROM register R4_PERFORMANCE_COUNT0_CONTROL. Offset and field positions read from the table; role inferred from the names.
+ * PROM register R4_PERFORMANCE_COUNT0_CONTROL. Offset and field positions read
+ * from the table; role inferred from the names.
  */
 /* performance_count0_control: rw64, reset unknown */
-#define ROUTER_NL4_PERFORMANCE_COUNT0_CONTROL_OFFSET 0x1080000u /* established */
-#define ROUTER_NL4_PERFORMANCE_COUNT0_CONTROL_CLR_ENABLE_SHIFT 32 /* established */
+/* established */
+#define ROUTER_NL4_PERFORMANCE_COUNT0_CONTROL_OFFSET 0x1080000u
+/* established */
+#define ROUTER_NL4_PERFORMANCE_COUNT0_CONTROL_CLR_ENABLE_SHIFT 32
 #define ROUTER_NL4_PERFORMANCE_COUNT0_CONTROL_CLR_ENABLE_MASK 0x1ull
 #define ROUTER_NL4_PERFORMANCE_COUNT0_CONTROL_CLR_ENABLE_INPLACE (ROUTER_NL4_PERFORMANCE_COUNT0_CONTROL_CLR_ENABLE_MASK << ROUTER_NL4_PERFORMANCE_COUNT0_CONTROL_CLR_ENABLE_SHIFT)
-#define ROUTER_NL4_PERFORMANCE_COUNT0_CONTROL_CLR_MODE_SHIFT 31 /* established */
+/* established */
+#define ROUTER_NL4_PERFORMANCE_COUNT0_CONTROL_CLR_MODE_SHIFT 31
 #define ROUTER_NL4_PERFORMANCE_COUNT0_CONTROL_CLR_MODE_MASK 0x1ull
 #define ROUTER_NL4_PERFORMANCE_COUNT0_CONTROL_CLR_MODE_INPLACE (ROUTER_NL4_PERFORMANCE_COUNT0_CONTROL_CLR_MODE_MASK << ROUTER_NL4_PERFORMANCE_COUNT0_CONTROL_CLR_MODE_SHIFT)
-#define ROUTER_NL4_PERFORMANCE_COUNT0_CONTROL_CLR_POLARITY_SHIFT 30 /* established */
+/* established */
+#define ROUTER_NL4_PERFORMANCE_COUNT0_CONTROL_CLR_POLARITY_SHIFT 30
 #define ROUTER_NL4_PERFORMANCE_COUNT0_CONTROL_CLR_POLARITY_MASK 0x1ull
 #define ROUTER_NL4_PERFORMANCE_COUNT0_CONTROL_CLR_POLARITY_INPLACE (ROUTER_NL4_PERFORMANCE_COUNT0_CONTROL_CLR_POLARITY_MASK << ROUTER_NL4_PERFORMANCE_COUNT0_CONTROL_CLR_POLARITY_SHIFT)
-#define ROUTER_NL4_PERFORMANCE_COUNT0_CONTROL_CLR_EVENT_SHIFT 29 /* established */
+/* established */
+#define ROUTER_NL4_PERFORMANCE_COUNT0_CONTROL_CLR_EVENT_SHIFT 29
 #define ROUTER_NL4_PERFORMANCE_COUNT0_CONTROL_CLR_EVENT_MASK 0x1ull
 #define ROUTER_NL4_PERFORMANCE_COUNT0_CONTROL_CLR_EVENT_INPLACE (ROUTER_NL4_PERFORMANCE_COUNT0_CONTROL_CLR_EVENT_MASK << ROUTER_NL4_PERFORMANCE_COUNT0_CONTROL_CLR_EVENT_SHIFT)
-#define ROUTER_NL4_PERFORMANCE_COUNT0_CONTROL_CLR_STIMULUS_SHIFT 24 /* established */
+/* established */
+#define ROUTER_NL4_PERFORMANCE_COUNT0_CONTROL_CLR_STIMULUS_SHIFT 24
 #define ROUTER_NL4_PERFORMANCE_COUNT0_CONTROL_CLR_STIMULUS_MASK 0x1full
 #define ROUTER_NL4_PERFORMANCE_COUNT0_CONTROL_CLR_STIMULUS_INPLACE (ROUTER_NL4_PERFORMANCE_COUNT0_CONTROL_CLR_STIMULUS_MASK << ROUTER_NL4_PERFORMANCE_COUNT0_CONTROL_CLR_STIMULUS_SHIFT)
-#define ROUTER_NL4_PERFORMANCE_COUNT0_CONTROL_PEAK_DET_ENABLE_SHIFT 18 /* established */
+/* established */
+#define ROUTER_NL4_PERFORMANCE_COUNT0_CONTROL_PEAK_DET_ENABLE_SHIFT 18
 #define ROUTER_NL4_PERFORMANCE_COUNT0_CONTROL_PEAK_DET_ENABLE_MASK 0x1ull
 #define ROUTER_NL4_PERFORMANCE_COUNT0_CONTROL_PEAK_DET_ENABLE_INPLACE (ROUTER_NL4_PERFORMANCE_COUNT0_CONTROL_PEAK_DET_ENABLE_MASK << ROUTER_NL4_PERFORMANCE_COUNT0_CONTROL_PEAK_DET_ENABLE_SHIFT)
-#define ROUTER_NL4_PERFORMANCE_COUNT0_CONTROL_DEC_ENABLE_SHIFT 17 /* established */
+/* established */
+#define ROUTER_NL4_PERFORMANCE_COUNT0_CONTROL_DEC_ENABLE_SHIFT 17
 #define ROUTER_NL4_PERFORMANCE_COUNT0_CONTROL_DEC_ENABLE_MASK 0x1ull
 #define ROUTER_NL4_PERFORMANCE_COUNT0_CONTROL_DEC_ENABLE_INPLACE (ROUTER_NL4_PERFORMANCE_COUNT0_CONTROL_DEC_ENABLE_MASK << ROUTER_NL4_PERFORMANCE_COUNT0_CONTROL_DEC_ENABLE_SHIFT)
-#define ROUTER_NL4_PERFORMANCE_COUNT0_CONTROL_INC_ENABLE_SHIFT 16 /* established */
+/* established */
+#define ROUTER_NL4_PERFORMANCE_COUNT0_CONTROL_INC_ENABLE_SHIFT 16
 #define ROUTER_NL4_PERFORMANCE_COUNT0_CONTROL_INC_ENABLE_MASK 0x1ull
 #define ROUTER_NL4_PERFORMANCE_COUNT0_CONTROL_INC_ENABLE_INPLACE (ROUTER_NL4_PERFORMANCE_COUNT0_CONTROL_INC_ENABLE_MASK << ROUTER_NL4_PERFORMANCE_COUNT0_CONTROL_INC_ENABLE_SHIFT)
 #define ROUTER_NL4_PERFORMANCE_COUNT0_CONTROL_DN_MODE_SHIFT 15 /* established */
 #define ROUTER_NL4_PERFORMANCE_COUNT0_CONTROL_DN_MODE_MASK 0x1ull
 #define ROUTER_NL4_PERFORMANCE_COUNT0_CONTROL_DN_MODE_INPLACE (ROUTER_NL4_PERFORMANCE_COUNT0_CONTROL_DN_MODE_MASK << ROUTER_NL4_PERFORMANCE_COUNT0_CONTROL_DN_MODE_SHIFT)
-#define ROUTER_NL4_PERFORMANCE_COUNT0_CONTROL_DN_POLARITY_SHIFT 14 /* established */
+/* established */
+#define ROUTER_NL4_PERFORMANCE_COUNT0_CONTROL_DN_POLARITY_SHIFT 14
 #define ROUTER_NL4_PERFORMANCE_COUNT0_CONTROL_DN_POLARITY_MASK 0x1ull
 #define ROUTER_NL4_PERFORMANCE_COUNT0_CONTROL_DN_POLARITY_INPLACE (ROUTER_NL4_PERFORMANCE_COUNT0_CONTROL_DN_POLARITY_MASK << ROUTER_NL4_PERFORMANCE_COUNT0_CONTROL_DN_POLARITY_SHIFT)
-#define ROUTER_NL4_PERFORMANCE_COUNT0_CONTROL_DN_EVENT_SHIFT 13 /* established */
+/* established */
+#define ROUTER_NL4_PERFORMANCE_COUNT0_CONTROL_DN_EVENT_SHIFT 13
 #define ROUTER_NL4_PERFORMANCE_COUNT0_CONTROL_DN_EVENT_MASK 0x1ull
 #define ROUTER_NL4_PERFORMANCE_COUNT0_CONTROL_DN_EVENT_INPLACE (ROUTER_NL4_PERFORMANCE_COUNT0_CONTROL_DN_EVENT_MASK << ROUTER_NL4_PERFORMANCE_COUNT0_CONTROL_DN_EVENT_SHIFT)
-#define ROUTER_NL4_PERFORMANCE_COUNT0_CONTROL_DN_STIMULUS_SHIFT 8 /* established */
+/* established */
+#define ROUTER_NL4_PERFORMANCE_COUNT0_CONTROL_DN_STIMULUS_SHIFT 8
 #define ROUTER_NL4_PERFORMANCE_COUNT0_CONTROL_DN_STIMULUS_MASK 0x1full
 #define ROUTER_NL4_PERFORMANCE_COUNT0_CONTROL_DN_STIMULUS_INPLACE (ROUTER_NL4_PERFORMANCE_COUNT0_CONTROL_DN_STIMULUS_MASK << ROUTER_NL4_PERFORMANCE_COUNT0_CONTROL_DN_STIMULUS_SHIFT)
 #define ROUTER_NL4_PERFORMANCE_COUNT0_CONTROL_UP_MODE_SHIFT 7 /* established */
 #define ROUTER_NL4_PERFORMANCE_COUNT0_CONTROL_UP_MODE_MASK 0x1ull
 #define ROUTER_NL4_PERFORMANCE_COUNT0_CONTROL_UP_MODE_INPLACE (ROUTER_NL4_PERFORMANCE_COUNT0_CONTROL_UP_MODE_MASK << ROUTER_NL4_PERFORMANCE_COUNT0_CONTROL_UP_MODE_SHIFT)
-#define ROUTER_NL4_PERFORMANCE_COUNT0_CONTROL_UP_POLARITY_SHIFT 6 /* established */
+/* established */
+#define ROUTER_NL4_PERFORMANCE_COUNT0_CONTROL_UP_POLARITY_SHIFT 6
 #define ROUTER_NL4_PERFORMANCE_COUNT0_CONTROL_UP_POLARITY_MASK 0x1ull
 #define ROUTER_NL4_PERFORMANCE_COUNT0_CONTROL_UP_POLARITY_INPLACE (ROUTER_NL4_PERFORMANCE_COUNT0_CONTROL_UP_POLARITY_MASK << ROUTER_NL4_PERFORMANCE_COUNT0_CONTROL_UP_POLARITY_SHIFT)
 #define ROUTER_NL4_PERFORMANCE_COUNT0_CONTROL_UP_EVENT_SHIFT 5 /* established */
 #define ROUTER_NL4_PERFORMANCE_COUNT0_CONTROL_UP_EVENT_MASK 0x1ull
 #define ROUTER_NL4_PERFORMANCE_COUNT0_CONTROL_UP_EVENT_INPLACE (ROUTER_NL4_PERFORMANCE_COUNT0_CONTROL_UP_EVENT_MASK << ROUTER_NL4_PERFORMANCE_COUNT0_CONTROL_UP_EVENT_SHIFT)
-#define ROUTER_NL4_PERFORMANCE_COUNT0_CONTROL_UP_STIMULUS_SHIFT 0 /* established */
+/* established */
+#define ROUTER_NL4_PERFORMANCE_COUNT0_CONTROL_UP_STIMULUS_SHIFT 0
 #define ROUTER_NL4_PERFORMANCE_COUNT0_CONTROL_UP_STIMULUS_MASK 0x1full
 #define ROUTER_NL4_PERFORMANCE_COUNT0_CONTROL_UP_STIMULUS_INPLACE (ROUTER_NL4_PERFORMANCE_COUNT0_CONTROL_UP_STIMULUS_MASK << ROUTER_NL4_PERFORMANCE_COUNT0_CONTROL_UP_STIMULUS_SHIFT)
 
 /*
- * PROM register R4_PERFORMANCE_COUNT1_CONTROL. Offset and field positions read from the table; role inferred from the names.
+ * PROM register R4_PERFORMANCE_COUNT1_CONTROL. Offset and field positions read
+ * from the table; role inferred from the names.
  */
 /* performance_count1_control: rw64, reset unknown */
-#define ROUTER_NL4_PERFORMANCE_COUNT1_CONTROL_OFFSET 0x1090000u /* established */
-#define ROUTER_NL4_PERFORMANCE_COUNT1_CONTROL_CLR_ENABLE_SHIFT 32 /* established */
+/* established */
+#define ROUTER_NL4_PERFORMANCE_COUNT1_CONTROL_OFFSET 0x1090000u
+/* established */
+#define ROUTER_NL4_PERFORMANCE_COUNT1_CONTROL_CLR_ENABLE_SHIFT 32
 #define ROUTER_NL4_PERFORMANCE_COUNT1_CONTROL_CLR_ENABLE_MASK 0x1ull
 #define ROUTER_NL4_PERFORMANCE_COUNT1_CONTROL_CLR_ENABLE_INPLACE (ROUTER_NL4_PERFORMANCE_COUNT1_CONTROL_CLR_ENABLE_MASK << ROUTER_NL4_PERFORMANCE_COUNT1_CONTROL_CLR_ENABLE_SHIFT)
-#define ROUTER_NL4_PERFORMANCE_COUNT1_CONTROL_CLR_MODE_SHIFT 31 /* established */
+/* established */
+#define ROUTER_NL4_PERFORMANCE_COUNT1_CONTROL_CLR_MODE_SHIFT 31
 #define ROUTER_NL4_PERFORMANCE_COUNT1_CONTROL_CLR_MODE_MASK 0x1ull
 #define ROUTER_NL4_PERFORMANCE_COUNT1_CONTROL_CLR_MODE_INPLACE (ROUTER_NL4_PERFORMANCE_COUNT1_CONTROL_CLR_MODE_MASK << ROUTER_NL4_PERFORMANCE_COUNT1_CONTROL_CLR_MODE_SHIFT)
-#define ROUTER_NL4_PERFORMANCE_COUNT1_CONTROL_CLR_POLARITY_SHIFT 30 /* established */
+/* established */
+#define ROUTER_NL4_PERFORMANCE_COUNT1_CONTROL_CLR_POLARITY_SHIFT 30
 #define ROUTER_NL4_PERFORMANCE_COUNT1_CONTROL_CLR_POLARITY_MASK 0x1ull
 #define ROUTER_NL4_PERFORMANCE_COUNT1_CONTROL_CLR_POLARITY_INPLACE (ROUTER_NL4_PERFORMANCE_COUNT1_CONTROL_CLR_POLARITY_MASK << ROUTER_NL4_PERFORMANCE_COUNT1_CONTROL_CLR_POLARITY_SHIFT)
-#define ROUTER_NL4_PERFORMANCE_COUNT1_CONTROL_CLR_EVENT_SHIFT 29 /* established */
+/* established */
+#define ROUTER_NL4_PERFORMANCE_COUNT1_CONTROL_CLR_EVENT_SHIFT 29
 #define ROUTER_NL4_PERFORMANCE_COUNT1_CONTROL_CLR_EVENT_MASK 0x1ull
 #define ROUTER_NL4_PERFORMANCE_COUNT1_CONTROL_CLR_EVENT_INPLACE (ROUTER_NL4_PERFORMANCE_COUNT1_CONTROL_CLR_EVENT_MASK << ROUTER_NL4_PERFORMANCE_COUNT1_CONTROL_CLR_EVENT_SHIFT)
-#define ROUTER_NL4_PERFORMANCE_COUNT1_CONTROL_CLR_STIMULUS_SHIFT 24 /* established */
+/* established */
+#define ROUTER_NL4_PERFORMANCE_COUNT1_CONTROL_CLR_STIMULUS_SHIFT 24
 #define ROUTER_NL4_PERFORMANCE_COUNT1_CONTROL_CLR_STIMULUS_MASK 0x1full
 #define ROUTER_NL4_PERFORMANCE_COUNT1_CONTROL_CLR_STIMULUS_INPLACE (ROUTER_NL4_PERFORMANCE_COUNT1_CONTROL_CLR_STIMULUS_MASK << ROUTER_NL4_PERFORMANCE_COUNT1_CONTROL_CLR_STIMULUS_SHIFT)
-#define ROUTER_NL4_PERFORMANCE_COUNT1_CONTROL_PEAK_DET_ENABLE_SHIFT 18 /* established */
+/* established */
+#define ROUTER_NL4_PERFORMANCE_COUNT1_CONTROL_PEAK_DET_ENABLE_SHIFT 18
 #define ROUTER_NL4_PERFORMANCE_COUNT1_CONTROL_PEAK_DET_ENABLE_MASK 0x1ull
 #define ROUTER_NL4_PERFORMANCE_COUNT1_CONTROL_PEAK_DET_ENABLE_INPLACE (ROUTER_NL4_PERFORMANCE_COUNT1_CONTROL_PEAK_DET_ENABLE_MASK << ROUTER_NL4_PERFORMANCE_COUNT1_CONTROL_PEAK_DET_ENABLE_SHIFT)
-#define ROUTER_NL4_PERFORMANCE_COUNT1_CONTROL_DEC_ENABLE_SHIFT 17 /* established */
+/* established */
+#define ROUTER_NL4_PERFORMANCE_COUNT1_CONTROL_DEC_ENABLE_SHIFT 17
 #define ROUTER_NL4_PERFORMANCE_COUNT1_CONTROL_DEC_ENABLE_MASK 0x1ull
 #define ROUTER_NL4_PERFORMANCE_COUNT1_CONTROL_DEC_ENABLE_INPLACE (ROUTER_NL4_PERFORMANCE_COUNT1_CONTROL_DEC_ENABLE_MASK << ROUTER_NL4_PERFORMANCE_COUNT1_CONTROL_DEC_ENABLE_SHIFT)
-#define ROUTER_NL4_PERFORMANCE_COUNT1_CONTROL_INC_ENABLE_SHIFT 16 /* established */
+/* established */
+#define ROUTER_NL4_PERFORMANCE_COUNT1_CONTROL_INC_ENABLE_SHIFT 16
 #define ROUTER_NL4_PERFORMANCE_COUNT1_CONTROL_INC_ENABLE_MASK 0x1ull
 #define ROUTER_NL4_PERFORMANCE_COUNT1_CONTROL_INC_ENABLE_INPLACE (ROUTER_NL4_PERFORMANCE_COUNT1_CONTROL_INC_ENABLE_MASK << ROUTER_NL4_PERFORMANCE_COUNT1_CONTROL_INC_ENABLE_SHIFT)
 #define ROUTER_NL4_PERFORMANCE_COUNT1_CONTROL_DN_MODE_SHIFT 15 /* established */
 #define ROUTER_NL4_PERFORMANCE_COUNT1_CONTROL_DN_MODE_MASK 0x1ull
 #define ROUTER_NL4_PERFORMANCE_COUNT1_CONTROL_DN_MODE_INPLACE (ROUTER_NL4_PERFORMANCE_COUNT1_CONTROL_DN_MODE_MASK << ROUTER_NL4_PERFORMANCE_COUNT1_CONTROL_DN_MODE_SHIFT)
-#define ROUTER_NL4_PERFORMANCE_COUNT1_CONTROL_DN_POLARITY_SHIFT 14 /* established */
+/* established */
+#define ROUTER_NL4_PERFORMANCE_COUNT1_CONTROL_DN_POLARITY_SHIFT 14
 #define ROUTER_NL4_PERFORMANCE_COUNT1_CONTROL_DN_POLARITY_MASK 0x1ull
 #define ROUTER_NL4_PERFORMANCE_COUNT1_CONTROL_DN_POLARITY_INPLACE (ROUTER_NL4_PERFORMANCE_COUNT1_CONTROL_DN_POLARITY_MASK << ROUTER_NL4_PERFORMANCE_COUNT1_CONTROL_DN_POLARITY_SHIFT)
-#define ROUTER_NL4_PERFORMANCE_COUNT1_CONTROL_DN_EVENT_SHIFT 13 /* established */
+/* established */
+#define ROUTER_NL4_PERFORMANCE_COUNT1_CONTROL_DN_EVENT_SHIFT 13
 #define ROUTER_NL4_PERFORMANCE_COUNT1_CONTROL_DN_EVENT_MASK 0x1ull
 #define ROUTER_NL4_PERFORMANCE_COUNT1_CONTROL_DN_EVENT_INPLACE (ROUTER_NL4_PERFORMANCE_COUNT1_CONTROL_DN_EVENT_MASK << ROUTER_NL4_PERFORMANCE_COUNT1_CONTROL_DN_EVENT_SHIFT)
-#define ROUTER_NL4_PERFORMANCE_COUNT1_CONTROL_DN_STIMULUS_SHIFT 8 /* established */
+/* established */
+#define ROUTER_NL4_PERFORMANCE_COUNT1_CONTROL_DN_STIMULUS_SHIFT 8
 #define ROUTER_NL4_PERFORMANCE_COUNT1_CONTROL_DN_STIMULUS_MASK 0x1full
 #define ROUTER_NL4_PERFORMANCE_COUNT1_CONTROL_DN_STIMULUS_INPLACE (ROUTER_NL4_PERFORMANCE_COUNT1_CONTROL_DN_STIMULUS_MASK << ROUTER_NL4_PERFORMANCE_COUNT1_CONTROL_DN_STIMULUS_SHIFT)
 #define ROUTER_NL4_PERFORMANCE_COUNT1_CONTROL_UP_MODE_SHIFT 7 /* established */
 #define ROUTER_NL4_PERFORMANCE_COUNT1_CONTROL_UP_MODE_MASK 0x1ull
 #define ROUTER_NL4_PERFORMANCE_COUNT1_CONTROL_UP_MODE_INPLACE (ROUTER_NL4_PERFORMANCE_COUNT1_CONTROL_UP_MODE_MASK << ROUTER_NL4_PERFORMANCE_COUNT1_CONTROL_UP_MODE_SHIFT)
-#define ROUTER_NL4_PERFORMANCE_COUNT1_CONTROL_UP_POLARITY_SHIFT 6 /* established */
+/* established */
+#define ROUTER_NL4_PERFORMANCE_COUNT1_CONTROL_UP_POLARITY_SHIFT 6
 #define ROUTER_NL4_PERFORMANCE_COUNT1_CONTROL_UP_POLARITY_MASK 0x1ull
 #define ROUTER_NL4_PERFORMANCE_COUNT1_CONTROL_UP_POLARITY_INPLACE (ROUTER_NL4_PERFORMANCE_COUNT1_CONTROL_UP_POLARITY_MASK << ROUTER_NL4_PERFORMANCE_COUNT1_CONTROL_UP_POLARITY_SHIFT)
 #define ROUTER_NL4_PERFORMANCE_COUNT1_CONTROL_UP_EVENT_SHIFT 5 /* established */
 #define ROUTER_NL4_PERFORMANCE_COUNT1_CONTROL_UP_EVENT_MASK 0x1ull
 #define ROUTER_NL4_PERFORMANCE_COUNT1_CONTROL_UP_EVENT_INPLACE (ROUTER_NL4_PERFORMANCE_COUNT1_CONTROL_UP_EVENT_MASK << ROUTER_NL4_PERFORMANCE_COUNT1_CONTROL_UP_EVENT_SHIFT)
-#define ROUTER_NL4_PERFORMANCE_COUNT1_CONTROL_UP_STIMULUS_SHIFT 0 /* established */
+/* established */
+#define ROUTER_NL4_PERFORMANCE_COUNT1_CONTROL_UP_STIMULUS_SHIFT 0
 #define ROUTER_NL4_PERFORMANCE_COUNT1_CONTROL_UP_STIMULUS_MASK 0x1full
 #define ROUTER_NL4_PERFORMANCE_COUNT1_CONTROL_UP_STIMULUS_INPLACE (ROUTER_NL4_PERFORMANCE_COUNT1_CONTROL_UP_STIMULUS_MASK << ROUTER_NL4_PERFORMANCE_COUNT1_CONTROL_UP_STIMULUS_SHIFT)
 
 /*
- * PROM register R4_PERFORMANCE_COUNT2_CONTROL. Offset and field positions read from the table; role inferred from the names.
+ * PROM register R4_PERFORMANCE_COUNT2_CONTROL. Offset and field positions read
+ * from the table; role inferred from the names.
  */
 /* performance_count2_control: rw64, reset unknown */
-#define ROUTER_NL4_PERFORMANCE_COUNT2_CONTROL_OFFSET 0x10a0000u /* established */
-#define ROUTER_NL4_PERFORMANCE_COUNT2_CONTROL_CLR_ENABLE_SHIFT 32 /* established */
+/* established */
+#define ROUTER_NL4_PERFORMANCE_COUNT2_CONTROL_OFFSET 0x10a0000u
+/* established */
+#define ROUTER_NL4_PERFORMANCE_COUNT2_CONTROL_CLR_ENABLE_SHIFT 32
 #define ROUTER_NL4_PERFORMANCE_COUNT2_CONTROL_CLR_ENABLE_MASK 0x1ull
 #define ROUTER_NL4_PERFORMANCE_COUNT2_CONTROL_CLR_ENABLE_INPLACE (ROUTER_NL4_PERFORMANCE_COUNT2_CONTROL_CLR_ENABLE_MASK << ROUTER_NL4_PERFORMANCE_COUNT2_CONTROL_CLR_ENABLE_SHIFT)
-#define ROUTER_NL4_PERFORMANCE_COUNT2_CONTROL_CLR_MODE_SHIFT 31 /* established */
+/* established */
+#define ROUTER_NL4_PERFORMANCE_COUNT2_CONTROL_CLR_MODE_SHIFT 31
 #define ROUTER_NL4_PERFORMANCE_COUNT2_CONTROL_CLR_MODE_MASK 0x1ull
 #define ROUTER_NL4_PERFORMANCE_COUNT2_CONTROL_CLR_MODE_INPLACE (ROUTER_NL4_PERFORMANCE_COUNT2_CONTROL_CLR_MODE_MASK << ROUTER_NL4_PERFORMANCE_COUNT2_CONTROL_CLR_MODE_SHIFT)
-#define ROUTER_NL4_PERFORMANCE_COUNT2_CONTROL_CLR_POLARITY_SHIFT 30 /* established */
+/* established */
+#define ROUTER_NL4_PERFORMANCE_COUNT2_CONTROL_CLR_POLARITY_SHIFT 30
 #define ROUTER_NL4_PERFORMANCE_COUNT2_CONTROL_CLR_POLARITY_MASK 0x1ull
 #define ROUTER_NL4_PERFORMANCE_COUNT2_CONTROL_CLR_POLARITY_INPLACE (ROUTER_NL4_PERFORMANCE_COUNT2_CONTROL_CLR_POLARITY_MASK << ROUTER_NL4_PERFORMANCE_COUNT2_CONTROL_CLR_POLARITY_SHIFT)
-#define ROUTER_NL4_PERFORMANCE_COUNT2_CONTROL_CLR_EVENT_SHIFT 29 /* established */
+/* established */
+#define ROUTER_NL4_PERFORMANCE_COUNT2_CONTROL_CLR_EVENT_SHIFT 29
 #define ROUTER_NL4_PERFORMANCE_COUNT2_CONTROL_CLR_EVENT_MASK 0x1ull
 #define ROUTER_NL4_PERFORMANCE_COUNT2_CONTROL_CLR_EVENT_INPLACE (ROUTER_NL4_PERFORMANCE_COUNT2_CONTROL_CLR_EVENT_MASK << ROUTER_NL4_PERFORMANCE_COUNT2_CONTROL_CLR_EVENT_SHIFT)
-#define ROUTER_NL4_PERFORMANCE_COUNT2_CONTROL_CLR_STIMULUS_SHIFT 24 /* established */
+/* established */
+#define ROUTER_NL4_PERFORMANCE_COUNT2_CONTROL_CLR_STIMULUS_SHIFT 24
 #define ROUTER_NL4_PERFORMANCE_COUNT2_CONTROL_CLR_STIMULUS_MASK 0x1full
 #define ROUTER_NL4_PERFORMANCE_COUNT2_CONTROL_CLR_STIMULUS_INPLACE (ROUTER_NL4_PERFORMANCE_COUNT2_CONTROL_CLR_STIMULUS_MASK << ROUTER_NL4_PERFORMANCE_COUNT2_CONTROL_CLR_STIMULUS_SHIFT)
-#define ROUTER_NL4_PERFORMANCE_COUNT2_CONTROL_PEAK_DET_ENABLE_SHIFT 18 /* established */
+/* established */
+#define ROUTER_NL4_PERFORMANCE_COUNT2_CONTROL_PEAK_DET_ENABLE_SHIFT 18
 #define ROUTER_NL4_PERFORMANCE_COUNT2_CONTROL_PEAK_DET_ENABLE_MASK 0x1ull
 #define ROUTER_NL4_PERFORMANCE_COUNT2_CONTROL_PEAK_DET_ENABLE_INPLACE (ROUTER_NL4_PERFORMANCE_COUNT2_CONTROL_PEAK_DET_ENABLE_MASK << ROUTER_NL4_PERFORMANCE_COUNT2_CONTROL_PEAK_DET_ENABLE_SHIFT)
-#define ROUTER_NL4_PERFORMANCE_COUNT2_CONTROL_DEC_ENABLE_SHIFT 17 /* established */
+/* established */
+#define ROUTER_NL4_PERFORMANCE_COUNT2_CONTROL_DEC_ENABLE_SHIFT 17
 #define ROUTER_NL4_PERFORMANCE_COUNT2_CONTROL_DEC_ENABLE_MASK 0x1ull
 #define ROUTER_NL4_PERFORMANCE_COUNT2_CONTROL_DEC_ENABLE_INPLACE (ROUTER_NL4_PERFORMANCE_COUNT2_CONTROL_DEC_ENABLE_MASK << ROUTER_NL4_PERFORMANCE_COUNT2_CONTROL_DEC_ENABLE_SHIFT)
-#define ROUTER_NL4_PERFORMANCE_COUNT2_CONTROL_INC_ENABLE_SHIFT 16 /* established */
+/* established */
+#define ROUTER_NL4_PERFORMANCE_COUNT2_CONTROL_INC_ENABLE_SHIFT 16
 #define ROUTER_NL4_PERFORMANCE_COUNT2_CONTROL_INC_ENABLE_MASK 0x1ull
 #define ROUTER_NL4_PERFORMANCE_COUNT2_CONTROL_INC_ENABLE_INPLACE (ROUTER_NL4_PERFORMANCE_COUNT2_CONTROL_INC_ENABLE_MASK << ROUTER_NL4_PERFORMANCE_COUNT2_CONTROL_INC_ENABLE_SHIFT)
 #define ROUTER_NL4_PERFORMANCE_COUNT2_CONTROL_DN_MODE_SHIFT 15 /* established */
 #define ROUTER_NL4_PERFORMANCE_COUNT2_CONTROL_DN_MODE_MASK 0x1ull
 #define ROUTER_NL4_PERFORMANCE_COUNT2_CONTROL_DN_MODE_INPLACE (ROUTER_NL4_PERFORMANCE_COUNT2_CONTROL_DN_MODE_MASK << ROUTER_NL4_PERFORMANCE_COUNT2_CONTROL_DN_MODE_SHIFT)
-#define ROUTER_NL4_PERFORMANCE_COUNT2_CONTROL_DN_POLARITY_SHIFT 14 /* established */
+/* established */
+#define ROUTER_NL4_PERFORMANCE_COUNT2_CONTROL_DN_POLARITY_SHIFT 14
 #define ROUTER_NL4_PERFORMANCE_COUNT2_CONTROL_DN_POLARITY_MASK 0x1ull
 #define ROUTER_NL4_PERFORMANCE_COUNT2_CONTROL_DN_POLARITY_INPLACE (ROUTER_NL4_PERFORMANCE_COUNT2_CONTROL_DN_POLARITY_MASK << ROUTER_NL4_PERFORMANCE_COUNT2_CONTROL_DN_POLARITY_SHIFT)
-#define ROUTER_NL4_PERFORMANCE_COUNT2_CONTROL_DN_EVENT_SHIFT 13 /* established */
+/* established */
+#define ROUTER_NL4_PERFORMANCE_COUNT2_CONTROL_DN_EVENT_SHIFT 13
 #define ROUTER_NL4_PERFORMANCE_COUNT2_CONTROL_DN_EVENT_MASK 0x1ull
 #define ROUTER_NL4_PERFORMANCE_COUNT2_CONTROL_DN_EVENT_INPLACE (ROUTER_NL4_PERFORMANCE_COUNT2_CONTROL_DN_EVENT_MASK << ROUTER_NL4_PERFORMANCE_COUNT2_CONTROL_DN_EVENT_SHIFT)
-#define ROUTER_NL4_PERFORMANCE_COUNT2_CONTROL_DN_STIMULUS_SHIFT 8 /* established */
+/* established */
+#define ROUTER_NL4_PERFORMANCE_COUNT2_CONTROL_DN_STIMULUS_SHIFT 8
 #define ROUTER_NL4_PERFORMANCE_COUNT2_CONTROL_DN_STIMULUS_MASK 0x1full
 #define ROUTER_NL4_PERFORMANCE_COUNT2_CONTROL_DN_STIMULUS_INPLACE (ROUTER_NL4_PERFORMANCE_COUNT2_CONTROL_DN_STIMULUS_MASK << ROUTER_NL4_PERFORMANCE_COUNT2_CONTROL_DN_STIMULUS_SHIFT)
 #define ROUTER_NL4_PERFORMANCE_COUNT2_CONTROL_UP_MODE_SHIFT 7 /* established */
 #define ROUTER_NL4_PERFORMANCE_COUNT2_CONTROL_UP_MODE_MASK 0x1ull
 #define ROUTER_NL4_PERFORMANCE_COUNT2_CONTROL_UP_MODE_INPLACE (ROUTER_NL4_PERFORMANCE_COUNT2_CONTROL_UP_MODE_MASK << ROUTER_NL4_PERFORMANCE_COUNT2_CONTROL_UP_MODE_SHIFT)
-#define ROUTER_NL4_PERFORMANCE_COUNT2_CONTROL_UP_POLARITY_SHIFT 6 /* established */
+/* established */
+#define ROUTER_NL4_PERFORMANCE_COUNT2_CONTROL_UP_POLARITY_SHIFT 6
 #define ROUTER_NL4_PERFORMANCE_COUNT2_CONTROL_UP_POLARITY_MASK 0x1ull
 #define ROUTER_NL4_PERFORMANCE_COUNT2_CONTROL_UP_POLARITY_INPLACE (ROUTER_NL4_PERFORMANCE_COUNT2_CONTROL_UP_POLARITY_MASK << ROUTER_NL4_PERFORMANCE_COUNT2_CONTROL_UP_POLARITY_SHIFT)
 #define ROUTER_NL4_PERFORMANCE_COUNT2_CONTROL_UP_EVENT_SHIFT 5 /* established */
 #define ROUTER_NL4_PERFORMANCE_COUNT2_CONTROL_UP_EVENT_MASK 0x1ull
 #define ROUTER_NL4_PERFORMANCE_COUNT2_CONTROL_UP_EVENT_INPLACE (ROUTER_NL4_PERFORMANCE_COUNT2_CONTROL_UP_EVENT_MASK << ROUTER_NL4_PERFORMANCE_COUNT2_CONTROL_UP_EVENT_SHIFT)
-#define ROUTER_NL4_PERFORMANCE_COUNT2_CONTROL_UP_STIMULUS_SHIFT 0 /* established */
+/* established */
+#define ROUTER_NL4_PERFORMANCE_COUNT2_CONTROL_UP_STIMULUS_SHIFT 0
 #define ROUTER_NL4_PERFORMANCE_COUNT2_CONTROL_UP_STIMULUS_MASK 0x1full
 #define ROUTER_NL4_PERFORMANCE_COUNT2_CONTROL_UP_STIMULUS_INPLACE (ROUTER_NL4_PERFORMANCE_COUNT2_CONTROL_UP_STIMULUS_MASK << ROUTER_NL4_PERFORMANCE_COUNT2_CONTROL_UP_STIMULUS_SHIFT)
 
 /*
- * PROM register R4_PERFORMANCE_COUNT3_CONTROL. Offset and field positions read from the table; role inferred from the names.
+ * PROM register R4_PERFORMANCE_COUNT3_CONTROL. Offset and field positions read
+ * from the table; role inferred from the names.
  */
 /* performance_count3_control: rw64, reset unknown */
-#define ROUTER_NL4_PERFORMANCE_COUNT3_CONTROL_OFFSET 0x10b0000u /* established */
-#define ROUTER_NL4_PERFORMANCE_COUNT3_CONTROL_CLR_ENABLE_SHIFT 32 /* established */
+/* established */
+#define ROUTER_NL4_PERFORMANCE_COUNT3_CONTROL_OFFSET 0x10b0000u
+/* established */
+#define ROUTER_NL4_PERFORMANCE_COUNT3_CONTROL_CLR_ENABLE_SHIFT 32
 #define ROUTER_NL4_PERFORMANCE_COUNT3_CONTROL_CLR_ENABLE_MASK 0x1ull
 #define ROUTER_NL4_PERFORMANCE_COUNT3_CONTROL_CLR_ENABLE_INPLACE (ROUTER_NL4_PERFORMANCE_COUNT3_CONTROL_CLR_ENABLE_MASK << ROUTER_NL4_PERFORMANCE_COUNT3_CONTROL_CLR_ENABLE_SHIFT)
-#define ROUTER_NL4_PERFORMANCE_COUNT3_CONTROL_CLR_MODE_SHIFT 31 /* established */
+/* established */
+#define ROUTER_NL4_PERFORMANCE_COUNT3_CONTROL_CLR_MODE_SHIFT 31
 #define ROUTER_NL4_PERFORMANCE_COUNT3_CONTROL_CLR_MODE_MASK 0x1ull
 #define ROUTER_NL4_PERFORMANCE_COUNT3_CONTROL_CLR_MODE_INPLACE (ROUTER_NL4_PERFORMANCE_COUNT3_CONTROL_CLR_MODE_MASK << ROUTER_NL4_PERFORMANCE_COUNT3_CONTROL_CLR_MODE_SHIFT)
-#define ROUTER_NL4_PERFORMANCE_COUNT3_CONTROL_CLR_POLARITY_SHIFT 30 /* established */
+/* established */
+#define ROUTER_NL4_PERFORMANCE_COUNT3_CONTROL_CLR_POLARITY_SHIFT 30
 #define ROUTER_NL4_PERFORMANCE_COUNT3_CONTROL_CLR_POLARITY_MASK 0x1ull
 #define ROUTER_NL4_PERFORMANCE_COUNT3_CONTROL_CLR_POLARITY_INPLACE (ROUTER_NL4_PERFORMANCE_COUNT3_CONTROL_CLR_POLARITY_MASK << ROUTER_NL4_PERFORMANCE_COUNT3_CONTROL_CLR_POLARITY_SHIFT)
-#define ROUTER_NL4_PERFORMANCE_COUNT3_CONTROL_CLR_EVENT_SHIFT 29 /* established */
+/* established */
+#define ROUTER_NL4_PERFORMANCE_COUNT3_CONTROL_CLR_EVENT_SHIFT 29
 #define ROUTER_NL4_PERFORMANCE_COUNT3_CONTROL_CLR_EVENT_MASK 0x1ull
 #define ROUTER_NL4_PERFORMANCE_COUNT3_CONTROL_CLR_EVENT_INPLACE (ROUTER_NL4_PERFORMANCE_COUNT3_CONTROL_CLR_EVENT_MASK << ROUTER_NL4_PERFORMANCE_COUNT3_CONTROL_CLR_EVENT_SHIFT)
-#define ROUTER_NL4_PERFORMANCE_COUNT3_CONTROL_CLR_STIMULUS_SHIFT 24 /* established */
+/* established */
+#define ROUTER_NL4_PERFORMANCE_COUNT3_CONTROL_CLR_STIMULUS_SHIFT 24
 #define ROUTER_NL4_PERFORMANCE_COUNT3_CONTROL_CLR_STIMULUS_MASK 0x1full
 #define ROUTER_NL4_PERFORMANCE_COUNT3_CONTROL_CLR_STIMULUS_INPLACE (ROUTER_NL4_PERFORMANCE_COUNT3_CONTROL_CLR_STIMULUS_MASK << ROUTER_NL4_PERFORMANCE_COUNT3_CONTROL_CLR_STIMULUS_SHIFT)
-#define ROUTER_NL4_PERFORMANCE_COUNT3_CONTROL_PEAK_DET_ENABLE_SHIFT 18 /* established */
+/* established */
+#define ROUTER_NL4_PERFORMANCE_COUNT3_CONTROL_PEAK_DET_ENABLE_SHIFT 18
 #define ROUTER_NL4_PERFORMANCE_COUNT3_CONTROL_PEAK_DET_ENABLE_MASK 0x1ull
 #define ROUTER_NL4_PERFORMANCE_COUNT3_CONTROL_PEAK_DET_ENABLE_INPLACE (ROUTER_NL4_PERFORMANCE_COUNT3_CONTROL_PEAK_DET_ENABLE_MASK << ROUTER_NL4_PERFORMANCE_COUNT3_CONTROL_PEAK_DET_ENABLE_SHIFT)
-#define ROUTER_NL4_PERFORMANCE_COUNT3_CONTROL_DEC_ENABLE_SHIFT 17 /* established */
+/* established */
+#define ROUTER_NL4_PERFORMANCE_COUNT3_CONTROL_DEC_ENABLE_SHIFT 17
 #define ROUTER_NL4_PERFORMANCE_COUNT3_CONTROL_DEC_ENABLE_MASK 0x1ull
 #define ROUTER_NL4_PERFORMANCE_COUNT3_CONTROL_DEC_ENABLE_INPLACE (ROUTER_NL4_PERFORMANCE_COUNT3_CONTROL_DEC_ENABLE_MASK << ROUTER_NL4_PERFORMANCE_COUNT3_CONTROL_DEC_ENABLE_SHIFT)
-#define ROUTER_NL4_PERFORMANCE_COUNT3_CONTROL_INC_ENABLE_SHIFT 16 /* established */
+/* established */
+#define ROUTER_NL4_PERFORMANCE_COUNT3_CONTROL_INC_ENABLE_SHIFT 16
 #define ROUTER_NL4_PERFORMANCE_COUNT3_CONTROL_INC_ENABLE_MASK 0x1ull
 #define ROUTER_NL4_PERFORMANCE_COUNT3_CONTROL_INC_ENABLE_INPLACE (ROUTER_NL4_PERFORMANCE_COUNT3_CONTROL_INC_ENABLE_MASK << ROUTER_NL4_PERFORMANCE_COUNT3_CONTROL_INC_ENABLE_SHIFT)
 #define ROUTER_NL4_PERFORMANCE_COUNT3_CONTROL_DN_MODE_SHIFT 15 /* established */
 #define ROUTER_NL4_PERFORMANCE_COUNT3_CONTROL_DN_MODE_MASK 0x1ull
 #define ROUTER_NL4_PERFORMANCE_COUNT3_CONTROL_DN_MODE_INPLACE (ROUTER_NL4_PERFORMANCE_COUNT3_CONTROL_DN_MODE_MASK << ROUTER_NL4_PERFORMANCE_COUNT3_CONTROL_DN_MODE_SHIFT)
-#define ROUTER_NL4_PERFORMANCE_COUNT3_CONTROL_DN_POLARITY_SHIFT 14 /* established */
+/* established */
+#define ROUTER_NL4_PERFORMANCE_COUNT3_CONTROL_DN_POLARITY_SHIFT 14
 #define ROUTER_NL4_PERFORMANCE_COUNT3_CONTROL_DN_POLARITY_MASK 0x1ull
 #define ROUTER_NL4_PERFORMANCE_COUNT3_CONTROL_DN_POLARITY_INPLACE (ROUTER_NL4_PERFORMANCE_COUNT3_CONTROL_DN_POLARITY_MASK << ROUTER_NL4_PERFORMANCE_COUNT3_CONTROL_DN_POLARITY_SHIFT)
-#define ROUTER_NL4_PERFORMANCE_COUNT3_CONTROL_DN_EVENT_SHIFT 13 /* established */
+/* established */
+#define ROUTER_NL4_PERFORMANCE_COUNT3_CONTROL_DN_EVENT_SHIFT 13
 #define ROUTER_NL4_PERFORMANCE_COUNT3_CONTROL_DN_EVENT_MASK 0x1ull
 #define ROUTER_NL4_PERFORMANCE_COUNT3_CONTROL_DN_EVENT_INPLACE (ROUTER_NL4_PERFORMANCE_COUNT3_CONTROL_DN_EVENT_MASK << ROUTER_NL4_PERFORMANCE_COUNT3_CONTROL_DN_EVENT_SHIFT)
-#define ROUTER_NL4_PERFORMANCE_COUNT3_CONTROL_DN_STIMULUS_SHIFT 8 /* established */
+/* established */
+#define ROUTER_NL4_PERFORMANCE_COUNT3_CONTROL_DN_STIMULUS_SHIFT 8
 #define ROUTER_NL4_PERFORMANCE_COUNT3_CONTROL_DN_STIMULUS_MASK 0x1full
 #define ROUTER_NL4_PERFORMANCE_COUNT3_CONTROL_DN_STIMULUS_INPLACE (ROUTER_NL4_PERFORMANCE_COUNT3_CONTROL_DN_STIMULUS_MASK << ROUTER_NL4_PERFORMANCE_COUNT3_CONTROL_DN_STIMULUS_SHIFT)
 #define ROUTER_NL4_PERFORMANCE_COUNT3_CONTROL_UP_MODE_SHIFT 7 /* established */
 #define ROUTER_NL4_PERFORMANCE_COUNT3_CONTROL_UP_MODE_MASK 0x1ull
 #define ROUTER_NL4_PERFORMANCE_COUNT3_CONTROL_UP_MODE_INPLACE (ROUTER_NL4_PERFORMANCE_COUNT3_CONTROL_UP_MODE_MASK << ROUTER_NL4_PERFORMANCE_COUNT3_CONTROL_UP_MODE_SHIFT)
-#define ROUTER_NL4_PERFORMANCE_COUNT3_CONTROL_UP_POLARITY_SHIFT 6 /* established */
+/* established */
+#define ROUTER_NL4_PERFORMANCE_COUNT3_CONTROL_UP_POLARITY_SHIFT 6
 #define ROUTER_NL4_PERFORMANCE_COUNT3_CONTROL_UP_POLARITY_MASK 0x1ull
 #define ROUTER_NL4_PERFORMANCE_COUNT3_CONTROL_UP_POLARITY_INPLACE (ROUTER_NL4_PERFORMANCE_COUNT3_CONTROL_UP_POLARITY_MASK << ROUTER_NL4_PERFORMANCE_COUNT3_CONTROL_UP_POLARITY_SHIFT)
 #define ROUTER_NL4_PERFORMANCE_COUNT3_CONTROL_UP_EVENT_SHIFT 5 /* established */
 #define ROUTER_NL4_PERFORMANCE_COUNT3_CONTROL_UP_EVENT_MASK 0x1ull
 #define ROUTER_NL4_PERFORMANCE_COUNT3_CONTROL_UP_EVENT_INPLACE (ROUTER_NL4_PERFORMANCE_COUNT3_CONTROL_UP_EVENT_MASK << ROUTER_NL4_PERFORMANCE_COUNT3_CONTROL_UP_EVENT_SHIFT)
-#define ROUTER_NL4_PERFORMANCE_COUNT3_CONTROL_UP_STIMULUS_SHIFT 0 /* established */
+/* established */
+#define ROUTER_NL4_PERFORMANCE_COUNT3_CONTROL_UP_STIMULUS_SHIFT 0
 #define ROUTER_NL4_PERFORMANCE_COUNT3_CONTROL_UP_STIMULUS_MASK 0x1full
 #define ROUTER_NL4_PERFORMANCE_COUNT3_CONTROL_UP_STIMULUS_INPLACE (ROUTER_NL4_PERFORMANCE_COUNT3_CONTROL_UP_STIMULUS_MASK << ROUTER_NL4_PERFORMANCE_COUNT3_CONTROL_UP_STIMULUS_SHIFT)
 
 /*
- * PROM register R4_PERFORMANCE_COUNT4_CONTROL. Offset and field positions read from the table; role inferred from the names.
+ * PROM register R4_PERFORMANCE_COUNT4_CONTROL. Offset and field positions read
+ * from the table; role inferred from the names.
  */
 /* performance_count4_control: rw64, reset unknown */
-#define ROUTER_NL4_PERFORMANCE_COUNT4_CONTROL_OFFSET 0x10c0000u /* established */
-#define ROUTER_NL4_PERFORMANCE_COUNT4_CONTROL_CLR_ENABLE_SHIFT 32 /* established */
+/* established */
+#define ROUTER_NL4_PERFORMANCE_COUNT4_CONTROL_OFFSET 0x10c0000u
+/* established */
+#define ROUTER_NL4_PERFORMANCE_COUNT4_CONTROL_CLR_ENABLE_SHIFT 32
 #define ROUTER_NL4_PERFORMANCE_COUNT4_CONTROL_CLR_ENABLE_MASK 0x1ull
 #define ROUTER_NL4_PERFORMANCE_COUNT4_CONTROL_CLR_ENABLE_INPLACE (ROUTER_NL4_PERFORMANCE_COUNT4_CONTROL_CLR_ENABLE_MASK << ROUTER_NL4_PERFORMANCE_COUNT4_CONTROL_CLR_ENABLE_SHIFT)
-#define ROUTER_NL4_PERFORMANCE_COUNT4_CONTROL_CLR_MODE_SHIFT 31 /* established */
+/* established */
+#define ROUTER_NL4_PERFORMANCE_COUNT4_CONTROL_CLR_MODE_SHIFT 31
 #define ROUTER_NL4_PERFORMANCE_COUNT4_CONTROL_CLR_MODE_MASK 0x1ull
 #define ROUTER_NL4_PERFORMANCE_COUNT4_CONTROL_CLR_MODE_INPLACE (ROUTER_NL4_PERFORMANCE_COUNT4_CONTROL_CLR_MODE_MASK << ROUTER_NL4_PERFORMANCE_COUNT4_CONTROL_CLR_MODE_SHIFT)
-#define ROUTER_NL4_PERFORMANCE_COUNT4_CONTROL_CLR_POLARITY_SHIFT 30 /* established */
+/* established */
+#define ROUTER_NL4_PERFORMANCE_COUNT4_CONTROL_CLR_POLARITY_SHIFT 30
 #define ROUTER_NL4_PERFORMANCE_COUNT4_CONTROL_CLR_POLARITY_MASK 0x1ull
 #define ROUTER_NL4_PERFORMANCE_COUNT4_CONTROL_CLR_POLARITY_INPLACE (ROUTER_NL4_PERFORMANCE_COUNT4_CONTROL_CLR_POLARITY_MASK << ROUTER_NL4_PERFORMANCE_COUNT4_CONTROL_CLR_POLARITY_SHIFT)
-#define ROUTER_NL4_PERFORMANCE_COUNT4_CONTROL_CLR_EVENT_SHIFT 29 /* established */
+/* established */
+#define ROUTER_NL4_PERFORMANCE_COUNT4_CONTROL_CLR_EVENT_SHIFT 29
 #define ROUTER_NL4_PERFORMANCE_COUNT4_CONTROL_CLR_EVENT_MASK 0x1ull
 #define ROUTER_NL4_PERFORMANCE_COUNT4_CONTROL_CLR_EVENT_INPLACE (ROUTER_NL4_PERFORMANCE_COUNT4_CONTROL_CLR_EVENT_MASK << ROUTER_NL4_PERFORMANCE_COUNT4_CONTROL_CLR_EVENT_SHIFT)
-#define ROUTER_NL4_PERFORMANCE_COUNT4_CONTROL_CLR_STIMULUS_SHIFT 24 /* established */
+/* established */
+#define ROUTER_NL4_PERFORMANCE_COUNT4_CONTROL_CLR_STIMULUS_SHIFT 24
 #define ROUTER_NL4_PERFORMANCE_COUNT4_CONTROL_CLR_STIMULUS_MASK 0x1full
 #define ROUTER_NL4_PERFORMANCE_COUNT4_CONTROL_CLR_STIMULUS_INPLACE (ROUTER_NL4_PERFORMANCE_COUNT4_CONTROL_CLR_STIMULUS_MASK << ROUTER_NL4_PERFORMANCE_COUNT4_CONTROL_CLR_STIMULUS_SHIFT)
-#define ROUTER_NL4_PERFORMANCE_COUNT4_CONTROL_PEAK_DET_ENABLE_SHIFT 18 /* established */
+/* established */
+#define ROUTER_NL4_PERFORMANCE_COUNT4_CONTROL_PEAK_DET_ENABLE_SHIFT 18
 #define ROUTER_NL4_PERFORMANCE_COUNT4_CONTROL_PEAK_DET_ENABLE_MASK 0x1ull
 #define ROUTER_NL4_PERFORMANCE_COUNT4_CONTROL_PEAK_DET_ENABLE_INPLACE (ROUTER_NL4_PERFORMANCE_COUNT4_CONTROL_PEAK_DET_ENABLE_MASK << ROUTER_NL4_PERFORMANCE_COUNT4_CONTROL_PEAK_DET_ENABLE_SHIFT)
-#define ROUTER_NL4_PERFORMANCE_COUNT4_CONTROL_DEC_ENABLE_SHIFT 17 /* established */
+/* established */
+#define ROUTER_NL4_PERFORMANCE_COUNT4_CONTROL_DEC_ENABLE_SHIFT 17
 #define ROUTER_NL4_PERFORMANCE_COUNT4_CONTROL_DEC_ENABLE_MASK 0x1ull
 #define ROUTER_NL4_PERFORMANCE_COUNT4_CONTROL_DEC_ENABLE_INPLACE (ROUTER_NL4_PERFORMANCE_COUNT4_CONTROL_DEC_ENABLE_MASK << ROUTER_NL4_PERFORMANCE_COUNT4_CONTROL_DEC_ENABLE_SHIFT)
-#define ROUTER_NL4_PERFORMANCE_COUNT4_CONTROL_INC_ENABLE_SHIFT 16 /* established */
+/* established */
+#define ROUTER_NL4_PERFORMANCE_COUNT4_CONTROL_INC_ENABLE_SHIFT 16
 #define ROUTER_NL4_PERFORMANCE_COUNT4_CONTROL_INC_ENABLE_MASK 0x1ull
 #define ROUTER_NL4_PERFORMANCE_COUNT4_CONTROL_INC_ENABLE_INPLACE (ROUTER_NL4_PERFORMANCE_COUNT4_CONTROL_INC_ENABLE_MASK << ROUTER_NL4_PERFORMANCE_COUNT4_CONTROL_INC_ENABLE_SHIFT)
 #define ROUTER_NL4_PERFORMANCE_COUNT4_CONTROL_DN_MODE_SHIFT 15 /* established */
 #define ROUTER_NL4_PERFORMANCE_COUNT4_CONTROL_DN_MODE_MASK 0x1ull
 #define ROUTER_NL4_PERFORMANCE_COUNT4_CONTROL_DN_MODE_INPLACE (ROUTER_NL4_PERFORMANCE_COUNT4_CONTROL_DN_MODE_MASK << ROUTER_NL4_PERFORMANCE_COUNT4_CONTROL_DN_MODE_SHIFT)
-#define ROUTER_NL4_PERFORMANCE_COUNT4_CONTROL_DN_POLARITY_SHIFT 14 /* established */
+/* established */
+#define ROUTER_NL4_PERFORMANCE_COUNT4_CONTROL_DN_POLARITY_SHIFT 14
 #define ROUTER_NL4_PERFORMANCE_COUNT4_CONTROL_DN_POLARITY_MASK 0x1ull
 #define ROUTER_NL4_PERFORMANCE_COUNT4_CONTROL_DN_POLARITY_INPLACE (ROUTER_NL4_PERFORMANCE_COUNT4_CONTROL_DN_POLARITY_MASK << ROUTER_NL4_PERFORMANCE_COUNT4_CONTROL_DN_POLARITY_SHIFT)
-#define ROUTER_NL4_PERFORMANCE_COUNT4_CONTROL_DN_EVENT_SHIFT 13 /* established */
+/* established */
+#define ROUTER_NL4_PERFORMANCE_COUNT4_CONTROL_DN_EVENT_SHIFT 13
 #define ROUTER_NL4_PERFORMANCE_COUNT4_CONTROL_DN_EVENT_MASK 0x1ull
 #define ROUTER_NL4_PERFORMANCE_COUNT4_CONTROL_DN_EVENT_INPLACE (ROUTER_NL4_PERFORMANCE_COUNT4_CONTROL_DN_EVENT_MASK << ROUTER_NL4_PERFORMANCE_COUNT4_CONTROL_DN_EVENT_SHIFT)
-#define ROUTER_NL4_PERFORMANCE_COUNT4_CONTROL_DN_STIMULUS_SHIFT 8 /* established */
+/* established */
+#define ROUTER_NL4_PERFORMANCE_COUNT4_CONTROL_DN_STIMULUS_SHIFT 8
 #define ROUTER_NL4_PERFORMANCE_COUNT4_CONTROL_DN_STIMULUS_MASK 0x1full
 #define ROUTER_NL4_PERFORMANCE_COUNT4_CONTROL_DN_STIMULUS_INPLACE (ROUTER_NL4_PERFORMANCE_COUNT4_CONTROL_DN_STIMULUS_MASK << ROUTER_NL4_PERFORMANCE_COUNT4_CONTROL_DN_STIMULUS_SHIFT)
 #define ROUTER_NL4_PERFORMANCE_COUNT4_CONTROL_UP_MODE_SHIFT 7 /* established */
 #define ROUTER_NL4_PERFORMANCE_COUNT4_CONTROL_UP_MODE_MASK 0x1ull
 #define ROUTER_NL4_PERFORMANCE_COUNT4_CONTROL_UP_MODE_INPLACE (ROUTER_NL4_PERFORMANCE_COUNT4_CONTROL_UP_MODE_MASK << ROUTER_NL4_PERFORMANCE_COUNT4_CONTROL_UP_MODE_SHIFT)
-#define ROUTER_NL4_PERFORMANCE_COUNT4_CONTROL_UP_POLARITY_SHIFT 6 /* established */
+/* established */
+#define ROUTER_NL4_PERFORMANCE_COUNT4_CONTROL_UP_POLARITY_SHIFT 6
 #define ROUTER_NL4_PERFORMANCE_COUNT4_CONTROL_UP_POLARITY_MASK 0x1ull
 #define ROUTER_NL4_PERFORMANCE_COUNT4_CONTROL_UP_POLARITY_INPLACE (ROUTER_NL4_PERFORMANCE_COUNT4_CONTROL_UP_POLARITY_MASK << ROUTER_NL4_PERFORMANCE_COUNT4_CONTROL_UP_POLARITY_SHIFT)
 #define ROUTER_NL4_PERFORMANCE_COUNT4_CONTROL_UP_EVENT_SHIFT 5 /* established */
 #define ROUTER_NL4_PERFORMANCE_COUNT4_CONTROL_UP_EVENT_MASK 0x1ull
 #define ROUTER_NL4_PERFORMANCE_COUNT4_CONTROL_UP_EVENT_INPLACE (ROUTER_NL4_PERFORMANCE_COUNT4_CONTROL_UP_EVENT_MASK << ROUTER_NL4_PERFORMANCE_COUNT4_CONTROL_UP_EVENT_SHIFT)
-#define ROUTER_NL4_PERFORMANCE_COUNT4_CONTROL_UP_STIMULUS_SHIFT 0 /* established */
+/* established */
+#define ROUTER_NL4_PERFORMANCE_COUNT4_CONTROL_UP_STIMULUS_SHIFT 0
 #define ROUTER_NL4_PERFORMANCE_COUNT4_CONTROL_UP_STIMULUS_MASK 0x1full
 #define ROUTER_NL4_PERFORMANCE_COUNT4_CONTROL_UP_STIMULUS_INPLACE (ROUTER_NL4_PERFORMANCE_COUNT4_CONTROL_UP_STIMULUS_MASK << ROUTER_NL4_PERFORMANCE_COUNT4_CONTROL_UP_STIMULUS_SHIFT)
 
 /*
- * PROM register R4_PERFORMANCE_COUNT5_CONTROL. Offset and field positions read from the table; role inferred from the names.
+ * PROM register R4_PERFORMANCE_COUNT5_CONTROL. Offset and field positions read
+ * from the table; role inferred from the names.
  */
 /* performance_count5_control: rw64, reset unknown */
-#define ROUTER_NL4_PERFORMANCE_COUNT5_CONTROL_OFFSET 0x10d0000u /* established */
-#define ROUTER_NL4_PERFORMANCE_COUNT5_CONTROL_CLR_ENABLE_SHIFT 32 /* established */
+/* established */
+#define ROUTER_NL4_PERFORMANCE_COUNT5_CONTROL_OFFSET 0x10d0000u
+/* established */
+#define ROUTER_NL4_PERFORMANCE_COUNT5_CONTROL_CLR_ENABLE_SHIFT 32
 #define ROUTER_NL4_PERFORMANCE_COUNT5_CONTROL_CLR_ENABLE_MASK 0x1ull
 #define ROUTER_NL4_PERFORMANCE_COUNT5_CONTROL_CLR_ENABLE_INPLACE (ROUTER_NL4_PERFORMANCE_COUNT5_CONTROL_CLR_ENABLE_MASK << ROUTER_NL4_PERFORMANCE_COUNT5_CONTROL_CLR_ENABLE_SHIFT)
-#define ROUTER_NL4_PERFORMANCE_COUNT5_CONTROL_CLR_MODE_SHIFT 31 /* established */
+/* established */
+#define ROUTER_NL4_PERFORMANCE_COUNT5_CONTROL_CLR_MODE_SHIFT 31
 #define ROUTER_NL4_PERFORMANCE_COUNT5_CONTROL_CLR_MODE_MASK 0x1ull
 #define ROUTER_NL4_PERFORMANCE_COUNT5_CONTROL_CLR_MODE_INPLACE (ROUTER_NL4_PERFORMANCE_COUNT5_CONTROL_CLR_MODE_MASK << ROUTER_NL4_PERFORMANCE_COUNT5_CONTROL_CLR_MODE_SHIFT)
-#define ROUTER_NL4_PERFORMANCE_COUNT5_CONTROL_CLR_POLARITY_SHIFT 30 /* established */
+/* established */
+#define ROUTER_NL4_PERFORMANCE_COUNT5_CONTROL_CLR_POLARITY_SHIFT 30
 #define ROUTER_NL4_PERFORMANCE_COUNT5_CONTROL_CLR_POLARITY_MASK 0x1ull
 #define ROUTER_NL4_PERFORMANCE_COUNT5_CONTROL_CLR_POLARITY_INPLACE (ROUTER_NL4_PERFORMANCE_COUNT5_CONTROL_CLR_POLARITY_MASK << ROUTER_NL4_PERFORMANCE_COUNT5_CONTROL_CLR_POLARITY_SHIFT)
-#define ROUTER_NL4_PERFORMANCE_COUNT5_CONTROL_CLR_EVENT_SHIFT 29 /* established */
+/* established */
+#define ROUTER_NL4_PERFORMANCE_COUNT5_CONTROL_CLR_EVENT_SHIFT 29
 #define ROUTER_NL4_PERFORMANCE_COUNT5_CONTROL_CLR_EVENT_MASK 0x1ull
 #define ROUTER_NL4_PERFORMANCE_COUNT5_CONTROL_CLR_EVENT_INPLACE (ROUTER_NL4_PERFORMANCE_COUNT5_CONTROL_CLR_EVENT_MASK << ROUTER_NL4_PERFORMANCE_COUNT5_CONTROL_CLR_EVENT_SHIFT)
-#define ROUTER_NL4_PERFORMANCE_COUNT5_CONTROL_CLR_STIMULUS_SHIFT 24 /* established */
+/* established */
+#define ROUTER_NL4_PERFORMANCE_COUNT5_CONTROL_CLR_STIMULUS_SHIFT 24
 #define ROUTER_NL4_PERFORMANCE_COUNT5_CONTROL_CLR_STIMULUS_MASK 0x1full
 #define ROUTER_NL4_PERFORMANCE_COUNT5_CONTROL_CLR_STIMULUS_INPLACE (ROUTER_NL4_PERFORMANCE_COUNT5_CONTROL_CLR_STIMULUS_MASK << ROUTER_NL4_PERFORMANCE_COUNT5_CONTROL_CLR_STIMULUS_SHIFT)
-#define ROUTER_NL4_PERFORMANCE_COUNT5_CONTROL_PEAK_DET_ENABLE_SHIFT 18 /* established */
+/* established */
+#define ROUTER_NL4_PERFORMANCE_COUNT5_CONTROL_PEAK_DET_ENABLE_SHIFT 18
 #define ROUTER_NL4_PERFORMANCE_COUNT5_CONTROL_PEAK_DET_ENABLE_MASK 0x1ull
 #define ROUTER_NL4_PERFORMANCE_COUNT5_CONTROL_PEAK_DET_ENABLE_INPLACE (ROUTER_NL4_PERFORMANCE_COUNT5_CONTROL_PEAK_DET_ENABLE_MASK << ROUTER_NL4_PERFORMANCE_COUNT5_CONTROL_PEAK_DET_ENABLE_SHIFT)
-#define ROUTER_NL4_PERFORMANCE_COUNT5_CONTROL_DEC_ENABLE_SHIFT 17 /* established */
+/* established */
+#define ROUTER_NL4_PERFORMANCE_COUNT5_CONTROL_DEC_ENABLE_SHIFT 17
 #define ROUTER_NL4_PERFORMANCE_COUNT5_CONTROL_DEC_ENABLE_MASK 0x1ull
 #define ROUTER_NL4_PERFORMANCE_COUNT5_CONTROL_DEC_ENABLE_INPLACE (ROUTER_NL4_PERFORMANCE_COUNT5_CONTROL_DEC_ENABLE_MASK << ROUTER_NL4_PERFORMANCE_COUNT5_CONTROL_DEC_ENABLE_SHIFT)
-#define ROUTER_NL4_PERFORMANCE_COUNT5_CONTROL_INC_ENABLE_SHIFT 16 /* established */
+/* established */
+#define ROUTER_NL4_PERFORMANCE_COUNT5_CONTROL_INC_ENABLE_SHIFT 16
 #define ROUTER_NL4_PERFORMANCE_COUNT5_CONTROL_INC_ENABLE_MASK 0x1ull
 #define ROUTER_NL4_PERFORMANCE_COUNT5_CONTROL_INC_ENABLE_INPLACE (ROUTER_NL4_PERFORMANCE_COUNT5_CONTROL_INC_ENABLE_MASK << ROUTER_NL4_PERFORMANCE_COUNT5_CONTROL_INC_ENABLE_SHIFT)
 #define ROUTER_NL4_PERFORMANCE_COUNT5_CONTROL_DN_MODE_SHIFT 15 /* established */
 #define ROUTER_NL4_PERFORMANCE_COUNT5_CONTROL_DN_MODE_MASK 0x1ull
 #define ROUTER_NL4_PERFORMANCE_COUNT5_CONTROL_DN_MODE_INPLACE (ROUTER_NL4_PERFORMANCE_COUNT5_CONTROL_DN_MODE_MASK << ROUTER_NL4_PERFORMANCE_COUNT5_CONTROL_DN_MODE_SHIFT)
-#define ROUTER_NL4_PERFORMANCE_COUNT5_CONTROL_DN_POLARITY_SHIFT 14 /* established */
+/* established */
+#define ROUTER_NL4_PERFORMANCE_COUNT5_CONTROL_DN_POLARITY_SHIFT 14
 #define ROUTER_NL4_PERFORMANCE_COUNT5_CONTROL_DN_POLARITY_MASK 0x1ull
 #define ROUTER_NL4_PERFORMANCE_COUNT5_CONTROL_DN_POLARITY_INPLACE (ROUTER_NL4_PERFORMANCE_COUNT5_CONTROL_DN_POLARITY_MASK << ROUTER_NL4_PERFORMANCE_COUNT5_CONTROL_DN_POLARITY_SHIFT)
-#define ROUTER_NL4_PERFORMANCE_COUNT5_CONTROL_DN_EVENT_SHIFT 13 /* established */
+/* established */
+#define ROUTER_NL4_PERFORMANCE_COUNT5_CONTROL_DN_EVENT_SHIFT 13
 #define ROUTER_NL4_PERFORMANCE_COUNT5_CONTROL_DN_EVENT_MASK 0x1ull
 #define ROUTER_NL4_PERFORMANCE_COUNT5_CONTROL_DN_EVENT_INPLACE (ROUTER_NL4_PERFORMANCE_COUNT5_CONTROL_DN_EVENT_MASK << ROUTER_NL4_PERFORMANCE_COUNT5_CONTROL_DN_EVENT_SHIFT)
-#define ROUTER_NL4_PERFORMANCE_COUNT5_CONTROL_DN_STIMULUS_SHIFT 8 /* established */
+/* established */
+#define ROUTER_NL4_PERFORMANCE_COUNT5_CONTROL_DN_STIMULUS_SHIFT 8
 #define ROUTER_NL4_PERFORMANCE_COUNT5_CONTROL_DN_STIMULUS_MASK 0x1full
 #define ROUTER_NL4_PERFORMANCE_COUNT5_CONTROL_DN_STIMULUS_INPLACE (ROUTER_NL4_PERFORMANCE_COUNT5_CONTROL_DN_STIMULUS_MASK << ROUTER_NL4_PERFORMANCE_COUNT5_CONTROL_DN_STIMULUS_SHIFT)
 #define ROUTER_NL4_PERFORMANCE_COUNT5_CONTROL_UP_MODE_SHIFT 7 /* established */
 #define ROUTER_NL4_PERFORMANCE_COUNT5_CONTROL_UP_MODE_MASK 0x1ull
 #define ROUTER_NL4_PERFORMANCE_COUNT5_CONTROL_UP_MODE_INPLACE (ROUTER_NL4_PERFORMANCE_COUNT5_CONTROL_UP_MODE_MASK << ROUTER_NL4_PERFORMANCE_COUNT5_CONTROL_UP_MODE_SHIFT)
-#define ROUTER_NL4_PERFORMANCE_COUNT5_CONTROL_UP_POLARITY_SHIFT 6 /* established */
+/* established */
+#define ROUTER_NL4_PERFORMANCE_COUNT5_CONTROL_UP_POLARITY_SHIFT 6
 #define ROUTER_NL4_PERFORMANCE_COUNT5_CONTROL_UP_POLARITY_MASK 0x1ull
 #define ROUTER_NL4_PERFORMANCE_COUNT5_CONTROL_UP_POLARITY_INPLACE (ROUTER_NL4_PERFORMANCE_COUNT5_CONTROL_UP_POLARITY_MASK << ROUTER_NL4_PERFORMANCE_COUNT5_CONTROL_UP_POLARITY_SHIFT)
 #define ROUTER_NL4_PERFORMANCE_COUNT5_CONTROL_UP_EVENT_SHIFT 5 /* established */
 #define ROUTER_NL4_PERFORMANCE_COUNT5_CONTROL_UP_EVENT_MASK 0x1ull
 #define ROUTER_NL4_PERFORMANCE_COUNT5_CONTROL_UP_EVENT_INPLACE (ROUTER_NL4_PERFORMANCE_COUNT5_CONTROL_UP_EVENT_MASK << ROUTER_NL4_PERFORMANCE_COUNT5_CONTROL_UP_EVENT_SHIFT)
-#define ROUTER_NL4_PERFORMANCE_COUNT5_CONTROL_UP_STIMULUS_SHIFT 0 /* established */
+/* established */
+#define ROUTER_NL4_PERFORMANCE_COUNT5_CONTROL_UP_STIMULUS_SHIFT 0
 #define ROUTER_NL4_PERFORMANCE_COUNT5_CONTROL_UP_STIMULUS_MASK 0x1full
 #define ROUTER_NL4_PERFORMANCE_COUNT5_CONTROL_UP_STIMULUS_INPLACE (ROUTER_NL4_PERFORMANCE_COUNT5_CONTROL_UP_STIMULUS_MASK << ROUTER_NL4_PERFORMANCE_COUNT5_CONTROL_UP_STIMULUS_SHIFT)
 
 /*
- * PROM register R4_PERFORMANCE_COUNT6_CONTROL. Offset and field positions read from the table; role inferred from the names.
+ * PROM register R4_PERFORMANCE_COUNT6_CONTROL. Offset and field positions read
+ * from the table; role inferred from the names.
  */
 /* performance_count6_control: rw64, reset unknown */
-#define ROUTER_NL4_PERFORMANCE_COUNT6_CONTROL_OFFSET 0x10e0000u /* established */
-#define ROUTER_NL4_PERFORMANCE_COUNT6_CONTROL_CLR_ENABLE_SHIFT 32 /* established */
+/* established */
+#define ROUTER_NL4_PERFORMANCE_COUNT6_CONTROL_OFFSET 0x10e0000u
+/* established */
+#define ROUTER_NL4_PERFORMANCE_COUNT6_CONTROL_CLR_ENABLE_SHIFT 32
 #define ROUTER_NL4_PERFORMANCE_COUNT6_CONTROL_CLR_ENABLE_MASK 0x1ull
 #define ROUTER_NL4_PERFORMANCE_COUNT6_CONTROL_CLR_ENABLE_INPLACE (ROUTER_NL4_PERFORMANCE_COUNT6_CONTROL_CLR_ENABLE_MASK << ROUTER_NL4_PERFORMANCE_COUNT6_CONTROL_CLR_ENABLE_SHIFT)
-#define ROUTER_NL4_PERFORMANCE_COUNT6_CONTROL_CLR_MODE_SHIFT 31 /* established */
+/* established */
+#define ROUTER_NL4_PERFORMANCE_COUNT6_CONTROL_CLR_MODE_SHIFT 31
 #define ROUTER_NL4_PERFORMANCE_COUNT6_CONTROL_CLR_MODE_MASK 0x1ull
 #define ROUTER_NL4_PERFORMANCE_COUNT6_CONTROL_CLR_MODE_INPLACE (ROUTER_NL4_PERFORMANCE_COUNT6_CONTROL_CLR_MODE_MASK << ROUTER_NL4_PERFORMANCE_COUNT6_CONTROL_CLR_MODE_SHIFT)
-#define ROUTER_NL4_PERFORMANCE_COUNT6_CONTROL_CLR_POLARITY_SHIFT 30 /* established */
+/* established */
+#define ROUTER_NL4_PERFORMANCE_COUNT6_CONTROL_CLR_POLARITY_SHIFT 30
 #define ROUTER_NL4_PERFORMANCE_COUNT6_CONTROL_CLR_POLARITY_MASK 0x1ull
 #define ROUTER_NL4_PERFORMANCE_COUNT6_CONTROL_CLR_POLARITY_INPLACE (ROUTER_NL4_PERFORMANCE_COUNT6_CONTROL_CLR_POLARITY_MASK << ROUTER_NL4_PERFORMANCE_COUNT6_CONTROL_CLR_POLARITY_SHIFT)
-#define ROUTER_NL4_PERFORMANCE_COUNT6_CONTROL_CLR_EVENT_SHIFT 29 /* established */
+/* established */
+#define ROUTER_NL4_PERFORMANCE_COUNT6_CONTROL_CLR_EVENT_SHIFT 29
 #define ROUTER_NL4_PERFORMANCE_COUNT6_CONTROL_CLR_EVENT_MASK 0x1ull
 #define ROUTER_NL4_PERFORMANCE_COUNT6_CONTROL_CLR_EVENT_INPLACE (ROUTER_NL4_PERFORMANCE_COUNT6_CONTROL_CLR_EVENT_MASK << ROUTER_NL4_PERFORMANCE_COUNT6_CONTROL_CLR_EVENT_SHIFT)
-#define ROUTER_NL4_PERFORMANCE_COUNT6_CONTROL_CLR_STIMULUS_SHIFT 24 /* established */
+/* established */
+#define ROUTER_NL4_PERFORMANCE_COUNT6_CONTROL_CLR_STIMULUS_SHIFT 24
 #define ROUTER_NL4_PERFORMANCE_COUNT6_CONTROL_CLR_STIMULUS_MASK 0x1full
 #define ROUTER_NL4_PERFORMANCE_COUNT6_CONTROL_CLR_STIMULUS_INPLACE (ROUTER_NL4_PERFORMANCE_COUNT6_CONTROL_CLR_STIMULUS_MASK << ROUTER_NL4_PERFORMANCE_COUNT6_CONTROL_CLR_STIMULUS_SHIFT)
-#define ROUTER_NL4_PERFORMANCE_COUNT6_CONTROL_PEAK_DET_ENABLE_SHIFT 18 /* established */
+/* established */
+#define ROUTER_NL4_PERFORMANCE_COUNT6_CONTROL_PEAK_DET_ENABLE_SHIFT 18
 #define ROUTER_NL4_PERFORMANCE_COUNT6_CONTROL_PEAK_DET_ENABLE_MASK 0x1ull
 #define ROUTER_NL4_PERFORMANCE_COUNT6_CONTROL_PEAK_DET_ENABLE_INPLACE (ROUTER_NL4_PERFORMANCE_COUNT6_CONTROL_PEAK_DET_ENABLE_MASK << ROUTER_NL4_PERFORMANCE_COUNT6_CONTROL_PEAK_DET_ENABLE_SHIFT)
-#define ROUTER_NL4_PERFORMANCE_COUNT6_CONTROL_DEC_ENABLE_SHIFT 17 /* established */
+/* established */
+#define ROUTER_NL4_PERFORMANCE_COUNT6_CONTROL_DEC_ENABLE_SHIFT 17
 #define ROUTER_NL4_PERFORMANCE_COUNT6_CONTROL_DEC_ENABLE_MASK 0x1ull
 #define ROUTER_NL4_PERFORMANCE_COUNT6_CONTROL_DEC_ENABLE_INPLACE (ROUTER_NL4_PERFORMANCE_COUNT6_CONTROL_DEC_ENABLE_MASK << ROUTER_NL4_PERFORMANCE_COUNT6_CONTROL_DEC_ENABLE_SHIFT)
-#define ROUTER_NL4_PERFORMANCE_COUNT6_CONTROL_INC_ENABLE_SHIFT 16 /* established */
+/* established */
+#define ROUTER_NL4_PERFORMANCE_COUNT6_CONTROL_INC_ENABLE_SHIFT 16
 #define ROUTER_NL4_PERFORMANCE_COUNT6_CONTROL_INC_ENABLE_MASK 0x1ull
 #define ROUTER_NL4_PERFORMANCE_COUNT6_CONTROL_INC_ENABLE_INPLACE (ROUTER_NL4_PERFORMANCE_COUNT6_CONTROL_INC_ENABLE_MASK << ROUTER_NL4_PERFORMANCE_COUNT6_CONTROL_INC_ENABLE_SHIFT)
 #define ROUTER_NL4_PERFORMANCE_COUNT6_CONTROL_DN_MODE_SHIFT 15 /* established */
 #define ROUTER_NL4_PERFORMANCE_COUNT6_CONTROL_DN_MODE_MASK 0x1ull
 #define ROUTER_NL4_PERFORMANCE_COUNT6_CONTROL_DN_MODE_INPLACE (ROUTER_NL4_PERFORMANCE_COUNT6_CONTROL_DN_MODE_MASK << ROUTER_NL4_PERFORMANCE_COUNT6_CONTROL_DN_MODE_SHIFT)
-#define ROUTER_NL4_PERFORMANCE_COUNT6_CONTROL_DN_POLARITY_SHIFT 14 /* established */
+/* established */
+#define ROUTER_NL4_PERFORMANCE_COUNT6_CONTROL_DN_POLARITY_SHIFT 14
 #define ROUTER_NL4_PERFORMANCE_COUNT6_CONTROL_DN_POLARITY_MASK 0x1ull
 #define ROUTER_NL4_PERFORMANCE_COUNT6_CONTROL_DN_POLARITY_INPLACE (ROUTER_NL4_PERFORMANCE_COUNT6_CONTROL_DN_POLARITY_MASK << ROUTER_NL4_PERFORMANCE_COUNT6_CONTROL_DN_POLARITY_SHIFT)
-#define ROUTER_NL4_PERFORMANCE_COUNT6_CONTROL_DN_EVENT_SHIFT 13 /* established */
+/* established */
+#define ROUTER_NL4_PERFORMANCE_COUNT6_CONTROL_DN_EVENT_SHIFT 13
 #define ROUTER_NL4_PERFORMANCE_COUNT6_CONTROL_DN_EVENT_MASK 0x1ull
 #define ROUTER_NL4_PERFORMANCE_COUNT6_CONTROL_DN_EVENT_INPLACE (ROUTER_NL4_PERFORMANCE_COUNT6_CONTROL_DN_EVENT_MASK << ROUTER_NL4_PERFORMANCE_COUNT6_CONTROL_DN_EVENT_SHIFT)
-#define ROUTER_NL4_PERFORMANCE_COUNT6_CONTROL_DN_STIMULUS_SHIFT 8 /* established */
+/* established */
+#define ROUTER_NL4_PERFORMANCE_COUNT6_CONTROL_DN_STIMULUS_SHIFT 8
 #define ROUTER_NL4_PERFORMANCE_COUNT6_CONTROL_DN_STIMULUS_MASK 0x1full
 #define ROUTER_NL4_PERFORMANCE_COUNT6_CONTROL_DN_STIMULUS_INPLACE (ROUTER_NL4_PERFORMANCE_COUNT6_CONTROL_DN_STIMULUS_MASK << ROUTER_NL4_PERFORMANCE_COUNT6_CONTROL_DN_STIMULUS_SHIFT)
 #define ROUTER_NL4_PERFORMANCE_COUNT6_CONTROL_UP_MODE_SHIFT 7 /* established */
 #define ROUTER_NL4_PERFORMANCE_COUNT6_CONTROL_UP_MODE_MASK 0x1ull
 #define ROUTER_NL4_PERFORMANCE_COUNT6_CONTROL_UP_MODE_INPLACE (ROUTER_NL4_PERFORMANCE_COUNT6_CONTROL_UP_MODE_MASK << ROUTER_NL4_PERFORMANCE_COUNT6_CONTROL_UP_MODE_SHIFT)
-#define ROUTER_NL4_PERFORMANCE_COUNT6_CONTROL_UP_POLARITY_SHIFT 6 /* established */
+/* established */
+#define ROUTER_NL4_PERFORMANCE_COUNT6_CONTROL_UP_POLARITY_SHIFT 6
 #define ROUTER_NL4_PERFORMANCE_COUNT6_CONTROL_UP_POLARITY_MASK 0x1ull
 #define ROUTER_NL4_PERFORMANCE_COUNT6_CONTROL_UP_POLARITY_INPLACE (ROUTER_NL4_PERFORMANCE_COUNT6_CONTROL_UP_POLARITY_MASK << ROUTER_NL4_PERFORMANCE_COUNT6_CONTROL_UP_POLARITY_SHIFT)
 #define ROUTER_NL4_PERFORMANCE_COUNT6_CONTROL_UP_EVENT_SHIFT 5 /* established */
 #define ROUTER_NL4_PERFORMANCE_COUNT6_CONTROL_UP_EVENT_MASK 0x1ull
 #define ROUTER_NL4_PERFORMANCE_COUNT6_CONTROL_UP_EVENT_INPLACE (ROUTER_NL4_PERFORMANCE_COUNT6_CONTROL_UP_EVENT_MASK << ROUTER_NL4_PERFORMANCE_COUNT6_CONTROL_UP_EVENT_SHIFT)
-#define ROUTER_NL4_PERFORMANCE_COUNT6_CONTROL_UP_STIMULUS_SHIFT 0 /* established */
+/* established */
+#define ROUTER_NL4_PERFORMANCE_COUNT6_CONTROL_UP_STIMULUS_SHIFT 0
 #define ROUTER_NL4_PERFORMANCE_COUNT6_CONTROL_UP_STIMULUS_MASK 0x1full
 #define ROUTER_NL4_PERFORMANCE_COUNT6_CONTROL_UP_STIMULUS_INPLACE (ROUTER_NL4_PERFORMANCE_COUNT6_CONTROL_UP_STIMULUS_MASK << ROUTER_NL4_PERFORMANCE_COUNT6_CONTROL_UP_STIMULUS_SHIFT)
 
 /*
- * PROM register R4_PERFORMANCE_COUNT7_CONTROL. Offset and field positions read from the table; role inferred from the names.
+ * PROM register R4_PERFORMANCE_COUNT7_CONTROL. Offset and field positions read
+ * from the table; role inferred from the names.
  */
 /* performance_count7_control: rw64, reset unknown */
-#define ROUTER_NL4_PERFORMANCE_COUNT7_CONTROL_OFFSET 0x10f0000u /* established */
-#define ROUTER_NL4_PERFORMANCE_COUNT7_CONTROL_CLR_ENABLE_SHIFT 32 /* established */
+/* established */
+#define ROUTER_NL4_PERFORMANCE_COUNT7_CONTROL_OFFSET 0x10f0000u
+/* established */
+#define ROUTER_NL4_PERFORMANCE_COUNT7_CONTROL_CLR_ENABLE_SHIFT 32
 #define ROUTER_NL4_PERFORMANCE_COUNT7_CONTROL_CLR_ENABLE_MASK 0x1ull
 #define ROUTER_NL4_PERFORMANCE_COUNT7_CONTROL_CLR_ENABLE_INPLACE (ROUTER_NL4_PERFORMANCE_COUNT7_CONTROL_CLR_ENABLE_MASK << ROUTER_NL4_PERFORMANCE_COUNT7_CONTROL_CLR_ENABLE_SHIFT)
-#define ROUTER_NL4_PERFORMANCE_COUNT7_CONTROL_CLR_MODE_SHIFT 31 /* established */
+/* established */
+#define ROUTER_NL4_PERFORMANCE_COUNT7_CONTROL_CLR_MODE_SHIFT 31
 #define ROUTER_NL4_PERFORMANCE_COUNT7_CONTROL_CLR_MODE_MASK 0x1ull
 #define ROUTER_NL4_PERFORMANCE_COUNT7_CONTROL_CLR_MODE_INPLACE (ROUTER_NL4_PERFORMANCE_COUNT7_CONTROL_CLR_MODE_MASK << ROUTER_NL4_PERFORMANCE_COUNT7_CONTROL_CLR_MODE_SHIFT)
-#define ROUTER_NL4_PERFORMANCE_COUNT7_CONTROL_CLR_POLARITY_SHIFT 30 /* established */
+/* established */
+#define ROUTER_NL4_PERFORMANCE_COUNT7_CONTROL_CLR_POLARITY_SHIFT 30
 #define ROUTER_NL4_PERFORMANCE_COUNT7_CONTROL_CLR_POLARITY_MASK 0x1ull
 #define ROUTER_NL4_PERFORMANCE_COUNT7_CONTROL_CLR_POLARITY_INPLACE (ROUTER_NL4_PERFORMANCE_COUNT7_CONTROL_CLR_POLARITY_MASK << ROUTER_NL4_PERFORMANCE_COUNT7_CONTROL_CLR_POLARITY_SHIFT)
-#define ROUTER_NL4_PERFORMANCE_COUNT7_CONTROL_CLR_EVENT_SHIFT 29 /* established */
+/* established */
+#define ROUTER_NL4_PERFORMANCE_COUNT7_CONTROL_CLR_EVENT_SHIFT 29
 #define ROUTER_NL4_PERFORMANCE_COUNT7_CONTROL_CLR_EVENT_MASK 0x1ull
 #define ROUTER_NL4_PERFORMANCE_COUNT7_CONTROL_CLR_EVENT_INPLACE (ROUTER_NL4_PERFORMANCE_COUNT7_CONTROL_CLR_EVENT_MASK << ROUTER_NL4_PERFORMANCE_COUNT7_CONTROL_CLR_EVENT_SHIFT)
-#define ROUTER_NL4_PERFORMANCE_COUNT7_CONTROL_CLR_STIMULUS_SHIFT 24 /* established */
+/* established */
+#define ROUTER_NL4_PERFORMANCE_COUNT7_CONTROL_CLR_STIMULUS_SHIFT 24
 #define ROUTER_NL4_PERFORMANCE_COUNT7_CONTROL_CLR_STIMULUS_MASK 0x1full
 #define ROUTER_NL4_PERFORMANCE_COUNT7_CONTROL_CLR_STIMULUS_INPLACE (ROUTER_NL4_PERFORMANCE_COUNT7_CONTROL_CLR_STIMULUS_MASK << ROUTER_NL4_PERFORMANCE_COUNT7_CONTROL_CLR_STIMULUS_SHIFT)
-#define ROUTER_NL4_PERFORMANCE_COUNT7_CONTROL_PEAK_DET_ENABLE_SHIFT 18 /* established */
+/* established */
+#define ROUTER_NL4_PERFORMANCE_COUNT7_CONTROL_PEAK_DET_ENABLE_SHIFT 18
 #define ROUTER_NL4_PERFORMANCE_COUNT7_CONTROL_PEAK_DET_ENABLE_MASK 0x1ull
 #define ROUTER_NL4_PERFORMANCE_COUNT7_CONTROL_PEAK_DET_ENABLE_INPLACE (ROUTER_NL4_PERFORMANCE_COUNT7_CONTROL_PEAK_DET_ENABLE_MASK << ROUTER_NL4_PERFORMANCE_COUNT7_CONTROL_PEAK_DET_ENABLE_SHIFT)
-#define ROUTER_NL4_PERFORMANCE_COUNT7_CONTROL_DEC_ENABLE_SHIFT 17 /* established */
+/* established */
+#define ROUTER_NL4_PERFORMANCE_COUNT7_CONTROL_DEC_ENABLE_SHIFT 17
 #define ROUTER_NL4_PERFORMANCE_COUNT7_CONTROL_DEC_ENABLE_MASK 0x1ull
 #define ROUTER_NL4_PERFORMANCE_COUNT7_CONTROL_DEC_ENABLE_INPLACE (ROUTER_NL4_PERFORMANCE_COUNT7_CONTROL_DEC_ENABLE_MASK << ROUTER_NL4_PERFORMANCE_COUNT7_CONTROL_DEC_ENABLE_SHIFT)
-#define ROUTER_NL4_PERFORMANCE_COUNT7_CONTROL_INC_ENABLE_SHIFT 16 /* established */
+/* established */
+#define ROUTER_NL4_PERFORMANCE_COUNT7_CONTROL_INC_ENABLE_SHIFT 16
 #define ROUTER_NL4_PERFORMANCE_COUNT7_CONTROL_INC_ENABLE_MASK 0x1ull
 #define ROUTER_NL4_PERFORMANCE_COUNT7_CONTROL_INC_ENABLE_INPLACE (ROUTER_NL4_PERFORMANCE_COUNT7_CONTROL_INC_ENABLE_MASK << ROUTER_NL4_PERFORMANCE_COUNT7_CONTROL_INC_ENABLE_SHIFT)
 #define ROUTER_NL4_PERFORMANCE_COUNT7_CONTROL_DN_MODE_SHIFT 15 /* established */
 #define ROUTER_NL4_PERFORMANCE_COUNT7_CONTROL_DN_MODE_MASK 0x1ull
 #define ROUTER_NL4_PERFORMANCE_COUNT7_CONTROL_DN_MODE_INPLACE (ROUTER_NL4_PERFORMANCE_COUNT7_CONTROL_DN_MODE_MASK << ROUTER_NL4_PERFORMANCE_COUNT7_CONTROL_DN_MODE_SHIFT)
-#define ROUTER_NL4_PERFORMANCE_COUNT7_CONTROL_DN_POLARITY_SHIFT 14 /* established */
+/* established */
+#define ROUTER_NL4_PERFORMANCE_COUNT7_CONTROL_DN_POLARITY_SHIFT 14
 #define ROUTER_NL4_PERFORMANCE_COUNT7_CONTROL_DN_POLARITY_MASK 0x1ull
 #define ROUTER_NL4_PERFORMANCE_COUNT7_CONTROL_DN_POLARITY_INPLACE (ROUTER_NL4_PERFORMANCE_COUNT7_CONTROL_DN_POLARITY_MASK << ROUTER_NL4_PERFORMANCE_COUNT7_CONTROL_DN_POLARITY_SHIFT)
-#define ROUTER_NL4_PERFORMANCE_COUNT7_CONTROL_DN_EVENT_SHIFT 13 /* established */
+/* established */
+#define ROUTER_NL4_PERFORMANCE_COUNT7_CONTROL_DN_EVENT_SHIFT 13
 #define ROUTER_NL4_PERFORMANCE_COUNT7_CONTROL_DN_EVENT_MASK 0x1ull
 #define ROUTER_NL4_PERFORMANCE_COUNT7_CONTROL_DN_EVENT_INPLACE (ROUTER_NL4_PERFORMANCE_COUNT7_CONTROL_DN_EVENT_MASK << ROUTER_NL4_PERFORMANCE_COUNT7_CONTROL_DN_EVENT_SHIFT)
-#define ROUTER_NL4_PERFORMANCE_COUNT7_CONTROL_DN_STIMULUS_SHIFT 8 /* established */
+/* established */
+#define ROUTER_NL4_PERFORMANCE_COUNT7_CONTROL_DN_STIMULUS_SHIFT 8
 #define ROUTER_NL4_PERFORMANCE_COUNT7_CONTROL_DN_STIMULUS_MASK 0x1full
 #define ROUTER_NL4_PERFORMANCE_COUNT7_CONTROL_DN_STIMULUS_INPLACE (ROUTER_NL4_PERFORMANCE_COUNT7_CONTROL_DN_STIMULUS_MASK << ROUTER_NL4_PERFORMANCE_COUNT7_CONTROL_DN_STIMULUS_SHIFT)
 #define ROUTER_NL4_PERFORMANCE_COUNT7_CONTROL_UP_MODE_SHIFT 7 /* established */
 #define ROUTER_NL4_PERFORMANCE_COUNT7_CONTROL_UP_MODE_MASK 0x1ull
 #define ROUTER_NL4_PERFORMANCE_COUNT7_CONTROL_UP_MODE_INPLACE (ROUTER_NL4_PERFORMANCE_COUNT7_CONTROL_UP_MODE_MASK << ROUTER_NL4_PERFORMANCE_COUNT7_CONTROL_UP_MODE_SHIFT)
-#define ROUTER_NL4_PERFORMANCE_COUNT7_CONTROL_UP_POLARITY_SHIFT 6 /* established */
+/* established */
+#define ROUTER_NL4_PERFORMANCE_COUNT7_CONTROL_UP_POLARITY_SHIFT 6
 #define ROUTER_NL4_PERFORMANCE_COUNT7_CONTROL_UP_POLARITY_MASK 0x1ull
 #define ROUTER_NL4_PERFORMANCE_COUNT7_CONTROL_UP_POLARITY_INPLACE (ROUTER_NL4_PERFORMANCE_COUNT7_CONTROL_UP_POLARITY_MASK << ROUTER_NL4_PERFORMANCE_COUNT7_CONTROL_UP_POLARITY_SHIFT)
 #define ROUTER_NL4_PERFORMANCE_COUNT7_CONTROL_UP_EVENT_SHIFT 5 /* established */
 #define ROUTER_NL4_PERFORMANCE_COUNT7_CONTROL_UP_EVENT_MASK 0x1ull
 #define ROUTER_NL4_PERFORMANCE_COUNT7_CONTROL_UP_EVENT_INPLACE (ROUTER_NL4_PERFORMANCE_COUNT7_CONTROL_UP_EVENT_MASK << ROUTER_NL4_PERFORMANCE_COUNT7_CONTROL_UP_EVENT_SHIFT)
-#define ROUTER_NL4_PERFORMANCE_COUNT7_CONTROL_UP_STIMULUS_SHIFT 0 /* established */
+/* established */
+#define ROUTER_NL4_PERFORMANCE_COUNT7_CONTROL_UP_STIMULUS_SHIFT 0
 #define ROUTER_NL4_PERFORMANCE_COUNT7_CONTROL_UP_STIMULUS_MASK 0x1full
 #define ROUTER_NL4_PERFORMANCE_COUNT7_CONTROL_UP_STIMULUS_INPLACE (ROUTER_NL4_PERFORMANCE_COUNT7_CONTROL_UP_STIMULUS_MASK << ROUTER_NL4_PERFORMANCE_COUNT7_CONTROL_UP_STIMULUS_SHIFT)
 
 /*
- * PROM register R4_PROFILE_DN_CONTROL. Offset and field positions read from the table; role inferred from the names.
+ * PROM register R4_PROFILE_DN_CONTROL. Offset and field positions read from the
+ * table; role inferred from the names.
  */
 /* profile_dn_control: rw64, reset unknown */
-#define ROUTER_NL4_PROFILE_DN_CONTROL_OFFSET         0x1100000u /* established */
+/* established */
+#define ROUTER_NL4_PROFILE_DN_CONTROL_OFFSET         0x1100000u
 #define ROUTER_NL4_PROFILE_DN_CONTROL_MODE_SHIFT     7 /* established */
 #define ROUTER_NL4_PROFILE_DN_CONTROL_MODE_MASK      0x1ull
-#define ROUTER_NL4_PROFILE_DN_CONTROL_MODE_INPLACE   (ROUTER_NL4_PROFILE_DN_CONTROL_MODE_MASK << ROUTER_NL4_PROFILE_DN_CONTROL_MODE_SHIFT)
+#define ROUTER_NL4_PROFILE_DN_CONTROL_MODE_INPLACE (ROUTER_NL4_PROFILE_DN_CONTROL_MODE_MASK << ROUTER_NL4_PROFILE_DN_CONTROL_MODE_SHIFT)
 #define ROUTER_NL4_PROFILE_DN_CONTROL_POLARITY_SHIFT 6 /* established */
 #define ROUTER_NL4_PROFILE_DN_CONTROL_POLARITY_MASK  0x1ull
 #define ROUTER_NL4_PROFILE_DN_CONTROL_POLARITY_INPLACE (ROUTER_NL4_PROFILE_DN_CONTROL_POLARITY_MASK << ROUTER_NL4_PROFILE_DN_CONTROL_POLARITY_SHIFT)
 #define ROUTER_NL4_PROFILE_DN_CONTROL_EVENT_SHIFT    5 /* established */
 #define ROUTER_NL4_PROFILE_DN_CONTROL_EVENT_MASK     0x1ull
-#define ROUTER_NL4_PROFILE_DN_CONTROL_EVENT_INPLACE  (ROUTER_NL4_PROFILE_DN_CONTROL_EVENT_MASK << ROUTER_NL4_PROFILE_DN_CONTROL_EVENT_SHIFT)
+#define ROUTER_NL4_PROFILE_DN_CONTROL_EVENT_INPLACE (ROUTER_NL4_PROFILE_DN_CONTROL_EVENT_MASK << ROUTER_NL4_PROFILE_DN_CONTROL_EVENT_SHIFT)
 #define ROUTER_NL4_PROFILE_DN_CONTROL_STIMULUS_SHIFT 0 /* established */
 #define ROUTER_NL4_PROFILE_DN_CONTROL_STIMULUS_MASK  0x1full
 #define ROUTER_NL4_PROFILE_DN_CONTROL_STIMULUS_INPLACE (ROUTER_NL4_PROFILE_DN_CONTROL_STIMULUS_MASK << ROUTER_NL4_PROFILE_DN_CONTROL_STIMULUS_SHIFT)
 
 /*
- * PROM register R4_PROFILE_PEAK_CONTROL. Offset and field positions read from the table; role inferred from the names.
+ * PROM register R4_PROFILE_PEAK_CONTROL. Offset and field positions read from
+ * the table; role inferred from the names.
  */
 /* profile_peak_control: rw64, reset unknown */
-#define ROUTER_NL4_PROFILE_PEAK_CONTROL_OFFSET       0x1100080u /* established */
+/* established */
+#define ROUTER_NL4_PROFILE_PEAK_CONTROL_OFFSET       0x1100080u
 #define ROUTER_NL4_PROFILE_PEAK_CONTROL_POLARITY_SHIFT 6 /* established */
 #define ROUTER_NL4_PROFILE_PEAK_CONTROL_POLARITY_MASK 0x1ull
 #define ROUTER_NL4_PROFILE_PEAK_CONTROL_POLARITY_INPLACE (ROUTER_NL4_PROFILE_PEAK_CONTROL_POLARITY_MASK << ROUTER_NL4_PROFILE_PEAK_CONTROL_POLARITY_SHIFT)
@@ -2837,178 +3277,204 @@
 #define ROUTER_NL4_PROFILE_PEAK_CONTROL_STIMULUS_INPLACE (ROUTER_NL4_PROFILE_PEAK_CONTROL_STIMULUS_MASK << ROUTER_NL4_PROFILE_PEAK_CONTROL_STIMULUS_SHIFT)
 
 /*
- * PROM register R4_PROFILE_RANGE. Offset and field positions read from the table; role inferred from the names.
+ * PROM register R4_PROFILE_RANGE. Offset and field positions read from the
+ * table; role inferred from the names.
  */
 /* profile_range: rw64, reset unknown */
-#define ROUTER_NL4_PROFILE_RANGE_OFFSET              0x1100100u /* established */
+/* established */
+#define ROUTER_NL4_PROFILE_RANGE_OFFSET              0x1100100u
 #define ROUTER_NL4_PROFILE_RANGE_RANGE7_SHIFT        56 /* established */
 #define ROUTER_NL4_PROFILE_RANGE_RANGE7_MASK         0xffull
-#define ROUTER_NL4_PROFILE_RANGE_RANGE7_INPLACE      (ROUTER_NL4_PROFILE_RANGE_RANGE7_MASK << ROUTER_NL4_PROFILE_RANGE_RANGE7_SHIFT)
+#define ROUTER_NL4_PROFILE_RANGE_RANGE7_INPLACE (ROUTER_NL4_PROFILE_RANGE_RANGE7_MASK << ROUTER_NL4_PROFILE_RANGE_RANGE7_SHIFT)
 #define ROUTER_NL4_PROFILE_RANGE_RANGE6_SHIFT        48 /* established */
 #define ROUTER_NL4_PROFILE_RANGE_RANGE6_MASK         0xffull
-#define ROUTER_NL4_PROFILE_RANGE_RANGE6_INPLACE      (ROUTER_NL4_PROFILE_RANGE_RANGE6_MASK << ROUTER_NL4_PROFILE_RANGE_RANGE6_SHIFT)
+#define ROUTER_NL4_PROFILE_RANGE_RANGE6_INPLACE (ROUTER_NL4_PROFILE_RANGE_RANGE6_MASK << ROUTER_NL4_PROFILE_RANGE_RANGE6_SHIFT)
 #define ROUTER_NL4_PROFILE_RANGE_RANGE5_SHIFT        40 /* established */
 #define ROUTER_NL4_PROFILE_RANGE_RANGE5_MASK         0xffull
-#define ROUTER_NL4_PROFILE_RANGE_RANGE5_INPLACE      (ROUTER_NL4_PROFILE_RANGE_RANGE5_MASK << ROUTER_NL4_PROFILE_RANGE_RANGE5_SHIFT)
+#define ROUTER_NL4_PROFILE_RANGE_RANGE5_INPLACE (ROUTER_NL4_PROFILE_RANGE_RANGE5_MASK << ROUTER_NL4_PROFILE_RANGE_RANGE5_SHIFT)
 #define ROUTER_NL4_PROFILE_RANGE_RANGE4_SHIFT        32 /* established */
 #define ROUTER_NL4_PROFILE_RANGE_RANGE4_MASK         0xffull
-#define ROUTER_NL4_PROFILE_RANGE_RANGE4_INPLACE      (ROUTER_NL4_PROFILE_RANGE_RANGE4_MASK << ROUTER_NL4_PROFILE_RANGE_RANGE4_SHIFT)
+#define ROUTER_NL4_PROFILE_RANGE_RANGE4_INPLACE (ROUTER_NL4_PROFILE_RANGE_RANGE4_MASK << ROUTER_NL4_PROFILE_RANGE_RANGE4_SHIFT)
 #define ROUTER_NL4_PROFILE_RANGE_RANGE3_SHIFT        24 /* established */
 #define ROUTER_NL4_PROFILE_RANGE_RANGE3_MASK         0xffull
-#define ROUTER_NL4_PROFILE_RANGE_RANGE3_INPLACE      (ROUTER_NL4_PROFILE_RANGE_RANGE3_MASK << ROUTER_NL4_PROFILE_RANGE_RANGE3_SHIFT)
+#define ROUTER_NL4_PROFILE_RANGE_RANGE3_INPLACE (ROUTER_NL4_PROFILE_RANGE_RANGE3_MASK << ROUTER_NL4_PROFILE_RANGE_RANGE3_SHIFT)
 #define ROUTER_NL4_PROFILE_RANGE_RANGE2_SHIFT        16 /* established */
 #define ROUTER_NL4_PROFILE_RANGE_RANGE2_MASK         0xffull
-#define ROUTER_NL4_PROFILE_RANGE_RANGE2_INPLACE      (ROUTER_NL4_PROFILE_RANGE_RANGE2_MASK << ROUTER_NL4_PROFILE_RANGE_RANGE2_SHIFT)
+#define ROUTER_NL4_PROFILE_RANGE_RANGE2_INPLACE (ROUTER_NL4_PROFILE_RANGE_RANGE2_MASK << ROUTER_NL4_PROFILE_RANGE_RANGE2_SHIFT)
 #define ROUTER_NL4_PROFILE_RANGE_RANGE1_SHIFT        8 /* established */
 #define ROUTER_NL4_PROFILE_RANGE_RANGE1_MASK         0xffull
-#define ROUTER_NL4_PROFILE_RANGE_RANGE1_INPLACE      (ROUTER_NL4_PROFILE_RANGE_RANGE1_MASK << ROUTER_NL4_PROFILE_RANGE_RANGE1_SHIFT)
+#define ROUTER_NL4_PROFILE_RANGE_RANGE1_INPLACE (ROUTER_NL4_PROFILE_RANGE_RANGE1_MASK << ROUTER_NL4_PROFILE_RANGE_RANGE1_SHIFT)
 #define ROUTER_NL4_PROFILE_RANGE_RANGE0_SHIFT        0 /* established */
 #define ROUTER_NL4_PROFILE_RANGE_RANGE0_MASK         0xffull
-#define ROUTER_NL4_PROFILE_RANGE_RANGE0_INPLACE      (ROUTER_NL4_PROFILE_RANGE_RANGE0_MASK << ROUTER_NL4_PROFILE_RANGE_RANGE0_SHIFT)
+#define ROUTER_NL4_PROFILE_RANGE_RANGE0_INPLACE (ROUTER_NL4_PROFILE_RANGE_RANGE0_MASK << ROUTER_NL4_PROFILE_RANGE_RANGE0_SHIFT)
 
 /*
- * PROM register R4_PROFILE_UP_CONTROL. Offset and field positions read from the table; role inferred from the names.
+ * PROM register R4_PROFILE_UP_CONTROL. Offset and field positions read from the
+ * table; role inferred from the names.
  */
 /* profile_up_control: rw64, reset unknown */
-#define ROUTER_NL4_PROFILE_UP_CONTROL_OFFSET         0x1100180u /* established */
+/* established */
+#define ROUTER_NL4_PROFILE_UP_CONTROL_OFFSET         0x1100180u
 #define ROUTER_NL4_PROFILE_UP_CONTROL_MODE_SHIFT     7 /* established */
 #define ROUTER_NL4_PROFILE_UP_CONTROL_MODE_MASK      0x1ull
-#define ROUTER_NL4_PROFILE_UP_CONTROL_MODE_INPLACE   (ROUTER_NL4_PROFILE_UP_CONTROL_MODE_MASK << ROUTER_NL4_PROFILE_UP_CONTROL_MODE_SHIFT)
+#define ROUTER_NL4_PROFILE_UP_CONTROL_MODE_INPLACE (ROUTER_NL4_PROFILE_UP_CONTROL_MODE_MASK << ROUTER_NL4_PROFILE_UP_CONTROL_MODE_SHIFT)
 #define ROUTER_NL4_PROFILE_UP_CONTROL_POLARITY_SHIFT 6 /* established */
 #define ROUTER_NL4_PROFILE_UP_CONTROL_POLARITY_MASK  0x1ull
 #define ROUTER_NL4_PROFILE_UP_CONTROL_POLARITY_INPLACE (ROUTER_NL4_PROFILE_UP_CONTROL_POLARITY_MASK << ROUTER_NL4_PROFILE_UP_CONTROL_POLARITY_SHIFT)
 #define ROUTER_NL4_PROFILE_UP_CONTROL_EVENT_SHIFT    5 /* established */
 #define ROUTER_NL4_PROFILE_UP_CONTROL_EVENT_MASK     0x1ull
-#define ROUTER_NL4_PROFILE_UP_CONTROL_EVENT_INPLACE  (ROUTER_NL4_PROFILE_UP_CONTROL_EVENT_MASK << ROUTER_NL4_PROFILE_UP_CONTROL_EVENT_SHIFT)
+#define ROUTER_NL4_PROFILE_UP_CONTROL_EVENT_INPLACE (ROUTER_NL4_PROFILE_UP_CONTROL_EVENT_MASK << ROUTER_NL4_PROFILE_UP_CONTROL_EVENT_SHIFT)
 #define ROUTER_NL4_PROFILE_UP_CONTROL_STIMULUS_SHIFT 0 /* established */
 #define ROUTER_NL4_PROFILE_UP_CONTROL_STIMULUS_MASK  0x1full
 #define ROUTER_NL4_PROFILE_UP_CONTROL_STIMULUS_INPLACE (ROUTER_NL4_PROFILE_UP_CONTROL_STIMULUS_MASK << ROUTER_NL4_PROFILE_UP_CONTROL_STIMULUS_SHIFT)
 
 /*
- * PROM register R4_PERF_TRIG_PATTERN_0. Offset and field positions read from the table; role inferred from the names.
+ * PROM register R4_PERF_TRIG_PATTERN_0. Offset and field positions read from
+ * the table; role inferred from the names.
  */
 /* perf_trig_pattern_0: rw64, reset unknown */
-#define ROUTER_NL4_PERF_TRIG_PATTERN_0_OFFSET        0x1100200u /* established */
+/* established */
+#define ROUTER_NL4_PERF_TRIG_PATTERN_0_OFFSET        0x1100200u
 #define ROUTER_NL4_PERF_TRIG_PATTERN_0_BIT_EN_SHIFT  32 /* established */
 #define ROUTER_NL4_PERF_TRIG_PATTERN_0_BIT_EN_MASK   0xffffffffull
 #define ROUTER_NL4_PERF_TRIG_PATTERN_0_BIT_EN_INPLACE (ROUTER_NL4_PERF_TRIG_PATTERN_0_BIT_EN_MASK << ROUTER_NL4_PERF_TRIG_PATTERN_0_BIT_EN_SHIFT)
 #define ROUTER_NL4_PERF_TRIG_PATTERN_0_DATA_SHIFT    0 /* established */
 #define ROUTER_NL4_PERF_TRIG_PATTERN_0_DATA_MASK     0xffffffffull
-#define ROUTER_NL4_PERF_TRIG_PATTERN_0_DATA_INPLACE  (ROUTER_NL4_PERF_TRIG_PATTERN_0_DATA_MASK << ROUTER_NL4_PERF_TRIG_PATTERN_0_DATA_SHIFT)
+#define ROUTER_NL4_PERF_TRIG_PATTERN_0_DATA_INPLACE (ROUTER_NL4_PERF_TRIG_PATTERN_0_DATA_MASK << ROUTER_NL4_PERF_TRIG_PATTERN_0_DATA_SHIFT)
 
 /*
- * PROM register R4_PERF_TRIG_PATTERN_1. Offset and field positions read from the table; role inferred from the names.
+ * PROM register R4_PERF_TRIG_PATTERN_1. Offset and field positions read from
+ * the table; role inferred from the names.
  */
 /* perf_trig_pattern_1: rw64, reset unknown */
-#define ROUTER_NL4_PERF_TRIG_PATTERN_1_OFFSET        0x1100208u /* established */
+/* established */
+#define ROUTER_NL4_PERF_TRIG_PATTERN_1_OFFSET        0x1100208u
 #define ROUTER_NL4_PERF_TRIG_PATTERN_1_BIT_EN_SHIFT  32 /* established */
 #define ROUTER_NL4_PERF_TRIG_PATTERN_1_BIT_EN_MASK   0xffffffffull
 #define ROUTER_NL4_PERF_TRIG_PATTERN_1_BIT_EN_INPLACE (ROUTER_NL4_PERF_TRIG_PATTERN_1_BIT_EN_MASK << ROUTER_NL4_PERF_TRIG_PATTERN_1_BIT_EN_SHIFT)
 #define ROUTER_NL4_PERF_TRIG_PATTERN_1_DATA_SHIFT    0 /* established */
 #define ROUTER_NL4_PERF_TRIG_PATTERN_1_DATA_MASK     0xffffffffull
-#define ROUTER_NL4_PERF_TRIG_PATTERN_1_DATA_INPLACE  (ROUTER_NL4_PERF_TRIG_PATTERN_1_DATA_MASK << ROUTER_NL4_PERF_TRIG_PATTERN_1_DATA_SHIFT)
+#define ROUTER_NL4_PERF_TRIG_PATTERN_1_DATA_INPLACE (ROUTER_NL4_PERF_TRIG_PATTERN_1_DATA_MASK << ROUTER_NL4_PERF_TRIG_PATTERN_1_DATA_SHIFT)
 
 /*
- * PROM register R4_PERF_TRIG_PATTERN_2. Offset and field positions read from the table; role inferred from the names.
+ * PROM register R4_PERF_TRIG_PATTERN_2. Offset and field positions read from
+ * the table; role inferred from the names.
  */
 /* perf_trig_pattern_2: rw64, reset unknown */
-#define ROUTER_NL4_PERF_TRIG_PATTERN_2_OFFSET        0x1100210u /* established */
+/* established */
+#define ROUTER_NL4_PERF_TRIG_PATTERN_2_OFFSET        0x1100210u
 #define ROUTER_NL4_PERF_TRIG_PATTERN_2_BIT_EN_SHIFT  32 /* established */
 #define ROUTER_NL4_PERF_TRIG_PATTERN_2_BIT_EN_MASK   0xffffffffull
 #define ROUTER_NL4_PERF_TRIG_PATTERN_2_BIT_EN_INPLACE (ROUTER_NL4_PERF_TRIG_PATTERN_2_BIT_EN_MASK << ROUTER_NL4_PERF_TRIG_PATTERN_2_BIT_EN_SHIFT)
 #define ROUTER_NL4_PERF_TRIG_PATTERN_2_DATA_SHIFT    0 /* established */
 #define ROUTER_NL4_PERF_TRIG_PATTERN_2_DATA_MASK     0xffffffffull
-#define ROUTER_NL4_PERF_TRIG_PATTERN_2_DATA_INPLACE  (ROUTER_NL4_PERF_TRIG_PATTERN_2_DATA_MASK << ROUTER_NL4_PERF_TRIG_PATTERN_2_DATA_SHIFT)
+#define ROUTER_NL4_PERF_TRIG_PATTERN_2_DATA_INPLACE (ROUTER_NL4_PERF_TRIG_PATTERN_2_DATA_MASK << ROUTER_NL4_PERF_TRIG_PATTERN_2_DATA_SHIFT)
 
 /*
- * PROM register R4_PERF_TRIG_PATTERN_3. Offset and field positions read from the table; role inferred from the names.
+ * PROM register R4_PERF_TRIG_PATTERN_3. Offset and field positions read from
+ * the table; role inferred from the names.
  */
 /* perf_trig_pattern_3: rw64, reset unknown */
-#define ROUTER_NL4_PERF_TRIG_PATTERN_3_OFFSET        0x1100218u /* established */
+/* established */
+#define ROUTER_NL4_PERF_TRIG_PATTERN_3_OFFSET        0x1100218u
 #define ROUTER_NL4_PERF_TRIG_PATTERN_3_BIT_EN_SHIFT  32 /* established */
 #define ROUTER_NL4_PERF_TRIG_PATTERN_3_BIT_EN_MASK   0xffffffffull
 #define ROUTER_NL4_PERF_TRIG_PATTERN_3_BIT_EN_INPLACE (ROUTER_NL4_PERF_TRIG_PATTERN_3_BIT_EN_MASK << ROUTER_NL4_PERF_TRIG_PATTERN_3_BIT_EN_SHIFT)
 #define ROUTER_NL4_PERF_TRIG_PATTERN_3_DATA_SHIFT    0 /* established */
 #define ROUTER_NL4_PERF_TRIG_PATTERN_3_DATA_MASK     0xffffffffull
-#define ROUTER_NL4_PERF_TRIG_PATTERN_3_DATA_INPLACE  (ROUTER_NL4_PERF_TRIG_PATTERN_3_DATA_MASK << ROUTER_NL4_PERF_TRIG_PATTERN_3_DATA_SHIFT)
+#define ROUTER_NL4_PERF_TRIG_PATTERN_3_DATA_INPLACE (ROUTER_NL4_PERF_TRIG_PATTERN_3_DATA_MASK << ROUTER_NL4_PERF_TRIG_PATTERN_3_DATA_SHIFT)
 
 /*
- * PROM register R4_PERF_TRIG_PATTERN_4. Offset and field positions read from the table; role inferred from the names.
+ * PROM register R4_PERF_TRIG_PATTERN_4. Offset and field positions read from
+ * the table; role inferred from the names.
  */
 /* perf_trig_pattern_4: rw64, reset unknown */
-#define ROUTER_NL4_PERF_TRIG_PATTERN_4_OFFSET        0x1100220u /* established */
+/* established */
+#define ROUTER_NL4_PERF_TRIG_PATTERN_4_OFFSET        0x1100220u
 #define ROUTER_NL4_PERF_TRIG_PATTERN_4_BIT_EN_SHIFT  32 /* established */
 #define ROUTER_NL4_PERF_TRIG_PATTERN_4_BIT_EN_MASK   0xffffffffull
 #define ROUTER_NL4_PERF_TRIG_PATTERN_4_BIT_EN_INPLACE (ROUTER_NL4_PERF_TRIG_PATTERN_4_BIT_EN_MASK << ROUTER_NL4_PERF_TRIG_PATTERN_4_BIT_EN_SHIFT)
 #define ROUTER_NL4_PERF_TRIG_PATTERN_4_DATA_SHIFT    0 /* established */
 #define ROUTER_NL4_PERF_TRIG_PATTERN_4_DATA_MASK     0xffffffffull
-#define ROUTER_NL4_PERF_TRIG_PATTERN_4_DATA_INPLACE  (ROUTER_NL4_PERF_TRIG_PATTERN_4_DATA_MASK << ROUTER_NL4_PERF_TRIG_PATTERN_4_DATA_SHIFT)
+#define ROUTER_NL4_PERF_TRIG_PATTERN_4_DATA_INPLACE (ROUTER_NL4_PERF_TRIG_PATTERN_4_DATA_MASK << ROUTER_NL4_PERF_TRIG_PATTERN_4_DATA_SHIFT)
 
 /*
- * PROM register R4_PERF_TRIG_PATTERN_5. Offset and field positions read from the table; role inferred from the names.
+ * PROM register R4_PERF_TRIG_PATTERN_5. Offset and field positions read from
+ * the table; role inferred from the names.
  */
 /* perf_trig_pattern_5: rw64, reset unknown */
-#define ROUTER_NL4_PERF_TRIG_PATTERN_5_OFFSET        0x1100228u /* established */
+/* established */
+#define ROUTER_NL4_PERF_TRIG_PATTERN_5_OFFSET        0x1100228u
 #define ROUTER_NL4_PERF_TRIG_PATTERN_5_BIT_EN_SHIFT  32 /* established */
 #define ROUTER_NL4_PERF_TRIG_PATTERN_5_BIT_EN_MASK   0xffffffffull
 #define ROUTER_NL4_PERF_TRIG_PATTERN_5_BIT_EN_INPLACE (ROUTER_NL4_PERF_TRIG_PATTERN_5_BIT_EN_MASK << ROUTER_NL4_PERF_TRIG_PATTERN_5_BIT_EN_SHIFT)
 #define ROUTER_NL4_PERF_TRIG_PATTERN_5_DATA_SHIFT    0 /* established */
 #define ROUTER_NL4_PERF_TRIG_PATTERN_5_DATA_MASK     0xffffffffull
-#define ROUTER_NL4_PERF_TRIG_PATTERN_5_DATA_INPLACE  (ROUTER_NL4_PERF_TRIG_PATTERN_5_DATA_MASK << ROUTER_NL4_PERF_TRIG_PATTERN_5_DATA_SHIFT)
+#define ROUTER_NL4_PERF_TRIG_PATTERN_5_DATA_INPLACE (ROUTER_NL4_PERF_TRIG_PATTERN_5_DATA_MASK << ROUTER_NL4_PERF_TRIG_PATTERN_5_DATA_SHIFT)
 
 /*
- * PROM register R4_PERF_TRIG_PATTERN_6. Offset and field positions read from the table; role inferred from the names.
+ * PROM register R4_PERF_TRIG_PATTERN_6. Offset and field positions read from
+ * the table; role inferred from the names.
  */
 /* perf_trig_pattern_6: rw64, reset unknown */
-#define ROUTER_NL4_PERF_TRIG_PATTERN_6_OFFSET        0x1100230u /* established */
+/* established */
+#define ROUTER_NL4_PERF_TRIG_PATTERN_6_OFFSET        0x1100230u
 #define ROUTER_NL4_PERF_TRIG_PATTERN_6_BIT_EN_SHIFT  32 /* established */
 #define ROUTER_NL4_PERF_TRIG_PATTERN_6_BIT_EN_MASK   0xffffffffull
 #define ROUTER_NL4_PERF_TRIG_PATTERN_6_BIT_EN_INPLACE (ROUTER_NL4_PERF_TRIG_PATTERN_6_BIT_EN_MASK << ROUTER_NL4_PERF_TRIG_PATTERN_6_BIT_EN_SHIFT)
 #define ROUTER_NL4_PERF_TRIG_PATTERN_6_DATA_SHIFT    0 /* established */
 #define ROUTER_NL4_PERF_TRIG_PATTERN_6_DATA_MASK     0xffffffffull
-#define ROUTER_NL4_PERF_TRIG_PATTERN_6_DATA_INPLACE  (ROUTER_NL4_PERF_TRIG_PATTERN_6_DATA_MASK << ROUTER_NL4_PERF_TRIG_PATTERN_6_DATA_SHIFT)
+#define ROUTER_NL4_PERF_TRIG_PATTERN_6_DATA_INPLACE (ROUTER_NL4_PERF_TRIG_PATTERN_6_DATA_MASK << ROUTER_NL4_PERF_TRIG_PATTERN_6_DATA_SHIFT)
 
 /*
- * PROM register R4_PERF_TRIG_PATTERN_7. Offset and field positions read from the table; role inferred from the names.
+ * PROM register R4_PERF_TRIG_PATTERN_7. Offset and field positions read from
+ * the table; role inferred from the names.
  */
 /* perf_trig_pattern_7: rw64, reset unknown */
-#define ROUTER_NL4_PERF_TRIG_PATTERN_7_OFFSET        0x1100238u /* established */
+/* established */
+#define ROUTER_NL4_PERF_TRIG_PATTERN_7_OFFSET        0x1100238u
 #define ROUTER_NL4_PERF_TRIG_PATTERN_7_BIT_EN_SHIFT  32 /* established */
 #define ROUTER_NL4_PERF_TRIG_PATTERN_7_BIT_EN_MASK   0xffffffffull
 #define ROUTER_NL4_PERF_TRIG_PATTERN_7_BIT_EN_INPLACE (ROUTER_NL4_PERF_TRIG_PATTERN_7_BIT_EN_MASK << ROUTER_NL4_PERF_TRIG_PATTERN_7_BIT_EN_SHIFT)
 #define ROUTER_NL4_PERF_TRIG_PATTERN_7_DATA_SHIFT    0 /* established */
 #define ROUTER_NL4_PERF_TRIG_PATTERN_7_DATA_MASK     0xffffffffull
-#define ROUTER_NL4_PERF_TRIG_PATTERN_7_DATA_INPLACE  (ROUTER_NL4_PERF_TRIG_PATTERN_7_DATA_MASK << ROUTER_NL4_PERF_TRIG_PATTERN_7_DATA_SHIFT)
+#define ROUTER_NL4_PERF_TRIG_PATTERN_7_DATA_INPLACE (ROUTER_NL4_PERF_TRIG_PATTERN_7_DATA_MASK << ROUTER_NL4_PERF_TRIG_PATTERN_7_DATA_SHIFT)
 
 /*
- * PROM register R4_PERF_TRIG_PATTERN_8. Offset and field positions read from the table; role inferred from the names.
+ * PROM register R4_PERF_TRIG_PATTERN_8. Offset and field positions read from
+ * the table; role inferred from the names.
  */
 /* perf_trig_pattern_8: rw64, reset unknown */
-#define ROUTER_NL4_PERF_TRIG_PATTERN_8_OFFSET        0x1100240u /* established */
+/* established */
+#define ROUTER_NL4_PERF_TRIG_PATTERN_8_OFFSET        0x1100240u
 #define ROUTER_NL4_PERF_TRIG_PATTERN_8_BIT_EN_SHIFT  32 /* established */
 #define ROUTER_NL4_PERF_TRIG_PATTERN_8_BIT_EN_MASK   0xffffffffull
 #define ROUTER_NL4_PERF_TRIG_PATTERN_8_BIT_EN_INPLACE (ROUTER_NL4_PERF_TRIG_PATTERN_8_BIT_EN_MASK << ROUTER_NL4_PERF_TRIG_PATTERN_8_BIT_EN_SHIFT)
 #define ROUTER_NL4_PERF_TRIG_PATTERN_8_DATA_SHIFT    0 /* established */
 #define ROUTER_NL4_PERF_TRIG_PATTERN_8_DATA_MASK     0xffffffffull
-#define ROUTER_NL4_PERF_TRIG_PATTERN_8_DATA_INPLACE  (ROUTER_NL4_PERF_TRIG_PATTERN_8_DATA_MASK << ROUTER_NL4_PERF_TRIG_PATTERN_8_DATA_SHIFT)
+#define ROUTER_NL4_PERF_TRIG_PATTERN_8_DATA_INPLACE (ROUTER_NL4_PERF_TRIG_PATTERN_8_DATA_MASK << ROUTER_NL4_PERF_TRIG_PATTERN_8_DATA_SHIFT)
 
 /*
- * PROM register R4_PERF_TRIG_PATTERN_9. Offset and field positions read from the table; role inferred from the names.
+ * PROM register R4_PERF_TRIG_PATTERN_9. Offset and field positions read from
+ * the table; role inferred from the names.
  */
 /* perf_trig_pattern_9: rw64, reset unknown */
-#define ROUTER_NL4_PERF_TRIG_PATTERN_9_OFFSET        0x1100248u /* established */
+/* established */
+#define ROUTER_NL4_PERF_TRIG_PATTERN_9_OFFSET        0x1100248u
 #define ROUTER_NL4_PERF_TRIG_PATTERN_9_BIT_EN_SHIFT  32 /* established */
 #define ROUTER_NL4_PERF_TRIG_PATTERN_9_BIT_EN_MASK   0xffffffffull
 #define ROUTER_NL4_PERF_TRIG_PATTERN_9_BIT_EN_INPLACE (ROUTER_NL4_PERF_TRIG_PATTERN_9_BIT_EN_MASK << ROUTER_NL4_PERF_TRIG_PATTERN_9_BIT_EN_SHIFT)
 #define ROUTER_NL4_PERF_TRIG_PATTERN_9_DATA_SHIFT    0 /* established */
 #define ROUTER_NL4_PERF_TRIG_PATTERN_9_DATA_MASK     0xffffffffull
-#define ROUTER_NL4_PERF_TRIG_PATTERN_9_DATA_INPLACE  (ROUTER_NL4_PERF_TRIG_PATTERN_9_DATA_MASK << ROUTER_NL4_PERF_TRIG_PATTERN_9_DATA_SHIFT)
+#define ROUTER_NL4_PERF_TRIG_PATTERN_9_DATA_INPLACE (ROUTER_NL4_PERF_TRIG_PATTERN_9_DATA_MASK << ROUTER_NL4_PERF_TRIG_PATTERN_9_DATA_SHIFT)
 
 /*
- * PROM register R4_PERF_TRIG_PATTERN_10. Offset and field positions read from the table; role inferred from the names.
+ * PROM register R4_PERF_TRIG_PATTERN_10. Offset and field positions read from
+ * the table; role inferred from the names.
  */
 /* perf_trig_pattern_10: rw64, reset unknown */
-#define ROUTER_NL4_PERF_TRIG_PATTERN_10_OFFSET       0x1100250u /* established */
+/* established */
+#define ROUTER_NL4_PERF_TRIG_PATTERN_10_OFFSET       0x1100250u
 #define ROUTER_NL4_PERF_TRIG_PATTERN_10_BIT_EN_SHIFT 32 /* established */
 #define ROUTER_NL4_PERF_TRIG_PATTERN_10_BIT_EN_MASK  0xffffffffull
 #define ROUTER_NL4_PERF_TRIG_PATTERN_10_BIT_EN_INPLACE (ROUTER_NL4_PERF_TRIG_PATTERN_10_BIT_EN_MASK << ROUTER_NL4_PERF_TRIG_PATTERN_10_BIT_EN_SHIFT)
@@ -3017,10 +3483,12 @@
 #define ROUTER_NL4_PERF_TRIG_PATTERN_10_DATA_INPLACE (ROUTER_NL4_PERF_TRIG_PATTERN_10_DATA_MASK << ROUTER_NL4_PERF_TRIG_PATTERN_10_DATA_SHIFT)
 
 /*
- * PROM register R4_PERF_TRIG_PATTERN_11. Offset and field positions read from the table; role inferred from the names.
+ * PROM register R4_PERF_TRIG_PATTERN_11. Offset and field positions read from
+ * the table; role inferred from the names.
  */
 /* perf_trig_pattern_11: rw64, reset unknown */
-#define ROUTER_NL4_PERF_TRIG_PATTERN_11_OFFSET       0x1100258u /* established */
+/* established */
+#define ROUTER_NL4_PERF_TRIG_PATTERN_11_OFFSET       0x1100258u
 #define ROUTER_NL4_PERF_TRIG_PATTERN_11_BIT_EN_SHIFT 32 /* established */
 #define ROUTER_NL4_PERF_TRIG_PATTERN_11_BIT_EN_MASK  0xffffffffull
 #define ROUTER_NL4_PERF_TRIG_PATTERN_11_BIT_EN_INPLACE (ROUTER_NL4_PERF_TRIG_PATTERN_11_BIT_EN_MASK << ROUTER_NL4_PERF_TRIG_PATTERN_11_BIT_EN_SHIFT)
@@ -3029,10 +3497,12 @@
 #define ROUTER_NL4_PERF_TRIG_PATTERN_11_DATA_INPLACE (ROUTER_NL4_PERF_TRIG_PATTERN_11_DATA_MASK << ROUTER_NL4_PERF_TRIG_PATTERN_11_DATA_SHIFT)
 
 /*
- * PROM register R4_PERF_TRIG_PATTERN_12. Offset and field positions read from the table; role inferred from the names.
+ * PROM register R4_PERF_TRIG_PATTERN_12. Offset and field positions read from
+ * the table; role inferred from the names.
  */
 /* perf_trig_pattern_12: rw64, reset unknown */
-#define ROUTER_NL4_PERF_TRIG_PATTERN_12_OFFSET       0x1100260u /* established */
+/* established */
+#define ROUTER_NL4_PERF_TRIG_PATTERN_12_OFFSET       0x1100260u
 #define ROUTER_NL4_PERF_TRIG_PATTERN_12_BIT_EN_SHIFT 32 /* established */
 #define ROUTER_NL4_PERF_TRIG_PATTERN_12_BIT_EN_MASK  0xffffffffull
 #define ROUTER_NL4_PERF_TRIG_PATTERN_12_BIT_EN_INPLACE (ROUTER_NL4_PERF_TRIG_PATTERN_12_BIT_EN_MASK << ROUTER_NL4_PERF_TRIG_PATTERN_12_BIT_EN_SHIFT)
@@ -3041,10 +3511,12 @@
 #define ROUTER_NL4_PERF_TRIG_PATTERN_12_DATA_INPLACE (ROUTER_NL4_PERF_TRIG_PATTERN_12_DATA_MASK << ROUTER_NL4_PERF_TRIG_PATTERN_12_DATA_SHIFT)
 
 /*
- * PROM register R4_PERF_TRIG_PATTERN_13. Offset and field positions read from the table; role inferred from the names.
+ * PROM register R4_PERF_TRIG_PATTERN_13. Offset and field positions read from
+ * the table; role inferred from the names.
  */
 /* perf_trig_pattern_13: rw64, reset unknown */
-#define ROUTER_NL4_PERF_TRIG_PATTERN_13_OFFSET       0x1100268u /* established */
+/* established */
+#define ROUTER_NL4_PERF_TRIG_PATTERN_13_OFFSET       0x1100268u
 #define ROUTER_NL4_PERF_TRIG_PATTERN_13_BIT_EN_SHIFT 32 /* established */
 #define ROUTER_NL4_PERF_TRIG_PATTERN_13_BIT_EN_MASK  0xffffffffull
 #define ROUTER_NL4_PERF_TRIG_PATTERN_13_BIT_EN_INPLACE (ROUTER_NL4_PERF_TRIG_PATTERN_13_BIT_EN_MASK << ROUTER_NL4_PERF_TRIG_PATTERN_13_BIT_EN_SHIFT)
@@ -3053,10 +3525,12 @@
 #define ROUTER_NL4_PERF_TRIG_PATTERN_13_DATA_INPLACE (ROUTER_NL4_PERF_TRIG_PATTERN_13_DATA_MASK << ROUTER_NL4_PERF_TRIG_PATTERN_13_DATA_SHIFT)
 
 /*
- * PROM register R4_PERF_TRIG_PATTERN_14. Offset and field positions read from the table; role inferred from the names.
+ * PROM register R4_PERF_TRIG_PATTERN_14. Offset and field positions read from
+ * the table; role inferred from the names.
  */
 /* perf_trig_pattern_14: rw64, reset unknown */
-#define ROUTER_NL4_PERF_TRIG_PATTERN_14_OFFSET       0x1100270u /* established */
+/* established */
+#define ROUTER_NL4_PERF_TRIG_PATTERN_14_OFFSET       0x1100270u
 #define ROUTER_NL4_PERF_TRIG_PATTERN_14_BIT_EN_SHIFT 32 /* established */
 #define ROUTER_NL4_PERF_TRIG_PATTERN_14_BIT_EN_MASK  0xffffffffull
 #define ROUTER_NL4_PERF_TRIG_PATTERN_14_BIT_EN_INPLACE (ROUTER_NL4_PERF_TRIG_PATTERN_14_BIT_EN_MASK << ROUTER_NL4_PERF_TRIG_PATTERN_14_BIT_EN_SHIFT)
@@ -3065,10 +3539,12 @@
 #define ROUTER_NL4_PERF_TRIG_PATTERN_14_DATA_INPLACE (ROUTER_NL4_PERF_TRIG_PATTERN_14_DATA_MASK << ROUTER_NL4_PERF_TRIG_PATTERN_14_DATA_SHIFT)
 
 /*
- * PROM register R4_PERF_TRIG_PATTERN_15. Offset and field positions read from the table; role inferred from the names.
+ * PROM register R4_PERF_TRIG_PATTERN_15. Offset and field positions read from
+ * the table; role inferred from the names.
  */
 /* perf_trig_pattern_15: rw64, reset unknown */
-#define ROUTER_NL4_PERF_TRIG_PATTERN_15_OFFSET       0x1100278u /* established */
+/* established */
+#define ROUTER_NL4_PERF_TRIG_PATTERN_15_OFFSET       0x1100278u
 #define ROUTER_NL4_PERF_TRIG_PATTERN_15_BIT_EN_SHIFT 32 /* established */
 #define ROUTER_NL4_PERF_TRIG_PATTERN_15_BIT_EN_MASK  0xffffffffull
 #define ROUTER_NL4_PERF_TRIG_PATTERN_15_BIT_EN_INPLACE (ROUTER_NL4_PERF_TRIG_PATTERN_15_BIT_EN_MASK << ROUTER_NL4_PERF_TRIG_PATTERN_15_BIT_EN_SHIFT)
@@ -3077,384 +3553,498 @@
 #define ROUTER_NL4_PERF_TRIG_PATTERN_15_DATA_INPLACE (ROUTER_NL4_PERF_TRIG_PATTERN_15_DATA_MASK << ROUTER_NL4_PERF_TRIG_PATTERN_15_DATA_SHIFT)
 
 /*
- * PROM register R4_PERFORMANCE_COUNTER0. Offset and field positions read from the table; role inferred from the names.
+ * PROM register R4_PERFORMANCE_COUNTER0. Offset and field positions read from
+ * the table; role inferred from the names.
  */
 /* performance_counter0: rw64, reset unknown */
-#define ROUTER_NL4_PERFORMANCE_COUNTER0_OFFSET       0x1110000u /* established */
+/* established */
+#define ROUTER_NL4_PERFORMANCE_COUNTER0_OFFSET       0x1110000u
 #define ROUTER_NL4_PERFORMANCE_COUNTER0_COUNT_SHIFT  0 /* established */
 #define ROUTER_NL4_PERFORMANCE_COUNTER0_COUNT_MASK   0xffffffffull
 #define ROUTER_NL4_PERFORMANCE_COUNTER0_COUNT_INPLACE (ROUTER_NL4_PERFORMANCE_COUNTER0_COUNT_MASK << ROUTER_NL4_PERFORMANCE_COUNTER0_COUNT_SHIFT)
 
 /*
- * PROM register R4_PERFORMANCE_COUNTER1. Offset and field positions read from the table; role inferred from the names.
+ * PROM register R4_PERFORMANCE_COUNTER1. Offset and field positions read from
+ * the table; role inferred from the names.
  */
 /* performance_counter1: rw64, reset unknown */
-#define ROUTER_NL4_PERFORMANCE_COUNTER1_OFFSET       0x1120000u /* established */
+/* established */
+#define ROUTER_NL4_PERFORMANCE_COUNTER1_OFFSET       0x1120000u
 #define ROUTER_NL4_PERFORMANCE_COUNTER1_COUNT_SHIFT  0 /* established */
 #define ROUTER_NL4_PERFORMANCE_COUNTER1_COUNT_MASK   0xffffffffull
 #define ROUTER_NL4_PERFORMANCE_COUNTER1_COUNT_INPLACE (ROUTER_NL4_PERFORMANCE_COUNTER1_COUNT_MASK << ROUTER_NL4_PERFORMANCE_COUNTER1_COUNT_SHIFT)
 
 /*
- * PROM register R4_PERFORMANCE_COUNTER2. Offset and field positions read from the table; role inferred from the names.
+ * PROM register R4_PERFORMANCE_COUNTER2. Offset and field positions read from
+ * the table; role inferred from the names.
  */
 /* performance_counter2: rw64, reset unknown */
-#define ROUTER_NL4_PERFORMANCE_COUNTER2_OFFSET       0x1130000u /* established */
+/* established */
+#define ROUTER_NL4_PERFORMANCE_COUNTER2_OFFSET       0x1130000u
 #define ROUTER_NL4_PERFORMANCE_COUNTER2_COUNT_SHIFT  0 /* established */
 #define ROUTER_NL4_PERFORMANCE_COUNTER2_COUNT_MASK   0xffffffffull
 #define ROUTER_NL4_PERFORMANCE_COUNTER2_COUNT_INPLACE (ROUTER_NL4_PERFORMANCE_COUNTER2_COUNT_MASK << ROUTER_NL4_PERFORMANCE_COUNTER2_COUNT_SHIFT)
 
 /*
- * PROM register R4_PERFORMANCE_COUNTER3. Offset and field positions read from the table; role inferred from the names.
+ * PROM register R4_PERFORMANCE_COUNTER3. Offset and field positions read from
+ * the table; role inferred from the names.
  */
 /* performance_counter3: rw64, reset unknown */
-#define ROUTER_NL4_PERFORMANCE_COUNTER3_OFFSET       0x1140000u /* established */
+/* established */
+#define ROUTER_NL4_PERFORMANCE_COUNTER3_OFFSET       0x1140000u
 #define ROUTER_NL4_PERFORMANCE_COUNTER3_COUNT_SHIFT  0 /* established */
 #define ROUTER_NL4_PERFORMANCE_COUNTER3_COUNT_MASK   0xffffffffull
 #define ROUTER_NL4_PERFORMANCE_COUNTER3_COUNT_INPLACE (ROUTER_NL4_PERFORMANCE_COUNTER3_COUNT_MASK << ROUTER_NL4_PERFORMANCE_COUNTER3_COUNT_SHIFT)
 
 /*
- * PROM register R4_PERFORMANCE_COUNTER4. Offset and field positions read from the table; role inferred from the names.
+ * PROM register R4_PERFORMANCE_COUNTER4. Offset and field positions read from
+ * the table; role inferred from the names.
  */
 /* performance_counter4: rw64, reset unknown */
-#define ROUTER_NL4_PERFORMANCE_COUNTER4_OFFSET       0x1150000u /* established */
+/* established */
+#define ROUTER_NL4_PERFORMANCE_COUNTER4_OFFSET       0x1150000u
 #define ROUTER_NL4_PERFORMANCE_COUNTER4_COUNT_SHIFT  0 /* established */
 #define ROUTER_NL4_PERFORMANCE_COUNTER4_COUNT_MASK   0xffffffffull
 #define ROUTER_NL4_PERFORMANCE_COUNTER4_COUNT_INPLACE (ROUTER_NL4_PERFORMANCE_COUNTER4_COUNT_MASK << ROUTER_NL4_PERFORMANCE_COUNTER4_COUNT_SHIFT)
 
 /*
- * PROM register R4_PERFORMANCE_COUNTER5. Offset and field positions read from the table; role inferred from the names.
+ * PROM register R4_PERFORMANCE_COUNTER5. Offset and field positions read from
+ * the table; role inferred from the names.
  */
 /* performance_counter5: rw64, reset unknown */
-#define ROUTER_NL4_PERFORMANCE_COUNTER5_OFFSET       0x1160000u /* established */
+/* established */
+#define ROUTER_NL4_PERFORMANCE_COUNTER5_OFFSET       0x1160000u
 #define ROUTER_NL4_PERFORMANCE_COUNTER5_COUNT_SHIFT  0 /* established */
 #define ROUTER_NL4_PERFORMANCE_COUNTER5_COUNT_MASK   0xffffffffull
 #define ROUTER_NL4_PERFORMANCE_COUNTER5_COUNT_INPLACE (ROUTER_NL4_PERFORMANCE_COUNTER5_COUNT_MASK << ROUTER_NL4_PERFORMANCE_COUNTER5_COUNT_SHIFT)
 
 /*
- * PROM register R4_PERFORMANCE_COUNTER6. Offset and field positions read from the table; role inferred from the names.
+ * PROM register R4_PERFORMANCE_COUNTER6. Offset and field positions read from
+ * the table; role inferred from the names.
  */
 /* performance_counter6: rw64, reset unknown */
-#define ROUTER_NL4_PERFORMANCE_COUNTER6_OFFSET       0x1170000u /* established */
+/* established */
+#define ROUTER_NL4_PERFORMANCE_COUNTER6_OFFSET       0x1170000u
 #define ROUTER_NL4_PERFORMANCE_COUNTER6_COUNT_SHIFT  0 /* established */
 #define ROUTER_NL4_PERFORMANCE_COUNTER6_COUNT_MASK   0xffffffffull
 #define ROUTER_NL4_PERFORMANCE_COUNTER6_COUNT_INPLACE (ROUTER_NL4_PERFORMANCE_COUNTER6_COUNT_MASK << ROUTER_NL4_PERFORMANCE_COUNTER6_COUNT_SHIFT)
 
 /*
- * PROM register R4_PERFORMANCE_COUNTER7. Offset and field positions read from the table; role inferred from the names.
+ * PROM register R4_PERFORMANCE_COUNTER7. Offset and field positions read from
+ * the table; role inferred from the names.
  */
 /* performance_counter7: rw64, reset unknown */
-#define ROUTER_NL4_PERFORMANCE_COUNTER7_OFFSET       0x1180000u /* established */
+/* established */
+#define ROUTER_NL4_PERFORMANCE_COUNTER7_OFFSET       0x1180000u
 #define ROUTER_NL4_PERFORMANCE_COUNTER7_COUNT_SHIFT  0 /* established */
 #define ROUTER_NL4_PERFORMANCE_COUNTER7_COUNT_MASK   0xffffffffull
 #define ROUTER_NL4_PERFORMANCE_COUNTER7_COUNT_INPLACE (ROUTER_NL4_PERFORMANCE_COUNTER7_COUNT_MASK << ROUTER_NL4_PERFORMANCE_COUNTER7_COUNT_SHIFT)
 
 /*
- * PROM register R4_PROFILE_COUNTER. Offset and field positions read from the table; role inferred from the names.
+ * PROM register R4_PROFILE_COUNTER. Offset and field positions read from the
+ * table; role inferred from the names.
  */
 /* profile_counter: rw64, reset unknown */
-#define ROUTER_NL4_PROFILE_COUNTER_OFFSET            0x1190000u /* established */
+/* established */
+#define ROUTER_NL4_PROFILE_COUNTER_OFFSET            0x1190000u
 #define ROUTER_NL4_PROFILE_COUNTER_COUNTER_SHIFT     0 /* established */
 #define ROUTER_NL4_PROFILE_COUNTER_COUNTER_MASK      0xffull
-#define ROUTER_NL4_PROFILE_COUNTER_COUNTER_INPLACE   (ROUTER_NL4_PROFILE_COUNTER_COUNTER_MASK << ROUTER_NL4_PROFILE_COUNTER_COUNTER_SHIFT)
+#define ROUTER_NL4_PROFILE_COUNTER_COUNTER_INPLACE (ROUTER_NL4_PROFILE_COUNTER_COUNTER_MASK << ROUTER_NL4_PROFILE_COUNTER_COUNTER_SHIFT)
 
 /*
- * PROM register R4_PROFILE_PEAK. Offset and field positions read from the table; role inferred from the names.
+ * PROM register R4_PROFILE_PEAK. Offset and field positions read from the
+ * table; role inferred from the names.
  */
 /* profile_peak: rw64, reset unknown */
-#define ROUTER_NL4_PROFILE_PEAK_OFFSET               0x1190080u /* established */
+/* established */
+#define ROUTER_NL4_PROFILE_PEAK_OFFSET               0x1190080u
 #define ROUTER_NL4_PROFILE_PEAK_COUNTER_SHIFT        0 /* established */
 #define ROUTER_NL4_PROFILE_PEAK_COUNTER_MASK         0xffull
-#define ROUTER_NL4_PROFILE_PEAK_COUNTER_INPLACE      (ROUTER_NL4_PROFILE_PEAK_COUNTER_MASK << ROUTER_NL4_PROFILE_PEAK_COUNTER_SHIFT)
+#define ROUTER_NL4_PROFILE_PEAK_COUNTER_INPLACE (ROUTER_NL4_PROFILE_PEAK_COUNTER_MASK << ROUTER_NL4_PROFILE_PEAK_COUNTER_SHIFT)
 
 /*
- * PROM register R4_PORTA_VC0_N_COUNT_INIT; one per port A to H. Offset and field positions read from the table; role inferred from the names.
+ * PROM register R4_PORTA_VC0_N_COUNT_INIT; one per port A to H. Offset and
+ * field positions read from the table; role inferred from the names.
  */
 /* port_vc0_n_count_init: rw64, reset unknown */
-#define ROUTER_NL4_PORT_VC0_N_COUNT_INIT_OFFSET      0x2000010u /* established */
+/* established */
+#define ROUTER_NL4_PORT_VC0_N_COUNT_INIT_OFFSET      0x2000010u
 #define ROUTER_NL4_PORT_VC0_N_COUNT_INIT_COUNT       8
 #define ROUTER_NL4_PORT_VC0_N_COUNT_INIT_STRIDE      32
-#define ROUTER_NL4_PORT_VC0_N_COUNT_INIT_N_INIT_INPUT_PORT_LB_SHIFT 32 /* established */
+/* established */
+#define ROUTER_NL4_PORT_VC0_N_COUNT_INIT_N_INIT_INPUT_PORT_LB_SHIFT 32
 #define ROUTER_NL4_PORT_VC0_N_COUNT_INIT_N_INIT_INPUT_PORT_LB_MASK 0x3ull
 #define ROUTER_NL4_PORT_VC0_N_COUNT_INIT_N_INIT_INPUT_PORT_LB_INPLACE (ROUTER_NL4_PORT_VC0_N_COUNT_INIT_N_INIT_INPUT_PORT_LB_MASK << ROUTER_NL4_PORT_VC0_N_COUNT_INIT_N_INIT_INPUT_PORT_LB_SHIFT)
-#define ROUTER_NL4_PORT_VC0_N_COUNT_INIT_N_INIT_INPUT_PORT_H_SHIFT 28 /* established */
+/* established */
+#define ROUTER_NL4_PORT_VC0_N_COUNT_INIT_N_INIT_INPUT_PORT_H_SHIFT 28
 #define ROUTER_NL4_PORT_VC0_N_COUNT_INIT_N_INIT_INPUT_PORT_H_MASK 0x3ull
 #define ROUTER_NL4_PORT_VC0_N_COUNT_INIT_N_INIT_INPUT_PORT_H_INPLACE (ROUTER_NL4_PORT_VC0_N_COUNT_INIT_N_INIT_INPUT_PORT_H_MASK << ROUTER_NL4_PORT_VC0_N_COUNT_INIT_N_INIT_INPUT_PORT_H_SHIFT)
-#define ROUTER_NL4_PORT_VC0_N_COUNT_INIT_N_INIT_INPUT_PORT_G_SHIFT 24 /* established */
+/* established */
+#define ROUTER_NL4_PORT_VC0_N_COUNT_INIT_N_INIT_INPUT_PORT_G_SHIFT 24
 #define ROUTER_NL4_PORT_VC0_N_COUNT_INIT_N_INIT_INPUT_PORT_G_MASK 0x3ull
 #define ROUTER_NL4_PORT_VC0_N_COUNT_INIT_N_INIT_INPUT_PORT_G_INPLACE (ROUTER_NL4_PORT_VC0_N_COUNT_INIT_N_INIT_INPUT_PORT_G_MASK << ROUTER_NL4_PORT_VC0_N_COUNT_INIT_N_INIT_INPUT_PORT_G_SHIFT)
-#define ROUTER_NL4_PORT_VC0_N_COUNT_INIT_N_INIT_INPUT_PORT_F_SHIFT 20 /* established */
+/* established */
+#define ROUTER_NL4_PORT_VC0_N_COUNT_INIT_N_INIT_INPUT_PORT_F_SHIFT 20
 #define ROUTER_NL4_PORT_VC0_N_COUNT_INIT_N_INIT_INPUT_PORT_F_MASK 0x3ull
 #define ROUTER_NL4_PORT_VC0_N_COUNT_INIT_N_INIT_INPUT_PORT_F_INPLACE (ROUTER_NL4_PORT_VC0_N_COUNT_INIT_N_INIT_INPUT_PORT_F_MASK << ROUTER_NL4_PORT_VC0_N_COUNT_INIT_N_INIT_INPUT_PORT_F_SHIFT)
-#define ROUTER_NL4_PORT_VC0_N_COUNT_INIT_N_INIT_INPUT_PORT_E_SHIFT 16 /* established */
+/* established */
+#define ROUTER_NL4_PORT_VC0_N_COUNT_INIT_N_INIT_INPUT_PORT_E_SHIFT 16
 #define ROUTER_NL4_PORT_VC0_N_COUNT_INIT_N_INIT_INPUT_PORT_E_MASK 0x3ull
 #define ROUTER_NL4_PORT_VC0_N_COUNT_INIT_N_INIT_INPUT_PORT_E_INPLACE (ROUTER_NL4_PORT_VC0_N_COUNT_INIT_N_INIT_INPUT_PORT_E_MASK << ROUTER_NL4_PORT_VC0_N_COUNT_INIT_N_INIT_INPUT_PORT_E_SHIFT)
-#define ROUTER_NL4_PORT_VC0_N_COUNT_INIT_N_INIT_INPUT_PORT_D_SHIFT 12 /* established */
+/* established */
+#define ROUTER_NL4_PORT_VC0_N_COUNT_INIT_N_INIT_INPUT_PORT_D_SHIFT 12
 #define ROUTER_NL4_PORT_VC0_N_COUNT_INIT_N_INIT_INPUT_PORT_D_MASK 0x3ull
 #define ROUTER_NL4_PORT_VC0_N_COUNT_INIT_N_INIT_INPUT_PORT_D_INPLACE (ROUTER_NL4_PORT_VC0_N_COUNT_INIT_N_INIT_INPUT_PORT_D_MASK << ROUTER_NL4_PORT_VC0_N_COUNT_INIT_N_INIT_INPUT_PORT_D_SHIFT)
-#define ROUTER_NL4_PORT_VC0_N_COUNT_INIT_N_INIT_INPUT_PORT_C_SHIFT 8 /* established */
+/* established */
+#define ROUTER_NL4_PORT_VC0_N_COUNT_INIT_N_INIT_INPUT_PORT_C_SHIFT 8
 #define ROUTER_NL4_PORT_VC0_N_COUNT_INIT_N_INIT_INPUT_PORT_C_MASK 0x3ull
 #define ROUTER_NL4_PORT_VC0_N_COUNT_INIT_N_INIT_INPUT_PORT_C_INPLACE (ROUTER_NL4_PORT_VC0_N_COUNT_INIT_N_INIT_INPUT_PORT_C_MASK << ROUTER_NL4_PORT_VC0_N_COUNT_INIT_N_INIT_INPUT_PORT_C_SHIFT)
-#define ROUTER_NL4_PORT_VC0_N_COUNT_INIT_N_INIT_INPUT_PORT_B_SHIFT 4 /* established */
+/* established */
+#define ROUTER_NL4_PORT_VC0_N_COUNT_INIT_N_INIT_INPUT_PORT_B_SHIFT 4
 #define ROUTER_NL4_PORT_VC0_N_COUNT_INIT_N_INIT_INPUT_PORT_B_MASK 0x3ull
 #define ROUTER_NL4_PORT_VC0_N_COUNT_INIT_N_INIT_INPUT_PORT_B_INPLACE (ROUTER_NL4_PORT_VC0_N_COUNT_INIT_N_INIT_INPUT_PORT_B_MASK << ROUTER_NL4_PORT_VC0_N_COUNT_INIT_N_INIT_INPUT_PORT_B_SHIFT)
-#define ROUTER_NL4_PORT_VC0_N_COUNT_INIT_N_INIT_INPUT_PORT_A_SHIFT 0 /* established */
+/* established */
+#define ROUTER_NL4_PORT_VC0_N_COUNT_INIT_N_INIT_INPUT_PORT_A_SHIFT 0
 #define ROUTER_NL4_PORT_VC0_N_COUNT_INIT_N_INIT_INPUT_PORT_A_MASK 0x3ull
 #define ROUTER_NL4_PORT_VC0_N_COUNT_INIT_N_INIT_INPUT_PORT_A_INPLACE (ROUTER_NL4_PORT_VC0_N_COUNT_INIT_N_INIT_INPUT_PORT_A_MASK << ROUTER_NL4_PORT_VC0_N_COUNT_INIT_N_INIT_INPUT_PORT_A_SHIFT)
 
 /*
- * PROM register R4_PORTA_VC1_N_COUNT_INIT; one per port A to H. Offset and field positions read from the table; role inferred from the names.
+ * PROM register R4_PORTA_VC1_N_COUNT_INIT; one per port A to H. Offset and
+ * field positions read from the table; role inferred from the names.
  */
 /* port_vc1_n_count_init: rw64, reset unknown */
-#define ROUTER_NL4_PORT_VC1_N_COUNT_INIT_OFFSET      0x2000018u /* established */
+/* established */
+#define ROUTER_NL4_PORT_VC1_N_COUNT_INIT_OFFSET      0x2000018u
 #define ROUTER_NL4_PORT_VC1_N_COUNT_INIT_COUNT       8
 #define ROUTER_NL4_PORT_VC1_N_COUNT_INIT_STRIDE      32
-#define ROUTER_NL4_PORT_VC1_N_COUNT_INIT_N_INIT_INPUT_PORT_LB_SHIFT 32 /* established */
+/* established */
+#define ROUTER_NL4_PORT_VC1_N_COUNT_INIT_N_INIT_INPUT_PORT_LB_SHIFT 32
 #define ROUTER_NL4_PORT_VC1_N_COUNT_INIT_N_INIT_INPUT_PORT_LB_MASK 0x3ull
 #define ROUTER_NL4_PORT_VC1_N_COUNT_INIT_N_INIT_INPUT_PORT_LB_INPLACE (ROUTER_NL4_PORT_VC1_N_COUNT_INIT_N_INIT_INPUT_PORT_LB_MASK << ROUTER_NL4_PORT_VC1_N_COUNT_INIT_N_INIT_INPUT_PORT_LB_SHIFT)
-#define ROUTER_NL4_PORT_VC1_N_COUNT_INIT_N_INIT_INPUT_PORT_H_SHIFT 28 /* established */
+/* established */
+#define ROUTER_NL4_PORT_VC1_N_COUNT_INIT_N_INIT_INPUT_PORT_H_SHIFT 28
 #define ROUTER_NL4_PORT_VC1_N_COUNT_INIT_N_INIT_INPUT_PORT_H_MASK 0x3ull
 #define ROUTER_NL4_PORT_VC1_N_COUNT_INIT_N_INIT_INPUT_PORT_H_INPLACE (ROUTER_NL4_PORT_VC1_N_COUNT_INIT_N_INIT_INPUT_PORT_H_MASK << ROUTER_NL4_PORT_VC1_N_COUNT_INIT_N_INIT_INPUT_PORT_H_SHIFT)
-#define ROUTER_NL4_PORT_VC1_N_COUNT_INIT_N_INIT_INPUT_PORT_G_SHIFT 24 /* established */
+/* established */
+#define ROUTER_NL4_PORT_VC1_N_COUNT_INIT_N_INIT_INPUT_PORT_G_SHIFT 24
 #define ROUTER_NL4_PORT_VC1_N_COUNT_INIT_N_INIT_INPUT_PORT_G_MASK 0x3ull
 #define ROUTER_NL4_PORT_VC1_N_COUNT_INIT_N_INIT_INPUT_PORT_G_INPLACE (ROUTER_NL4_PORT_VC1_N_COUNT_INIT_N_INIT_INPUT_PORT_G_MASK << ROUTER_NL4_PORT_VC1_N_COUNT_INIT_N_INIT_INPUT_PORT_G_SHIFT)
-#define ROUTER_NL4_PORT_VC1_N_COUNT_INIT_N_INIT_INPUT_PORT_F_SHIFT 20 /* established */
+/* established */
+#define ROUTER_NL4_PORT_VC1_N_COUNT_INIT_N_INIT_INPUT_PORT_F_SHIFT 20
 #define ROUTER_NL4_PORT_VC1_N_COUNT_INIT_N_INIT_INPUT_PORT_F_MASK 0x3ull
 #define ROUTER_NL4_PORT_VC1_N_COUNT_INIT_N_INIT_INPUT_PORT_F_INPLACE (ROUTER_NL4_PORT_VC1_N_COUNT_INIT_N_INIT_INPUT_PORT_F_MASK << ROUTER_NL4_PORT_VC1_N_COUNT_INIT_N_INIT_INPUT_PORT_F_SHIFT)
-#define ROUTER_NL4_PORT_VC1_N_COUNT_INIT_N_INIT_INPUT_PORT_E_SHIFT 16 /* established */
+/* established */
+#define ROUTER_NL4_PORT_VC1_N_COUNT_INIT_N_INIT_INPUT_PORT_E_SHIFT 16
 #define ROUTER_NL4_PORT_VC1_N_COUNT_INIT_N_INIT_INPUT_PORT_E_MASK 0x3ull
 #define ROUTER_NL4_PORT_VC1_N_COUNT_INIT_N_INIT_INPUT_PORT_E_INPLACE (ROUTER_NL4_PORT_VC1_N_COUNT_INIT_N_INIT_INPUT_PORT_E_MASK << ROUTER_NL4_PORT_VC1_N_COUNT_INIT_N_INIT_INPUT_PORT_E_SHIFT)
-#define ROUTER_NL4_PORT_VC1_N_COUNT_INIT_N_INIT_INPUT_PORT_D_SHIFT 12 /* established */
+/* established */
+#define ROUTER_NL4_PORT_VC1_N_COUNT_INIT_N_INIT_INPUT_PORT_D_SHIFT 12
 #define ROUTER_NL4_PORT_VC1_N_COUNT_INIT_N_INIT_INPUT_PORT_D_MASK 0x3ull
 #define ROUTER_NL4_PORT_VC1_N_COUNT_INIT_N_INIT_INPUT_PORT_D_INPLACE (ROUTER_NL4_PORT_VC1_N_COUNT_INIT_N_INIT_INPUT_PORT_D_MASK << ROUTER_NL4_PORT_VC1_N_COUNT_INIT_N_INIT_INPUT_PORT_D_SHIFT)
-#define ROUTER_NL4_PORT_VC1_N_COUNT_INIT_N_INIT_INPUT_PORT_C_SHIFT 8 /* established */
+/* established */
+#define ROUTER_NL4_PORT_VC1_N_COUNT_INIT_N_INIT_INPUT_PORT_C_SHIFT 8
 #define ROUTER_NL4_PORT_VC1_N_COUNT_INIT_N_INIT_INPUT_PORT_C_MASK 0x3ull
 #define ROUTER_NL4_PORT_VC1_N_COUNT_INIT_N_INIT_INPUT_PORT_C_INPLACE (ROUTER_NL4_PORT_VC1_N_COUNT_INIT_N_INIT_INPUT_PORT_C_MASK << ROUTER_NL4_PORT_VC1_N_COUNT_INIT_N_INIT_INPUT_PORT_C_SHIFT)
-#define ROUTER_NL4_PORT_VC1_N_COUNT_INIT_N_INIT_INPUT_PORT_B_SHIFT 4 /* established */
+/* established */
+#define ROUTER_NL4_PORT_VC1_N_COUNT_INIT_N_INIT_INPUT_PORT_B_SHIFT 4
 #define ROUTER_NL4_PORT_VC1_N_COUNT_INIT_N_INIT_INPUT_PORT_B_MASK 0x3ull
 #define ROUTER_NL4_PORT_VC1_N_COUNT_INIT_N_INIT_INPUT_PORT_B_INPLACE (ROUTER_NL4_PORT_VC1_N_COUNT_INIT_N_INIT_INPUT_PORT_B_MASK << ROUTER_NL4_PORT_VC1_N_COUNT_INIT_N_INIT_INPUT_PORT_B_SHIFT)
-#define ROUTER_NL4_PORT_VC1_N_COUNT_INIT_N_INIT_INPUT_PORT_A_SHIFT 0 /* established */
+/* established */
+#define ROUTER_NL4_PORT_VC1_N_COUNT_INIT_N_INIT_INPUT_PORT_A_SHIFT 0
 #define ROUTER_NL4_PORT_VC1_N_COUNT_INIT_N_INIT_INPUT_PORT_A_MASK 0x3ull
 #define ROUTER_NL4_PORT_VC1_N_COUNT_INIT_N_INIT_INPUT_PORT_A_INPLACE (ROUTER_NL4_PORT_VC1_N_COUNT_INIT_N_INIT_INPUT_PORT_A_MASK << ROUTER_NL4_PORT_VC1_N_COUNT_INIT_N_INIT_INPUT_PORT_A_SHIFT)
 
 /*
- * PROM register R4_PORTA_VC2_N_COUNT_INIT; one per port A to H. Offset and field positions read from the table; role inferred from the names.
+ * PROM register R4_PORTA_VC2_N_COUNT_INIT; one per port A to H. Offset and
+ * field positions read from the table; role inferred from the names.
  */
 /* port_vc2_n_count_init: rw64, reset unknown */
-#define ROUTER_NL4_PORT_VC2_N_COUNT_INIT_OFFSET      0x2000020u /* established */
+/* established */
+#define ROUTER_NL4_PORT_VC2_N_COUNT_INIT_OFFSET      0x2000020u
 #define ROUTER_NL4_PORT_VC2_N_COUNT_INIT_COUNT       8
 #define ROUTER_NL4_PORT_VC2_N_COUNT_INIT_STRIDE      32
-#define ROUTER_NL4_PORT_VC2_N_COUNT_INIT_N_INIT_INPUT_PORT_LB_SHIFT 32 /* established */
+/* established */
+#define ROUTER_NL4_PORT_VC2_N_COUNT_INIT_N_INIT_INPUT_PORT_LB_SHIFT 32
 #define ROUTER_NL4_PORT_VC2_N_COUNT_INIT_N_INIT_INPUT_PORT_LB_MASK 0x3ull
 #define ROUTER_NL4_PORT_VC2_N_COUNT_INIT_N_INIT_INPUT_PORT_LB_INPLACE (ROUTER_NL4_PORT_VC2_N_COUNT_INIT_N_INIT_INPUT_PORT_LB_MASK << ROUTER_NL4_PORT_VC2_N_COUNT_INIT_N_INIT_INPUT_PORT_LB_SHIFT)
-#define ROUTER_NL4_PORT_VC2_N_COUNT_INIT_N_INIT_INPUT_PORT_H_SHIFT 28 /* established */
+/* established */
+#define ROUTER_NL4_PORT_VC2_N_COUNT_INIT_N_INIT_INPUT_PORT_H_SHIFT 28
 #define ROUTER_NL4_PORT_VC2_N_COUNT_INIT_N_INIT_INPUT_PORT_H_MASK 0x3ull
 #define ROUTER_NL4_PORT_VC2_N_COUNT_INIT_N_INIT_INPUT_PORT_H_INPLACE (ROUTER_NL4_PORT_VC2_N_COUNT_INIT_N_INIT_INPUT_PORT_H_MASK << ROUTER_NL4_PORT_VC2_N_COUNT_INIT_N_INIT_INPUT_PORT_H_SHIFT)
-#define ROUTER_NL4_PORT_VC2_N_COUNT_INIT_N_INIT_INPUT_PORT_G_SHIFT 24 /* established */
+/* established */
+#define ROUTER_NL4_PORT_VC2_N_COUNT_INIT_N_INIT_INPUT_PORT_G_SHIFT 24
 #define ROUTER_NL4_PORT_VC2_N_COUNT_INIT_N_INIT_INPUT_PORT_G_MASK 0x3ull
 #define ROUTER_NL4_PORT_VC2_N_COUNT_INIT_N_INIT_INPUT_PORT_G_INPLACE (ROUTER_NL4_PORT_VC2_N_COUNT_INIT_N_INIT_INPUT_PORT_G_MASK << ROUTER_NL4_PORT_VC2_N_COUNT_INIT_N_INIT_INPUT_PORT_G_SHIFT)
-#define ROUTER_NL4_PORT_VC2_N_COUNT_INIT_N_INIT_INPUT_PORT_F_SHIFT 20 /* established */
+/* established */
+#define ROUTER_NL4_PORT_VC2_N_COUNT_INIT_N_INIT_INPUT_PORT_F_SHIFT 20
 #define ROUTER_NL4_PORT_VC2_N_COUNT_INIT_N_INIT_INPUT_PORT_F_MASK 0x3ull
 #define ROUTER_NL4_PORT_VC2_N_COUNT_INIT_N_INIT_INPUT_PORT_F_INPLACE (ROUTER_NL4_PORT_VC2_N_COUNT_INIT_N_INIT_INPUT_PORT_F_MASK << ROUTER_NL4_PORT_VC2_N_COUNT_INIT_N_INIT_INPUT_PORT_F_SHIFT)
-#define ROUTER_NL4_PORT_VC2_N_COUNT_INIT_N_INIT_INPUT_PORT_E_SHIFT 16 /* established */
+/* established */
+#define ROUTER_NL4_PORT_VC2_N_COUNT_INIT_N_INIT_INPUT_PORT_E_SHIFT 16
 #define ROUTER_NL4_PORT_VC2_N_COUNT_INIT_N_INIT_INPUT_PORT_E_MASK 0x3ull
 #define ROUTER_NL4_PORT_VC2_N_COUNT_INIT_N_INIT_INPUT_PORT_E_INPLACE (ROUTER_NL4_PORT_VC2_N_COUNT_INIT_N_INIT_INPUT_PORT_E_MASK << ROUTER_NL4_PORT_VC2_N_COUNT_INIT_N_INIT_INPUT_PORT_E_SHIFT)
-#define ROUTER_NL4_PORT_VC2_N_COUNT_INIT_N_INIT_INPUT_PORT_D_SHIFT 12 /* established */
+/* established */
+#define ROUTER_NL4_PORT_VC2_N_COUNT_INIT_N_INIT_INPUT_PORT_D_SHIFT 12
 #define ROUTER_NL4_PORT_VC2_N_COUNT_INIT_N_INIT_INPUT_PORT_D_MASK 0x3ull
 #define ROUTER_NL4_PORT_VC2_N_COUNT_INIT_N_INIT_INPUT_PORT_D_INPLACE (ROUTER_NL4_PORT_VC2_N_COUNT_INIT_N_INIT_INPUT_PORT_D_MASK << ROUTER_NL4_PORT_VC2_N_COUNT_INIT_N_INIT_INPUT_PORT_D_SHIFT)
-#define ROUTER_NL4_PORT_VC2_N_COUNT_INIT_N_INIT_INPUT_PORT_C_SHIFT 8 /* established */
+/* established */
+#define ROUTER_NL4_PORT_VC2_N_COUNT_INIT_N_INIT_INPUT_PORT_C_SHIFT 8
 #define ROUTER_NL4_PORT_VC2_N_COUNT_INIT_N_INIT_INPUT_PORT_C_MASK 0x3ull
 #define ROUTER_NL4_PORT_VC2_N_COUNT_INIT_N_INIT_INPUT_PORT_C_INPLACE (ROUTER_NL4_PORT_VC2_N_COUNT_INIT_N_INIT_INPUT_PORT_C_MASK << ROUTER_NL4_PORT_VC2_N_COUNT_INIT_N_INIT_INPUT_PORT_C_SHIFT)
-#define ROUTER_NL4_PORT_VC2_N_COUNT_INIT_N_INIT_INPUT_PORT_B_SHIFT 4 /* established */
+/* established */
+#define ROUTER_NL4_PORT_VC2_N_COUNT_INIT_N_INIT_INPUT_PORT_B_SHIFT 4
 #define ROUTER_NL4_PORT_VC2_N_COUNT_INIT_N_INIT_INPUT_PORT_B_MASK 0x3ull
 #define ROUTER_NL4_PORT_VC2_N_COUNT_INIT_N_INIT_INPUT_PORT_B_INPLACE (ROUTER_NL4_PORT_VC2_N_COUNT_INIT_N_INIT_INPUT_PORT_B_MASK << ROUTER_NL4_PORT_VC2_N_COUNT_INIT_N_INIT_INPUT_PORT_B_SHIFT)
-#define ROUTER_NL4_PORT_VC2_N_COUNT_INIT_N_INIT_INPUT_PORT_A_SHIFT 0 /* established */
+/* established */
+#define ROUTER_NL4_PORT_VC2_N_COUNT_INIT_N_INIT_INPUT_PORT_A_SHIFT 0
 #define ROUTER_NL4_PORT_VC2_N_COUNT_INIT_N_INIT_INPUT_PORT_A_MASK 0x3ull
 #define ROUTER_NL4_PORT_VC2_N_COUNT_INIT_N_INIT_INPUT_PORT_A_INPLACE (ROUTER_NL4_PORT_VC2_N_COUNT_INIT_N_INIT_INPUT_PORT_A_MASK << ROUTER_NL4_PORT_VC2_N_COUNT_INIT_N_INIT_INPUT_PORT_A_SHIFT)
 
 /*
- * PROM register R4_PORTA_VC3_N_COUNT_INIT; one per port A to H. Offset and field positions read from the table; role inferred from the names.
+ * PROM register R4_PORTA_VC3_N_COUNT_INIT; one per port A to H. Offset and
+ * field positions read from the table; role inferred from the names.
  */
 /* port_vc3_n_count_init: rw64, reset unknown */
-#define ROUTER_NL4_PORT_VC3_N_COUNT_INIT_OFFSET      0x2000028u /* established */
+/* established */
+#define ROUTER_NL4_PORT_VC3_N_COUNT_INIT_OFFSET      0x2000028u
 #define ROUTER_NL4_PORT_VC3_N_COUNT_INIT_COUNT       8
 #define ROUTER_NL4_PORT_VC3_N_COUNT_INIT_STRIDE      32
-#define ROUTER_NL4_PORT_VC3_N_COUNT_INIT_N_INIT_INPUT_PORT_LB_SHIFT 32 /* established */
+/* established */
+#define ROUTER_NL4_PORT_VC3_N_COUNT_INIT_N_INIT_INPUT_PORT_LB_SHIFT 32
 #define ROUTER_NL4_PORT_VC3_N_COUNT_INIT_N_INIT_INPUT_PORT_LB_MASK 0x3ull
 #define ROUTER_NL4_PORT_VC3_N_COUNT_INIT_N_INIT_INPUT_PORT_LB_INPLACE (ROUTER_NL4_PORT_VC3_N_COUNT_INIT_N_INIT_INPUT_PORT_LB_MASK << ROUTER_NL4_PORT_VC3_N_COUNT_INIT_N_INIT_INPUT_PORT_LB_SHIFT)
-#define ROUTER_NL4_PORT_VC3_N_COUNT_INIT_N_INIT_INPUT_PORT_H_SHIFT 28 /* established */
+/* established */
+#define ROUTER_NL4_PORT_VC3_N_COUNT_INIT_N_INIT_INPUT_PORT_H_SHIFT 28
 #define ROUTER_NL4_PORT_VC3_N_COUNT_INIT_N_INIT_INPUT_PORT_H_MASK 0x3ull
 #define ROUTER_NL4_PORT_VC3_N_COUNT_INIT_N_INIT_INPUT_PORT_H_INPLACE (ROUTER_NL4_PORT_VC3_N_COUNT_INIT_N_INIT_INPUT_PORT_H_MASK << ROUTER_NL4_PORT_VC3_N_COUNT_INIT_N_INIT_INPUT_PORT_H_SHIFT)
-#define ROUTER_NL4_PORT_VC3_N_COUNT_INIT_N_INIT_INPUT_PORT_G_SHIFT 24 /* established */
+/* established */
+#define ROUTER_NL4_PORT_VC3_N_COUNT_INIT_N_INIT_INPUT_PORT_G_SHIFT 24
 #define ROUTER_NL4_PORT_VC3_N_COUNT_INIT_N_INIT_INPUT_PORT_G_MASK 0x3ull
 #define ROUTER_NL4_PORT_VC3_N_COUNT_INIT_N_INIT_INPUT_PORT_G_INPLACE (ROUTER_NL4_PORT_VC3_N_COUNT_INIT_N_INIT_INPUT_PORT_G_MASK << ROUTER_NL4_PORT_VC3_N_COUNT_INIT_N_INIT_INPUT_PORT_G_SHIFT)
-#define ROUTER_NL4_PORT_VC3_N_COUNT_INIT_N_INIT_INPUT_PORT_F_SHIFT 20 /* established */
+/* established */
+#define ROUTER_NL4_PORT_VC3_N_COUNT_INIT_N_INIT_INPUT_PORT_F_SHIFT 20
 #define ROUTER_NL4_PORT_VC3_N_COUNT_INIT_N_INIT_INPUT_PORT_F_MASK 0x3ull
 #define ROUTER_NL4_PORT_VC3_N_COUNT_INIT_N_INIT_INPUT_PORT_F_INPLACE (ROUTER_NL4_PORT_VC3_N_COUNT_INIT_N_INIT_INPUT_PORT_F_MASK << ROUTER_NL4_PORT_VC3_N_COUNT_INIT_N_INIT_INPUT_PORT_F_SHIFT)
-#define ROUTER_NL4_PORT_VC3_N_COUNT_INIT_N_INIT_INPUT_PORT_E_SHIFT 16 /* established */
+/* established */
+#define ROUTER_NL4_PORT_VC3_N_COUNT_INIT_N_INIT_INPUT_PORT_E_SHIFT 16
 #define ROUTER_NL4_PORT_VC3_N_COUNT_INIT_N_INIT_INPUT_PORT_E_MASK 0x3ull
 #define ROUTER_NL4_PORT_VC3_N_COUNT_INIT_N_INIT_INPUT_PORT_E_INPLACE (ROUTER_NL4_PORT_VC3_N_COUNT_INIT_N_INIT_INPUT_PORT_E_MASK << ROUTER_NL4_PORT_VC3_N_COUNT_INIT_N_INIT_INPUT_PORT_E_SHIFT)
-#define ROUTER_NL4_PORT_VC3_N_COUNT_INIT_N_INIT_INPUT_PORT_D_SHIFT 12 /* established */
+/* established */
+#define ROUTER_NL4_PORT_VC3_N_COUNT_INIT_N_INIT_INPUT_PORT_D_SHIFT 12
 #define ROUTER_NL4_PORT_VC3_N_COUNT_INIT_N_INIT_INPUT_PORT_D_MASK 0x3ull
 #define ROUTER_NL4_PORT_VC3_N_COUNT_INIT_N_INIT_INPUT_PORT_D_INPLACE (ROUTER_NL4_PORT_VC3_N_COUNT_INIT_N_INIT_INPUT_PORT_D_MASK << ROUTER_NL4_PORT_VC3_N_COUNT_INIT_N_INIT_INPUT_PORT_D_SHIFT)
-#define ROUTER_NL4_PORT_VC3_N_COUNT_INIT_N_INIT_INPUT_PORT_C_SHIFT 8 /* established */
+/* established */
+#define ROUTER_NL4_PORT_VC3_N_COUNT_INIT_N_INIT_INPUT_PORT_C_SHIFT 8
 #define ROUTER_NL4_PORT_VC3_N_COUNT_INIT_N_INIT_INPUT_PORT_C_MASK 0x3ull
 #define ROUTER_NL4_PORT_VC3_N_COUNT_INIT_N_INIT_INPUT_PORT_C_INPLACE (ROUTER_NL4_PORT_VC3_N_COUNT_INIT_N_INIT_INPUT_PORT_C_MASK << ROUTER_NL4_PORT_VC3_N_COUNT_INIT_N_INIT_INPUT_PORT_C_SHIFT)
-#define ROUTER_NL4_PORT_VC3_N_COUNT_INIT_N_INIT_INPUT_PORT_B_SHIFT 4 /* established */
+/* established */
+#define ROUTER_NL4_PORT_VC3_N_COUNT_INIT_N_INIT_INPUT_PORT_B_SHIFT 4
 #define ROUTER_NL4_PORT_VC3_N_COUNT_INIT_N_INIT_INPUT_PORT_B_MASK 0x3ull
 #define ROUTER_NL4_PORT_VC3_N_COUNT_INIT_N_INIT_INPUT_PORT_B_INPLACE (ROUTER_NL4_PORT_VC3_N_COUNT_INIT_N_INIT_INPUT_PORT_B_MASK << ROUTER_NL4_PORT_VC3_N_COUNT_INIT_N_INIT_INPUT_PORT_B_SHIFT)
-#define ROUTER_NL4_PORT_VC3_N_COUNT_INIT_N_INIT_INPUT_PORT_A_SHIFT 0 /* established */
+/* established */
+#define ROUTER_NL4_PORT_VC3_N_COUNT_INIT_N_INIT_INPUT_PORT_A_SHIFT 0
 #define ROUTER_NL4_PORT_VC3_N_COUNT_INIT_N_INIT_INPUT_PORT_A_MASK 0x3ull
 #define ROUTER_NL4_PORT_VC3_N_COUNT_INIT_N_INIT_INPUT_PORT_A_INPLACE (ROUTER_NL4_PORT_VC3_N_COUNT_INIT_N_INIT_INPUT_PORT_A_MASK << ROUTER_NL4_PORT_VC3_N_COUNT_INIT_N_INIT_INPUT_PORT_A_SHIFT)
 
 /*
- * PROM register R4_PORTLB_ARBL_VC0_N_COUNT_INIT. Offset and field positions read from the table; role inferred from the names.
+ * PROM register R4_PORTLB_ARBL_VC0_N_COUNT_INIT. Offset and field positions
+ * read from the table; role inferred from the names.
  */
 /* portlb_arbl_vc0_n_count_init: rw64, reset unknown */
-#define ROUTER_NL4_PORTLB_ARBL_VC0_N_COUNT_INIT_OFFSET 0x2000120u /* established */
-#define ROUTER_NL4_PORTLB_ARBL_VC0_N_COUNT_INIT_N_INIT_INPUT_PORT_H_SHIFT 28 /* established */
+/* established */
+#define ROUTER_NL4_PORTLB_ARBL_VC0_N_COUNT_INIT_OFFSET 0x2000120u
+/* established */
+#define ROUTER_NL4_PORTLB_ARBL_VC0_N_COUNT_INIT_N_INIT_INPUT_PORT_H_SHIFT 28
 #define ROUTER_NL4_PORTLB_ARBL_VC0_N_COUNT_INIT_N_INIT_INPUT_PORT_H_MASK 0x3ull
 #define ROUTER_NL4_PORTLB_ARBL_VC0_N_COUNT_INIT_N_INIT_INPUT_PORT_H_INPLACE (ROUTER_NL4_PORTLB_ARBL_VC0_N_COUNT_INIT_N_INIT_INPUT_PORT_H_MASK << ROUTER_NL4_PORTLB_ARBL_VC0_N_COUNT_INIT_N_INIT_INPUT_PORT_H_SHIFT)
-#define ROUTER_NL4_PORTLB_ARBL_VC0_N_COUNT_INIT_N_INIT_INPUT_PORT_G_SHIFT 24 /* established */
+/* established */
+#define ROUTER_NL4_PORTLB_ARBL_VC0_N_COUNT_INIT_N_INIT_INPUT_PORT_G_SHIFT 24
 #define ROUTER_NL4_PORTLB_ARBL_VC0_N_COUNT_INIT_N_INIT_INPUT_PORT_G_MASK 0x3ull
 #define ROUTER_NL4_PORTLB_ARBL_VC0_N_COUNT_INIT_N_INIT_INPUT_PORT_G_INPLACE (ROUTER_NL4_PORTLB_ARBL_VC0_N_COUNT_INIT_N_INIT_INPUT_PORT_G_MASK << ROUTER_NL4_PORTLB_ARBL_VC0_N_COUNT_INIT_N_INIT_INPUT_PORT_G_SHIFT)
-#define ROUTER_NL4_PORTLB_ARBL_VC0_N_COUNT_INIT_N_INIT_INPUT_PORT_B_SHIFT 4 /* established */
+/* established */
+#define ROUTER_NL4_PORTLB_ARBL_VC0_N_COUNT_INIT_N_INIT_INPUT_PORT_B_SHIFT 4
 #define ROUTER_NL4_PORTLB_ARBL_VC0_N_COUNT_INIT_N_INIT_INPUT_PORT_B_MASK 0x3ull
 #define ROUTER_NL4_PORTLB_ARBL_VC0_N_COUNT_INIT_N_INIT_INPUT_PORT_B_INPLACE (ROUTER_NL4_PORTLB_ARBL_VC0_N_COUNT_INIT_N_INIT_INPUT_PORT_B_MASK << ROUTER_NL4_PORTLB_ARBL_VC0_N_COUNT_INIT_N_INIT_INPUT_PORT_B_SHIFT)
-#define ROUTER_NL4_PORTLB_ARBL_VC0_N_COUNT_INIT_N_INIT_INPUT_PORT_A_SHIFT 0 /* established */
+/* established */
+#define ROUTER_NL4_PORTLB_ARBL_VC0_N_COUNT_INIT_N_INIT_INPUT_PORT_A_SHIFT 0
 #define ROUTER_NL4_PORTLB_ARBL_VC0_N_COUNT_INIT_N_INIT_INPUT_PORT_A_MASK 0x3ull
 #define ROUTER_NL4_PORTLB_ARBL_VC0_N_COUNT_INIT_N_INIT_INPUT_PORT_A_INPLACE (ROUTER_NL4_PORTLB_ARBL_VC0_N_COUNT_INIT_N_INIT_INPUT_PORT_A_MASK << ROUTER_NL4_PORTLB_ARBL_VC0_N_COUNT_INIT_N_INIT_INPUT_PORT_A_SHIFT)
 
 /*
- * PROM register R4_PORTLB_ARBL_VC1_N_COUNT_INIT. Offset and field positions read from the table; role inferred from the names.
+ * PROM register R4_PORTLB_ARBL_VC1_N_COUNT_INIT. Offset and field positions
+ * read from the table; role inferred from the names.
  */
 /* portlb_arbl_vc1_n_count_init: rw64, reset unknown */
-#define ROUTER_NL4_PORTLB_ARBL_VC1_N_COUNT_INIT_OFFSET 0x2000128u /* established */
-#define ROUTER_NL4_PORTLB_ARBL_VC1_N_COUNT_INIT_N_INIT_INPUT_PORT_H_SHIFT 28 /* established */
+/* established */
+#define ROUTER_NL4_PORTLB_ARBL_VC1_N_COUNT_INIT_OFFSET 0x2000128u
+/* established */
+#define ROUTER_NL4_PORTLB_ARBL_VC1_N_COUNT_INIT_N_INIT_INPUT_PORT_H_SHIFT 28
 #define ROUTER_NL4_PORTLB_ARBL_VC1_N_COUNT_INIT_N_INIT_INPUT_PORT_H_MASK 0x3ull
 #define ROUTER_NL4_PORTLB_ARBL_VC1_N_COUNT_INIT_N_INIT_INPUT_PORT_H_INPLACE (ROUTER_NL4_PORTLB_ARBL_VC1_N_COUNT_INIT_N_INIT_INPUT_PORT_H_MASK << ROUTER_NL4_PORTLB_ARBL_VC1_N_COUNT_INIT_N_INIT_INPUT_PORT_H_SHIFT)
-#define ROUTER_NL4_PORTLB_ARBL_VC1_N_COUNT_INIT_N_INIT_INPUT_PORT_G_SHIFT 24 /* established */
+/* established */
+#define ROUTER_NL4_PORTLB_ARBL_VC1_N_COUNT_INIT_N_INIT_INPUT_PORT_G_SHIFT 24
 #define ROUTER_NL4_PORTLB_ARBL_VC1_N_COUNT_INIT_N_INIT_INPUT_PORT_G_MASK 0x3ull
 #define ROUTER_NL4_PORTLB_ARBL_VC1_N_COUNT_INIT_N_INIT_INPUT_PORT_G_INPLACE (ROUTER_NL4_PORTLB_ARBL_VC1_N_COUNT_INIT_N_INIT_INPUT_PORT_G_MASK << ROUTER_NL4_PORTLB_ARBL_VC1_N_COUNT_INIT_N_INIT_INPUT_PORT_G_SHIFT)
-#define ROUTER_NL4_PORTLB_ARBL_VC1_N_COUNT_INIT_N_INIT_INPUT_PORT_B_SHIFT 4 /* established */
+/* established */
+#define ROUTER_NL4_PORTLB_ARBL_VC1_N_COUNT_INIT_N_INIT_INPUT_PORT_B_SHIFT 4
 #define ROUTER_NL4_PORTLB_ARBL_VC1_N_COUNT_INIT_N_INIT_INPUT_PORT_B_MASK 0x3ull
 #define ROUTER_NL4_PORTLB_ARBL_VC1_N_COUNT_INIT_N_INIT_INPUT_PORT_B_INPLACE (ROUTER_NL4_PORTLB_ARBL_VC1_N_COUNT_INIT_N_INIT_INPUT_PORT_B_MASK << ROUTER_NL4_PORTLB_ARBL_VC1_N_COUNT_INIT_N_INIT_INPUT_PORT_B_SHIFT)
-#define ROUTER_NL4_PORTLB_ARBL_VC1_N_COUNT_INIT_N_INIT_INPUT_PORT_A_SHIFT 0 /* established */
+/* established */
+#define ROUTER_NL4_PORTLB_ARBL_VC1_N_COUNT_INIT_N_INIT_INPUT_PORT_A_SHIFT 0
 #define ROUTER_NL4_PORTLB_ARBL_VC1_N_COUNT_INIT_N_INIT_INPUT_PORT_A_MASK 0x3ull
 #define ROUTER_NL4_PORTLB_ARBL_VC1_N_COUNT_INIT_N_INIT_INPUT_PORT_A_INPLACE (ROUTER_NL4_PORTLB_ARBL_VC1_N_COUNT_INIT_N_INIT_INPUT_PORT_A_MASK << ROUTER_NL4_PORTLB_ARBL_VC1_N_COUNT_INIT_N_INIT_INPUT_PORT_A_SHIFT)
 
 /*
- * PROM register R4_PORTLB_ARBL_VC2_N_COUNT_INIT. Offset and field positions read from the table; role inferred from the names.
+ * PROM register R4_PORTLB_ARBL_VC2_N_COUNT_INIT. Offset and field positions
+ * read from the table; role inferred from the names.
  */
 /* portlb_arbl_vc2_n_count_init: rw64, reset unknown */
-#define ROUTER_NL4_PORTLB_ARBL_VC2_N_COUNT_INIT_OFFSET 0x2000130u /* established */
-#define ROUTER_NL4_PORTLB_ARBL_VC2_N_COUNT_INIT_N_INIT_INPUT_PORT_H_SHIFT 28 /* established */
+/* established */
+#define ROUTER_NL4_PORTLB_ARBL_VC2_N_COUNT_INIT_OFFSET 0x2000130u
+/* established */
+#define ROUTER_NL4_PORTLB_ARBL_VC2_N_COUNT_INIT_N_INIT_INPUT_PORT_H_SHIFT 28
 #define ROUTER_NL4_PORTLB_ARBL_VC2_N_COUNT_INIT_N_INIT_INPUT_PORT_H_MASK 0x3ull
 #define ROUTER_NL4_PORTLB_ARBL_VC2_N_COUNT_INIT_N_INIT_INPUT_PORT_H_INPLACE (ROUTER_NL4_PORTLB_ARBL_VC2_N_COUNT_INIT_N_INIT_INPUT_PORT_H_MASK << ROUTER_NL4_PORTLB_ARBL_VC2_N_COUNT_INIT_N_INIT_INPUT_PORT_H_SHIFT)
-#define ROUTER_NL4_PORTLB_ARBL_VC2_N_COUNT_INIT_N_INIT_INPUT_PORT_G_SHIFT 24 /* established */
+/* established */
+#define ROUTER_NL4_PORTLB_ARBL_VC2_N_COUNT_INIT_N_INIT_INPUT_PORT_G_SHIFT 24
 #define ROUTER_NL4_PORTLB_ARBL_VC2_N_COUNT_INIT_N_INIT_INPUT_PORT_G_MASK 0x3ull
 #define ROUTER_NL4_PORTLB_ARBL_VC2_N_COUNT_INIT_N_INIT_INPUT_PORT_G_INPLACE (ROUTER_NL4_PORTLB_ARBL_VC2_N_COUNT_INIT_N_INIT_INPUT_PORT_G_MASK << ROUTER_NL4_PORTLB_ARBL_VC2_N_COUNT_INIT_N_INIT_INPUT_PORT_G_SHIFT)
-#define ROUTER_NL4_PORTLB_ARBL_VC2_N_COUNT_INIT_N_INIT_INPUT_PORT_B_SHIFT 4 /* established */
+/* established */
+#define ROUTER_NL4_PORTLB_ARBL_VC2_N_COUNT_INIT_N_INIT_INPUT_PORT_B_SHIFT 4
 #define ROUTER_NL4_PORTLB_ARBL_VC2_N_COUNT_INIT_N_INIT_INPUT_PORT_B_MASK 0x3ull
 #define ROUTER_NL4_PORTLB_ARBL_VC2_N_COUNT_INIT_N_INIT_INPUT_PORT_B_INPLACE (ROUTER_NL4_PORTLB_ARBL_VC2_N_COUNT_INIT_N_INIT_INPUT_PORT_B_MASK << ROUTER_NL4_PORTLB_ARBL_VC2_N_COUNT_INIT_N_INIT_INPUT_PORT_B_SHIFT)
-#define ROUTER_NL4_PORTLB_ARBL_VC2_N_COUNT_INIT_N_INIT_INPUT_PORT_A_SHIFT 0 /* established */
+/* established */
+#define ROUTER_NL4_PORTLB_ARBL_VC2_N_COUNT_INIT_N_INIT_INPUT_PORT_A_SHIFT 0
 #define ROUTER_NL4_PORTLB_ARBL_VC2_N_COUNT_INIT_N_INIT_INPUT_PORT_A_MASK 0x3ull
 #define ROUTER_NL4_PORTLB_ARBL_VC2_N_COUNT_INIT_N_INIT_INPUT_PORT_A_INPLACE (ROUTER_NL4_PORTLB_ARBL_VC2_N_COUNT_INIT_N_INIT_INPUT_PORT_A_MASK << ROUTER_NL4_PORTLB_ARBL_VC2_N_COUNT_INIT_N_INIT_INPUT_PORT_A_SHIFT)
 
 /*
- * PROM register R4_PORTLB_ARBL_VC3_N_COUNT_INIT. Offset and field positions read from the table; role inferred from the names.
+ * PROM register R4_PORTLB_ARBL_VC3_N_COUNT_INIT. Offset and field positions
+ * read from the table; role inferred from the names.
  */
 /* portlb_arbl_vc3_n_count_init: rw64, reset unknown */
-#define ROUTER_NL4_PORTLB_ARBL_VC3_N_COUNT_INIT_OFFSET 0x2000138u /* established */
-#define ROUTER_NL4_PORTLB_ARBL_VC3_N_COUNT_INIT_N_INIT_INPUT_PORT_H_SHIFT 28 /* established */
+/* established */
+#define ROUTER_NL4_PORTLB_ARBL_VC3_N_COUNT_INIT_OFFSET 0x2000138u
+/* established */
+#define ROUTER_NL4_PORTLB_ARBL_VC3_N_COUNT_INIT_N_INIT_INPUT_PORT_H_SHIFT 28
 #define ROUTER_NL4_PORTLB_ARBL_VC3_N_COUNT_INIT_N_INIT_INPUT_PORT_H_MASK 0x3ull
 #define ROUTER_NL4_PORTLB_ARBL_VC3_N_COUNT_INIT_N_INIT_INPUT_PORT_H_INPLACE (ROUTER_NL4_PORTLB_ARBL_VC3_N_COUNT_INIT_N_INIT_INPUT_PORT_H_MASK << ROUTER_NL4_PORTLB_ARBL_VC3_N_COUNT_INIT_N_INIT_INPUT_PORT_H_SHIFT)
-#define ROUTER_NL4_PORTLB_ARBL_VC3_N_COUNT_INIT_N_INIT_INPUT_PORT_G_SHIFT 24 /* established */
+/* established */
+#define ROUTER_NL4_PORTLB_ARBL_VC3_N_COUNT_INIT_N_INIT_INPUT_PORT_G_SHIFT 24
 #define ROUTER_NL4_PORTLB_ARBL_VC3_N_COUNT_INIT_N_INIT_INPUT_PORT_G_MASK 0x3ull
 #define ROUTER_NL4_PORTLB_ARBL_VC3_N_COUNT_INIT_N_INIT_INPUT_PORT_G_INPLACE (ROUTER_NL4_PORTLB_ARBL_VC3_N_COUNT_INIT_N_INIT_INPUT_PORT_G_MASK << ROUTER_NL4_PORTLB_ARBL_VC3_N_COUNT_INIT_N_INIT_INPUT_PORT_G_SHIFT)
-#define ROUTER_NL4_PORTLB_ARBL_VC3_N_COUNT_INIT_N_INIT_INPUT_PORT_B_SHIFT 4 /* established */
+/* established */
+#define ROUTER_NL4_PORTLB_ARBL_VC3_N_COUNT_INIT_N_INIT_INPUT_PORT_B_SHIFT 4
 #define ROUTER_NL4_PORTLB_ARBL_VC3_N_COUNT_INIT_N_INIT_INPUT_PORT_B_MASK 0x3ull
 #define ROUTER_NL4_PORTLB_ARBL_VC3_N_COUNT_INIT_N_INIT_INPUT_PORT_B_INPLACE (ROUTER_NL4_PORTLB_ARBL_VC3_N_COUNT_INIT_N_INIT_INPUT_PORT_B_MASK << ROUTER_NL4_PORTLB_ARBL_VC3_N_COUNT_INIT_N_INIT_INPUT_PORT_B_SHIFT)
-#define ROUTER_NL4_PORTLB_ARBL_VC3_N_COUNT_INIT_N_INIT_INPUT_PORT_A_SHIFT 0 /* established */
+/* established */
+#define ROUTER_NL4_PORTLB_ARBL_VC3_N_COUNT_INIT_N_INIT_INPUT_PORT_A_SHIFT 0
 #define ROUTER_NL4_PORTLB_ARBL_VC3_N_COUNT_INIT_N_INIT_INPUT_PORT_A_MASK 0x3ull
 #define ROUTER_NL4_PORTLB_ARBL_VC3_N_COUNT_INIT_N_INIT_INPUT_PORT_A_INPLACE (ROUTER_NL4_PORTLB_ARBL_VC3_N_COUNT_INIT_N_INIT_INPUT_PORT_A_MASK << ROUTER_NL4_PORTLB_ARBL_VC3_N_COUNT_INIT_N_INIT_INPUT_PORT_A_SHIFT)
 
 /*
- * PROM register R4_PORTLB_ARBR_VC0_N_COUNT_INIT. Offset and field positions read from the table; role inferred from the names.
+ * PROM register R4_PORTLB_ARBR_VC0_N_COUNT_INIT. Offset and field positions
+ * read from the table; role inferred from the names.
  */
 /* portlb_arbr_vc0_n_count_init: rw64, reset unknown */
-#define ROUTER_NL4_PORTLB_ARBR_VC0_N_COUNT_INIT_OFFSET 0x2000140u /* established */
-#define ROUTER_NL4_PORTLB_ARBR_VC0_N_COUNT_INIT_N_INIT_INPUT_PORT_F_SHIFT 20 /* established */
+/* established */
+#define ROUTER_NL4_PORTLB_ARBR_VC0_N_COUNT_INIT_OFFSET 0x2000140u
+/* established */
+#define ROUTER_NL4_PORTLB_ARBR_VC0_N_COUNT_INIT_N_INIT_INPUT_PORT_F_SHIFT 20
 #define ROUTER_NL4_PORTLB_ARBR_VC0_N_COUNT_INIT_N_INIT_INPUT_PORT_F_MASK 0x3ull
 #define ROUTER_NL4_PORTLB_ARBR_VC0_N_COUNT_INIT_N_INIT_INPUT_PORT_F_INPLACE (ROUTER_NL4_PORTLB_ARBR_VC0_N_COUNT_INIT_N_INIT_INPUT_PORT_F_MASK << ROUTER_NL4_PORTLB_ARBR_VC0_N_COUNT_INIT_N_INIT_INPUT_PORT_F_SHIFT)
-#define ROUTER_NL4_PORTLB_ARBR_VC0_N_COUNT_INIT_N_INIT_INPUT_PORT_E_SHIFT 16 /* established */
+/* established */
+#define ROUTER_NL4_PORTLB_ARBR_VC0_N_COUNT_INIT_N_INIT_INPUT_PORT_E_SHIFT 16
 #define ROUTER_NL4_PORTLB_ARBR_VC0_N_COUNT_INIT_N_INIT_INPUT_PORT_E_MASK 0x3ull
 #define ROUTER_NL4_PORTLB_ARBR_VC0_N_COUNT_INIT_N_INIT_INPUT_PORT_E_INPLACE (ROUTER_NL4_PORTLB_ARBR_VC0_N_COUNT_INIT_N_INIT_INPUT_PORT_E_MASK << ROUTER_NL4_PORTLB_ARBR_VC0_N_COUNT_INIT_N_INIT_INPUT_PORT_E_SHIFT)
-#define ROUTER_NL4_PORTLB_ARBR_VC0_N_COUNT_INIT_N_INIT_INPUT_PORT_D_SHIFT 12 /* established */
+/* established */
+#define ROUTER_NL4_PORTLB_ARBR_VC0_N_COUNT_INIT_N_INIT_INPUT_PORT_D_SHIFT 12
 #define ROUTER_NL4_PORTLB_ARBR_VC0_N_COUNT_INIT_N_INIT_INPUT_PORT_D_MASK 0x3ull
 #define ROUTER_NL4_PORTLB_ARBR_VC0_N_COUNT_INIT_N_INIT_INPUT_PORT_D_INPLACE (ROUTER_NL4_PORTLB_ARBR_VC0_N_COUNT_INIT_N_INIT_INPUT_PORT_D_MASK << ROUTER_NL4_PORTLB_ARBR_VC0_N_COUNT_INIT_N_INIT_INPUT_PORT_D_SHIFT)
-#define ROUTER_NL4_PORTLB_ARBR_VC0_N_COUNT_INIT_N_INIT_INPUT_PORT_C_SHIFT 8 /* established */
+/* established */
+#define ROUTER_NL4_PORTLB_ARBR_VC0_N_COUNT_INIT_N_INIT_INPUT_PORT_C_SHIFT 8
 #define ROUTER_NL4_PORTLB_ARBR_VC0_N_COUNT_INIT_N_INIT_INPUT_PORT_C_MASK 0x3ull
 #define ROUTER_NL4_PORTLB_ARBR_VC0_N_COUNT_INIT_N_INIT_INPUT_PORT_C_INPLACE (ROUTER_NL4_PORTLB_ARBR_VC0_N_COUNT_INIT_N_INIT_INPUT_PORT_C_MASK << ROUTER_NL4_PORTLB_ARBR_VC0_N_COUNT_INIT_N_INIT_INPUT_PORT_C_SHIFT)
 
 /*
- * PROM register R4_PORTLB_ARBR_VC1_N_COUNT_INIT. Offset and field positions read from the table; role inferred from the names.
+ * PROM register R4_PORTLB_ARBR_VC1_N_COUNT_INIT. Offset and field positions
+ * read from the table; role inferred from the names.
  */
 /* portlb_arbr_vc1_n_count_init: rw64, reset unknown */
-#define ROUTER_NL4_PORTLB_ARBR_VC1_N_COUNT_INIT_OFFSET 0x2000148u /* established */
-#define ROUTER_NL4_PORTLB_ARBR_VC1_N_COUNT_INIT_N_INIT_INPUT_PORT_F_SHIFT 20 /* established */
+/* established */
+#define ROUTER_NL4_PORTLB_ARBR_VC1_N_COUNT_INIT_OFFSET 0x2000148u
+/* established */
+#define ROUTER_NL4_PORTLB_ARBR_VC1_N_COUNT_INIT_N_INIT_INPUT_PORT_F_SHIFT 20
 #define ROUTER_NL4_PORTLB_ARBR_VC1_N_COUNT_INIT_N_INIT_INPUT_PORT_F_MASK 0x3ull
 #define ROUTER_NL4_PORTLB_ARBR_VC1_N_COUNT_INIT_N_INIT_INPUT_PORT_F_INPLACE (ROUTER_NL4_PORTLB_ARBR_VC1_N_COUNT_INIT_N_INIT_INPUT_PORT_F_MASK << ROUTER_NL4_PORTLB_ARBR_VC1_N_COUNT_INIT_N_INIT_INPUT_PORT_F_SHIFT)
-#define ROUTER_NL4_PORTLB_ARBR_VC1_N_COUNT_INIT_N_INIT_INPUT_PORT_E_SHIFT 16 /* established */
+/* established */
+#define ROUTER_NL4_PORTLB_ARBR_VC1_N_COUNT_INIT_N_INIT_INPUT_PORT_E_SHIFT 16
 #define ROUTER_NL4_PORTLB_ARBR_VC1_N_COUNT_INIT_N_INIT_INPUT_PORT_E_MASK 0x3ull
 #define ROUTER_NL4_PORTLB_ARBR_VC1_N_COUNT_INIT_N_INIT_INPUT_PORT_E_INPLACE (ROUTER_NL4_PORTLB_ARBR_VC1_N_COUNT_INIT_N_INIT_INPUT_PORT_E_MASK << ROUTER_NL4_PORTLB_ARBR_VC1_N_COUNT_INIT_N_INIT_INPUT_PORT_E_SHIFT)
-#define ROUTER_NL4_PORTLB_ARBR_VC1_N_COUNT_INIT_N_INIT_INPUT_PORT_D_SHIFT 12 /* established */
+/* established */
+#define ROUTER_NL4_PORTLB_ARBR_VC1_N_COUNT_INIT_N_INIT_INPUT_PORT_D_SHIFT 12
 #define ROUTER_NL4_PORTLB_ARBR_VC1_N_COUNT_INIT_N_INIT_INPUT_PORT_D_MASK 0x3ull
 #define ROUTER_NL4_PORTLB_ARBR_VC1_N_COUNT_INIT_N_INIT_INPUT_PORT_D_INPLACE (ROUTER_NL4_PORTLB_ARBR_VC1_N_COUNT_INIT_N_INIT_INPUT_PORT_D_MASK << ROUTER_NL4_PORTLB_ARBR_VC1_N_COUNT_INIT_N_INIT_INPUT_PORT_D_SHIFT)
-#define ROUTER_NL4_PORTLB_ARBR_VC1_N_COUNT_INIT_N_INIT_INPUT_PORT_C_SHIFT 8 /* established */
+/* established */
+#define ROUTER_NL4_PORTLB_ARBR_VC1_N_COUNT_INIT_N_INIT_INPUT_PORT_C_SHIFT 8
 #define ROUTER_NL4_PORTLB_ARBR_VC1_N_COUNT_INIT_N_INIT_INPUT_PORT_C_MASK 0x3ull
 #define ROUTER_NL4_PORTLB_ARBR_VC1_N_COUNT_INIT_N_INIT_INPUT_PORT_C_INPLACE (ROUTER_NL4_PORTLB_ARBR_VC1_N_COUNT_INIT_N_INIT_INPUT_PORT_C_MASK << ROUTER_NL4_PORTLB_ARBR_VC1_N_COUNT_INIT_N_INIT_INPUT_PORT_C_SHIFT)
 
 /*
- * PROM register R4_PORTLB_ARBR_VC2_N_COUNT_INIT. Offset and field positions read from the table; role inferred from the names.
+ * PROM register R4_PORTLB_ARBR_VC2_N_COUNT_INIT. Offset and field positions
+ * read from the table; role inferred from the names.
  */
 /* portlb_arbr_vc2_n_count_init: rw64, reset unknown */
-#define ROUTER_NL4_PORTLB_ARBR_VC2_N_COUNT_INIT_OFFSET 0x2000150u /* established */
-#define ROUTER_NL4_PORTLB_ARBR_VC2_N_COUNT_INIT_N_INIT_INPUT_PORT_F_SHIFT 20 /* established */
+/* established */
+#define ROUTER_NL4_PORTLB_ARBR_VC2_N_COUNT_INIT_OFFSET 0x2000150u
+/* established */
+#define ROUTER_NL4_PORTLB_ARBR_VC2_N_COUNT_INIT_N_INIT_INPUT_PORT_F_SHIFT 20
 #define ROUTER_NL4_PORTLB_ARBR_VC2_N_COUNT_INIT_N_INIT_INPUT_PORT_F_MASK 0x3ull
 #define ROUTER_NL4_PORTLB_ARBR_VC2_N_COUNT_INIT_N_INIT_INPUT_PORT_F_INPLACE (ROUTER_NL4_PORTLB_ARBR_VC2_N_COUNT_INIT_N_INIT_INPUT_PORT_F_MASK << ROUTER_NL4_PORTLB_ARBR_VC2_N_COUNT_INIT_N_INIT_INPUT_PORT_F_SHIFT)
-#define ROUTER_NL4_PORTLB_ARBR_VC2_N_COUNT_INIT_N_INIT_INPUT_PORT_E_SHIFT 16 /* established */
+/* established */
+#define ROUTER_NL4_PORTLB_ARBR_VC2_N_COUNT_INIT_N_INIT_INPUT_PORT_E_SHIFT 16
 #define ROUTER_NL4_PORTLB_ARBR_VC2_N_COUNT_INIT_N_INIT_INPUT_PORT_E_MASK 0x3ull
 #define ROUTER_NL4_PORTLB_ARBR_VC2_N_COUNT_INIT_N_INIT_INPUT_PORT_E_INPLACE (ROUTER_NL4_PORTLB_ARBR_VC2_N_COUNT_INIT_N_INIT_INPUT_PORT_E_MASK << ROUTER_NL4_PORTLB_ARBR_VC2_N_COUNT_INIT_N_INIT_INPUT_PORT_E_SHIFT)
-#define ROUTER_NL4_PORTLB_ARBR_VC2_N_COUNT_INIT_N_INIT_INPUT_PORT_D_SHIFT 12 /* established */
+/* established */
+#define ROUTER_NL4_PORTLB_ARBR_VC2_N_COUNT_INIT_N_INIT_INPUT_PORT_D_SHIFT 12
 #define ROUTER_NL4_PORTLB_ARBR_VC2_N_COUNT_INIT_N_INIT_INPUT_PORT_D_MASK 0x3ull
 #define ROUTER_NL4_PORTLB_ARBR_VC2_N_COUNT_INIT_N_INIT_INPUT_PORT_D_INPLACE (ROUTER_NL4_PORTLB_ARBR_VC2_N_COUNT_INIT_N_INIT_INPUT_PORT_D_MASK << ROUTER_NL4_PORTLB_ARBR_VC2_N_COUNT_INIT_N_INIT_INPUT_PORT_D_SHIFT)
-#define ROUTER_NL4_PORTLB_ARBR_VC2_N_COUNT_INIT_N_INIT_INPUT_PORT_C_SHIFT 8 /* established */
+/* established */
+#define ROUTER_NL4_PORTLB_ARBR_VC2_N_COUNT_INIT_N_INIT_INPUT_PORT_C_SHIFT 8
 #define ROUTER_NL4_PORTLB_ARBR_VC2_N_COUNT_INIT_N_INIT_INPUT_PORT_C_MASK 0x3ull
 #define ROUTER_NL4_PORTLB_ARBR_VC2_N_COUNT_INIT_N_INIT_INPUT_PORT_C_INPLACE (ROUTER_NL4_PORTLB_ARBR_VC2_N_COUNT_INIT_N_INIT_INPUT_PORT_C_MASK << ROUTER_NL4_PORTLB_ARBR_VC2_N_COUNT_INIT_N_INIT_INPUT_PORT_C_SHIFT)
 
 /*
- * PROM register R4_PORTLB_ARBR_VC3_N_COUNT_INIT. Offset and field positions read from the table; role inferred from the names.
+ * PROM register R4_PORTLB_ARBR_VC3_N_COUNT_INIT. Offset and field positions
+ * read from the table; role inferred from the names.
  */
 /* portlb_arbr_vc3_n_count_init: rw64, reset unknown */
-#define ROUTER_NL4_PORTLB_ARBR_VC3_N_COUNT_INIT_OFFSET 0x2000158u /* established */
-#define ROUTER_NL4_PORTLB_ARBR_VC3_N_COUNT_INIT_N_INIT_INPUT_PORT_F_SHIFT 20 /* established */
+/* established */
+#define ROUTER_NL4_PORTLB_ARBR_VC3_N_COUNT_INIT_OFFSET 0x2000158u
+/* established */
+#define ROUTER_NL4_PORTLB_ARBR_VC3_N_COUNT_INIT_N_INIT_INPUT_PORT_F_SHIFT 20
 #define ROUTER_NL4_PORTLB_ARBR_VC3_N_COUNT_INIT_N_INIT_INPUT_PORT_F_MASK 0x3ull
 #define ROUTER_NL4_PORTLB_ARBR_VC3_N_COUNT_INIT_N_INIT_INPUT_PORT_F_INPLACE (ROUTER_NL4_PORTLB_ARBR_VC3_N_COUNT_INIT_N_INIT_INPUT_PORT_F_MASK << ROUTER_NL4_PORTLB_ARBR_VC3_N_COUNT_INIT_N_INIT_INPUT_PORT_F_SHIFT)
-#define ROUTER_NL4_PORTLB_ARBR_VC3_N_COUNT_INIT_N_INIT_INPUT_PORT_E_SHIFT 16 /* established */
+/* established */
+#define ROUTER_NL4_PORTLB_ARBR_VC3_N_COUNT_INIT_N_INIT_INPUT_PORT_E_SHIFT 16
 #define ROUTER_NL4_PORTLB_ARBR_VC3_N_COUNT_INIT_N_INIT_INPUT_PORT_E_MASK 0x3ull
 #define ROUTER_NL4_PORTLB_ARBR_VC3_N_COUNT_INIT_N_INIT_INPUT_PORT_E_INPLACE (ROUTER_NL4_PORTLB_ARBR_VC3_N_COUNT_INIT_N_INIT_INPUT_PORT_E_MASK << ROUTER_NL4_PORTLB_ARBR_VC3_N_COUNT_INIT_N_INIT_INPUT_PORT_E_SHIFT)
-#define ROUTER_NL4_PORTLB_ARBR_VC3_N_COUNT_INIT_N_INIT_INPUT_PORT_D_SHIFT 12 /* established */
+/* established */
+#define ROUTER_NL4_PORTLB_ARBR_VC3_N_COUNT_INIT_N_INIT_INPUT_PORT_D_SHIFT 12
 #define ROUTER_NL4_PORTLB_ARBR_VC3_N_COUNT_INIT_N_INIT_INPUT_PORT_D_MASK 0x3ull
 #define ROUTER_NL4_PORTLB_ARBR_VC3_N_COUNT_INIT_N_INIT_INPUT_PORT_D_INPLACE (ROUTER_NL4_PORTLB_ARBR_VC3_N_COUNT_INIT_N_INIT_INPUT_PORT_D_MASK << ROUTER_NL4_PORTLB_ARBR_VC3_N_COUNT_INIT_N_INIT_INPUT_PORT_D_SHIFT)
-#define ROUTER_NL4_PORTLB_ARBR_VC3_N_COUNT_INIT_N_INIT_INPUT_PORT_C_SHIFT 8 /* established */
+/* established */
+#define ROUTER_NL4_PORTLB_ARBR_VC3_N_COUNT_INIT_N_INIT_INPUT_PORT_C_SHIFT 8
 #define ROUTER_NL4_PORTLB_ARBR_VC3_N_COUNT_INIT_N_INIT_INPUT_PORT_C_MASK 0x3ull
 #define ROUTER_NL4_PORTLB_ARBR_VC3_N_COUNT_INIT_N_INIT_INPUT_PORT_C_INPLACE (ROUTER_NL4_PORTLB_ARBR_VC3_N_COUNT_INIT_N_INIT_INPUT_PORT_C_MASK << ROUTER_NL4_PORTLB_ARBR_VC3_N_COUNT_INIT_N_INIT_INPUT_PORT_C_SHIFT)
 
 /*
- * PROM register R4_PORTA_D_COUNT_INIT. Offset and field positions read from the table; role inferred from the names.
+ * PROM register R4_PORTA_D_COUNT_INIT. Offset and field positions read from the
+ * table; role inferred from the names.
  */
 /* porta_d_count_init: rw64, reset unknown */
-#define ROUTER_NL4_PORTA_D_COUNT_INIT_OFFSET         0x2000400u /* established */
+/* established */
+#define ROUTER_NL4_PORTA_D_COUNT_INIT_OFFSET         0x2000400u
 #define ROUTER_NL4_PORTA_D_COUNT_INIT_D_INIT_VC3_SHIFT 24 /* established */
 #define ROUTER_NL4_PORTA_D_COUNT_INIT_D_INIT_VC3_MASK 0xffull
 #define ROUTER_NL4_PORTA_D_COUNT_INIT_D_INIT_VC3_INPLACE (ROUTER_NL4_PORTA_D_COUNT_INIT_D_INIT_VC3_MASK << ROUTER_NL4_PORTA_D_COUNT_INIT_D_INIT_VC3_SHIFT)
@@ -3469,10 +4059,12 @@
 #define ROUTER_NL4_PORTA_D_COUNT_INIT_D_INIT_VC0_INPLACE (ROUTER_NL4_PORTA_D_COUNT_INIT_D_INIT_VC0_MASK << ROUTER_NL4_PORTA_D_COUNT_INIT_D_INIT_VC0_SHIFT)
 
 /*
- * PROM register R4_PORTA_D_COUNT_INIT. Offset and field positions read from the table; role inferred from the names.
+ * PROM register R4_PORTA_D_COUNT_INIT. Offset and field positions read from the
+ * table; role inferred from the names.
  */
 /* portb_d_count_init: rw64, reset unknown */
-#define ROUTER_NL4_PORTB_D_COUNT_INIT_OFFSET         0x2000408u /* established */
+/* established */
+#define ROUTER_NL4_PORTB_D_COUNT_INIT_OFFSET         0x2000408u
 #define ROUTER_NL4_PORTB_D_COUNT_INIT_D_INIT_VC3_SHIFT 24 /* established */
 #define ROUTER_NL4_PORTB_D_COUNT_INIT_D_INIT_VC3_MASK 0xffull
 #define ROUTER_NL4_PORTB_D_COUNT_INIT_D_INIT_VC3_INPLACE (ROUTER_NL4_PORTB_D_COUNT_INIT_D_INIT_VC3_MASK << ROUTER_NL4_PORTB_D_COUNT_INIT_D_INIT_VC3_SHIFT)
@@ -3487,10 +4079,12 @@
 #define ROUTER_NL4_PORTB_D_COUNT_INIT_D_INIT_VC0_INPLACE (ROUTER_NL4_PORTB_D_COUNT_INIT_D_INIT_VC0_MASK << ROUTER_NL4_PORTB_D_COUNT_INIT_D_INIT_VC0_SHIFT)
 
 /*
- * PROM register R4_PORTA_D_COUNT_INIT. Offset and field positions read from the table; role inferred from the names.
+ * PROM register R4_PORTA_D_COUNT_INIT. Offset and field positions read from the
+ * table; role inferred from the names.
  */
 /* portg_d_count_init: rw64, reset unknown */
-#define ROUTER_NL4_PORTG_D_COUNT_INIT_OFFSET         0x2000410u /* established */
+/* established */
+#define ROUTER_NL4_PORTG_D_COUNT_INIT_OFFSET         0x2000410u
 #define ROUTER_NL4_PORTG_D_COUNT_INIT_D_INIT_VC3_SHIFT 24 /* established */
 #define ROUTER_NL4_PORTG_D_COUNT_INIT_D_INIT_VC3_MASK 0xffull
 #define ROUTER_NL4_PORTG_D_COUNT_INIT_D_INIT_VC3_INPLACE (ROUTER_NL4_PORTG_D_COUNT_INIT_D_INIT_VC3_MASK << ROUTER_NL4_PORTG_D_COUNT_INIT_D_INIT_VC3_SHIFT)
@@ -3505,10 +4099,12 @@
 #define ROUTER_NL4_PORTG_D_COUNT_INIT_D_INIT_VC0_INPLACE (ROUTER_NL4_PORTG_D_COUNT_INIT_D_INIT_VC0_MASK << ROUTER_NL4_PORTG_D_COUNT_INIT_D_INIT_VC0_SHIFT)
 
 /*
- * PROM register R4_PORTA_D_COUNT_INIT. Offset and field positions read from the table; role inferred from the names.
+ * PROM register R4_PORTA_D_COUNT_INIT. Offset and field positions read from the
+ * table; role inferred from the names.
  */
 /* porth_d_count_init: rw64, reset unknown */
-#define ROUTER_NL4_PORTH_D_COUNT_INIT_OFFSET         0x2000418u /* established */
+/* established */
+#define ROUTER_NL4_PORTH_D_COUNT_INIT_OFFSET         0x2000418u
 #define ROUTER_NL4_PORTH_D_COUNT_INIT_D_INIT_VC3_SHIFT 24 /* established */
 #define ROUTER_NL4_PORTH_D_COUNT_INIT_D_INIT_VC3_MASK 0xffull
 #define ROUTER_NL4_PORTH_D_COUNT_INIT_D_INIT_VC3_INPLACE (ROUTER_NL4_PORTH_D_COUNT_INIT_D_INIT_VC3_MASK << ROUTER_NL4_PORTH_D_COUNT_INIT_D_INIT_VC3_SHIFT)
@@ -3523,14 +4119,18 @@
 #define ROUTER_NL4_PORTH_D_COUNT_INIT_D_INIT_VC0_INPLACE (ROUTER_NL4_PORTH_D_COUNT_INIT_D_INIT_VC0_MASK << ROUTER_NL4_PORTH_D_COUNT_INIT_D_INIT_VC0_SHIFT)
 
 /*
- * PROM register R4_PORTLB_ARBL_D_COUNT_INIT. Offset and field positions read from the table; role inferred from the names.
+ * PROM register R4_PORTLB_ARBL_D_COUNT_INIT. Offset and field positions read
+ * from the table; role inferred from the names.
  */
 /* portlb_arbl_d_count_init: rw64, reset unknown */
-#define ROUTER_NL4_PORTLB_ARBL_D_COUNT_INIT_OFFSET   0x2000420u /* established */
-#define ROUTER_NL4_PORTLB_ARBL_D_COUNT_INIT_D_INIT_VC3_SHIFT 24 /* established */
+/* established */
+#define ROUTER_NL4_PORTLB_ARBL_D_COUNT_INIT_OFFSET   0x2000420u
+/* established */
+#define ROUTER_NL4_PORTLB_ARBL_D_COUNT_INIT_D_INIT_VC3_SHIFT 24
 #define ROUTER_NL4_PORTLB_ARBL_D_COUNT_INIT_D_INIT_VC3_MASK 0xffull
 #define ROUTER_NL4_PORTLB_ARBL_D_COUNT_INIT_D_INIT_VC3_INPLACE (ROUTER_NL4_PORTLB_ARBL_D_COUNT_INIT_D_INIT_VC3_MASK << ROUTER_NL4_PORTLB_ARBL_D_COUNT_INIT_D_INIT_VC3_SHIFT)
-#define ROUTER_NL4_PORTLB_ARBL_D_COUNT_INIT_D_INIT_VC2_SHIFT 16 /* established */
+/* established */
+#define ROUTER_NL4_PORTLB_ARBL_D_COUNT_INIT_D_INIT_VC2_SHIFT 16
 #define ROUTER_NL4_PORTLB_ARBL_D_COUNT_INIT_D_INIT_VC2_MASK 0xffull
 #define ROUTER_NL4_PORTLB_ARBL_D_COUNT_INIT_D_INIT_VC2_INPLACE (ROUTER_NL4_PORTLB_ARBL_D_COUNT_INIT_D_INIT_VC2_MASK << ROUTER_NL4_PORTLB_ARBL_D_COUNT_INIT_D_INIT_VC2_SHIFT)
 #define ROUTER_NL4_PORTLB_ARBL_D_COUNT_INIT_D_INIT_VC1_SHIFT 8 /* established */
@@ -3541,10 +4141,12 @@
 #define ROUTER_NL4_PORTLB_ARBL_D_COUNT_INIT_D_INIT_VC0_INPLACE (ROUTER_NL4_PORTLB_ARBL_D_COUNT_INIT_D_INIT_VC0_MASK << ROUTER_NL4_PORTLB_ARBL_D_COUNT_INIT_D_INIT_VC0_SHIFT)
 
 /*
- * PROM register R4_PORTA_D_COUNT_INIT. Offset and field positions read from the table; role inferred from the names.
+ * PROM register R4_PORTA_D_COUNT_INIT. Offset and field positions read from the
+ * table; role inferred from the names.
  */
 /* portc_d_count_init: rw64, reset unknown */
-#define ROUTER_NL4_PORTC_D_COUNT_INIT_OFFSET         0x2000428u /* established */
+/* established */
+#define ROUTER_NL4_PORTC_D_COUNT_INIT_OFFSET         0x2000428u
 #define ROUTER_NL4_PORTC_D_COUNT_INIT_D_INIT_VC3_SHIFT 24 /* established */
 #define ROUTER_NL4_PORTC_D_COUNT_INIT_D_INIT_VC3_MASK 0xffull
 #define ROUTER_NL4_PORTC_D_COUNT_INIT_D_INIT_VC3_INPLACE (ROUTER_NL4_PORTC_D_COUNT_INIT_D_INIT_VC3_MASK << ROUTER_NL4_PORTC_D_COUNT_INIT_D_INIT_VC3_SHIFT)
@@ -3559,10 +4161,12 @@
 #define ROUTER_NL4_PORTC_D_COUNT_INIT_D_INIT_VC0_INPLACE (ROUTER_NL4_PORTC_D_COUNT_INIT_D_INIT_VC0_MASK << ROUTER_NL4_PORTC_D_COUNT_INIT_D_INIT_VC0_SHIFT)
 
 /*
- * PROM register R4_PORTA_D_COUNT_INIT. Offset and field positions read from the table; role inferred from the names.
+ * PROM register R4_PORTA_D_COUNT_INIT. Offset and field positions read from the
+ * table; role inferred from the names.
  */
 /* portd_d_count_init: rw64, reset unknown */
-#define ROUTER_NL4_PORTD_D_COUNT_INIT_OFFSET         0x2000430u /* established */
+/* established */
+#define ROUTER_NL4_PORTD_D_COUNT_INIT_OFFSET         0x2000430u
 #define ROUTER_NL4_PORTD_D_COUNT_INIT_D_INIT_VC3_SHIFT 24 /* established */
 #define ROUTER_NL4_PORTD_D_COUNT_INIT_D_INIT_VC3_MASK 0xffull
 #define ROUTER_NL4_PORTD_D_COUNT_INIT_D_INIT_VC3_INPLACE (ROUTER_NL4_PORTD_D_COUNT_INIT_D_INIT_VC3_MASK << ROUTER_NL4_PORTD_D_COUNT_INIT_D_INIT_VC3_SHIFT)
@@ -3577,10 +4181,12 @@
 #define ROUTER_NL4_PORTD_D_COUNT_INIT_D_INIT_VC0_INPLACE (ROUTER_NL4_PORTD_D_COUNT_INIT_D_INIT_VC0_MASK << ROUTER_NL4_PORTD_D_COUNT_INIT_D_INIT_VC0_SHIFT)
 
 /*
- * PROM register R4_PORTA_D_COUNT_INIT. Offset and field positions read from the table; role inferred from the names.
+ * PROM register R4_PORTA_D_COUNT_INIT. Offset and field positions read from the
+ * table; role inferred from the names.
  */
 /* porte_d_count_init: rw64, reset unknown */
-#define ROUTER_NL4_PORTE_D_COUNT_INIT_OFFSET         0x2000438u /* established */
+/* established */
+#define ROUTER_NL4_PORTE_D_COUNT_INIT_OFFSET         0x2000438u
 #define ROUTER_NL4_PORTE_D_COUNT_INIT_D_INIT_VC3_SHIFT 24 /* established */
 #define ROUTER_NL4_PORTE_D_COUNT_INIT_D_INIT_VC3_MASK 0xffull
 #define ROUTER_NL4_PORTE_D_COUNT_INIT_D_INIT_VC3_INPLACE (ROUTER_NL4_PORTE_D_COUNT_INIT_D_INIT_VC3_MASK << ROUTER_NL4_PORTE_D_COUNT_INIT_D_INIT_VC3_SHIFT)
@@ -3595,10 +4201,12 @@
 #define ROUTER_NL4_PORTE_D_COUNT_INIT_D_INIT_VC0_INPLACE (ROUTER_NL4_PORTE_D_COUNT_INIT_D_INIT_VC0_MASK << ROUTER_NL4_PORTE_D_COUNT_INIT_D_INIT_VC0_SHIFT)
 
 /*
- * PROM register R4_PORTA_D_COUNT_INIT. Offset and field positions read from the table; role inferred from the names.
+ * PROM register R4_PORTA_D_COUNT_INIT. Offset and field positions read from the
+ * table; role inferred from the names.
  */
 /* portf_d_count_init: rw64, reset unknown */
-#define ROUTER_NL4_PORTF_D_COUNT_INIT_OFFSET         0x2000440u /* established */
+/* established */
+#define ROUTER_NL4_PORTF_D_COUNT_INIT_OFFSET         0x2000440u
 #define ROUTER_NL4_PORTF_D_COUNT_INIT_D_INIT_VC3_SHIFT 24 /* established */
 #define ROUTER_NL4_PORTF_D_COUNT_INIT_D_INIT_VC3_MASK 0xffull
 #define ROUTER_NL4_PORTF_D_COUNT_INIT_D_INIT_VC3_INPLACE (ROUTER_NL4_PORTF_D_COUNT_INIT_D_INIT_VC3_MASK << ROUTER_NL4_PORTF_D_COUNT_INIT_D_INIT_VC3_SHIFT)
@@ -3613,14 +4221,18 @@
 #define ROUTER_NL4_PORTF_D_COUNT_INIT_D_INIT_VC0_INPLACE (ROUTER_NL4_PORTF_D_COUNT_INIT_D_INIT_VC0_MASK << ROUTER_NL4_PORTF_D_COUNT_INIT_D_INIT_VC0_SHIFT)
 
 /*
- * PROM register R4_PORTLB_ARBR_D_COUNT_INIT. Offset and field positions read from the table; role inferred from the names.
+ * PROM register R4_PORTLB_ARBR_D_COUNT_INIT. Offset and field positions read
+ * from the table; role inferred from the names.
  */
 /* portlb_arbr_d_count_init: rw64, reset unknown */
-#define ROUTER_NL4_PORTLB_ARBR_D_COUNT_INIT_OFFSET   0x2000448u /* established */
-#define ROUTER_NL4_PORTLB_ARBR_D_COUNT_INIT_D_INIT_VC3_SHIFT 24 /* established */
+/* established */
+#define ROUTER_NL4_PORTLB_ARBR_D_COUNT_INIT_OFFSET   0x2000448u
+/* established */
+#define ROUTER_NL4_PORTLB_ARBR_D_COUNT_INIT_D_INIT_VC3_SHIFT 24
 #define ROUTER_NL4_PORTLB_ARBR_D_COUNT_INIT_D_INIT_VC3_MASK 0xffull
 #define ROUTER_NL4_PORTLB_ARBR_D_COUNT_INIT_D_INIT_VC3_INPLACE (ROUTER_NL4_PORTLB_ARBR_D_COUNT_INIT_D_INIT_VC3_MASK << ROUTER_NL4_PORTLB_ARBR_D_COUNT_INIT_D_INIT_VC3_SHIFT)
-#define ROUTER_NL4_PORTLB_ARBR_D_COUNT_INIT_D_INIT_VC2_SHIFT 16 /* established */
+/* established */
+#define ROUTER_NL4_PORTLB_ARBR_D_COUNT_INIT_D_INIT_VC2_SHIFT 16
 #define ROUTER_NL4_PORTLB_ARBR_D_COUNT_INIT_D_INIT_VC2_MASK 0xffull
 #define ROUTER_NL4_PORTLB_ARBR_D_COUNT_INIT_D_INIT_VC2_INPLACE (ROUTER_NL4_PORTLB_ARBR_D_COUNT_INIT_D_INIT_VC2_MASK << ROUTER_NL4_PORTLB_ARBR_D_COUNT_INIT_D_INIT_VC2_SHIFT)
 #define ROUTER_NL4_PORTLB_ARBR_D_COUNT_INIT_D_INIT_VC1_SHIFT 8 /* established */
@@ -3631,214 +4243,284 @@
 #define ROUTER_NL4_PORTLB_ARBR_D_COUNT_INIT_D_INIT_VC0_INPLACE (ROUTER_NL4_PORTLB_ARBR_D_COUNT_INIT_D_INIT_VC0_MASK << ROUTER_NL4_PORTLB_ARBR_D_COUNT_INIT_D_INIT_VC0_SHIFT)
 
 /*
- * PROM register R4_THROTTLE_ENABLE_ARBL. Offset and field positions read from the table; role inferred from the names.
+ * PROM register R4_THROTTLE_ENABLE_ARBL. Offset and field positions read from
+ * the table; role inferred from the names.
  */
 /* throttle_enable_arbl: rw64, reset unknown */
-#define ROUTER_NL4_THROTTLE_ENABLE_ARBL_OFFSET       0x2000500u /* established */
-#define ROUTER_NL4_THROTTLE_ENABLE_ARBL_INPUTH_VC3_ENABLE_SHIFT 31 /* established */
+/* established */
+#define ROUTER_NL4_THROTTLE_ENABLE_ARBL_OFFSET       0x2000500u
+/* established */
+#define ROUTER_NL4_THROTTLE_ENABLE_ARBL_INPUTH_VC3_ENABLE_SHIFT 31
 #define ROUTER_NL4_THROTTLE_ENABLE_ARBL_INPUTH_VC3_ENABLE_MASK 0x1ull
 #define ROUTER_NL4_THROTTLE_ENABLE_ARBL_INPUTH_VC3_ENABLE_INPLACE (ROUTER_NL4_THROTTLE_ENABLE_ARBL_INPUTH_VC3_ENABLE_MASK << ROUTER_NL4_THROTTLE_ENABLE_ARBL_INPUTH_VC3_ENABLE_SHIFT)
-#define ROUTER_NL4_THROTTLE_ENABLE_ARBL_INPUTH_VC2_ENABLE_SHIFT 30 /* established */
+/* established */
+#define ROUTER_NL4_THROTTLE_ENABLE_ARBL_INPUTH_VC2_ENABLE_SHIFT 30
 #define ROUTER_NL4_THROTTLE_ENABLE_ARBL_INPUTH_VC2_ENABLE_MASK 0x1ull
 #define ROUTER_NL4_THROTTLE_ENABLE_ARBL_INPUTH_VC2_ENABLE_INPLACE (ROUTER_NL4_THROTTLE_ENABLE_ARBL_INPUTH_VC2_ENABLE_MASK << ROUTER_NL4_THROTTLE_ENABLE_ARBL_INPUTH_VC2_ENABLE_SHIFT)
-#define ROUTER_NL4_THROTTLE_ENABLE_ARBL_INPUTH_VC1_ENABLE_SHIFT 29 /* established */
+/* established */
+#define ROUTER_NL4_THROTTLE_ENABLE_ARBL_INPUTH_VC1_ENABLE_SHIFT 29
 #define ROUTER_NL4_THROTTLE_ENABLE_ARBL_INPUTH_VC1_ENABLE_MASK 0x1ull
 #define ROUTER_NL4_THROTTLE_ENABLE_ARBL_INPUTH_VC1_ENABLE_INPLACE (ROUTER_NL4_THROTTLE_ENABLE_ARBL_INPUTH_VC1_ENABLE_MASK << ROUTER_NL4_THROTTLE_ENABLE_ARBL_INPUTH_VC1_ENABLE_SHIFT)
-#define ROUTER_NL4_THROTTLE_ENABLE_ARBL_INPUTH_VC0_ENABLE_SHIFT 28 /* established */
+/* established */
+#define ROUTER_NL4_THROTTLE_ENABLE_ARBL_INPUTH_VC0_ENABLE_SHIFT 28
 #define ROUTER_NL4_THROTTLE_ENABLE_ARBL_INPUTH_VC0_ENABLE_MASK 0x1ull
 #define ROUTER_NL4_THROTTLE_ENABLE_ARBL_INPUTH_VC0_ENABLE_INPLACE (ROUTER_NL4_THROTTLE_ENABLE_ARBL_INPUTH_VC0_ENABLE_MASK << ROUTER_NL4_THROTTLE_ENABLE_ARBL_INPUTH_VC0_ENABLE_SHIFT)
-#define ROUTER_NL4_THROTTLE_ENABLE_ARBL_INPUTG_VC3_ENABLE_SHIFT 27 /* established */
+/* established */
+#define ROUTER_NL4_THROTTLE_ENABLE_ARBL_INPUTG_VC3_ENABLE_SHIFT 27
 #define ROUTER_NL4_THROTTLE_ENABLE_ARBL_INPUTG_VC3_ENABLE_MASK 0x1ull
 #define ROUTER_NL4_THROTTLE_ENABLE_ARBL_INPUTG_VC3_ENABLE_INPLACE (ROUTER_NL4_THROTTLE_ENABLE_ARBL_INPUTG_VC3_ENABLE_MASK << ROUTER_NL4_THROTTLE_ENABLE_ARBL_INPUTG_VC3_ENABLE_SHIFT)
-#define ROUTER_NL4_THROTTLE_ENABLE_ARBL_INPUTG_VC2_ENABLE_SHIFT 26 /* established */
+/* established */
+#define ROUTER_NL4_THROTTLE_ENABLE_ARBL_INPUTG_VC2_ENABLE_SHIFT 26
 #define ROUTER_NL4_THROTTLE_ENABLE_ARBL_INPUTG_VC2_ENABLE_MASK 0x1ull
 #define ROUTER_NL4_THROTTLE_ENABLE_ARBL_INPUTG_VC2_ENABLE_INPLACE (ROUTER_NL4_THROTTLE_ENABLE_ARBL_INPUTG_VC2_ENABLE_MASK << ROUTER_NL4_THROTTLE_ENABLE_ARBL_INPUTG_VC2_ENABLE_SHIFT)
-#define ROUTER_NL4_THROTTLE_ENABLE_ARBL_INPUTG_VC1_ENABLE_SHIFT 25 /* established */
+/* established */
+#define ROUTER_NL4_THROTTLE_ENABLE_ARBL_INPUTG_VC1_ENABLE_SHIFT 25
 #define ROUTER_NL4_THROTTLE_ENABLE_ARBL_INPUTG_VC1_ENABLE_MASK 0x1ull
 #define ROUTER_NL4_THROTTLE_ENABLE_ARBL_INPUTG_VC1_ENABLE_INPLACE (ROUTER_NL4_THROTTLE_ENABLE_ARBL_INPUTG_VC1_ENABLE_MASK << ROUTER_NL4_THROTTLE_ENABLE_ARBL_INPUTG_VC1_ENABLE_SHIFT)
-#define ROUTER_NL4_THROTTLE_ENABLE_ARBL_INPUTG_VC0_ENABLE_SHIFT 24 /* established */
+/* established */
+#define ROUTER_NL4_THROTTLE_ENABLE_ARBL_INPUTG_VC0_ENABLE_SHIFT 24
 #define ROUTER_NL4_THROTTLE_ENABLE_ARBL_INPUTG_VC0_ENABLE_MASK 0x1ull
 #define ROUTER_NL4_THROTTLE_ENABLE_ARBL_INPUTG_VC0_ENABLE_INPLACE (ROUTER_NL4_THROTTLE_ENABLE_ARBL_INPUTG_VC0_ENABLE_MASK << ROUTER_NL4_THROTTLE_ENABLE_ARBL_INPUTG_VC0_ENABLE_SHIFT)
-#define ROUTER_NL4_THROTTLE_ENABLE_ARBL_INPUTF_VC3_ENABLE_SHIFT 23 /* established */
+/* established */
+#define ROUTER_NL4_THROTTLE_ENABLE_ARBL_INPUTF_VC3_ENABLE_SHIFT 23
 #define ROUTER_NL4_THROTTLE_ENABLE_ARBL_INPUTF_VC3_ENABLE_MASK 0x1ull
 #define ROUTER_NL4_THROTTLE_ENABLE_ARBL_INPUTF_VC3_ENABLE_INPLACE (ROUTER_NL4_THROTTLE_ENABLE_ARBL_INPUTF_VC3_ENABLE_MASK << ROUTER_NL4_THROTTLE_ENABLE_ARBL_INPUTF_VC3_ENABLE_SHIFT)
-#define ROUTER_NL4_THROTTLE_ENABLE_ARBL_INPUTF_VC2_ENABLE_SHIFT 22 /* established */
+/* established */
+#define ROUTER_NL4_THROTTLE_ENABLE_ARBL_INPUTF_VC2_ENABLE_SHIFT 22
 #define ROUTER_NL4_THROTTLE_ENABLE_ARBL_INPUTF_VC2_ENABLE_MASK 0x1ull
 #define ROUTER_NL4_THROTTLE_ENABLE_ARBL_INPUTF_VC2_ENABLE_INPLACE (ROUTER_NL4_THROTTLE_ENABLE_ARBL_INPUTF_VC2_ENABLE_MASK << ROUTER_NL4_THROTTLE_ENABLE_ARBL_INPUTF_VC2_ENABLE_SHIFT)
-#define ROUTER_NL4_THROTTLE_ENABLE_ARBL_INPUTF_VC1_ENABLE_SHIFT 21 /* established */
+/* established */
+#define ROUTER_NL4_THROTTLE_ENABLE_ARBL_INPUTF_VC1_ENABLE_SHIFT 21
 #define ROUTER_NL4_THROTTLE_ENABLE_ARBL_INPUTF_VC1_ENABLE_MASK 0x1ull
 #define ROUTER_NL4_THROTTLE_ENABLE_ARBL_INPUTF_VC1_ENABLE_INPLACE (ROUTER_NL4_THROTTLE_ENABLE_ARBL_INPUTF_VC1_ENABLE_MASK << ROUTER_NL4_THROTTLE_ENABLE_ARBL_INPUTF_VC1_ENABLE_SHIFT)
-#define ROUTER_NL4_THROTTLE_ENABLE_ARBL_INPUTF_VC0_ENABLE_SHIFT 20 /* established */
+/* established */
+#define ROUTER_NL4_THROTTLE_ENABLE_ARBL_INPUTF_VC0_ENABLE_SHIFT 20
 #define ROUTER_NL4_THROTTLE_ENABLE_ARBL_INPUTF_VC0_ENABLE_MASK 0x1ull
 #define ROUTER_NL4_THROTTLE_ENABLE_ARBL_INPUTF_VC0_ENABLE_INPLACE (ROUTER_NL4_THROTTLE_ENABLE_ARBL_INPUTF_VC0_ENABLE_MASK << ROUTER_NL4_THROTTLE_ENABLE_ARBL_INPUTF_VC0_ENABLE_SHIFT)
-#define ROUTER_NL4_THROTTLE_ENABLE_ARBL_INPUTE_VC3_ENABLE_SHIFT 19 /* established */
+/* established */
+#define ROUTER_NL4_THROTTLE_ENABLE_ARBL_INPUTE_VC3_ENABLE_SHIFT 19
 #define ROUTER_NL4_THROTTLE_ENABLE_ARBL_INPUTE_VC3_ENABLE_MASK 0x1ull
 #define ROUTER_NL4_THROTTLE_ENABLE_ARBL_INPUTE_VC3_ENABLE_INPLACE (ROUTER_NL4_THROTTLE_ENABLE_ARBL_INPUTE_VC3_ENABLE_MASK << ROUTER_NL4_THROTTLE_ENABLE_ARBL_INPUTE_VC3_ENABLE_SHIFT)
-#define ROUTER_NL4_THROTTLE_ENABLE_ARBL_INPUTE_VC2_ENABLE_SHIFT 18 /* established */
+/* established */
+#define ROUTER_NL4_THROTTLE_ENABLE_ARBL_INPUTE_VC2_ENABLE_SHIFT 18
 #define ROUTER_NL4_THROTTLE_ENABLE_ARBL_INPUTE_VC2_ENABLE_MASK 0x1ull
 #define ROUTER_NL4_THROTTLE_ENABLE_ARBL_INPUTE_VC2_ENABLE_INPLACE (ROUTER_NL4_THROTTLE_ENABLE_ARBL_INPUTE_VC2_ENABLE_MASK << ROUTER_NL4_THROTTLE_ENABLE_ARBL_INPUTE_VC2_ENABLE_SHIFT)
-#define ROUTER_NL4_THROTTLE_ENABLE_ARBL_INPUTE_VC1_ENABLE_SHIFT 17 /* established */
+/* established */
+#define ROUTER_NL4_THROTTLE_ENABLE_ARBL_INPUTE_VC1_ENABLE_SHIFT 17
 #define ROUTER_NL4_THROTTLE_ENABLE_ARBL_INPUTE_VC1_ENABLE_MASK 0x1ull
 #define ROUTER_NL4_THROTTLE_ENABLE_ARBL_INPUTE_VC1_ENABLE_INPLACE (ROUTER_NL4_THROTTLE_ENABLE_ARBL_INPUTE_VC1_ENABLE_MASK << ROUTER_NL4_THROTTLE_ENABLE_ARBL_INPUTE_VC1_ENABLE_SHIFT)
-#define ROUTER_NL4_THROTTLE_ENABLE_ARBL_INPUTE_VC0_ENABLE_SHIFT 16 /* established */
+/* established */
+#define ROUTER_NL4_THROTTLE_ENABLE_ARBL_INPUTE_VC0_ENABLE_SHIFT 16
 #define ROUTER_NL4_THROTTLE_ENABLE_ARBL_INPUTE_VC0_ENABLE_MASK 0x1ull
 #define ROUTER_NL4_THROTTLE_ENABLE_ARBL_INPUTE_VC0_ENABLE_INPLACE (ROUTER_NL4_THROTTLE_ENABLE_ARBL_INPUTE_VC0_ENABLE_MASK << ROUTER_NL4_THROTTLE_ENABLE_ARBL_INPUTE_VC0_ENABLE_SHIFT)
-#define ROUTER_NL4_THROTTLE_ENABLE_ARBL_INPUTD_VC3_ENABLE_SHIFT 15 /* established */
+/* established */
+#define ROUTER_NL4_THROTTLE_ENABLE_ARBL_INPUTD_VC3_ENABLE_SHIFT 15
 #define ROUTER_NL4_THROTTLE_ENABLE_ARBL_INPUTD_VC3_ENABLE_MASK 0x1ull
 #define ROUTER_NL4_THROTTLE_ENABLE_ARBL_INPUTD_VC3_ENABLE_INPLACE (ROUTER_NL4_THROTTLE_ENABLE_ARBL_INPUTD_VC3_ENABLE_MASK << ROUTER_NL4_THROTTLE_ENABLE_ARBL_INPUTD_VC3_ENABLE_SHIFT)
-#define ROUTER_NL4_THROTTLE_ENABLE_ARBL_INPUTD_VC2_ENABLE_SHIFT 14 /* established */
+/* established */
+#define ROUTER_NL4_THROTTLE_ENABLE_ARBL_INPUTD_VC2_ENABLE_SHIFT 14
 #define ROUTER_NL4_THROTTLE_ENABLE_ARBL_INPUTD_VC2_ENABLE_MASK 0x1ull
 #define ROUTER_NL4_THROTTLE_ENABLE_ARBL_INPUTD_VC2_ENABLE_INPLACE (ROUTER_NL4_THROTTLE_ENABLE_ARBL_INPUTD_VC2_ENABLE_MASK << ROUTER_NL4_THROTTLE_ENABLE_ARBL_INPUTD_VC2_ENABLE_SHIFT)
-#define ROUTER_NL4_THROTTLE_ENABLE_ARBL_INPUTD_VC1_ENABLE_SHIFT 13 /* established */
+/* established */
+#define ROUTER_NL4_THROTTLE_ENABLE_ARBL_INPUTD_VC1_ENABLE_SHIFT 13
 #define ROUTER_NL4_THROTTLE_ENABLE_ARBL_INPUTD_VC1_ENABLE_MASK 0x1ull
 #define ROUTER_NL4_THROTTLE_ENABLE_ARBL_INPUTD_VC1_ENABLE_INPLACE (ROUTER_NL4_THROTTLE_ENABLE_ARBL_INPUTD_VC1_ENABLE_MASK << ROUTER_NL4_THROTTLE_ENABLE_ARBL_INPUTD_VC1_ENABLE_SHIFT)
-#define ROUTER_NL4_THROTTLE_ENABLE_ARBL_INPUTD_VC0_ENABLE_SHIFT 12 /* established */
+/* established */
+#define ROUTER_NL4_THROTTLE_ENABLE_ARBL_INPUTD_VC0_ENABLE_SHIFT 12
 #define ROUTER_NL4_THROTTLE_ENABLE_ARBL_INPUTD_VC0_ENABLE_MASK 0x1ull
 #define ROUTER_NL4_THROTTLE_ENABLE_ARBL_INPUTD_VC0_ENABLE_INPLACE (ROUTER_NL4_THROTTLE_ENABLE_ARBL_INPUTD_VC0_ENABLE_MASK << ROUTER_NL4_THROTTLE_ENABLE_ARBL_INPUTD_VC0_ENABLE_SHIFT)
-#define ROUTER_NL4_THROTTLE_ENABLE_ARBL_INPUTC_VC3_ENABLE_SHIFT 11 /* established */
+/* established */
+#define ROUTER_NL4_THROTTLE_ENABLE_ARBL_INPUTC_VC3_ENABLE_SHIFT 11
 #define ROUTER_NL4_THROTTLE_ENABLE_ARBL_INPUTC_VC3_ENABLE_MASK 0x1ull
 #define ROUTER_NL4_THROTTLE_ENABLE_ARBL_INPUTC_VC3_ENABLE_INPLACE (ROUTER_NL4_THROTTLE_ENABLE_ARBL_INPUTC_VC3_ENABLE_MASK << ROUTER_NL4_THROTTLE_ENABLE_ARBL_INPUTC_VC3_ENABLE_SHIFT)
-#define ROUTER_NL4_THROTTLE_ENABLE_ARBL_INPUTC_VC2_ENABLE_SHIFT 10 /* established */
+/* established */
+#define ROUTER_NL4_THROTTLE_ENABLE_ARBL_INPUTC_VC2_ENABLE_SHIFT 10
 #define ROUTER_NL4_THROTTLE_ENABLE_ARBL_INPUTC_VC2_ENABLE_MASK 0x1ull
 #define ROUTER_NL4_THROTTLE_ENABLE_ARBL_INPUTC_VC2_ENABLE_INPLACE (ROUTER_NL4_THROTTLE_ENABLE_ARBL_INPUTC_VC2_ENABLE_MASK << ROUTER_NL4_THROTTLE_ENABLE_ARBL_INPUTC_VC2_ENABLE_SHIFT)
-#define ROUTER_NL4_THROTTLE_ENABLE_ARBL_INPUTC_VC1_ENABLE_SHIFT 9 /* established */
+/* established */
+#define ROUTER_NL4_THROTTLE_ENABLE_ARBL_INPUTC_VC1_ENABLE_SHIFT 9
 #define ROUTER_NL4_THROTTLE_ENABLE_ARBL_INPUTC_VC1_ENABLE_MASK 0x1ull
 #define ROUTER_NL4_THROTTLE_ENABLE_ARBL_INPUTC_VC1_ENABLE_INPLACE (ROUTER_NL4_THROTTLE_ENABLE_ARBL_INPUTC_VC1_ENABLE_MASK << ROUTER_NL4_THROTTLE_ENABLE_ARBL_INPUTC_VC1_ENABLE_SHIFT)
-#define ROUTER_NL4_THROTTLE_ENABLE_ARBL_INPUTC_VC0_ENABLE_SHIFT 8 /* established */
+/* established */
+#define ROUTER_NL4_THROTTLE_ENABLE_ARBL_INPUTC_VC0_ENABLE_SHIFT 8
 #define ROUTER_NL4_THROTTLE_ENABLE_ARBL_INPUTC_VC0_ENABLE_MASK 0x1ull
 #define ROUTER_NL4_THROTTLE_ENABLE_ARBL_INPUTC_VC0_ENABLE_INPLACE (ROUTER_NL4_THROTTLE_ENABLE_ARBL_INPUTC_VC0_ENABLE_MASK << ROUTER_NL4_THROTTLE_ENABLE_ARBL_INPUTC_VC0_ENABLE_SHIFT)
-#define ROUTER_NL4_THROTTLE_ENABLE_ARBL_INPUTB_VC3_ENABLE_SHIFT 7 /* established */
+/* established */
+#define ROUTER_NL4_THROTTLE_ENABLE_ARBL_INPUTB_VC3_ENABLE_SHIFT 7
 #define ROUTER_NL4_THROTTLE_ENABLE_ARBL_INPUTB_VC3_ENABLE_MASK 0x1ull
 #define ROUTER_NL4_THROTTLE_ENABLE_ARBL_INPUTB_VC3_ENABLE_INPLACE (ROUTER_NL4_THROTTLE_ENABLE_ARBL_INPUTB_VC3_ENABLE_MASK << ROUTER_NL4_THROTTLE_ENABLE_ARBL_INPUTB_VC3_ENABLE_SHIFT)
-#define ROUTER_NL4_THROTTLE_ENABLE_ARBL_INPUTB_VC2_ENABLE_SHIFT 6 /* established */
+/* established */
+#define ROUTER_NL4_THROTTLE_ENABLE_ARBL_INPUTB_VC2_ENABLE_SHIFT 6
 #define ROUTER_NL4_THROTTLE_ENABLE_ARBL_INPUTB_VC2_ENABLE_MASK 0x1ull
 #define ROUTER_NL4_THROTTLE_ENABLE_ARBL_INPUTB_VC2_ENABLE_INPLACE (ROUTER_NL4_THROTTLE_ENABLE_ARBL_INPUTB_VC2_ENABLE_MASK << ROUTER_NL4_THROTTLE_ENABLE_ARBL_INPUTB_VC2_ENABLE_SHIFT)
-#define ROUTER_NL4_THROTTLE_ENABLE_ARBL_INPUTB_VC1_ENABLE_SHIFT 5 /* established */
+/* established */
+#define ROUTER_NL4_THROTTLE_ENABLE_ARBL_INPUTB_VC1_ENABLE_SHIFT 5
 #define ROUTER_NL4_THROTTLE_ENABLE_ARBL_INPUTB_VC1_ENABLE_MASK 0x1ull
 #define ROUTER_NL4_THROTTLE_ENABLE_ARBL_INPUTB_VC1_ENABLE_INPLACE (ROUTER_NL4_THROTTLE_ENABLE_ARBL_INPUTB_VC1_ENABLE_MASK << ROUTER_NL4_THROTTLE_ENABLE_ARBL_INPUTB_VC1_ENABLE_SHIFT)
-#define ROUTER_NL4_THROTTLE_ENABLE_ARBL_INPUTB_VC0_ENABLE_SHIFT 4 /* established */
+/* established */
+#define ROUTER_NL4_THROTTLE_ENABLE_ARBL_INPUTB_VC0_ENABLE_SHIFT 4
 #define ROUTER_NL4_THROTTLE_ENABLE_ARBL_INPUTB_VC0_ENABLE_MASK 0x1ull
 #define ROUTER_NL4_THROTTLE_ENABLE_ARBL_INPUTB_VC0_ENABLE_INPLACE (ROUTER_NL4_THROTTLE_ENABLE_ARBL_INPUTB_VC0_ENABLE_MASK << ROUTER_NL4_THROTTLE_ENABLE_ARBL_INPUTB_VC0_ENABLE_SHIFT)
-#define ROUTER_NL4_THROTTLE_ENABLE_ARBL_INPUTA_VC3_ENABLE_SHIFT 3 /* established */
+/* established */
+#define ROUTER_NL4_THROTTLE_ENABLE_ARBL_INPUTA_VC3_ENABLE_SHIFT 3
 #define ROUTER_NL4_THROTTLE_ENABLE_ARBL_INPUTA_VC3_ENABLE_MASK 0x1ull
 #define ROUTER_NL4_THROTTLE_ENABLE_ARBL_INPUTA_VC3_ENABLE_INPLACE (ROUTER_NL4_THROTTLE_ENABLE_ARBL_INPUTA_VC3_ENABLE_MASK << ROUTER_NL4_THROTTLE_ENABLE_ARBL_INPUTA_VC3_ENABLE_SHIFT)
-#define ROUTER_NL4_THROTTLE_ENABLE_ARBL_INPUTA_VC2_ENABLE_SHIFT 2 /* established */
+/* established */
+#define ROUTER_NL4_THROTTLE_ENABLE_ARBL_INPUTA_VC2_ENABLE_SHIFT 2
 #define ROUTER_NL4_THROTTLE_ENABLE_ARBL_INPUTA_VC2_ENABLE_MASK 0x1ull
 #define ROUTER_NL4_THROTTLE_ENABLE_ARBL_INPUTA_VC2_ENABLE_INPLACE (ROUTER_NL4_THROTTLE_ENABLE_ARBL_INPUTA_VC2_ENABLE_MASK << ROUTER_NL4_THROTTLE_ENABLE_ARBL_INPUTA_VC2_ENABLE_SHIFT)
-#define ROUTER_NL4_THROTTLE_ENABLE_ARBL_INPUTA_VC1_ENABLE_SHIFT 1 /* established */
+/* established */
+#define ROUTER_NL4_THROTTLE_ENABLE_ARBL_INPUTA_VC1_ENABLE_SHIFT 1
 #define ROUTER_NL4_THROTTLE_ENABLE_ARBL_INPUTA_VC1_ENABLE_MASK 0x1ull
 #define ROUTER_NL4_THROTTLE_ENABLE_ARBL_INPUTA_VC1_ENABLE_INPLACE (ROUTER_NL4_THROTTLE_ENABLE_ARBL_INPUTA_VC1_ENABLE_MASK << ROUTER_NL4_THROTTLE_ENABLE_ARBL_INPUTA_VC1_ENABLE_SHIFT)
-#define ROUTER_NL4_THROTTLE_ENABLE_ARBL_INPUTA_VC0_ENABLE_SHIFT 0 /* established */
+/* established */
+#define ROUTER_NL4_THROTTLE_ENABLE_ARBL_INPUTA_VC0_ENABLE_SHIFT 0
 #define ROUTER_NL4_THROTTLE_ENABLE_ARBL_INPUTA_VC0_ENABLE_MASK 0x1ull
 #define ROUTER_NL4_THROTTLE_ENABLE_ARBL_INPUTA_VC0_ENABLE_INPLACE (ROUTER_NL4_THROTTLE_ENABLE_ARBL_INPUTA_VC0_ENABLE_MASK << ROUTER_NL4_THROTTLE_ENABLE_ARBL_INPUTA_VC0_ENABLE_SHIFT)
 
 /*
- * PROM register R4_THROTTLE_ENABLE_ARBR. Offset and field positions read from the table; role inferred from the names.
+ * PROM register R4_THROTTLE_ENABLE_ARBR. Offset and field positions read from
+ * the table; role inferred from the names.
  */
 /* throttle_enable_arbr: rw64, reset unknown */
-#define ROUTER_NL4_THROTTLE_ENABLE_ARBR_OFFSET       0x2000508u /* established */
-#define ROUTER_NL4_THROTTLE_ENABLE_ARBR_INPUTH_VC3_ENABLE_SHIFT 31 /* established */
+/* established */
+#define ROUTER_NL4_THROTTLE_ENABLE_ARBR_OFFSET       0x2000508u
+/* established */
+#define ROUTER_NL4_THROTTLE_ENABLE_ARBR_INPUTH_VC3_ENABLE_SHIFT 31
 #define ROUTER_NL4_THROTTLE_ENABLE_ARBR_INPUTH_VC3_ENABLE_MASK 0x1ull
 #define ROUTER_NL4_THROTTLE_ENABLE_ARBR_INPUTH_VC3_ENABLE_INPLACE (ROUTER_NL4_THROTTLE_ENABLE_ARBR_INPUTH_VC3_ENABLE_MASK << ROUTER_NL4_THROTTLE_ENABLE_ARBR_INPUTH_VC3_ENABLE_SHIFT)
-#define ROUTER_NL4_THROTTLE_ENABLE_ARBR_INPUTH_VC2_ENABLE_SHIFT 30 /* established */
+/* established */
+#define ROUTER_NL4_THROTTLE_ENABLE_ARBR_INPUTH_VC2_ENABLE_SHIFT 30
 #define ROUTER_NL4_THROTTLE_ENABLE_ARBR_INPUTH_VC2_ENABLE_MASK 0x1ull
 #define ROUTER_NL4_THROTTLE_ENABLE_ARBR_INPUTH_VC2_ENABLE_INPLACE (ROUTER_NL4_THROTTLE_ENABLE_ARBR_INPUTH_VC2_ENABLE_MASK << ROUTER_NL4_THROTTLE_ENABLE_ARBR_INPUTH_VC2_ENABLE_SHIFT)
-#define ROUTER_NL4_THROTTLE_ENABLE_ARBR_INPUTH_VC1_ENABLE_SHIFT 29 /* established */
+/* established */
+#define ROUTER_NL4_THROTTLE_ENABLE_ARBR_INPUTH_VC1_ENABLE_SHIFT 29
 #define ROUTER_NL4_THROTTLE_ENABLE_ARBR_INPUTH_VC1_ENABLE_MASK 0x1ull
 #define ROUTER_NL4_THROTTLE_ENABLE_ARBR_INPUTH_VC1_ENABLE_INPLACE (ROUTER_NL4_THROTTLE_ENABLE_ARBR_INPUTH_VC1_ENABLE_MASK << ROUTER_NL4_THROTTLE_ENABLE_ARBR_INPUTH_VC1_ENABLE_SHIFT)
-#define ROUTER_NL4_THROTTLE_ENABLE_ARBR_INPUTH_VC0_ENABLE_SHIFT 28 /* established */
+/* established */
+#define ROUTER_NL4_THROTTLE_ENABLE_ARBR_INPUTH_VC0_ENABLE_SHIFT 28
 #define ROUTER_NL4_THROTTLE_ENABLE_ARBR_INPUTH_VC0_ENABLE_MASK 0x1ull
 #define ROUTER_NL4_THROTTLE_ENABLE_ARBR_INPUTH_VC0_ENABLE_INPLACE (ROUTER_NL4_THROTTLE_ENABLE_ARBR_INPUTH_VC0_ENABLE_MASK << ROUTER_NL4_THROTTLE_ENABLE_ARBR_INPUTH_VC0_ENABLE_SHIFT)
-#define ROUTER_NL4_THROTTLE_ENABLE_ARBR_INPUTG_VC3_ENABLE_SHIFT 27 /* established */
+/* established */
+#define ROUTER_NL4_THROTTLE_ENABLE_ARBR_INPUTG_VC3_ENABLE_SHIFT 27
 #define ROUTER_NL4_THROTTLE_ENABLE_ARBR_INPUTG_VC3_ENABLE_MASK 0x1ull
 #define ROUTER_NL4_THROTTLE_ENABLE_ARBR_INPUTG_VC3_ENABLE_INPLACE (ROUTER_NL4_THROTTLE_ENABLE_ARBR_INPUTG_VC3_ENABLE_MASK << ROUTER_NL4_THROTTLE_ENABLE_ARBR_INPUTG_VC3_ENABLE_SHIFT)
-#define ROUTER_NL4_THROTTLE_ENABLE_ARBR_INPUTG_VC2_ENABLE_SHIFT 26 /* established */
+/* established */
+#define ROUTER_NL4_THROTTLE_ENABLE_ARBR_INPUTG_VC2_ENABLE_SHIFT 26
 #define ROUTER_NL4_THROTTLE_ENABLE_ARBR_INPUTG_VC2_ENABLE_MASK 0x1ull
 #define ROUTER_NL4_THROTTLE_ENABLE_ARBR_INPUTG_VC2_ENABLE_INPLACE (ROUTER_NL4_THROTTLE_ENABLE_ARBR_INPUTG_VC2_ENABLE_MASK << ROUTER_NL4_THROTTLE_ENABLE_ARBR_INPUTG_VC2_ENABLE_SHIFT)
-#define ROUTER_NL4_THROTTLE_ENABLE_ARBR_INPUTG_VC1_ENABLE_SHIFT 25 /* established */
+/* established */
+#define ROUTER_NL4_THROTTLE_ENABLE_ARBR_INPUTG_VC1_ENABLE_SHIFT 25
 #define ROUTER_NL4_THROTTLE_ENABLE_ARBR_INPUTG_VC1_ENABLE_MASK 0x1ull
 #define ROUTER_NL4_THROTTLE_ENABLE_ARBR_INPUTG_VC1_ENABLE_INPLACE (ROUTER_NL4_THROTTLE_ENABLE_ARBR_INPUTG_VC1_ENABLE_MASK << ROUTER_NL4_THROTTLE_ENABLE_ARBR_INPUTG_VC1_ENABLE_SHIFT)
-#define ROUTER_NL4_THROTTLE_ENABLE_ARBR_INPUTG_VC0_ENABLE_SHIFT 24 /* established */
+/* established */
+#define ROUTER_NL4_THROTTLE_ENABLE_ARBR_INPUTG_VC0_ENABLE_SHIFT 24
 #define ROUTER_NL4_THROTTLE_ENABLE_ARBR_INPUTG_VC0_ENABLE_MASK 0x1ull
 #define ROUTER_NL4_THROTTLE_ENABLE_ARBR_INPUTG_VC0_ENABLE_INPLACE (ROUTER_NL4_THROTTLE_ENABLE_ARBR_INPUTG_VC0_ENABLE_MASK << ROUTER_NL4_THROTTLE_ENABLE_ARBR_INPUTG_VC0_ENABLE_SHIFT)
-#define ROUTER_NL4_THROTTLE_ENABLE_ARBR_INPUTF_VC3_ENABLE_SHIFT 23 /* established */
+/* established */
+#define ROUTER_NL4_THROTTLE_ENABLE_ARBR_INPUTF_VC3_ENABLE_SHIFT 23
 #define ROUTER_NL4_THROTTLE_ENABLE_ARBR_INPUTF_VC3_ENABLE_MASK 0x1ull
 #define ROUTER_NL4_THROTTLE_ENABLE_ARBR_INPUTF_VC3_ENABLE_INPLACE (ROUTER_NL4_THROTTLE_ENABLE_ARBR_INPUTF_VC3_ENABLE_MASK << ROUTER_NL4_THROTTLE_ENABLE_ARBR_INPUTF_VC3_ENABLE_SHIFT)
-#define ROUTER_NL4_THROTTLE_ENABLE_ARBR_INPUTF_VC2_ENABLE_SHIFT 22 /* established */
+/* established */
+#define ROUTER_NL4_THROTTLE_ENABLE_ARBR_INPUTF_VC2_ENABLE_SHIFT 22
 #define ROUTER_NL4_THROTTLE_ENABLE_ARBR_INPUTF_VC2_ENABLE_MASK 0x1ull
 #define ROUTER_NL4_THROTTLE_ENABLE_ARBR_INPUTF_VC2_ENABLE_INPLACE (ROUTER_NL4_THROTTLE_ENABLE_ARBR_INPUTF_VC2_ENABLE_MASK << ROUTER_NL4_THROTTLE_ENABLE_ARBR_INPUTF_VC2_ENABLE_SHIFT)
-#define ROUTER_NL4_THROTTLE_ENABLE_ARBR_INPUTF_VC1_ENABLE_SHIFT 21 /* established */
+/* established */
+#define ROUTER_NL4_THROTTLE_ENABLE_ARBR_INPUTF_VC1_ENABLE_SHIFT 21
 #define ROUTER_NL4_THROTTLE_ENABLE_ARBR_INPUTF_VC1_ENABLE_MASK 0x1ull
 #define ROUTER_NL4_THROTTLE_ENABLE_ARBR_INPUTF_VC1_ENABLE_INPLACE (ROUTER_NL4_THROTTLE_ENABLE_ARBR_INPUTF_VC1_ENABLE_MASK << ROUTER_NL4_THROTTLE_ENABLE_ARBR_INPUTF_VC1_ENABLE_SHIFT)
-#define ROUTER_NL4_THROTTLE_ENABLE_ARBR_INPUTF_VC0_ENABLE_SHIFT 20 /* established */
+/* established */
+#define ROUTER_NL4_THROTTLE_ENABLE_ARBR_INPUTF_VC0_ENABLE_SHIFT 20
 #define ROUTER_NL4_THROTTLE_ENABLE_ARBR_INPUTF_VC0_ENABLE_MASK 0x1ull
 #define ROUTER_NL4_THROTTLE_ENABLE_ARBR_INPUTF_VC0_ENABLE_INPLACE (ROUTER_NL4_THROTTLE_ENABLE_ARBR_INPUTF_VC0_ENABLE_MASK << ROUTER_NL4_THROTTLE_ENABLE_ARBR_INPUTF_VC0_ENABLE_SHIFT)
-#define ROUTER_NL4_THROTTLE_ENABLE_ARBR_INPUTE_VC3_ENABLE_SHIFT 19 /* established */
+/* established */
+#define ROUTER_NL4_THROTTLE_ENABLE_ARBR_INPUTE_VC3_ENABLE_SHIFT 19
 #define ROUTER_NL4_THROTTLE_ENABLE_ARBR_INPUTE_VC3_ENABLE_MASK 0x1ull
 #define ROUTER_NL4_THROTTLE_ENABLE_ARBR_INPUTE_VC3_ENABLE_INPLACE (ROUTER_NL4_THROTTLE_ENABLE_ARBR_INPUTE_VC3_ENABLE_MASK << ROUTER_NL4_THROTTLE_ENABLE_ARBR_INPUTE_VC3_ENABLE_SHIFT)
-#define ROUTER_NL4_THROTTLE_ENABLE_ARBR_INPUTE_VC2_ENABLE_SHIFT 18 /* established */
+/* established */
+#define ROUTER_NL4_THROTTLE_ENABLE_ARBR_INPUTE_VC2_ENABLE_SHIFT 18
 #define ROUTER_NL4_THROTTLE_ENABLE_ARBR_INPUTE_VC2_ENABLE_MASK 0x1ull
 #define ROUTER_NL4_THROTTLE_ENABLE_ARBR_INPUTE_VC2_ENABLE_INPLACE (ROUTER_NL4_THROTTLE_ENABLE_ARBR_INPUTE_VC2_ENABLE_MASK << ROUTER_NL4_THROTTLE_ENABLE_ARBR_INPUTE_VC2_ENABLE_SHIFT)
-#define ROUTER_NL4_THROTTLE_ENABLE_ARBR_INPUTE_VC1_ENABLE_SHIFT 17 /* established */
+/* established */
+#define ROUTER_NL4_THROTTLE_ENABLE_ARBR_INPUTE_VC1_ENABLE_SHIFT 17
 #define ROUTER_NL4_THROTTLE_ENABLE_ARBR_INPUTE_VC1_ENABLE_MASK 0x1ull
 #define ROUTER_NL4_THROTTLE_ENABLE_ARBR_INPUTE_VC1_ENABLE_INPLACE (ROUTER_NL4_THROTTLE_ENABLE_ARBR_INPUTE_VC1_ENABLE_MASK << ROUTER_NL4_THROTTLE_ENABLE_ARBR_INPUTE_VC1_ENABLE_SHIFT)
-#define ROUTER_NL4_THROTTLE_ENABLE_ARBR_INPUTE_VC0_ENABLE_SHIFT 16 /* established */
+/* established */
+#define ROUTER_NL4_THROTTLE_ENABLE_ARBR_INPUTE_VC0_ENABLE_SHIFT 16
 #define ROUTER_NL4_THROTTLE_ENABLE_ARBR_INPUTE_VC0_ENABLE_MASK 0x1ull
 #define ROUTER_NL4_THROTTLE_ENABLE_ARBR_INPUTE_VC0_ENABLE_INPLACE (ROUTER_NL4_THROTTLE_ENABLE_ARBR_INPUTE_VC0_ENABLE_MASK << ROUTER_NL4_THROTTLE_ENABLE_ARBR_INPUTE_VC0_ENABLE_SHIFT)
-#define ROUTER_NL4_THROTTLE_ENABLE_ARBR_INPUTD_VC3_ENABLE_SHIFT 15 /* established */
+/* established */
+#define ROUTER_NL4_THROTTLE_ENABLE_ARBR_INPUTD_VC3_ENABLE_SHIFT 15
 #define ROUTER_NL4_THROTTLE_ENABLE_ARBR_INPUTD_VC3_ENABLE_MASK 0x1ull
 #define ROUTER_NL4_THROTTLE_ENABLE_ARBR_INPUTD_VC3_ENABLE_INPLACE (ROUTER_NL4_THROTTLE_ENABLE_ARBR_INPUTD_VC3_ENABLE_MASK << ROUTER_NL4_THROTTLE_ENABLE_ARBR_INPUTD_VC3_ENABLE_SHIFT)
-#define ROUTER_NL4_THROTTLE_ENABLE_ARBR_INPUTD_VC2_ENABLE_SHIFT 14 /* established */
+/* established */
+#define ROUTER_NL4_THROTTLE_ENABLE_ARBR_INPUTD_VC2_ENABLE_SHIFT 14
 #define ROUTER_NL4_THROTTLE_ENABLE_ARBR_INPUTD_VC2_ENABLE_MASK 0x1ull
 #define ROUTER_NL4_THROTTLE_ENABLE_ARBR_INPUTD_VC2_ENABLE_INPLACE (ROUTER_NL4_THROTTLE_ENABLE_ARBR_INPUTD_VC2_ENABLE_MASK << ROUTER_NL4_THROTTLE_ENABLE_ARBR_INPUTD_VC2_ENABLE_SHIFT)
-#define ROUTER_NL4_THROTTLE_ENABLE_ARBR_INPUTD_VC1_ENABLE_SHIFT 13 /* established */
+/* established */
+#define ROUTER_NL4_THROTTLE_ENABLE_ARBR_INPUTD_VC1_ENABLE_SHIFT 13
 #define ROUTER_NL4_THROTTLE_ENABLE_ARBR_INPUTD_VC1_ENABLE_MASK 0x1ull
 #define ROUTER_NL4_THROTTLE_ENABLE_ARBR_INPUTD_VC1_ENABLE_INPLACE (ROUTER_NL4_THROTTLE_ENABLE_ARBR_INPUTD_VC1_ENABLE_MASK << ROUTER_NL4_THROTTLE_ENABLE_ARBR_INPUTD_VC1_ENABLE_SHIFT)
-#define ROUTER_NL4_THROTTLE_ENABLE_ARBR_INPUTD_VC0_ENABLE_SHIFT 12 /* established */
+/* established */
+#define ROUTER_NL4_THROTTLE_ENABLE_ARBR_INPUTD_VC0_ENABLE_SHIFT 12
 #define ROUTER_NL4_THROTTLE_ENABLE_ARBR_INPUTD_VC0_ENABLE_MASK 0x1ull
 #define ROUTER_NL4_THROTTLE_ENABLE_ARBR_INPUTD_VC0_ENABLE_INPLACE (ROUTER_NL4_THROTTLE_ENABLE_ARBR_INPUTD_VC0_ENABLE_MASK << ROUTER_NL4_THROTTLE_ENABLE_ARBR_INPUTD_VC0_ENABLE_SHIFT)
-#define ROUTER_NL4_THROTTLE_ENABLE_ARBR_INPUTC_VC3_ENABLE_SHIFT 11 /* established */
+/* established */
+#define ROUTER_NL4_THROTTLE_ENABLE_ARBR_INPUTC_VC3_ENABLE_SHIFT 11
 #define ROUTER_NL4_THROTTLE_ENABLE_ARBR_INPUTC_VC3_ENABLE_MASK 0x1ull
 #define ROUTER_NL4_THROTTLE_ENABLE_ARBR_INPUTC_VC3_ENABLE_INPLACE (ROUTER_NL4_THROTTLE_ENABLE_ARBR_INPUTC_VC3_ENABLE_MASK << ROUTER_NL4_THROTTLE_ENABLE_ARBR_INPUTC_VC3_ENABLE_SHIFT)
-#define ROUTER_NL4_THROTTLE_ENABLE_ARBR_INPUTC_VC2_ENABLE_SHIFT 10 /* established */
+/* established */
+#define ROUTER_NL4_THROTTLE_ENABLE_ARBR_INPUTC_VC2_ENABLE_SHIFT 10
 #define ROUTER_NL4_THROTTLE_ENABLE_ARBR_INPUTC_VC2_ENABLE_MASK 0x1ull
 #define ROUTER_NL4_THROTTLE_ENABLE_ARBR_INPUTC_VC2_ENABLE_INPLACE (ROUTER_NL4_THROTTLE_ENABLE_ARBR_INPUTC_VC2_ENABLE_MASK << ROUTER_NL4_THROTTLE_ENABLE_ARBR_INPUTC_VC2_ENABLE_SHIFT)
-#define ROUTER_NL4_THROTTLE_ENABLE_ARBR_INPUTC_VC1_ENABLE_SHIFT 9 /* established */
+/* established */
+#define ROUTER_NL4_THROTTLE_ENABLE_ARBR_INPUTC_VC1_ENABLE_SHIFT 9
 #define ROUTER_NL4_THROTTLE_ENABLE_ARBR_INPUTC_VC1_ENABLE_MASK 0x1ull
 #define ROUTER_NL4_THROTTLE_ENABLE_ARBR_INPUTC_VC1_ENABLE_INPLACE (ROUTER_NL4_THROTTLE_ENABLE_ARBR_INPUTC_VC1_ENABLE_MASK << ROUTER_NL4_THROTTLE_ENABLE_ARBR_INPUTC_VC1_ENABLE_SHIFT)
-#define ROUTER_NL4_THROTTLE_ENABLE_ARBR_INPUTC_VC0_ENABLE_SHIFT 8 /* established */
+/* established */
+#define ROUTER_NL4_THROTTLE_ENABLE_ARBR_INPUTC_VC0_ENABLE_SHIFT 8
 #define ROUTER_NL4_THROTTLE_ENABLE_ARBR_INPUTC_VC0_ENABLE_MASK 0x1ull
 #define ROUTER_NL4_THROTTLE_ENABLE_ARBR_INPUTC_VC0_ENABLE_INPLACE (ROUTER_NL4_THROTTLE_ENABLE_ARBR_INPUTC_VC0_ENABLE_MASK << ROUTER_NL4_THROTTLE_ENABLE_ARBR_INPUTC_VC0_ENABLE_SHIFT)
-#define ROUTER_NL4_THROTTLE_ENABLE_ARBR_INPUTB_VC3_ENABLE_SHIFT 7 /* established */
+/* established */
+#define ROUTER_NL4_THROTTLE_ENABLE_ARBR_INPUTB_VC3_ENABLE_SHIFT 7
 #define ROUTER_NL4_THROTTLE_ENABLE_ARBR_INPUTB_VC3_ENABLE_MASK 0x1ull
 #define ROUTER_NL4_THROTTLE_ENABLE_ARBR_INPUTB_VC3_ENABLE_INPLACE (ROUTER_NL4_THROTTLE_ENABLE_ARBR_INPUTB_VC3_ENABLE_MASK << ROUTER_NL4_THROTTLE_ENABLE_ARBR_INPUTB_VC3_ENABLE_SHIFT)
-#define ROUTER_NL4_THROTTLE_ENABLE_ARBR_INPUTB_VC2_ENABLE_SHIFT 6 /* established */
+/* established */
+#define ROUTER_NL4_THROTTLE_ENABLE_ARBR_INPUTB_VC2_ENABLE_SHIFT 6
 #define ROUTER_NL4_THROTTLE_ENABLE_ARBR_INPUTB_VC2_ENABLE_MASK 0x1ull
 #define ROUTER_NL4_THROTTLE_ENABLE_ARBR_INPUTB_VC2_ENABLE_INPLACE (ROUTER_NL4_THROTTLE_ENABLE_ARBR_INPUTB_VC2_ENABLE_MASK << ROUTER_NL4_THROTTLE_ENABLE_ARBR_INPUTB_VC2_ENABLE_SHIFT)
-#define ROUTER_NL4_THROTTLE_ENABLE_ARBR_INPUTB_VC1_ENABLE_SHIFT 5 /* established */
+/* established */
+#define ROUTER_NL4_THROTTLE_ENABLE_ARBR_INPUTB_VC1_ENABLE_SHIFT 5
 #define ROUTER_NL4_THROTTLE_ENABLE_ARBR_INPUTB_VC1_ENABLE_MASK 0x1ull
 #define ROUTER_NL4_THROTTLE_ENABLE_ARBR_INPUTB_VC1_ENABLE_INPLACE (ROUTER_NL4_THROTTLE_ENABLE_ARBR_INPUTB_VC1_ENABLE_MASK << ROUTER_NL4_THROTTLE_ENABLE_ARBR_INPUTB_VC1_ENABLE_SHIFT)
-#define ROUTER_NL4_THROTTLE_ENABLE_ARBR_INPUTB_VC0_ENABLE_SHIFT 4 /* established */
+/* established */
+#define ROUTER_NL4_THROTTLE_ENABLE_ARBR_INPUTB_VC0_ENABLE_SHIFT 4
 #define ROUTER_NL4_THROTTLE_ENABLE_ARBR_INPUTB_VC0_ENABLE_MASK 0x1ull
 #define ROUTER_NL4_THROTTLE_ENABLE_ARBR_INPUTB_VC0_ENABLE_INPLACE (ROUTER_NL4_THROTTLE_ENABLE_ARBR_INPUTB_VC0_ENABLE_MASK << ROUTER_NL4_THROTTLE_ENABLE_ARBR_INPUTB_VC0_ENABLE_SHIFT)
-#define ROUTER_NL4_THROTTLE_ENABLE_ARBR_INPUTA_VC3_ENABLE_SHIFT 3 /* established */
+/* established */
+#define ROUTER_NL4_THROTTLE_ENABLE_ARBR_INPUTA_VC3_ENABLE_SHIFT 3
 #define ROUTER_NL4_THROTTLE_ENABLE_ARBR_INPUTA_VC3_ENABLE_MASK 0x1ull
 #define ROUTER_NL4_THROTTLE_ENABLE_ARBR_INPUTA_VC3_ENABLE_INPLACE (ROUTER_NL4_THROTTLE_ENABLE_ARBR_INPUTA_VC3_ENABLE_MASK << ROUTER_NL4_THROTTLE_ENABLE_ARBR_INPUTA_VC3_ENABLE_SHIFT)
-#define ROUTER_NL4_THROTTLE_ENABLE_ARBR_INPUTA_VC2_ENABLE_SHIFT 2 /* established */
+/* established */
+#define ROUTER_NL4_THROTTLE_ENABLE_ARBR_INPUTA_VC2_ENABLE_SHIFT 2
 #define ROUTER_NL4_THROTTLE_ENABLE_ARBR_INPUTA_VC2_ENABLE_MASK 0x1ull
 #define ROUTER_NL4_THROTTLE_ENABLE_ARBR_INPUTA_VC2_ENABLE_INPLACE (ROUTER_NL4_THROTTLE_ENABLE_ARBR_INPUTA_VC2_ENABLE_MASK << ROUTER_NL4_THROTTLE_ENABLE_ARBR_INPUTA_VC2_ENABLE_SHIFT)
-#define ROUTER_NL4_THROTTLE_ENABLE_ARBR_INPUTA_VC1_ENABLE_SHIFT 1 /* established */
+/* established */
+#define ROUTER_NL4_THROTTLE_ENABLE_ARBR_INPUTA_VC1_ENABLE_SHIFT 1
 #define ROUTER_NL4_THROTTLE_ENABLE_ARBR_INPUTA_VC1_ENABLE_MASK 0x1ull
 #define ROUTER_NL4_THROTTLE_ENABLE_ARBR_INPUTA_VC1_ENABLE_INPLACE (ROUTER_NL4_THROTTLE_ENABLE_ARBR_INPUTA_VC1_ENABLE_MASK << ROUTER_NL4_THROTTLE_ENABLE_ARBR_INPUTA_VC1_ENABLE_SHIFT)
-#define ROUTER_NL4_THROTTLE_ENABLE_ARBR_INPUTA_VC0_ENABLE_SHIFT 0 /* established */
+/* established */
+#define ROUTER_NL4_THROTTLE_ENABLE_ARBR_INPUTA_VC0_ENABLE_SHIFT 0
 #define ROUTER_NL4_THROTTLE_ENABLE_ARBR_INPUTA_VC0_ENABLE_MASK 0x1ull
 #define ROUTER_NL4_THROTTLE_ENABLE_ARBR_INPUTA_VC0_ENABLE_INPLACE (ROUTER_NL4_THROTTLE_ENABLE_ARBR_INPUTA_VC0_ENABLE_MASK << ROUTER_NL4_THROTTLE_ENABLE_ARBR_INPUTA_VC0_ENABLE_SHIFT)
 
 /*
- * PROM register R4_AGE_RATE_PORTA; one per port A to H. Offset and field positions read from the table; role inferred from the names.
+ * PROM register R4_AGE_RATE_PORTA; one per port A to H. Offset and field
+ * positions read from the table; role inferred from the names.
  */
 /* age_rate_port: rw64, reset unknown */
-#define ROUTER_NL4_AGE_RATE_PORT_OFFSET              0x2000600u /* established */
+/* established */
+#define ROUTER_NL4_AGE_RATE_PORT_OFFSET              0x2000600u
 #define ROUTER_NL4_AGE_RATE_PORT_COUNT               8
 #define ROUTER_NL4_AGE_RATE_PORT_STRIDE              16
 #define ROUTER_NL4_AGE_RATE_PORT_AGE_RATE_ENABLE_SHIFT 63 /* established */
@@ -3870,29 +4552,37 @@
 #define ROUTER_NL4_AGE_RATE_PORT_AGE_RANGE_0_TRIGGER_INPLACE (ROUTER_NL4_AGE_RATE_PORT_AGE_RANGE_0_TRIGGER_MASK << ROUTER_NL4_AGE_RATE_PORT_AGE_RANGE_0_TRIGGER_SHIFT)
 
 /*
- * PROM register R4_AGE_RATE_PORTLB. Offset and field positions read from the table; role inferred from the names.
+ * PROM register R4_AGE_RATE_PORTLB. Offset and field positions read from the
+ * table; role inferred from the names.
  */
 /* age_rate_portlb: rw64, reset unknown */
-#define ROUTER_NL4_AGE_RATE_PORTLB_OFFSET            0x2000680u /* established */
+/* established */
+#define ROUTER_NL4_AGE_RATE_PORTLB_OFFSET            0x2000680u
 #define ROUTER_NL4_AGE_RATE_PORTLB_AGE_RATE_ENABLE_SHIFT 63 /* established */
 #define ROUTER_NL4_AGE_RATE_PORTLB_AGE_RATE_ENABLE_MASK 0x1ull
 #define ROUTER_NL4_AGE_RATE_PORTLB_AGE_RATE_ENABLE_INPLACE (ROUTER_NL4_AGE_RATE_PORTLB_AGE_RATE_ENABLE_MASK << ROUTER_NL4_AGE_RATE_PORTLB_AGE_RATE_ENABLE_SHIFT)
-#define ROUTER_NL4_AGE_RATE_PORTLB_AGE_RANGE_7_TRIGGER_SHIFT 56 /* established */
+/* established */
+#define ROUTER_NL4_AGE_RATE_PORTLB_AGE_RANGE_7_TRIGGER_SHIFT 56
 #define ROUTER_NL4_AGE_RATE_PORTLB_AGE_RANGE_7_TRIGGER_MASK 0x1full
 #define ROUTER_NL4_AGE_RATE_PORTLB_AGE_RANGE_7_TRIGGER_INPLACE (ROUTER_NL4_AGE_RATE_PORTLB_AGE_RANGE_7_TRIGGER_MASK << ROUTER_NL4_AGE_RATE_PORTLB_AGE_RANGE_7_TRIGGER_SHIFT)
-#define ROUTER_NL4_AGE_RATE_PORTLB_AGE_RANGE_6_TRIGGER_SHIFT 48 /* established */
+/* established */
+#define ROUTER_NL4_AGE_RATE_PORTLB_AGE_RANGE_6_TRIGGER_SHIFT 48
 #define ROUTER_NL4_AGE_RATE_PORTLB_AGE_RANGE_6_TRIGGER_MASK 0x1full
 #define ROUTER_NL4_AGE_RATE_PORTLB_AGE_RANGE_6_TRIGGER_INPLACE (ROUTER_NL4_AGE_RATE_PORTLB_AGE_RANGE_6_TRIGGER_MASK << ROUTER_NL4_AGE_RATE_PORTLB_AGE_RANGE_6_TRIGGER_SHIFT)
-#define ROUTER_NL4_AGE_RATE_PORTLB_AGE_RANGE_5_TRIGGER_SHIFT 40 /* established */
+/* established */
+#define ROUTER_NL4_AGE_RATE_PORTLB_AGE_RANGE_5_TRIGGER_SHIFT 40
 #define ROUTER_NL4_AGE_RATE_PORTLB_AGE_RANGE_5_TRIGGER_MASK 0x1full
 #define ROUTER_NL4_AGE_RATE_PORTLB_AGE_RANGE_5_TRIGGER_INPLACE (ROUTER_NL4_AGE_RATE_PORTLB_AGE_RANGE_5_TRIGGER_MASK << ROUTER_NL4_AGE_RATE_PORTLB_AGE_RANGE_5_TRIGGER_SHIFT)
-#define ROUTER_NL4_AGE_RATE_PORTLB_AGE_RANGE_4_TRIGGER_SHIFT 32 /* established */
+/* established */
+#define ROUTER_NL4_AGE_RATE_PORTLB_AGE_RANGE_4_TRIGGER_SHIFT 32
 #define ROUTER_NL4_AGE_RATE_PORTLB_AGE_RANGE_4_TRIGGER_MASK 0x1full
 #define ROUTER_NL4_AGE_RATE_PORTLB_AGE_RANGE_4_TRIGGER_INPLACE (ROUTER_NL4_AGE_RATE_PORTLB_AGE_RANGE_4_TRIGGER_MASK << ROUTER_NL4_AGE_RATE_PORTLB_AGE_RANGE_4_TRIGGER_SHIFT)
-#define ROUTER_NL4_AGE_RATE_PORTLB_AGE_RANGE_3_TRIGGER_SHIFT 24 /* established */
+/* established */
+#define ROUTER_NL4_AGE_RATE_PORTLB_AGE_RANGE_3_TRIGGER_SHIFT 24
 #define ROUTER_NL4_AGE_RATE_PORTLB_AGE_RANGE_3_TRIGGER_MASK 0x1full
 #define ROUTER_NL4_AGE_RATE_PORTLB_AGE_RANGE_3_TRIGGER_INPLACE (ROUTER_NL4_AGE_RATE_PORTLB_AGE_RANGE_3_TRIGGER_MASK << ROUTER_NL4_AGE_RATE_PORTLB_AGE_RANGE_3_TRIGGER_SHIFT)
-#define ROUTER_NL4_AGE_RATE_PORTLB_AGE_RANGE_2_TRIGGER_SHIFT 16 /* established */
+/* established */
+#define ROUTER_NL4_AGE_RATE_PORTLB_AGE_RANGE_2_TRIGGER_SHIFT 16
 #define ROUTER_NL4_AGE_RATE_PORTLB_AGE_RANGE_2_TRIGGER_MASK 0x1full
 #define ROUTER_NL4_AGE_RATE_PORTLB_AGE_RANGE_2_TRIGGER_INPLACE (ROUTER_NL4_AGE_RATE_PORTLB_AGE_RANGE_2_TRIGGER_MASK << ROUTER_NL4_AGE_RATE_PORTLB_AGE_RANGE_2_TRIGGER_SHIFT)
 #define ROUTER_NL4_AGE_RATE_PORTLB_AGE_RANGE_1_TRIGGER_SHIFT 8 /* established */
@@ -3903,362 +4593,476 @@
 #define ROUTER_NL4_AGE_RATE_PORTLB_AGE_RANGE_0_TRIGGER_INPLACE (ROUTER_NL4_AGE_RATE_PORTLB_AGE_RANGE_0_TRIGGER_MASK << ROUTER_NL4_AGE_RATE_PORTLB_AGE_RANGE_0_TRIGGER_SHIFT)
 
 /*
- * PROM register R4_ARBL_TEST_POINT_SELECT_512. Offset and field positions read from the table; role inferred from the names.
+ * PROM register R4_ARBL_TEST_POINT_SELECT_512. Offset and field positions read
+ * from the table; role inferred from the names.
  */
 /* arbl_test_point_select_512: rw64, reset unknown */
-#define ROUTER_NL4_ARBL_TEST_POINT_SELECT_512_OFFSET 0x2002700u /* established */
-#define ROUTER_NL4_ARBL_TEST_POINT_SELECT_512_NIBBLE7_NIBBLE_SEL_SHIFT 60 /* established */
+/* established */
+#define ROUTER_NL4_ARBL_TEST_POINT_SELECT_512_OFFSET 0x2002700u
+/* established */
+#define ROUTER_NL4_ARBL_TEST_POINT_SELECT_512_NIBBLE7_NIBBLE_SEL_SHIFT 60
 #define ROUTER_NL4_ARBL_TEST_POINT_SELECT_512_NIBBLE7_NIBBLE_SEL_MASK 0x7ull
 #define ROUTER_NL4_ARBL_TEST_POINT_SELECT_512_NIBBLE7_NIBBLE_SEL_INPLACE (ROUTER_NL4_ARBL_TEST_POINT_SELECT_512_NIBBLE7_NIBBLE_SEL_MASK << ROUTER_NL4_ARBL_TEST_POINT_SELECT_512_NIBBLE7_NIBBLE_SEL_SHIFT)
-#define ROUTER_NL4_ARBL_TEST_POINT_SELECT_512_NIBBLE7_CHIPLET_SEL_SHIFT 56 /* established */
+/* established */
+#define ROUTER_NL4_ARBL_TEST_POINT_SELECT_512_NIBBLE7_CHIPLET_SEL_SHIFT 56
 #define ROUTER_NL4_ARBL_TEST_POINT_SELECT_512_NIBBLE7_CHIPLET_SEL_MASK 0xfull
 #define ROUTER_NL4_ARBL_TEST_POINT_SELECT_512_NIBBLE7_CHIPLET_SEL_INPLACE (ROUTER_NL4_ARBL_TEST_POINT_SELECT_512_NIBBLE7_CHIPLET_SEL_MASK << ROUTER_NL4_ARBL_TEST_POINT_SELECT_512_NIBBLE7_CHIPLET_SEL_SHIFT)
-#define ROUTER_NL4_ARBL_TEST_POINT_SELECT_512_NIBBLE6_NIBBLE_SEL_SHIFT 52 /* established */
+/* established */
+#define ROUTER_NL4_ARBL_TEST_POINT_SELECT_512_NIBBLE6_NIBBLE_SEL_SHIFT 52
 #define ROUTER_NL4_ARBL_TEST_POINT_SELECT_512_NIBBLE6_NIBBLE_SEL_MASK 0x7ull
 #define ROUTER_NL4_ARBL_TEST_POINT_SELECT_512_NIBBLE6_NIBBLE_SEL_INPLACE (ROUTER_NL4_ARBL_TEST_POINT_SELECT_512_NIBBLE6_NIBBLE_SEL_MASK << ROUTER_NL4_ARBL_TEST_POINT_SELECT_512_NIBBLE6_NIBBLE_SEL_SHIFT)
-#define ROUTER_NL4_ARBL_TEST_POINT_SELECT_512_NIBBLE6_CHIPLET_SEL_SHIFT 48 /* established */
+/* established */
+#define ROUTER_NL4_ARBL_TEST_POINT_SELECT_512_NIBBLE6_CHIPLET_SEL_SHIFT 48
 #define ROUTER_NL4_ARBL_TEST_POINT_SELECT_512_NIBBLE6_CHIPLET_SEL_MASK 0xfull
 #define ROUTER_NL4_ARBL_TEST_POINT_SELECT_512_NIBBLE6_CHIPLET_SEL_INPLACE (ROUTER_NL4_ARBL_TEST_POINT_SELECT_512_NIBBLE6_CHIPLET_SEL_MASK << ROUTER_NL4_ARBL_TEST_POINT_SELECT_512_NIBBLE6_CHIPLET_SEL_SHIFT)
-#define ROUTER_NL4_ARBL_TEST_POINT_SELECT_512_NIBBLE5_NIBBLE_SEL_SHIFT 44 /* established */
+/* established */
+#define ROUTER_NL4_ARBL_TEST_POINT_SELECT_512_NIBBLE5_NIBBLE_SEL_SHIFT 44
 #define ROUTER_NL4_ARBL_TEST_POINT_SELECT_512_NIBBLE5_NIBBLE_SEL_MASK 0x7ull
 #define ROUTER_NL4_ARBL_TEST_POINT_SELECT_512_NIBBLE5_NIBBLE_SEL_INPLACE (ROUTER_NL4_ARBL_TEST_POINT_SELECT_512_NIBBLE5_NIBBLE_SEL_MASK << ROUTER_NL4_ARBL_TEST_POINT_SELECT_512_NIBBLE5_NIBBLE_SEL_SHIFT)
-#define ROUTER_NL4_ARBL_TEST_POINT_SELECT_512_NIBBLE5_CHIPLET_SEL_SHIFT 40 /* established */
+/* established */
+#define ROUTER_NL4_ARBL_TEST_POINT_SELECT_512_NIBBLE5_CHIPLET_SEL_SHIFT 40
 #define ROUTER_NL4_ARBL_TEST_POINT_SELECT_512_NIBBLE5_CHIPLET_SEL_MASK 0xfull
 #define ROUTER_NL4_ARBL_TEST_POINT_SELECT_512_NIBBLE5_CHIPLET_SEL_INPLACE (ROUTER_NL4_ARBL_TEST_POINT_SELECT_512_NIBBLE5_CHIPLET_SEL_MASK << ROUTER_NL4_ARBL_TEST_POINT_SELECT_512_NIBBLE5_CHIPLET_SEL_SHIFT)
-#define ROUTER_NL4_ARBL_TEST_POINT_SELECT_512_NIBBLE4_NIBBLE_SEL_SHIFT 36 /* established */
+/* established */
+#define ROUTER_NL4_ARBL_TEST_POINT_SELECT_512_NIBBLE4_NIBBLE_SEL_SHIFT 36
 #define ROUTER_NL4_ARBL_TEST_POINT_SELECT_512_NIBBLE4_NIBBLE_SEL_MASK 0x7ull
 #define ROUTER_NL4_ARBL_TEST_POINT_SELECT_512_NIBBLE4_NIBBLE_SEL_INPLACE (ROUTER_NL4_ARBL_TEST_POINT_SELECT_512_NIBBLE4_NIBBLE_SEL_MASK << ROUTER_NL4_ARBL_TEST_POINT_SELECT_512_NIBBLE4_NIBBLE_SEL_SHIFT)
-#define ROUTER_NL4_ARBL_TEST_POINT_SELECT_512_NIBBLE4_CHIPLET_SEL_SHIFT 32 /* established */
+/* established */
+#define ROUTER_NL4_ARBL_TEST_POINT_SELECT_512_NIBBLE4_CHIPLET_SEL_SHIFT 32
 #define ROUTER_NL4_ARBL_TEST_POINT_SELECT_512_NIBBLE4_CHIPLET_SEL_MASK 0xfull
 #define ROUTER_NL4_ARBL_TEST_POINT_SELECT_512_NIBBLE4_CHIPLET_SEL_INPLACE (ROUTER_NL4_ARBL_TEST_POINT_SELECT_512_NIBBLE4_CHIPLET_SEL_MASK << ROUTER_NL4_ARBL_TEST_POINT_SELECT_512_NIBBLE4_CHIPLET_SEL_SHIFT)
-#define ROUTER_NL4_ARBL_TEST_POINT_SELECT_512_NIBBLE3_NIBBLE_SEL_SHIFT 28 /* established */
+/* established */
+#define ROUTER_NL4_ARBL_TEST_POINT_SELECT_512_NIBBLE3_NIBBLE_SEL_SHIFT 28
 #define ROUTER_NL4_ARBL_TEST_POINT_SELECT_512_NIBBLE3_NIBBLE_SEL_MASK 0x7ull
 #define ROUTER_NL4_ARBL_TEST_POINT_SELECT_512_NIBBLE3_NIBBLE_SEL_INPLACE (ROUTER_NL4_ARBL_TEST_POINT_SELECT_512_NIBBLE3_NIBBLE_SEL_MASK << ROUTER_NL4_ARBL_TEST_POINT_SELECT_512_NIBBLE3_NIBBLE_SEL_SHIFT)
-#define ROUTER_NL4_ARBL_TEST_POINT_SELECT_512_NIBBLE3_CHIPLET_SEL_SHIFT 24 /* established */
+/* established */
+#define ROUTER_NL4_ARBL_TEST_POINT_SELECT_512_NIBBLE3_CHIPLET_SEL_SHIFT 24
 #define ROUTER_NL4_ARBL_TEST_POINT_SELECT_512_NIBBLE3_CHIPLET_SEL_MASK 0xfull
 #define ROUTER_NL4_ARBL_TEST_POINT_SELECT_512_NIBBLE3_CHIPLET_SEL_INPLACE (ROUTER_NL4_ARBL_TEST_POINT_SELECT_512_NIBBLE3_CHIPLET_SEL_MASK << ROUTER_NL4_ARBL_TEST_POINT_SELECT_512_NIBBLE3_CHIPLET_SEL_SHIFT)
-#define ROUTER_NL4_ARBL_TEST_POINT_SELECT_512_NIBBLE2_NIBBLE_SEL_SHIFT 20 /* established */
+/* established */
+#define ROUTER_NL4_ARBL_TEST_POINT_SELECT_512_NIBBLE2_NIBBLE_SEL_SHIFT 20
 #define ROUTER_NL4_ARBL_TEST_POINT_SELECT_512_NIBBLE2_NIBBLE_SEL_MASK 0x7ull
 #define ROUTER_NL4_ARBL_TEST_POINT_SELECT_512_NIBBLE2_NIBBLE_SEL_INPLACE (ROUTER_NL4_ARBL_TEST_POINT_SELECT_512_NIBBLE2_NIBBLE_SEL_MASK << ROUTER_NL4_ARBL_TEST_POINT_SELECT_512_NIBBLE2_NIBBLE_SEL_SHIFT)
-#define ROUTER_NL4_ARBL_TEST_POINT_SELECT_512_NIBBLE2_CHIPLET_SEL_SHIFT 16 /* established */
+/* established */
+#define ROUTER_NL4_ARBL_TEST_POINT_SELECT_512_NIBBLE2_CHIPLET_SEL_SHIFT 16
 #define ROUTER_NL4_ARBL_TEST_POINT_SELECT_512_NIBBLE2_CHIPLET_SEL_MASK 0xfull
 #define ROUTER_NL4_ARBL_TEST_POINT_SELECT_512_NIBBLE2_CHIPLET_SEL_INPLACE (ROUTER_NL4_ARBL_TEST_POINT_SELECT_512_NIBBLE2_CHIPLET_SEL_MASK << ROUTER_NL4_ARBL_TEST_POINT_SELECT_512_NIBBLE2_CHIPLET_SEL_SHIFT)
-#define ROUTER_NL4_ARBL_TEST_POINT_SELECT_512_NIBBLE1_NIBBLE_SEL_SHIFT 12 /* established */
+/* established */
+#define ROUTER_NL4_ARBL_TEST_POINT_SELECT_512_NIBBLE1_NIBBLE_SEL_SHIFT 12
 #define ROUTER_NL4_ARBL_TEST_POINT_SELECT_512_NIBBLE1_NIBBLE_SEL_MASK 0x7ull
 #define ROUTER_NL4_ARBL_TEST_POINT_SELECT_512_NIBBLE1_NIBBLE_SEL_INPLACE (ROUTER_NL4_ARBL_TEST_POINT_SELECT_512_NIBBLE1_NIBBLE_SEL_MASK << ROUTER_NL4_ARBL_TEST_POINT_SELECT_512_NIBBLE1_NIBBLE_SEL_SHIFT)
-#define ROUTER_NL4_ARBL_TEST_POINT_SELECT_512_NIBBLE1_CHIPLET_SEL_SHIFT 8 /* established */
+/* established */
+#define ROUTER_NL4_ARBL_TEST_POINT_SELECT_512_NIBBLE1_CHIPLET_SEL_SHIFT 8
 #define ROUTER_NL4_ARBL_TEST_POINT_SELECT_512_NIBBLE1_CHIPLET_SEL_MASK 0xfull
 #define ROUTER_NL4_ARBL_TEST_POINT_SELECT_512_NIBBLE1_CHIPLET_SEL_INPLACE (ROUTER_NL4_ARBL_TEST_POINT_SELECT_512_NIBBLE1_CHIPLET_SEL_MASK << ROUTER_NL4_ARBL_TEST_POINT_SELECT_512_NIBBLE1_CHIPLET_SEL_SHIFT)
-#define ROUTER_NL4_ARBL_TEST_POINT_SELECT_512_NIBBLE0_NIBBLE_SEL_SHIFT 4 /* established */
+/* established */
+#define ROUTER_NL4_ARBL_TEST_POINT_SELECT_512_NIBBLE0_NIBBLE_SEL_SHIFT 4
 #define ROUTER_NL4_ARBL_TEST_POINT_SELECT_512_NIBBLE0_NIBBLE_SEL_MASK 0x7ull
 #define ROUTER_NL4_ARBL_TEST_POINT_SELECT_512_NIBBLE0_NIBBLE_SEL_INPLACE (ROUTER_NL4_ARBL_TEST_POINT_SELECT_512_NIBBLE0_NIBBLE_SEL_MASK << ROUTER_NL4_ARBL_TEST_POINT_SELECT_512_NIBBLE0_NIBBLE_SEL_SHIFT)
-#define ROUTER_NL4_ARBL_TEST_POINT_SELECT_512_NIBBLE0_CHIPLET_SEL_SHIFT 0 /* established */
+/* established */
+#define ROUTER_NL4_ARBL_TEST_POINT_SELECT_512_NIBBLE0_CHIPLET_SEL_SHIFT 0
 #define ROUTER_NL4_ARBL_TEST_POINT_SELECT_512_NIBBLE0_CHIPLET_SEL_MASK 0xfull
 #define ROUTER_NL4_ARBL_TEST_POINT_SELECT_512_NIBBLE0_CHIPLET_SEL_INPLACE (ROUTER_NL4_ARBL_TEST_POINT_SELECT_512_NIBBLE0_CHIPLET_SEL_MASK << ROUTER_NL4_ARBL_TEST_POINT_SELECT_512_NIBBLE0_CHIPLET_SEL_SHIFT)
 
 /*
- * PROM register R4_ARBR_TEST_POINT_SELECT_512. Offset and field positions read from the table; role inferred from the names.
+ * PROM register R4_ARBR_TEST_POINT_SELECT_512. Offset and field positions read
+ * from the table; role inferred from the names.
  */
 /* arbr_test_point_select_512: rw64, reset unknown */
-#define ROUTER_NL4_ARBR_TEST_POINT_SELECT_512_OFFSET 0x2002720u /* established */
-#define ROUTER_NL4_ARBR_TEST_POINT_SELECT_512_NIBBLE7_NIBBLE_SEL_SHIFT 60 /* established */
+/* established */
+#define ROUTER_NL4_ARBR_TEST_POINT_SELECT_512_OFFSET 0x2002720u
+/* established */
+#define ROUTER_NL4_ARBR_TEST_POINT_SELECT_512_NIBBLE7_NIBBLE_SEL_SHIFT 60
 #define ROUTER_NL4_ARBR_TEST_POINT_SELECT_512_NIBBLE7_NIBBLE_SEL_MASK 0x7ull
 #define ROUTER_NL4_ARBR_TEST_POINT_SELECT_512_NIBBLE7_NIBBLE_SEL_INPLACE (ROUTER_NL4_ARBR_TEST_POINT_SELECT_512_NIBBLE7_NIBBLE_SEL_MASK << ROUTER_NL4_ARBR_TEST_POINT_SELECT_512_NIBBLE7_NIBBLE_SEL_SHIFT)
-#define ROUTER_NL4_ARBR_TEST_POINT_SELECT_512_NIBBLE7_CHIPLET_SEL_SHIFT 56 /* established */
+/* established */
+#define ROUTER_NL4_ARBR_TEST_POINT_SELECT_512_NIBBLE7_CHIPLET_SEL_SHIFT 56
 #define ROUTER_NL4_ARBR_TEST_POINT_SELECT_512_NIBBLE7_CHIPLET_SEL_MASK 0xfull
 #define ROUTER_NL4_ARBR_TEST_POINT_SELECT_512_NIBBLE7_CHIPLET_SEL_INPLACE (ROUTER_NL4_ARBR_TEST_POINT_SELECT_512_NIBBLE7_CHIPLET_SEL_MASK << ROUTER_NL4_ARBR_TEST_POINT_SELECT_512_NIBBLE7_CHIPLET_SEL_SHIFT)
-#define ROUTER_NL4_ARBR_TEST_POINT_SELECT_512_NIBBLE6_NIBBLE_SEL_SHIFT 52 /* established */
+/* established */
+#define ROUTER_NL4_ARBR_TEST_POINT_SELECT_512_NIBBLE6_NIBBLE_SEL_SHIFT 52
 #define ROUTER_NL4_ARBR_TEST_POINT_SELECT_512_NIBBLE6_NIBBLE_SEL_MASK 0x7ull
 #define ROUTER_NL4_ARBR_TEST_POINT_SELECT_512_NIBBLE6_NIBBLE_SEL_INPLACE (ROUTER_NL4_ARBR_TEST_POINT_SELECT_512_NIBBLE6_NIBBLE_SEL_MASK << ROUTER_NL4_ARBR_TEST_POINT_SELECT_512_NIBBLE6_NIBBLE_SEL_SHIFT)
-#define ROUTER_NL4_ARBR_TEST_POINT_SELECT_512_NIBBLE6_CHIPLET_SEL_SHIFT 48 /* established */
+/* established */
+#define ROUTER_NL4_ARBR_TEST_POINT_SELECT_512_NIBBLE6_CHIPLET_SEL_SHIFT 48
 #define ROUTER_NL4_ARBR_TEST_POINT_SELECT_512_NIBBLE6_CHIPLET_SEL_MASK 0xfull
 #define ROUTER_NL4_ARBR_TEST_POINT_SELECT_512_NIBBLE6_CHIPLET_SEL_INPLACE (ROUTER_NL4_ARBR_TEST_POINT_SELECT_512_NIBBLE6_CHIPLET_SEL_MASK << ROUTER_NL4_ARBR_TEST_POINT_SELECT_512_NIBBLE6_CHIPLET_SEL_SHIFT)
-#define ROUTER_NL4_ARBR_TEST_POINT_SELECT_512_NIBBLE5_NIBBLE_SEL_SHIFT 44 /* established */
+/* established */
+#define ROUTER_NL4_ARBR_TEST_POINT_SELECT_512_NIBBLE5_NIBBLE_SEL_SHIFT 44
 #define ROUTER_NL4_ARBR_TEST_POINT_SELECT_512_NIBBLE5_NIBBLE_SEL_MASK 0x7ull
 #define ROUTER_NL4_ARBR_TEST_POINT_SELECT_512_NIBBLE5_NIBBLE_SEL_INPLACE (ROUTER_NL4_ARBR_TEST_POINT_SELECT_512_NIBBLE5_NIBBLE_SEL_MASK << ROUTER_NL4_ARBR_TEST_POINT_SELECT_512_NIBBLE5_NIBBLE_SEL_SHIFT)
-#define ROUTER_NL4_ARBR_TEST_POINT_SELECT_512_NIBBLE5_CHIPLET_SEL_SHIFT 40 /* established */
+/* established */
+#define ROUTER_NL4_ARBR_TEST_POINT_SELECT_512_NIBBLE5_CHIPLET_SEL_SHIFT 40
 #define ROUTER_NL4_ARBR_TEST_POINT_SELECT_512_NIBBLE5_CHIPLET_SEL_MASK 0xfull
 #define ROUTER_NL4_ARBR_TEST_POINT_SELECT_512_NIBBLE5_CHIPLET_SEL_INPLACE (ROUTER_NL4_ARBR_TEST_POINT_SELECT_512_NIBBLE5_CHIPLET_SEL_MASK << ROUTER_NL4_ARBR_TEST_POINT_SELECT_512_NIBBLE5_CHIPLET_SEL_SHIFT)
-#define ROUTER_NL4_ARBR_TEST_POINT_SELECT_512_NIBBLE4_NIBBLE_SEL_SHIFT 36 /* established */
+/* established */
+#define ROUTER_NL4_ARBR_TEST_POINT_SELECT_512_NIBBLE4_NIBBLE_SEL_SHIFT 36
 #define ROUTER_NL4_ARBR_TEST_POINT_SELECT_512_NIBBLE4_NIBBLE_SEL_MASK 0x7ull
 #define ROUTER_NL4_ARBR_TEST_POINT_SELECT_512_NIBBLE4_NIBBLE_SEL_INPLACE (ROUTER_NL4_ARBR_TEST_POINT_SELECT_512_NIBBLE4_NIBBLE_SEL_MASK << ROUTER_NL4_ARBR_TEST_POINT_SELECT_512_NIBBLE4_NIBBLE_SEL_SHIFT)
-#define ROUTER_NL4_ARBR_TEST_POINT_SELECT_512_NIBBLE4_CHIPLET_SEL_SHIFT 32 /* established */
+/* established */
+#define ROUTER_NL4_ARBR_TEST_POINT_SELECT_512_NIBBLE4_CHIPLET_SEL_SHIFT 32
 #define ROUTER_NL4_ARBR_TEST_POINT_SELECT_512_NIBBLE4_CHIPLET_SEL_MASK 0xfull
 #define ROUTER_NL4_ARBR_TEST_POINT_SELECT_512_NIBBLE4_CHIPLET_SEL_INPLACE (ROUTER_NL4_ARBR_TEST_POINT_SELECT_512_NIBBLE4_CHIPLET_SEL_MASK << ROUTER_NL4_ARBR_TEST_POINT_SELECT_512_NIBBLE4_CHIPLET_SEL_SHIFT)
-#define ROUTER_NL4_ARBR_TEST_POINT_SELECT_512_NIBBLE3_NIBBLE_SEL_SHIFT 28 /* established */
+/* established */
+#define ROUTER_NL4_ARBR_TEST_POINT_SELECT_512_NIBBLE3_NIBBLE_SEL_SHIFT 28
 #define ROUTER_NL4_ARBR_TEST_POINT_SELECT_512_NIBBLE3_NIBBLE_SEL_MASK 0x7ull
 #define ROUTER_NL4_ARBR_TEST_POINT_SELECT_512_NIBBLE3_NIBBLE_SEL_INPLACE (ROUTER_NL4_ARBR_TEST_POINT_SELECT_512_NIBBLE3_NIBBLE_SEL_MASK << ROUTER_NL4_ARBR_TEST_POINT_SELECT_512_NIBBLE3_NIBBLE_SEL_SHIFT)
-#define ROUTER_NL4_ARBR_TEST_POINT_SELECT_512_NIBBLE3_CHIPLET_SEL_SHIFT 24 /* established */
+/* established */
+#define ROUTER_NL4_ARBR_TEST_POINT_SELECT_512_NIBBLE3_CHIPLET_SEL_SHIFT 24
 #define ROUTER_NL4_ARBR_TEST_POINT_SELECT_512_NIBBLE3_CHIPLET_SEL_MASK 0xfull
 #define ROUTER_NL4_ARBR_TEST_POINT_SELECT_512_NIBBLE3_CHIPLET_SEL_INPLACE (ROUTER_NL4_ARBR_TEST_POINT_SELECT_512_NIBBLE3_CHIPLET_SEL_MASK << ROUTER_NL4_ARBR_TEST_POINT_SELECT_512_NIBBLE3_CHIPLET_SEL_SHIFT)
-#define ROUTER_NL4_ARBR_TEST_POINT_SELECT_512_NIBBLE2_NIBBLE_SEL_SHIFT 20 /* established */
+/* established */
+#define ROUTER_NL4_ARBR_TEST_POINT_SELECT_512_NIBBLE2_NIBBLE_SEL_SHIFT 20
 #define ROUTER_NL4_ARBR_TEST_POINT_SELECT_512_NIBBLE2_NIBBLE_SEL_MASK 0x7ull
 #define ROUTER_NL4_ARBR_TEST_POINT_SELECT_512_NIBBLE2_NIBBLE_SEL_INPLACE (ROUTER_NL4_ARBR_TEST_POINT_SELECT_512_NIBBLE2_NIBBLE_SEL_MASK << ROUTER_NL4_ARBR_TEST_POINT_SELECT_512_NIBBLE2_NIBBLE_SEL_SHIFT)
-#define ROUTER_NL4_ARBR_TEST_POINT_SELECT_512_NIBBLE2_CHIPLET_SEL_SHIFT 16 /* established */
+/* established */
+#define ROUTER_NL4_ARBR_TEST_POINT_SELECT_512_NIBBLE2_CHIPLET_SEL_SHIFT 16
 #define ROUTER_NL4_ARBR_TEST_POINT_SELECT_512_NIBBLE2_CHIPLET_SEL_MASK 0xfull
 #define ROUTER_NL4_ARBR_TEST_POINT_SELECT_512_NIBBLE2_CHIPLET_SEL_INPLACE (ROUTER_NL4_ARBR_TEST_POINT_SELECT_512_NIBBLE2_CHIPLET_SEL_MASK << ROUTER_NL4_ARBR_TEST_POINT_SELECT_512_NIBBLE2_CHIPLET_SEL_SHIFT)
-#define ROUTER_NL4_ARBR_TEST_POINT_SELECT_512_NIBBLE1_NIBBLE_SEL_SHIFT 12 /* established */
+/* established */
+#define ROUTER_NL4_ARBR_TEST_POINT_SELECT_512_NIBBLE1_NIBBLE_SEL_SHIFT 12
 #define ROUTER_NL4_ARBR_TEST_POINT_SELECT_512_NIBBLE1_NIBBLE_SEL_MASK 0x7ull
 #define ROUTER_NL4_ARBR_TEST_POINT_SELECT_512_NIBBLE1_NIBBLE_SEL_INPLACE (ROUTER_NL4_ARBR_TEST_POINT_SELECT_512_NIBBLE1_NIBBLE_SEL_MASK << ROUTER_NL4_ARBR_TEST_POINT_SELECT_512_NIBBLE1_NIBBLE_SEL_SHIFT)
-#define ROUTER_NL4_ARBR_TEST_POINT_SELECT_512_NIBBLE1_CHIPLET_SEL_SHIFT 8 /* established */
+/* established */
+#define ROUTER_NL4_ARBR_TEST_POINT_SELECT_512_NIBBLE1_CHIPLET_SEL_SHIFT 8
 #define ROUTER_NL4_ARBR_TEST_POINT_SELECT_512_NIBBLE1_CHIPLET_SEL_MASK 0xfull
 #define ROUTER_NL4_ARBR_TEST_POINT_SELECT_512_NIBBLE1_CHIPLET_SEL_INPLACE (ROUTER_NL4_ARBR_TEST_POINT_SELECT_512_NIBBLE1_CHIPLET_SEL_MASK << ROUTER_NL4_ARBR_TEST_POINT_SELECT_512_NIBBLE1_CHIPLET_SEL_SHIFT)
-#define ROUTER_NL4_ARBR_TEST_POINT_SELECT_512_NIBBLE0_NIBBLE_SEL_SHIFT 4 /* established */
+/* established */
+#define ROUTER_NL4_ARBR_TEST_POINT_SELECT_512_NIBBLE0_NIBBLE_SEL_SHIFT 4
 #define ROUTER_NL4_ARBR_TEST_POINT_SELECT_512_NIBBLE0_NIBBLE_SEL_MASK 0x7ull
 #define ROUTER_NL4_ARBR_TEST_POINT_SELECT_512_NIBBLE0_NIBBLE_SEL_INPLACE (ROUTER_NL4_ARBR_TEST_POINT_SELECT_512_NIBBLE0_NIBBLE_SEL_MASK << ROUTER_NL4_ARBR_TEST_POINT_SELECT_512_NIBBLE0_NIBBLE_SEL_SHIFT)
-#define ROUTER_NL4_ARBR_TEST_POINT_SELECT_512_NIBBLE0_CHIPLET_SEL_SHIFT 0 /* established */
+/* established */
+#define ROUTER_NL4_ARBR_TEST_POINT_SELECT_512_NIBBLE0_CHIPLET_SEL_SHIFT 0
 #define ROUTER_NL4_ARBR_TEST_POINT_SELECT_512_NIBBLE0_CHIPLET_SEL_MASK 0xfull
 #define ROUTER_NL4_ARBR_TEST_POINT_SELECT_512_NIBBLE0_CHIPLET_SEL_INPLACE (ROUTER_NL4_ARBR_TEST_POINT_SELECT_512_NIBBLE0_CHIPLET_SEL_MASK << ROUTER_NL4_ARBR_TEST_POINT_SELECT_512_NIBBLE0_CHIPLET_SEL_SHIFT)
 
 /*
- * PROM register R4_CDQ0_TEST_POINT_SELECT_512. Offset and field positions read from the table; role inferred from the names.
+ * PROM register R4_CDQ0_TEST_POINT_SELECT_512. Offset and field positions read
+ * from the table; role inferred from the names.
  */
 /* cdq0_test_point_select_512: rw64, reset unknown */
-#define ROUTER_NL4_CDQ0_TEST_POINT_SELECT_512_OFFSET 0x2002740u /* established */
-#define ROUTER_NL4_CDQ0_TEST_POINT_SELECT_512_NIBBLE7_NIBBLE_SEL_SHIFT 60 /* established */
+/* established */
+#define ROUTER_NL4_CDQ0_TEST_POINT_SELECT_512_OFFSET 0x2002740u
+/* established */
+#define ROUTER_NL4_CDQ0_TEST_POINT_SELECT_512_NIBBLE7_NIBBLE_SEL_SHIFT 60
 #define ROUTER_NL4_CDQ0_TEST_POINT_SELECT_512_NIBBLE7_NIBBLE_SEL_MASK 0x7ull
 #define ROUTER_NL4_CDQ0_TEST_POINT_SELECT_512_NIBBLE7_NIBBLE_SEL_INPLACE (ROUTER_NL4_CDQ0_TEST_POINT_SELECT_512_NIBBLE7_NIBBLE_SEL_MASK << ROUTER_NL4_CDQ0_TEST_POINT_SELECT_512_NIBBLE7_NIBBLE_SEL_SHIFT)
-#define ROUTER_NL4_CDQ0_TEST_POINT_SELECT_512_NIBBLE7_CHIPLET_SEL_SHIFT 56 /* established */
+/* established */
+#define ROUTER_NL4_CDQ0_TEST_POINT_SELECT_512_NIBBLE7_CHIPLET_SEL_SHIFT 56
 #define ROUTER_NL4_CDQ0_TEST_POINT_SELECT_512_NIBBLE7_CHIPLET_SEL_MASK 0xfull
 #define ROUTER_NL4_CDQ0_TEST_POINT_SELECT_512_NIBBLE7_CHIPLET_SEL_INPLACE (ROUTER_NL4_CDQ0_TEST_POINT_SELECT_512_NIBBLE7_CHIPLET_SEL_MASK << ROUTER_NL4_CDQ0_TEST_POINT_SELECT_512_NIBBLE7_CHIPLET_SEL_SHIFT)
-#define ROUTER_NL4_CDQ0_TEST_POINT_SELECT_512_NIBBLE6_NIBBLE_SEL_SHIFT 52 /* established */
+/* established */
+#define ROUTER_NL4_CDQ0_TEST_POINT_SELECT_512_NIBBLE6_NIBBLE_SEL_SHIFT 52
 #define ROUTER_NL4_CDQ0_TEST_POINT_SELECT_512_NIBBLE6_NIBBLE_SEL_MASK 0x7ull
 #define ROUTER_NL4_CDQ0_TEST_POINT_SELECT_512_NIBBLE6_NIBBLE_SEL_INPLACE (ROUTER_NL4_CDQ0_TEST_POINT_SELECT_512_NIBBLE6_NIBBLE_SEL_MASK << ROUTER_NL4_CDQ0_TEST_POINT_SELECT_512_NIBBLE6_NIBBLE_SEL_SHIFT)
-#define ROUTER_NL4_CDQ0_TEST_POINT_SELECT_512_NIBBLE6_CHIPLET_SEL_SHIFT 48 /* established */
+/* established */
+#define ROUTER_NL4_CDQ0_TEST_POINT_SELECT_512_NIBBLE6_CHIPLET_SEL_SHIFT 48
 #define ROUTER_NL4_CDQ0_TEST_POINT_SELECT_512_NIBBLE6_CHIPLET_SEL_MASK 0xfull
 #define ROUTER_NL4_CDQ0_TEST_POINT_SELECT_512_NIBBLE6_CHIPLET_SEL_INPLACE (ROUTER_NL4_CDQ0_TEST_POINT_SELECT_512_NIBBLE6_CHIPLET_SEL_MASK << ROUTER_NL4_CDQ0_TEST_POINT_SELECT_512_NIBBLE6_CHIPLET_SEL_SHIFT)
-#define ROUTER_NL4_CDQ0_TEST_POINT_SELECT_512_NIBBLE5_NIBBLE_SEL_SHIFT 44 /* established */
+/* established */
+#define ROUTER_NL4_CDQ0_TEST_POINT_SELECT_512_NIBBLE5_NIBBLE_SEL_SHIFT 44
 #define ROUTER_NL4_CDQ0_TEST_POINT_SELECT_512_NIBBLE5_NIBBLE_SEL_MASK 0x7ull
 #define ROUTER_NL4_CDQ0_TEST_POINT_SELECT_512_NIBBLE5_NIBBLE_SEL_INPLACE (ROUTER_NL4_CDQ0_TEST_POINT_SELECT_512_NIBBLE5_NIBBLE_SEL_MASK << ROUTER_NL4_CDQ0_TEST_POINT_SELECT_512_NIBBLE5_NIBBLE_SEL_SHIFT)
-#define ROUTER_NL4_CDQ0_TEST_POINT_SELECT_512_NIBBLE5_CHIPLET_SEL_SHIFT 40 /* established */
+/* established */
+#define ROUTER_NL4_CDQ0_TEST_POINT_SELECT_512_NIBBLE5_CHIPLET_SEL_SHIFT 40
 #define ROUTER_NL4_CDQ0_TEST_POINT_SELECT_512_NIBBLE5_CHIPLET_SEL_MASK 0xfull
 #define ROUTER_NL4_CDQ0_TEST_POINT_SELECT_512_NIBBLE5_CHIPLET_SEL_INPLACE (ROUTER_NL4_CDQ0_TEST_POINT_SELECT_512_NIBBLE5_CHIPLET_SEL_MASK << ROUTER_NL4_CDQ0_TEST_POINT_SELECT_512_NIBBLE5_CHIPLET_SEL_SHIFT)
-#define ROUTER_NL4_CDQ0_TEST_POINT_SELECT_512_NIBBLE4_NIBBLE_SEL_SHIFT 36 /* established */
+/* established */
+#define ROUTER_NL4_CDQ0_TEST_POINT_SELECT_512_NIBBLE4_NIBBLE_SEL_SHIFT 36
 #define ROUTER_NL4_CDQ0_TEST_POINT_SELECT_512_NIBBLE4_NIBBLE_SEL_MASK 0x7ull
 #define ROUTER_NL4_CDQ0_TEST_POINT_SELECT_512_NIBBLE4_NIBBLE_SEL_INPLACE (ROUTER_NL4_CDQ0_TEST_POINT_SELECT_512_NIBBLE4_NIBBLE_SEL_MASK << ROUTER_NL4_CDQ0_TEST_POINT_SELECT_512_NIBBLE4_NIBBLE_SEL_SHIFT)
-#define ROUTER_NL4_CDQ0_TEST_POINT_SELECT_512_NIBBLE4_CHIPLET_SEL_SHIFT 32 /* established */
+/* established */
+#define ROUTER_NL4_CDQ0_TEST_POINT_SELECT_512_NIBBLE4_CHIPLET_SEL_SHIFT 32
 #define ROUTER_NL4_CDQ0_TEST_POINT_SELECT_512_NIBBLE4_CHIPLET_SEL_MASK 0xfull
 #define ROUTER_NL4_CDQ0_TEST_POINT_SELECT_512_NIBBLE4_CHIPLET_SEL_INPLACE (ROUTER_NL4_CDQ0_TEST_POINT_SELECT_512_NIBBLE4_CHIPLET_SEL_MASK << ROUTER_NL4_CDQ0_TEST_POINT_SELECT_512_NIBBLE4_CHIPLET_SEL_SHIFT)
-#define ROUTER_NL4_CDQ0_TEST_POINT_SELECT_512_NIBBLE3_NIBBLE_SEL_SHIFT 28 /* established */
+/* established */
+#define ROUTER_NL4_CDQ0_TEST_POINT_SELECT_512_NIBBLE3_NIBBLE_SEL_SHIFT 28
 #define ROUTER_NL4_CDQ0_TEST_POINT_SELECT_512_NIBBLE3_NIBBLE_SEL_MASK 0x7ull
 #define ROUTER_NL4_CDQ0_TEST_POINT_SELECT_512_NIBBLE3_NIBBLE_SEL_INPLACE (ROUTER_NL4_CDQ0_TEST_POINT_SELECT_512_NIBBLE3_NIBBLE_SEL_MASK << ROUTER_NL4_CDQ0_TEST_POINT_SELECT_512_NIBBLE3_NIBBLE_SEL_SHIFT)
-#define ROUTER_NL4_CDQ0_TEST_POINT_SELECT_512_NIBBLE3_CHIPLET_SEL_SHIFT 24 /* established */
+/* established */
+#define ROUTER_NL4_CDQ0_TEST_POINT_SELECT_512_NIBBLE3_CHIPLET_SEL_SHIFT 24
 #define ROUTER_NL4_CDQ0_TEST_POINT_SELECT_512_NIBBLE3_CHIPLET_SEL_MASK 0xfull
 #define ROUTER_NL4_CDQ0_TEST_POINT_SELECT_512_NIBBLE3_CHIPLET_SEL_INPLACE (ROUTER_NL4_CDQ0_TEST_POINT_SELECT_512_NIBBLE3_CHIPLET_SEL_MASK << ROUTER_NL4_CDQ0_TEST_POINT_SELECT_512_NIBBLE3_CHIPLET_SEL_SHIFT)
-#define ROUTER_NL4_CDQ0_TEST_POINT_SELECT_512_NIBBLE2_NIBBLE_SEL_SHIFT 20 /* established */
+/* established */
+#define ROUTER_NL4_CDQ0_TEST_POINT_SELECT_512_NIBBLE2_NIBBLE_SEL_SHIFT 20
 #define ROUTER_NL4_CDQ0_TEST_POINT_SELECT_512_NIBBLE2_NIBBLE_SEL_MASK 0x7ull
 #define ROUTER_NL4_CDQ0_TEST_POINT_SELECT_512_NIBBLE2_NIBBLE_SEL_INPLACE (ROUTER_NL4_CDQ0_TEST_POINT_SELECT_512_NIBBLE2_NIBBLE_SEL_MASK << ROUTER_NL4_CDQ0_TEST_POINT_SELECT_512_NIBBLE2_NIBBLE_SEL_SHIFT)
-#define ROUTER_NL4_CDQ0_TEST_POINT_SELECT_512_NIBBLE2_CHIPLET_SEL_SHIFT 16 /* established */
+/* established */
+#define ROUTER_NL4_CDQ0_TEST_POINT_SELECT_512_NIBBLE2_CHIPLET_SEL_SHIFT 16
 #define ROUTER_NL4_CDQ0_TEST_POINT_SELECT_512_NIBBLE2_CHIPLET_SEL_MASK 0xfull
 #define ROUTER_NL4_CDQ0_TEST_POINT_SELECT_512_NIBBLE2_CHIPLET_SEL_INPLACE (ROUTER_NL4_CDQ0_TEST_POINT_SELECT_512_NIBBLE2_CHIPLET_SEL_MASK << ROUTER_NL4_CDQ0_TEST_POINT_SELECT_512_NIBBLE2_CHIPLET_SEL_SHIFT)
-#define ROUTER_NL4_CDQ0_TEST_POINT_SELECT_512_NIBBLE1_NIBBLE_SEL_SHIFT 12 /* established */
+/* established */
+#define ROUTER_NL4_CDQ0_TEST_POINT_SELECT_512_NIBBLE1_NIBBLE_SEL_SHIFT 12
 #define ROUTER_NL4_CDQ0_TEST_POINT_SELECT_512_NIBBLE1_NIBBLE_SEL_MASK 0x7ull
 #define ROUTER_NL4_CDQ0_TEST_POINT_SELECT_512_NIBBLE1_NIBBLE_SEL_INPLACE (ROUTER_NL4_CDQ0_TEST_POINT_SELECT_512_NIBBLE1_NIBBLE_SEL_MASK << ROUTER_NL4_CDQ0_TEST_POINT_SELECT_512_NIBBLE1_NIBBLE_SEL_SHIFT)
-#define ROUTER_NL4_CDQ0_TEST_POINT_SELECT_512_NIBBLE1_CHIPLET_SEL_SHIFT 8 /* established */
+/* established */
+#define ROUTER_NL4_CDQ0_TEST_POINT_SELECT_512_NIBBLE1_CHIPLET_SEL_SHIFT 8
 #define ROUTER_NL4_CDQ0_TEST_POINT_SELECT_512_NIBBLE1_CHIPLET_SEL_MASK 0xfull
 #define ROUTER_NL4_CDQ0_TEST_POINT_SELECT_512_NIBBLE1_CHIPLET_SEL_INPLACE (ROUTER_NL4_CDQ0_TEST_POINT_SELECT_512_NIBBLE1_CHIPLET_SEL_MASK << ROUTER_NL4_CDQ0_TEST_POINT_SELECT_512_NIBBLE1_CHIPLET_SEL_SHIFT)
-#define ROUTER_NL4_CDQ0_TEST_POINT_SELECT_512_NIBBLE0_NIBBLE_SEL_SHIFT 4 /* established */
+/* established */
+#define ROUTER_NL4_CDQ0_TEST_POINT_SELECT_512_NIBBLE0_NIBBLE_SEL_SHIFT 4
 #define ROUTER_NL4_CDQ0_TEST_POINT_SELECT_512_NIBBLE0_NIBBLE_SEL_MASK 0x7ull
 #define ROUTER_NL4_CDQ0_TEST_POINT_SELECT_512_NIBBLE0_NIBBLE_SEL_INPLACE (ROUTER_NL4_CDQ0_TEST_POINT_SELECT_512_NIBBLE0_NIBBLE_SEL_MASK << ROUTER_NL4_CDQ0_TEST_POINT_SELECT_512_NIBBLE0_NIBBLE_SEL_SHIFT)
-#define ROUTER_NL4_CDQ0_TEST_POINT_SELECT_512_NIBBLE0_CHIPLET_SEL_SHIFT 0 /* established */
+/* established */
+#define ROUTER_NL4_CDQ0_TEST_POINT_SELECT_512_NIBBLE0_CHIPLET_SEL_SHIFT 0
 #define ROUTER_NL4_CDQ0_TEST_POINT_SELECT_512_NIBBLE0_CHIPLET_SEL_MASK 0xfull
 #define ROUTER_NL4_CDQ0_TEST_POINT_SELECT_512_NIBBLE0_CHIPLET_SEL_INPLACE (ROUTER_NL4_CDQ0_TEST_POINT_SELECT_512_NIBBLE0_CHIPLET_SEL_MASK << ROUTER_NL4_CDQ0_TEST_POINT_SELECT_512_NIBBLE0_CHIPLET_SEL_SHIFT)
 
 /*
- * PROM register R4_CDQ1_TEST_POINT_SELECT_512. Offset and field positions read from the table; role inferred from the names.
+ * PROM register R4_CDQ1_TEST_POINT_SELECT_512. Offset and field positions read
+ * from the table; role inferred from the names.
  */
 /* cdq1_test_point_select_512: rw64, reset unknown */
-#define ROUTER_NL4_CDQ1_TEST_POINT_SELECT_512_OFFSET 0x2002760u /* established */
-#define ROUTER_NL4_CDQ1_TEST_POINT_SELECT_512_NIBBLE7_NIBBLE_SEL_SHIFT 60 /* established */
+/* established */
+#define ROUTER_NL4_CDQ1_TEST_POINT_SELECT_512_OFFSET 0x2002760u
+/* established */
+#define ROUTER_NL4_CDQ1_TEST_POINT_SELECT_512_NIBBLE7_NIBBLE_SEL_SHIFT 60
 #define ROUTER_NL4_CDQ1_TEST_POINT_SELECT_512_NIBBLE7_NIBBLE_SEL_MASK 0x7ull
 #define ROUTER_NL4_CDQ1_TEST_POINT_SELECT_512_NIBBLE7_NIBBLE_SEL_INPLACE (ROUTER_NL4_CDQ1_TEST_POINT_SELECT_512_NIBBLE7_NIBBLE_SEL_MASK << ROUTER_NL4_CDQ1_TEST_POINT_SELECT_512_NIBBLE7_NIBBLE_SEL_SHIFT)
-#define ROUTER_NL4_CDQ1_TEST_POINT_SELECT_512_NIBBLE7_CHIPLET_SEL_SHIFT 56 /* established */
+/* established */
+#define ROUTER_NL4_CDQ1_TEST_POINT_SELECT_512_NIBBLE7_CHIPLET_SEL_SHIFT 56
 #define ROUTER_NL4_CDQ1_TEST_POINT_SELECT_512_NIBBLE7_CHIPLET_SEL_MASK 0xfull
 #define ROUTER_NL4_CDQ1_TEST_POINT_SELECT_512_NIBBLE7_CHIPLET_SEL_INPLACE (ROUTER_NL4_CDQ1_TEST_POINT_SELECT_512_NIBBLE7_CHIPLET_SEL_MASK << ROUTER_NL4_CDQ1_TEST_POINT_SELECT_512_NIBBLE7_CHIPLET_SEL_SHIFT)
-#define ROUTER_NL4_CDQ1_TEST_POINT_SELECT_512_NIBBLE6_NIBBLE_SEL_SHIFT 52 /* established */
+/* established */
+#define ROUTER_NL4_CDQ1_TEST_POINT_SELECT_512_NIBBLE6_NIBBLE_SEL_SHIFT 52
 #define ROUTER_NL4_CDQ1_TEST_POINT_SELECT_512_NIBBLE6_NIBBLE_SEL_MASK 0x7ull
 #define ROUTER_NL4_CDQ1_TEST_POINT_SELECT_512_NIBBLE6_NIBBLE_SEL_INPLACE (ROUTER_NL4_CDQ1_TEST_POINT_SELECT_512_NIBBLE6_NIBBLE_SEL_MASK << ROUTER_NL4_CDQ1_TEST_POINT_SELECT_512_NIBBLE6_NIBBLE_SEL_SHIFT)
-#define ROUTER_NL4_CDQ1_TEST_POINT_SELECT_512_NIBBLE6_CHIPLET_SEL_SHIFT 48 /* established */
+/* established */
+#define ROUTER_NL4_CDQ1_TEST_POINT_SELECT_512_NIBBLE6_CHIPLET_SEL_SHIFT 48
 #define ROUTER_NL4_CDQ1_TEST_POINT_SELECT_512_NIBBLE6_CHIPLET_SEL_MASK 0xfull
 #define ROUTER_NL4_CDQ1_TEST_POINT_SELECT_512_NIBBLE6_CHIPLET_SEL_INPLACE (ROUTER_NL4_CDQ1_TEST_POINT_SELECT_512_NIBBLE6_CHIPLET_SEL_MASK << ROUTER_NL4_CDQ1_TEST_POINT_SELECT_512_NIBBLE6_CHIPLET_SEL_SHIFT)
-#define ROUTER_NL4_CDQ1_TEST_POINT_SELECT_512_NIBBLE5_NIBBLE_SEL_SHIFT 44 /* established */
+/* established */
+#define ROUTER_NL4_CDQ1_TEST_POINT_SELECT_512_NIBBLE5_NIBBLE_SEL_SHIFT 44
 #define ROUTER_NL4_CDQ1_TEST_POINT_SELECT_512_NIBBLE5_NIBBLE_SEL_MASK 0x7ull
 #define ROUTER_NL4_CDQ1_TEST_POINT_SELECT_512_NIBBLE5_NIBBLE_SEL_INPLACE (ROUTER_NL4_CDQ1_TEST_POINT_SELECT_512_NIBBLE5_NIBBLE_SEL_MASK << ROUTER_NL4_CDQ1_TEST_POINT_SELECT_512_NIBBLE5_NIBBLE_SEL_SHIFT)
-#define ROUTER_NL4_CDQ1_TEST_POINT_SELECT_512_NIBBLE5_CHIPLET_SEL_SHIFT 40 /* established */
+/* established */
+#define ROUTER_NL4_CDQ1_TEST_POINT_SELECT_512_NIBBLE5_CHIPLET_SEL_SHIFT 40
 #define ROUTER_NL4_CDQ1_TEST_POINT_SELECT_512_NIBBLE5_CHIPLET_SEL_MASK 0xfull
 #define ROUTER_NL4_CDQ1_TEST_POINT_SELECT_512_NIBBLE5_CHIPLET_SEL_INPLACE (ROUTER_NL4_CDQ1_TEST_POINT_SELECT_512_NIBBLE5_CHIPLET_SEL_MASK << ROUTER_NL4_CDQ1_TEST_POINT_SELECT_512_NIBBLE5_CHIPLET_SEL_SHIFT)
-#define ROUTER_NL4_CDQ1_TEST_POINT_SELECT_512_NIBBLE4_NIBBLE_SEL_SHIFT 36 /* established */
+/* established */
+#define ROUTER_NL4_CDQ1_TEST_POINT_SELECT_512_NIBBLE4_NIBBLE_SEL_SHIFT 36
 #define ROUTER_NL4_CDQ1_TEST_POINT_SELECT_512_NIBBLE4_NIBBLE_SEL_MASK 0x7ull
 #define ROUTER_NL4_CDQ1_TEST_POINT_SELECT_512_NIBBLE4_NIBBLE_SEL_INPLACE (ROUTER_NL4_CDQ1_TEST_POINT_SELECT_512_NIBBLE4_NIBBLE_SEL_MASK << ROUTER_NL4_CDQ1_TEST_POINT_SELECT_512_NIBBLE4_NIBBLE_SEL_SHIFT)
-#define ROUTER_NL4_CDQ1_TEST_POINT_SELECT_512_NIBBLE4_CHIPLET_SEL_SHIFT 32 /* established */
+/* established */
+#define ROUTER_NL4_CDQ1_TEST_POINT_SELECT_512_NIBBLE4_CHIPLET_SEL_SHIFT 32
 #define ROUTER_NL4_CDQ1_TEST_POINT_SELECT_512_NIBBLE4_CHIPLET_SEL_MASK 0xfull
 #define ROUTER_NL4_CDQ1_TEST_POINT_SELECT_512_NIBBLE4_CHIPLET_SEL_INPLACE (ROUTER_NL4_CDQ1_TEST_POINT_SELECT_512_NIBBLE4_CHIPLET_SEL_MASK << ROUTER_NL4_CDQ1_TEST_POINT_SELECT_512_NIBBLE4_CHIPLET_SEL_SHIFT)
-#define ROUTER_NL4_CDQ1_TEST_POINT_SELECT_512_NIBBLE3_NIBBLE_SEL_SHIFT 28 /* established */
+/* established */
+#define ROUTER_NL4_CDQ1_TEST_POINT_SELECT_512_NIBBLE3_NIBBLE_SEL_SHIFT 28
 #define ROUTER_NL4_CDQ1_TEST_POINT_SELECT_512_NIBBLE3_NIBBLE_SEL_MASK 0x7ull
 #define ROUTER_NL4_CDQ1_TEST_POINT_SELECT_512_NIBBLE3_NIBBLE_SEL_INPLACE (ROUTER_NL4_CDQ1_TEST_POINT_SELECT_512_NIBBLE3_NIBBLE_SEL_MASK << ROUTER_NL4_CDQ1_TEST_POINT_SELECT_512_NIBBLE3_NIBBLE_SEL_SHIFT)
-#define ROUTER_NL4_CDQ1_TEST_POINT_SELECT_512_NIBBLE3_CHIPLET_SEL_SHIFT 24 /* established */
+/* established */
+#define ROUTER_NL4_CDQ1_TEST_POINT_SELECT_512_NIBBLE3_CHIPLET_SEL_SHIFT 24
 #define ROUTER_NL4_CDQ1_TEST_POINT_SELECT_512_NIBBLE3_CHIPLET_SEL_MASK 0xfull
 #define ROUTER_NL4_CDQ1_TEST_POINT_SELECT_512_NIBBLE3_CHIPLET_SEL_INPLACE (ROUTER_NL4_CDQ1_TEST_POINT_SELECT_512_NIBBLE3_CHIPLET_SEL_MASK << ROUTER_NL4_CDQ1_TEST_POINT_SELECT_512_NIBBLE3_CHIPLET_SEL_SHIFT)
-#define ROUTER_NL4_CDQ1_TEST_POINT_SELECT_512_NIBBLE2_NIBBLE_SEL_SHIFT 20 /* established */
+/* established */
+#define ROUTER_NL4_CDQ1_TEST_POINT_SELECT_512_NIBBLE2_NIBBLE_SEL_SHIFT 20
 #define ROUTER_NL4_CDQ1_TEST_POINT_SELECT_512_NIBBLE2_NIBBLE_SEL_MASK 0x7ull
 #define ROUTER_NL4_CDQ1_TEST_POINT_SELECT_512_NIBBLE2_NIBBLE_SEL_INPLACE (ROUTER_NL4_CDQ1_TEST_POINT_SELECT_512_NIBBLE2_NIBBLE_SEL_MASK << ROUTER_NL4_CDQ1_TEST_POINT_SELECT_512_NIBBLE2_NIBBLE_SEL_SHIFT)
-#define ROUTER_NL4_CDQ1_TEST_POINT_SELECT_512_NIBBLE2_CHIPLET_SEL_SHIFT 16 /* established */
+/* established */
+#define ROUTER_NL4_CDQ1_TEST_POINT_SELECT_512_NIBBLE2_CHIPLET_SEL_SHIFT 16
 #define ROUTER_NL4_CDQ1_TEST_POINT_SELECT_512_NIBBLE2_CHIPLET_SEL_MASK 0xfull
 #define ROUTER_NL4_CDQ1_TEST_POINT_SELECT_512_NIBBLE2_CHIPLET_SEL_INPLACE (ROUTER_NL4_CDQ1_TEST_POINT_SELECT_512_NIBBLE2_CHIPLET_SEL_MASK << ROUTER_NL4_CDQ1_TEST_POINT_SELECT_512_NIBBLE2_CHIPLET_SEL_SHIFT)
-#define ROUTER_NL4_CDQ1_TEST_POINT_SELECT_512_NIBBLE1_NIBBLE_SEL_SHIFT 12 /* established */
+/* established */
+#define ROUTER_NL4_CDQ1_TEST_POINT_SELECT_512_NIBBLE1_NIBBLE_SEL_SHIFT 12
 #define ROUTER_NL4_CDQ1_TEST_POINT_SELECT_512_NIBBLE1_NIBBLE_SEL_MASK 0x7ull
 #define ROUTER_NL4_CDQ1_TEST_POINT_SELECT_512_NIBBLE1_NIBBLE_SEL_INPLACE (ROUTER_NL4_CDQ1_TEST_POINT_SELECT_512_NIBBLE1_NIBBLE_SEL_MASK << ROUTER_NL4_CDQ1_TEST_POINT_SELECT_512_NIBBLE1_NIBBLE_SEL_SHIFT)
-#define ROUTER_NL4_CDQ1_TEST_POINT_SELECT_512_NIBBLE1_CHIPLET_SEL_SHIFT 8 /* established */
+/* established */
+#define ROUTER_NL4_CDQ1_TEST_POINT_SELECT_512_NIBBLE1_CHIPLET_SEL_SHIFT 8
 #define ROUTER_NL4_CDQ1_TEST_POINT_SELECT_512_NIBBLE1_CHIPLET_SEL_MASK 0xfull
 #define ROUTER_NL4_CDQ1_TEST_POINT_SELECT_512_NIBBLE1_CHIPLET_SEL_INPLACE (ROUTER_NL4_CDQ1_TEST_POINT_SELECT_512_NIBBLE1_CHIPLET_SEL_MASK << ROUTER_NL4_CDQ1_TEST_POINT_SELECT_512_NIBBLE1_CHIPLET_SEL_SHIFT)
-#define ROUTER_NL4_CDQ1_TEST_POINT_SELECT_512_NIBBLE0_NIBBLE_SEL_SHIFT 4 /* established */
+/* established */
+#define ROUTER_NL4_CDQ1_TEST_POINT_SELECT_512_NIBBLE0_NIBBLE_SEL_SHIFT 4
 #define ROUTER_NL4_CDQ1_TEST_POINT_SELECT_512_NIBBLE0_NIBBLE_SEL_MASK 0x7ull
 #define ROUTER_NL4_CDQ1_TEST_POINT_SELECT_512_NIBBLE0_NIBBLE_SEL_INPLACE (ROUTER_NL4_CDQ1_TEST_POINT_SELECT_512_NIBBLE0_NIBBLE_SEL_MASK << ROUTER_NL4_CDQ1_TEST_POINT_SELECT_512_NIBBLE0_NIBBLE_SEL_SHIFT)
-#define ROUTER_NL4_CDQ1_TEST_POINT_SELECT_512_NIBBLE0_CHIPLET_SEL_SHIFT 0 /* established */
+/* established */
+#define ROUTER_NL4_CDQ1_TEST_POINT_SELECT_512_NIBBLE0_CHIPLET_SEL_SHIFT 0
 #define ROUTER_NL4_CDQ1_TEST_POINT_SELECT_512_NIBBLE0_CHIPLET_SEL_MASK 0xfull
 #define ROUTER_NL4_CDQ1_TEST_POINT_SELECT_512_NIBBLE0_CHIPLET_SEL_INPLACE (ROUTER_NL4_CDQ1_TEST_POINT_SELECT_512_NIBBLE0_CHIPLET_SEL_MASK << ROUTER_NL4_CDQ1_TEST_POINT_SELECT_512_NIBBLE0_CHIPLET_SEL_SHIFT)
 
 /*
- * PROM register R4_CDQ2_TEST_POINT_SELECT_512. Offset and field positions read from the table; role inferred from the names.
+ * PROM register R4_CDQ2_TEST_POINT_SELECT_512. Offset and field positions read
+ * from the table; role inferred from the names.
  */
 /* cdq2_test_point_select_512: rw64, reset unknown */
-#define ROUTER_NL4_CDQ2_TEST_POINT_SELECT_512_OFFSET 0x2002780u /* established */
-#define ROUTER_NL4_CDQ2_TEST_POINT_SELECT_512_NIBBLE7_NIBBLE_SEL_SHIFT 60 /* established */
+/* established */
+#define ROUTER_NL4_CDQ2_TEST_POINT_SELECT_512_OFFSET 0x2002780u
+/* established */
+#define ROUTER_NL4_CDQ2_TEST_POINT_SELECT_512_NIBBLE7_NIBBLE_SEL_SHIFT 60
 #define ROUTER_NL4_CDQ2_TEST_POINT_SELECT_512_NIBBLE7_NIBBLE_SEL_MASK 0x7ull
 #define ROUTER_NL4_CDQ2_TEST_POINT_SELECT_512_NIBBLE7_NIBBLE_SEL_INPLACE (ROUTER_NL4_CDQ2_TEST_POINT_SELECT_512_NIBBLE7_NIBBLE_SEL_MASK << ROUTER_NL4_CDQ2_TEST_POINT_SELECT_512_NIBBLE7_NIBBLE_SEL_SHIFT)
-#define ROUTER_NL4_CDQ2_TEST_POINT_SELECT_512_NIBBLE7_CHIPLET_SEL_SHIFT 56 /* established */
+/* established */
+#define ROUTER_NL4_CDQ2_TEST_POINT_SELECT_512_NIBBLE7_CHIPLET_SEL_SHIFT 56
 #define ROUTER_NL4_CDQ2_TEST_POINT_SELECT_512_NIBBLE7_CHIPLET_SEL_MASK 0xfull
 #define ROUTER_NL4_CDQ2_TEST_POINT_SELECT_512_NIBBLE7_CHIPLET_SEL_INPLACE (ROUTER_NL4_CDQ2_TEST_POINT_SELECT_512_NIBBLE7_CHIPLET_SEL_MASK << ROUTER_NL4_CDQ2_TEST_POINT_SELECT_512_NIBBLE7_CHIPLET_SEL_SHIFT)
-#define ROUTER_NL4_CDQ2_TEST_POINT_SELECT_512_NIBBLE6_NIBBLE_SEL_SHIFT 52 /* established */
+/* established */
+#define ROUTER_NL4_CDQ2_TEST_POINT_SELECT_512_NIBBLE6_NIBBLE_SEL_SHIFT 52
 #define ROUTER_NL4_CDQ2_TEST_POINT_SELECT_512_NIBBLE6_NIBBLE_SEL_MASK 0x7ull
 #define ROUTER_NL4_CDQ2_TEST_POINT_SELECT_512_NIBBLE6_NIBBLE_SEL_INPLACE (ROUTER_NL4_CDQ2_TEST_POINT_SELECT_512_NIBBLE6_NIBBLE_SEL_MASK << ROUTER_NL4_CDQ2_TEST_POINT_SELECT_512_NIBBLE6_NIBBLE_SEL_SHIFT)
-#define ROUTER_NL4_CDQ2_TEST_POINT_SELECT_512_NIBBLE6_CHIPLET_SEL_SHIFT 48 /* established */
+/* established */
+#define ROUTER_NL4_CDQ2_TEST_POINT_SELECT_512_NIBBLE6_CHIPLET_SEL_SHIFT 48
 #define ROUTER_NL4_CDQ2_TEST_POINT_SELECT_512_NIBBLE6_CHIPLET_SEL_MASK 0xfull
 #define ROUTER_NL4_CDQ2_TEST_POINT_SELECT_512_NIBBLE6_CHIPLET_SEL_INPLACE (ROUTER_NL4_CDQ2_TEST_POINT_SELECT_512_NIBBLE6_CHIPLET_SEL_MASK << ROUTER_NL4_CDQ2_TEST_POINT_SELECT_512_NIBBLE6_CHIPLET_SEL_SHIFT)
-#define ROUTER_NL4_CDQ2_TEST_POINT_SELECT_512_NIBBLE5_NIBBLE_SEL_SHIFT 44 /* established */
+/* established */
+#define ROUTER_NL4_CDQ2_TEST_POINT_SELECT_512_NIBBLE5_NIBBLE_SEL_SHIFT 44
 #define ROUTER_NL4_CDQ2_TEST_POINT_SELECT_512_NIBBLE5_NIBBLE_SEL_MASK 0x7ull
 #define ROUTER_NL4_CDQ2_TEST_POINT_SELECT_512_NIBBLE5_NIBBLE_SEL_INPLACE (ROUTER_NL4_CDQ2_TEST_POINT_SELECT_512_NIBBLE5_NIBBLE_SEL_MASK << ROUTER_NL4_CDQ2_TEST_POINT_SELECT_512_NIBBLE5_NIBBLE_SEL_SHIFT)
-#define ROUTER_NL4_CDQ2_TEST_POINT_SELECT_512_NIBBLE5_CHIPLET_SEL_SHIFT 40 /* established */
+/* established */
+#define ROUTER_NL4_CDQ2_TEST_POINT_SELECT_512_NIBBLE5_CHIPLET_SEL_SHIFT 40
 #define ROUTER_NL4_CDQ2_TEST_POINT_SELECT_512_NIBBLE5_CHIPLET_SEL_MASK 0xfull
 #define ROUTER_NL4_CDQ2_TEST_POINT_SELECT_512_NIBBLE5_CHIPLET_SEL_INPLACE (ROUTER_NL4_CDQ2_TEST_POINT_SELECT_512_NIBBLE5_CHIPLET_SEL_MASK << ROUTER_NL4_CDQ2_TEST_POINT_SELECT_512_NIBBLE5_CHIPLET_SEL_SHIFT)
-#define ROUTER_NL4_CDQ2_TEST_POINT_SELECT_512_NIBBLE4_NIBBLE_SEL_SHIFT 36 /* established */
+/* established */
+#define ROUTER_NL4_CDQ2_TEST_POINT_SELECT_512_NIBBLE4_NIBBLE_SEL_SHIFT 36
 #define ROUTER_NL4_CDQ2_TEST_POINT_SELECT_512_NIBBLE4_NIBBLE_SEL_MASK 0x7ull
 #define ROUTER_NL4_CDQ2_TEST_POINT_SELECT_512_NIBBLE4_NIBBLE_SEL_INPLACE (ROUTER_NL4_CDQ2_TEST_POINT_SELECT_512_NIBBLE4_NIBBLE_SEL_MASK << ROUTER_NL4_CDQ2_TEST_POINT_SELECT_512_NIBBLE4_NIBBLE_SEL_SHIFT)
-#define ROUTER_NL4_CDQ2_TEST_POINT_SELECT_512_NIBBLE4_CHIPLET_SEL_SHIFT 32 /* established */
+/* established */
+#define ROUTER_NL4_CDQ2_TEST_POINT_SELECT_512_NIBBLE4_CHIPLET_SEL_SHIFT 32
 #define ROUTER_NL4_CDQ2_TEST_POINT_SELECT_512_NIBBLE4_CHIPLET_SEL_MASK 0xfull
 #define ROUTER_NL4_CDQ2_TEST_POINT_SELECT_512_NIBBLE4_CHIPLET_SEL_INPLACE (ROUTER_NL4_CDQ2_TEST_POINT_SELECT_512_NIBBLE4_CHIPLET_SEL_MASK << ROUTER_NL4_CDQ2_TEST_POINT_SELECT_512_NIBBLE4_CHIPLET_SEL_SHIFT)
-#define ROUTER_NL4_CDQ2_TEST_POINT_SELECT_512_NIBBLE3_NIBBLE_SEL_SHIFT 28 /* established */
+/* established */
+#define ROUTER_NL4_CDQ2_TEST_POINT_SELECT_512_NIBBLE3_NIBBLE_SEL_SHIFT 28
 #define ROUTER_NL4_CDQ2_TEST_POINT_SELECT_512_NIBBLE3_NIBBLE_SEL_MASK 0x7ull
 #define ROUTER_NL4_CDQ2_TEST_POINT_SELECT_512_NIBBLE3_NIBBLE_SEL_INPLACE (ROUTER_NL4_CDQ2_TEST_POINT_SELECT_512_NIBBLE3_NIBBLE_SEL_MASK << ROUTER_NL4_CDQ2_TEST_POINT_SELECT_512_NIBBLE3_NIBBLE_SEL_SHIFT)
-#define ROUTER_NL4_CDQ2_TEST_POINT_SELECT_512_NIBBLE3_CHIPLET_SEL_SHIFT 24 /* established */
+/* established */
+#define ROUTER_NL4_CDQ2_TEST_POINT_SELECT_512_NIBBLE3_CHIPLET_SEL_SHIFT 24
 #define ROUTER_NL4_CDQ2_TEST_POINT_SELECT_512_NIBBLE3_CHIPLET_SEL_MASK 0xfull
 #define ROUTER_NL4_CDQ2_TEST_POINT_SELECT_512_NIBBLE3_CHIPLET_SEL_INPLACE (ROUTER_NL4_CDQ2_TEST_POINT_SELECT_512_NIBBLE3_CHIPLET_SEL_MASK << ROUTER_NL4_CDQ2_TEST_POINT_SELECT_512_NIBBLE3_CHIPLET_SEL_SHIFT)
-#define ROUTER_NL4_CDQ2_TEST_POINT_SELECT_512_NIBBLE2_NIBBLE_SEL_SHIFT 20 /* established */
+/* established */
+#define ROUTER_NL4_CDQ2_TEST_POINT_SELECT_512_NIBBLE2_NIBBLE_SEL_SHIFT 20
 #define ROUTER_NL4_CDQ2_TEST_POINT_SELECT_512_NIBBLE2_NIBBLE_SEL_MASK 0x7ull
 #define ROUTER_NL4_CDQ2_TEST_POINT_SELECT_512_NIBBLE2_NIBBLE_SEL_INPLACE (ROUTER_NL4_CDQ2_TEST_POINT_SELECT_512_NIBBLE2_NIBBLE_SEL_MASK << ROUTER_NL4_CDQ2_TEST_POINT_SELECT_512_NIBBLE2_NIBBLE_SEL_SHIFT)
-#define ROUTER_NL4_CDQ2_TEST_POINT_SELECT_512_NIBBLE2_CHIPLET_SEL_SHIFT 16 /* established */
+/* established */
+#define ROUTER_NL4_CDQ2_TEST_POINT_SELECT_512_NIBBLE2_CHIPLET_SEL_SHIFT 16
 #define ROUTER_NL4_CDQ2_TEST_POINT_SELECT_512_NIBBLE2_CHIPLET_SEL_MASK 0xfull
 #define ROUTER_NL4_CDQ2_TEST_POINT_SELECT_512_NIBBLE2_CHIPLET_SEL_INPLACE (ROUTER_NL4_CDQ2_TEST_POINT_SELECT_512_NIBBLE2_CHIPLET_SEL_MASK << ROUTER_NL4_CDQ2_TEST_POINT_SELECT_512_NIBBLE2_CHIPLET_SEL_SHIFT)
-#define ROUTER_NL4_CDQ2_TEST_POINT_SELECT_512_NIBBLE1_NIBBLE_SEL_SHIFT 12 /* established */
+/* established */
+#define ROUTER_NL4_CDQ2_TEST_POINT_SELECT_512_NIBBLE1_NIBBLE_SEL_SHIFT 12
 #define ROUTER_NL4_CDQ2_TEST_POINT_SELECT_512_NIBBLE1_NIBBLE_SEL_MASK 0x7ull
 #define ROUTER_NL4_CDQ2_TEST_POINT_SELECT_512_NIBBLE1_NIBBLE_SEL_INPLACE (ROUTER_NL4_CDQ2_TEST_POINT_SELECT_512_NIBBLE1_NIBBLE_SEL_MASK << ROUTER_NL4_CDQ2_TEST_POINT_SELECT_512_NIBBLE1_NIBBLE_SEL_SHIFT)
-#define ROUTER_NL4_CDQ2_TEST_POINT_SELECT_512_NIBBLE1_CHIPLET_SEL_SHIFT 8 /* established */
+/* established */
+#define ROUTER_NL4_CDQ2_TEST_POINT_SELECT_512_NIBBLE1_CHIPLET_SEL_SHIFT 8
 #define ROUTER_NL4_CDQ2_TEST_POINT_SELECT_512_NIBBLE1_CHIPLET_SEL_MASK 0xfull
 #define ROUTER_NL4_CDQ2_TEST_POINT_SELECT_512_NIBBLE1_CHIPLET_SEL_INPLACE (ROUTER_NL4_CDQ2_TEST_POINT_SELECT_512_NIBBLE1_CHIPLET_SEL_MASK << ROUTER_NL4_CDQ2_TEST_POINT_SELECT_512_NIBBLE1_CHIPLET_SEL_SHIFT)
-#define ROUTER_NL4_CDQ2_TEST_POINT_SELECT_512_NIBBLE0_NIBBLE_SEL_SHIFT 4 /* established */
+/* established */
+#define ROUTER_NL4_CDQ2_TEST_POINT_SELECT_512_NIBBLE0_NIBBLE_SEL_SHIFT 4
 #define ROUTER_NL4_CDQ2_TEST_POINT_SELECT_512_NIBBLE0_NIBBLE_SEL_MASK 0x7ull
 #define ROUTER_NL4_CDQ2_TEST_POINT_SELECT_512_NIBBLE0_NIBBLE_SEL_INPLACE (ROUTER_NL4_CDQ2_TEST_POINT_SELECT_512_NIBBLE0_NIBBLE_SEL_MASK << ROUTER_NL4_CDQ2_TEST_POINT_SELECT_512_NIBBLE0_NIBBLE_SEL_SHIFT)
-#define ROUTER_NL4_CDQ2_TEST_POINT_SELECT_512_NIBBLE0_CHIPLET_SEL_SHIFT 0 /* established */
+/* established */
+#define ROUTER_NL4_CDQ2_TEST_POINT_SELECT_512_NIBBLE0_CHIPLET_SEL_SHIFT 0
 #define ROUTER_NL4_CDQ2_TEST_POINT_SELECT_512_NIBBLE0_CHIPLET_SEL_MASK 0xfull
 #define ROUTER_NL4_CDQ2_TEST_POINT_SELECT_512_NIBBLE0_CHIPLET_SEL_INPLACE (ROUTER_NL4_CDQ2_TEST_POINT_SELECT_512_NIBBLE0_CHIPLET_SEL_MASK << ROUTER_NL4_CDQ2_TEST_POINT_SELECT_512_NIBBLE0_CHIPLET_SEL_SHIFT)
 
 /*
- * PROM register R4_CDQ3_TEST_POINT_SELECT_512. Offset and field positions read from the table; role inferred from the names.
+ * PROM register R4_CDQ3_TEST_POINT_SELECT_512. Offset and field positions read
+ * from the table; role inferred from the names.
  */
 /* cdq3_test_point_select_512: rw64, reset unknown */
-#define ROUTER_NL4_CDQ3_TEST_POINT_SELECT_512_OFFSET 0x2002800u /* established */
-#define ROUTER_NL4_CDQ3_TEST_POINT_SELECT_512_NIBBLE7_NIBBLE_SEL_SHIFT 60 /* established */
+/* established */
+#define ROUTER_NL4_CDQ3_TEST_POINT_SELECT_512_OFFSET 0x2002800u
+/* established */
+#define ROUTER_NL4_CDQ3_TEST_POINT_SELECT_512_NIBBLE7_NIBBLE_SEL_SHIFT 60
 #define ROUTER_NL4_CDQ3_TEST_POINT_SELECT_512_NIBBLE7_NIBBLE_SEL_MASK 0x7ull
 #define ROUTER_NL4_CDQ3_TEST_POINT_SELECT_512_NIBBLE7_NIBBLE_SEL_INPLACE (ROUTER_NL4_CDQ3_TEST_POINT_SELECT_512_NIBBLE7_NIBBLE_SEL_MASK << ROUTER_NL4_CDQ3_TEST_POINT_SELECT_512_NIBBLE7_NIBBLE_SEL_SHIFT)
-#define ROUTER_NL4_CDQ3_TEST_POINT_SELECT_512_NIBBLE7_CHIPLET_SEL_SHIFT 56 /* established */
+/* established */
+#define ROUTER_NL4_CDQ3_TEST_POINT_SELECT_512_NIBBLE7_CHIPLET_SEL_SHIFT 56
 #define ROUTER_NL4_CDQ3_TEST_POINT_SELECT_512_NIBBLE7_CHIPLET_SEL_MASK 0xfull
 #define ROUTER_NL4_CDQ3_TEST_POINT_SELECT_512_NIBBLE7_CHIPLET_SEL_INPLACE (ROUTER_NL4_CDQ3_TEST_POINT_SELECT_512_NIBBLE7_CHIPLET_SEL_MASK << ROUTER_NL4_CDQ3_TEST_POINT_SELECT_512_NIBBLE7_CHIPLET_SEL_SHIFT)
-#define ROUTER_NL4_CDQ3_TEST_POINT_SELECT_512_NIBBLE6_NIBBLE_SEL_SHIFT 52 /* established */
+/* established */
+#define ROUTER_NL4_CDQ3_TEST_POINT_SELECT_512_NIBBLE6_NIBBLE_SEL_SHIFT 52
 #define ROUTER_NL4_CDQ3_TEST_POINT_SELECT_512_NIBBLE6_NIBBLE_SEL_MASK 0x7ull
 #define ROUTER_NL4_CDQ3_TEST_POINT_SELECT_512_NIBBLE6_NIBBLE_SEL_INPLACE (ROUTER_NL4_CDQ3_TEST_POINT_SELECT_512_NIBBLE6_NIBBLE_SEL_MASK << ROUTER_NL4_CDQ3_TEST_POINT_SELECT_512_NIBBLE6_NIBBLE_SEL_SHIFT)
-#define ROUTER_NL4_CDQ3_TEST_POINT_SELECT_512_NIBBLE6_CHIPLET_SEL_SHIFT 48 /* established */
+/* established */
+#define ROUTER_NL4_CDQ3_TEST_POINT_SELECT_512_NIBBLE6_CHIPLET_SEL_SHIFT 48
 #define ROUTER_NL4_CDQ3_TEST_POINT_SELECT_512_NIBBLE6_CHIPLET_SEL_MASK 0xfull
 #define ROUTER_NL4_CDQ3_TEST_POINT_SELECT_512_NIBBLE6_CHIPLET_SEL_INPLACE (ROUTER_NL4_CDQ3_TEST_POINT_SELECT_512_NIBBLE6_CHIPLET_SEL_MASK << ROUTER_NL4_CDQ3_TEST_POINT_SELECT_512_NIBBLE6_CHIPLET_SEL_SHIFT)
-#define ROUTER_NL4_CDQ3_TEST_POINT_SELECT_512_NIBBLE5_NIBBLE_SEL_SHIFT 44 /* established */
+/* established */
+#define ROUTER_NL4_CDQ3_TEST_POINT_SELECT_512_NIBBLE5_NIBBLE_SEL_SHIFT 44
 #define ROUTER_NL4_CDQ3_TEST_POINT_SELECT_512_NIBBLE5_NIBBLE_SEL_MASK 0x7ull
 #define ROUTER_NL4_CDQ3_TEST_POINT_SELECT_512_NIBBLE5_NIBBLE_SEL_INPLACE (ROUTER_NL4_CDQ3_TEST_POINT_SELECT_512_NIBBLE5_NIBBLE_SEL_MASK << ROUTER_NL4_CDQ3_TEST_POINT_SELECT_512_NIBBLE5_NIBBLE_SEL_SHIFT)
-#define ROUTER_NL4_CDQ3_TEST_POINT_SELECT_512_NIBBLE5_CHIPLET_SEL_SHIFT 40 /* established */
+/* established */
+#define ROUTER_NL4_CDQ3_TEST_POINT_SELECT_512_NIBBLE5_CHIPLET_SEL_SHIFT 40
 #define ROUTER_NL4_CDQ3_TEST_POINT_SELECT_512_NIBBLE5_CHIPLET_SEL_MASK 0xfull
 #define ROUTER_NL4_CDQ3_TEST_POINT_SELECT_512_NIBBLE5_CHIPLET_SEL_INPLACE (ROUTER_NL4_CDQ3_TEST_POINT_SELECT_512_NIBBLE5_CHIPLET_SEL_MASK << ROUTER_NL4_CDQ3_TEST_POINT_SELECT_512_NIBBLE5_CHIPLET_SEL_SHIFT)
-#define ROUTER_NL4_CDQ3_TEST_POINT_SELECT_512_NIBBLE4_NIBBLE_SEL_SHIFT 36 /* established */
+/* established */
+#define ROUTER_NL4_CDQ3_TEST_POINT_SELECT_512_NIBBLE4_NIBBLE_SEL_SHIFT 36
 #define ROUTER_NL4_CDQ3_TEST_POINT_SELECT_512_NIBBLE4_NIBBLE_SEL_MASK 0x7ull
 #define ROUTER_NL4_CDQ3_TEST_POINT_SELECT_512_NIBBLE4_NIBBLE_SEL_INPLACE (ROUTER_NL4_CDQ3_TEST_POINT_SELECT_512_NIBBLE4_NIBBLE_SEL_MASK << ROUTER_NL4_CDQ3_TEST_POINT_SELECT_512_NIBBLE4_NIBBLE_SEL_SHIFT)
-#define ROUTER_NL4_CDQ3_TEST_POINT_SELECT_512_NIBBLE4_CHIPLET_SEL_SHIFT 32 /* established */
+/* established */
+#define ROUTER_NL4_CDQ3_TEST_POINT_SELECT_512_NIBBLE4_CHIPLET_SEL_SHIFT 32
 #define ROUTER_NL4_CDQ3_TEST_POINT_SELECT_512_NIBBLE4_CHIPLET_SEL_MASK 0xfull
 #define ROUTER_NL4_CDQ3_TEST_POINT_SELECT_512_NIBBLE4_CHIPLET_SEL_INPLACE (ROUTER_NL4_CDQ3_TEST_POINT_SELECT_512_NIBBLE4_CHIPLET_SEL_MASK << ROUTER_NL4_CDQ3_TEST_POINT_SELECT_512_NIBBLE4_CHIPLET_SEL_SHIFT)
-#define ROUTER_NL4_CDQ3_TEST_POINT_SELECT_512_NIBBLE3_NIBBLE_SEL_SHIFT 28 /* established */
+/* established */
+#define ROUTER_NL4_CDQ3_TEST_POINT_SELECT_512_NIBBLE3_NIBBLE_SEL_SHIFT 28
 #define ROUTER_NL4_CDQ3_TEST_POINT_SELECT_512_NIBBLE3_NIBBLE_SEL_MASK 0x7ull
 #define ROUTER_NL4_CDQ3_TEST_POINT_SELECT_512_NIBBLE3_NIBBLE_SEL_INPLACE (ROUTER_NL4_CDQ3_TEST_POINT_SELECT_512_NIBBLE3_NIBBLE_SEL_MASK << ROUTER_NL4_CDQ3_TEST_POINT_SELECT_512_NIBBLE3_NIBBLE_SEL_SHIFT)
-#define ROUTER_NL4_CDQ3_TEST_POINT_SELECT_512_NIBBLE3_CHIPLET_SEL_SHIFT 24 /* established */
+/* established */
+#define ROUTER_NL4_CDQ3_TEST_POINT_SELECT_512_NIBBLE3_CHIPLET_SEL_SHIFT 24
 #define ROUTER_NL4_CDQ3_TEST_POINT_SELECT_512_NIBBLE3_CHIPLET_SEL_MASK 0xfull
 #define ROUTER_NL4_CDQ3_TEST_POINT_SELECT_512_NIBBLE3_CHIPLET_SEL_INPLACE (ROUTER_NL4_CDQ3_TEST_POINT_SELECT_512_NIBBLE3_CHIPLET_SEL_MASK << ROUTER_NL4_CDQ3_TEST_POINT_SELECT_512_NIBBLE3_CHIPLET_SEL_SHIFT)
-#define ROUTER_NL4_CDQ3_TEST_POINT_SELECT_512_NIBBLE2_NIBBLE_SEL_SHIFT 20 /* established */
+/* established */
+#define ROUTER_NL4_CDQ3_TEST_POINT_SELECT_512_NIBBLE2_NIBBLE_SEL_SHIFT 20
 #define ROUTER_NL4_CDQ3_TEST_POINT_SELECT_512_NIBBLE2_NIBBLE_SEL_MASK 0x7ull
 #define ROUTER_NL4_CDQ3_TEST_POINT_SELECT_512_NIBBLE2_NIBBLE_SEL_INPLACE (ROUTER_NL4_CDQ3_TEST_POINT_SELECT_512_NIBBLE2_NIBBLE_SEL_MASK << ROUTER_NL4_CDQ3_TEST_POINT_SELECT_512_NIBBLE2_NIBBLE_SEL_SHIFT)
-#define ROUTER_NL4_CDQ3_TEST_POINT_SELECT_512_NIBBLE2_CHIPLET_SEL_SHIFT 16 /* established */
+/* established */
+#define ROUTER_NL4_CDQ3_TEST_POINT_SELECT_512_NIBBLE2_CHIPLET_SEL_SHIFT 16
 #define ROUTER_NL4_CDQ3_TEST_POINT_SELECT_512_NIBBLE2_CHIPLET_SEL_MASK 0xfull
 #define ROUTER_NL4_CDQ3_TEST_POINT_SELECT_512_NIBBLE2_CHIPLET_SEL_INPLACE (ROUTER_NL4_CDQ3_TEST_POINT_SELECT_512_NIBBLE2_CHIPLET_SEL_MASK << ROUTER_NL4_CDQ3_TEST_POINT_SELECT_512_NIBBLE2_CHIPLET_SEL_SHIFT)
-#define ROUTER_NL4_CDQ3_TEST_POINT_SELECT_512_NIBBLE1_NIBBLE_SEL_SHIFT 12 /* established */
+/* established */
+#define ROUTER_NL4_CDQ3_TEST_POINT_SELECT_512_NIBBLE1_NIBBLE_SEL_SHIFT 12
 #define ROUTER_NL4_CDQ3_TEST_POINT_SELECT_512_NIBBLE1_NIBBLE_SEL_MASK 0x7ull
 #define ROUTER_NL4_CDQ3_TEST_POINT_SELECT_512_NIBBLE1_NIBBLE_SEL_INPLACE (ROUTER_NL4_CDQ3_TEST_POINT_SELECT_512_NIBBLE1_NIBBLE_SEL_MASK << ROUTER_NL4_CDQ3_TEST_POINT_SELECT_512_NIBBLE1_NIBBLE_SEL_SHIFT)
-#define ROUTER_NL4_CDQ3_TEST_POINT_SELECT_512_NIBBLE1_CHIPLET_SEL_SHIFT 8 /* established */
+/* established */
+#define ROUTER_NL4_CDQ3_TEST_POINT_SELECT_512_NIBBLE1_CHIPLET_SEL_SHIFT 8
 #define ROUTER_NL4_CDQ3_TEST_POINT_SELECT_512_NIBBLE1_CHIPLET_SEL_MASK 0xfull
 #define ROUTER_NL4_CDQ3_TEST_POINT_SELECT_512_NIBBLE1_CHIPLET_SEL_INPLACE (ROUTER_NL4_CDQ3_TEST_POINT_SELECT_512_NIBBLE1_CHIPLET_SEL_MASK << ROUTER_NL4_CDQ3_TEST_POINT_SELECT_512_NIBBLE1_CHIPLET_SEL_SHIFT)
-#define ROUTER_NL4_CDQ3_TEST_POINT_SELECT_512_NIBBLE0_NIBBLE_SEL_SHIFT 4 /* established */
+/* established */
+#define ROUTER_NL4_CDQ3_TEST_POINT_SELECT_512_NIBBLE0_NIBBLE_SEL_SHIFT 4
 #define ROUTER_NL4_CDQ3_TEST_POINT_SELECT_512_NIBBLE0_NIBBLE_SEL_MASK 0x7ull
 #define ROUTER_NL4_CDQ3_TEST_POINT_SELECT_512_NIBBLE0_NIBBLE_SEL_INPLACE (ROUTER_NL4_CDQ3_TEST_POINT_SELECT_512_NIBBLE0_NIBBLE_SEL_MASK << ROUTER_NL4_CDQ3_TEST_POINT_SELECT_512_NIBBLE0_NIBBLE_SEL_SHIFT)
-#define ROUTER_NL4_CDQ3_TEST_POINT_SELECT_512_NIBBLE0_CHIPLET_SEL_SHIFT 0 /* established */
+/* established */
+#define ROUTER_NL4_CDQ3_TEST_POINT_SELECT_512_NIBBLE0_CHIPLET_SEL_SHIFT 0
 #define ROUTER_NL4_CDQ3_TEST_POINT_SELECT_512_NIBBLE0_CHIPLET_SEL_MASK 0xfull
 #define ROUTER_NL4_CDQ3_TEST_POINT_SELECT_512_NIBBLE0_CHIPLET_SEL_INPLACE (ROUTER_NL4_CDQ3_TEST_POINT_SELECT_512_NIBBLE0_CHIPLET_SEL_MASK << ROUTER_NL4_CDQ3_TEST_POINT_SELECT_512_NIBBLE0_CHIPLET_SEL_SHIFT)
 
 /*
- * PROM register R4_PORTA_LOCAL_TABLE; one per port A to H. Offset and field positions read from the table; role inferred from the names.
+ * PROM register R4_PORTA_LOCAL_TABLE; one per port A to H. Offset and field
+ * positions read from the table; role inferred from the names.
  */
 /* port_local_table: rw64, reset unknown */
-#define ROUTER_NL4_PORT_LOCAL_TABLE_OFFSET           0x8000000u /* established */
+/* established */
+#define ROUTER_NL4_PORT_LOCAL_TABLE_OFFSET           0x8000000u
 #define ROUTER_NL4_PORT_LOCAL_TABLE_COUNT            8
 #define ROUTER_NL4_PORT_LOCAL_TABLE_STRIDE           16777216
 #define ROUTER_NL4_PORT_LOCAL_TABLE_VALID_SHIFT      63 /* established */
 #define ROUTER_NL4_PORT_LOCAL_TABLE_VALID_MASK       0x1ull
-#define ROUTER_NL4_PORT_LOCAL_TABLE_VALID_INPLACE    (ROUTER_NL4_PORT_LOCAL_TABLE_VALID_MASK << ROUTER_NL4_PORT_LOCAL_TABLE_VALID_SHIFT)
+#define ROUTER_NL4_PORT_LOCAL_TABLE_VALID_INPLACE (ROUTER_NL4_PORT_LOCAL_TABLE_VALID_MASK << ROUTER_NL4_PORT_LOCAL_TABLE_VALID_SHIFT)
 #define ROUTER_NL4_PORT_LOCAL_TABLE_DIR0_SHIFT       0 /* established */
 #define ROUTER_NL4_PORT_LOCAL_TABLE_DIR0_MASK        0x1full
-#define ROUTER_NL4_PORT_LOCAL_TABLE_DIR0_INPLACE     (ROUTER_NL4_PORT_LOCAL_TABLE_DIR0_MASK << ROUTER_NL4_PORT_LOCAL_TABLE_DIR0_SHIFT)
+#define ROUTER_NL4_PORT_LOCAL_TABLE_DIR0_INPLACE (ROUTER_NL4_PORT_LOCAL_TABLE_DIR0_MASK << ROUTER_NL4_PORT_LOCAL_TABLE_DIR0_SHIFT)
 
 /*
- * PROM register R4_PORTA_GLOBAL_TABLE; one per port A to H. Offset and field positions read from the table; role inferred from the names.
+ * PROM register R4_PORTA_GLOBAL_TABLE; one per port A to H. Offset and field
+ * positions read from the table; role inferred from the names.
  */
 /* port_global_table: rw64, reset unknown */
-#define ROUTER_NL4_PORT_GLOBAL_TABLE_OFFSET          0x8001000u /* established */
+/* established */
+#define ROUTER_NL4_PORT_GLOBAL_TABLE_OFFSET          0x8001000u
 #define ROUTER_NL4_PORT_GLOBAL_TABLE_COUNT           8
 #define ROUTER_NL4_PORT_GLOBAL_TABLE_STRIDE          16777216
 #define ROUTER_NL4_PORT_GLOBAL_TABLE_VALID_SHIFT     63 /* established */
 #define ROUTER_NL4_PORT_GLOBAL_TABLE_VALID_MASK      0x1ull
-#define ROUTER_NL4_PORT_GLOBAL_TABLE_VALID_INPLACE   (ROUTER_NL4_PORT_GLOBAL_TABLE_VALID_MASK << ROUTER_NL4_PORT_GLOBAL_TABLE_VALID_SHIFT)
+#define ROUTER_NL4_PORT_GLOBAL_TABLE_VALID_INPLACE (ROUTER_NL4_PORT_GLOBAL_TABLE_VALID_MASK << ROUTER_NL4_PORT_GLOBAL_TABLE_VALID_SHIFT)
 #define ROUTER_NL4_PORT_GLOBAL_TABLE_DIR0_SHIFT      0 /* established */
 #define ROUTER_NL4_PORT_GLOBAL_TABLE_DIR0_MASK       0x1full
-#define ROUTER_NL4_PORT_GLOBAL_TABLE_DIR0_INPLACE    (ROUTER_NL4_PORT_GLOBAL_TABLE_DIR0_MASK << ROUTER_NL4_PORT_GLOBAL_TABLE_DIR0_SHIFT)
+#define ROUTER_NL4_PORT_GLOBAL_TABLE_DIR0_INPLACE (ROUTER_NL4_PORT_GLOBAL_TABLE_DIR0_MASK << ROUTER_NL4_PORT_GLOBAL_TABLE_DIR0_SHIFT)
 
 /*
- * PROM register R4_PORTA_NEIGHBOR_TABLE; one per port A to H. Offset and field positions read from the table; role inferred from the names.
+ * PROM register R4_PORTA_NEIGHBOR_TABLE; one per port A to H. Offset and field
+ * positions read from the table; role inferred from the names.
  */
 /* port_neighbor_table: rw64, reset unknown */
-#define ROUTER_NL4_PORT_NEIGHBOR_TABLE_OFFSET        0x8001800u /* established */
+/* established */
+#define ROUTER_NL4_PORT_NEIGHBOR_TABLE_OFFSET        0x8001800u
 #define ROUTER_NL4_PORT_NEIGHBOR_TABLE_COUNT         8
 #define ROUTER_NL4_PORT_NEIGHBOR_TABLE_STRIDE        16777216
 #define ROUTER_NL4_PORT_NEIGHBOR_TABLE_VALID_SHIFT   63 /* established */
@@ -4269,15 +5073,17 @@
 #define ROUTER_NL4_PORT_NEIGHBOR_TABLE_NEIGHBOR_ID_INPLACE (ROUTER_NL4_PORT_NEIGHBOR_TABLE_NEIGHBOR_ID_MASK << ROUTER_NL4_PORT_NEIGHBOR_TABLE_NEIGHBOR_ID_SHIFT)
 
 /*
- * PROM register R4_PORTA_PARMS; one per port A to H. Offset and field positions read from the table; role inferred from the names.
+ * PROM register R4_PORTA_PARMS; one per port A to H. Offset and field positions
+ * read from the table; role inferred from the names.
  */
 /* port_parms: rw64, reset unknown */
-#define ROUTER_NL4_PORT_PARMS_OFFSET                 0x8001840u /* established */
+/* established */
+#define ROUTER_NL4_PORT_PARMS_OFFSET                 0x8001840u
 #define ROUTER_NL4_PORT_PARMS_COUNT                  8
 #define ROUTER_NL4_PORT_PARMS_STRIDE                 16777216
 #define ROUTER_NL4_PORT_PARMS_SPARE_SHIFT            30 /* established */
 #define ROUTER_NL4_PORT_PARMS_SPARE_MASK             0xffull
-#define ROUTER_NL4_PORT_PARMS_SPARE_INPLACE          (ROUTER_NL4_PORT_PARMS_SPARE_MASK << ROUTER_NL4_PORT_PARMS_SPARE_SHIFT)
+#define ROUTER_NL4_PORT_PARMS_SPARE_INPLACE (ROUTER_NL4_PORT_PARMS_SPARE_MASK << ROUTER_NL4_PORT_PARMS_SPARE_SHIFT)
 #define ROUTER_NL4_PORT_PARMS_V_BIT_EMULATION_SHIFT  29 /* established */
 #define ROUTER_NL4_PORT_PARMS_V_BIT_EMULATION_MASK   0x1ull
 #define ROUTER_NL4_PORT_PARMS_V_BIT_EMULATION_INPLACE (ROUTER_NL4_PORT_PARMS_V_BIT_EMULATION_MASK << ROUTER_NL4_PORT_PARMS_V_BIT_EMULATION_SHIFT)
@@ -4289,7 +5095,7 @@
 #define ROUTER_NL4_PORT_PARMS_DIR_SPRAY_ENABLE_INPLACE (ROUTER_NL4_PORT_PARMS_DIR_SPRAY_ENABLE_MASK << ROUTER_NL4_PORT_PARMS_DIR_SPRAY_ENABLE_SHIFT)
 #define ROUTER_NL4_PORT_PARMS_EXTEND_ENABLE_SHIFT    26 /* established */
 #define ROUTER_NL4_PORT_PARMS_EXTEND_ENABLE_MASK     0x1ull
-#define ROUTER_NL4_PORT_PARMS_EXTEND_ENABLE_INPLACE  (ROUTER_NL4_PORT_PARMS_EXTEND_ENABLE_MASK << ROUTER_NL4_PORT_PARMS_EXTEND_ENABLE_SHIFT)
+#define ROUTER_NL4_PORT_PARMS_EXTEND_ENABLE_INPLACE (ROUTER_NL4_PORT_PARMS_EXTEND_ENABLE_MASK << ROUTER_NL4_PORT_PARMS_EXTEND_ENABLE_SHIFT)
 #define ROUTER_NL4_PORT_PARMS_EXTEND_SHUB_INPUT_SHIFT 25 /* established */
 #define ROUTER_NL4_PORT_PARMS_EXTEND_SHUB_INPUT_MASK 0x1ull
 #define ROUTER_NL4_PORT_PARMS_EXTEND_SHUB_INPUT_INPLACE (ROUTER_NL4_PORT_PARMS_EXTEND_SHUB_INPUT_MASK << ROUTER_NL4_PORT_PARMS_EXTEND_SHUB_INPUT_SHIFT)
@@ -4299,37 +5105,48 @@
 #define ROUTER_NL4_PORT_PARMS_ARM_FORCE_CB_ERROR_SHIFT 16 /* established */
 #define ROUTER_NL4_PORT_PARMS_ARM_FORCE_CB_ERROR_MASK 0x1ull
 #define ROUTER_NL4_PORT_PARMS_ARM_FORCE_CB_ERROR_INPLACE (ROUTER_NL4_PORT_PARMS_ARM_FORCE_CB_ERROR_MASK << ROUTER_NL4_PORT_PARMS_ARM_FORCE_CB_ERROR_SHIFT)
-#define ROUTER_NL4_PORT_PARMS_LINKRESET_ON_BUFFEROVERFLOW_SHIFT 15 /* established */
+/* established */
+#define ROUTER_NL4_PORT_PARMS_LINKRESET_ON_BUFFEROVERFLOW_SHIFT 15
 #define ROUTER_NL4_PORT_PARMS_LINKRESET_ON_BUFFEROVERFLOW_MASK 0x1ull
 #define ROUTER_NL4_PORT_PARMS_LINKRESET_ON_BUFFEROVERFLOW_INPLACE (ROUTER_NL4_PORT_PARMS_LINKRESET_ON_BUFFEROVERFLOW_MASK << ROUTER_NL4_PORT_PARMS_LINKRESET_ON_BUFFEROVERFLOW_SHIFT)
-#define ROUTER_NL4_PORT_PARMS_EATUNTILTAIL_ON_BUFFEROVERFLOW_SHIFT 14 /* established */
+/* established */
+#define ROUTER_NL4_PORT_PARMS_EATUNTILTAIL_ON_BUFFEROVERFLOW_SHIFT 14
 #define ROUTER_NL4_PORT_PARMS_EATUNTILTAIL_ON_BUFFEROVERFLOW_MASK 0x1ull
 #define ROUTER_NL4_PORT_PARMS_EATUNTILTAIL_ON_BUFFEROVERFLOW_INPLACE (ROUTER_NL4_PORT_PARMS_EATUNTILTAIL_ON_BUFFEROVERFLOW_MASK << ROUTER_NL4_PORT_PARMS_EATUNTILTAIL_ON_BUFFEROVERFLOW_SHIFT)
-#define ROUTER_NL4_PORT_PARMS_LINKRESET_ON_FIFOOVERFLOW_SHIFT 13 /* established */
+/* established */
+#define ROUTER_NL4_PORT_PARMS_LINKRESET_ON_FIFOOVERFLOW_SHIFT 13
 #define ROUTER_NL4_PORT_PARMS_LINKRESET_ON_FIFOOVERFLOW_MASK 0x1ull
 #define ROUTER_NL4_PORT_PARMS_LINKRESET_ON_FIFOOVERFLOW_INPLACE (ROUTER_NL4_PORT_PARMS_LINKRESET_ON_FIFOOVERFLOW_MASK << ROUTER_NL4_PORT_PARMS_LINKRESET_ON_FIFOOVERFLOW_SHIFT)
-#define ROUTER_NL4_PORT_PARMS_SEND_DEADLOCK_EAT_ENABLE_VCH3_SHIFT 12 /* established */
+/* established */
+#define ROUTER_NL4_PORT_PARMS_SEND_DEADLOCK_EAT_ENABLE_VCH3_SHIFT 12
 #define ROUTER_NL4_PORT_PARMS_SEND_DEADLOCK_EAT_ENABLE_VCH3_MASK 0x1ull
 #define ROUTER_NL4_PORT_PARMS_SEND_DEADLOCK_EAT_ENABLE_VCH3_INPLACE (ROUTER_NL4_PORT_PARMS_SEND_DEADLOCK_EAT_ENABLE_VCH3_MASK << ROUTER_NL4_PORT_PARMS_SEND_DEADLOCK_EAT_ENABLE_VCH3_SHIFT)
-#define ROUTER_NL4_PORT_PARMS_SEND_DEADLOCK_EAT_ENABLE_VCH2_SHIFT 11 /* established */
+/* established */
+#define ROUTER_NL4_PORT_PARMS_SEND_DEADLOCK_EAT_ENABLE_VCH2_SHIFT 11
 #define ROUTER_NL4_PORT_PARMS_SEND_DEADLOCK_EAT_ENABLE_VCH2_MASK 0x1ull
 #define ROUTER_NL4_PORT_PARMS_SEND_DEADLOCK_EAT_ENABLE_VCH2_INPLACE (ROUTER_NL4_PORT_PARMS_SEND_DEADLOCK_EAT_ENABLE_VCH2_MASK << ROUTER_NL4_PORT_PARMS_SEND_DEADLOCK_EAT_ENABLE_VCH2_SHIFT)
-#define ROUTER_NL4_PORT_PARMS_SEND_DEADLOCK_EAT_ENABLE_VCH1_SHIFT 10 /* established */
+/* established */
+#define ROUTER_NL4_PORT_PARMS_SEND_DEADLOCK_EAT_ENABLE_VCH1_SHIFT 10
 #define ROUTER_NL4_PORT_PARMS_SEND_DEADLOCK_EAT_ENABLE_VCH1_MASK 0x1ull
 #define ROUTER_NL4_PORT_PARMS_SEND_DEADLOCK_EAT_ENABLE_VCH1_INPLACE (ROUTER_NL4_PORT_PARMS_SEND_DEADLOCK_EAT_ENABLE_VCH1_MASK << ROUTER_NL4_PORT_PARMS_SEND_DEADLOCK_EAT_ENABLE_VCH1_SHIFT)
-#define ROUTER_NL4_PORT_PARMS_SEND_DEADLOCK_EAT_ENABLE_VCH0_SHIFT 9 /* established */
+/* established */
+#define ROUTER_NL4_PORT_PARMS_SEND_DEADLOCK_EAT_ENABLE_VCH0_SHIFT 9
 #define ROUTER_NL4_PORT_PARMS_SEND_DEADLOCK_EAT_ENABLE_VCH0_MASK 0x1ull
 #define ROUTER_NL4_PORT_PARMS_SEND_DEADLOCK_EAT_ENABLE_VCH0_INPLACE (ROUTER_NL4_PORT_PARMS_SEND_DEADLOCK_EAT_ENABLE_VCH0_MASK << ROUTER_NL4_PORT_PARMS_SEND_DEADLOCK_EAT_ENABLE_VCH0_SHIFT)
-#define ROUTER_NL4_PORT_PARMS_TAIL_TO_ERROR_TAIL_ENABLE_VCH3_SHIFT 8 /* established */
+/* established */
+#define ROUTER_NL4_PORT_PARMS_TAIL_TO_ERROR_TAIL_ENABLE_VCH3_SHIFT 8
 #define ROUTER_NL4_PORT_PARMS_TAIL_TO_ERROR_TAIL_ENABLE_VCH3_MASK 0x1ull
 #define ROUTER_NL4_PORT_PARMS_TAIL_TO_ERROR_TAIL_ENABLE_VCH3_INPLACE (ROUTER_NL4_PORT_PARMS_TAIL_TO_ERROR_TAIL_ENABLE_VCH3_MASK << ROUTER_NL4_PORT_PARMS_TAIL_TO_ERROR_TAIL_ENABLE_VCH3_SHIFT)
-#define ROUTER_NL4_PORT_PARMS_TAIL_TO_ERROR_TAIL_ENABLE_VCH2_SHIFT 7 /* established */
+/* established */
+#define ROUTER_NL4_PORT_PARMS_TAIL_TO_ERROR_TAIL_ENABLE_VCH2_SHIFT 7
 #define ROUTER_NL4_PORT_PARMS_TAIL_TO_ERROR_TAIL_ENABLE_VCH2_MASK 0x1ull
 #define ROUTER_NL4_PORT_PARMS_TAIL_TO_ERROR_TAIL_ENABLE_VCH2_INPLACE (ROUTER_NL4_PORT_PARMS_TAIL_TO_ERROR_TAIL_ENABLE_VCH2_MASK << ROUTER_NL4_PORT_PARMS_TAIL_TO_ERROR_TAIL_ENABLE_VCH2_SHIFT)
-#define ROUTER_NL4_PORT_PARMS_TAIL_TO_ERROR_TAIL_ENABLE_VCH1_SHIFT 6 /* established */
+/* established */
+#define ROUTER_NL4_PORT_PARMS_TAIL_TO_ERROR_TAIL_ENABLE_VCH1_SHIFT 6
 #define ROUTER_NL4_PORT_PARMS_TAIL_TO_ERROR_TAIL_ENABLE_VCH1_MASK 0x1ull
 #define ROUTER_NL4_PORT_PARMS_TAIL_TO_ERROR_TAIL_ENABLE_VCH1_INPLACE (ROUTER_NL4_PORT_PARMS_TAIL_TO_ERROR_TAIL_ENABLE_VCH1_MASK << ROUTER_NL4_PORT_PARMS_TAIL_TO_ERROR_TAIL_ENABLE_VCH1_SHIFT)
-#define ROUTER_NL4_PORT_PARMS_TAIL_TO_ERROR_TAIL_ENABLE_VCH0_SHIFT 5 /* established */
+/* established */
+#define ROUTER_NL4_PORT_PARMS_TAIL_TO_ERROR_TAIL_ENABLE_VCH0_SHIFT 5
 #define ROUTER_NL4_PORT_PARMS_TAIL_TO_ERROR_TAIL_ENABLE_VCH0_MASK 0x1ull
 #define ROUTER_NL4_PORT_PARMS_TAIL_TO_ERROR_TAIL_ENABLE_VCH0_INPLACE (ROUTER_NL4_PORT_PARMS_TAIL_TO_ERROR_TAIL_ENABLE_VCH0_MASK << ROUTER_NL4_PORT_PARMS_TAIL_TO_ERROR_TAIL_ENABLE_VCH0_SHIFT)
 #define ROUTER_NL4_PORT_PARMS_MIP_RESET_ENABLE_SHIFT 4 /* established */
@@ -4340,50 +5157,56 @@
 #define ROUTER_NL4_PORT_PARMS_SEND_DEADLOCK_TO_VAL_INPLACE (ROUTER_NL4_PORT_PARMS_SEND_DEADLOCK_TO_VAL_MASK << ROUTER_NL4_PORT_PARMS_SEND_DEADLOCK_TO_VAL_SHIFT)
 
 /*
- * PROM register R4_PORTA_SPRAY_DIR; one per port A to H. Offset and field positions read from the table; role inferred from the names.
+ * PROM register R4_PORTA_SPRAY_DIR; one per port A to H. Offset and field
+ * positions read from the table; role inferred from the names.
  */
 /* port_spray_dir: rw64, reset unknown */
-#define ROUTER_NL4_PORT_SPRAY_DIR_OFFSET             0x8001848u /* established */
+/* established */
+#define ROUTER_NL4_PORT_SPRAY_DIR_OFFSET             0x8001848u
 #define ROUTER_NL4_PORT_SPRAY_DIR_COUNT              8
 #define ROUTER_NL4_PORT_SPRAY_DIR_STRIDE             16777216
 #define ROUTER_NL4_PORT_SPRAY_DIR_DIR7_SHIFT         56 /* established */
 #define ROUTER_NL4_PORT_SPRAY_DIR_DIR7_MASK          0xffull
-#define ROUTER_NL4_PORT_SPRAY_DIR_DIR7_INPLACE       (ROUTER_NL4_PORT_SPRAY_DIR_DIR7_MASK << ROUTER_NL4_PORT_SPRAY_DIR_DIR7_SHIFT)
+#define ROUTER_NL4_PORT_SPRAY_DIR_DIR7_INPLACE (ROUTER_NL4_PORT_SPRAY_DIR_DIR7_MASK << ROUTER_NL4_PORT_SPRAY_DIR_DIR7_SHIFT)
 #define ROUTER_NL4_PORT_SPRAY_DIR_DIR6_SHIFT         48 /* established */
 #define ROUTER_NL4_PORT_SPRAY_DIR_DIR6_MASK          0xffull
-#define ROUTER_NL4_PORT_SPRAY_DIR_DIR6_INPLACE       (ROUTER_NL4_PORT_SPRAY_DIR_DIR6_MASK << ROUTER_NL4_PORT_SPRAY_DIR_DIR6_SHIFT)
+#define ROUTER_NL4_PORT_SPRAY_DIR_DIR6_INPLACE (ROUTER_NL4_PORT_SPRAY_DIR_DIR6_MASK << ROUTER_NL4_PORT_SPRAY_DIR_DIR6_SHIFT)
 #define ROUTER_NL4_PORT_SPRAY_DIR_DIR5_SHIFT         40 /* established */
 #define ROUTER_NL4_PORT_SPRAY_DIR_DIR5_MASK          0xffull
-#define ROUTER_NL4_PORT_SPRAY_DIR_DIR5_INPLACE       (ROUTER_NL4_PORT_SPRAY_DIR_DIR5_MASK << ROUTER_NL4_PORT_SPRAY_DIR_DIR5_SHIFT)
+#define ROUTER_NL4_PORT_SPRAY_DIR_DIR5_INPLACE (ROUTER_NL4_PORT_SPRAY_DIR_DIR5_MASK << ROUTER_NL4_PORT_SPRAY_DIR_DIR5_SHIFT)
 #define ROUTER_NL4_PORT_SPRAY_DIR_DIR4_SHIFT         32 /* established */
 #define ROUTER_NL4_PORT_SPRAY_DIR_DIR4_MASK          0xffull
-#define ROUTER_NL4_PORT_SPRAY_DIR_DIR4_INPLACE       (ROUTER_NL4_PORT_SPRAY_DIR_DIR4_MASK << ROUTER_NL4_PORT_SPRAY_DIR_DIR4_SHIFT)
+#define ROUTER_NL4_PORT_SPRAY_DIR_DIR4_INPLACE (ROUTER_NL4_PORT_SPRAY_DIR_DIR4_MASK << ROUTER_NL4_PORT_SPRAY_DIR_DIR4_SHIFT)
 #define ROUTER_NL4_PORT_SPRAY_DIR_DIR3_SHIFT         24 /* established */
 #define ROUTER_NL4_PORT_SPRAY_DIR_DIR3_MASK          0xffull
-#define ROUTER_NL4_PORT_SPRAY_DIR_DIR3_INPLACE       (ROUTER_NL4_PORT_SPRAY_DIR_DIR3_MASK << ROUTER_NL4_PORT_SPRAY_DIR_DIR3_SHIFT)
+#define ROUTER_NL4_PORT_SPRAY_DIR_DIR3_INPLACE (ROUTER_NL4_PORT_SPRAY_DIR_DIR3_MASK << ROUTER_NL4_PORT_SPRAY_DIR_DIR3_SHIFT)
 #define ROUTER_NL4_PORT_SPRAY_DIR_DIR2_SHIFT         16 /* established */
 #define ROUTER_NL4_PORT_SPRAY_DIR_DIR2_MASK          0xffull
-#define ROUTER_NL4_PORT_SPRAY_DIR_DIR2_INPLACE       (ROUTER_NL4_PORT_SPRAY_DIR_DIR2_MASK << ROUTER_NL4_PORT_SPRAY_DIR_DIR2_SHIFT)
+#define ROUTER_NL4_PORT_SPRAY_DIR_DIR2_INPLACE (ROUTER_NL4_PORT_SPRAY_DIR_DIR2_MASK << ROUTER_NL4_PORT_SPRAY_DIR_DIR2_SHIFT)
 #define ROUTER_NL4_PORT_SPRAY_DIR_DIR1_SHIFT         8 /* established */
 #define ROUTER_NL4_PORT_SPRAY_DIR_DIR1_MASK          0xffull
-#define ROUTER_NL4_PORT_SPRAY_DIR_DIR1_INPLACE       (ROUTER_NL4_PORT_SPRAY_DIR_DIR1_MASK << ROUTER_NL4_PORT_SPRAY_DIR_DIR1_SHIFT)
+#define ROUTER_NL4_PORT_SPRAY_DIR_DIR1_INPLACE (ROUTER_NL4_PORT_SPRAY_DIR_DIR1_MASK << ROUTER_NL4_PORT_SPRAY_DIR_DIR1_SHIFT)
 
 /*
- * PROM register R4_PORTA_SPRAY_CMD_3F_0; one per port A to H. Offset and field positions read from the table; role inferred from the names.
+ * PROM register R4_PORTA_SPRAY_CMD_3F_0; one per port A to H. Offset and field
+ * positions read from the table; role inferred from the names.
  */
 /* port_spray_cmd_3f_0: rw64, reset unknown */
-#define ROUTER_NL4_PORT_SPRAY_CMD_3F_0_OFFSET        0x8001850u /* established */
+/* established */
+#define ROUTER_NL4_PORT_SPRAY_CMD_3F_0_OFFSET        0x8001850u
 #define ROUTER_NL4_PORT_SPRAY_CMD_3F_0_COUNT         8
 #define ROUTER_NL4_PORT_SPRAY_CMD_3F_0_STRIDE        16777216
 #define ROUTER_NL4_PORT_SPRAY_CMD_3F_0_MASK_SHIFT    0 /* established */
 #define ROUTER_NL4_PORT_SPRAY_CMD_3F_0_MASK_MASK     0xffffffffffffffffull
-#define ROUTER_NL4_PORT_SPRAY_CMD_3F_0_MASK_INPLACE  (ROUTER_NL4_PORT_SPRAY_CMD_3F_0_MASK_MASK << ROUTER_NL4_PORT_SPRAY_CMD_3F_0_MASK_SHIFT)
+#define ROUTER_NL4_PORT_SPRAY_CMD_3F_0_MASK_INPLACE (ROUTER_NL4_PORT_SPRAY_CMD_3F_0_MASK_MASK << ROUTER_NL4_PORT_SPRAY_CMD_3F_0_MASK_SHIFT)
 
 /*
- * PROM register R4_PORTA_SPRAY_CMD_7F_40; one per port A to H. Offset and field positions read from the table; role inferred from the names.
+ * PROM register R4_PORTA_SPRAY_CMD_7F_40; one per port A to H. Offset and field
+ * positions read from the table; role inferred from the names.
  */
 /* port_spray_cmd_7f_40: rw64, reset unknown */
-#define ROUTER_NL4_PORT_SPRAY_CMD_7F_40_OFFSET       0x8001858u /* established */
+/* established */
+#define ROUTER_NL4_PORT_SPRAY_CMD_7F_40_OFFSET       0x8001858u
 #define ROUTER_NL4_PORT_SPRAY_CMD_7F_40_COUNT        8
 #define ROUTER_NL4_PORT_SPRAY_CMD_7F_40_STRIDE       16777216
 #define ROUTER_NL4_PORT_SPRAY_CMD_7F_40_MASK_SHIFT   0 /* established */
@@ -4391,10 +5214,12 @@
 #define ROUTER_NL4_PORT_SPRAY_CMD_7F_40_MASK_INPLACE (ROUTER_NL4_PORT_SPRAY_CMD_7F_40_MASK_MASK << ROUTER_NL4_PORT_SPRAY_CMD_7F_40_MASK_SHIFT)
 
 /*
- * PROM register R4_PORTA_SPRAY_CMD_BF_80; one per port A to H. Offset and field positions read from the table; role inferred from the names.
+ * PROM register R4_PORTA_SPRAY_CMD_BF_80; one per port A to H. Offset and field
+ * positions read from the table; role inferred from the names.
  */
 /* port_spray_cmd_bf_80: rw64, reset unknown */
-#define ROUTER_NL4_PORT_SPRAY_CMD_BF_80_OFFSET       0x8001860u /* established */
+/* established */
+#define ROUTER_NL4_PORT_SPRAY_CMD_BF_80_OFFSET       0x8001860u
 #define ROUTER_NL4_PORT_SPRAY_CMD_BF_80_COUNT        8
 #define ROUTER_NL4_PORT_SPRAY_CMD_BF_80_STRIDE       16777216
 #define ROUTER_NL4_PORT_SPRAY_CMD_BF_80_MASK_SHIFT   0 /* established */
@@ -4402,10 +5227,12 @@
 #define ROUTER_NL4_PORT_SPRAY_CMD_BF_80_MASK_INPLACE (ROUTER_NL4_PORT_SPRAY_CMD_BF_80_MASK_MASK << ROUTER_NL4_PORT_SPRAY_CMD_BF_80_MASK_SHIFT)
 
 /*
- * PROM register R4_PORTA_SPRAY_CMD_FF_C0; one per port A to H. Offset and field positions read from the table; role inferred from the names.
+ * PROM register R4_PORTA_SPRAY_CMD_FF_C0; one per port A to H. Offset and field
+ * positions read from the table; role inferred from the names.
  */
 /* port_spray_cmd_ff_c0: rw64, reset unknown */
-#define ROUTER_NL4_PORT_SPRAY_CMD_FF_C0_OFFSET       0x8001868u /* established */
+/* established */
+#define ROUTER_NL4_PORT_SPRAY_CMD_FF_C0_OFFSET       0x8001868u
 #define ROUTER_NL4_PORT_SPRAY_CMD_FF_C0_COUNT        8
 #define ROUTER_NL4_PORT_SPRAY_CMD_FF_C0_STRIDE       16777216
 #define ROUTER_NL4_PORT_SPRAY_CMD_FF_C0_MASK_SHIFT   0 /* established */
@@ -4413,10 +5240,12 @@
 #define ROUTER_NL4_PORT_SPRAY_CMD_FF_C0_MASK_INPLACE (ROUTER_NL4_PORT_SPRAY_CMD_FF_C0_MASK_MASK << ROUTER_NL4_PORT_SPRAY_CMD_FF_C0_MASK_SHIFT)
 
 /*
- * PROM register R4_PORTA_LLP_CONFIG; one per port A to H. Offset and field positions read from the table; role inferred from the names.
+ * PROM register R4_PORTA_LLP_CONFIG; one per port A to H. Offset and field
+ * positions read from the table; role inferred from the names.
  */
 /* port_llp_config: rw64, reset unknown */
-#define ROUTER_NL4_PORT_LLP_CONFIG_OFFSET            0x8001888u /* established */
+/* established */
+#define ROUTER_NL4_PORT_LLP_CONFIG_OFFSET            0x8001888u
 #define ROUTER_NL4_PORT_LLP_CONFIG_COUNT             8
 #define ROUTER_NL4_PORT_LLP_CONFIG_STRIDE            16777216
 #define ROUTER_NL4_PORT_LLP_CONFIG_ENABLE_RMT_FT_UPD_SHIFT 4 /* established */
@@ -4436,10 +5265,12 @@
 #define ROUTER_NL4_PORT_LLP_CONFIG_BITMODE32_INPLACE (ROUTER_NL4_PORT_LLP_CONFIG_BITMODE32_MASK << ROUTER_NL4_PORT_LLP_CONFIG_BITMODE32_SHIFT)
 
 /*
- * PROM register R4_PORTA_LLP_TEST_CTL; one per port A to H. Offset and field positions read from the table; role inferred from the names.
+ * PROM register R4_PORTA_LLP_TEST_CTL; one per port A to H. Offset and field
+ * positions read from the table; role inferred from the names.
  */
 /* port_llp_test_ctl: rw64, reset unknown */
-#define ROUTER_NL4_PORT_LLP_TEST_CTL_OFFSET          0x8001890u /* established */
+/* established */
+#define ROUTER_NL4_PORT_LLP_TEST_CTL_OFFSET          0x8001890u
 #define ROUTER_NL4_PORT_LLP_TEST_CTL_COUNT           8
 #define ROUTER_NL4_PORT_LLP_TEST_CTL_STRIDE          16777216
 #define ROUTER_NL4_PORT_LLP_TEST_CTL_CB_ERROR_SHIFT  62 /* established */
@@ -4480,10 +5311,12 @@
 #define ROUTER_NL4_PORT_LLP_TEST_CTL_PATTERN_INPLACE (ROUTER_NL4_PORT_LLP_TEST_CTL_PATTERN_MASK << ROUTER_NL4_PORT_LLP_TEST_CTL_PATTERN_SHIFT)
 
 /*
- * PROM register R4_PORTA_LLP_STATE; one per port A to H. Offset and field positions read from the table; role inferred from the names.
+ * PROM register R4_PORTA_LLP_STATE; one per port A to H. Offset and field
+ * positions read from the table; role inferred from the names.
  */
 /* port_llp_state: r64, reset unknown */
-#define ROUTER_NL4_PORT_LLP_STATE_OFFSET             0x8001898u /* established */
+/* established */
+#define ROUTER_NL4_PORT_LLP_STATE_OFFSET             0x8001898u
 #define ROUTER_NL4_PORT_LLP_STATE_COUNT              8
 #define ROUTER_NL4_PORT_LLP_STATE_STRIDE             16777216
 #define ROUTER_NL4_PORT_LLP_STATE_LINK_SEND_FSM_STATE_SHIFT 10 /* established */
@@ -4497,10 +5330,12 @@
 #define ROUTER_NL4_PORT_LLP_STATE_LINK_RESET_STATE_INPLACE (ROUTER_NL4_PORT_LLP_STATE_LINK_RESET_STATE_MASK << ROUTER_NL4_PORT_LLP_STATE_LINK_RESET_STATE_SHIFT)
 
 /*
- * PROM register R4_PORTA_LLP_ERR1; one per port A to H. Offset and field positions read from the table; role inferred from the names.
+ * PROM register R4_PORTA_LLP_ERR1; one per port A to H. Offset and field
+ * positions read from the table; role inferred from the names.
  */
 /* port_llp_err1: rw64, reset unknown */
-#define ROUTER_NL4_PORT_LLP_ERR1_OFFSET              0x80018a0u /* established */
+/* established */
+#define ROUTER_NL4_PORT_LLP_ERR1_OFFSET              0x80018a0u
 #define ROUTER_NL4_PORT_LLP_ERR1_COUNT               8
 #define ROUTER_NL4_PORT_LLP_ERR1_STRIDE              16777216
 #define ROUTER_NL4_PORT_LLP_ERR1_RETRY_COUNT_SHIFT   48 /* established */
@@ -4514,10 +5349,12 @@
 #define ROUTER_NL4_PORT_LLP_ERR1_RX_SN_ERR_COUNT_INPLACE (ROUTER_NL4_PORT_LLP_ERR1_RX_SN_ERR_COUNT_MASK << ROUTER_NL4_PORT_LLP_ERR1_RX_SN_ERR_COUNT_SHIFT)
 
 /*
- * PROM register R4_PORTA_LLP_ERR2; one per port A to H. Offset and field positions read from the table; role inferred from the names.
+ * PROM register R4_PORTA_LLP_ERR2; one per port A to H. Offset and field
+ * positions read from the table; role inferred from the names.
  */
 /* port_llp_err2: rw64, reset unknown */
-#define ROUTER_NL4_PORT_LLP_ERR2_OFFSET              0x80018a8u /* established */
+/* established */
+#define ROUTER_NL4_PORT_LLP_ERR2_OFFSET              0x80018a8u
 #define ROUTER_NL4_PORT_LLP_ERR2_COUNT               8
 #define ROUTER_NL4_PORT_LLP_ERR2_STRIDE              16777216
 #define ROUTER_NL4_PORT_LLP_ERR2_CORESENTBADCRC_COUNT_SHIFT 28 /* established */
@@ -4525,7 +5362,7 @@
 #define ROUTER_NL4_PORT_LLP_ERR2_CORESENTBADCRC_COUNT_INPLACE (ROUTER_NL4_PORT_LLP_ERR2_CORESENTBADCRC_COUNT_MASK << ROUTER_NL4_PORT_LLP_ERR2_CORESENTBADCRC_COUNT_SHIFT)
 #define ROUTER_NL4_PORT_LLP_ERR2_SQUASH_SHIFT        27 /* established */
 #define ROUTER_NL4_PORT_LLP_ERR2_SQUASH_MASK         0x1ull
-#define ROUTER_NL4_PORT_LLP_ERR2_SQUASH_INPLACE      (ROUTER_NL4_PORT_LLP_ERR2_SQUASH_MASK << ROUTER_NL4_PORT_LLP_ERR2_SQUASH_SHIFT)
+#define ROUTER_NL4_PORT_LLP_ERR2_SQUASH_INPLACE (ROUTER_NL4_PORT_LLP_ERR2_SQUASH_MASK << ROUTER_NL4_PORT_LLP_ERR2_SQUASH_SHIFT)
 #define ROUTER_NL4_PORT_LLP_ERR2_RESET_TIMEOUT_SHIFT 26 /* established */
 #define ROUTER_NL4_PORT_LLP_ERR2_RESET_TIMEOUT_MASK  0x1ull
 #define ROUTER_NL4_PORT_LLP_ERR2_RESET_TIMEOUT_INPLACE (ROUTER_NL4_PORT_LLP_ERR2_RESET_TIMEOUT_MASK << ROUTER_NL4_PORT_LLP_ERR2_RESET_TIMEOUT_SHIFT)
@@ -4537,47 +5374,57 @@
 #define ROUTER_NL4_PORT_LLP_ERR2_WIRE_OVERFLOW_INPLACE (ROUTER_NL4_PORT_LLP_ERR2_WIRE_OVERFLOW_MASK << ROUTER_NL4_PORT_LLP_ERR2_WIRE_OVERFLOW_SHIFT)
 #define ROUTER_NL4_PORT_LLP_ERR2_WIRE_CNT_SHIFT      0 /* established */
 #define ROUTER_NL4_PORT_LLP_ERR2_WIRE_CNT_MASK       0xffffffull
-#define ROUTER_NL4_PORT_LLP_ERR2_WIRE_CNT_INPLACE    (ROUTER_NL4_PORT_LLP_ERR2_WIRE_CNT_MASK << ROUTER_NL4_PORT_LLP_ERR2_WIRE_CNT_SHIFT)
+#define ROUTER_NL4_PORT_LLP_ERR2_WIRE_CNT_INPLACE (ROUTER_NL4_PORT_LLP_ERR2_WIRE_CNT_MASK << ROUTER_NL4_PORT_LLP_ERR2_WIRE_CNT_SHIFT)
 
 /*
- * PROM register R4_PORTA_LLP_CAPT_WD1; one per port A to H. Offset and field positions read from the table; role inferred from the names.
+ * PROM register R4_PORTA_LLP_CAPT_WD1; one per port A to H. Offset and field
+ * positions read from the table; role inferred from the names.
  */
 /* port_llp_capt_wd1: r64, reset unknown */
-#define ROUTER_NL4_PORT_LLP_CAPT_WD1_OFFSET          0x80018b0u /* established */
+/* established */
+#define ROUTER_NL4_PORT_LLP_CAPT_WD1_OFFSET          0x80018b0u
 #define ROUTER_NL4_PORT_LLP_CAPT_WD1_COUNT           8
 #define ROUTER_NL4_PORT_LLP_CAPT_WD1_STRIDE          16777216
 #define ROUTER_NL4_PORT_LLP_CAPT_WD1_DATA_SHIFT      0 /* established */
 #define ROUTER_NL4_PORT_LLP_CAPT_WD1_DATA_MASK       0xffffffffffffffffull
-#define ROUTER_NL4_PORT_LLP_CAPT_WD1_DATA_INPLACE    (ROUTER_NL4_PORT_LLP_CAPT_WD1_DATA_MASK << ROUTER_NL4_PORT_LLP_CAPT_WD1_DATA_SHIFT)
+#define ROUTER_NL4_PORT_LLP_CAPT_WD1_DATA_INPLACE (ROUTER_NL4_PORT_LLP_CAPT_WD1_DATA_MASK << ROUTER_NL4_PORT_LLP_CAPT_WD1_DATA_SHIFT)
 
 /*
- * PROM register R4_PORTA_LLP_CAPT_WD2; one per port A to H. Offset and field positions read from the table; role inferred from the names.
+ * PROM register R4_PORTA_LLP_CAPT_WD2; one per port A to H. Offset and field
+ * positions read from the table; role inferred from the names.
  */
 /* port_llp_capt_wd2: r64, reset unknown */
-#define ROUTER_NL4_PORT_LLP_CAPT_WD2_OFFSET          0x80018b8u /* established */
+/* established */
+#define ROUTER_NL4_PORT_LLP_CAPT_WD2_OFFSET          0x80018b8u
 #define ROUTER_NL4_PORT_LLP_CAPT_WD2_COUNT           8
 #define ROUTER_NL4_PORT_LLP_CAPT_WD2_STRIDE          16777216
 #define ROUTER_NL4_PORT_LLP_CAPT_WD2_DATA_SHIFT      0 /* established */
 #define ROUTER_NL4_PORT_LLP_CAPT_WD2_DATA_MASK       0xffffffffffffffffull
-#define ROUTER_NL4_PORT_LLP_CAPT_WD2_DATA_INPLACE    (ROUTER_NL4_PORT_LLP_CAPT_WD2_DATA_MASK << ROUTER_NL4_PORT_LLP_CAPT_WD2_DATA_SHIFT)
+#define ROUTER_NL4_PORT_LLP_CAPT_WD2_DATA_INPLACE (ROUTER_NL4_PORT_LLP_CAPT_WD2_DATA_MASK << ROUTER_NL4_PORT_LLP_CAPT_WD2_DATA_SHIFT)
 
 /*
- * PROM register R4_PORTA_LLP_CAPT_SBCB; one per port A to H. Offset and field positions read from the table; role inferred from the names.
+ * PROM register R4_PORTA_LLP_CAPT_SBCB; one per port A to H. Offset and field
+ * positions read from the table; role inferred from the names.
  */
 /* port_llp_capt_sbcb: r64, reset unknown */
-#define ROUTER_NL4_PORT_LLP_CAPT_SBCB_OFFSET         0x80018c0u /* established */
+/* established */
+#define ROUTER_NL4_PORT_LLP_CAPT_SBCB_OFFSET         0x80018c0u
 #define ROUTER_NL4_PORT_LLP_CAPT_SBCB_COUNT          8
 #define ROUTER_NL4_PORT_LLP_CAPT_SBCB_STRIDE         16777216
-#define ROUTER_NL4_PORT_LLP_CAPT_SBCB_FAKED_ALL_SN_ERRORS_SHIFT 34 /* established */
+/* established */
+#define ROUTER_NL4_PORT_LLP_CAPT_SBCB_FAKED_ALL_SN_ERRORS_SHIFT 34
 #define ROUTER_NL4_PORT_LLP_CAPT_SBCB_FAKED_ALL_SN_ERRORS_MASK 0x1ull
 #define ROUTER_NL4_PORT_LLP_CAPT_SBCB_FAKED_ALL_SN_ERRORS_INPLACE (ROUTER_NL4_PORT_LLP_CAPT_SBCB_FAKED_ALL_SN_ERRORS_MASK << ROUTER_NL4_PORT_LLP_CAPT_SBCB_FAKED_ALL_SN_ERRORS_SHIFT)
-#define ROUTER_NL4_PORT_LLP_CAPT_SBCB_SENT_ALL_SN_ERRORS_SHIFT 33 /* established */
+/* established */
+#define ROUTER_NL4_PORT_LLP_CAPT_SBCB_SENT_ALL_SN_ERRORS_SHIFT 33
 #define ROUTER_NL4_PORT_LLP_CAPT_SBCB_SENT_ALL_SN_ERRORS_MASK 0x1ull
 #define ROUTER_NL4_PORT_LLP_CAPT_SBCB_SENT_ALL_SN_ERRORS_INPLACE (ROUTER_NL4_PORT_LLP_CAPT_SBCB_SENT_ALL_SN_ERRORS_MASK << ROUTER_NL4_PORT_LLP_CAPT_SBCB_SENT_ALL_SN_ERRORS_SHIFT)
-#define ROUTER_NL4_PORT_LLP_CAPT_SBCB_SENT_ALL_CB_ERRORS_SHIFT 32 /* established */
+/* established */
+#define ROUTER_NL4_PORT_LLP_CAPT_SBCB_SENT_ALL_CB_ERRORS_SHIFT 32
 #define ROUTER_NL4_PORT_LLP_CAPT_SBCB_SENT_ALL_CB_ERRORS_MASK 0x1ull
 #define ROUTER_NL4_PORT_LLP_CAPT_SBCB_SENT_ALL_CB_ERRORS_INPLACE (ROUTER_NL4_PORT_LLP_CAPT_SBCB_SENT_ALL_CB_ERRORS_MASK << ROUTER_NL4_PORT_LLP_CAPT_SBCB_SENT_ALL_CB_ERRORS_SHIFT)
-#define ROUTER_NL4_PORT_LLP_CAPT_SBCB_CAPTURED_RCV_CRC_SHIFT 16 /* established */
+/* established */
+#define ROUTER_NL4_PORT_LLP_CAPT_SBCB_CAPTURED_RCV_CRC_SHIFT 16
 #define ROUTER_NL4_PORT_LLP_CAPT_SBCB_CAPTURED_RCV_CRC_MASK 0xffffull
 #define ROUTER_NL4_PORT_LLP_CAPT_SBCB_CAPTURED_RCV_CRC_INPLACE (ROUTER_NL4_PORT_LLP_CAPT_SBCB_CAPTURED_RCV_CRC_MASK << ROUTER_NL4_PORT_LLP_CAPT_SBCB_CAPTURED_RCV_CRC_SHIFT)
 #define ROUTER_NL4_PORT_LLP_CAPT_SBCB_CAPTURED_RCVSBSN_SHIFT 0 /* established */
@@ -4585,10 +5432,12 @@
 #define ROUTER_NL4_PORT_LLP_CAPT_SBCB_CAPTURED_RCVSBSN_INPLACE (ROUTER_NL4_PORT_LLP_CAPT_SBCB_CAPTURED_RCVSBSN_MASK << ROUTER_NL4_PORT_LLP_CAPT_SBCB_CAPTURED_RCVSBSN_SHIFT)
 
 /*
- * PROM register R4_PORTA_CREDIT; one per port A to H. Offset and field positions read from the table; role inferred from the names.
+ * PROM register R4_PORTA_CREDIT; one per port A to H. Offset and field
+ * positions read from the table; role inferred from the names.
  */
 /* port_credit: rw64, reset unknown */
-#define ROUTER_NL4_PORT_CREDIT_OFFSET                0x80018c8u /* established */
+/* established */
+#define ROUTER_NL4_PORT_CREDIT_OFFSET                0x80018c8u
 #define ROUTER_NL4_PORT_CREDIT_COUNT                 8
 #define ROUTER_NL4_PORT_CREDIT_STRIDE                16777216
 #define ROUTER_NL4_PORT_CREDIT_SEND_LIMIT_VCH3_SHIFT 56 /* established */
@@ -4617,10 +5466,12 @@
 #define ROUTER_NL4_PORT_CREDIT_RCV_INITIAL_VCH0_INPLACE (ROUTER_NL4_PORT_CREDIT_RCV_INITIAL_VCH0_MASK << ROUTER_NL4_PORT_CREDIT_RCV_INITIAL_VCH0_SHIFT)
 
 /*
- * PROM register R4_PORTA_DEBIT; one per port A to H. Offset and field positions read from the table; role inferred from the names.
+ * PROM register R4_PORTA_DEBIT; one per port A to H. Offset and field positions
+ * read from the table; role inferred from the names.
  */
 /* port_debit: rw64, reset unknown */
-#define ROUTER_NL4_PORT_DEBIT_OFFSET                 0x80018d0u /* established */
+/* established */
+#define ROUTER_NL4_PORT_DEBIT_OFFSET                 0x80018d0u
 #define ROUTER_NL4_PORT_DEBIT_COUNT                  8
 #define ROUTER_NL4_PORT_DEBIT_STRIDE                 16777216
 #define ROUTER_NL4_PORT_DEBIT_EN_SHORT_INTERVAL_SHIFT 36 /* established */
@@ -4637,31 +5488,33 @@
 #define ROUTER_NL4_PORT_DEBIT_FORCE_DEBIT_VCH3_INPLACE (ROUTER_NL4_PORT_DEBIT_FORCE_DEBIT_VCH3_MASK << ROUTER_NL4_PORT_DEBIT_FORCE_DEBIT_VCH3_SHIFT)
 #define ROUTER_NL4_PORT_DEBIT_WITHHOLD_VCH3_SHIFT    24 /* established */
 #define ROUTER_NL4_PORT_DEBIT_WITHHOLD_VCH3_MASK     0x3full
-#define ROUTER_NL4_PORT_DEBIT_WITHHOLD_VCH3_INPLACE  (ROUTER_NL4_PORT_DEBIT_WITHHOLD_VCH3_MASK << ROUTER_NL4_PORT_DEBIT_WITHHOLD_VCH3_SHIFT)
+#define ROUTER_NL4_PORT_DEBIT_WITHHOLD_VCH3_INPLACE (ROUTER_NL4_PORT_DEBIT_WITHHOLD_VCH3_MASK << ROUTER_NL4_PORT_DEBIT_WITHHOLD_VCH3_SHIFT)
 #define ROUTER_NL4_PORT_DEBIT_FORCE_DEBIT_VCH2_SHIFT 22 /* established */
 #define ROUTER_NL4_PORT_DEBIT_FORCE_DEBIT_VCH2_MASK  0x1ull
 #define ROUTER_NL4_PORT_DEBIT_FORCE_DEBIT_VCH2_INPLACE (ROUTER_NL4_PORT_DEBIT_FORCE_DEBIT_VCH2_MASK << ROUTER_NL4_PORT_DEBIT_FORCE_DEBIT_VCH2_SHIFT)
 #define ROUTER_NL4_PORT_DEBIT_WITHHOLD_VCH2_SHIFT    16 /* established */
 #define ROUTER_NL4_PORT_DEBIT_WITHHOLD_VCH2_MASK     0x3full
-#define ROUTER_NL4_PORT_DEBIT_WITHHOLD_VCH2_INPLACE  (ROUTER_NL4_PORT_DEBIT_WITHHOLD_VCH2_MASK << ROUTER_NL4_PORT_DEBIT_WITHHOLD_VCH2_SHIFT)
+#define ROUTER_NL4_PORT_DEBIT_WITHHOLD_VCH2_INPLACE (ROUTER_NL4_PORT_DEBIT_WITHHOLD_VCH2_MASK << ROUTER_NL4_PORT_DEBIT_WITHHOLD_VCH2_SHIFT)
 #define ROUTER_NL4_PORT_DEBIT_FORCE_DEBIT_VCH1_SHIFT 14 /* established */
 #define ROUTER_NL4_PORT_DEBIT_FORCE_DEBIT_VCH1_MASK  0x1ull
 #define ROUTER_NL4_PORT_DEBIT_FORCE_DEBIT_VCH1_INPLACE (ROUTER_NL4_PORT_DEBIT_FORCE_DEBIT_VCH1_MASK << ROUTER_NL4_PORT_DEBIT_FORCE_DEBIT_VCH1_SHIFT)
 #define ROUTER_NL4_PORT_DEBIT_WITHHOLD_VCH1_SHIFT    8 /* established */
 #define ROUTER_NL4_PORT_DEBIT_WITHHOLD_VCH1_MASK     0x3full
-#define ROUTER_NL4_PORT_DEBIT_WITHHOLD_VCH1_INPLACE  (ROUTER_NL4_PORT_DEBIT_WITHHOLD_VCH1_MASK << ROUTER_NL4_PORT_DEBIT_WITHHOLD_VCH1_SHIFT)
+#define ROUTER_NL4_PORT_DEBIT_WITHHOLD_VCH1_INPLACE (ROUTER_NL4_PORT_DEBIT_WITHHOLD_VCH1_MASK << ROUTER_NL4_PORT_DEBIT_WITHHOLD_VCH1_SHIFT)
 #define ROUTER_NL4_PORT_DEBIT_FORCE_DEBIT_VCH0_SHIFT 6 /* established */
 #define ROUTER_NL4_PORT_DEBIT_FORCE_DEBIT_VCH0_MASK  0x1ull
 #define ROUTER_NL4_PORT_DEBIT_FORCE_DEBIT_VCH0_INPLACE (ROUTER_NL4_PORT_DEBIT_FORCE_DEBIT_VCH0_MASK << ROUTER_NL4_PORT_DEBIT_FORCE_DEBIT_VCH0_SHIFT)
 #define ROUTER_NL4_PORT_DEBIT_WITHHOLD_VCH0_SHIFT    0 /* established */
 #define ROUTER_NL4_PORT_DEBIT_WITHHOLD_VCH0_MASK     0x3full
-#define ROUTER_NL4_PORT_DEBIT_WITHHOLD_VCH0_INPLACE  (ROUTER_NL4_PORT_DEBIT_WITHHOLD_VCH0_MASK << ROUTER_NL4_PORT_DEBIT_WITHHOLD_VCH0_SHIFT)
+#define ROUTER_NL4_PORT_DEBIT_WITHHOLD_VCH0_INPLACE (ROUTER_NL4_PORT_DEBIT_WITHHOLD_VCH0_MASK << ROUTER_NL4_PORT_DEBIT_WITHHOLD_VCH0_SHIFT)
 
 /*
- * PROM register R4_PORTA_CREDIT_STATE; one per port A to H. Offset and field positions read from the table; role inferred from the names.
+ * PROM register R4_PORTA_CREDIT_STATE; one per port A to H. Offset and field
+ * positions read from the table; role inferred from the names.
  */
 /* port_credit_state: r64, reset unknown */
-#define ROUTER_NL4_PORT_CREDIT_STATE_OFFSET          0x80018d8u /* established */
+/* established */
+#define ROUTER_NL4_PORT_CREDIT_STATE_OFFSET          0x80018d8u
 #define ROUTER_NL4_PORT_CREDIT_STATE_COUNT           8
 #define ROUTER_NL4_PORT_CREDIT_STATE_STRIDE          16777216
 #define ROUTER_NL4_PORT_CREDIT_STATE_CREDITS_VCH3_SHIFT 56 /* established */
@@ -4690,32 +5543,38 @@
 #define ROUTER_NL4_PORT_CREDIT_STATE_DEBITS_VCH0_INPLACE (ROUTER_NL4_PORT_CREDIT_STATE_DEBITS_VCH0_MASK << ROUTER_NL4_PORT_CREDIT_STATE_DEBITS_VCH0_SHIFT)
 
 /*
- * PROM register R4_PORTA_LLP_PKT; one per port A to H. Offset and field positions read from the table; role inferred from the names.
+ * PROM register R4_PORTA_LLP_PKT; one per port A to H. Offset and field
+ * positions read from the table; role inferred from the names.
  */
 /* port_llp_pkt: rw64, reset unknown */
-#define ROUTER_NL4_PORT_LLP_PKT_OFFSET               0x80018e0u /* established */
+/* established */
+#define ROUTER_NL4_PORT_LLP_PKT_OFFSET               0x80018e0u
 #define ROUTER_NL4_PORT_LLP_PKT_COUNT                8
 #define ROUTER_NL4_PORT_LLP_PKT_STRIDE               16777216
 #define ROUTER_NL4_PORT_LLP_PKT_COUNT_SHIFT          0 /* established */
 #define ROUTER_NL4_PORT_LLP_PKT_COUNT_MASK           0xffffffffffffull
-#define ROUTER_NL4_PORT_LLP_PKT_COUNT_INPLACE        (ROUTER_NL4_PORT_LLP_PKT_COUNT_MASK << ROUTER_NL4_PORT_LLP_PKT_COUNT_SHIFT)
+#define ROUTER_NL4_PORT_LLP_PKT_COUNT_INPLACE (ROUTER_NL4_PORT_LLP_PKT_COUNT_MASK << ROUTER_NL4_PORT_LLP_PKT_COUNT_SHIFT)
 
 /*
- * PROM register R4_PORTA_ERROR_DETAIL; one per port A to H. Offset and field positions read from the table; role inferred from the names.
+ * PROM register R4_PORTA_ERROR_DETAIL; one per port A to H. Offset and field
+ * positions read from the table; role inferred from the names.
  */
 /* port_error_detail: r64, reset unknown */
-#define ROUTER_NL4_PORT_ERROR_DETAIL_OFFSET          0x8002000u /* established */
+/* established */
+#define ROUTER_NL4_PORT_ERROR_DETAIL_OFFSET          0x8002000u
 #define ROUTER_NL4_PORT_ERROR_DETAIL_COUNT           8
 #define ROUTER_NL4_PORT_ERROR_DETAIL_STRIDE          16777216
 #define ROUTER_NL4_PORT_ERROR_DETAIL_DETAIL_SHIFT    0 /* established */
 #define ROUTER_NL4_PORT_ERROR_DETAIL_DETAIL_MASK     0xffffffffffffffffull
-#define ROUTER_NL4_PORT_ERROR_DETAIL_DETAIL_INPLACE  (ROUTER_NL4_PORT_ERROR_DETAIL_DETAIL_MASK << ROUTER_NL4_PORT_ERROR_DETAIL_DETAIL_SHIFT)
+#define ROUTER_NL4_PORT_ERROR_DETAIL_DETAIL_INPLACE (ROUTER_NL4_PORT_ERROR_DETAIL_DETAIL_MASK << ROUTER_NL4_PORT_ERROR_DETAIL_DETAIL_SHIFT)
 
 /*
- * PROM register R4_PORTA_ERROR_DETAIL_CLEAR; one per port A to H. Offset and field positions read from the table; role inferred from the names.
+ * PROM register R4_PORTA_ERROR_DETAIL_CLEAR; one per port A to H. Offset and
+ * field positions read from the table; role inferred from the names.
  */
 /* port_error_detail_clear: rw64, reset unknown */
-#define ROUTER_NL4_PORT_ERROR_DETAIL_CLEAR_OFFSET    0x8002100u /* established */
+/* established */
+#define ROUTER_NL4_PORT_ERROR_DETAIL_CLEAR_OFFSET    0x8002100u
 #define ROUTER_NL4_PORT_ERROR_DETAIL_CLEAR_COUNT     8
 #define ROUTER_NL4_PORT_ERROR_DETAIL_CLEAR_STRIDE    16777216
 #define ROUTER_NL4_PORT_ERROR_DETAIL_CLEAR_ENABLE_SHIFT 0 /* established */
@@ -4723,139 +5582,183 @@
 #define ROUTER_NL4_PORT_ERROR_DETAIL_CLEAR_ENABLE_INPLACE (ROUTER_NL4_PORT_ERROR_DETAIL_CLEAR_ENABLE_MASK << ROUTER_NL4_PORT_ERROR_DETAIL_CLEAR_ENABLE_SHIFT)
 
 /*
- * PROM register R4_PORTA_ERROR_SUMMARY; one per port A to H. Offset and field positions read from the table; role inferred from the names.
+ * PROM register R4_PORTA_ERROR_SUMMARY; one per port A to H. Offset and field
+ * positions read from the table; role inferred from the names.
  */
 /* port_error_summary: rw64, reset unknown */
-#define ROUTER_NL4_PORT_ERROR_SUMMARY_OFFSET         0x8002200u /* established */
+/* established */
+#define ROUTER_NL4_PORT_ERROR_SUMMARY_OFFSET         0x8002200u
 #define ROUTER_NL4_PORT_ERROR_SUMMARY_COUNT          8
 #define ROUTER_NL4_PORT_ERROR_SUMMARY_STRIDE         16777216
 #define ROUTER_NL4_PORT_ERROR_SUMMARY_EXTEND_TURN_ERR_SHIFT 46 /* established */
 #define ROUTER_NL4_PORT_ERROR_SUMMARY_EXTEND_TURN_ERR_MASK 0x1ull
 #define ROUTER_NL4_PORT_ERROR_SUMMARY_EXTEND_TURN_ERR_INPLACE (ROUTER_NL4_PORT_ERROR_SUMMARY_EXTEND_TURN_ERR_MASK << ROUTER_NL4_PORT_ERROR_SUMMARY_EXTEND_TURN_ERR_SHIFT)
-#define ROUTER_NL4_PORT_ERROR_SUMMARY_CORESENTBADCRC_CNT_NON_ZERO_SHIFT 45 /* established */
+/* established */
+#define ROUTER_NL4_PORT_ERROR_SUMMARY_CORESENTBADCRC_CNT_NON_ZERO_SHIFT 45
 #define ROUTER_NL4_PORT_ERROR_SUMMARY_CORESENTBADCRC_CNT_NON_ZERO_MASK 0x1ull
 #define ROUTER_NL4_PORT_ERROR_SUMMARY_CORESENTBADCRC_CNT_NON_ZERO_INPLACE (ROUTER_NL4_PORT_ERROR_SUMMARY_CORESENTBADCRC_CNT_NON_ZERO_MASK << ROUTER_NL4_PORT_ERROR_SUMMARY_CORESENTBADCRC_CNT_NON_ZERO_SHIFT)
-#define ROUTER_NL4_PORT_ERROR_SUMMARY_RETRY_CNT_NON_ZERO_SHIFT 44 /* established */
+/* established */
+#define ROUTER_NL4_PORT_ERROR_SUMMARY_RETRY_CNT_NON_ZERO_SHIFT 44
 #define ROUTER_NL4_PORT_ERROR_SUMMARY_RETRY_CNT_NON_ZERO_MASK 0x1ull
 #define ROUTER_NL4_PORT_ERROR_SUMMARY_RETRY_CNT_NON_ZERO_INPLACE (ROUTER_NL4_PORT_ERROR_SUMMARY_RETRY_CNT_NON_ZERO_MASK << ROUTER_NL4_PORT_ERROR_SUMMARY_RETRY_CNT_NON_ZERO_SHIFT)
-#define ROUTER_NL4_PORT_ERROR_SUMMARY_CB_ERROR_CNT_NON_ZERO_SHIFT 43 /* established */
+/* established */
+#define ROUTER_NL4_PORT_ERROR_SUMMARY_CB_ERROR_CNT_NON_ZERO_SHIFT 43
 #define ROUTER_NL4_PORT_ERROR_SUMMARY_CB_ERROR_CNT_NON_ZERO_MASK 0x1ull
 #define ROUTER_NL4_PORT_ERROR_SUMMARY_CB_ERROR_CNT_NON_ZERO_INPLACE (ROUTER_NL4_PORT_ERROR_SUMMARY_CB_ERROR_CNT_NON_ZERO_MASK << ROUTER_NL4_PORT_ERROR_SUMMARY_CB_ERROR_CNT_NON_ZERO_SHIFT)
-#define ROUTER_NL4_PORT_ERROR_SUMMARY_SN_ERROR_CNT_NON_ZERO_SHIFT 42 /* established */
+/* established */
+#define ROUTER_NL4_PORT_ERROR_SUMMARY_SN_ERROR_CNT_NON_ZERO_SHIFT 42
 #define ROUTER_NL4_PORT_ERROR_SUMMARY_SN_ERROR_CNT_NON_ZERO_MASK 0x1ull
 #define ROUTER_NL4_PORT_ERROR_SUMMARY_SN_ERROR_CNT_NON_ZERO_INPLACE (ROUTER_NL4_PORT_ERROR_SUMMARY_SN_ERROR_CNT_NON_ZERO_MASK << ROUTER_NL4_PORT_ERROR_SUMMARY_SN_ERROR_CNT_NON_ZERO_SHIFT)
-#define ROUTER_NL4_PORT_ERROR_SUMMARY_RCV_TAIL_TO_VCH3_SHIFT 41 /* established */
+/* established */
+#define ROUTER_NL4_PORT_ERROR_SUMMARY_RCV_TAIL_TO_VCH3_SHIFT 41
 #define ROUTER_NL4_PORT_ERROR_SUMMARY_RCV_TAIL_TO_VCH3_MASK 0x1ull
 #define ROUTER_NL4_PORT_ERROR_SUMMARY_RCV_TAIL_TO_VCH3_INPLACE (ROUTER_NL4_PORT_ERROR_SUMMARY_RCV_TAIL_TO_VCH3_MASK << ROUTER_NL4_PORT_ERROR_SUMMARY_RCV_TAIL_TO_VCH3_SHIFT)
-#define ROUTER_NL4_PORT_ERROR_SUMMARY_RCV_TAIL_TO_VCH2_SHIFT 40 /* established */
+/* established */
+#define ROUTER_NL4_PORT_ERROR_SUMMARY_RCV_TAIL_TO_VCH2_SHIFT 40
 #define ROUTER_NL4_PORT_ERROR_SUMMARY_RCV_TAIL_TO_VCH2_MASK 0x1ull
 #define ROUTER_NL4_PORT_ERROR_SUMMARY_RCV_TAIL_TO_VCH2_INPLACE (ROUTER_NL4_PORT_ERROR_SUMMARY_RCV_TAIL_TO_VCH2_MASK << ROUTER_NL4_PORT_ERROR_SUMMARY_RCV_TAIL_TO_VCH2_SHIFT)
-#define ROUTER_NL4_PORT_ERROR_SUMMARY_RCV_TAIL_TO_VCH1_SHIFT 39 /* established */
+/* established */
+#define ROUTER_NL4_PORT_ERROR_SUMMARY_RCV_TAIL_TO_VCH1_SHIFT 39
 #define ROUTER_NL4_PORT_ERROR_SUMMARY_RCV_TAIL_TO_VCH1_MASK 0x1ull
 #define ROUTER_NL4_PORT_ERROR_SUMMARY_RCV_TAIL_TO_VCH1_INPLACE (ROUTER_NL4_PORT_ERROR_SUMMARY_RCV_TAIL_TO_VCH1_MASK << ROUTER_NL4_PORT_ERROR_SUMMARY_RCV_TAIL_TO_VCH1_SHIFT)
-#define ROUTER_NL4_PORT_ERROR_SUMMARY_RCV_TAIL_TO_VCH0_SHIFT 38 /* established */
+/* established */
+#define ROUTER_NL4_PORT_ERROR_SUMMARY_RCV_TAIL_TO_VCH0_SHIFT 38
 #define ROUTER_NL4_PORT_ERROR_SUMMARY_RCV_TAIL_TO_VCH0_MASK 0x1ull
 #define ROUTER_NL4_PORT_ERROR_SUMMARY_RCV_TAIL_TO_VCH0_INPLACE (ROUTER_NL4_PORT_ERROR_SUMMARY_RCV_TAIL_TO_VCH0_MASK << ROUTER_NL4_PORT_ERROR_SUMMARY_RCV_TAIL_TO_VCH0_SHIFT)
-#define ROUTER_NL4_PORT_ERROR_SUMMARY_SEND_DEADLOCK_TO_VCH3_SHIFT 37 /* established */
+/* established */
+#define ROUTER_NL4_PORT_ERROR_SUMMARY_SEND_DEADLOCK_TO_VCH3_SHIFT 37
 #define ROUTER_NL4_PORT_ERROR_SUMMARY_SEND_DEADLOCK_TO_VCH3_MASK 0x1ull
 #define ROUTER_NL4_PORT_ERROR_SUMMARY_SEND_DEADLOCK_TO_VCH3_INPLACE (ROUTER_NL4_PORT_ERROR_SUMMARY_SEND_DEADLOCK_TO_VCH3_MASK << ROUTER_NL4_PORT_ERROR_SUMMARY_SEND_DEADLOCK_TO_VCH3_SHIFT)
-#define ROUTER_NL4_PORT_ERROR_SUMMARY_SEND_DEADLOCK_TO_VCH2_SHIFT 36 /* established */
+/* established */
+#define ROUTER_NL4_PORT_ERROR_SUMMARY_SEND_DEADLOCK_TO_VCH2_SHIFT 36
 #define ROUTER_NL4_PORT_ERROR_SUMMARY_SEND_DEADLOCK_TO_VCH2_MASK 0x1ull
 #define ROUTER_NL4_PORT_ERROR_SUMMARY_SEND_DEADLOCK_TO_VCH2_INPLACE (ROUTER_NL4_PORT_ERROR_SUMMARY_SEND_DEADLOCK_TO_VCH2_MASK << ROUTER_NL4_PORT_ERROR_SUMMARY_SEND_DEADLOCK_TO_VCH2_SHIFT)
-#define ROUTER_NL4_PORT_ERROR_SUMMARY_SEND_DEADLOCK_TO_VCH1_SHIFT 35 /* established */
+/* established */
+#define ROUTER_NL4_PORT_ERROR_SUMMARY_SEND_DEADLOCK_TO_VCH1_SHIFT 35
 #define ROUTER_NL4_PORT_ERROR_SUMMARY_SEND_DEADLOCK_TO_VCH1_MASK 0x1ull
 #define ROUTER_NL4_PORT_ERROR_SUMMARY_SEND_DEADLOCK_TO_VCH1_INPLACE (ROUTER_NL4_PORT_ERROR_SUMMARY_SEND_DEADLOCK_TO_VCH1_MASK << ROUTER_NL4_PORT_ERROR_SUMMARY_SEND_DEADLOCK_TO_VCH1_SHIFT)
-#define ROUTER_NL4_PORT_ERROR_SUMMARY_SEND_DEADLOCK_TO_VCH0_SHIFT 34 /* established */
+/* established */
+#define ROUTER_NL4_PORT_ERROR_SUMMARY_SEND_DEADLOCK_TO_VCH0_SHIFT 34
 #define ROUTER_NL4_PORT_ERROR_SUMMARY_SEND_DEADLOCK_TO_VCH0_MASK 0x1ull
 #define ROUTER_NL4_PORT_ERROR_SUMMARY_SEND_DEADLOCK_TO_VCH0_INPLACE (ROUTER_NL4_PORT_ERROR_SUMMARY_SEND_DEADLOCK_TO_VCH0_MASK << ROUTER_NL4_PORT_ERROR_SUMMARY_SEND_DEADLOCK_TO_VCH0_SHIFT)
-#define ROUTER_NL4_PORT_ERROR_SUMMARY_DAMQ_DEADLOCK_TO_VCH3_SHIFT 33 /* established */
+/* established */
+#define ROUTER_NL4_PORT_ERROR_SUMMARY_DAMQ_DEADLOCK_TO_VCH3_SHIFT 33
 #define ROUTER_NL4_PORT_ERROR_SUMMARY_DAMQ_DEADLOCK_TO_VCH3_MASK 0x1ull
 #define ROUTER_NL4_PORT_ERROR_SUMMARY_DAMQ_DEADLOCK_TO_VCH3_INPLACE (ROUTER_NL4_PORT_ERROR_SUMMARY_DAMQ_DEADLOCK_TO_VCH3_MASK << ROUTER_NL4_PORT_ERROR_SUMMARY_DAMQ_DEADLOCK_TO_VCH3_SHIFT)
-#define ROUTER_NL4_PORT_ERROR_SUMMARY_DAMQ_DEADLOCK_TO_VCH2_SHIFT 32 /* established */
+/* established */
+#define ROUTER_NL4_PORT_ERROR_SUMMARY_DAMQ_DEADLOCK_TO_VCH2_SHIFT 32
 #define ROUTER_NL4_PORT_ERROR_SUMMARY_DAMQ_DEADLOCK_TO_VCH2_MASK 0x1ull
 #define ROUTER_NL4_PORT_ERROR_SUMMARY_DAMQ_DEADLOCK_TO_VCH2_INPLACE (ROUTER_NL4_PORT_ERROR_SUMMARY_DAMQ_DEADLOCK_TO_VCH2_MASK << ROUTER_NL4_PORT_ERROR_SUMMARY_DAMQ_DEADLOCK_TO_VCH2_SHIFT)
-#define ROUTER_NL4_PORT_ERROR_SUMMARY_DAMQ_DEADLOCK_TO_VCH1_SHIFT 31 /* established */
+/* established */
+#define ROUTER_NL4_PORT_ERROR_SUMMARY_DAMQ_DEADLOCK_TO_VCH1_SHIFT 31
 #define ROUTER_NL4_PORT_ERROR_SUMMARY_DAMQ_DEADLOCK_TO_VCH1_MASK 0x1ull
 #define ROUTER_NL4_PORT_ERROR_SUMMARY_DAMQ_DEADLOCK_TO_VCH1_INPLACE (ROUTER_NL4_PORT_ERROR_SUMMARY_DAMQ_DEADLOCK_TO_VCH1_MASK << ROUTER_NL4_PORT_ERROR_SUMMARY_DAMQ_DEADLOCK_TO_VCH1_SHIFT)
-#define ROUTER_NL4_PORT_ERROR_SUMMARY_DAMQ_DEADLOCK_TO_VCH0_SHIFT 30 /* established */
+/* established */
+#define ROUTER_NL4_PORT_ERROR_SUMMARY_DAMQ_DEADLOCK_TO_VCH0_SHIFT 30
 #define ROUTER_NL4_PORT_ERROR_SUMMARY_DAMQ_DEADLOCK_TO_VCH0_MASK 0x1ull
 #define ROUTER_NL4_PORT_ERROR_SUMMARY_DAMQ_DEADLOCK_TO_VCH0_INPLACE (ROUTER_NL4_PORT_ERROR_SUMMARY_DAMQ_DEADLOCK_TO_VCH0_MASK << ROUTER_NL4_PORT_ERROR_SUMMARY_DAMQ_DEADLOCK_TO_VCH0_SHIFT)
-#define ROUTER_NL4_PORT_ERROR_SUMMARY_INVALID_GLOBAL_LU_VCH3_SHIFT 29 /* established */
+/* established */
+#define ROUTER_NL4_PORT_ERROR_SUMMARY_INVALID_GLOBAL_LU_VCH3_SHIFT 29
 #define ROUTER_NL4_PORT_ERROR_SUMMARY_INVALID_GLOBAL_LU_VCH3_MASK 0x1ull
 #define ROUTER_NL4_PORT_ERROR_SUMMARY_INVALID_GLOBAL_LU_VCH3_INPLACE (ROUTER_NL4_PORT_ERROR_SUMMARY_INVALID_GLOBAL_LU_VCH3_MASK << ROUTER_NL4_PORT_ERROR_SUMMARY_INVALID_GLOBAL_LU_VCH3_SHIFT)
-#define ROUTER_NL4_PORT_ERROR_SUMMARY_INVALID_GLOBAL_LU_VCH2_SHIFT 28 /* established */
+/* established */
+#define ROUTER_NL4_PORT_ERROR_SUMMARY_INVALID_GLOBAL_LU_VCH2_SHIFT 28
 #define ROUTER_NL4_PORT_ERROR_SUMMARY_INVALID_GLOBAL_LU_VCH2_MASK 0x1ull
 #define ROUTER_NL4_PORT_ERROR_SUMMARY_INVALID_GLOBAL_LU_VCH2_INPLACE (ROUTER_NL4_PORT_ERROR_SUMMARY_INVALID_GLOBAL_LU_VCH2_MASK << ROUTER_NL4_PORT_ERROR_SUMMARY_INVALID_GLOBAL_LU_VCH2_SHIFT)
-#define ROUTER_NL4_PORT_ERROR_SUMMARY_INVALID_GLOBAL_LU_VCH1_SHIFT 27 /* established */
+/* established */
+#define ROUTER_NL4_PORT_ERROR_SUMMARY_INVALID_GLOBAL_LU_VCH1_SHIFT 27
 #define ROUTER_NL4_PORT_ERROR_SUMMARY_INVALID_GLOBAL_LU_VCH1_MASK 0x1ull
 #define ROUTER_NL4_PORT_ERROR_SUMMARY_INVALID_GLOBAL_LU_VCH1_INPLACE (ROUTER_NL4_PORT_ERROR_SUMMARY_INVALID_GLOBAL_LU_VCH1_MASK << ROUTER_NL4_PORT_ERROR_SUMMARY_INVALID_GLOBAL_LU_VCH1_SHIFT)
-#define ROUTER_NL4_PORT_ERROR_SUMMARY_INVALID_GLOBAL_LU_VCH0_SHIFT 26 /* established */
+/* established */
+#define ROUTER_NL4_PORT_ERROR_SUMMARY_INVALID_GLOBAL_LU_VCH0_SHIFT 26
 #define ROUTER_NL4_PORT_ERROR_SUMMARY_INVALID_GLOBAL_LU_VCH0_MASK 0x1ull
 #define ROUTER_NL4_PORT_ERROR_SUMMARY_INVALID_GLOBAL_LU_VCH0_INPLACE (ROUTER_NL4_PORT_ERROR_SUMMARY_INVALID_GLOBAL_LU_VCH0_MASK << ROUTER_NL4_PORT_ERROR_SUMMARY_INVALID_GLOBAL_LU_VCH0_SHIFT)
-#define ROUTER_NL4_PORT_ERROR_SUMMARY_INVALID_LOCAL_LU_VCH3_SHIFT 25 /* established */
+/* established */
+#define ROUTER_NL4_PORT_ERROR_SUMMARY_INVALID_LOCAL_LU_VCH3_SHIFT 25
 #define ROUTER_NL4_PORT_ERROR_SUMMARY_INVALID_LOCAL_LU_VCH3_MASK 0x1ull
 #define ROUTER_NL4_PORT_ERROR_SUMMARY_INVALID_LOCAL_LU_VCH3_INPLACE (ROUTER_NL4_PORT_ERROR_SUMMARY_INVALID_LOCAL_LU_VCH3_MASK << ROUTER_NL4_PORT_ERROR_SUMMARY_INVALID_LOCAL_LU_VCH3_SHIFT)
-#define ROUTER_NL4_PORT_ERROR_SUMMARY_INVALID_LOCAL_LU_VCH2_SHIFT 24 /* established */
+/* established */
+#define ROUTER_NL4_PORT_ERROR_SUMMARY_INVALID_LOCAL_LU_VCH2_SHIFT 24
 #define ROUTER_NL4_PORT_ERROR_SUMMARY_INVALID_LOCAL_LU_VCH2_MASK 0x1ull
 #define ROUTER_NL4_PORT_ERROR_SUMMARY_INVALID_LOCAL_LU_VCH2_INPLACE (ROUTER_NL4_PORT_ERROR_SUMMARY_INVALID_LOCAL_LU_VCH2_MASK << ROUTER_NL4_PORT_ERROR_SUMMARY_INVALID_LOCAL_LU_VCH2_SHIFT)
-#define ROUTER_NL4_PORT_ERROR_SUMMARY_INVALID_LOCAL_LU_VCH1_SHIFT 23 /* established */
+/* established */
+#define ROUTER_NL4_PORT_ERROR_SUMMARY_INVALID_LOCAL_LU_VCH1_SHIFT 23
 #define ROUTER_NL4_PORT_ERROR_SUMMARY_INVALID_LOCAL_LU_VCH1_MASK 0x1ull
 #define ROUTER_NL4_PORT_ERROR_SUMMARY_INVALID_LOCAL_LU_VCH1_INPLACE (ROUTER_NL4_PORT_ERROR_SUMMARY_INVALID_LOCAL_LU_VCH1_MASK << ROUTER_NL4_PORT_ERROR_SUMMARY_INVALID_LOCAL_LU_VCH1_SHIFT)
-#define ROUTER_NL4_PORT_ERROR_SUMMARY_INVALID_LOCAL_LU_VCH0_SHIFT 22 /* established */
+/* established */
+#define ROUTER_NL4_PORT_ERROR_SUMMARY_INVALID_LOCAL_LU_VCH0_SHIFT 22
 #define ROUTER_NL4_PORT_ERROR_SUMMARY_INVALID_LOCAL_LU_VCH0_MASK 0x1ull
 #define ROUTER_NL4_PORT_ERROR_SUMMARY_INVALID_LOCAL_LU_VCH0_INPLACE (ROUTER_NL4_PORT_ERROR_SUMMARY_INVALID_LOCAL_LU_VCH0_MASK << ROUTER_NL4_PORT_ERROR_SUMMARY_INVALID_LOCAL_LU_VCH0_SHIFT)
-#define ROUTER_NL4_PORT_ERROR_SUMMARY_DATELINE_ERROR_VCH3_SHIFT 21 /* established */
+/* established */
+#define ROUTER_NL4_PORT_ERROR_SUMMARY_DATELINE_ERROR_VCH3_SHIFT 21
 #define ROUTER_NL4_PORT_ERROR_SUMMARY_DATELINE_ERROR_VCH3_MASK 0x1ull
 #define ROUTER_NL4_PORT_ERROR_SUMMARY_DATELINE_ERROR_VCH3_INPLACE (ROUTER_NL4_PORT_ERROR_SUMMARY_DATELINE_ERROR_VCH3_MASK << ROUTER_NL4_PORT_ERROR_SUMMARY_DATELINE_ERROR_VCH3_SHIFT)
-#define ROUTER_NL4_PORT_ERROR_SUMMARY_DATELINE_ERROR_VCH1_SHIFT 20 /* established */
+/* established */
+#define ROUTER_NL4_PORT_ERROR_SUMMARY_DATELINE_ERROR_VCH1_SHIFT 20
 #define ROUTER_NL4_PORT_ERROR_SUMMARY_DATELINE_ERROR_VCH1_MASK 0x1ull
 #define ROUTER_NL4_PORT_ERROR_SUMMARY_DATELINE_ERROR_VCH1_INPLACE (ROUTER_NL4_PORT_ERROR_SUMMARY_DATELINE_ERROR_VCH1_MASK << ROUTER_NL4_PORT_ERROR_SUMMARY_DATELINE_ERROR_VCH1_SHIFT)
-#define ROUTER_NL4_PORT_ERROR_SUMMARY_ILLEGAL_DIR_VCH3_SHIFT 19 /* established */
+/* established */
+#define ROUTER_NL4_PORT_ERROR_SUMMARY_ILLEGAL_DIR_VCH3_SHIFT 19
 #define ROUTER_NL4_PORT_ERROR_SUMMARY_ILLEGAL_DIR_VCH3_MASK 0x1ull
 #define ROUTER_NL4_PORT_ERROR_SUMMARY_ILLEGAL_DIR_VCH3_INPLACE (ROUTER_NL4_PORT_ERROR_SUMMARY_ILLEGAL_DIR_VCH3_MASK << ROUTER_NL4_PORT_ERROR_SUMMARY_ILLEGAL_DIR_VCH3_SHIFT)
-#define ROUTER_NL4_PORT_ERROR_SUMMARY_ILLEGAL_DIR_VCH2_SHIFT 18 /* established */
+/* established */
+#define ROUTER_NL4_PORT_ERROR_SUMMARY_ILLEGAL_DIR_VCH2_SHIFT 18
 #define ROUTER_NL4_PORT_ERROR_SUMMARY_ILLEGAL_DIR_VCH2_MASK 0x1ull
 #define ROUTER_NL4_PORT_ERROR_SUMMARY_ILLEGAL_DIR_VCH2_INPLACE (ROUTER_NL4_PORT_ERROR_SUMMARY_ILLEGAL_DIR_VCH2_MASK << ROUTER_NL4_PORT_ERROR_SUMMARY_ILLEGAL_DIR_VCH2_SHIFT)
-#define ROUTER_NL4_PORT_ERROR_SUMMARY_ILLEGAL_DIR_VCH1_SHIFT 17 /* established */
+/* established */
+#define ROUTER_NL4_PORT_ERROR_SUMMARY_ILLEGAL_DIR_VCH1_SHIFT 17
 #define ROUTER_NL4_PORT_ERROR_SUMMARY_ILLEGAL_DIR_VCH1_MASK 0x1ull
 #define ROUTER_NL4_PORT_ERROR_SUMMARY_ILLEGAL_DIR_VCH1_INPLACE (ROUTER_NL4_PORT_ERROR_SUMMARY_ILLEGAL_DIR_VCH1_MASK << ROUTER_NL4_PORT_ERROR_SUMMARY_ILLEGAL_DIR_VCH1_SHIFT)
-#define ROUTER_NL4_PORT_ERROR_SUMMARY_ILLEGAL_DIR_VCH0_SHIFT 16 /* established */
+/* established */
+#define ROUTER_NL4_PORT_ERROR_SUMMARY_ILLEGAL_DIR_VCH0_SHIFT 16
 #define ROUTER_NL4_PORT_ERROR_SUMMARY_ILLEGAL_DIR_VCH0_MASK 0x1ull
 #define ROUTER_NL4_PORT_ERROR_SUMMARY_ILLEGAL_DIR_VCH0_INPLACE (ROUTER_NL4_PORT_ERROR_SUMMARY_ILLEGAL_DIR_VCH0_MASK << ROUTER_NL4_PORT_ERROR_SUMMARY_ILLEGAL_DIR_VCH0_SHIFT)
-#define ROUTER_NL4_PORT_ERROR_SUMMARY_CREDIT_OVERFLOW_VCH3_SHIFT 15 /* established */
+/* established */
+#define ROUTER_NL4_PORT_ERROR_SUMMARY_CREDIT_OVERFLOW_VCH3_SHIFT 15
 #define ROUTER_NL4_PORT_ERROR_SUMMARY_CREDIT_OVERFLOW_VCH3_MASK 0x1ull
 #define ROUTER_NL4_PORT_ERROR_SUMMARY_CREDIT_OVERFLOW_VCH3_INPLACE (ROUTER_NL4_PORT_ERROR_SUMMARY_CREDIT_OVERFLOW_VCH3_MASK << ROUTER_NL4_PORT_ERROR_SUMMARY_CREDIT_OVERFLOW_VCH3_SHIFT)
-#define ROUTER_NL4_PORT_ERROR_SUMMARY_CREDIT_OVERFLOW_VCH2_SHIFT 14 /* established */
+/* established */
+#define ROUTER_NL4_PORT_ERROR_SUMMARY_CREDIT_OVERFLOW_VCH2_SHIFT 14
 #define ROUTER_NL4_PORT_ERROR_SUMMARY_CREDIT_OVERFLOW_VCH2_MASK 0x1ull
 #define ROUTER_NL4_PORT_ERROR_SUMMARY_CREDIT_OVERFLOW_VCH2_INPLACE (ROUTER_NL4_PORT_ERROR_SUMMARY_CREDIT_OVERFLOW_VCH2_MASK << ROUTER_NL4_PORT_ERROR_SUMMARY_CREDIT_OVERFLOW_VCH2_SHIFT)
-#define ROUTER_NL4_PORT_ERROR_SUMMARY_CREDIT_OVERFLOW_VCH1_SHIFT 13 /* established */
+/* established */
+#define ROUTER_NL4_PORT_ERROR_SUMMARY_CREDIT_OVERFLOW_VCH1_SHIFT 13
 #define ROUTER_NL4_PORT_ERROR_SUMMARY_CREDIT_OVERFLOW_VCH1_MASK 0x1ull
 #define ROUTER_NL4_PORT_ERROR_SUMMARY_CREDIT_OVERFLOW_VCH1_INPLACE (ROUTER_NL4_PORT_ERROR_SUMMARY_CREDIT_OVERFLOW_VCH1_MASK << ROUTER_NL4_PORT_ERROR_SUMMARY_CREDIT_OVERFLOW_VCH1_SHIFT)
-#define ROUTER_NL4_PORT_ERROR_SUMMARY_CREDIT_OVERFLOW_VCH0_SHIFT 12 /* established */
+/* established */
+#define ROUTER_NL4_PORT_ERROR_SUMMARY_CREDIT_OVERFLOW_VCH0_SHIFT 12
 #define ROUTER_NL4_PORT_ERROR_SUMMARY_CREDIT_OVERFLOW_VCH0_MASK 0x1ull
 #define ROUTER_NL4_PORT_ERROR_SUMMARY_CREDIT_OVERFLOW_VCH0_INPLACE (ROUTER_NL4_PORT_ERROR_SUMMARY_CREDIT_OVERFLOW_VCH0_MASK << ROUTER_NL4_PORT_ERROR_SUMMARY_CREDIT_OVERFLOW_VCH0_SHIFT)
-#define ROUTER_NL4_PORT_ERROR_SUMMARY_FIFO_OVERFLOW_VCH3_SHIFT 11 /* established */
+/* established */
+#define ROUTER_NL4_PORT_ERROR_SUMMARY_FIFO_OVERFLOW_VCH3_SHIFT 11
 #define ROUTER_NL4_PORT_ERROR_SUMMARY_FIFO_OVERFLOW_VCH3_MASK 0x1ull
 #define ROUTER_NL4_PORT_ERROR_SUMMARY_FIFO_OVERFLOW_VCH3_INPLACE (ROUTER_NL4_PORT_ERROR_SUMMARY_FIFO_OVERFLOW_VCH3_MASK << ROUTER_NL4_PORT_ERROR_SUMMARY_FIFO_OVERFLOW_VCH3_SHIFT)
-#define ROUTER_NL4_PORT_ERROR_SUMMARY_FIFO_OVERFLOW_VCH2_SHIFT 10 /* established */
+/* established */
+#define ROUTER_NL4_PORT_ERROR_SUMMARY_FIFO_OVERFLOW_VCH2_SHIFT 10
 #define ROUTER_NL4_PORT_ERROR_SUMMARY_FIFO_OVERFLOW_VCH2_MASK 0x1ull
 #define ROUTER_NL4_PORT_ERROR_SUMMARY_FIFO_OVERFLOW_VCH2_INPLACE (ROUTER_NL4_PORT_ERROR_SUMMARY_FIFO_OVERFLOW_VCH2_MASK << ROUTER_NL4_PORT_ERROR_SUMMARY_FIFO_OVERFLOW_VCH2_SHIFT)
-#define ROUTER_NL4_PORT_ERROR_SUMMARY_FIFO_OVERFLOW_VCH1_SHIFT 9 /* established */
+/* established */
+#define ROUTER_NL4_PORT_ERROR_SUMMARY_FIFO_OVERFLOW_VCH1_SHIFT 9
 #define ROUTER_NL4_PORT_ERROR_SUMMARY_FIFO_OVERFLOW_VCH1_MASK 0x1ull
 #define ROUTER_NL4_PORT_ERROR_SUMMARY_FIFO_OVERFLOW_VCH1_INPLACE (ROUTER_NL4_PORT_ERROR_SUMMARY_FIFO_OVERFLOW_VCH1_MASK << ROUTER_NL4_PORT_ERROR_SUMMARY_FIFO_OVERFLOW_VCH1_SHIFT)
-#define ROUTER_NL4_PORT_ERROR_SUMMARY_FIFO_OVERFLOW_VCH0_SHIFT 8 /* established */
+/* established */
+#define ROUTER_NL4_PORT_ERROR_SUMMARY_FIFO_OVERFLOW_VCH0_SHIFT 8
 #define ROUTER_NL4_PORT_ERROR_SUMMARY_FIFO_OVERFLOW_VCH0_MASK 0x1ull
 #define ROUTER_NL4_PORT_ERROR_SUMMARY_FIFO_OVERFLOW_VCH0_INPLACE (ROUTER_NL4_PORT_ERROR_SUMMARY_FIFO_OVERFLOW_VCH0_MASK << ROUTER_NL4_PORT_ERROR_SUMMARY_FIFO_OVERFLOW_VCH0_SHIFT)
-#define ROUTER_NL4_PORT_ERROR_SUMMARY_BUFFER_OVERFLOW_VCH3_SHIFT 7 /* established */
+/* established */
+#define ROUTER_NL4_PORT_ERROR_SUMMARY_BUFFER_OVERFLOW_VCH3_SHIFT 7
 #define ROUTER_NL4_PORT_ERROR_SUMMARY_BUFFER_OVERFLOW_VCH3_MASK 0x1ull
 #define ROUTER_NL4_PORT_ERROR_SUMMARY_BUFFER_OVERFLOW_VCH3_INPLACE (ROUTER_NL4_PORT_ERROR_SUMMARY_BUFFER_OVERFLOW_VCH3_MASK << ROUTER_NL4_PORT_ERROR_SUMMARY_BUFFER_OVERFLOW_VCH3_SHIFT)
-#define ROUTER_NL4_PORT_ERROR_SUMMARY_BUFFER_OVERFLOW_VCH2_SHIFT 6 /* established */
+/* established */
+#define ROUTER_NL4_PORT_ERROR_SUMMARY_BUFFER_OVERFLOW_VCH2_SHIFT 6
 #define ROUTER_NL4_PORT_ERROR_SUMMARY_BUFFER_OVERFLOW_VCH2_MASK 0x1ull
 #define ROUTER_NL4_PORT_ERROR_SUMMARY_BUFFER_OVERFLOW_VCH2_INPLACE (ROUTER_NL4_PORT_ERROR_SUMMARY_BUFFER_OVERFLOW_VCH2_MASK << ROUTER_NL4_PORT_ERROR_SUMMARY_BUFFER_OVERFLOW_VCH2_SHIFT)
-#define ROUTER_NL4_PORT_ERROR_SUMMARY_BUFFER_OVERFLOW_VCH1_SHIFT 5 /* established */
+/* established */
+#define ROUTER_NL4_PORT_ERROR_SUMMARY_BUFFER_OVERFLOW_VCH1_SHIFT 5
 #define ROUTER_NL4_PORT_ERROR_SUMMARY_BUFFER_OVERFLOW_VCH1_MASK 0x1ull
 #define ROUTER_NL4_PORT_ERROR_SUMMARY_BUFFER_OVERFLOW_VCH1_INPLACE (ROUTER_NL4_PORT_ERROR_SUMMARY_BUFFER_OVERFLOW_VCH1_MASK << ROUTER_NL4_PORT_ERROR_SUMMARY_BUFFER_OVERFLOW_VCH1_SHIFT)
-#define ROUTER_NL4_PORT_ERROR_SUMMARY_BUFFER_OVERFLOW_VCH0_SHIFT 4 /* established */
+/* established */
+#define ROUTER_NL4_PORT_ERROR_SUMMARY_BUFFER_OVERFLOW_VCH0_SHIFT 4
 #define ROUTER_NL4_PORT_ERROR_SUMMARY_BUFFER_OVERFLOW_VCH0_MASK 0x1ull
 #define ROUTER_NL4_PORT_ERROR_SUMMARY_BUFFER_OVERFLOW_VCH0_INPLACE (ROUTER_NL4_PORT_ERROR_SUMMARY_BUFFER_OVERFLOW_VCH0_MASK << ROUTER_NL4_PORT_ERROR_SUMMARY_BUFFER_OVERFLOW_VCH0_SHIFT)
 #define ROUTER_NL4_PORT_ERROR_SUMMARY_RETRY_TO_SHIFT 3 /* established */
@@ -4872,25 +5775,31 @@
 #define ROUTER_NL4_PORT_ERROR_SUMMARY_POWER_NOT_OK_INPLACE (ROUTER_NL4_PORT_ERROR_SUMMARY_POWER_NOT_OK_MASK << ROUTER_NL4_PORT_ERROR_SUMMARY_POWER_NOT_OK_SHIFT)
 
 /*
- * PROM register R4_PORTA_FIRST_ERROR; one per port A to H. Offset and field positions read from the table; role inferred from the names.
+ * PROM register R4_PORTA_FIRST_ERROR; one per port A to H. Offset and field
+ * positions read from the table; role inferred from the names.
  */
 /* port_first_error: rw64, reset unknown */
-#define ROUTER_NL4_PORT_FIRST_ERROR_OFFSET           0x8002210u /* established */
+/* established */
+#define ROUTER_NL4_PORT_FIRST_ERROR_OFFSET           0x8002210u
 #define ROUTER_NL4_PORT_FIRST_ERROR_COUNT            8
 #define ROUTER_NL4_PORT_FIRST_ERROR_STRIDE           16777216
 #define ROUTER_NL4_PORT_FIRST_ERROR_EXTEND_TURN_ERR_SHIFT 46 /* established */
 #define ROUTER_NL4_PORT_FIRST_ERROR_EXTEND_TURN_ERR_MASK 0x1ull
 #define ROUTER_NL4_PORT_FIRST_ERROR_EXTEND_TURN_ERR_INPLACE (ROUTER_NL4_PORT_FIRST_ERROR_EXTEND_TURN_ERR_MASK << ROUTER_NL4_PORT_FIRST_ERROR_EXTEND_TURN_ERR_SHIFT)
-#define ROUTER_NL4_PORT_FIRST_ERROR_CORESENTBADCRC_CNT_NON_ZERO_SHIFT 45 /* established */
+/* established */
+#define ROUTER_NL4_PORT_FIRST_ERROR_CORESENTBADCRC_CNT_NON_ZERO_SHIFT 45
 #define ROUTER_NL4_PORT_FIRST_ERROR_CORESENTBADCRC_CNT_NON_ZERO_MASK 0x1ull
 #define ROUTER_NL4_PORT_FIRST_ERROR_CORESENTBADCRC_CNT_NON_ZERO_INPLACE (ROUTER_NL4_PORT_FIRST_ERROR_CORESENTBADCRC_CNT_NON_ZERO_MASK << ROUTER_NL4_PORT_FIRST_ERROR_CORESENTBADCRC_CNT_NON_ZERO_SHIFT)
-#define ROUTER_NL4_PORT_FIRST_ERROR_RETRY_CNT_NON_ZERO_SHIFT 44 /* established */
+/* established */
+#define ROUTER_NL4_PORT_FIRST_ERROR_RETRY_CNT_NON_ZERO_SHIFT 44
 #define ROUTER_NL4_PORT_FIRST_ERROR_RETRY_CNT_NON_ZERO_MASK 0x1ull
 #define ROUTER_NL4_PORT_FIRST_ERROR_RETRY_CNT_NON_ZERO_INPLACE (ROUTER_NL4_PORT_FIRST_ERROR_RETRY_CNT_NON_ZERO_MASK << ROUTER_NL4_PORT_FIRST_ERROR_RETRY_CNT_NON_ZERO_SHIFT)
-#define ROUTER_NL4_PORT_FIRST_ERROR_CB_ERROR_CNT_NON_ZERO_SHIFT 43 /* established */
+/* established */
+#define ROUTER_NL4_PORT_FIRST_ERROR_CB_ERROR_CNT_NON_ZERO_SHIFT 43
 #define ROUTER_NL4_PORT_FIRST_ERROR_CB_ERROR_CNT_NON_ZERO_MASK 0x1ull
 #define ROUTER_NL4_PORT_FIRST_ERROR_CB_ERROR_CNT_NON_ZERO_INPLACE (ROUTER_NL4_PORT_FIRST_ERROR_CB_ERROR_CNT_NON_ZERO_MASK << ROUTER_NL4_PORT_FIRST_ERROR_CB_ERROR_CNT_NON_ZERO_SHIFT)
-#define ROUTER_NL4_PORT_FIRST_ERROR_SN_ERROR_CNT_NON_ZERO_SHIFT 42 /* established */
+/* established */
+#define ROUTER_NL4_PORT_FIRST_ERROR_SN_ERROR_CNT_NON_ZERO_SHIFT 42
 #define ROUTER_NL4_PORT_FIRST_ERROR_SN_ERROR_CNT_NON_ZERO_MASK 0x1ull
 #define ROUTER_NL4_PORT_FIRST_ERROR_SN_ERROR_CNT_NON_ZERO_INPLACE (ROUTER_NL4_PORT_FIRST_ERROR_SN_ERROR_CNT_NON_ZERO_MASK << ROUTER_NL4_PORT_FIRST_ERROR_SN_ERROR_CNT_NON_ZERO_SHIFT)
 #define ROUTER_NL4_PORT_FIRST_ERROR_RCV_TAIL_TO_VCH3_SHIFT 41 /* established */
@@ -4905,58 +5814,76 @@
 #define ROUTER_NL4_PORT_FIRST_ERROR_RCV_TAIL_TO_VCH0_SHIFT 38 /* established */
 #define ROUTER_NL4_PORT_FIRST_ERROR_RCV_TAIL_TO_VCH0_MASK 0x1ull
 #define ROUTER_NL4_PORT_FIRST_ERROR_RCV_TAIL_TO_VCH0_INPLACE (ROUTER_NL4_PORT_FIRST_ERROR_RCV_TAIL_TO_VCH0_MASK << ROUTER_NL4_PORT_FIRST_ERROR_RCV_TAIL_TO_VCH0_SHIFT)
-#define ROUTER_NL4_PORT_FIRST_ERROR_SEND_DEADLOCK_TO_VCH3_SHIFT 37 /* established */
+/* established */
+#define ROUTER_NL4_PORT_FIRST_ERROR_SEND_DEADLOCK_TO_VCH3_SHIFT 37
 #define ROUTER_NL4_PORT_FIRST_ERROR_SEND_DEADLOCK_TO_VCH3_MASK 0x1ull
 #define ROUTER_NL4_PORT_FIRST_ERROR_SEND_DEADLOCK_TO_VCH3_INPLACE (ROUTER_NL4_PORT_FIRST_ERROR_SEND_DEADLOCK_TO_VCH3_MASK << ROUTER_NL4_PORT_FIRST_ERROR_SEND_DEADLOCK_TO_VCH3_SHIFT)
-#define ROUTER_NL4_PORT_FIRST_ERROR_SEND_DEADLOCK_TO_VCH2_SHIFT 36 /* established */
+/* established */
+#define ROUTER_NL4_PORT_FIRST_ERROR_SEND_DEADLOCK_TO_VCH2_SHIFT 36
 #define ROUTER_NL4_PORT_FIRST_ERROR_SEND_DEADLOCK_TO_VCH2_MASK 0x1ull
 #define ROUTER_NL4_PORT_FIRST_ERROR_SEND_DEADLOCK_TO_VCH2_INPLACE (ROUTER_NL4_PORT_FIRST_ERROR_SEND_DEADLOCK_TO_VCH2_MASK << ROUTER_NL4_PORT_FIRST_ERROR_SEND_DEADLOCK_TO_VCH2_SHIFT)
-#define ROUTER_NL4_PORT_FIRST_ERROR_SEND_DEADLOCK_TO_VCH1_SHIFT 35 /* established */
+/* established */
+#define ROUTER_NL4_PORT_FIRST_ERROR_SEND_DEADLOCK_TO_VCH1_SHIFT 35
 #define ROUTER_NL4_PORT_FIRST_ERROR_SEND_DEADLOCK_TO_VCH1_MASK 0x1ull
 #define ROUTER_NL4_PORT_FIRST_ERROR_SEND_DEADLOCK_TO_VCH1_INPLACE (ROUTER_NL4_PORT_FIRST_ERROR_SEND_DEADLOCK_TO_VCH1_MASK << ROUTER_NL4_PORT_FIRST_ERROR_SEND_DEADLOCK_TO_VCH1_SHIFT)
-#define ROUTER_NL4_PORT_FIRST_ERROR_SEND_DEADLOCK_TO_VCH0_SHIFT 34 /* established */
+/* established */
+#define ROUTER_NL4_PORT_FIRST_ERROR_SEND_DEADLOCK_TO_VCH0_SHIFT 34
 #define ROUTER_NL4_PORT_FIRST_ERROR_SEND_DEADLOCK_TO_VCH0_MASK 0x1ull
 #define ROUTER_NL4_PORT_FIRST_ERROR_SEND_DEADLOCK_TO_VCH0_INPLACE (ROUTER_NL4_PORT_FIRST_ERROR_SEND_DEADLOCK_TO_VCH0_MASK << ROUTER_NL4_PORT_FIRST_ERROR_SEND_DEADLOCK_TO_VCH0_SHIFT)
-#define ROUTER_NL4_PORT_FIRST_ERROR_DAMQ_DEADLOCK_TO_VCH3_SHIFT 33 /* established */
+/* established */
+#define ROUTER_NL4_PORT_FIRST_ERROR_DAMQ_DEADLOCK_TO_VCH3_SHIFT 33
 #define ROUTER_NL4_PORT_FIRST_ERROR_DAMQ_DEADLOCK_TO_VCH3_MASK 0x1ull
 #define ROUTER_NL4_PORT_FIRST_ERROR_DAMQ_DEADLOCK_TO_VCH3_INPLACE (ROUTER_NL4_PORT_FIRST_ERROR_DAMQ_DEADLOCK_TO_VCH3_MASK << ROUTER_NL4_PORT_FIRST_ERROR_DAMQ_DEADLOCK_TO_VCH3_SHIFT)
-#define ROUTER_NL4_PORT_FIRST_ERROR_DAMQ_DEADLOCK_TO_VCH2_SHIFT 32 /* established */
+/* established */
+#define ROUTER_NL4_PORT_FIRST_ERROR_DAMQ_DEADLOCK_TO_VCH2_SHIFT 32
 #define ROUTER_NL4_PORT_FIRST_ERROR_DAMQ_DEADLOCK_TO_VCH2_MASK 0x1ull
 #define ROUTER_NL4_PORT_FIRST_ERROR_DAMQ_DEADLOCK_TO_VCH2_INPLACE (ROUTER_NL4_PORT_FIRST_ERROR_DAMQ_DEADLOCK_TO_VCH2_MASK << ROUTER_NL4_PORT_FIRST_ERROR_DAMQ_DEADLOCK_TO_VCH2_SHIFT)
-#define ROUTER_NL4_PORT_FIRST_ERROR_DAMQ_DEADLOCK_TO_VCH1_SHIFT 31 /* established */
+/* established */
+#define ROUTER_NL4_PORT_FIRST_ERROR_DAMQ_DEADLOCK_TO_VCH1_SHIFT 31
 #define ROUTER_NL4_PORT_FIRST_ERROR_DAMQ_DEADLOCK_TO_VCH1_MASK 0x1ull
 #define ROUTER_NL4_PORT_FIRST_ERROR_DAMQ_DEADLOCK_TO_VCH1_INPLACE (ROUTER_NL4_PORT_FIRST_ERROR_DAMQ_DEADLOCK_TO_VCH1_MASK << ROUTER_NL4_PORT_FIRST_ERROR_DAMQ_DEADLOCK_TO_VCH1_SHIFT)
-#define ROUTER_NL4_PORT_FIRST_ERROR_DAMQ_DEADLOCK_TO_VCH0_SHIFT 30 /* established */
+/* established */
+#define ROUTER_NL4_PORT_FIRST_ERROR_DAMQ_DEADLOCK_TO_VCH0_SHIFT 30
 #define ROUTER_NL4_PORT_FIRST_ERROR_DAMQ_DEADLOCK_TO_VCH0_MASK 0x1ull
 #define ROUTER_NL4_PORT_FIRST_ERROR_DAMQ_DEADLOCK_TO_VCH0_INPLACE (ROUTER_NL4_PORT_FIRST_ERROR_DAMQ_DEADLOCK_TO_VCH0_MASK << ROUTER_NL4_PORT_FIRST_ERROR_DAMQ_DEADLOCK_TO_VCH0_SHIFT)
-#define ROUTER_NL4_PORT_FIRST_ERROR_INVALID_GLOBAL_LU_VCH3_SHIFT 29 /* established */
+/* established */
+#define ROUTER_NL4_PORT_FIRST_ERROR_INVALID_GLOBAL_LU_VCH3_SHIFT 29
 #define ROUTER_NL4_PORT_FIRST_ERROR_INVALID_GLOBAL_LU_VCH3_MASK 0x1ull
 #define ROUTER_NL4_PORT_FIRST_ERROR_INVALID_GLOBAL_LU_VCH3_INPLACE (ROUTER_NL4_PORT_FIRST_ERROR_INVALID_GLOBAL_LU_VCH3_MASK << ROUTER_NL4_PORT_FIRST_ERROR_INVALID_GLOBAL_LU_VCH3_SHIFT)
-#define ROUTER_NL4_PORT_FIRST_ERROR_INVALID_GLOBAL_LU_VCH2_SHIFT 28 /* established */
+/* established */
+#define ROUTER_NL4_PORT_FIRST_ERROR_INVALID_GLOBAL_LU_VCH2_SHIFT 28
 #define ROUTER_NL4_PORT_FIRST_ERROR_INVALID_GLOBAL_LU_VCH2_MASK 0x1ull
 #define ROUTER_NL4_PORT_FIRST_ERROR_INVALID_GLOBAL_LU_VCH2_INPLACE (ROUTER_NL4_PORT_FIRST_ERROR_INVALID_GLOBAL_LU_VCH2_MASK << ROUTER_NL4_PORT_FIRST_ERROR_INVALID_GLOBAL_LU_VCH2_SHIFT)
-#define ROUTER_NL4_PORT_FIRST_ERROR_INVALID_GLOBAL_LU_VCH1_SHIFT 27 /* established */
+/* established */
+#define ROUTER_NL4_PORT_FIRST_ERROR_INVALID_GLOBAL_LU_VCH1_SHIFT 27
 #define ROUTER_NL4_PORT_FIRST_ERROR_INVALID_GLOBAL_LU_VCH1_MASK 0x1ull
 #define ROUTER_NL4_PORT_FIRST_ERROR_INVALID_GLOBAL_LU_VCH1_INPLACE (ROUTER_NL4_PORT_FIRST_ERROR_INVALID_GLOBAL_LU_VCH1_MASK << ROUTER_NL4_PORT_FIRST_ERROR_INVALID_GLOBAL_LU_VCH1_SHIFT)
-#define ROUTER_NL4_PORT_FIRST_ERROR_INVALID_GLOBAL_LU_VCH0_SHIFT 26 /* established */
+/* established */
+#define ROUTER_NL4_PORT_FIRST_ERROR_INVALID_GLOBAL_LU_VCH0_SHIFT 26
 #define ROUTER_NL4_PORT_FIRST_ERROR_INVALID_GLOBAL_LU_VCH0_MASK 0x1ull
 #define ROUTER_NL4_PORT_FIRST_ERROR_INVALID_GLOBAL_LU_VCH0_INPLACE (ROUTER_NL4_PORT_FIRST_ERROR_INVALID_GLOBAL_LU_VCH0_MASK << ROUTER_NL4_PORT_FIRST_ERROR_INVALID_GLOBAL_LU_VCH0_SHIFT)
-#define ROUTER_NL4_PORT_FIRST_ERROR_INVALID_LOCAL_LU_VCH3_SHIFT 25 /* established */
+/* established */
+#define ROUTER_NL4_PORT_FIRST_ERROR_INVALID_LOCAL_LU_VCH3_SHIFT 25
 #define ROUTER_NL4_PORT_FIRST_ERROR_INVALID_LOCAL_LU_VCH3_MASK 0x1ull
 #define ROUTER_NL4_PORT_FIRST_ERROR_INVALID_LOCAL_LU_VCH3_INPLACE (ROUTER_NL4_PORT_FIRST_ERROR_INVALID_LOCAL_LU_VCH3_MASK << ROUTER_NL4_PORT_FIRST_ERROR_INVALID_LOCAL_LU_VCH3_SHIFT)
-#define ROUTER_NL4_PORT_FIRST_ERROR_INVALID_LOCAL_LU_VCH2_SHIFT 24 /* established */
+/* established */
+#define ROUTER_NL4_PORT_FIRST_ERROR_INVALID_LOCAL_LU_VCH2_SHIFT 24
 #define ROUTER_NL4_PORT_FIRST_ERROR_INVALID_LOCAL_LU_VCH2_MASK 0x1ull
 #define ROUTER_NL4_PORT_FIRST_ERROR_INVALID_LOCAL_LU_VCH2_INPLACE (ROUTER_NL4_PORT_FIRST_ERROR_INVALID_LOCAL_LU_VCH2_MASK << ROUTER_NL4_PORT_FIRST_ERROR_INVALID_LOCAL_LU_VCH2_SHIFT)
-#define ROUTER_NL4_PORT_FIRST_ERROR_INVALID_LOCAL_LU_VCH1_SHIFT 23 /* established */
+/* established */
+#define ROUTER_NL4_PORT_FIRST_ERROR_INVALID_LOCAL_LU_VCH1_SHIFT 23
 #define ROUTER_NL4_PORT_FIRST_ERROR_INVALID_LOCAL_LU_VCH1_MASK 0x1ull
 #define ROUTER_NL4_PORT_FIRST_ERROR_INVALID_LOCAL_LU_VCH1_INPLACE (ROUTER_NL4_PORT_FIRST_ERROR_INVALID_LOCAL_LU_VCH1_MASK << ROUTER_NL4_PORT_FIRST_ERROR_INVALID_LOCAL_LU_VCH1_SHIFT)
-#define ROUTER_NL4_PORT_FIRST_ERROR_INVALID_LOCAL_LU_VCH0_SHIFT 22 /* established */
+/* established */
+#define ROUTER_NL4_PORT_FIRST_ERROR_INVALID_LOCAL_LU_VCH0_SHIFT 22
 #define ROUTER_NL4_PORT_FIRST_ERROR_INVALID_LOCAL_LU_VCH0_MASK 0x1ull
 #define ROUTER_NL4_PORT_FIRST_ERROR_INVALID_LOCAL_LU_VCH0_INPLACE (ROUTER_NL4_PORT_FIRST_ERROR_INVALID_LOCAL_LU_VCH0_MASK << ROUTER_NL4_PORT_FIRST_ERROR_INVALID_LOCAL_LU_VCH0_SHIFT)
-#define ROUTER_NL4_PORT_FIRST_ERROR_DATELINE_ERROR_VCH3_SHIFT 21 /* established */
+/* established */
+#define ROUTER_NL4_PORT_FIRST_ERROR_DATELINE_ERROR_VCH3_SHIFT 21
 #define ROUTER_NL4_PORT_FIRST_ERROR_DATELINE_ERROR_VCH3_MASK 0x1ull
 #define ROUTER_NL4_PORT_FIRST_ERROR_DATELINE_ERROR_VCH3_INPLACE (ROUTER_NL4_PORT_FIRST_ERROR_DATELINE_ERROR_VCH3_MASK << ROUTER_NL4_PORT_FIRST_ERROR_DATELINE_ERROR_VCH3_SHIFT)
-#define ROUTER_NL4_PORT_FIRST_ERROR_DATELINE_ERROR_VCH1_SHIFT 20 /* established */
+/* established */
+#define ROUTER_NL4_PORT_FIRST_ERROR_DATELINE_ERROR_VCH1_SHIFT 20
 #define ROUTER_NL4_PORT_FIRST_ERROR_DATELINE_ERROR_VCH1_MASK 0x1ull
 #define ROUTER_NL4_PORT_FIRST_ERROR_DATELINE_ERROR_VCH1_INPLACE (ROUTER_NL4_PORT_FIRST_ERROR_DATELINE_ERROR_VCH1_MASK << ROUTER_NL4_PORT_FIRST_ERROR_DATELINE_ERROR_VCH1_SHIFT)
 #define ROUTER_NL4_PORT_FIRST_ERROR_ILLEGAL_DIR_VCH3_SHIFT 19 /* established */
@@ -4971,22 +5898,28 @@
 #define ROUTER_NL4_PORT_FIRST_ERROR_ILLEGAL_DIR_VCH0_SHIFT 16 /* established */
 #define ROUTER_NL4_PORT_FIRST_ERROR_ILLEGAL_DIR_VCH0_MASK 0x1ull
 #define ROUTER_NL4_PORT_FIRST_ERROR_ILLEGAL_DIR_VCH0_INPLACE (ROUTER_NL4_PORT_FIRST_ERROR_ILLEGAL_DIR_VCH0_MASK << ROUTER_NL4_PORT_FIRST_ERROR_ILLEGAL_DIR_VCH0_SHIFT)
-#define ROUTER_NL4_PORT_FIRST_ERROR_CREDIT_OVERFLOW_VCH3_SHIFT 15 /* established */
+/* established */
+#define ROUTER_NL4_PORT_FIRST_ERROR_CREDIT_OVERFLOW_VCH3_SHIFT 15
 #define ROUTER_NL4_PORT_FIRST_ERROR_CREDIT_OVERFLOW_VCH3_MASK 0x1ull
 #define ROUTER_NL4_PORT_FIRST_ERROR_CREDIT_OVERFLOW_VCH3_INPLACE (ROUTER_NL4_PORT_FIRST_ERROR_CREDIT_OVERFLOW_VCH3_MASK << ROUTER_NL4_PORT_FIRST_ERROR_CREDIT_OVERFLOW_VCH3_SHIFT)
-#define ROUTER_NL4_PORT_FIRST_ERROR_CREDIT_OVERFLOW_VCH2_SHIFT 14 /* established */
+/* established */
+#define ROUTER_NL4_PORT_FIRST_ERROR_CREDIT_OVERFLOW_VCH2_SHIFT 14
 #define ROUTER_NL4_PORT_FIRST_ERROR_CREDIT_OVERFLOW_VCH2_MASK 0x1ull
 #define ROUTER_NL4_PORT_FIRST_ERROR_CREDIT_OVERFLOW_VCH2_INPLACE (ROUTER_NL4_PORT_FIRST_ERROR_CREDIT_OVERFLOW_VCH2_MASK << ROUTER_NL4_PORT_FIRST_ERROR_CREDIT_OVERFLOW_VCH2_SHIFT)
-#define ROUTER_NL4_PORT_FIRST_ERROR_CREDIT_OVERFLOW_VCH1_SHIFT 13 /* established */
+/* established */
+#define ROUTER_NL4_PORT_FIRST_ERROR_CREDIT_OVERFLOW_VCH1_SHIFT 13
 #define ROUTER_NL4_PORT_FIRST_ERROR_CREDIT_OVERFLOW_VCH1_MASK 0x1ull
 #define ROUTER_NL4_PORT_FIRST_ERROR_CREDIT_OVERFLOW_VCH1_INPLACE (ROUTER_NL4_PORT_FIRST_ERROR_CREDIT_OVERFLOW_VCH1_MASK << ROUTER_NL4_PORT_FIRST_ERROR_CREDIT_OVERFLOW_VCH1_SHIFT)
-#define ROUTER_NL4_PORT_FIRST_ERROR_CREDIT_OVERFLOW_VCH0_SHIFT 12 /* established */
+/* established */
+#define ROUTER_NL4_PORT_FIRST_ERROR_CREDIT_OVERFLOW_VCH0_SHIFT 12
 #define ROUTER_NL4_PORT_FIRST_ERROR_CREDIT_OVERFLOW_VCH0_MASK 0x1ull
 #define ROUTER_NL4_PORT_FIRST_ERROR_CREDIT_OVERFLOW_VCH0_INPLACE (ROUTER_NL4_PORT_FIRST_ERROR_CREDIT_OVERFLOW_VCH0_MASK << ROUTER_NL4_PORT_FIRST_ERROR_CREDIT_OVERFLOW_VCH0_SHIFT)
-#define ROUTER_NL4_PORT_FIRST_ERROR_FIFO_OVERFLOW_VCH3_SHIFT 11 /* established */
+/* established */
+#define ROUTER_NL4_PORT_FIRST_ERROR_FIFO_OVERFLOW_VCH3_SHIFT 11
 #define ROUTER_NL4_PORT_FIRST_ERROR_FIFO_OVERFLOW_VCH3_MASK 0x1ull
 #define ROUTER_NL4_PORT_FIRST_ERROR_FIFO_OVERFLOW_VCH3_INPLACE (ROUTER_NL4_PORT_FIRST_ERROR_FIFO_OVERFLOW_VCH3_MASK << ROUTER_NL4_PORT_FIRST_ERROR_FIFO_OVERFLOW_VCH3_SHIFT)
-#define ROUTER_NL4_PORT_FIRST_ERROR_FIFO_OVERFLOW_VCH2_SHIFT 10 /* established */
+/* established */
+#define ROUTER_NL4_PORT_FIRST_ERROR_FIFO_OVERFLOW_VCH2_SHIFT 10
 #define ROUTER_NL4_PORT_FIRST_ERROR_FIFO_OVERFLOW_VCH2_MASK 0x1ull
 #define ROUTER_NL4_PORT_FIRST_ERROR_FIFO_OVERFLOW_VCH2_INPLACE (ROUTER_NL4_PORT_FIRST_ERROR_FIFO_OVERFLOW_VCH2_MASK << ROUTER_NL4_PORT_FIRST_ERROR_FIFO_OVERFLOW_VCH2_SHIFT)
 #define ROUTER_NL4_PORT_FIRST_ERROR_FIFO_OVERFLOW_VCH1_SHIFT 9 /* established */
@@ -4995,16 +5928,20 @@
 #define ROUTER_NL4_PORT_FIRST_ERROR_FIFO_OVERFLOW_VCH0_SHIFT 8 /* established */
 #define ROUTER_NL4_PORT_FIRST_ERROR_FIFO_OVERFLOW_VCH0_MASK 0x1ull
 #define ROUTER_NL4_PORT_FIRST_ERROR_FIFO_OVERFLOW_VCH0_INPLACE (ROUTER_NL4_PORT_FIRST_ERROR_FIFO_OVERFLOW_VCH0_MASK << ROUTER_NL4_PORT_FIRST_ERROR_FIFO_OVERFLOW_VCH0_SHIFT)
-#define ROUTER_NL4_PORT_FIRST_ERROR_BUFFER_OVERFLOW_VCH3_SHIFT 7 /* established */
+/* established */
+#define ROUTER_NL4_PORT_FIRST_ERROR_BUFFER_OVERFLOW_VCH3_SHIFT 7
 #define ROUTER_NL4_PORT_FIRST_ERROR_BUFFER_OVERFLOW_VCH3_MASK 0x1ull
 #define ROUTER_NL4_PORT_FIRST_ERROR_BUFFER_OVERFLOW_VCH3_INPLACE (ROUTER_NL4_PORT_FIRST_ERROR_BUFFER_OVERFLOW_VCH3_MASK << ROUTER_NL4_PORT_FIRST_ERROR_BUFFER_OVERFLOW_VCH3_SHIFT)
-#define ROUTER_NL4_PORT_FIRST_ERROR_BUFFER_OVERFLOW_VCH2_SHIFT 6 /* established */
+/* established */
+#define ROUTER_NL4_PORT_FIRST_ERROR_BUFFER_OVERFLOW_VCH2_SHIFT 6
 #define ROUTER_NL4_PORT_FIRST_ERROR_BUFFER_OVERFLOW_VCH2_MASK 0x1ull
 #define ROUTER_NL4_PORT_FIRST_ERROR_BUFFER_OVERFLOW_VCH2_INPLACE (ROUTER_NL4_PORT_FIRST_ERROR_BUFFER_OVERFLOW_VCH2_MASK << ROUTER_NL4_PORT_FIRST_ERROR_BUFFER_OVERFLOW_VCH2_SHIFT)
-#define ROUTER_NL4_PORT_FIRST_ERROR_BUFFER_OVERFLOW_VCH1_SHIFT 5 /* established */
+/* established */
+#define ROUTER_NL4_PORT_FIRST_ERROR_BUFFER_OVERFLOW_VCH1_SHIFT 5
 #define ROUTER_NL4_PORT_FIRST_ERROR_BUFFER_OVERFLOW_VCH1_MASK 0x1ull
 #define ROUTER_NL4_PORT_FIRST_ERROR_BUFFER_OVERFLOW_VCH1_INPLACE (ROUTER_NL4_PORT_FIRST_ERROR_BUFFER_OVERFLOW_VCH1_MASK << ROUTER_NL4_PORT_FIRST_ERROR_BUFFER_OVERFLOW_VCH1_SHIFT)
-#define ROUTER_NL4_PORT_FIRST_ERROR_BUFFER_OVERFLOW_VCH0_SHIFT 4 /* established */
+/* established */
+#define ROUTER_NL4_PORT_FIRST_ERROR_BUFFER_OVERFLOW_VCH0_SHIFT 4
 #define ROUTER_NL4_PORT_FIRST_ERROR_BUFFER_OVERFLOW_VCH0_MASK 0x1ull
 #define ROUTER_NL4_PORT_FIRST_ERROR_BUFFER_OVERFLOW_VCH0_INPLACE (ROUTER_NL4_PORT_FIRST_ERROR_BUFFER_OVERFLOW_VCH0_MASK << ROUTER_NL4_PORT_FIRST_ERROR_BUFFER_OVERFLOW_VCH0_SHIFT)
 #define ROUTER_NL4_PORT_FIRST_ERROR_RETRY_TO_SHIFT   3 /* established */
@@ -5021,148 +5958,195 @@
 #define ROUTER_NL4_PORT_FIRST_ERROR_POWER_NOT_OK_INPLACE (ROUTER_NL4_PORT_FIRST_ERROR_POWER_NOT_OK_MASK << ROUTER_NL4_PORT_FIRST_ERROR_POWER_NOT_OK_SHIFT)
 
 /*
- * PROM register R4_PORTA_ERROR_REPORT_MASK; one per port A to H. Offset and field positions read from the table; role inferred from the names.
+ * PROM register R4_PORTA_ERROR_REPORT_MASK; one per port A to H. Offset and
+ * field positions read from the table; role inferred from the names.
  */
 /* port_error_report_mask: rw64, reset unknown */
-#define ROUTER_NL4_PORT_ERROR_REPORT_MASK_OFFSET     0x8002218u /* established */
+/* established */
+#define ROUTER_NL4_PORT_ERROR_REPORT_MASK_OFFSET     0x8002218u
 #define ROUTER_NL4_PORT_ERROR_REPORT_MASK_COUNT      8
 #define ROUTER_NL4_PORT_ERROR_REPORT_MASK_STRIDE     16777216
-#define ROUTER_NL4_PORT_ERROR_REPORT_MASK_EXTEND_TURN_ERR_SHIFT 46 /* established */
+/* established */
+#define ROUTER_NL4_PORT_ERROR_REPORT_MASK_EXTEND_TURN_ERR_SHIFT 46
 #define ROUTER_NL4_PORT_ERROR_REPORT_MASK_EXTEND_TURN_ERR_MASK 0x1ull
 #define ROUTER_NL4_PORT_ERROR_REPORT_MASK_EXTEND_TURN_ERR_INPLACE (ROUTER_NL4_PORT_ERROR_REPORT_MASK_EXTEND_TURN_ERR_MASK << ROUTER_NL4_PORT_ERROR_REPORT_MASK_EXTEND_TURN_ERR_SHIFT)
-#define ROUTER_NL4_PORT_ERROR_REPORT_MASK_CORESENTBADCRC_CNT_NON_ZERO_SHIFT 45 /* established */
+/* established */
+#define ROUTER_NL4_PORT_ERROR_REPORT_MASK_CORESENTBADCRC_CNT_NON_ZERO_SHIFT 45
 #define ROUTER_NL4_PORT_ERROR_REPORT_MASK_CORESENTBADCRC_CNT_NON_ZERO_MASK 0x1ull
 #define ROUTER_NL4_PORT_ERROR_REPORT_MASK_CORESENTBADCRC_CNT_NON_ZERO_INPLACE (ROUTER_NL4_PORT_ERROR_REPORT_MASK_CORESENTBADCRC_CNT_NON_ZERO_MASK << ROUTER_NL4_PORT_ERROR_REPORT_MASK_CORESENTBADCRC_CNT_NON_ZERO_SHIFT)
-#define ROUTER_NL4_PORT_ERROR_REPORT_MASK_RETRY_CNT_NON_ZERO_SHIFT 44 /* established */
+/* established */
+#define ROUTER_NL4_PORT_ERROR_REPORT_MASK_RETRY_CNT_NON_ZERO_SHIFT 44
 #define ROUTER_NL4_PORT_ERROR_REPORT_MASK_RETRY_CNT_NON_ZERO_MASK 0x1ull
 #define ROUTER_NL4_PORT_ERROR_REPORT_MASK_RETRY_CNT_NON_ZERO_INPLACE (ROUTER_NL4_PORT_ERROR_REPORT_MASK_RETRY_CNT_NON_ZERO_MASK << ROUTER_NL4_PORT_ERROR_REPORT_MASK_RETRY_CNT_NON_ZERO_SHIFT)
-#define ROUTER_NL4_PORT_ERROR_REPORT_MASK_CB_ERROR_CNT_NON_ZERO_SHIFT 43 /* established */
+/* established */
+#define ROUTER_NL4_PORT_ERROR_REPORT_MASK_CB_ERROR_CNT_NON_ZERO_SHIFT 43
 #define ROUTER_NL4_PORT_ERROR_REPORT_MASK_CB_ERROR_CNT_NON_ZERO_MASK 0x1ull
 #define ROUTER_NL4_PORT_ERROR_REPORT_MASK_CB_ERROR_CNT_NON_ZERO_INPLACE (ROUTER_NL4_PORT_ERROR_REPORT_MASK_CB_ERROR_CNT_NON_ZERO_MASK << ROUTER_NL4_PORT_ERROR_REPORT_MASK_CB_ERROR_CNT_NON_ZERO_SHIFT)
-#define ROUTER_NL4_PORT_ERROR_REPORT_MASK_SN_ERROR_CNT_NON_ZERO_SHIFT 42 /* established */
+/* established */
+#define ROUTER_NL4_PORT_ERROR_REPORT_MASK_SN_ERROR_CNT_NON_ZERO_SHIFT 42
 #define ROUTER_NL4_PORT_ERROR_REPORT_MASK_SN_ERROR_CNT_NON_ZERO_MASK 0x1ull
 #define ROUTER_NL4_PORT_ERROR_REPORT_MASK_SN_ERROR_CNT_NON_ZERO_INPLACE (ROUTER_NL4_PORT_ERROR_REPORT_MASK_SN_ERROR_CNT_NON_ZERO_MASK << ROUTER_NL4_PORT_ERROR_REPORT_MASK_SN_ERROR_CNT_NON_ZERO_SHIFT)
-#define ROUTER_NL4_PORT_ERROR_REPORT_MASK_RCV_TAIL_TO_VCH3_SHIFT 41 /* established */
+/* established */
+#define ROUTER_NL4_PORT_ERROR_REPORT_MASK_RCV_TAIL_TO_VCH3_SHIFT 41
 #define ROUTER_NL4_PORT_ERROR_REPORT_MASK_RCV_TAIL_TO_VCH3_MASK 0x1ull
 #define ROUTER_NL4_PORT_ERROR_REPORT_MASK_RCV_TAIL_TO_VCH3_INPLACE (ROUTER_NL4_PORT_ERROR_REPORT_MASK_RCV_TAIL_TO_VCH3_MASK << ROUTER_NL4_PORT_ERROR_REPORT_MASK_RCV_TAIL_TO_VCH3_SHIFT)
-#define ROUTER_NL4_PORT_ERROR_REPORT_MASK_RCV_TAIL_TO_VCH2_SHIFT 40 /* established */
+/* established */
+#define ROUTER_NL4_PORT_ERROR_REPORT_MASK_RCV_TAIL_TO_VCH2_SHIFT 40
 #define ROUTER_NL4_PORT_ERROR_REPORT_MASK_RCV_TAIL_TO_VCH2_MASK 0x1ull
 #define ROUTER_NL4_PORT_ERROR_REPORT_MASK_RCV_TAIL_TO_VCH2_INPLACE (ROUTER_NL4_PORT_ERROR_REPORT_MASK_RCV_TAIL_TO_VCH2_MASK << ROUTER_NL4_PORT_ERROR_REPORT_MASK_RCV_TAIL_TO_VCH2_SHIFT)
-#define ROUTER_NL4_PORT_ERROR_REPORT_MASK_RCV_TAIL_TO_VCH1_SHIFT 39 /* established */
+/* established */
+#define ROUTER_NL4_PORT_ERROR_REPORT_MASK_RCV_TAIL_TO_VCH1_SHIFT 39
 #define ROUTER_NL4_PORT_ERROR_REPORT_MASK_RCV_TAIL_TO_VCH1_MASK 0x1ull
 #define ROUTER_NL4_PORT_ERROR_REPORT_MASK_RCV_TAIL_TO_VCH1_INPLACE (ROUTER_NL4_PORT_ERROR_REPORT_MASK_RCV_TAIL_TO_VCH1_MASK << ROUTER_NL4_PORT_ERROR_REPORT_MASK_RCV_TAIL_TO_VCH1_SHIFT)
-#define ROUTER_NL4_PORT_ERROR_REPORT_MASK_RCV_TAIL_TO_VCH0_SHIFT 38 /* established */
+/* established */
+#define ROUTER_NL4_PORT_ERROR_REPORT_MASK_RCV_TAIL_TO_VCH0_SHIFT 38
 #define ROUTER_NL4_PORT_ERROR_REPORT_MASK_RCV_TAIL_TO_VCH0_MASK 0x1ull
 #define ROUTER_NL4_PORT_ERROR_REPORT_MASK_RCV_TAIL_TO_VCH0_INPLACE (ROUTER_NL4_PORT_ERROR_REPORT_MASK_RCV_TAIL_TO_VCH0_MASK << ROUTER_NL4_PORT_ERROR_REPORT_MASK_RCV_TAIL_TO_VCH0_SHIFT)
-#define ROUTER_NL4_PORT_ERROR_REPORT_MASK_SEND_DEADLOCK_TO_VCH3_SHIFT 37 /* established */
+/* established */
+#define ROUTER_NL4_PORT_ERROR_REPORT_MASK_SEND_DEADLOCK_TO_VCH3_SHIFT 37
 #define ROUTER_NL4_PORT_ERROR_REPORT_MASK_SEND_DEADLOCK_TO_VCH3_MASK 0x1ull
 #define ROUTER_NL4_PORT_ERROR_REPORT_MASK_SEND_DEADLOCK_TO_VCH3_INPLACE (ROUTER_NL4_PORT_ERROR_REPORT_MASK_SEND_DEADLOCK_TO_VCH3_MASK << ROUTER_NL4_PORT_ERROR_REPORT_MASK_SEND_DEADLOCK_TO_VCH3_SHIFT)
-#define ROUTER_NL4_PORT_ERROR_REPORT_MASK_SEND_DEADLOCK_TO_VCH2_SHIFT 36 /* established */
+/* established */
+#define ROUTER_NL4_PORT_ERROR_REPORT_MASK_SEND_DEADLOCK_TO_VCH2_SHIFT 36
 #define ROUTER_NL4_PORT_ERROR_REPORT_MASK_SEND_DEADLOCK_TO_VCH2_MASK 0x1ull
 #define ROUTER_NL4_PORT_ERROR_REPORT_MASK_SEND_DEADLOCK_TO_VCH2_INPLACE (ROUTER_NL4_PORT_ERROR_REPORT_MASK_SEND_DEADLOCK_TO_VCH2_MASK << ROUTER_NL4_PORT_ERROR_REPORT_MASK_SEND_DEADLOCK_TO_VCH2_SHIFT)
-#define ROUTER_NL4_PORT_ERROR_REPORT_MASK_SEND_DEADLOCK_TO_VCH1_SHIFT 35 /* established */
+/* established */
+#define ROUTER_NL4_PORT_ERROR_REPORT_MASK_SEND_DEADLOCK_TO_VCH1_SHIFT 35
 #define ROUTER_NL4_PORT_ERROR_REPORT_MASK_SEND_DEADLOCK_TO_VCH1_MASK 0x1ull
 #define ROUTER_NL4_PORT_ERROR_REPORT_MASK_SEND_DEADLOCK_TO_VCH1_INPLACE (ROUTER_NL4_PORT_ERROR_REPORT_MASK_SEND_DEADLOCK_TO_VCH1_MASK << ROUTER_NL4_PORT_ERROR_REPORT_MASK_SEND_DEADLOCK_TO_VCH1_SHIFT)
-#define ROUTER_NL4_PORT_ERROR_REPORT_MASK_SEND_DEADLOCK_TO_VCH0_SHIFT 34 /* established */
+/* established */
+#define ROUTER_NL4_PORT_ERROR_REPORT_MASK_SEND_DEADLOCK_TO_VCH0_SHIFT 34
 #define ROUTER_NL4_PORT_ERROR_REPORT_MASK_SEND_DEADLOCK_TO_VCH0_MASK 0x1ull
 #define ROUTER_NL4_PORT_ERROR_REPORT_MASK_SEND_DEADLOCK_TO_VCH0_INPLACE (ROUTER_NL4_PORT_ERROR_REPORT_MASK_SEND_DEADLOCK_TO_VCH0_MASK << ROUTER_NL4_PORT_ERROR_REPORT_MASK_SEND_DEADLOCK_TO_VCH0_SHIFT)
-#define ROUTER_NL4_PORT_ERROR_REPORT_MASK_DAMQ_DEADLOCK_TO_VCH3_SHIFT 33 /* established */
+/* established */
+#define ROUTER_NL4_PORT_ERROR_REPORT_MASK_DAMQ_DEADLOCK_TO_VCH3_SHIFT 33
 #define ROUTER_NL4_PORT_ERROR_REPORT_MASK_DAMQ_DEADLOCK_TO_VCH3_MASK 0x1ull
 #define ROUTER_NL4_PORT_ERROR_REPORT_MASK_DAMQ_DEADLOCK_TO_VCH3_INPLACE (ROUTER_NL4_PORT_ERROR_REPORT_MASK_DAMQ_DEADLOCK_TO_VCH3_MASK << ROUTER_NL4_PORT_ERROR_REPORT_MASK_DAMQ_DEADLOCK_TO_VCH3_SHIFT)
-#define ROUTER_NL4_PORT_ERROR_REPORT_MASK_DAMQ_DEADLOCK_TO_VCH2_SHIFT 32 /* established */
+/* established */
+#define ROUTER_NL4_PORT_ERROR_REPORT_MASK_DAMQ_DEADLOCK_TO_VCH2_SHIFT 32
 #define ROUTER_NL4_PORT_ERROR_REPORT_MASK_DAMQ_DEADLOCK_TO_VCH2_MASK 0x1ull
 #define ROUTER_NL4_PORT_ERROR_REPORT_MASK_DAMQ_DEADLOCK_TO_VCH2_INPLACE (ROUTER_NL4_PORT_ERROR_REPORT_MASK_DAMQ_DEADLOCK_TO_VCH2_MASK << ROUTER_NL4_PORT_ERROR_REPORT_MASK_DAMQ_DEADLOCK_TO_VCH2_SHIFT)
-#define ROUTER_NL4_PORT_ERROR_REPORT_MASK_DAMQ_DEADLOCK_TO_VCH1_SHIFT 31 /* established */
+/* established */
+#define ROUTER_NL4_PORT_ERROR_REPORT_MASK_DAMQ_DEADLOCK_TO_VCH1_SHIFT 31
 #define ROUTER_NL4_PORT_ERROR_REPORT_MASK_DAMQ_DEADLOCK_TO_VCH1_MASK 0x1ull
 #define ROUTER_NL4_PORT_ERROR_REPORT_MASK_DAMQ_DEADLOCK_TO_VCH1_INPLACE (ROUTER_NL4_PORT_ERROR_REPORT_MASK_DAMQ_DEADLOCK_TO_VCH1_MASK << ROUTER_NL4_PORT_ERROR_REPORT_MASK_DAMQ_DEADLOCK_TO_VCH1_SHIFT)
-#define ROUTER_NL4_PORT_ERROR_REPORT_MASK_DAMQ_DEADLOCK_TO_VCH0_SHIFT 30 /* established */
+/* established */
+#define ROUTER_NL4_PORT_ERROR_REPORT_MASK_DAMQ_DEADLOCK_TO_VCH0_SHIFT 30
 #define ROUTER_NL4_PORT_ERROR_REPORT_MASK_DAMQ_DEADLOCK_TO_VCH0_MASK 0x1ull
 #define ROUTER_NL4_PORT_ERROR_REPORT_MASK_DAMQ_DEADLOCK_TO_VCH0_INPLACE (ROUTER_NL4_PORT_ERROR_REPORT_MASK_DAMQ_DEADLOCK_TO_VCH0_MASK << ROUTER_NL4_PORT_ERROR_REPORT_MASK_DAMQ_DEADLOCK_TO_VCH0_SHIFT)
-#define ROUTER_NL4_PORT_ERROR_REPORT_MASK_INVALID_GLOBAL_LU_VCH3_SHIFT 29 /* established */
+/* established */
+#define ROUTER_NL4_PORT_ERROR_REPORT_MASK_INVALID_GLOBAL_LU_VCH3_SHIFT 29
 #define ROUTER_NL4_PORT_ERROR_REPORT_MASK_INVALID_GLOBAL_LU_VCH3_MASK 0x1ull
 #define ROUTER_NL4_PORT_ERROR_REPORT_MASK_INVALID_GLOBAL_LU_VCH3_INPLACE (ROUTER_NL4_PORT_ERROR_REPORT_MASK_INVALID_GLOBAL_LU_VCH3_MASK << ROUTER_NL4_PORT_ERROR_REPORT_MASK_INVALID_GLOBAL_LU_VCH3_SHIFT)
-#define ROUTER_NL4_PORT_ERROR_REPORT_MASK_INVALID_GLOBAL_LU_VCH2_SHIFT 28 /* established */
+/* established */
+#define ROUTER_NL4_PORT_ERROR_REPORT_MASK_INVALID_GLOBAL_LU_VCH2_SHIFT 28
 #define ROUTER_NL4_PORT_ERROR_REPORT_MASK_INVALID_GLOBAL_LU_VCH2_MASK 0x1ull
 #define ROUTER_NL4_PORT_ERROR_REPORT_MASK_INVALID_GLOBAL_LU_VCH2_INPLACE (ROUTER_NL4_PORT_ERROR_REPORT_MASK_INVALID_GLOBAL_LU_VCH2_MASK << ROUTER_NL4_PORT_ERROR_REPORT_MASK_INVALID_GLOBAL_LU_VCH2_SHIFT)
-#define ROUTER_NL4_PORT_ERROR_REPORT_MASK_INVALID_GLOBAL_LU_VCH1_SHIFT 27 /* established */
+/* established */
+#define ROUTER_NL4_PORT_ERROR_REPORT_MASK_INVALID_GLOBAL_LU_VCH1_SHIFT 27
 #define ROUTER_NL4_PORT_ERROR_REPORT_MASK_INVALID_GLOBAL_LU_VCH1_MASK 0x1ull
 #define ROUTER_NL4_PORT_ERROR_REPORT_MASK_INVALID_GLOBAL_LU_VCH1_INPLACE (ROUTER_NL4_PORT_ERROR_REPORT_MASK_INVALID_GLOBAL_LU_VCH1_MASK << ROUTER_NL4_PORT_ERROR_REPORT_MASK_INVALID_GLOBAL_LU_VCH1_SHIFT)
-#define ROUTER_NL4_PORT_ERROR_REPORT_MASK_INVALID_GLOBAL_LU_VCH0_SHIFT 26 /* established */
+/* established */
+#define ROUTER_NL4_PORT_ERROR_REPORT_MASK_INVALID_GLOBAL_LU_VCH0_SHIFT 26
 #define ROUTER_NL4_PORT_ERROR_REPORT_MASK_INVALID_GLOBAL_LU_VCH0_MASK 0x1ull
 #define ROUTER_NL4_PORT_ERROR_REPORT_MASK_INVALID_GLOBAL_LU_VCH0_INPLACE (ROUTER_NL4_PORT_ERROR_REPORT_MASK_INVALID_GLOBAL_LU_VCH0_MASK << ROUTER_NL4_PORT_ERROR_REPORT_MASK_INVALID_GLOBAL_LU_VCH0_SHIFT)
-#define ROUTER_NL4_PORT_ERROR_REPORT_MASK_INVALID_LOCAL_LU_VCH3_SHIFT 25 /* established */
+/* established */
+#define ROUTER_NL4_PORT_ERROR_REPORT_MASK_INVALID_LOCAL_LU_VCH3_SHIFT 25
 #define ROUTER_NL4_PORT_ERROR_REPORT_MASK_INVALID_LOCAL_LU_VCH3_MASK 0x1ull
 #define ROUTER_NL4_PORT_ERROR_REPORT_MASK_INVALID_LOCAL_LU_VCH3_INPLACE (ROUTER_NL4_PORT_ERROR_REPORT_MASK_INVALID_LOCAL_LU_VCH3_MASK << ROUTER_NL4_PORT_ERROR_REPORT_MASK_INVALID_LOCAL_LU_VCH3_SHIFT)
-#define ROUTER_NL4_PORT_ERROR_REPORT_MASK_INVALID_LOCAL_LU_VCH2_SHIFT 24 /* established */
+/* established */
+#define ROUTER_NL4_PORT_ERROR_REPORT_MASK_INVALID_LOCAL_LU_VCH2_SHIFT 24
 #define ROUTER_NL4_PORT_ERROR_REPORT_MASK_INVALID_LOCAL_LU_VCH2_MASK 0x1ull
 #define ROUTER_NL4_PORT_ERROR_REPORT_MASK_INVALID_LOCAL_LU_VCH2_INPLACE (ROUTER_NL4_PORT_ERROR_REPORT_MASK_INVALID_LOCAL_LU_VCH2_MASK << ROUTER_NL4_PORT_ERROR_REPORT_MASK_INVALID_LOCAL_LU_VCH2_SHIFT)
-#define ROUTER_NL4_PORT_ERROR_REPORT_MASK_INVALID_LOCAL_LU_VCH1_SHIFT 23 /* established */
+/* established */
+#define ROUTER_NL4_PORT_ERROR_REPORT_MASK_INVALID_LOCAL_LU_VCH1_SHIFT 23
 #define ROUTER_NL4_PORT_ERROR_REPORT_MASK_INVALID_LOCAL_LU_VCH1_MASK 0x1ull
 #define ROUTER_NL4_PORT_ERROR_REPORT_MASK_INVALID_LOCAL_LU_VCH1_INPLACE (ROUTER_NL4_PORT_ERROR_REPORT_MASK_INVALID_LOCAL_LU_VCH1_MASK << ROUTER_NL4_PORT_ERROR_REPORT_MASK_INVALID_LOCAL_LU_VCH1_SHIFT)
-#define ROUTER_NL4_PORT_ERROR_REPORT_MASK_INVALID_LOCAL_LU_VCH0_SHIFT 22 /* established */
+/* established */
+#define ROUTER_NL4_PORT_ERROR_REPORT_MASK_INVALID_LOCAL_LU_VCH0_SHIFT 22
 #define ROUTER_NL4_PORT_ERROR_REPORT_MASK_INVALID_LOCAL_LU_VCH0_MASK 0x1ull
 #define ROUTER_NL4_PORT_ERROR_REPORT_MASK_INVALID_LOCAL_LU_VCH0_INPLACE (ROUTER_NL4_PORT_ERROR_REPORT_MASK_INVALID_LOCAL_LU_VCH0_MASK << ROUTER_NL4_PORT_ERROR_REPORT_MASK_INVALID_LOCAL_LU_VCH0_SHIFT)
-#define ROUTER_NL4_PORT_ERROR_REPORT_MASK_DATELINE_ERROR_VCH3_SHIFT 21 /* established */
+/* established */
+#define ROUTER_NL4_PORT_ERROR_REPORT_MASK_DATELINE_ERROR_VCH3_SHIFT 21
 #define ROUTER_NL4_PORT_ERROR_REPORT_MASK_DATELINE_ERROR_VCH3_MASK 0x1ull
 #define ROUTER_NL4_PORT_ERROR_REPORT_MASK_DATELINE_ERROR_VCH3_INPLACE (ROUTER_NL4_PORT_ERROR_REPORT_MASK_DATELINE_ERROR_VCH3_MASK << ROUTER_NL4_PORT_ERROR_REPORT_MASK_DATELINE_ERROR_VCH3_SHIFT)
-#define ROUTER_NL4_PORT_ERROR_REPORT_MASK_DATELINE_ERROR_VCH1_SHIFT 20 /* established */
+/* established */
+#define ROUTER_NL4_PORT_ERROR_REPORT_MASK_DATELINE_ERROR_VCH1_SHIFT 20
 #define ROUTER_NL4_PORT_ERROR_REPORT_MASK_DATELINE_ERROR_VCH1_MASK 0x1ull
 #define ROUTER_NL4_PORT_ERROR_REPORT_MASK_DATELINE_ERROR_VCH1_INPLACE (ROUTER_NL4_PORT_ERROR_REPORT_MASK_DATELINE_ERROR_VCH1_MASK << ROUTER_NL4_PORT_ERROR_REPORT_MASK_DATELINE_ERROR_VCH1_SHIFT)
-#define ROUTER_NL4_PORT_ERROR_REPORT_MASK_ILLEGAL_DIR_VCH3_SHIFT 19 /* established */
+/* established */
+#define ROUTER_NL4_PORT_ERROR_REPORT_MASK_ILLEGAL_DIR_VCH3_SHIFT 19
 #define ROUTER_NL4_PORT_ERROR_REPORT_MASK_ILLEGAL_DIR_VCH3_MASK 0x1ull
 #define ROUTER_NL4_PORT_ERROR_REPORT_MASK_ILLEGAL_DIR_VCH3_INPLACE (ROUTER_NL4_PORT_ERROR_REPORT_MASK_ILLEGAL_DIR_VCH3_MASK << ROUTER_NL4_PORT_ERROR_REPORT_MASK_ILLEGAL_DIR_VCH3_SHIFT)
-#define ROUTER_NL4_PORT_ERROR_REPORT_MASK_ILLEGAL_DIR_VCH2_SHIFT 18 /* established */
+/* established */
+#define ROUTER_NL4_PORT_ERROR_REPORT_MASK_ILLEGAL_DIR_VCH2_SHIFT 18
 #define ROUTER_NL4_PORT_ERROR_REPORT_MASK_ILLEGAL_DIR_VCH2_MASK 0x1ull
 #define ROUTER_NL4_PORT_ERROR_REPORT_MASK_ILLEGAL_DIR_VCH2_INPLACE (ROUTER_NL4_PORT_ERROR_REPORT_MASK_ILLEGAL_DIR_VCH2_MASK << ROUTER_NL4_PORT_ERROR_REPORT_MASK_ILLEGAL_DIR_VCH2_SHIFT)
-#define ROUTER_NL4_PORT_ERROR_REPORT_MASK_ILLEGAL_DIR_VCH1_SHIFT 17 /* established */
+/* established */
+#define ROUTER_NL4_PORT_ERROR_REPORT_MASK_ILLEGAL_DIR_VCH1_SHIFT 17
 #define ROUTER_NL4_PORT_ERROR_REPORT_MASK_ILLEGAL_DIR_VCH1_MASK 0x1ull
 #define ROUTER_NL4_PORT_ERROR_REPORT_MASK_ILLEGAL_DIR_VCH1_INPLACE (ROUTER_NL4_PORT_ERROR_REPORT_MASK_ILLEGAL_DIR_VCH1_MASK << ROUTER_NL4_PORT_ERROR_REPORT_MASK_ILLEGAL_DIR_VCH1_SHIFT)
-#define ROUTER_NL4_PORT_ERROR_REPORT_MASK_ILLEGAL_DIR_VCH0_SHIFT 16 /* established */
+/* established */
+#define ROUTER_NL4_PORT_ERROR_REPORT_MASK_ILLEGAL_DIR_VCH0_SHIFT 16
 #define ROUTER_NL4_PORT_ERROR_REPORT_MASK_ILLEGAL_DIR_VCH0_MASK 0x1ull
 #define ROUTER_NL4_PORT_ERROR_REPORT_MASK_ILLEGAL_DIR_VCH0_INPLACE (ROUTER_NL4_PORT_ERROR_REPORT_MASK_ILLEGAL_DIR_VCH0_MASK << ROUTER_NL4_PORT_ERROR_REPORT_MASK_ILLEGAL_DIR_VCH0_SHIFT)
-#define ROUTER_NL4_PORT_ERROR_REPORT_MASK_CREDIT_OVERFLOW_VCH3_SHIFT 15 /* established */
+/* established */
+#define ROUTER_NL4_PORT_ERROR_REPORT_MASK_CREDIT_OVERFLOW_VCH3_SHIFT 15
 #define ROUTER_NL4_PORT_ERROR_REPORT_MASK_CREDIT_OVERFLOW_VCH3_MASK 0x1ull
 #define ROUTER_NL4_PORT_ERROR_REPORT_MASK_CREDIT_OVERFLOW_VCH3_INPLACE (ROUTER_NL4_PORT_ERROR_REPORT_MASK_CREDIT_OVERFLOW_VCH3_MASK << ROUTER_NL4_PORT_ERROR_REPORT_MASK_CREDIT_OVERFLOW_VCH3_SHIFT)
-#define ROUTER_NL4_PORT_ERROR_REPORT_MASK_CREDIT_OVERFLOW_VCH2_SHIFT 14 /* established */
+/* established */
+#define ROUTER_NL4_PORT_ERROR_REPORT_MASK_CREDIT_OVERFLOW_VCH2_SHIFT 14
 #define ROUTER_NL4_PORT_ERROR_REPORT_MASK_CREDIT_OVERFLOW_VCH2_MASK 0x1ull
 #define ROUTER_NL4_PORT_ERROR_REPORT_MASK_CREDIT_OVERFLOW_VCH2_INPLACE (ROUTER_NL4_PORT_ERROR_REPORT_MASK_CREDIT_OVERFLOW_VCH2_MASK << ROUTER_NL4_PORT_ERROR_REPORT_MASK_CREDIT_OVERFLOW_VCH2_SHIFT)
-#define ROUTER_NL4_PORT_ERROR_REPORT_MASK_CREDIT_OVERFLOW_VCH1_SHIFT 13 /* established */
+/* established */
+#define ROUTER_NL4_PORT_ERROR_REPORT_MASK_CREDIT_OVERFLOW_VCH1_SHIFT 13
 #define ROUTER_NL4_PORT_ERROR_REPORT_MASK_CREDIT_OVERFLOW_VCH1_MASK 0x1ull
 #define ROUTER_NL4_PORT_ERROR_REPORT_MASK_CREDIT_OVERFLOW_VCH1_INPLACE (ROUTER_NL4_PORT_ERROR_REPORT_MASK_CREDIT_OVERFLOW_VCH1_MASK << ROUTER_NL4_PORT_ERROR_REPORT_MASK_CREDIT_OVERFLOW_VCH1_SHIFT)
-#define ROUTER_NL4_PORT_ERROR_REPORT_MASK_CREDIT_OVERFLOW_VCH0_SHIFT 12 /* established */
+/* established */
+#define ROUTER_NL4_PORT_ERROR_REPORT_MASK_CREDIT_OVERFLOW_VCH0_SHIFT 12
 #define ROUTER_NL4_PORT_ERROR_REPORT_MASK_CREDIT_OVERFLOW_VCH0_MASK 0x1ull
 #define ROUTER_NL4_PORT_ERROR_REPORT_MASK_CREDIT_OVERFLOW_VCH0_INPLACE (ROUTER_NL4_PORT_ERROR_REPORT_MASK_CREDIT_OVERFLOW_VCH0_MASK << ROUTER_NL4_PORT_ERROR_REPORT_MASK_CREDIT_OVERFLOW_VCH0_SHIFT)
-#define ROUTER_NL4_PORT_ERROR_REPORT_MASK_FIFO_OVERFLOW_VCH3_SHIFT 11 /* established */
+/* established */
+#define ROUTER_NL4_PORT_ERROR_REPORT_MASK_FIFO_OVERFLOW_VCH3_SHIFT 11
 #define ROUTER_NL4_PORT_ERROR_REPORT_MASK_FIFO_OVERFLOW_VCH3_MASK 0x1ull
 #define ROUTER_NL4_PORT_ERROR_REPORT_MASK_FIFO_OVERFLOW_VCH3_INPLACE (ROUTER_NL4_PORT_ERROR_REPORT_MASK_FIFO_OVERFLOW_VCH3_MASK << ROUTER_NL4_PORT_ERROR_REPORT_MASK_FIFO_OVERFLOW_VCH3_SHIFT)
-#define ROUTER_NL4_PORT_ERROR_REPORT_MASK_FIFO_OVERFLOW_VCH2_SHIFT 10 /* established */
+/* established */
+#define ROUTER_NL4_PORT_ERROR_REPORT_MASK_FIFO_OVERFLOW_VCH2_SHIFT 10
 #define ROUTER_NL4_PORT_ERROR_REPORT_MASK_FIFO_OVERFLOW_VCH2_MASK 0x1ull
 #define ROUTER_NL4_PORT_ERROR_REPORT_MASK_FIFO_OVERFLOW_VCH2_INPLACE (ROUTER_NL4_PORT_ERROR_REPORT_MASK_FIFO_OVERFLOW_VCH2_MASK << ROUTER_NL4_PORT_ERROR_REPORT_MASK_FIFO_OVERFLOW_VCH2_SHIFT)
-#define ROUTER_NL4_PORT_ERROR_REPORT_MASK_FIFO_OVERFLOW_VCH1_SHIFT 9 /* established */
+/* established */
+#define ROUTER_NL4_PORT_ERROR_REPORT_MASK_FIFO_OVERFLOW_VCH1_SHIFT 9
 #define ROUTER_NL4_PORT_ERROR_REPORT_MASK_FIFO_OVERFLOW_VCH1_MASK 0x1ull
 #define ROUTER_NL4_PORT_ERROR_REPORT_MASK_FIFO_OVERFLOW_VCH1_INPLACE (ROUTER_NL4_PORT_ERROR_REPORT_MASK_FIFO_OVERFLOW_VCH1_MASK << ROUTER_NL4_PORT_ERROR_REPORT_MASK_FIFO_OVERFLOW_VCH1_SHIFT)
-#define ROUTER_NL4_PORT_ERROR_REPORT_MASK_FIFO_OVERFLOW_VCH0_SHIFT 8 /* established */
+/* established */
+#define ROUTER_NL4_PORT_ERROR_REPORT_MASK_FIFO_OVERFLOW_VCH0_SHIFT 8
 #define ROUTER_NL4_PORT_ERROR_REPORT_MASK_FIFO_OVERFLOW_VCH0_MASK 0x1ull
 #define ROUTER_NL4_PORT_ERROR_REPORT_MASK_FIFO_OVERFLOW_VCH0_INPLACE (ROUTER_NL4_PORT_ERROR_REPORT_MASK_FIFO_OVERFLOW_VCH0_MASK << ROUTER_NL4_PORT_ERROR_REPORT_MASK_FIFO_OVERFLOW_VCH0_SHIFT)
-#define ROUTER_NL4_PORT_ERROR_REPORT_MASK_BUFFER_OVERFLOW_VCH3_SHIFT 7 /* established */
+/* established */
+#define ROUTER_NL4_PORT_ERROR_REPORT_MASK_BUFFER_OVERFLOW_VCH3_SHIFT 7
 #define ROUTER_NL4_PORT_ERROR_REPORT_MASK_BUFFER_OVERFLOW_VCH3_MASK 0x1ull
 #define ROUTER_NL4_PORT_ERROR_REPORT_MASK_BUFFER_OVERFLOW_VCH3_INPLACE (ROUTER_NL4_PORT_ERROR_REPORT_MASK_BUFFER_OVERFLOW_VCH3_MASK << ROUTER_NL4_PORT_ERROR_REPORT_MASK_BUFFER_OVERFLOW_VCH3_SHIFT)
-#define ROUTER_NL4_PORT_ERROR_REPORT_MASK_BUFFER_OVERFLOW_VCH2_SHIFT 6 /* established */
+/* established */
+#define ROUTER_NL4_PORT_ERROR_REPORT_MASK_BUFFER_OVERFLOW_VCH2_SHIFT 6
 #define ROUTER_NL4_PORT_ERROR_REPORT_MASK_BUFFER_OVERFLOW_VCH2_MASK 0x1ull
 #define ROUTER_NL4_PORT_ERROR_REPORT_MASK_BUFFER_OVERFLOW_VCH2_INPLACE (ROUTER_NL4_PORT_ERROR_REPORT_MASK_BUFFER_OVERFLOW_VCH2_MASK << ROUTER_NL4_PORT_ERROR_REPORT_MASK_BUFFER_OVERFLOW_VCH2_SHIFT)
-#define ROUTER_NL4_PORT_ERROR_REPORT_MASK_BUFFER_OVERFLOW_VCH1_SHIFT 5 /* established */
+/* established */
+#define ROUTER_NL4_PORT_ERROR_REPORT_MASK_BUFFER_OVERFLOW_VCH1_SHIFT 5
 #define ROUTER_NL4_PORT_ERROR_REPORT_MASK_BUFFER_OVERFLOW_VCH1_MASK 0x1ull
 #define ROUTER_NL4_PORT_ERROR_REPORT_MASK_BUFFER_OVERFLOW_VCH1_INPLACE (ROUTER_NL4_PORT_ERROR_REPORT_MASK_BUFFER_OVERFLOW_VCH1_MASK << ROUTER_NL4_PORT_ERROR_REPORT_MASK_BUFFER_OVERFLOW_VCH1_SHIFT)
-#define ROUTER_NL4_PORT_ERROR_REPORT_MASK_BUFFER_OVERFLOW_VCH0_SHIFT 4 /* established */
+/* established */
+#define ROUTER_NL4_PORT_ERROR_REPORT_MASK_BUFFER_OVERFLOW_VCH0_SHIFT 4
 #define ROUTER_NL4_PORT_ERROR_REPORT_MASK_BUFFER_OVERFLOW_VCH0_MASK 0x1ull
 #define ROUTER_NL4_PORT_ERROR_REPORT_MASK_BUFFER_OVERFLOW_VCH0_INPLACE (ROUTER_NL4_PORT_ERROR_REPORT_MASK_BUFFER_OVERFLOW_VCH0_MASK << ROUTER_NL4_PORT_ERROR_REPORT_MASK_BUFFER_OVERFLOW_VCH0_SHIFT)
 #define ROUTER_NL4_PORT_ERROR_REPORT_MASK_RETRY_TO_SHIFT 3 /* established */
 #define ROUTER_NL4_PORT_ERROR_REPORT_MASK_RETRY_TO_MASK 0x1ull
 #define ROUTER_NL4_PORT_ERROR_REPORT_MASK_RETRY_TO_INPLACE (ROUTER_NL4_PORT_ERROR_REPORT_MASK_RETRY_TO_MASK << ROUTER_NL4_PORT_ERROR_REPORT_MASK_RETRY_TO_SHIFT)
-#define ROUTER_NL4_PORT_ERROR_REPORT_MASK_RCV_LINK_RESET_SHIFT 2 /* established */
+/* established */
+#define ROUTER_NL4_PORT_ERROR_REPORT_MASK_RCV_LINK_RESET_SHIFT 2
 #define ROUTER_NL4_PORT_ERROR_REPORT_MASK_RCV_LINK_RESET_MASK 0x1ull
 #define ROUTER_NL4_PORT_ERROR_REPORT_MASK_RCV_LINK_RESET_INPLACE (ROUTER_NL4_PORT_ERROR_REPORT_MASK_RCV_LINK_RESET_MASK << ROUTER_NL4_PORT_ERROR_REPORT_MASK_RCV_LINK_RESET_SHIFT)
-#define ROUTER_NL4_PORT_ERROR_REPORT_MASK_RCV_WARM_RESET_SHIFT 1 /* established */
+/* established */
+#define ROUTER_NL4_PORT_ERROR_REPORT_MASK_RCV_WARM_RESET_SHIFT 1
 #define ROUTER_NL4_PORT_ERROR_REPORT_MASK_RCV_WARM_RESET_MASK 0x1ull
 #define ROUTER_NL4_PORT_ERROR_REPORT_MASK_RCV_WARM_RESET_INPLACE (ROUTER_NL4_PORT_ERROR_REPORT_MASK_RCV_WARM_RESET_MASK << ROUTER_NL4_PORT_ERROR_REPORT_MASK_RCV_WARM_RESET_SHIFT)
 #define ROUTER_NL4_PORT_ERROR_REPORT_MASK_POWER_NOT_OK_SHIFT 0 /* established */
@@ -5170,550 +6154,649 @@
 #define ROUTER_NL4_PORT_ERROR_REPORT_MASK_POWER_NOT_OK_INPLACE (ROUTER_NL4_PORT_ERROR_REPORT_MASK_POWER_NOT_OK_MASK << ROUTER_NL4_PORT_ERROR_REPORT_MASK_POWER_NOT_OK_SHIFT)
 
 /*
- * PROM register R4_PORTA_TEST_POINT_SELECT_512; one per port A to H. Offset and field positions read from the table; role inferred from the names.
+ * PROM register R4_PORTA_TEST_POINT_SELECT_512; one per port A to H. Offset and
+ * field positions read from the table; role inferred from the names.
  */
 /* port_test_point_select_512: rw64, reset unknown */
-#define ROUTER_NL4_PORT_TEST_POINT_SELECT_512_OFFSET 0x8002700u /* established */
+/* established */
+#define ROUTER_NL4_PORT_TEST_POINT_SELECT_512_OFFSET 0x8002700u
 #define ROUTER_NL4_PORT_TEST_POINT_SELECT_512_COUNT  8
 #define ROUTER_NL4_PORT_TEST_POINT_SELECT_512_STRIDE 16777216
-#define ROUTER_NL4_PORT_TEST_POINT_SELECT_512_NIBBLE7_NIBBLE_SEL_SHIFT 60 /* established */
+/* established */
+#define ROUTER_NL4_PORT_TEST_POINT_SELECT_512_NIBBLE7_NIBBLE_SEL_SHIFT 60
 #define ROUTER_NL4_PORT_TEST_POINT_SELECT_512_NIBBLE7_NIBBLE_SEL_MASK 0x7ull
 #define ROUTER_NL4_PORT_TEST_POINT_SELECT_512_NIBBLE7_NIBBLE_SEL_INPLACE (ROUTER_NL4_PORT_TEST_POINT_SELECT_512_NIBBLE7_NIBBLE_SEL_MASK << ROUTER_NL4_PORT_TEST_POINT_SELECT_512_NIBBLE7_NIBBLE_SEL_SHIFT)
-#define ROUTER_NL4_PORT_TEST_POINT_SELECT_512_NIBBLE7_CHIPLET_SEL_SHIFT 56 /* established */
+/* established */
+#define ROUTER_NL4_PORT_TEST_POINT_SELECT_512_NIBBLE7_CHIPLET_SEL_SHIFT 56
 #define ROUTER_NL4_PORT_TEST_POINT_SELECT_512_NIBBLE7_CHIPLET_SEL_MASK 0xfull
 #define ROUTER_NL4_PORT_TEST_POINT_SELECT_512_NIBBLE7_CHIPLET_SEL_INPLACE (ROUTER_NL4_PORT_TEST_POINT_SELECT_512_NIBBLE7_CHIPLET_SEL_MASK << ROUTER_NL4_PORT_TEST_POINT_SELECT_512_NIBBLE7_CHIPLET_SEL_SHIFT)
-#define ROUTER_NL4_PORT_TEST_POINT_SELECT_512_NIBBLE6_NIBBLE_SEL_SHIFT 52 /* established */
+/* established */
+#define ROUTER_NL4_PORT_TEST_POINT_SELECT_512_NIBBLE6_NIBBLE_SEL_SHIFT 52
 #define ROUTER_NL4_PORT_TEST_POINT_SELECT_512_NIBBLE6_NIBBLE_SEL_MASK 0x7ull
 #define ROUTER_NL4_PORT_TEST_POINT_SELECT_512_NIBBLE6_NIBBLE_SEL_INPLACE (ROUTER_NL4_PORT_TEST_POINT_SELECT_512_NIBBLE6_NIBBLE_SEL_MASK << ROUTER_NL4_PORT_TEST_POINT_SELECT_512_NIBBLE6_NIBBLE_SEL_SHIFT)
-#define ROUTER_NL4_PORT_TEST_POINT_SELECT_512_NIBBLE6_CHIPLET_SEL_SHIFT 48 /* established */
+/* established */
+#define ROUTER_NL4_PORT_TEST_POINT_SELECT_512_NIBBLE6_CHIPLET_SEL_SHIFT 48
 #define ROUTER_NL4_PORT_TEST_POINT_SELECT_512_NIBBLE6_CHIPLET_SEL_MASK 0xfull
 #define ROUTER_NL4_PORT_TEST_POINT_SELECT_512_NIBBLE6_CHIPLET_SEL_INPLACE (ROUTER_NL4_PORT_TEST_POINT_SELECT_512_NIBBLE6_CHIPLET_SEL_MASK << ROUTER_NL4_PORT_TEST_POINT_SELECT_512_NIBBLE6_CHIPLET_SEL_SHIFT)
-#define ROUTER_NL4_PORT_TEST_POINT_SELECT_512_NIBBLE5_NIBBLE_SEL_SHIFT 44 /* established */
+/* established */
+#define ROUTER_NL4_PORT_TEST_POINT_SELECT_512_NIBBLE5_NIBBLE_SEL_SHIFT 44
 #define ROUTER_NL4_PORT_TEST_POINT_SELECT_512_NIBBLE5_NIBBLE_SEL_MASK 0x7ull
 #define ROUTER_NL4_PORT_TEST_POINT_SELECT_512_NIBBLE5_NIBBLE_SEL_INPLACE (ROUTER_NL4_PORT_TEST_POINT_SELECT_512_NIBBLE5_NIBBLE_SEL_MASK << ROUTER_NL4_PORT_TEST_POINT_SELECT_512_NIBBLE5_NIBBLE_SEL_SHIFT)
-#define ROUTER_NL4_PORT_TEST_POINT_SELECT_512_NIBBLE5_CHIPLET_SEL_SHIFT 40 /* established */
+/* established */
+#define ROUTER_NL4_PORT_TEST_POINT_SELECT_512_NIBBLE5_CHIPLET_SEL_SHIFT 40
 #define ROUTER_NL4_PORT_TEST_POINT_SELECT_512_NIBBLE5_CHIPLET_SEL_MASK 0xfull
 #define ROUTER_NL4_PORT_TEST_POINT_SELECT_512_NIBBLE5_CHIPLET_SEL_INPLACE (ROUTER_NL4_PORT_TEST_POINT_SELECT_512_NIBBLE5_CHIPLET_SEL_MASK << ROUTER_NL4_PORT_TEST_POINT_SELECT_512_NIBBLE5_CHIPLET_SEL_SHIFT)
-#define ROUTER_NL4_PORT_TEST_POINT_SELECT_512_NIBBLE4_NIBBLE_SEL_SHIFT 36 /* established */
+/* established */
+#define ROUTER_NL4_PORT_TEST_POINT_SELECT_512_NIBBLE4_NIBBLE_SEL_SHIFT 36
 #define ROUTER_NL4_PORT_TEST_POINT_SELECT_512_NIBBLE4_NIBBLE_SEL_MASK 0x7ull
 #define ROUTER_NL4_PORT_TEST_POINT_SELECT_512_NIBBLE4_NIBBLE_SEL_INPLACE (ROUTER_NL4_PORT_TEST_POINT_SELECT_512_NIBBLE4_NIBBLE_SEL_MASK << ROUTER_NL4_PORT_TEST_POINT_SELECT_512_NIBBLE4_NIBBLE_SEL_SHIFT)
-#define ROUTER_NL4_PORT_TEST_POINT_SELECT_512_NIBBLE4_CHIPLET_SEL_SHIFT 32 /* established */
+/* established */
+#define ROUTER_NL4_PORT_TEST_POINT_SELECT_512_NIBBLE4_CHIPLET_SEL_SHIFT 32
 #define ROUTER_NL4_PORT_TEST_POINT_SELECT_512_NIBBLE4_CHIPLET_SEL_MASK 0xfull
 #define ROUTER_NL4_PORT_TEST_POINT_SELECT_512_NIBBLE4_CHIPLET_SEL_INPLACE (ROUTER_NL4_PORT_TEST_POINT_SELECT_512_NIBBLE4_CHIPLET_SEL_MASK << ROUTER_NL4_PORT_TEST_POINT_SELECT_512_NIBBLE4_CHIPLET_SEL_SHIFT)
-#define ROUTER_NL4_PORT_TEST_POINT_SELECT_512_NIBBLE3_NIBBLE_SEL_SHIFT 28 /* established */
+/* established */
+#define ROUTER_NL4_PORT_TEST_POINT_SELECT_512_NIBBLE3_NIBBLE_SEL_SHIFT 28
 #define ROUTER_NL4_PORT_TEST_POINT_SELECT_512_NIBBLE3_NIBBLE_SEL_MASK 0x7ull
 #define ROUTER_NL4_PORT_TEST_POINT_SELECT_512_NIBBLE3_NIBBLE_SEL_INPLACE (ROUTER_NL4_PORT_TEST_POINT_SELECT_512_NIBBLE3_NIBBLE_SEL_MASK << ROUTER_NL4_PORT_TEST_POINT_SELECT_512_NIBBLE3_NIBBLE_SEL_SHIFT)
-#define ROUTER_NL4_PORT_TEST_POINT_SELECT_512_NIBBLE3_CHIPLET_SEL_SHIFT 24 /* established */
+/* established */
+#define ROUTER_NL4_PORT_TEST_POINT_SELECT_512_NIBBLE3_CHIPLET_SEL_SHIFT 24
 #define ROUTER_NL4_PORT_TEST_POINT_SELECT_512_NIBBLE3_CHIPLET_SEL_MASK 0xfull
 #define ROUTER_NL4_PORT_TEST_POINT_SELECT_512_NIBBLE3_CHIPLET_SEL_INPLACE (ROUTER_NL4_PORT_TEST_POINT_SELECT_512_NIBBLE3_CHIPLET_SEL_MASK << ROUTER_NL4_PORT_TEST_POINT_SELECT_512_NIBBLE3_CHIPLET_SEL_SHIFT)
-#define ROUTER_NL4_PORT_TEST_POINT_SELECT_512_NIBBLE2_NIBBLE_SEL_SHIFT 20 /* established */
+/* established */
+#define ROUTER_NL4_PORT_TEST_POINT_SELECT_512_NIBBLE2_NIBBLE_SEL_SHIFT 20
 #define ROUTER_NL4_PORT_TEST_POINT_SELECT_512_NIBBLE2_NIBBLE_SEL_MASK 0x7ull
 #define ROUTER_NL4_PORT_TEST_POINT_SELECT_512_NIBBLE2_NIBBLE_SEL_INPLACE (ROUTER_NL4_PORT_TEST_POINT_SELECT_512_NIBBLE2_NIBBLE_SEL_MASK << ROUTER_NL4_PORT_TEST_POINT_SELECT_512_NIBBLE2_NIBBLE_SEL_SHIFT)
-#define ROUTER_NL4_PORT_TEST_POINT_SELECT_512_NIBBLE2_CHIPLET_SEL_SHIFT 16 /* established */
+/* established */
+#define ROUTER_NL4_PORT_TEST_POINT_SELECT_512_NIBBLE2_CHIPLET_SEL_SHIFT 16
 #define ROUTER_NL4_PORT_TEST_POINT_SELECT_512_NIBBLE2_CHIPLET_SEL_MASK 0xfull
 #define ROUTER_NL4_PORT_TEST_POINT_SELECT_512_NIBBLE2_CHIPLET_SEL_INPLACE (ROUTER_NL4_PORT_TEST_POINT_SELECT_512_NIBBLE2_CHIPLET_SEL_MASK << ROUTER_NL4_PORT_TEST_POINT_SELECT_512_NIBBLE2_CHIPLET_SEL_SHIFT)
-#define ROUTER_NL4_PORT_TEST_POINT_SELECT_512_NIBBLE1_NIBBLE_SEL_SHIFT 12 /* established */
+/* established */
+#define ROUTER_NL4_PORT_TEST_POINT_SELECT_512_NIBBLE1_NIBBLE_SEL_SHIFT 12
 #define ROUTER_NL4_PORT_TEST_POINT_SELECT_512_NIBBLE1_NIBBLE_SEL_MASK 0x7ull
 #define ROUTER_NL4_PORT_TEST_POINT_SELECT_512_NIBBLE1_NIBBLE_SEL_INPLACE (ROUTER_NL4_PORT_TEST_POINT_SELECT_512_NIBBLE1_NIBBLE_SEL_MASK << ROUTER_NL4_PORT_TEST_POINT_SELECT_512_NIBBLE1_NIBBLE_SEL_SHIFT)
-#define ROUTER_NL4_PORT_TEST_POINT_SELECT_512_NIBBLE1_CHIPLET_SEL_SHIFT 8 /* established */
+/* established */
+#define ROUTER_NL4_PORT_TEST_POINT_SELECT_512_NIBBLE1_CHIPLET_SEL_SHIFT 8
 #define ROUTER_NL4_PORT_TEST_POINT_SELECT_512_NIBBLE1_CHIPLET_SEL_MASK 0xfull
 #define ROUTER_NL4_PORT_TEST_POINT_SELECT_512_NIBBLE1_CHIPLET_SEL_INPLACE (ROUTER_NL4_PORT_TEST_POINT_SELECT_512_NIBBLE1_CHIPLET_SEL_MASK << ROUTER_NL4_PORT_TEST_POINT_SELECT_512_NIBBLE1_CHIPLET_SEL_SHIFT)
-#define ROUTER_NL4_PORT_TEST_POINT_SELECT_512_NIBBLE0_NIBBLE_SEL_SHIFT 4 /* established */
+/* established */
+#define ROUTER_NL4_PORT_TEST_POINT_SELECT_512_NIBBLE0_NIBBLE_SEL_SHIFT 4
 #define ROUTER_NL4_PORT_TEST_POINT_SELECT_512_NIBBLE0_NIBBLE_SEL_MASK 0x7ull
 #define ROUTER_NL4_PORT_TEST_POINT_SELECT_512_NIBBLE0_NIBBLE_SEL_INPLACE (ROUTER_NL4_PORT_TEST_POINT_SELECT_512_NIBBLE0_NIBBLE_SEL_MASK << ROUTER_NL4_PORT_TEST_POINT_SELECT_512_NIBBLE0_NIBBLE_SEL_SHIFT)
-#define ROUTER_NL4_PORT_TEST_POINT_SELECT_512_NIBBLE0_CHIPLET_SEL_SHIFT 0 /* established */
+/* established */
+#define ROUTER_NL4_PORT_TEST_POINT_SELECT_512_NIBBLE0_CHIPLET_SEL_SHIFT 0
 #define ROUTER_NL4_PORT_TEST_POINT_SELECT_512_NIBBLE0_CHIPLET_SEL_MASK 0xfull
 #define ROUTER_NL4_PORT_TEST_POINT_SELECT_512_NIBBLE0_CHIPLET_SEL_INPLACE (ROUTER_NL4_PORT_TEST_POINT_SELECT_512_NIBBLE0_CHIPLET_SEL_MASK << ROUTER_NL4_PORT_TEST_POINT_SELECT_512_NIBBLE0_CHIPLET_SEL_SHIFT)
 
 /*
- * PROM register R4_PORTA_PERF_CONFIG; one per port A to H. Offset and field positions read from the table; role inferred from the names.
+ * PROM register R4_PORTA_PERF_CONFIG; one per port A to H. Offset and field
+ * positions read from the table; role inferred from the names.
  */
 /* port_perf_config: rw64, reset unknown */
-#define ROUTER_NL4_PORT_PERF_CONFIG_OFFSET           0x8007000u /* established */
+/* established */
+#define ROUTER_NL4_PORT_PERF_CONFIG_OFFSET           0x8007000u
 #define ROUTER_NL4_PORT_PERF_CONFIG_COUNT            8
 #define ROUTER_NL4_PORT_PERF_CONFIG_STRIDE           16777216
 #define ROUTER_NL4_PORT_PERF_CONFIG_DIAG_SHIFT       45 /* established */
 #define ROUTER_NL4_PORT_PERF_CONFIG_DIAG_MASK        0x3fffull
-#define ROUTER_NL4_PORT_PERF_CONFIG_DIAG_INPLACE     (ROUTER_NL4_PORT_PERF_CONFIG_DIAG_MASK << ROUTER_NL4_PORT_PERF_CONFIG_DIAG_SHIFT)
+#define ROUTER_NL4_PORT_PERF_CONFIG_DIAG_INPLACE (ROUTER_NL4_PORT_PERF_CONFIG_DIAG_MASK << ROUTER_NL4_PORT_PERF_CONFIG_DIAG_SHIFT)
 #define ROUTER_NL4_PORT_PERF_CONFIG_EN_SHIFT         8 /* established */
 #define ROUTER_NL4_PORT_PERF_CONFIG_EN_MASK          0x1fffffffffull
-#define ROUTER_NL4_PORT_PERF_CONFIG_EN_INPLACE       (ROUTER_NL4_PORT_PERF_CONFIG_EN_MASK << ROUTER_NL4_PORT_PERF_CONFIG_EN_SHIFT)
+#define ROUTER_NL4_PORT_PERF_CONFIG_EN_INPLACE (ROUTER_NL4_PORT_PERF_CONFIG_EN_MASK << ROUTER_NL4_PORT_PERF_CONFIG_EN_SHIFT)
 #define ROUTER_NL4_PORT_PERF_CONFIG_DIR_SHIFT        0 /* established */
 #define ROUTER_NL4_PORT_PERF_CONFIG_DIR_MASK         0xffull
-#define ROUTER_NL4_PORT_PERF_CONFIG_DIR_INPLACE      (ROUTER_NL4_PORT_PERF_CONFIG_DIR_MASK << ROUTER_NL4_PORT_PERF_CONFIG_DIR_SHIFT)
+#define ROUTER_NL4_PORT_PERF_CONFIG_DIR_INPLACE (ROUTER_NL4_PORT_PERF_CONFIG_DIR_MASK << ROUTER_NL4_PORT_PERF_CONFIG_DIR_SHIFT)
 
 /*
- * PROM register R4_PORTA_PERF_CMD_LO; one per port A to H. Offset and field positions read from the table; role inferred from the names.
+ * PROM register R4_PORTA_PERF_CMD_LO; one per port A to H. Offset and field
+ * positions read from the table; role inferred from the names.
  */
 /* port_perf_cmd_lo: rw64, reset unknown */
-#define ROUTER_NL4_PORT_PERF_CMD_LO_OFFSET           0x8007008u /* established */
+/* established */
+#define ROUTER_NL4_PORT_PERF_CMD_LO_OFFSET           0x8007008u
 #define ROUTER_NL4_PORT_PERF_CMD_LO_COUNT            8
 #define ROUTER_NL4_PORT_PERF_CMD_LO_STRIDE           16777216
 #define ROUTER_NL4_PORT_PERF_CMD_LO_CNT7_SHIFT       56 /* established */
 #define ROUTER_NL4_PORT_PERF_CMD_LO_CNT7_MASK        0xffull
-#define ROUTER_NL4_PORT_PERF_CMD_LO_CNT7_INPLACE     (ROUTER_NL4_PORT_PERF_CMD_LO_CNT7_MASK << ROUTER_NL4_PORT_PERF_CMD_LO_CNT7_SHIFT)
+#define ROUTER_NL4_PORT_PERF_CMD_LO_CNT7_INPLACE (ROUTER_NL4_PORT_PERF_CMD_LO_CNT7_MASK << ROUTER_NL4_PORT_PERF_CMD_LO_CNT7_SHIFT)
 #define ROUTER_NL4_PORT_PERF_CMD_LO_CNT6_SHIFT       48 /* established */
 #define ROUTER_NL4_PORT_PERF_CMD_LO_CNT6_MASK        0xffull
-#define ROUTER_NL4_PORT_PERF_CMD_LO_CNT6_INPLACE     (ROUTER_NL4_PORT_PERF_CMD_LO_CNT6_MASK << ROUTER_NL4_PORT_PERF_CMD_LO_CNT6_SHIFT)
+#define ROUTER_NL4_PORT_PERF_CMD_LO_CNT6_INPLACE (ROUTER_NL4_PORT_PERF_CMD_LO_CNT6_MASK << ROUTER_NL4_PORT_PERF_CMD_LO_CNT6_SHIFT)
 #define ROUTER_NL4_PORT_PERF_CMD_LO_CNT5_SHIFT       40 /* established */
 #define ROUTER_NL4_PORT_PERF_CMD_LO_CNT5_MASK        0xffull
-#define ROUTER_NL4_PORT_PERF_CMD_LO_CNT5_INPLACE     (ROUTER_NL4_PORT_PERF_CMD_LO_CNT5_MASK << ROUTER_NL4_PORT_PERF_CMD_LO_CNT5_SHIFT)
+#define ROUTER_NL4_PORT_PERF_CMD_LO_CNT5_INPLACE (ROUTER_NL4_PORT_PERF_CMD_LO_CNT5_MASK << ROUTER_NL4_PORT_PERF_CMD_LO_CNT5_SHIFT)
 #define ROUTER_NL4_PORT_PERF_CMD_LO_CNT4_SHIFT       32 /* established */
 #define ROUTER_NL4_PORT_PERF_CMD_LO_CNT4_MASK        0xffull
-#define ROUTER_NL4_PORT_PERF_CMD_LO_CNT4_INPLACE     (ROUTER_NL4_PORT_PERF_CMD_LO_CNT4_MASK << ROUTER_NL4_PORT_PERF_CMD_LO_CNT4_SHIFT)
+#define ROUTER_NL4_PORT_PERF_CMD_LO_CNT4_INPLACE (ROUTER_NL4_PORT_PERF_CMD_LO_CNT4_MASK << ROUTER_NL4_PORT_PERF_CMD_LO_CNT4_SHIFT)
 #define ROUTER_NL4_PORT_PERF_CMD_LO_CNT3_SHIFT       24 /* established */
 #define ROUTER_NL4_PORT_PERF_CMD_LO_CNT3_MASK        0xffull
-#define ROUTER_NL4_PORT_PERF_CMD_LO_CNT3_INPLACE     (ROUTER_NL4_PORT_PERF_CMD_LO_CNT3_MASK << ROUTER_NL4_PORT_PERF_CMD_LO_CNT3_SHIFT)
+#define ROUTER_NL4_PORT_PERF_CMD_LO_CNT3_INPLACE (ROUTER_NL4_PORT_PERF_CMD_LO_CNT3_MASK << ROUTER_NL4_PORT_PERF_CMD_LO_CNT3_SHIFT)
 #define ROUTER_NL4_PORT_PERF_CMD_LO_CNT2_SHIFT       16 /* established */
 #define ROUTER_NL4_PORT_PERF_CMD_LO_CNT2_MASK        0xffull
-#define ROUTER_NL4_PORT_PERF_CMD_LO_CNT2_INPLACE     (ROUTER_NL4_PORT_PERF_CMD_LO_CNT2_MASK << ROUTER_NL4_PORT_PERF_CMD_LO_CNT2_SHIFT)
+#define ROUTER_NL4_PORT_PERF_CMD_LO_CNT2_INPLACE (ROUTER_NL4_PORT_PERF_CMD_LO_CNT2_MASK << ROUTER_NL4_PORT_PERF_CMD_LO_CNT2_SHIFT)
 #define ROUTER_NL4_PORT_PERF_CMD_LO_CNT1_SHIFT       8 /* established */
 #define ROUTER_NL4_PORT_PERF_CMD_LO_CNT1_MASK        0xffull
-#define ROUTER_NL4_PORT_PERF_CMD_LO_CNT1_INPLACE     (ROUTER_NL4_PORT_PERF_CMD_LO_CNT1_MASK << ROUTER_NL4_PORT_PERF_CMD_LO_CNT1_SHIFT)
+#define ROUTER_NL4_PORT_PERF_CMD_LO_CNT1_INPLACE (ROUTER_NL4_PORT_PERF_CMD_LO_CNT1_MASK << ROUTER_NL4_PORT_PERF_CMD_LO_CNT1_SHIFT)
 #define ROUTER_NL4_PORT_PERF_CMD_LO_CNT0_SHIFT       0 /* established */
 #define ROUTER_NL4_PORT_PERF_CMD_LO_CNT0_MASK        0xffull
-#define ROUTER_NL4_PORT_PERF_CMD_LO_CNT0_INPLACE     (ROUTER_NL4_PORT_PERF_CMD_LO_CNT0_MASK << ROUTER_NL4_PORT_PERF_CMD_LO_CNT0_SHIFT)
+#define ROUTER_NL4_PORT_PERF_CMD_LO_CNT0_INPLACE (ROUTER_NL4_PORT_PERF_CMD_LO_CNT0_MASK << ROUTER_NL4_PORT_PERF_CMD_LO_CNT0_SHIFT)
 
 /*
- * PROM register R4_PORTA_PERF_CMD_UP; one per port A to H. Offset and field positions read from the table; role inferred from the names.
+ * PROM register R4_PORTA_PERF_CMD_UP; one per port A to H. Offset and field
+ * positions read from the table; role inferred from the names.
  */
 /* port_perf_cmd_up: rw64, reset unknown */
-#define ROUTER_NL4_PORT_PERF_CMD_UP_OFFSET           0x8007010u /* established */
+/* established */
+#define ROUTER_NL4_PORT_PERF_CMD_UP_OFFSET           0x8007010u
 #define ROUTER_NL4_PORT_PERF_CMD_UP_COUNT            8
 #define ROUTER_NL4_PORT_PERF_CMD_UP_STRIDE           16777216
 #define ROUTER_NL4_PORT_PERF_CMD_UP_CNT7_SHIFT       56 /* established */
 #define ROUTER_NL4_PORT_PERF_CMD_UP_CNT7_MASK        0xffull
-#define ROUTER_NL4_PORT_PERF_CMD_UP_CNT7_INPLACE     (ROUTER_NL4_PORT_PERF_CMD_UP_CNT7_MASK << ROUTER_NL4_PORT_PERF_CMD_UP_CNT7_SHIFT)
+#define ROUTER_NL4_PORT_PERF_CMD_UP_CNT7_INPLACE (ROUTER_NL4_PORT_PERF_CMD_UP_CNT7_MASK << ROUTER_NL4_PORT_PERF_CMD_UP_CNT7_SHIFT)
 #define ROUTER_NL4_PORT_PERF_CMD_UP_CNT6_SHIFT       48 /* established */
 #define ROUTER_NL4_PORT_PERF_CMD_UP_CNT6_MASK        0xffull
-#define ROUTER_NL4_PORT_PERF_CMD_UP_CNT6_INPLACE     (ROUTER_NL4_PORT_PERF_CMD_UP_CNT6_MASK << ROUTER_NL4_PORT_PERF_CMD_UP_CNT6_SHIFT)
+#define ROUTER_NL4_PORT_PERF_CMD_UP_CNT6_INPLACE (ROUTER_NL4_PORT_PERF_CMD_UP_CNT6_MASK << ROUTER_NL4_PORT_PERF_CMD_UP_CNT6_SHIFT)
 #define ROUTER_NL4_PORT_PERF_CMD_UP_CNT5_SHIFT       40 /* established */
 #define ROUTER_NL4_PORT_PERF_CMD_UP_CNT5_MASK        0xffull
-#define ROUTER_NL4_PORT_PERF_CMD_UP_CNT5_INPLACE     (ROUTER_NL4_PORT_PERF_CMD_UP_CNT5_MASK << ROUTER_NL4_PORT_PERF_CMD_UP_CNT5_SHIFT)
+#define ROUTER_NL4_PORT_PERF_CMD_UP_CNT5_INPLACE (ROUTER_NL4_PORT_PERF_CMD_UP_CNT5_MASK << ROUTER_NL4_PORT_PERF_CMD_UP_CNT5_SHIFT)
 #define ROUTER_NL4_PORT_PERF_CMD_UP_CNT4_SHIFT       32 /* established */
 #define ROUTER_NL4_PORT_PERF_CMD_UP_CNT4_MASK        0xffull
-#define ROUTER_NL4_PORT_PERF_CMD_UP_CNT4_INPLACE     (ROUTER_NL4_PORT_PERF_CMD_UP_CNT4_MASK << ROUTER_NL4_PORT_PERF_CMD_UP_CNT4_SHIFT)
+#define ROUTER_NL4_PORT_PERF_CMD_UP_CNT4_INPLACE (ROUTER_NL4_PORT_PERF_CMD_UP_CNT4_MASK << ROUTER_NL4_PORT_PERF_CMD_UP_CNT4_SHIFT)
 #define ROUTER_NL4_PORT_PERF_CMD_UP_CNT3_SHIFT       24 /* established */
 #define ROUTER_NL4_PORT_PERF_CMD_UP_CNT3_MASK        0xffull
-#define ROUTER_NL4_PORT_PERF_CMD_UP_CNT3_INPLACE     (ROUTER_NL4_PORT_PERF_CMD_UP_CNT3_MASK << ROUTER_NL4_PORT_PERF_CMD_UP_CNT3_SHIFT)
+#define ROUTER_NL4_PORT_PERF_CMD_UP_CNT3_INPLACE (ROUTER_NL4_PORT_PERF_CMD_UP_CNT3_MASK << ROUTER_NL4_PORT_PERF_CMD_UP_CNT3_SHIFT)
 #define ROUTER_NL4_PORT_PERF_CMD_UP_CNT2_SHIFT       16 /* established */
 #define ROUTER_NL4_PORT_PERF_CMD_UP_CNT2_MASK        0xffull
-#define ROUTER_NL4_PORT_PERF_CMD_UP_CNT2_INPLACE     (ROUTER_NL4_PORT_PERF_CMD_UP_CNT2_MASK << ROUTER_NL4_PORT_PERF_CMD_UP_CNT2_SHIFT)
+#define ROUTER_NL4_PORT_PERF_CMD_UP_CNT2_INPLACE (ROUTER_NL4_PORT_PERF_CMD_UP_CNT2_MASK << ROUTER_NL4_PORT_PERF_CMD_UP_CNT2_SHIFT)
 #define ROUTER_NL4_PORT_PERF_CMD_UP_CNT1_SHIFT       8 /* established */
 #define ROUTER_NL4_PORT_PERF_CMD_UP_CNT1_MASK        0xffull
-#define ROUTER_NL4_PORT_PERF_CMD_UP_CNT1_INPLACE     (ROUTER_NL4_PORT_PERF_CMD_UP_CNT1_MASK << ROUTER_NL4_PORT_PERF_CMD_UP_CNT1_SHIFT)
+#define ROUTER_NL4_PORT_PERF_CMD_UP_CNT1_INPLACE (ROUTER_NL4_PORT_PERF_CMD_UP_CNT1_MASK << ROUTER_NL4_PORT_PERF_CMD_UP_CNT1_SHIFT)
 #define ROUTER_NL4_PORT_PERF_CMD_UP_CNT0_SHIFT       0 /* established */
 #define ROUTER_NL4_PORT_PERF_CMD_UP_CNT0_MASK        0xffull
-#define ROUTER_NL4_PORT_PERF_CMD_UP_CNT0_INPLACE     (ROUTER_NL4_PORT_PERF_CMD_UP_CNT0_MASK << ROUTER_NL4_PORT_PERF_CMD_UP_CNT0_SHIFT)
+#define ROUTER_NL4_PORT_PERF_CMD_UP_CNT0_INPLACE (ROUTER_NL4_PORT_PERF_CMD_UP_CNT0_MASK << ROUTER_NL4_PORT_PERF_CMD_UP_CNT0_SHIFT)
 
 /*
- * PROM register R4_PORTA_PERF_CNTR0; one per port A to H. Offset and field positions read from the table; role inferred from the names.
+ * PROM register R4_PORTA_PERF_CNTR0; one per port A to H. Offset and field
+ * positions read from the table; role inferred from the names.
  */
 /* port_perf_cntr0: rw64, reset unknown */
-#define ROUTER_NL4_PORT_PERF_CNTR0_OFFSET            0x8007018u /* established */
+/* established */
+#define ROUTER_NL4_PORT_PERF_CNTR0_OFFSET            0x8007018u
 #define ROUTER_NL4_PORT_PERF_CNTR0_COUNT             8
 #define ROUTER_NL4_PORT_PERF_CNTR0_STRIDE            16777216
 #define ROUTER_NL4_PORT_PERF_CNTR0_CNT_SHIFT         0 /* established */
 #define ROUTER_NL4_PORT_PERF_CNTR0_CNT_MASK          0xffffffffffffull
-#define ROUTER_NL4_PORT_PERF_CNTR0_CNT_INPLACE       (ROUTER_NL4_PORT_PERF_CNTR0_CNT_MASK << ROUTER_NL4_PORT_PERF_CNTR0_CNT_SHIFT)
+#define ROUTER_NL4_PORT_PERF_CNTR0_CNT_INPLACE (ROUTER_NL4_PORT_PERF_CNTR0_CNT_MASK << ROUTER_NL4_PORT_PERF_CNTR0_CNT_SHIFT)
 
 /*
- * PROM register R4_PORTA_PERF_CNTR1; one per port A to H. Offset and field positions read from the table; role inferred from the names.
+ * PROM register R4_PORTA_PERF_CNTR1; one per port A to H. Offset and field
+ * positions read from the table; role inferred from the names.
  */
 /* port_perf_cntr1: rw64, reset unknown */
-#define ROUTER_NL4_PORT_PERF_CNTR1_OFFSET            0x8007020u /* established */
+/* established */
+#define ROUTER_NL4_PORT_PERF_CNTR1_OFFSET            0x8007020u
 #define ROUTER_NL4_PORT_PERF_CNTR1_COUNT             8
 #define ROUTER_NL4_PORT_PERF_CNTR1_STRIDE            16777216
 #define ROUTER_NL4_PORT_PERF_CNTR1_CNT_SHIFT         0 /* established */
 #define ROUTER_NL4_PORT_PERF_CNTR1_CNT_MASK          0xffffffffffffull
-#define ROUTER_NL4_PORT_PERF_CNTR1_CNT_INPLACE       (ROUTER_NL4_PORT_PERF_CNTR1_CNT_MASK << ROUTER_NL4_PORT_PERF_CNTR1_CNT_SHIFT)
+#define ROUTER_NL4_PORT_PERF_CNTR1_CNT_INPLACE (ROUTER_NL4_PORT_PERF_CNTR1_CNT_MASK << ROUTER_NL4_PORT_PERF_CNTR1_CNT_SHIFT)
 
 /*
- * PROM register R4_PORTA_PERF_CNTR2; one per port A to H. Offset and field positions read from the table; role inferred from the names.
+ * PROM register R4_PORTA_PERF_CNTR2; one per port A to H. Offset and field
+ * positions read from the table; role inferred from the names.
  */
 /* port_perf_cntr2: rw64, reset unknown */
-#define ROUTER_NL4_PORT_PERF_CNTR2_OFFSET            0x8007028u /* established */
+/* established */
+#define ROUTER_NL4_PORT_PERF_CNTR2_OFFSET            0x8007028u
 #define ROUTER_NL4_PORT_PERF_CNTR2_COUNT             8
 #define ROUTER_NL4_PORT_PERF_CNTR2_STRIDE            16777216
 #define ROUTER_NL4_PORT_PERF_CNTR2_CNT_SHIFT         0 /* established */
 #define ROUTER_NL4_PORT_PERF_CNTR2_CNT_MASK          0xffffffffffffull
-#define ROUTER_NL4_PORT_PERF_CNTR2_CNT_INPLACE       (ROUTER_NL4_PORT_PERF_CNTR2_CNT_MASK << ROUTER_NL4_PORT_PERF_CNTR2_CNT_SHIFT)
+#define ROUTER_NL4_PORT_PERF_CNTR2_CNT_INPLACE (ROUTER_NL4_PORT_PERF_CNTR2_CNT_MASK << ROUTER_NL4_PORT_PERF_CNTR2_CNT_SHIFT)
 
 /*
- * PROM register R4_PORTA_PERF_CNTR3; one per port A to H. Offset and field positions read from the table; role inferred from the names.
+ * PROM register R4_PORTA_PERF_CNTR3; one per port A to H. Offset and field
+ * positions read from the table; role inferred from the names.
  */
 /* port_perf_cntr3: rw64, reset unknown */
-#define ROUTER_NL4_PORT_PERF_CNTR3_OFFSET            0x8007030u /* established */
+/* established */
+#define ROUTER_NL4_PORT_PERF_CNTR3_OFFSET            0x8007030u
 #define ROUTER_NL4_PORT_PERF_CNTR3_COUNT             8
 #define ROUTER_NL4_PORT_PERF_CNTR3_STRIDE            16777216
 #define ROUTER_NL4_PORT_PERF_CNTR3_CNT_SHIFT         0 /* established */
 #define ROUTER_NL4_PORT_PERF_CNTR3_CNT_MASK          0xffffffffffffull
-#define ROUTER_NL4_PORT_PERF_CNTR3_CNT_INPLACE       (ROUTER_NL4_PORT_PERF_CNTR3_CNT_MASK << ROUTER_NL4_PORT_PERF_CNTR3_CNT_SHIFT)
+#define ROUTER_NL4_PORT_PERF_CNTR3_CNT_INPLACE (ROUTER_NL4_PORT_PERF_CNTR3_CNT_MASK << ROUTER_NL4_PORT_PERF_CNTR3_CNT_SHIFT)
 
 /*
- * PROM register R4_PORTA_PERF_CNTR4; one per port A to H. Offset and field positions read from the table; role inferred from the names.
+ * PROM register R4_PORTA_PERF_CNTR4; one per port A to H. Offset and field
+ * positions read from the table; role inferred from the names.
  */
 /* port_perf_cntr4: rw64, reset unknown */
-#define ROUTER_NL4_PORT_PERF_CNTR4_OFFSET            0x8007038u /* established */
+/* established */
+#define ROUTER_NL4_PORT_PERF_CNTR4_OFFSET            0x8007038u
 #define ROUTER_NL4_PORT_PERF_CNTR4_COUNT             8
 #define ROUTER_NL4_PORT_PERF_CNTR4_STRIDE            16777216
 #define ROUTER_NL4_PORT_PERF_CNTR4_CNT_SHIFT         0 /* established */
 #define ROUTER_NL4_PORT_PERF_CNTR4_CNT_MASK          0xffffffffffffull
-#define ROUTER_NL4_PORT_PERF_CNTR4_CNT_INPLACE       (ROUTER_NL4_PORT_PERF_CNTR4_CNT_MASK << ROUTER_NL4_PORT_PERF_CNTR4_CNT_SHIFT)
+#define ROUTER_NL4_PORT_PERF_CNTR4_CNT_INPLACE (ROUTER_NL4_PORT_PERF_CNTR4_CNT_MASK << ROUTER_NL4_PORT_PERF_CNTR4_CNT_SHIFT)
 
 /*
- * PROM register R4_PORTA_PERF_CNTR5; one per port A to H. Offset and field positions read from the table; role inferred from the names.
+ * PROM register R4_PORTA_PERF_CNTR5; one per port A to H. Offset and field
+ * positions read from the table; role inferred from the names.
  */
 /* port_perf_cntr5: rw64, reset unknown */
-#define ROUTER_NL4_PORT_PERF_CNTR5_OFFSET            0x8007040u /* established */
+/* established */
+#define ROUTER_NL4_PORT_PERF_CNTR5_OFFSET            0x8007040u
 #define ROUTER_NL4_PORT_PERF_CNTR5_COUNT             8
 #define ROUTER_NL4_PORT_PERF_CNTR5_STRIDE            16777216
 #define ROUTER_NL4_PORT_PERF_CNTR5_CNT_SHIFT         0 /* established */
 #define ROUTER_NL4_PORT_PERF_CNTR5_CNT_MASK          0xffffffffffffull
-#define ROUTER_NL4_PORT_PERF_CNTR5_CNT_INPLACE       (ROUTER_NL4_PORT_PERF_CNTR5_CNT_MASK << ROUTER_NL4_PORT_PERF_CNTR5_CNT_SHIFT)
+#define ROUTER_NL4_PORT_PERF_CNTR5_CNT_INPLACE (ROUTER_NL4_PORT_PERF_CNTR5_CNT_MASK << ROUTER_NL4_PORT_PERF_CNTR5_CNT_SHIFT)
 
 /*
- * PROM register R4_PORTA_PERF_CNTR6; one per port A to H. Offset and field positions read from the table; role inferred from the names.
+ * PROM register R4_PORTA_PERF_CNTR6; one per port A to H. Offset and field
+ * positions read from the table; role inferred from the names.
  */
 /* port_perf_cntr6: rw64, reset unknown */
-#define ROUTER_NL4_PORT_PERF_CNTR6_OFFSET            0x8007048u /* established */
+/* established */
+#define ROUTER_NL4_PORT_PERF_CNTR6_OFFSET            0x8007048u
 #define ROUTER_NL4_PORT_PERF_CNTR6_COUNT             8
 #define ROUTER_NL4_PORT_PERF_CNTR6_STRIDE            16777216
 #define ROUTER_NL4_PORT_PERF_CNTR6_CNT_SHIFT         0 /* established */
 #define ROUTER_NL4_PORT_PERF_CNTR6_CNT_MASK          0xffffffffffffull
-#define ROUTER_NL4_PORT_PERF_CNTR6_CNT_INPLACE       (ROUTER_NL4_PORT_PERF_CNTR6_CNT_MASK << ROUTER_NL4_PORT_PERF_CNTR6_CNT_SHIFT)
+#define ROUTER_NL4_PORT_PERF_CNTR6_CNT_INPLACE (ROUTER_NL4_PORT_PERF_CNTR6_CNT_MASK << ROUTER_NL4_PORT_PERF_CNTR6_CNT_SHIFT)
 
 /*
- * PROM register R4_PORTA_PERF_CNTR7; one per port A to H. Offset and field positions read from the table; role inferred from the names.
+ * PROM register R4_PORTA_PERF_CNTR7; one per port A to H. Offset and field
+ * positions read from the table; role inferred from the names.
  */
 /* port_perf_cntr7: rw64, reset unknown */
-#define ROUTER_NL4_PORT_PERF_CNTR7_OFFSET            0x8007050u /* established */
+/* established */
+#define ROUTER_NL4_PORT_PERF_CNTR7_OFFSET            0x8007050u
 #define ROUTER_NL4_PORT_PERF_CNTR7_COUNT             8
 #define ROUTER_NL4_PORT_PERF_CNTR7_STRIDE            16777216
 #define ROUTER_NL4_PORT_PERF_CNTR7_CNT_SHIFT         0 /* established */
 #define ROUTER_NL4_PORT_PERF_CNTR7_CNT_MASK          0xffffffffffffull
-#define ROUTER_NL4_PORT_PERF_CNTR7_CNT_INPLACE       (ROUTER_NL4_PORT_PERF_CNTR7_CNT_MASK << ROUTER_NL4_PORT_PERF_CNTR7_CNT_SHIFT)
+#define ROUTER_NL4_PORT_PERF_CNTR7_CNT_INPLACE (ROUTER_NL4_PORT_PERF_CNTR7_CNT_MASK << ROUTER_NL4_PORT_PERF_CNTR7_CNT_SHIFT)
 
 /*
- * PROM register R4_PORTA_PERF_CNTR8; one per port A to H. Offset and field positions read from the table; role inferred from the names.
+ * PROM register R4_PORTA_PERF_CNTR8; one per port A to H. Offset and field
+ * positions read from the table; role inferred from the names.
  */
 /* port_perf_cntr8: rw64, reset unknown */
-#define ROUTER_NL4_PORT_PERF_CNTR8_OFFSET            0x8007058u /* established */
+/* established */
+#define ROUTER_NL4_PORT_PERF_CNTR8_OFFSET            0x8007058u
 #define ROUTER_NL4_PORT_PERF_CNTR8_COUNT             8
 #define ROUTER_NL4_PORT_PERF_CNTR8_STRIDE            16777216
 #define ROUTER_NL4_PORT_PERF_CNTR8_CNT_SHIFT         0 /* established */
 #define ROUTER_NL4_PORT_PERF_CNTR8_CNT_MASK          0xffffffffffffull
-#define ROUTER_NL4_PORT_PERF_CNTR8_CNT_INPLACE       (ROUTER_NL4_PORT_PERF_CNTR8_CNT_MASK << ROUTER_NL4_PORT_PERF_CNTR8_CNT_SHIFT)
+#define ROUTER_NL4_PORT_PERF_CNTR8_CNT_INPLACE (ROUTER_NL4_PORT_PERF_CNTR8_CNT_MASK << ROUTER_NL4_PORT_PERF_CNTR8_CNT_SHIFT)
 
 /*
- * PROM register R4_PORTA_PERF_CNTR9; one per port A to H. Offset and field positions read from the table; role inferred from the names.
+ * PROM register R4_PORTA_PERF_CNTR9; one per port A to H. Offset and field
+ * positions read from the table; role inferred from the names.
  */
 /* port_perf_cntr9: rw64, reset unknown */
-#define ROUTER_NL4_PORT_PERF_CNTR9_OFFSET            0x8007060u /* established */
+/* established */
+#define ROUTER_NL4_PORT_PERF_CNTR9_OFFSET            0x8007060u
 #define ROUTER_NL4_PORT_PERF_CNTR9_COUNT             8
 #define ROUTER_NL4_PORT_PERF_CNTR9_STRIDE            16777216
 #define ROUTER_NL4_PORT_PERF_CNTR9_CNT_SHIFT         0 /* established */
 #define ROUTER_NL4_PORT_PERF_CNTR9_CNT_MASK          0xffffffffffffull
-#define ROUTER_NL4_PORT_PERF_CNTR9_CNT_INPLACE       (ROUTER_NL4_PORT_PERF_CNTR9_CNT_MASK << ROUTER_NL4_PORT_PERF_CNTR9_CNT_SHIFT)
+#define ROUTER_NL4_PORT_PERF_CNTR9_CNT_INPLACE (ROUTER_NL4_PORT_PERF_CNTR9_CNT_MASK << ROUTER_NL4_PORT_PERF_CNTR9_CNT_SHIFT)
 
 /*
- * PROM register R4_PORTA_PERF_CNTR10; one per port A to H. Offset and field positions read from the table; role inferred from the names.
+ * PROM register R4_PORTA_PERF_CNTR10; one per port A to H. Offset and field
+ * positions read from the table; role inferred from the names.
  */
 /* port_perf_cntr10: rw64, reset unknown */
-#define ROUTER_NL4_PORT_PERF_CNTR10_OFFSET           0x8007068u /* established */
+/* established */
+#define ROUTER_NL4_PORT_PERF_CNTR10_OFFSET           0x8007068u
 #define ROUTER_NL4_PORT_PERF_CNTR10_COUNT            8
 #define ROUTER_NL4_PORT_PERF_CNTR10_STRIDE           16777216
 #define ROUTER_NL4_PORT_PERF_CNTR10_CNT_SHIFT        0 /* established */
 #define ROUTER_NL4_PORT_PERF_CNTR10_CNT_MASK         0xffffffffffffull
-#define ROUTER_NL4_PORT_PERF_CNTR10_CNT_INPLACE      (ROUTER_NL4_PORT_PERF_CNTR10_CNT_MASK << ROUTER_NL4_PORT_PERF_CNTR10_CNT_SHIFT)
+#define ROUTER_NL4_PORT_PERF_CNTR10_CNT_INPLACE (ROUTER_NL4_PORT_PERF_CNTR10_CNT_MASK << ROUTER_NL4_PORT_PERF_CNTR10_CNT_SHIFT)
 
 /*
- * PROM register R4_PORTA_PERF_CNTR11; one per port A to H. Offset and field positions read from the table; role inferred from the names.
+ * PROM register R4_PORTA_PERF_CNTR11; one per port A to H. Offset and field
+ * positions read from the table; role inferred from the names.
  */
 /* port_perf_cntr11: rw64, reset unknown */
-#define ROUTER_NL4_PORT_PERF_CNTR11_OFFSET           0x8007070u /* established */
+/* established */
+#define ROUTER_NL4_PORT_PERF_CNTR11_OFFSET           0x8007070u
 #define ROUTER_NL4_PORT_PERF_CNTR11_COUNT            8
 #define ROUTER_NL4_PORT_PERF_CNTR11_STRIDE           16777216
 #define ROUTER_NL4_PORT_PERF_CNTR11_CNT_SHIFT        0 /* established */
 #define ROUTER_NL4_PORT_PERF_CNTR11_CNT_MASK         0xffffffffffffull
-#define ROUTER_NL4_PORT_PERF_CNTR11_CNT_INPLACE      (ROUTER_NL4_PORT_PERF_CNTR11_CNT_MASK << ROUTER_NL4_PORT_PERF_CNTR11_CNT_SHIFT)
+#define ROUTER_NL4_PORT_PERF_CNTR11_CNT_INPLACE (ROUTER_NL4_PORT_PERF_CNTR11_CNT_MASK << ROUTER_NL4_PORT_PERF_CNTR11_CNT_SHIFT)
 
 /*
- * PROM register R4_PORTA_PERF_CNTR12; one per port A to H. Offset and field positions read from the table; role inferred from the names.
+ * PROM register R4_PORTA_PERF_CNTR12; one per port A to H. Offset and field
+ * positions read from the table; role inferred from the names.
  */
 /* port_perf_cntr12: rw64, reset unknown */
-#define ROUTER_NL4_PORT_PERF_CNTR12_OFFSET           0x8007078u /* established */
+/* established */
+#define ROUTER_NL4_PORT_PERF_CNTR12_OFFSET           0x8007078u
 #define ROUTER_NL4_PORT_PERF_CNTR12_COUNT            8
 #define ROUTER_NL4_PORT_PERF_CNTR12_STRIDE           16777216
 #define ROUTER_NL4_PORT_PERF_CNTR12_CNT_SHIFT        0 /* established */
 #define ROUTER_NL4_PORT_PERF_CNTR12_CNT_MASK         0xffffffffffffull
-#define ROUTER_NL4_PORT_PERF_CNTR12_CNT_INPLACE      (ROUTER_NL4_PORT_PERF_CNTR12_CNT_MASK << ROUTER_NL4_PORT_PERF_CNTR12_CNT_SHIFT)
+#define ROUTER_NL4_PORT_PERF_CNTR12_CNT_INPLACE (ROUTER_NL4_PORT_PERF_CNTR12_CNT_MASK << ROUTER_NL4_PORT_PERF_CNTR12_CNT_SHIFT)
 
 /*
- * PROM register R4_PORTA_PERF_CNTR13; one per port A to H. Offset and field positions read from the table; role inferred from the names.
+ * PROM register R4_PORTA_PERF_CNTR13; one per port A to H. Offset and field
+ * positions read from the table; role inferred from the names.
  */
 /* port_perf_cntr13: rw64, reset unknown */
-#define ROUTER_NL4_PORT_PERF_CNTR13_OFFSET           0x8007080u /* established */
+/* established */
+#define ROUTER_NL4_PORT_PERF_CNTR13_OFFSET           0x8007080u
 #define ROUTER_NL4_PORT_PERF_CNTR13_COUNT            8
 #define ROUTER_NL4_PORT_PERF_CNTR13_STRIDE           16777216
 #define ROUTER_NL4_PORT_PERF_CNTR13_CNT_SHIFT        0 /* established */
 #define ROUTER_NL4_PORT_PERF_CNTR13_CNT_MASK         0xffffffffffffull
-#define ROUTER_NL4_PORT_PERF_CNTR13_CNT_INPLACE      (ROUTER_NL4_PORT_PERF_CNTR13_CNT_MASK << ROUTER_NL4_PORT_PERF_CNTR13_CNT_SHIFT)
+#define ROUTER_NL4_PORT_PERF_CNTR13_CNT_INPLACE (ROUTER_NL4_PORT_PERF_CNTR13_CNT_MASK << ROUTER_NL4_PORT_PERF_CNTR13_CNT_SHIFT)
 
 /*
- * PROM register R4_PORTA_PERF_CNTR14; one per port A to H. Offset and field positions read from the table; role inferred from the names.
+ * PROM register R4_PORTA_PERF_CNTR14; one per port A to H. Offset and field
+ * positions read from the table; role inferred from the names.
  */
 /* port_perf_cntr14: rw64, reset unknown */
-#define ROUTER_NL4_PORT_PERF_CNTR14_OFFSET           0x8007088u /* established */
+/* established */
+#define ROUTER_NL4_PORT_PERF_CNTR14_OFFSET           0x8007088u
 #define ROUTER_NL4_PORT_PERF_CNTR14_COUNT            8
 #define ROUTER_NL4_PORT_PERF_CNTR14_STRIDE           16777216
 #define ROUTER_NL4_PORT_PERF_CNTR14_CNT_SHIFT        0 /* established */
 #define ROUTER_NL4_PORT_PERF_CNTR14_CNT_MASK         0xffffffffffffull
-#define ROUTER_NL4_PORT_PERF_CNTR14_CNT_INPLACE      (ROUTER_NL4_PORT_PERF_CNTR14_CNT_MASK << ROUTER_NL4_PORT_PERF_CNTR14_CNT_SHIFT)
+#define ROUTER_NL4_PORT_PERF_CNTR14_CNT_INPLACE (ROUTER_NL4_PORT_PERF_CNTR14_CNT_MASK << ROUTER_NL4_PORT_PERF_CNTR14_CNT_SHIFT)
 
 /*
- * PROM register R4_PORTA_PERF_CNTR15; one per port A to H. Offset and field positions read from the table; role inferred from the names.
+ * PROM register R4_PORTA_PERF_CNTR15; one per port A to H. Offset and field
+ * positions read from the table; role inferred from the names.
  */
 /* port_perf_cntr15: rw64, reset unknown */
-#define ROUTER_NL4_PORT_PERF_CNTR15_OFFSET           0x8007090u /* established */
+/* established */
+#define ROUTER_NL4_PORT_PERF_CNTR15_OFFSET           0x8007090u
 #define ROUTER_NL4_PORT_PERF_CNTR15_COUNT            8
 #define ROUTER_NL4_PORT_PERF_CNTR15_STRIDE           16777216
 #define ROUTER_NL4_PORT_PERF_CNTR15_CNT_SHIFT        0 /* established */
 #define ROUTER_NL4_PORT_PERF_CNTR15_CNT_MASK         0xffffffffffffull
-#define ROUTER_NL4_PORT_PERF_CNTR15_CNT_INPLACE      (ROUTER_NL4_PORT_PERF_CNTR15_CNT_MASK << ROUTER_NL4_PORT_PERF_CNTR15_CNT_SHIFT)
+#define ROUTER_NL4_PORT_PERF_CNTR15_CNT_INPLACE (ROUTER_NL4_PORT_PERF_CNTR15_CNT_MASK << ROUTER_NL4_PORT_PERF_CNTR15_CNT_SHIFT)
 
 /*
- * PROM register R4_PORTA_PERF_CNTR16; one per port A to H. Offset and field positions read from the table; role inferred from the names.
+ * PROM register R4_PORTA_PERF_CNTR16; one per port A to H. Offset and field
+ * positions read from the table; role inferred from the names.
  */
 /* port_perf_cntr16: rw64, reset unknown */
-#define ROUTER_NL4_PORT_PERF_CNTR16_OFFSET           0x8007098u /* established */
+/* established */
+#define ROUTER_NL4_PORT_PERF_CNTR16_OFFSET           0x8007098u
 #define ROUTER_NL4_PORT_PERF_CNTR16_COUNT            8
 #define ROUTER_NL4_PORT_PERF_CNTR16_STRIDE           16777216
 #define ROUTER_NL4_PORT_PERF_CNTR16_CNT_SHIFT        0 /* established */
 #define ROUTER_NL4_PORT_PERF_CNTR16_CNT_MASK         0xffffffffffffull
-#define ROUTER_NL4_PORT_PERF_CNTR16_CNT_INPLACE      (ROUTER_NL4_PORT_PERF_CNTR16_CNT_MASK << ROUTER_NL4_PORT_PERF_CNTR16_CNT_SHIFT)
+#define ROUTER_NL4_PORT_PERF_CNTR16_CNT_INPLACE (ROUTER_NL4_PORT_PERF_CNTR16_CNT_MASK << ROUTER_NL4_PORT_PERF_CNTR16_CNT_SHIFT)
 
 /*
- * PROM register R4_PORTA_PERF_CNTR17; one per port A to H. Offset and field positions read from the table; role inferred from the names.
+ * PROM register R4_PORTA_PERF_CNTR17; one per port A to H. Offset and field
+ * positions read from the table; role inferred from the names.
  */
 /* port_perf_cntr17: rw64, reset unknown */
-#define ROUTER_NL4_PORT_PERF_CNTR17_OFFSET           0x80070a0u /* established */
+/* established */
+#define ROUTER_NL4_PORT_PERF_CNTR17_OFFSET           0x80070a0u
 #define ROUTER_NL4_PORT_PERF_CNTR17_COUNT            8
 #define ROUTER_NL4_PORT_PERF_CNTR17_STRIDE           16777216
 #define ROUTER_NL4_PORT_PERF_CNTR17_CNT_SHIFT        0 /* established */
 #define ROUTER_NL4_PORT_PERF_CNTR17_CNT_MASK         0xffffffffffffull
-#define ROUTER_NL4_PORT_PERF_CNTR17_CNT_INPLACE      (ROUTER_NL4_PORT_PERF_CNTR17_CNT_MASK << ROUTER_NL4_PORT_PERF_CNTR17_CNT_SHIFT)
+#define ROUTER_NL4_PORT_PERF_CNTR17_CNT_INPLACE (ROUTER_NL4_PORT_PERF_CNTR17_CNT_MASK << ROUTER_NL4_PORT_PERF_CNTR17_CNT_SHIFT)
 
 /*
- * PROM register R4_PORTA_PERF_CNTR18; one per port A to H. Offset and field positions read from the table; role inferred from the names.
+ * PROM register R4_PORTA_PERF_CNTR18; one per port A to H. Offset and field
+ * positions read from the table; role inferred from the names.
  */
 /* port_perf_cntr18: rw64, reset unknown */
-#define ROUTER_NL4_PORT_PERF_CNTR18_OFFSET           0x80070a8u /* established */
+/* established */
+#define ROUTER_NL4_PORT_PERF_CNTR18_OFFSET           0x80070a8u
 #define ROUTER_NL4_PORT_PERF_CNTR18_COUNT            8
 #define ROUTER_NL4_PORT_PERF_CNTR18_STRIDE           16777216
 #define ROUTER_NL4_PORT_PERF_CNTR18_CNT_SHIFT        0 /* established */
 #define ROUTER_NL4_PORT_PERF_CNTR18_CNT_MASK         0xffffffffffffull
-#define ROUTER_NL4_PORT_PERF_CNTR18_CNT_INPLACE      (ROUTER_NL4_PORT_PERF_CNTR18_CNT_MASK << ROUTER_NL4_PORT_PERF_CNTR18_CNT_SHIFT)
+#define ROUTER_NL4_PORT_PERF_CNTR18_CNT_INPLACE (ROUTER_NL4_PORT_PERF_CNTR18_CNT_MASK << ROUTER_NL4_PORT_PERF_CNTR18_CNT_SHIFT)
 
 /*
- * PROM register R4_PORTA_PERF_CNTR19; one per port A to H. Offset and field positions read from the table; role inferred from the names.
+ * PROM register R4_PORTA_PERF_CNTR19; one per port A to H. Offset and field
+ * positions read from the table; role inferred from the names.
  */
 /* port_perf_cntr19: rw64, reset unknown */
-#define ROUTER_NL4_PORT_PERF_CNTR19_OFFSET           0x80070b0u /* established */
+/* established */
+#define ROUTER_NL4_PORT_PERF_CNTR19_OFFSET           0x80070b0u
 #define ROUTER_NL4_PORT_PERF_CNTR19_COUNT            8
 #define ROUTER_NL4_PORT_PERF_CNTR19_STRIDE           16777216
 #define ROUTER_NL4_PORT_PERF_CNTR19_CNT_SHIFT        0 /* established */
 #define ROUTER_NL4_PORT_PERF_CNTR19_CNT_MASK         0xffffffffffffull
-#define ROUTER_NL4_PORT_PERF_CNTR19_CNT_INPLACE      (ROUTER_NL4_PORT_PERF_CNTR19_CNT_MASK << ROUTER_NL4_PORT_PERF_CNTR19_CNT_SHIFT)
+#define ROUTER_NL4_PORT_PERF_CNTR19_CNT_INPLACE (ROUTER_NL4_PORT_PERF_CNTR19_CNT_MASK << ROUTER_NL4_PORT_PERF_CNTR19_CNT_SHIFT)
 
 /*
- * PROM register R4_PORTA_PERF_CNTR20; one per port A to H. Offset and field positions read from the table; role inferred from the names.
+ * PROM register R4_PORTA_PERF_CNTR20; one per port A to H. Offset and field
+ * positions read from the table; role inferred from the names.
  */
 /* port_perf_cntr20: rw64, reset unknown */
-#define ROUTER_NL4_PORT_PERF_CNTR20_OFFSET           0x80070b8u /* established */
+/* established */
+#define ROUTER_NL4_PORT_PERF_CNTR20_OFFSET           0x80070b8u
 #define ROUTER_NL4_PORT_PERF_CNTR20_COUNT            8
 #define ROUTER_NL4_PORT_PERF_CNTR20_STRIDE           16777216
 #define ROUTER_NL4_PORT_PERF_CNTR20_CNT_SHIFT        0 /* established */
 #define ROUTER_NL4_PORT_PERF_CNTR20_CNT_MASK         0xffffffffffffull
-#define ROUTER_NL4_PORT_PERF_CNTR20_CNT_INPLACE      (ROUTER_NL4_PORT_PERF_CNTR20_CNT_MASK << ROUTER_NL4_PORT_PERF_CNTR20_CNT_SHIFT)
+#define ROUTER_NL4_PORT_PERF_CNTR20_CNT_INPLACE (ROUTER_NL4_PORT_PERF_CNTR20_CNT_MASK << ROUTER_NL4_PORT_PERF_CNTR20_CNT_SHIFT)
 
 /*
- * PROM register R4_PORTA_PERF_CNTR21; one per port A to H. Offset and field positions read from the table; role inferred from the names.
+ * PROM register R4_PORTA_PERF_CNTR21; one per port A to H. Offset and field
+ * positions read from the table; role inferred from the names.
  */
 /* port_perf_cntr21: rw64, reset unknown */
-#define ROUTER_NL4_PORT_PERF_CNTR21_OFFSET           0x80070c0u /* established */
+/* established */
+#define ROUTER_NL4_PORT_PERF_CNTR21_OFFSET           0x80070c0u
 #define ROUTER_NL4_PORT_PERF_CNTR21_COUNT            8
 #define ROUTER_NL4_PORT_PERF_CNTR21_STRIDE           16777216
 #define ROUTER_NL4_PORT_PERF_CNTR21_CNT_SHIFT        0 /* established */
 #define ROUTER_NL4_PORT_PERF_CNTR21_CNT_MASK         0xffffffffffffull
-#define ROUTER_NL4_PORT_PERF_CNTR21_CNT_INPLACE      (ROUTER_NL4_PORT_PERF_CNTR21_CNT_MASK << ROUTER_NL4_PORT_PERF_CNTR21_CNT_SHIFT)
+#define ROUTER_NL4_PORT_PERF_CNTR21_CNT_INPLACE (ROUTER_NL4_PORT_PERF_CNTR21_CNT_MASK << ROUTER_NL4_PORT_PERF_CNTR21_CNT_SHIFT)
 
 /*
- * PROM register R4_PORTA_PERF_CNTR22; one per port A to H. Offset and field positions read from the table; role inferred from the names.
+ * PROM register R4_PORTA_PERF_CNTR22; one per port A to H. Offset and field
+ * positions read from the table; role inferred from the names.
  */
 /* port_perf_cntr22: rw64, reset unknown */
-#define ROUTER_NL4_PORT_PERF_CNTR22_OFFSET           0x80070c8u /* established */
+/* established */
+#define ROUTER_NL4_PORT_PERF_CNTR22_OFFSET           0x80070c8u
 #define ROUTER_NL4_PORT_PERF_CNTR22_COUNT            8
 #define ROUTER_NL4_PORT_PERF_CNTR22_STRIDE           16777216
 #define ROUTER_NL4_PORT_PERF_CNTR22_CNT_SHIFT        0 /* established */
 #define ROUTER_NL4_PORT_PERF_CNTR22_CNT_MASK         0xffffffffffffull
-#define ROUTER_NL4_PORT_PERF_CNTR22_CNT_INPLACE      (ROUTER_NL4_PORT_PERF_CNTR22_CNT_MASK << ROUTER_NL4_PORT_PERF_CNTR22_CNT_SHIFT)
+#define ROUTER_NL4_PORT_PERF_CNTR22_CNT_INPLACE (ROUTER_NL4_PORT_PERF_CNTR22_CNT_MASK << ROUTER_NL4_PORT_PERF_CNTR22_CNT_SHIFT)
 
 /*
- * PROM register R4_PORTA_PERF_CNTR23; one per port A to H. Offset and field positions read from the table; role inferred from the names.
+ * PROM register R4_PORTA_PERF_CNTR23; one per port A to H. Offset and field
+ * positions read from the table; role inferred from the names.
  */
 /* port_perf_cntr23: rw64, reset unknown */
-#define ROUTER_NL4_PORT_PERF_CNTR23_OFFSET           0x80070d0u /* established */
+/* established */
+#define ROUTER_NL4_PORT_PERF_CNTR23_OFFSET           0x80070d0u
 #define ROUTER_NL4_PORT_PERF_CNTR23_COUNT            8
 #define ROUTER_NL4_PORT_PERF_CNTR23_STRIDE           16777216
 #define ROUTER_NL4_PORT_PERF_CNTR23_CNT_SHIFT        0 /* established */
 #define ROUTER_NL4_PORT_PERF_CNTR23_CNT_MASK         0xffffffffffffull
-#define ROUTER_NL4_PORT_PERF_CNTR23_CNT_INPLACE      (ROUTER_NL4_PORT_PERF_CNTR23_CNT_MASK << ROUTER_NL4_PORT_PERF_CNTR23_CNT_SHIFT)
+#define ROUTER_NL4_PORT_PERF_CNTR23_CNT_INPLACE (ROUTER_NL4_PORT_PERF_CNTR23_CNT_MASK << ROUTER_NL4_PORT_PERF_CNTR23_CNT_SHIFT)
 
 /*
- * PROM register R4_PORTA_PERF_CNTR24; one per port A to H. Offset and field positions read from the table; role inferred from the names.
+ * PROM register R4_PORTA_PERF_CNTR24; one per port A to H. Offset and field
+ * positions read from the table; role inferred from the names.
  */
 /* port_perf_cntr24: rw64, reset unknown */
-#define ROUTER_NL4_PORT_PERF_CNTR24_OFFSET           0x80070d8u /* established */
+/* established */
+#define ROUTER_NL4_PORT_PERF_CNTR24_OFFSET           0x80070d8u
 #define ROUTER_NL4_PORT_PERF_CNTR24_COUNT            8
 #define ROUTER_NL4_PORT_PERF_CNTR24_STRIDE           16777216
 #define ROUTER_NL4_PORT_PERF_CNTR24_CNT_SHIFT        0 /* established */
 #define ROUTER_NL4_PORT_PERF_CNTR24_CNT_MASK         0xffffffffffffull
-#define ROUTER_NL4_PORT_PERF_CNTR24_CNT_INPLACE      (ROUTER_NL4_PORT_PERF_CNTR24_CNT_MASK << ROUTER_NL4_PORT_PERF_CNTR24_CNT_SHIFT)
+#define ROUTER_NL4_PORT_PERF_CNTR24_CNT_INPLACE (ROUTER_NL4_PORT_PERF_CNTR24_CNT_MASK << ROUTER_NL4_PORT_PERF_CNTR24_CNT_SHIFT)
 
 /*
- * PROM register R4_PORTA_PERF_CNTR25; one per port A to H. Offset and field positions read from the table; role inferred from the names.
+ * PROM register R4_PORTA_PERF_CNTR25; one per port A to H. Offset and field
+ * positions read from the table; role inferred from the names.
  */
 /* port_perf_cntr25: rw64, reset unknown */
-#define ROUTER_NL4_PORT_PERF_CNTR25_OFFSET           0x80070e0u /* established */
+/* established */
+#define ROUTER_NL4_PORT_PERF_CNTR25_OFFSET           0x80070e0u
 #define ROUTER_NL4_PORT_PERF_CNTR25_COUNT            8
 #define ROUTER_NL4_PORT_PERF_CNTR25_STRIDE           16777216
 #define ROUTER_NL4_PORT_PERF_CNTR25_CNT_SHIFT        0 /* established */
 #define ROUTER_NL4_PORT_PERF_CNTR25_CNT_MASK         0xffffffffffffull
-#define ROUTER_NL4_PORT_PERF_CNTR25_CNT_INPLACE      (ROUTER_NL4_PORT_PERF_CNTR25_CNT_MASK << ROUTER_NL4_PORT_PERF_CNTR25_CNT_SHIFT)
+#define ROUTER_NL4_PORT_PERF_CNTR25_CNT_INPLACE (ROUTER_NL4_PORT_PERF_CNTR25_CNT_MASK << ROUTER_NL4_PORT_PERF_CNTR25_CNT_SHIFT)
 
 /*
- * PROM register R4_PORTA_PERF_CNTR26; one per port A to H. Offset and field positions read from the table; role inferred from the names.
+ * PROM register R4_PORTA_PERF_CNTR26; one per port A to H. Offset and field
+ * positions read from the table; role inferred from the names.
  */
 /* port_perf_cntr26: rw64, reset unknown */
-#define ROUTER_NL4_PORT_PERF_CNTR26_OFFSET           0x80070e8u /* established */
+/* established */
+#define ROUTER_NL4_PORT_PERF_CNTR26_OFFSET           0x80070e8u
 #define ROUTER_NL4_PORT_PERF_CNTR26_COUNT            8
 #define ROUTER_NL4_PORT_PERF_CNTR26_STRIDE           16777216
 #define ROUTER_NL4_PORT_PERF_CNTR26_CNT_SHIFT        0 /* established */
 #define ROUTER_NL4_PORT_PERF_CNTR26_CNT_MASK         0xffffffffffffull
-#define ROUTER_NL4_PORT_PERF_CNTR26_CNT_INPLACE      (ROUTER_NL4_PORT_PERF_CNTR26_CNT_MASK << ROUTER_NL4_PORT_PERF_CNTR26_CNT_SHIFT)
+#define ROUTER_NL4_PORT_PERF_CNTR26_CNT_INPLACE (ROUTER_NL4_PORT_PERF_CNTR26_CNT_MASK << ROUTER_NL4_PORT_PERF_CNTR26_CNT_SHIFT)
 
 /*
- * PROM register R4_PORTA_PERF_CNTR27; one per port A to H. Offset and field positions read from the table; role inferred from the names.
+ * PROM register R4_PORTA_PERF_CNTR27; one per port A to H. Offset and field
+ * positions read from the table; role inferred from the names.
  */
 /* port_perf_cntr27: rw64, reset unknown */
-#define ROUTER_NL4_PORT_PERF_CNTR27_OFFSET           0x80070f0u /* established */
+/* established */
+#define ROUTER_NL4_PORT_PERF_CNTR27_OFFSET           0x80070f0u
 #define ROUTER_NL4_PORT_PERF_CNTR27_COUNT            8
 #define ROUTER_NL4_PORT_PERF_CNTR27_STRIDE           16777216
 #define ROUTER_NL4_PORT_PERF_CNTR27_CNT_SHIFT        0 /* established */
 #define ROUTER_NL4_PORT_PERF_CNTR27_CNT_MASK         0xffffffffffffull
-#define ROUTER_NL4_PORT_PERF_CNTR27_CNT_INPLACE      (ROUTER_NL4_PORT_PERF_CNTR27_CNT_MASK << ROUTER_NL4_PORT_PERF_CNTR27_CNT_SHIFT)
+#define ROUTER_NL4_PORT_PERF_CNTR27_CNT_INPLACE (ROUTER_NL4_PORT_PERF_CNTR27_CNT_MASK << ROUTER_NL4_PORT_PERF_CNTR27_CNT_SHIFT)
 
 /*
- * PROM register R4_PORTA_PERF_CNTR28; one per port A to H. Offset and field positions read from the table; role inferred from the names.
+ * PROM register R4_PORTA_PERF_CNTR28; one per port A to H. Offset and field
+ * positions read from the table; role inferred from the names.
  */
 /* port_perf_cntr28: rw64, reset unknown */
-#define ROUTER_NL4_PORT_PERF_CNTR28_OFFSET           0x80070f8u /* established */
+/* established */
+#define ROUTER_NL4_PORT_PERF_CNTR28_OFFSET           0x80070f8u
 #define ROUTER_NL4_PORT_PERF_CNTR28_COUNT            8
 #define ROUTER_NL4_PORT_PERF_CNTR28_STRIDE           16777216
 #define ROUTER_NL4_PORT_PERF_CNTR28_CNT_SHIFT        0 /* established */
 #define ROUTER_NL4_PORT_PERF_CNTR28_CNT_MASK         0xffffffffffffull
-#define ROUTER_NL4_PORT_PERF_CNTR28_CNT_INPLACE      (ROUTER_NL4_PORT_PERF_CNTR28_CNT_MASK << ROUTER_NL4_PORT_PERF_CNTR28_CNT_SHIFT)
+#define ROUTER_NL4_PORT_PERF_CNTR28_CNT_INPLACE (ROUTER_NL4_PORT_PERF_CNTR28_CNT_MASK << ROUTER_NL4_PORT_PERF_CNTR28_CNT_SHIFT)
 
 /*
- * PROM register R4_PORTA_PERF_CNTR29; one per port A to H. Offset and field positions read from the table; role inferred from the names.
+ * PROM register R4_PORTA_PERF_CNTR29; one per port A to H. Offset and field
+ * positions read from the table; role inferred from the names.
  */
 /* port_perf_cntr29: rw64, reset unknown */
-#define ROUTER_NL4_PORT_PERF_CNTR29_OFFSET           0x8007100u /* established */
+/* established */
+#define ROUTER_NL4_PORT_PERF_CNTR29_OFFSET           0x8007100u
 #define ROUTER_NL4_PORT_PERF_CNTR29_COUNT            8
 #define ROUTER_NL4_PORT_PERF_CNTR29_STRIDE           16777216
 #define ROUTER_NL4_PORT_PERF_CNTR29_CNT_SHIFT        0 /* established */
 #define ROUTER_NL4_PORT_PERF_CNTR29_CNT_MASK         0xffffffffffffull
-#define ROUTER_NL4_PORT_PERF_CNTR29_CNT_INPLACE      (ROUTER_NL4_PORT_PERF_CNTR29_CNT_MASK << ROUTER_NL4_PORT_PERF_CNTR29_CNT_SHIFT)
+#define ROUTER_NL4_PORT_PERF_CNTR29_CNT_INPLACE (ROUTER_NL4_PORT_PERF_CNTR29_CNT_MASK << ROUTER_NL4_PORT_PERF_CNTR29_CNT_SHIFT)
 
 /*
- * PROM register R4_PORTA_PERF_CNTR30; one per port A to H. Offset and field positions read from the table; role inferred from the names.
+ * PROM register R4_PORTA_PERF_CNTR30; one per port A to H. Offset and field
+ * positions read from the table; role inferred from the names.
  */
 /* port_perf_cntr30: rw64, reset unknown */
-#define ROUTER_NL4_PORT_PERF_CNTR30_OFFSET           0x8007108u /* established */
+/* established */
+#define ROUTER_NL4_PORT_PERF_CNTR30_OFFSET           0x8007108u
 #define ROUTER_NL4_PORT_PERF_CNTR30_COUNT            8
 #define ROUTER_NL4_PORT_PERF_CNTR30_STRIDE           16777216
 #define ROUTER_NL4_PORT_PERF_CNTR30_CNT_SHIFT        0 /* established */
 #define ROUTER_NL4_PORT_PERF_CNTR30_CNT_MASK         0xffffffffffffull
-#define ROUTER_NL4_PORT_PERF_CNTR30_CNT_INPLACE      (ROUTER_NL4_PORT_PERF_CNTR30_CNT_MASK << ROUTER_NL4_PORT_PERF_CNTR30_CNT_SHIFT)
+#define ROUTER_NL4_PORT_PERF_CNTR30_CNT_INPLACE (ROUTER_NL4_PORT_PERF_CNTR30_CNT_MASK << ROUTER_NL4_PORT_PERF_CNTR30_CNT_SHIFT)
 
 /*
- * PROM register R4_PORTA_PERF_CNTR31; one per port A to H. Offset and field positions read from the table; role inferred from the names.
+ * PROM register R4_PORTA_PERF_CNTR31; one per port A to H. Offset and field
+ * positions read from the table; role inferred from the names.
  */
 /* port_perf_cntr31: rw64, reset unknown */
-#define ROUTER_NL4_PORT_PERF_CNTR31_OFFSET           0x8007110u /* established */
+/* established */
+#define ROUTER_NL4_PORT_PERF_CNTR31_OFFSET           0x8007110u
 #define ROUTER_NL4_PORT_PERF_CNTR31_COUNT            8
 #define ROUTER_NL4_PORT_PERF_CNTR31_STRIDE           16777216
 #define ROUTER_NL4_PORT_PERF_CNTR31_CNT_SHIFT        0 /* established */
 #define ROUTER_NL4_PORT_PERF_CNTR31_CNT_MASK         0xffffffffffffull
-#define ROUTER_NL4_PORT_PERF_CNTR31_CNT_INPLACE      (ROUTER_NL4_PORT_PERF_CNTR31_CNT_MASK << ROUTER_NL4_PORT_PERF_CNTR31_CNT_SHIFT)
+#define ROUTER_NL4_PORT_PERF_CNTR31_CNT_INPLACE (ROUTER_NL4_PORT_PERF_CNTR31_CNT_MASK << ROUTER_NL4_PORT_PERF_CNTR31_CNT_SHIFT)
 
 /*
- * PROM register R4_PORTA_PERF_CNTR32; one per port A to H. Offset and field positions read from the table; role inferred from the names.
+ * PROM register R4_PORTA_PERF_CNTR32; one per port A to H. Offset and field
+ * positions read from the table; role inferred from the names.
  */
 /* port_perf_cntr32: rw64, reset unknown */
-#define ROUTER_NL4_PORT_PERF_CNTR32_OFFSET           0x8007118u /* established */
+/* established */
+#define ROUTER_NL4_PORT_PERF_CNTR32_OFFSET           0x8007118u
 #define ROUTER_NL4_PORT_PERF_CNTR32_COUNT            8
 #define ROUTER_NL4_PORT_PERF_CNTR32_STRIDE           16777216
 #define ROUTER_NL4_PORT_PERF_CNTR32_CNT_SHIFT        0 /* established */
 #define ROUTER_NL4_PORT_PERF_CNTR32_CNT_MASK         0xffffffffffffull
-#define ROUTER_NL4_PORT_PERF_CNTR32_CNT_INPLACE      (ROUTER_NL4_PORT_PERF_CNTR32_CNT_MASK << ROUTER_NL4_PORT_PERF_CNTR32_CNT_SHIFT)
+#define ROUTER_NL4_PORT_PERF_CNTR32_CNT_INPLACE (ROUTER_NL4_PORT_PERF_CNTR32_CNT_MASK << ROUTER_NL4_PORT_PERF_CNTR32_CNT_SHIFT)
 
 /*
- * PROM register R4_PORTA_PERF_CNTR33; one per port A to H. Offset and field positions read from the table; role inferred from the names.
+ * PROM register R4_PORTA_PERF_CNTR33; one per port A to H. Offset and field
+ * positions read from the table; role inferred from the names.
  */
 /* port_perf_cntr33: rw64, reset unknown */
-#define ROUTER_NL4_PORT_PERF_CNTR33_OFFSET           0x8007120u /* established */
+/* established */
+#define ROUTER_NL4_PORT_PERF_CNTR33_OFFSET           0x8007120u
 #define ROUTER_NL4_PORT_PERF_CNTR33_COUNT            8
 #define ROUTER_NL4_PORT_PERF_CNTR33_STRIDE           16777216
 #define ROUTER_NL4_PORT_PERF_CNTR33_CNT_SHIFT        0 /* established */
 #define ROUTER_NL4_PORT_PERF_CNTR33_CNT_MASK         0xffffffffffffull
-#define ROUTER_NL4_PORT_PERF_CNTR33_CNT_INPLACE      (ROUTER_NL4_PORT_PERF_CNTR33_CNT_MASK << ROUTER_NL4_PORT_PERF_CNTR33_CNT_SHIFT)
+#define ROUTER_NL4_PORT_PERF_CNTR33_CNT_INPLACE (ROUTER_NL4_PORT_PERF_CNTR33_CNT_MASK << ROUTER_NL4_PORT_PERF_CNTR33_CNT_SHIFT)
 
 /*
- * PROM register R4_PORTA_PERF_CNTR34; one per port A to H. Offset and field positions read from the table; role inferred from the names.
+ * PROM register R4_PORTA_PERF_CNTR34; one per port A to H. Offset and field
+ * positions read from the table; role inferred from the names.
  */
 /* port_perf_cntr34: rw64, reset unknown */
-#define ROUTER_NL4_PORT_PERF_CNTR34_OFFSET           0x8007128u /* established */
+/* established */
+#define ROUTER_NL4_PORT_PERF_CNTR34_OFFSET           0x8007128u
 #define ROUTER_NL4_PORT_PERF_CNTR34_COUNT            8
 #define ROUTER_NL4_PORT_PERF_CNTR34_STRIDE           16777216
 #define ROUTER_NL4_PORT_PERF_CNTR34_CNT_SHIFT        0 /* established */
 #define ROUTER_NL4_PORT_PERF_CNTR34_CNT_MASK         0xffffffffffffull
-#define ROUTER_NL4_PORT_PERF_CNTR34_CNT_INPLACE      (ROUTER_NL4_PORT_PERF_CNTR34_CNT_MASK << ROUTER_NL4_PORT_PERF_CNTR34_CNT_SHIFT)
+#define ROUTER_NL4_PORT_PERF_CNTR34_CNT_INPLACE (ROUTER_NL4_PORT_PERF_CNTR34_CNT_MASK << ROUTER_NL4_PORT_PERF_CNTR34_CNT_SHIFT)
 
 /*
- * PROM register R4_PORTA_PERF_CNTR35; one per port A to H. Offset and field positions read from the table; role inferred from the names.
+ * PROM register R4_PORTA_PERF_CNTR35; one per port A to H. Offset and field
+ * positions read from the table; role inferred from the names.
  */
 /* port_perf_cntr35: rw64, reset unknown */
-#define ROUTER_NL4_PORT_PERF_CNTR35_OFFSET           0x8007130u /* established */
+/* established */
+#define ROUTER_NL4_PORT_PERF_CNTR35_OFFSET           0x8007130u
 #define ROUTER_NL4_PORT_PERF_CNTR35_COUNT            8
 #define ROUTER_NL4_PORT_PERF_CNTR35_STRIDE           16777216
 #define ROUTER_NL4_PORT_PERF_CNTR35_CNT_SHIFT        0 /* established */
 #define ROUTER_NL4_PORT_PERF_CNTR35_CNT_MASK         0xffffffffffffull
-#define ROUTER_NL4_PORT_PERF_CNTR35_CNT_INPLACE      (ROUTER_NL4_PORT_PERF_CNTR35_CNT_MASK << ROUTER_NL4_PORT_PERF_CNTR35_CNT_SHIFT)
+#define ROUTER_NL4_PORT_PERF_CNTR35_CNT_INPLACE (ROUTER_NL4_PORT_PERF_CNTR35_CNT_MASK << ROUTER_NL4_PORT_PERF_CNTR35_CNT_SHIFT)
 
 /*
- * PROM register R4_PORTA_PERF_CNTR36; one per port A to H. Offset and field positions read from the table; role inferred from the names.
+ * PROM register R4_PORTA_PERF_CNTR36; one per port A to H. Offset and field
+ * positions read from the table; role inferred from the names.
  */
 /* port_perf_cntr36: rw64, reset unknown */
-#define ROUTER_NL4_PORT_PERF_CNTR36_OFFSET           0x8007138u /* established */
+/* established */
+#define ROUTER_NL4_PORT_PERF_CNTR36_OFFSET           0x8007138u
 #define ROUTER_NL4_PORT_PERF_CNTR36_COUNT            8
 #define ROUTER_NL4_PORT_PERF_CNTR36_STRIDE           16777216
 #define ROUTER_NL4_PORT_PERF_CNTR36_CNT_SHIFT        0 /* established */
 #define ROUTER_NL4_PORT_PERF_CNTR36_CNT_MASK         0xffffffffffffull
-#define ROUTER_NL4_PORT_PERF_CNTR36_CNT_INPLACE      (ROUTER_NL4_PORT_PERF_CNTR36_CNT_MASK << ROUTER_NL4_PORT_PERF_CNTR36_CNT_SHIFT)
+#define ROUTER_NL4_PORT_PERF_CNTR36_CNT_INPLACE (ROUTER_NL4_PORT_PERF_CNTR36_CNT_MASK << ROUTER_NL4_PORT_PERF_CNTR36_CNT_SHIFT)
 
 #define ROUTER_NL4_MAX_PORTS                         0x8u /* established */
-#define ROUTER_NL4_PORT_BLOCK_STRIDE                 0x1000000u /* established */
+/* established */
+#define ROUTER_NL4_PORT_BLOCK_STRIDE                 0x1000000u
 
 #endif /* ROUTER_NL4_GEN_H */

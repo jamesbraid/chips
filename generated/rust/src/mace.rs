@@ -1,8 +1,10 @@
-// generated from devices/mace/registers.toml by defs-gen - do not edit, change the source
-// defs-gen 2
+// @generated from devices/mace/registers.toml by defs-gen - do not edit, change the source
+// defs-gen 3
 // input sha256 46f8c30b055f7f92fd720b4f96d8d6328458907ed9687b8809658c5be263490e
 // MACE (O2 I/O ASIC)
 #![allow(dead_code)]
+#![allow(clippy::doc_markdown)]
+#![cfg_attr(rustfmt, rustfmt_skip)]
 
 /// (established)
 pub mod pci_err_addr {

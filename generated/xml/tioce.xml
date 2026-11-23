@@ -1,6 +1,6 @@
 <?xml version="1.0" ?>
 <!-- generated from devices/tioce/registers.toml by defs-gen - do not edit, change the source -->
-<!-- defs-gen 2 -->
+<!-- defs-gen 3 -->
 <!-- input sha256 52905da533c0fdd4266ab81f4644ea275734bd46daf5436fb5dcce504d25b373 -->
 <genxml unit="tioce" prefix="TIOCE" title="TIOCE (TIO PCI Express bridge), as SGI's Linux Altix platform code defines it">
   <doc>Names and offsets are the definitions of SGI's Linux Altix platform code (header and provider, v5.3). The TIOCE's own register specification is not held. The header gives no access direction and no reset value for any register; rows say what the provider does where it touches one. Bit layouts the header defines are fields of their registers. Where the header names a register with its masks (interrupt status and mask, error summary and mask, force interrupt, the upstream engine control, page map, pipe select and mask, PCIe control, gearbox configuration, downstream engine configuration) the fields are established; the same layout on a sibling register (an alias, say) is inferred and said so on the register. Constants keep the plain values (identifiers, address windows, enhanced configuration masks).</doc>

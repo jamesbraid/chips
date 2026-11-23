@@ -1,6 +1,6 @@
 <?xml version="1.0" ?>
 <!-- generated from devices/ds1685/registers.toml by defs-gen - do not edit, change the source -->
-<!-- defs-gen 2 -->
+<!-- defs-gen 3 -->
 <!-- input sha256 2d03aff8397fa4913c718e61cdbc7f8b15ad4905a2ec4a42ae8709b19c99ca92 -->
 <genxml unit="ds1685" prefix="DS1685" title="Dallas DS1685/DS1687 real-time clock and battery-backed RAM (Octane and Octane2 system boards)" from="Maxim DS1685 datasheet, document 19-5215 revision 10/12">
   <doc>The real-time clock and 242 bytes of battery-backed user RAM on the Octane and Octane2 system boards, reached through the IOC3's byte bus. The DS1687 is the same die in a package with its crystal and cell. The register contract here covers what the sources consulted state: the calendar and alarm bytes, the user RAM in its two banks, the bank-1 control and flag bytes that software polls, the extended-RAM ports and the identification bytes. Offsets are byte addresses within a bank. Register A to Register D are not listed: their bit meanings and offsets were not transcribed for this unit, and the bit positions of the bank-1 control bytes are not stated either. Grades say how each item was derived: established means the vendor datasheet text the sources quote, inferred means the public Linux or OpenBSD driver's use of the byte. None of it was measured on a board, and reset values are unknown unless a source states one.</doc>

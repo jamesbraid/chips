@@ -1,5 +1,5 @@
 <!-- generated from devices/bedrock_windows/registers.toml by defs-gen - do not edit, change the source -->
-<!-- defs-gen 2 -->
+<!-- defs-gen 3 -->
 <!-- input sha256 4ce22aad6bef30dbc9d45d94765826ca9936e0ce29420eac7da13078ea7efa6d -->
 
 # Bedrock register arrays whose extent is a fact of its own

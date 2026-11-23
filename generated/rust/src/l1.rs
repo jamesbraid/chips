@@ -1,8 +1,10 @@
-// generated from devices/l1/registers.toml by defs-gen - do not edit, change the source
-// defs-gen 2
+// @generated from devices/l1/registers.toml by defs-gen - do not edit, change the source
+// defs-gen 3
 // input sha256 5d88dc9d5c83288a421175717ea9ea8c6659d4accb6cd6159a690b25d4dc2da0
 // L1 system controller UART path (node-local window), Origin 3000 family
 #![allow(dead_code)]
+#![allow(clippy::doc_markdown)]
+#![cfg_attr(rustfmt, rustfmt_skip)]
 
 /// (established)
 pub mod uart_data {

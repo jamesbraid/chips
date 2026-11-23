@@ -1,6 +1,6 @@
 <?xml version="1.0" ?>
 <!-- generated from devices/bedrock_md/registers.toml by defs-gen - do not edit, change the source -->
-<!-- defs-gen 2 -->
+<!-- defs-gen 3 -->
 <!-- input sha256 5ab763a1dbf1570b7df1888172fc665b0fd53a8e4cc99dde24ccac8e3ba965af -->
 <genxml unit="bedrock_md" prefix="BEDROCK_MD" title="Bedrock memory and directory (MD) registers: field layouts, reset statements, error records and backdoor carriers" from="Linux 2.5.40 SN1 memory-directory register header">
   <doc>The memory and directory unit starts 7.5 MiB into the node's register space and holds the registers from the current-cell vector through the debug selector. Field positions, access widths and reset statements come from the public Linux 2.5.40 SN1 memory-directory header and its companion, so they are established as header facts. Where the companion header is marked as partly carried over from an earlier machine, its claims are graded inferred. Behaviour the header gives only in comments is graded as the comment's own claim, and behaviour it leaves open is unknown. No Bedrock specification is held, so no reset value is established where the header is silent. Diagnostic and PROM code tables are software expectations and graded inferred.</doc>

@@ -1,8 +1,10 @@
-// generated from devices/shub/registers.toml by defs-gen - do not edit, change the source
-// defs-gen 2
+// @generated from devices/shub/registers.toml by defs-gen - do not edit, change the source
+// defs-gen 3
 // input sha256 c27c4ba4b09b56b6270264238125032654f58c5a4b6632a33d80294f299d9aed
 // SHub 1 registers outside the I/O interface: interrupts, local block, real-time clock, PIO write status, TLB purge, junk bus LEDs
 #![allow(dead_code)]
+#![allow(clippy::doc_markdown)]
+#![cfg_attr(rustfmt, rustfmt_skip)]
 
 /// Chip identification word at node offset 0x1_0000_0000 (memory and directory block by address); the name is ours. The PROM reads it through the node's  (established)
 pub mod chip_id {

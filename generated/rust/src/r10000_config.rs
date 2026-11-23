@@ -1,8 +1,10 @@
-// generated from devices/r10000_config/registers.toml by defs-gen - do not edit, change the source
-// defs-gen 2
+// @generated from devices/r10000_config/registers.toml by defs-gen - do not edit, change the source
+// defs-gen 3
 // input sha256 362dcb7df00a43068f61a7a68c09c0919ae82e712b4e06d619267bedd01d0bee
 // R10000 family CP0 Config register field positions and hardwired primary-cache codes
 #![allow(dead_code)]
+#![allow(clippy::doc_markdown)]
+#![cfg_attr(rustfmt, rustfmt_skip)]
 
 pub const R10KCFG_BE_BIT: u32 = 0xf; // established
 pub const R10KCFG_BE_MASK: u32 = 0x8000; // established

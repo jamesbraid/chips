@@ -1,8 +1,10 @@
-// generated from devices/router_sn1/registers.toml by defs-gen - do not edit, change the source
-// defs-gen 2
+// @generated from devices/router_sn1/registers.toml by defs-gen - do not edit, change the source
+// defs-gen 3
 // input sha256 b70f66625e769d9712121c425a33c1e848b0297d809537cea42eec8674d89524
 // SN1 network router: port block, local routing table and remote reset mask (public header positions)
 #![allow(dead_code)]
+#![allow(clippy::doc_markdown)]
+#![cfg_attr(rustfmt, rustfmt_skip)]
 
 /// Remote reset mask of one port (RR_RESET_MASK, 0x18 from the port base). Bit L minus 1 is the reset-allowed bit for link L (RRM_RESETOK). The header na (established)
 pub mod reset_mask {

@@ -1,8 +1,10 @@
-// generated from devices/cobalt/registers.toml by defs-gen - do not edit, change the source
-// defs-gen 2
+// @generated from devices/cobalt/registers.toml by defs-gen - do not edit, change the source
+// defs-gen 3
 // input sha256 227f99188f7621959f0a363f89816adf63abc0248581cdd907555397055db96e
 // Cobalt (system ASIC of the SGI Visual Workstation 320 and 540): the CPU block with its timer, and the interrupt controller
 #![allow(dead_code)]
+#![allow(clippy::doc_markdown)]
+#![cfg_attr(rustfmt, rustfmt_skip)]
 
 /// Interrupt redirection entry, low word, one per interrupt line (thirty lines, 0 to 29). The kernel writes the level bit and an interrupt vector to unma (established)
 pub mod apic_lo {

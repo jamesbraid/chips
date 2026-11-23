@@ -1,8 +1,10 @@
-// generated from devices/hub_ni/registers-extra.toml by defs-gen - do not edit, change the source
-// defs-gen 2
+// @generated from devices/hub_ni/registers-extra.toml by defs-gen - do not edit, change the source
+// defs-gen 3
 // input sha256 491bd24195abfc81c22b65262321f9a32808de8e8b25ffb6d0b0aa6ce3827496
 // Hub network interface field layouts, port and vector fields, and register offsets outside the census
 #![allow(dead_code)]
+#![allow(clippy::doc_markdown)]
+#![cfg_attr(rustfmt, rustfmt_skip)]
 
 pub mod enums {
     pub mod ni_node_mode {
@@ -216,6 +218,7 @@ pub mod ni_status_rev_id {
         pub const fn set(v: u64, x: u64) -> u64 {
             (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
         }
+        #[allow(unused_imports)]
         pub use super::super::enums::ni_node_mode::Value;
     }
     pub mod region_size { // bits 17:17, established
@@ -227,6 +230,7 @@ pub mod ni_status_rev_id {
         pub const fn set(v: u64, x: u64) -> u64 {
             (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
         }
+        #[allow(unused_imports)]
         pub use super::super::enums::ni_region_size::Value;
     }
     pub mod node_id { // bits 16:8, established
@@ -443,6 +447,7 @@ pub mod ni_vector_parms {
         pub const fn set(v: u64, x: u64) -> u64 {
             (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
         }
+        #[allow(unused_imports)]
         pub use super::super::enums::ni_pio_request_type::Value;
     }
 }
@@ -519,6 +524,7 @@ pub mod ni_vector_status {
         pub const fn set(v: u64, x: u64) -> u64 {
             (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
         }
+        #[allow(unused_imports)]
         pub use super::super::enums::ni_pio_type::Value;
     }
 }
@@ -555,6 +561,7 @@ pub mod ni_age_cpu0_memory {
         pub const fn set(v: u64, x: u64) -> u64 {
             (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
         }
+        #[allow(unused_imports)]
         pub use super::super::enums::ni_vchannel::Value;
     }
     pub mod congestion { // bits 9:8, established
@@ -591,6 +598,7 @@ pub mod ni_age_cpu0_pio {
         pub const fn set(v: u64, x: u64) -> u64 {
             (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
         }
+        #[allow(unused_imports)]
         pub use super::super::enums::ni_vchannel::Value;
     }
     pub mod congestion { // bits 9:8, established
@@ -627,6 +635,7 @@ pub mod ni_age_cpu1_memory {
         pub const fn set(v: u64, x: u64) -> u64 {
             (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
         }
+        #[allow(unused_imports)]
         pub use super::super::enums::ni_vchannel::Value;
     }
     pub mod congestion { // bits 9:8, established
@@ -663,6 +672,7 @@ pub mod ni_age_cpu1_pio {
         pub const fn set(v: u64, x: u64) -> u64 {
             (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
         }
+        #[allow(unused_imports)]
         pub use super::super::enums::ni_vchannel::Value;
     }
     pub mod congestion { // bits 9:8, established
@@ -699,6 +709,7 @@ pub mod ni_age_gbr_memory {
         pub const fn set(v: u64, x: u64) -> u64 {
             (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
         }
+        #[allow(unused_imports)]
         pub use super::super::enums::ni_vchannel::Value;
     }
     pub mod congestion { // bits 9:8, established
@@ -735,6 +746,7 @@ pub mod ni_age_gbr_pio {
         pub const fn set(v: u64, x: u64) -> u64 {
             (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
         }
+        #[allow(unused_imports)]
         pub use super::super::enums::ni_vchannel::Value;
     }
     pub mod congestion { // bits 9:8, established
@@ -771,6 +783,7 @@ pub mod ni_age_io_memory {
         pub const fn set(v: u64, x: u64) -> u64 {
             (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
         }
+        #[allow(unused_imports)]
         pub use super::super::enums::ni_vchannel::Value;
     }
     pub mod congestion { // bits 9:8, established
@@ -807,6 +820,7 @@ pub mod ni_age_io_pio {
         pub const fn set(v: u64, x: u64) -> u64 {
             (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
         }
+        #[allow(unused_imports)]
         pub use super::super::enums::ni_vchannel::Value;
     }
     pub mod congestion { // bits 9:8, established

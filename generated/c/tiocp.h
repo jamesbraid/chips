@@ -1,7 +1,9 @@
-/* generated from devices/tiocp/registers.toml by defs-gen - do not edit, change the source */
-/* defs-gen 2 */
+/* generated from devices/tiocp/registers.toml by defs-gen - do not edit, change
+ * the source */
+/* defs-gen 3 */
 /* input sha256 5576c5319a7ca17a848cd2e3f88bc30b0d3db1e85c584f64b272f1060cb44aef */
-/* TIOCP (PCI-X bridge, later family), as the Origin 3000 family Bridge driver reaches it */
+/* TIOCP (PCI-X bridge, later family), as the Origin 3000 family Bridge driver
+ * reaches it */
 #ifndef TIOCP_GEN_H
 #define TIOCP_GEN_H
 

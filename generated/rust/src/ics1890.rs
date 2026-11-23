@@ -1,8 +1,10 @@
-// generated from devices/ics1890/registers.toml by defs-gen - do not edit, change the source
-// defs-gen 2
+// @generated from devices/ics1890/registers.toml by defs-gen - do not edit, change the source
+// defs-gen 3
 // input sha256 2677952e5dcb35c5d7263390a75249ba01d1e1a2864c98a6cfa1dfe1b408648f
 // ICS1890 10Base-T/100Base-TX PHYceiver, MII management registers (Octane base I/O)
 #![allow(dead_code)]
+#![allow(clippy::doc_markdown)]
+#![cfg_attr(rustfmt, rustfmt_skip)]
 
 pub mod enums {
     pub mod model {
@@ -105,6 +107,7 @@ pub mod phy_id2 {
         pub const fn set(v: u32, x: u32) -> u32 {
             (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
         }
+        #[allow(unused_imports)]
         pub use super::super::enums::model::Value;
     }
     pub mod revision { // bits 3:0, established
@@ -116,6 +119,7 @@ pub mod phy_id2 {
         pub const fn set(v: u32, x: u32) -> u32 {
             (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
         }
+        #[allow(unused_imports)]
         pub use super::super::enums::revision::Value;
     }
 }

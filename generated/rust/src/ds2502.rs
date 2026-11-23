@@ -1,8 +1,10 @@
-// generated from devices/ds2502/registers.toml by defs-gen - do not edit, change the source
-// defs-gen 2
+// @generated from devices/ds2502/registers.toml by defs-gen - do not edit, change the source
+// defs-gen 3
 // input sha256 9941eae5ea6d1a9225c3286c2cb883222d28d7bacbc24cc284abb93703acdb6e
 // Maxim DS2502 1 Kbit add-only 1-Wire memory: ROM, commands, memory layout and timing
 #![allow(dead_code)]
+#![allow(clippy::doc_markdown)]
+#![cfg_attr(rustfmt, rustfmt_skip)]
 
 pub const DS2502_CMD_MATCH_ROM: u32 = 0x55; // established
 pub const DS2502_CMD_READ_DATA_CRC: u32 = 0xc3; // established

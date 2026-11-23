@@ -1,8 +1,10 @@
-// generated from devices/router_nl4/registers.toml by defs-gen - do not edit, change the source
-// defs-gen 2
+// @generated from devices/router_nl4/registers.toml by defs-gen - do not edit, change the source
+// defs-gen 3
 // input sha256 8b308a8b92038c2fa56d72eb843a6e1e2ec8301ecc496cafbe84909de51dcf9a
 // NUMAlink 4 router (R4): global, local-block and per-port registers, as the SN2 PROM's error and dump tables name them
 #![allow(dead_code)]
+#![allow(clippy::doc_markdown)]
+#![cfg_attr(rustfmt, rustfmt_skip)]
 
 /// PROM register R4_STATUS_REV_ID. Offset and field positions read from the table; role inferred from the names. (established)
 pub mod status_rev_id {
@@ -4155,6 +4157,7 @@ pub mod lb1_test_point_select_512 {
     }
 }
 /// PROM register R4_HARD_RESET. Offset and field positions read from the table; role inferred from the names. (established)
+#[allow(clippy::module_inception)]
 pub mod hard_reset {
     pub const WIDTH: u32 = 64;
     pub const OFFSET: u64 = 0x1003000;
@@ -4170,6 +4173,7 @@ pub mod hard_reset {
     }
 }
 /// PROM register R4_SOFT_RESET. Offset and field positions read from the table; role inferred from the names. (established)
+#[allow(clippy::module_inception)]
 pub mod soft_reset {
     pub const WIDTH: u32 = 64;
     pub const OFFSET: u64 = 0x1003008;

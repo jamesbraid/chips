@@ -1,5 +1,5 @@
 """generated from devices/hpc3_enet/registers.toml by defs-gen - do not edit, change the source
-defs-gen 2
+defs-gen 3
 input sha256 2c7abbcb1c2985fa52c20dcda340386f2c9f75c597cf6a1b52429578511083c2
 SGI HPC3 Ethernet DMA channels (Indy)"""
 

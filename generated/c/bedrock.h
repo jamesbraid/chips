@@ -1,5 +1,6 @@
-/* generated from devices/bedrock/registers.toml by defs-gen - do not edit, change the source */
-/* defs-gen 2 */
+/* generated from devices/bedrock/registers.toml by defs-gen - do not edit,
+ * change the source */
+/* defs-gen 3 */
 /* input sha256 79078529ee64620ab2f48db1267490d7a964dfd3b79ea39d037dc224721f8047 */
 /* Bedrock (node controller), Origin 3000 family */
 #ifndef BEDROCK_GEN_H
@@ -8,7 +9,8 @@
 #include <stdint.h>
 
 
-/* handle_cac_buserr: r64, reset 0xffffffffffffffff; census: 1 sites, 1 routines */
+/* handle_cac_buserr: r64, reset 0xffffffffffffffff; census: 1 sites, 1 routines
+ */
 #define BEDROCK_HANDLE_CAC_BUSERR                    0x000018 /* established */
 
 /* sub_1bcf0: rw64, reset 0x0; census: 115 sites, 24 routines */
@@ -110,7 +112,8 @@
 /* sub_1bcf0_600000: r64, reset 0x23012049; census: 16 sites, 13 routines */
 #define BEDROCK_SUB_1BCF0_600000                     0x600000 /* established */
 
-/* sub_1bcf0_604020: r64, reset 0xfffffffffffffff; census: 1 sites, 1 routines */
+/* sub_1bcf0_604020: r64, reset 0xfffffffffffffff; census: 1 sites, 1 routines
+ */
 #define BEDROCK_SUB_1BCF0_604020                     0x604020 /* established */
 
 /* sub_1bcf0_604028: r64, reset 0x0; census: 1 sites, 1 routines */
@@ -167,7 +170,8 @@
 /* part_discovery_682008: r64, reset unknown; census: 1 sites, 1 routines */
 #define BEDROCK_PART_DISCOVERY_682008                0x682008 /* established */
 
-/* sub_1bcf0_780000: r64, reset 0xffffffffffffffff; census: 1 sites, 1 routines */
+/* sub_1bcf0_780000: r64, reset 0xffffffffffffffff; census: 1 sites, 1 routines
+ */
 #define BEDROCK_SUB_1BCF0_780000                     0x780000 /* established */
 
 /* mdir_xlate_addr_mem: r64, reset unknown; census: 3 sites, 3 routines */
@@ -416,7 +420,8 @@
 /* md_perf_start_count: w64, reset unknown; census: 2 sites, 2 routines */
 #define BEDROCK_MD_PERF_START_COUNT                  0xa10000 /* established */
 
-/* hubii_check_widget_disabled: r64, reset unknown; census: 2 sites, 2 routines */
+/* hubii_check_widget_disabled: r64, reset unknown; census: 2 sites, 2 routines
+ */
 #define BEDROCK_HUBII_CHECK_WIDGET_DISABLED          0xc00008 /* established */
 
 /* hub_widget_id: r64, reset unknown; census: 2 sites, 2 routines */
@@ -494,7 +499,8 @@
 /* hubiio_crb_error_handler: r64, reset unknown; census: 3 sites, 3 routines */
 #define BEDROCK_HUBIIO_CRB_ERROR_HANDLER             0xc00408 /* established */
 
-/* hubiio_crb_error_handler_c00410: r64, reset unknown; census: 3 sites, 3 routines */
+/* hubiio_crb_error_handler_c00410: r64, reset unknown; census: 3 sites, 3
+ * routines */
 #define BEDROCK_HUBIIO_CRB_ERROR_HANDLER_C00410      0xc00410 /* established */
 
 /* dump_crb: r64, reset unknown; census: 2 sites, 2 routines */
@@ -503,7 +509,8 @@
 /* io_perf_start_count: rw64, reset unknown; census: 4 sites, 2 routines */
 #define BEDROCK_IO_PERF_START_COUNT                  0xc30000 /* established */
 
-/* io_perf_start_count_c30008: r64, reset unknown; census: 2 sites, 2 routines */
+/* io_perf_start_count_c30008: r64, reset unknown; census: 2 sites, 2 routines
+ */
 #define BEDROCK_IO_PERF_START_COUNT_C30008           0xc30008 /* established */
 
 /* get_hub_chiprev: r64, reset unknown; census: 1 sites, 1 routines */
@@ -620,26 +627,35 @@
 /* memerror_sbe_intr_fe0018: r64, reset unknown; census: 5 sites, 3 routines */
 #define BEDROCK_MEMERROR_SBE_INTR_FE0018             0xfe0018 /* established */
 
-/* boot_space_off_000064: r32, space bedrock_boot_space, reset unknown; census: 2 sites, 1 routines */
+/* boot_space_off_000064: r32, space bedrock_boot_space, reset unknown; census:
+ * 2 sites, 1 routines */
 #define BEDROCK_BOOT_SPACE_OFF_000064                0x000064 /* established */
 
-/* boot_space_nic_get_phase_bits: r64, space bedrock_boot_space, reset unknown; census: 2 sites, 2 routines */
+/* boot_space_nic_get_phase_bits: r64, space bedrock_boot_space, reset unknown;
+ * census: 2 sites, 2 routines */
 #define BEDROCK_BOOT_SPACE_NIC_GET_PHASE_BITS        0x000078 /* established */
 
-/* boot_space_off_000080: r64, space bedrock_boot_space, reset unknown; census: 1 sites, 1 routines */
+/* boot_space_off_000080: r64, space bedrock_boot_space, reset unknown; census:
+ * 1 sites, 1 routines */
 #define BEDROCK_BOOT_SPACE_OFF_000080                0x000080 /* established */
 
-/* boot_space_off_00008c: r32, space bedrock_boot_space, reset unknown; census: 1 sites, 1 routines */
+/* boot_space_off_00008c: r32, space bedrock_boot_space, reset unknown; census:
+ * 1 sites, 1 routines */
 #define BEDROCK_BOOT_SPACE_OFF_00008C                0x00008c /* established */
 
-/* boot_space_off_00009c: r32, space bedrock_boot_space, reset unknown; census: 1 sites, 1 routines */
+/* boot_space_off_00009c: r32, space bedrock_boot_space, reset unknown; census:
+ * 1 sites, 1 routines */
 #define BEDROCK_BOOT_SPACE_OFF_00009C                0x00009c /* established */
 
-/* boot_space_cpuprom_detailed_inventory_info_add: r32, space bedrock_boot_space, reset 0x0; census: 2 sites, 2 routines */
-#define BEDROCK_BOOT_SPACE_CPUPROM_DETAILED_INVENTORY_INFO_ADD 0x0000a0 /* established */
+/* boot_space_cpuprom_detailed_inventory_info_add: r32, space
+ * bedrock_boot_space, reset 0x0; census: 2 sites, 2 routines */
+/* established */
+#define BEDROCK_BOOT_SPACE_CPUPROM_DETAILED_INVENTORY_INFO_ADD 0x0000a0
 
-/* boot_space_cpuprom_detailed_inventory_info_add_a4: r32, space bedrock_boot_space, reset unknown; census: 2 sites, 2 routines */
-#define BEDROCK_BOOT_SPACE_CPUPROM_DETAILED_INVENTORY_INFO_ADD_A4 0x0000a4 /* established */
+/* boot_space_cpuprom_detailed_inventory_info_add_a4: r32, space
+ * bedrock_boot_space, reset unknown; census: 2 sites, 2 routines */
+/* established */
+#define BEDROCK_BOOT_SPACE_CPUPROM_DETAILED_INVENTORY_INFO_ADD_A4 0x0000a4
 
 #define BEDROCK_BOOT_SPACE_OFF_000064_B_15_0         0xffffu /* inferred */
 #define BEDROCK_BOOT_SPACE_OFF_000064_B_8_0          0x1ffu /* inferred */

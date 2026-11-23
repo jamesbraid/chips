@@ -1,8 +1,10 @@
-// generated from devices/tl16pir552/registers.toml by defs-gen - do not edit, change the source
-// defs-gen 2
+// @generated from devices/tl16pir552/registers.toml by defs-gen - do not edit, change the source
+// defs-gen 3
 // input sha256 3e2e50de5e5e0e4fa39c8450ad2520b250adcd93013d4b878cacd3fb64dce4f0
 // TI TL16PIR552 dual UART and IEEE 1284 parallel port, parallel-port register contract (Fuel and Origin 200 board part)
 #![allow(dead_code)]
+#![allow(clippy::doc_markdown)]
+#![cfg_attr(rustfmt, rustfmt_skip)]
 
 pub mod enums {
     pub mod cnfgb_dma_select {
@@ -134,6 +136,7 @@ pub mod cnfgb {
         pub const fn set(v: u32, x: u32) -> u32 {
             (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
         }
+        #[allow(unused_imports)]
         pub use super::super::enums::cnfgb_irq_select::Value;
     }
     pub mod dma_select { // bits 2:0, established
@@ -145,6 +148,7 @@ pub mod cnfgb {
         pub const fn set(v: u32, x: u32) -> u32 {
             (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
         }
+        #[allow(unused_imports)]
         pub use super::super::enums::cnfgb_dma_select::Value;
     }
 }
@@ -161,6 +165,7 @@ pub mod ecr {
         pub const fn set(v: u32, x: u32) -> u32 {
             (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
         }
+        #[allow(unused_imports)]
         pub use super::super::enums::ecr_mode::Value;
     }
     pub mod ecp_fault_irq_disable { // bits 4:4, established

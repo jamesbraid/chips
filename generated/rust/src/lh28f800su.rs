@@ -1,8 +1,10 @@
-// generated from devices/lh28f800su/registers.toml by defs-gen - do not edit, change the source
-// defs-gen 2
+// @generated from devices/lh28f800su/registers.toml by defs-gen - do not edit, change the source
+// defs-gen 3
 // input sha256 71c039ffd5729e496aee717c8dfa100cd9f37ba507e648af391cd31eae7a983a
 // Sharp LH28F800SU 8 Mbit x16 flash: array geometry, command set, identifier and status registers
 #![allow(dead_code)]
+#![allow(clippy::doc_markdown)]
+#![cfg_attr(rustfmt, rustfmt_skip)]
 
 pub mod enums {
     pub mod bsr_op {
@@ -103,6 +105,7 @@ pub mod bsr {
         pub const fn set(v: u32, x: u32) -> u32 {
             (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
         }
+        #[allow(unused_imports)]
         pub use super::super::enums::bsr_op::Value;
     }
     pub mod queue_full { // bits 3:3, established
@@ -212,6 +215,7 @@ pub mod gsr {
         pub const fn set(v: u32, x: u32) -> u32 {
             (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
         }
+        #[allow(unused_imports)]
         pub use super::super::enums::gsr_op::Value;
     }
     pub mod queue_full { // bits 3:3, established

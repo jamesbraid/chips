@@ -1,8 +1,10 @@
-// generated from devices/xbow/registers-extra.toml by defs-gen - do not edit, change the source
-// defs-gen 2
+// @generated from devices/xbow/registers-extra.toml by defs-gen - do not edit, change the source
+// defs-gen 3
 // input sha256 5d0eaa0d4362a4e57ae74a9515b91ea99d1ae0b25cbc4f8dbf94696f4a778ea6
 // Xbow registers outside the census
 #![allow(dead_code)]
+#![allow(clippy::doc_markdown)]
+#![cfg_attr(rustfmt, rustfmt_skip)]
 
 /// (established)
 pub mod perf_a {

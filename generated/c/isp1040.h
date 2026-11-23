@@ -1,7 +1,9 @@
-/* generated from devices/isp1040/registers.toml by defs-gen - do not edit, change the source */
-/* defs-gen 2 */
+/* generated from devices/isp1040/registers.toml by defs-gen - do not edit,
+ * change the source */
+/* defs-gen 3 */
 /* input sha256 c6f60bd0ad553be96496d3d404604374c4fbab53c331492226b573abf3d0d9b4 */
-/* QLogic ISP1040 family SCSI host adapter (PCI 1077:1020), register and mailbox contract */
+/* QLogic ISP1040 family SCSI host adapter (PCI 1077:1020), register and mailbox
+ * contract */
 #ifndef ISP1040_GEN_H
 #define ISP1040_GEN_H
 
@@ -11,85 +13,108 @@
 /*
  * Low half of the identity word. The reset value is not stated by any source.
  */
-/* id_l: r16, reset unknown; Linux qla1280 driver header device register layout */
+/* id_l: r16, reset unknown; Linux qla1280 driver header device register layout
+ */
 #define ISP1040_ID_L_OFFSET                          0x0u /* established */
 
 /*
  * High half of the identity word. The reset value is not stated by any source.
  */
-/* id_h: r16, reset unknown; Linux qla1280 driver header device register layout */
+/* id_h: r16, reset unknown; Linux qla1280 driver header device register layout
+ */
 #define ISP1040_ID_H_OFFSET                          0x2u /* established */
 
 /*
- * Configuration 0. Its low four bits hold the hardware revision. Linux compares that revision with the 1040A value only, to decide whether to set the FIFO threshold. Linux does not use it to name the part.
+ * Configuration 0. Its low four bits hold the hardware revision. Linux compares
+ * that revision with the 1040A value only, to decide whether to set the FIFO
+ * threshold. Linux does not use it to name the part.
  */
-/* cfg_0: r16, reset unknown; Linux qla1280 driver header device register layout; qla1280 driver hardware revision test */
+/* cfg_0: r16, reset unknown; Linux qla1280 driver header device register
+ * layout; qla1280 driver hardware revision test */
 #define ISP1040_CFG_0_OFFSET                         0x4u /* established */
 #define ISP1040_CFG_0_HW_REVISION_SHIFT              0 /* established */
 #define ISP1040_CFG_0_HW_REVISION_MASK               0xfu
-#define ISP1040_CFG_0_HW_REVISION_INPLACE            (ISP1040_CFG_0_HW_REVISION_MASK << ISP1040_CFG_0_HW_REVISION_SHIFT)
+#define ISP1040_CFG_0_HW_REVISION_INPLACE (ISP1040_CFG_0_HW_REVISION_MASK << ISP1040_CFG_0_HW_REVISION_SHIFT)
 
 /*
- * Configuration 1: FIFO threshold and bus burst enable, written by the drivers at start-up.
+ * Configuration 1: FIFO threshold and bus burst enable, written by the drivers
+ * at start-up.
  */
-/* cfg_1: rw16, reset unknown; Linux qla1280 driver header device register layout */
+/* cfg_1: rw16, reset unknown; Linux qla1280 driver header device register
+ * layout */
 #define ISP1040_CFG_1_OFFSET                         0x6u /* established */
 
 /*
- * Bus interface control. It holds the soft reset bit, the interrupt enables and the flash BIOS controls.
+ * Bus interface control. It holds the soft reset bit, the interrupt enables and
+ * the flash BIOS controls.
  */
-/* ictrl: rw16, reset unknown; Linux qla1280 driver header device register layout and its use in qla1280 driver */
+/* ictrl: rw16, reset unknown; Linux qla1280 driver header device register
+ * layout and its use in qla1280 driver */
 #define ISP1040_ICTRL_OFFSET                         0x8u /* established */
 #define ISP1040_ICTRL_FLASH_UPPER_SHIFT              9 /* inferred */
 #define ISP1040_ICTRL_FLASH_UPPER_MASK               0x1u
-#define ISP1040_ICTRL_FLASH_UPPER_INPLACE            (ISP1040_ICTRL_FLASH_UPPER_MASK << ISP1040_ICTRL_FLASH_UPPER_SHIFT)
+#define ISP1040_ICTRL_FLASH_UPPER_INPLACE (ISP1040_ICTRL_FLASH_UPPER_MASK << ISP1040_ICTRL_FLASH_UPPER_SHIFT)
 #define ISP1040_ICTRL_FLASH_ENABLE_SHIFT             8 /* inferred */
 #define ISP1040_ICTRL_FLASH_ENABLE_MASK              0x1u
-#define ISP1040_ICTRL_FLASH_ENABLE_INPLACE           (ISP1040_ICTRL_FLASH_ENABLE_MASK << ISP1040_ICTRL_FLASH_ENABLE_SHIFT)
+#define ISP1040_ICTRL_FLASH_ENABLE_INPLACE (ISP1040_ICTRL_FLASH_ENABLE_MASK << ISP1040_ICTRL_FLASH_ENABLE_SHIFT)
 #define ISP1040_ICTRL_RISC_INT_ENABLE_SHIFT          2 /* inferred */
 #define ISP1040_ICTRL_RISC_INT_ENABLE_MASK           0x1u
-#define ISP1040_ICTRL_RISC_INT_ENABLE_INPLACE        (ISP1040_ICTRL_RISC_INT_ENABLE_MASK << ISP1040_ICTRL_RISC_INT_ENABLE_SHIFT)
+#define ISP1040_ICTRL_RISC_INT_ENABLE_INPLACE (ISP1040_ICTRL_RISC_INT_ENABLE_MASK << ISP1040_ICTRL_RISC_INT_ENABLE_SHIFT)
 #define ISP1040_ICTRL_INT_ENABLE_SHIFT               1 /* inferred */
 #define ISP1040_ICTRL_INT_ENABLE_MASK                0x1u
-#define ISP1040_ICTRL_INT_ENABLE_INPLACE             (ISP1040_ICTRL_INT_ENABLE_MASK << ISP1040_ICTRL_INT_ENABLE_SHIFT)
+#define ISP1040_ICTRL_INT_ENABLE_INPLACE (ISP1040_ICTRL_INT_ENABLE_MASK << ISP1040_ICTRL_INT_ENABLE_SHIFT)
 #define ISP1040_ICTRL_SOFT_RESET_SHIFT               0 /* inferred */
 #define ISP1040_ICTRL_SOFT_RESET_MASK                0x1u
-#define ISP1040_ICTRL_SOFT_RESET_INPLACE             (ISP1040_ICTRL_SOFT_RESET_MASK << ISP1040_ICTRL_SOFT_RESET_SHIFT)
+#define ISP1040_ICTRL_SOFT_RESET_INPLACE (ISP1040_ICTRL_SOFT_RESET_MASK << ISP1040_ICTRL_SOFT_RESET_SHIFT)
 
 /*
- * Interface status. Its bit meanings are not described here; the reset value is unknown.
+ * Interface status. Its bit meanings are not described here; the reset value is
+ * unknown.
  */
-/* istatus: r16, reset unknown; Linux qla1280 driver header device register layout */
+/* istatus: r16, reset unknown; Linux qla1280 driver header device register
+ * layout */
 #define ISP1040_ISTATUS_OFFSET                       0xau /* established */
 
 /*
  * Semaphore register. Linux names it; its use is not described here.
  */
-/* semaphore: rw16, reset unknown; Linux qla1280 driver header device register layout */
+/* semaphore: rw16, reset unknown; Linux qla1280 driver header device register
+ * layout */
 #define ISP1040_SEMAPHORE_OFFSET                     0xcu /* established */
 
 /*
- * Serial NVRAM interface register. Linux names its clock, select, data-out and data-in bits.
+ * Serial NVRAM interface register. Linux names its clock, select, data-out and
+ * data-in bits.
  */
-/* nvram: rw16, reset unknown; Linux qla1280 driver header device register layout */
+/* nvram: rw16, reset unknown; Linux qla1280 driver header device register
+ * layout */
 #define ISP1040_NVRAM_OFFSET                         0xeu /* established */
 
 /*
- * Flash BIOS data. Linux and OpenBSD both name it for this part. The NetBSD driver assigns the same offset to request-queue pointers for a later chip generation, so the naming rests on two drivers and is not confirmed by a manual.
+ * Flash BIOS data. Linux and OpenBSD both name it for this part. The NetBSD
+ * driver assigns the same offset to request-queue pointers for a later chip
+ * generation, so the naming rests on two drivers and is not confirmed by a
+ * manual.
  */
-/* flash_data: rw16, reset unknown; Linux qla1280 driver header and OpenBSD qlw driver header, both naming the flash data word */
+/* flash_data: rw16, reset unknown; Linux qla1280 driver header and OpenBSD qlw
+ * driver header, both naming the flash data word */
 #define ISP1040_FLASH_DATA_OFFSET                    0x10u /* inferred */
 
 /*
- * Flash BIOS address. The same naming and the same two-driver footing as the flash data word.
+ * Flash BIOS address. The same naming and the same two-driver footing as the
+ * flash data word.
  */
-/* flash_address: rw16, reset unknown; Linux qla1280 driver header and OpenBSD qlw driver header, both naming the flash address word */
+/* flash_address: rw16, reset unknown; Linux qla1280 driver header and OpenBSD
+ * qlw driver header, both naming the flash address word */
 #define ISP1040_FLASH_ADDRESS_OFFSET                 0x12u /* inferred */
 
 /*
- * Eight 16-bit mailbox registers, mailboxes 0 to 7 at 0x70 to 0x7e. Mailbox 0 carries the opcode of each command. The other mailboxes carry its operands and results, and their meaning is given per opcode below.
+ * Eight 16-bit mailbox registers, mailboxes 0 to 7 at 0x70 to 0x7e. Mailbox 0
+ * carries the opcode of each command. The other mailboxes carry its operands
+ * and results, and their meaning is given per opcode below.
  */
-/* mailbox: rw16, reset unknown; Linux qla1280 driver header device register layout (mailbox 0 at 0x70); OpenBSD QLW_MBOX_BASE_PCI */
+/* mailbox: rw16, reset unknown; Linux qla1280 driver header device register
+ * layout (mailbox 0 at 0x70); OpenBSD QLW_MBOX_BASE_PCI */
 #define ISP1040_MAILBOX_OFFSET                       0x70u /* established */
 #define ISP1040_MAILBOX_COUNT                        8
 #define ISP1040_MAILBOX_STRIDE                       2

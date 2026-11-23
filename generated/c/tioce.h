@@ -1,7 +1,9 @@
-/* generated from devices/tioce/registers.toml by defs-gen - do not edit, change the source */
-/* defs-gen 2 */
+/* generated from devices/tioce/registers.toml by defs-gen - do not edit, change
+ * the source */
+/* defs-gen 3 */
 /* input sha256 52905da533c0fdd4266ab81f4644ea275734bd46daf5436fb5dcce504d25b373 */
-/* TIOCE (TIO PCI Express bridge), as SGI's Linux Altix platform code defines it */
+/* TIOCE (TIO PCI Express bridge), as SGI's Linux Altix platform code defines it
+ */
 #ifndef TIOCE_GEN_H
 #define TIOCE_GEN_H
 
@@ -16,67 +18,96 @@
 #define TIOCE_URE_PAGESIZE_256K                      4 /* established */
 
 /*
- * Widget identification word: part 0xce00, source id 1, revision A = 1 (header constants). Revision A needs the access workaround described on the unit page. Name and offset are the vendor header's definition (struct member ce_adm_id). The header gives no access direction or reset value; access rw is a placeholder.
+ * Widget identification word: part 0xce00, source id 1, revision A = 1 (header
+ * constants). Revision A needs the access workaround described on the unit
+ * page. Name and offset are the vendor header's definition (struct member
+ * ce_adm_id). The header gives no access direction or reset value; access rw is
+ * a placeholder.
  */
 /* adm_id: rw64, reset unknown */
 #define TIOCE_ADM_ID                                 0x000000 /* established */
 
 /*
- * Name and offset are the vendor header's definition (struct member ce_adm_dyn_credit_status). The header gives no access direction or reset value; access rw is a placeholder.
+ * Name and offset are the vendor header's definition (struct member
+ * ce_adm_dyn_credit_status). The header gives no access direction or reset
+ * value; access rw is a placeholder.
  */
 /* adm_dyn_credit_status: rw64, reset unknown */
 #define TIOCE_ADM_DYN_CREDIT_STATUS                  0x000010 /* established */
 
 /*
- * Name and offset are the vendor header's definition (struct member ce_adm_last_credit_status). The header gives no access direction or reset value; access rw is a placeholder.
+ * Name and offset are the vendor header's definition (struct member
+ * ce_adm_last_credit_status). The header gives no access direction or reset
+ * value; access rw is a placeholder.
  */
 /* adm_last_credit_status: rw64, reset unknown */
 #define TIOCE_ADM_LAST_CREDIT_STATUS                 0x000018 /* established */
 
 /*
- * Name and offset are the vendor header's definition (struct member ce_adm_credit_limit). The header gives no access direction or reset value; access rw is a placeholder.
+ * Name and offset are the vendor header's definition (struct member
+ * ce_adm_credit_limit). The header gives no access direction or reset value;
+ * access rw is a placeholder.
  */
 /* adm_credit_limit: rw64, reset unknown */
 #define TIOCE_ADM_CREDIT_LIMIT                       0x000020 /* established */
 
 /*
- * Name and offset are the vendor header's definition (struct member ce_adm_force_credit). The header gives no access direction or reset value; access rw is a placeholder.
+ * Name and offset are the vendor header's definition (struct member
+ * ce_adm_force_credit). The header gives no access direction or reset value;
+ * access rw is a placeholder.
  */
 /* adm_force_credit: rw64, reset unknown */
 #define TIOCE_ADM_FORCE_CREDIT                       0x000028 /* established */
 
 /*
- * Name and offset are the vendor header's definition (struct member ce_adm_control). The header gives no access direction or reset value; access rw is a placeholder.
+ * Name and offset are the vendor header's definition (struct member
+ * ce_adm_control). The header gives no access direction or reset value; access
+ * rw is a placeholder.
  */
 /* adm_control: rw64, reset unknown */
 #define TIOCE_ADM_CONTROL                            0x000030 /* established */
 
 /*
- * Name and offset are the vendor header's definition (struct member ce_adm_mmr_chn_timeout). The header gives no access direction or reset value; access rw is a placeholder.
+ * Name and offset are the vendor header's definition (struct member
+ * ce_adm_mmr_chn_timeout). The header gives no access direction or reset value;
+ * access rw is a placeholder.
  */
 /* adm_mmr_chn_timeout: rw64, reset unknown */
 #define TIOCE_ADM_MMR_CHN_TIMEOUT                    0x000038 /* established */
 
 /*
- * Name and offset are the vendor header's definition (struct member ce_adm_ssp_ure_timeout). The header gives no access direction or reset value; access rw is a placeholder.
+ * Name and offset are the vendor header's definition (struct member
+ * ce_adm_ssp_ure_timeout). The header gives no access direction or reset value;
+ * access rw is a placeholder.
  */
 /* adm_ssp_ure_timeout: rw64, reset unknown */
 #define TIOCE_ADM_SSP_URE_TIMEOUT                    0x000040 /* established */
 
 /*
- * Name and offset are the vendor header's definition (struct member ce_adm_ssp_dre_timeout). The header gives no access direction or reset value; access rw is a placeholder.
+ * Name and offset are the vendor header's definition (struct member
+ * ce_adm_ssp_dre_timeout). The header gives no access direction or reset value;
+ * access rw is a placeholder.
  */
 /* adm_ssp_dre_timeout: rw64, reset unknown */
 #define TIOCE_ADM_SSP_DRE_TIMEOUT                    0x000048 /* established */
 
 /*
- * Name and offset are the vendor header's definition (struct member ce_adm_ssp_debug_sel). The header gives no access direction or reset value; access rw is a placeholder.
+ * Name and offset are the vendor header's definition (struct member
+ * ce_adm_ssp_debug_sel). The header gives no access direction or reset value;
+ * access rw is a placeholder.
  */
 /* adm_ssp_debug_sel: rw64, reset unknown */
 #define TIOCE_ADM_SSP_DEBUG_SEL                      0x000050 /* established */
 
 /*
- * Interrupt status. Bit n is the interrupt source named by the header (error, link 1 and 2 errors, PCIe error, hot-plug events per port, INTA to INTD of each port, message slots 0 to 3, power-management events). The provider reads it on revision A before forcing an interrupt. Name and offset are the vendor header's definition (struct member ce_adm_int_status). The header gives no access direction or reset value; access rw is a placeholder. Field layout: the header defines the bit position of every source. Bit 14 is also named as the first message slot. Bits 18 to 21 and above 23 have no definition.
+ * Interrupt status. Bit n is the interrupt source named by the header (error,
+ * link 1 and 2 errors, PCIe error, hot-plug events per port, INTA to INTD of
+ * each port, message slots 0 to 3, power-management events). The provider reads
+ * it on revision A before forcing an interrupt. Name and offset are the vendor
+ * header's definition (struct member ce_adm_int_status). The header gives no
+ * access direction or reset value; access rw is a placeholder. Field layout:
+ * the header defines the bit position of every source. Bit 14 is also named as
+ * the first message slot. Bits 18 to 21 and above 23 have no definition.
  */
 /* adm_int_status: rw64, reset unknown */
 #define TIOCE_ADM_INT_STATUS                         0x000058 /* established */
@@ -100,28 +131,28 @@
 #define TIOCE_ADM_INT_STATUS_PCIE_MSG_SLOT_0_INPLACE (TIOCE_ADM_INT_STATUS_PCIE_MSG_SLOT_0_MASK << TIOCE_ADM_INT_STATUS_PCIE_MSG_SLOT_0_SHIFT)
 #define TIOCE_ADM_INT_STATUS_PORT2_INTD_SHIFT        13 /* established */
 #define TIOCE_ADM_INT_STATUS_PORT2_INTD_MASK         0x1ull
-#define TIOCE_ADM_INT_STATUS_PORT2_INTD_INPLACE      (TIOCE_ADM_INT_STATUS_PORT2_INTD_MASK << TIOCE_ADM_INT_STATUS_PORT2_INTD_SHIFT)
+#define TIOCE_ADM_INT_STATUS_PORT2_INTD_INPLACE (TIOCE_ADM_INT_STATUS_PORT2_INTD_MASK << TIOCE_ADM_INT_STATUS_PORT2_INTD_SHIFT)
 #define TIOCE_ADM_INT_STATUS_PORT2_INTC_SHIFT        12 /* established */
 #define TIOCE_ADM_INT_STATUS_PORT2_INTC_MASK         0x1ull
-#define TIOCE_ADM_INT_STATUS_PORT2_INTC_INPLACE      (TIOCE_ADM_INT_STATUS_PORT2_INTC_MASK << TIOCE_ADM_INT_STATUS_PORT2_INTC_SHIFT)
+#define TIOCE_ADM_INT_STATUS_PORT2_INTC_INPLACE (TIOCE_ADM_INT_STATUS_PORT2_INTC_MASK << TIOCE_ADM_INT_STATUS_PORT2_INTC_SHIFT)
 #define TIOCE_ADM_INT_STATUS_PORT2_INTB_SHIFT        11 /* established */
 #define TIOCE_ADM_INT_STATUS_PORT2_INTB_MASK         0x1ull
-#define TIOCE_ADM_INT_STATUS_PORT2_INTB_INPLACE      (TIOCE_ADM_INT_STATUS_PORT2_INTB_MASK << TIOCE_ADM_INT_STATUS_PORT2_INTB_SHIFT)
+#define TIOCE_ADM_INT_STATUS_PORT2_INTB_INPLACE (TIOCE_ADM_INT_STATUS_PORT2_INTB_MASK << TIOCE_ADM_INT_STATUS_PORT2_INTB_SHIFT)
 #define TIOCE_ADM_INT_STATUS_PORT2_INTA_SHIFT        10 /* established */
 #define TIOCE_ADM_INT_STATUS_PORT2_INTA_MASK         0x1ull
-#define TIOCE_ADM_INT_STATUS_PORT2_INTA_INPLACE      (TIOCE_ADM_INT_STATUS_PORT2_INTA_MASK << TIOCE_ADM_INT_STATUS_PORT2_INTA_SHIFT)
+#define TIOCE_ADM_INT_STATUS_PORT2_INTA_INPLACE (TIOCE_ADM_INT_STATUS_PORT2_INTA_MASK << TIOCE_ADM_INT_STATUS_PORT2_INTA_SHIFT)
 #define TIOCE_ADM_INT_STATUS_PORT1_INTD_SHIFT        9 /* established */
 #define TIOCE_ADM_INT_STATUS_PORT1_INTD_MASK         0x1ull
-#define TIOCE_ADM_INT_STATUS_PORT1_INTD_INPLACE      (TIOCE_ADM_INT_STATUS_PORT1_INTD_MASK << TIOCE_ADM_INT_STATUS_PORT1_INTD_SHIFT)
+#define TIOCE_ADM_INT_STATUS_PORT1_INTD_INPLACE (TIOCE_ADM_INT_STATUS_PORT1_INTD_MASK << TIOCE_ADM_INT_STATUS_PORT1_INTD_SHIFT)
 #define TIOCE_ADM_INT_STATUS_PORT1_INTC_SHIFT        8 /* established */
 #define TIOCE_ADM_INT_STATUS_PORT1_INTC_MASK         0x1ull
-#define TIOCE_ADM_INT_STATUS_PORT1_INTC_INPLACE      (TIOCE_ADM_INT_STATUS_PORT1_INTC_MASK << TIOCE_ADM_INT_STATUS_PORT1_INTC_SHIFT)
+#define TIOCE_ADM_INT_STATUS_PORT1_INTC_INPLACE (TIOCE_ADM_INT_STATUS_PORT1_INTC_MASK << TIOCE_ADM_INT_STATUS_PORT1_INTC_SHIFT)
 #define TIOCE_ADM_INT_STATUS_PORT1_INTB_SHIFT        7 /* established */
 #define TIOCE_ADM_INT_STATUS_PORT1_INTB_MASK         0x1ull
-#define TIOCE_ADM_INT_STATUS_PORT1_INTB_INPLACE      (TIOCE_ADM_INT_STATUS_PORT1_INTB_MASK << TIOCE_ADM_INT_STATUS_PORT1_INTB_SHIFT)
+#define TIOCE_ADM_INT_STATUS_PORT1_INTB_INPLACE (TIOCE_ADM_INT_STATUS_PORT1_INTB_MASK << TIOCE_ADM_INT_STATUS_PORT1_INTB_SHIFT)
 #define TIOCE_ADM_INT_STATUS_PORT1_INTA_SHIFT        6 /* established */
 #define TIOCE_ADM_INT_STATUS_PORT1_INTA_MASK         0x1ull
-#define TIOCE_ADM_INT_STATUS_PORT1_INTA_INPLACE      (TIOCE_ADM_INT_STATUS_PORT1_INTA_MASK << TIOCE_ADM_INT_STATUS_PORT1_INTA_SHIFT)
+#define TIOCE_ADM_INT_STATUS_PORT1_INTA_INPLACE (TIOCE_ADM_INT_STATUS_PORT1_INTA_MASK << TIOCE_ADM_INT_STATUS_PORT1_INTA_SHIFT)
 #define TIOCE_ADM_INT_STATUS_PORT2_HOTPLUG_EVENT_SHIFT 5 /* established */
 #define TIOCE_ADM_INT_STATUS_PORT2_HOTPLUG_EVENT_MASK 0x1ull
 #define TIOCE_ADM_INT_STATUS_PORT2_HOTPLUG_EVENT_INPLACE (TIOCE_ADM_INT_STATUS_PORT2_HOTPLUG_EVENT_MASK << TIOCE_ADM_INT_STATUS_PORT2_HOTPLUG_EVENT_SHIFT)
@@ -130,19 +161,27 @@
 #define TIOCE_ADM_INT_STATUS_PORT1_HOTPLUG_EVENT_INPLACE (TIOCE_ADM_INT_STATUS_PORT1_HOTPLUG_EVENT_MASK << TIOCE_ADM_INT_STATUS_PORT1_HOTPLUG_EVENT_SHIFT)
 #define TIOCE_ADM_INT_STATUS_PCIE_ERROR_SHIFT        3 /* established */
 #define TIOCE_ADM_INT_STATUS_PCIE_ERROR_MASK         0x1ull
-#define TIOCE_ADM_INT_STATUS_PCIE_ERROR_INPLACE      (TIOCE_ADM_INT_STATUS_PCIE_ERROR_MASK << TIOCE_ADM_INT_STATUS_PCIE_ERROR_SHIFT)
+#define TIOCE_ADM_INT_STATUS_PCIE_ERROR_INPLACE (TIOCE_ADM_INT_STATUS_PCIE_ERROR_MASK << TIOCE_ADM_INT_STATUS_PCIE_ERROR_SHIFT)
 #define TIOCE_ADM_INT_STATUS_LSI2_IP_ERROR_SHIFT     2 /* established */
 #define TIOCE_ADM_INT_STATUS_LSI2_IP_ERROR_MASK      0x1ull
-#define TIOCE_ADM_INT_STATUS_LSI2_IP_ERROR_INPLACE   (TIOCE_ADM_INT_STATUS_LSI2_IP_ERROR_MASK << TIOCE_ADM_INT_STATUS_LSI2_IP_ERROR_SHIFT)
+#define TIOCE_ADM_INT_STATUS_LSI2_IP_ERROR_INPLACE (TIOCE_ADM_INT_STATUS_LSI2_IP_ERROR_MASK << TIOCE_ADM_INT_STATUS_LSI2_IP_ERROR_SHIFT)
 #define TIOCE_ADM_INT_STATUS_LSI1_IP_ERROR_SHIFT     1 /* established */
 #define TIOCE_ADM_INT_STATUS_LSI1_IP_ERROR_MASK      0x1ull
-#define TIOCE_ADM_INT_STATUS_LSI1_IP_ERROR_INPLACE   (TIOCE_ADM_INT_STATUS_LSI1_IP_ERROR_MASK << TIOCE_ADM_INT_STATUS_LSI1_IP_ERROR_SHIFT)
+#define TIOCE_ADM_INT_STATUS_LSI1_IP_ERROR_INPLACE (TIOCE_ADM_INT_STATUS_LSI1_IP_ERROR_MASK << TIOCE_ADM_INT_STATUS_LSI1_IP_ERROR_SHIFT)
 #define TIOCE_ADM_INT_STATUS_CE_ERROR_SHIFT          0 /* established */
 #define TIOCE_ADM_INT_STATUS_CE_ERROR_MASK           0x1ull
-#define TIOCE_ADM_INT_STATUS_CE_ERROR_INPLACE        (TIOCE_ADM_INT_STATUS_CE_ERROR_MASK << TIOCE_ADM_INT_STATUS_CE_ERROR_SHIFT)
+#define TIOCE_ADM_INT_STATUS_CE_ERROR_INPLACE (TIOCE_ADM_INT_STATUS_CE_ERROR_MASK << TIOCE_ADM_INT_STATUS_CE_ERROR_SHIFT)
 
 /*
- * Interrupt status alias. The provider sets every bit through it at attach to clear transients (the alias is the write path to clear; role from that use). Name and offset are the vendor header's definition (struct member ce_adm_int_status_alias). The header gives no access direction or reset value; access rw is a placeholder. Field layout is inferred: the header gives positions only for the status and mask registers. The provider writes all ones here at attach, after a load and OR, to clear stale interrupts, which reads as a write-to-clear alias of the status word (inferred from the provider comment, not stated by the header).
+ * Interrupt status alias. The provider sets every bit through it at attach to
+ * clear transients (the alias is the write path to clear; role from that use).
+ * Name and offset are the vendor header's definition (struct member
+ * ce_adm_int_status_alias). The header gives no access direction or reset
+ * value; access rw is a placeholder. Field layout is inferred: the header gives
+ * positions only for the status and mask registers. The provider writes all
+ * ones here at attach, after a load and OR, to clear stale interrupts, which
+ * reads as a write-to-clear alias of the status word (inferred from the
+ * provider comment, not stated by the header).
  */
 /* adm_int_status_alias: rw64, reset unknown */
 #define TIOCE_ADM_INT_STATUS_ALIAS                   0x000060 /* established */
@@ -205,55 +244,61 @@
 #define TIOCE_ADM_INT_STATUS_ALIAS_LSI1_IP_ERROR_INPLACE (TIOCE_ADM_INT_STATUS_ALIAS_LSI1_IP_ERROR_MASK << TIOCE_ADM_INT_STATUS_ALIAS_LSI1_IP_ERROR_SHIFT)
 #define TIOCE_ADM_INT_STATUS_ALIAS_CE_ERROR_SHIFT    0 /* inferred */
 #define TIOCE_ADM_INT_STATUS_ALIAS_CE_ERROR_MASK     0x1ull
-#define TIOCE_ADM_INT_STATUS_ALIAS_CE_ERROR_INPLACE  (TIOCE_ADM_INT_STATUS_ALIAS_CE_ERROR_MASK << TIOCE_ADM_INT_STATUS_ALIAS_CE_ERROR_SHIFT)
+#define TIOCE_ADM_INT_STATUS_ALIAS_CE_ERROR_INPLACE (TIOCE_ADM_INT_STATUS_ALIAS_CE_ERROR_MASK << TIOCE_ADM_INT_STATUS_ALIAS_CE_ERROR_SHIFT)
 
 /*
- * Interrupt mask. The provider sets a source bit, writes its destination, then clears the bit, so a set bit blocks the source while the destination is rewritten. Name and offset are the vendor header's definition (struct member ce_adm_int_mask). The header gives no access direction or reset value; access rw is a placeholder. Field layout: the header defines these positions for the mask and the status register alike. The provider sets a bit before retargeting a source and clears it afterwards.
+ * Interrupt mask. The provider sets a source bit, writes its destination, then
+ * clears the bit, so a set bit blocks the source while the destination is
+ * rewritten. Name and offset are the vendor header's definition (struct member
+ * ce_adm_int_mask). The header gives no access direction or reset value; access
+ * rw is a placeholder. Field layout: the header defines these positions for the
+ * mask and the status register alike. The provider sets a bit before
+ * retargeting a source and clears it afterwards.
  */
 /* adm_int_mask: rw64, reset unknown */
 #define TIOCE_ADM_INT_MASK                           0x000068 /* established */
 #define TIOCE_ADM_INT_MASK_PORT2_PM_PME_MSG_SHIFT    23 /* established */
 #define TIOCE_ADM_INT_MASK_PORT2_PM_PME_MSG_MASK     0x1ull
-#define TIOCE_ADM_INT_MASK_PORT2_PM_PME_MSG_INPLACE  (TIOCE_ADM_INT_MASK_PORT2_PM_PME_MSG_MASK << TIOCE_ADM_INT_MASK_PORT2_PM_PME_MSG_SHIFT)
+#define TIOCE_ADM_INT_MASK_PORT2_PM_PME_MSG_INPLACE (TIOCE_ADM_INT_MASK_PORT2_PM_PME_MSG_MASK << TIOCE_ADM_INT_MASK_PORT2_PM_PME_MSG_SHIFT)
 #define TIOCE_ADM_INT_MASK_PORT1_PM_PME_MSG_SHIFT    22 /* established */
 #define TIOCE_ADM_INT_MASK_PORT1_PM_PME_MSG_MASK     0x1ull
-#define TIOCE_ADM_INT_MASK_PORT1_PM_PME_MSG_INPLACE  (TIOCE_ADM_INT_MASK_PORT1_PM_PME_MSG_MASK << TIOCE_ADM_INT_MASK_PORT1_PM_PME_MSG_SHIFT)
+#define TIOCE_ADM_INT_MASK_PORT1_PM_PME_MSG_INPLACE (TIOCE_ADM_INT_MASK_PORT1_PM_PME_MSG_MASK << TIOCE_ADM_INT_MASK_PORT1_PM_PME_MSG_SHIFT)
 #define TIOCE_ADM_INT_MASK_PCIE_MSG_SLOT_3_SHIFT     17 /* established */
 #define TIOCE_ADM_INT_MASK_PCIE_MSG_SLOT_3_MASK      0x1ull
-#define TIOCE_ADM_INT_MASK_PCIE_MSG_SLOT_3_INPLACE   (TIOCE_ADM_INT_MASK_PCIE_MSG_SLOT_3_MASK << TIOCE_ADM_INT_MASK_PCIE_MSG_SLOT_3_SHIFT)
+#define TIOCE_ADM_INT_MASK_PCIE_MSG_SLOT_3_INPLACE (TIOCE_ADM_INT_MASK_PCIE_MSG_SLOT_3_MASK << TIOCE_ADM_INT_MASK_PCIE_MSG_SLOT_3_SHIFT)
 #define TIOCE_ADM_INT_MASK_PCIE_MSG_SLOT_2_SHIFT     16 /* established */
 #define TIOCE_ADM_INT_MASK_PCIE_MSG_SLOT_2_MASK      0x1ull
-#define TIOCE_ADM_INT_MASK_PCIE_MSG_SLOT_2_INPLACE   (TIOCE_ADM_INT_MASK_PCIE_MSG_SLOT_2_MASK << TIOCE_ADM_INT_MASK_PCIE_MSG_SLOT_2_SHIFT)
+#define TIOCE_ADM_INT_MASK_PCIE_MSG_SLOT_2_INPLACE (TIOCE_ADM_INT_MASK_PCIE_MSG_SLOT_2_MASK << TIOCE_ADM_INT_MASK_PCIE_MSG_SLOT_2_SHIFT)
 #define TIOCE_ADM_INT_MASK_PCIE_MSG_SLOT_1_SHIFT     15 /* established */
 #define TIOCE_ADM_INT_MASK_PCIE_MSG_SLOT_1_MASK      0x1ull
-#define TIOCE_ADM_INT_MASK_PCIE_MSG_SLOT_1_INPLACE   (TIOCE_ADM_INT_MASK_PCIE_MSG_SLOT_1_MASK << TIOCE_ADM_INT_MASK_PCIE_MSG_SLOT_1_SHIFT)
+#define TIOCE_ADM_INT_MASK_PCIE_MSG_SLOT_1_INPLACE (TIOCE_ADM_INT_MASK_PCIE_MSG_SLOT_1_MASK << TIOCE_ADM_INT_MASK_PCIE_MSG_SLOT_1_SHIFT)
 #define TIOCE_ADM_INT_MASK_PCIE_MSG_SLOT_0_SHIFT     14 /* established */
 #define TIOCE_ADM_INT_MASK_PCIE_MSG_SLOT_0_MASK      0x1ull
-#define TIOCE_ADM_INT_MASK_PCIE_MSG_SLOT_0_INPLACE   (TIOCE_ADM_INT_MASK_PCIE_MSG_SLOT_0_MASK << TIOCE_ADM_INT_MASK_PCIE_MSG_SLOT_0_SHIFT)
+#define TIOCE_ADM_INT_MASK_PCIE_MSG_SLOT_0_INPLACE (TIOCE_ADM_INT_MASK_PCIE_MSG_SLOT_0_MASK << TIOCE_ADM_INT_MASK_PCIE_MSG_SLOT_0_SHIFT)
 #define TIOCE_ADM_INT_MASK_PORT2_INTD_SHIFT          13 /* established */
 #define TIOCE_ADM_INT_MASK_PORT2_INTD_MASK           0x1ull
-#define TIOCE_ADM_INT_MASK_PORT2_INTD_INPLACE        (TIOCE_ADM_INT_MASK_PORT2_INTD_MASK << TIOCE_ADM_INT_MASK_PORT2_INTD_SHIFT)
+#define TIOCE_ADM_INT_MASK_PORT2_INTD_INPLACE (TIOCE_ADM_INT_MASK_PORT2_INTD_MASK << TIOCE_ADM_INT_MASK_PORT2_INTD_SHIFT)
 #define TIOCE_ADM_INT_MASK_PORT2_INTC_SHIFT          12 /* established */
 #define TIOCE_ADM_INT_MASK_PORT2_INTC_MASK           0x1ull
-#define TIOCE_ADM_INT_MASK_PORT2_INTC_INPLACE        (TIOCE_ADM_INT_MASK_PORT2_INTC_MASK << TIOCE_ADM_INT_MASK_PORT2_INTC_SHIFT)
+#define TIOCE_ADM_INT_MASK_PORT2_INTC_INPLACE (TIOCE_ADM_INT_MASK_PORT2_INTC_MASK << TIOCE_ADM_INT_MASK_PORT2_INTC_SHIFT)
 #define TIOCE_ADM_INT_MASK_PORT2_INTB_SHIFT          11 /* established */
 #define TIOCE_ADM_INT_MASK_PORT2_INTB_MASK           0x1ull
-#define TIOCE_ADM_INT_MASK_PORT2_INTB_INPLACE        (TIOCE_ADM_INT_MASK_PORT2_INTB_MASK << TIOCE_ADM_INT_MASK_PORT2_INTB_SHIFT)
+#define TIOCE_ADM_INT_MASK_PORT2_INTB_INPLACE (TIOCE_ADM_INT_MASK_PORT2_INTB_MASK << TIOCE_ADM_INT_MASK_PORT2_INTB_SHIFT)
 #define TIOCE_ADM_INT_MASK_PORT2_INTA_SHIFT          10 /* established */
 #define TIOCE_ADM_INT_MASK_PORT2_INTA_MASK           0x1ull
-#define TIOCE_ADM_INT_MASK_PORT2_INTA_INPLACE        (TIOCE_ADM_INT_MASK_PORT2_INTA_MASK << TIOCE_ADM_INT_MASK_PORT2_INTA_SHIFT)
+#define TIOCE_ADM_INT_MASK_PORT2_INTA_INPLACE (TIOCE_ADM_INT_MASK_PORT2_INTA_MASK << TIOCE_ADM_INT_MASK_PORT2_INTA_SHIFT)
 #define TIOCE_ADM_INT_MASK_PORT1_INTD_SHIFT          9 /* established */
 #define TIOCE_ADM_INT_MASK_PORT1_INTD_MASK           0x1ull
-#define TIOCE_ADM_INT_MASK_PORT1_INTD_INPLACE        (TIOCE_ADM_INT_MASK_PORT1_INTD_MASK << TIOCE_ADM_INT_MASK_PORT1_INTD_SHIFT)
+#define TIOCE_ADM_INT_MASK_PORT1_INTD_INPLACE (TIOCE_ADM_INT_MASK_PORT1_INTD_MASK << TIOCE_ADM_INT_MASK_PORT1_INTD_SHIFT)
 #define TIOCE_ADM_INT_MASK_PORT1_INTC_SHIFT          8 /* established */
 #define TIOCE_ADM_INT_MASK_PORT1_INTC_MASK           0x1ull
-#define TIOCE_ADM_INT_MASK_PORT1_INTC_INPLACE        (TIOCE_ADM_INT_MASK_PORT1_INTC_MASK << TIOCE_ADM_INT_MASK_PORT1_INTC_SHIFT)
+#define TIOCE_ADM_INT_MASK_PORT1_INTC_INPLACE (TIOCE_ADM_INT_MASK_PORT1_INTC_MASK << TIOCE_ADM_INT_MASK_PORT1_INTC_SHIFT)
 #define TIOCE_ADM_INT_MASK_PORT1_INTB_SHIFT          7 /* established */
 #define TIOCE_ADM_INT_MASK_PORT1_INTB_MASK           0x1ull
-#define TIOCE_ADM_INT_MASK_PORT1_INTB_INPLACE        (TIOCE_ADM_INT_MASK_PORT1_INTB_MASK << TIOCE_ADM_INT_MASK_PORT1_INTB_SHIFT)
+#define TIOCE_ADM_INT_MASK_PORT1_INTB_INPLACE (TIOCE_ADM_INT_MASK_PORT1_INTB_MASK << TIOCE_ADM_INT_MASK_PORT1_INTB_SHIFT)
 #define TIOCE_ADM_INT_MASK_PORT1_INTA_SHIFT          6 /* established */
 #define TIOCE_ADM_INT_MASK_PORT1_INTA_MASK           0x1ull
-#define TIOCE_ADM_INT_MASK_PORT1_INTA_INPLACE        (TIOCE_ADM_INT_MASK_PORT1_INTA_MASK << TIOCE_ADM_INT_MASK_PORT1_INTA_SHIFT)
+#define TIOCE_ADM_INT_MASK_PORT1_INTA_INPLACE (TIOCE_ADM_INT_MASK_PORT1_INTA_MASK << TIOCE_ADM_INT_MASK_PORT1_INTA_SHIFT)
 #define TIOCE_ADM_INT_MASK_PORT2_HOTPLUG_EVENT_SHIFT 5 /* established */
 #define TIOCE_ADM_INT_MASK_PORT2_HOTPLUG_EVENT_MASK  0x1ull
 #define TIOCE_ADM_INT_MASK_PORT2_HOTPLUG_EVENT_INPLACE (TIOCE_ADM_INT_MASK_PORT2_HOTPLUG_EVENT_MASK << TIOCE_ADM_INT_MASK_PORT2_HOTPLUG_EVENT_SHIFT)
@@ -262,58 +307,72 @@
 #define TIOCE_ADM_INT_MASK_PORT1_HOTPLUG_EVENT_INPLACE (TIOCE_ADM_INT_MASK_PORT1_HOTPLUG_EVENT_MASK << TIOCE_ADM_INT_MASK_PORT1_HOTPLUG_EVENT_SHIFT)
 #define TIOCE_ADM_INT_MASK_PCIE_ERROR_SHIFT          3 /* established */
 #define TIOCE_ADM_INT_MASK_PCIE_ERROR_MASK           0x1ull
-#define TIOCE_ADM_INT_MASK_PCIE_ERROR_INPLACE        (TIOCE_ADM_INT_MASK_PCIE_ERROR_MASK << TIOCE_ADM_INT_MASK_PCIE_ERROR_SHIFT)
+#define TIOCE_ADM_INT_MASK_PCIE_ERROR_INPLACE (TIOCE_ADM_INT_MASK_PCIE_ERROR_MASK << TIOCE_ADM_INT_MASK_PCIE_ERROR_SHIFT)
 #define TIOCE_ADM_INT_MASK_LSI2_IP_ERROR_SHIFT       2 /* established */
 #define TIOCE_ADM_INT_MASK_LSI2_IP_ERROR_MASK        0x1ull
-#define TIOCE_ADM_INT_MASK_LSI2_IP_ERROR_INPLACE     (TIOCE_ADM_INT_MASK_LSI2_IP_ERROR_MASK << TIOCE_ADM_INT_MASK_LSI2_IP_ERROR_SHIFT)
+#define TIOCE_ADM_INT_MASK_LSI2_IP_ERROR_INPLACE (TIOCE_ADM_INT_MASK_LSI2_IP_ERROR_MASK << TIOCE_ADM_INT_MASK_LSI2_IP_ERROR_SHIFT)
 #define TIOCE_ADM_INT_MASK_LSI1_IP_ERROR_SHIFT       1 /* established */
 #define TIOCE_ADM_INT_MASK_LSI1_IP_ERROR_MASK        0x1ull
-#define TIOCE_ADM_INT_MASK_LSI1_IP_ERROR_INPLACE     (TIOCE_ADM_INT_MASK_LSI1_IP_ERROR_MASK << TIOCE_ADM_INT_MASK_LSI1_IP_ERROR_SHIFT)
+#define TIOCE_ADM_INT_MASK_LSI1_IP_ERROR_INPLACE (TIOCE_ADM_INT_MASK_LSI1_IP_ERROR_MASK << TIOCE_ADM_INT_MASK_LSI1_IP_ERROR_SHIFT)
 #define TIOCE_ADM_INT_MASK_CE_ERROR_SHIFT            0 /* established */
 #define TIOCE_ADM_INT_MASK_CE_ERROR_MASK             0x1ull
-#define TIOCE_ADM_INT_MASK_CE_ERROR_INPLACE          (TIOCE_ADM_INT_MASK_CE_ERROR_MASK << TIOCE_ADM_INT_MASK_CE_ERROR_SHIFT)
+#define TIOCE_ADM_INT_MASK_CE_ERROR_INPLACE (TIOCE_ADM_INT_MASK_CE_ERROR_MASK << TIOCE_ADM_INT_MASK_CE_ERROR_SHIFT)
 
 /*
- * Name and offset are the vendor header's definition (struct member ce_adm_int_pending). The header gives no access direction or reset value; access rw is a placeholder.
+ * Name and offset are the vendor header's definition (struct member
+ * ce_adm_int_pending). The header gives no access direction or reset value;
+ * access rw is a placeholder.
  */
 /* adm_int_pending: rw64, reset unknown */
 #define TIOCE_ADM_INT_PENDING                        0x000070 /* established */
 
 /*
- * Force interrupt. Bits 0 to 7 force INTA to INTD of port 1 then port 2; bit 8 forces always. The bit numbering differs from the status register, and the provider maps explicitly. Revision A does not use it (workaround). Name and offset are the vendor header's definition (struct member ce_adm_force_int). The header gives no access direction or reset value; access rw is a placeholder. Field layout from the header: bits 0 to 7 are the four interrupt pins of each port, bit 8 forces unconditionally. These positions differ from the status register, and the provider maps between them explicitly.
+ * Force interrupt. Bits 0 to 7 force INTA to INTD of port 1 then port 2; bit 8
+ * forces always. The bit numbering differs from the status register, and the
+ * provider maps explicitly. Revision A does not use it (workaround). Name and
+ * offset are the vendor header's definition (struct member ce_adm_force_int).
+ * The header gives no access direction or reset value; access rw is a
+ * placeholder. Field layout from the header: bits 0 to 7 are the four interrupt
+ * pins of each port, bit 8 forces unconditionally. These positions differ from
+ * the status register, and the provider maps between them explicitly.
  */
 /* adm_force_int: rw64, reset unknown */
 #define TIOCE_ADM_FORCE_INT                          0x000078 /* established */
 #define TIOCE_ADM_FORCE_INT_ALWAYS_SHIFT             8 /* established */
 #define TIOCE_ADM_FORCE_INT_ALWAYS_MASK              0x1ull
-#define TIOCE_ADM_FORCE_INT_ALWAYS_INPLACE           (TIOCE_ADM_FORCE_INT_ALWAYS_MASK << TIOCE_ADM_FORCE_INT_ALWAYS_SHIFT)
+#define TIOCE_ADM_FORCE_INT_ALWAYS_INPLACE (TIOCE_ADM_FORCE_INT_ALWAYS_MASK << TIOCE_ADM_FORCE_INT_ALWAYS_SHIFT)
 #define TIOCE_ADM_FORCE_INT_PORT2_INTD_SHIFT         7 /* established */
 #define TIOCE_ADM_FORCE_INT_PORT2_INTD_MASK          0x1ull
-#define TIOCE_ADM_FORCE_INT_PORT2_INTD_INPLACE       (TIOCE_ADM_FORCE_INT_PORT2_INTD_MASK << TIOCE_ADM_FORCE_INT_PORT2_INTD_SHIFT)
+#define TIOCE_ADM_FORCE_INT_PORT2_INTD_INPLACE (TIOCE_ADM_FORCE_INT_PORT2_INTD_MASK << TIOCE_ADM_FORCE_INT_PORT2_INTD_SHIFT)
 #define TIOCE_ADM_FORCE_INT_PORT2_INTC_SHIFT         6 /* established */
 #define TIOCE_ADM_FORCE_INT_PORT2_INTC_MASK          0x1ull
-#define TIOCE_ADM_FORCE_INT_PORT2_INTC_INPLACE       (TIOCE_ADM_FORCE_INT_PORT2_INTC_MASK << TIOCE_ADM_FORCE_INT_PORT2_INTC_SHIFT)
+#define TIOCE_ADM_FORCE_INT_PORT2_INTC_INPLACE (TIOCE_ADM_FORCE_INT_PORT2_INTC_MASK << TIOCE_ADM_FORCE_INT_PORT2_INTC_SHIFT)
 #define TIOCE_ADM_FORCE_INT_PORT2_INTB_SHIFT         5 /* established */
 #define TIOCE_ADM_FORCE_INT_PORT2_INTB_MASK          0x1ull
-#define TIOCE_ADM_FORCE_INT_PORT2_INTB_INPLACE       (TIOCE_ADM_FORCE_INT_PORT2_INTB_MASK << TIOCE_ADM_FORCE_INT_PORT2_INTB_SHIFT)
+#define TIOCE_ADM_FORCE_INT_PORT2_INTB_INPLACE (TIOCE_ADM_FORCE_INT_PORT2_INTB_MASK << TIOCE_ADM_FORCE_INT_PORT2_INTB_SHIFT)
 #define TIOCE_ADM_FORCE_INT_PORT2_INTA_SHIFT         4 /* established */
 #define TIOCE_ADM_FORCE_INT_PORT2_INTA_MASK          0x1ull
-#define TIOCE_ADM_FORCE_INT_PORT2_INTA_INPLACE       (TIOCE_ADM_FORCE_INT_PORT2_INTA_MASK << TIOCE_ADM_FORCE_INT_PORT2_INTA_SHIFT)
+#define TIOCE_ADM_FORCE_INT_PORT2_INTA_INPLACE (TIOCE_ADM_FORCE_INT_PORT2_INTA_MASK << TIOCE_ADM_FORCE_INT_PORT2_INTA_SHIFT)
 #define TIOCE_ADM_FORCE_INT_PORT1_INTD_SHIFT         3 /* established */
 #define TIOCE_ADM_FORCE_INT_PORT1_INTD_MASK          0x1ull
-#define TIOCE_ADM_FORCE_INT_PORT1_INTD_INPLACE       (TIOCE_ADM_FORCE_INT_PORT1_INTD_MASK << TIOCE_ADM_FORCE_INT_PORT1_INTD_SHIFT)
+#define TIOCE_ADM_FORCE_INT_PORT1_INTD_INPLACE (TIOCE_ADM_FORCE_INT_PORT1_INTD_MASK << TIOCE_ADM_FORCE_INT_PORT1_INTD_SHIFT)
 #define TIOCE_ADM_FORCE_INT_PORT1_INTC_SHIFT         2 /* established */
 #define TIOCE_ADM_FORCE_INT_PORT1_INTC_MASK          0x1ull
-#define TIOCE_ADM_FORCE_INT_PORT1_INTC_INPLACE       (TIOCE_ADM_FORCE_INT_PORT1_INTC_MASK << TIOCE_ADM_FORCE_INT_PORT1_INTC_SHIFT)
+#define TIOCE_ADM_FORCE_INT_PORT1_INTC_INPLACE (TIOCE_ADM_FORCE_INT_PORT1_INTC_MASK << TIOCE_ADM_FORCE_INT_PORT1_INTC_SHIFT)
 #define TIOCE_ADM_FORCE_INT_PORT1_INTB_SHIFT         1 /* established */
 #define TIOCE_ADM_FORCE_INT_PORT1_INTB_MASK          0x1ull
-#define TIOCE_ADM_FORCE_INT_PORT1_INTB_INPLACE       (TIOCE_ADM_FORCE_INT_PORT1_INTB_MASK << TIOCE_ADM_FORCE_INT_PORT1_INTB_SHIFT)
+#define TIOCE_ADM_FORCE_INT_PORT1_INTB_INPLACE (TIOCE_ADM_FORCE_INT_PORT1_INTB_MASK << TIOCE_ADM_FORCE_INT_PORT1_INTB_SHIFT)
 #define TIOCE_ADM_FORCE_INT_PORT1_INTA_SHIFT         0 /* established */
 #define TIOCE_ADM_FORCE_INT_PORT1_INTA_MASK          0x1ull
-#define TIOCE_ADM_FORCE_INT_PORT1_INTA_INPLACE       (TIOCE_ADM_FORCE_INT_PORT1_INTA_MASK << TIOCE_ADM_FORCE_INT_PORT1_INTA_SHIFT)
+#define TIOCE_ADM_FORCE_INT_PORT1_INTA_INPLACE (TIOCE_ADM_FORCE_INT_PORT1_INTA_MASK << TIOCE_ADM_FORCE_INT_PORT1_INTA_SHIFT)
 
 /*
- * Name and offset are the vendor header's definition (struct member ce_adm_ure_ups_buf_barrier_flush). The header gives no access direction or reset value; access rw is a placeholder. Field layout: the header gives only the shift of each of eight selectors (one per pipe of each port), spaced four bits apart. The four-bit width is inferred from the spacing. The provider never touches it.
+ * Name and offset are the vendor header's definition (struct member
+ * ce_adm_ure_ups_buf_barrier_flush). The header gives no access direction or
+ * reset value; access rw is a placeholder. Field layout: the header gives only
+ * the shift of each of eight selectors (one per pipe of each port), spaced four
+ * bits apart. The four-bit width is inferred from the spacing. The provider
+ * never touches it.
  */
 /* adm_ure_ups_buf_barrier_flush: rw64, reset unknown */
 #define TIOCE_ADM_URE_UPS_BUF_BARRIER_FLUSH          0x000080 /* established */
@@ -343,7 +402,15 @@
 #define TIOCE_ADM_URE_UPS_BUF_BARRIER_FLUSH_PORT1_PIPE0_INPLACE (TIOCE_ADM_URE_UPS_BUF_BARRIER_FLUSH_PORT1_PIPE0_MASK << TIOCE_ADM_URE_UPS_BUF_BARRIER_FLUSH_PORT1_PIPE0_SHIFT)
 
 /*
- * Interrupt destination, one per source (the header declares fifteen). The provider writes the kernel vector in bits 63:56 (shift INTR_VECTOR_SHFT) ORed with the destination coretalk address of the target CPU, indexed by interrupt source bit. Name and offset are the vendor header's definition (struct member ce_adm_int_dest). The header gives no access direction or reset value; access rw is a placeholder. The vector field is inferred: the header gives only the shift 56 and the provider ORs the vector over the destination address; bit 63 as the top is the end of the word, not a header fact. The extent of the address part is unknown.
+ * Interrupt destination, one per source (the header declares fifteen). The
+ * provider writes the kernel vector in bits 63:56 (shift INTR_VECTOR_SHFT) ORed
+ * with the destination coretalk address of the target CPU, indexed by interrupt
+ * source bit. Name and offset are the vendor header's definition (struct member
+ * ce_adm_int_dest). The header gives no access direction or reset value; access
+ * rw is a placeholder. The vector field is inferred: the header gives only the
+ * shift 56 and the provider ORs the vector over the destination address; bit 63
+ * as the top is the end of the word, not a header fact. The extent of the
+ * address part is unknown.
  */
 /* adm_int_dest: rw64, reset unknown */
 #define TIOCE_ADM_INT_DEST                           0x000088 /* established */
@@ -351,10 +418,13 @@
 #define TIOCE_ADM_INT_DEST_STRIDE                    8
 #define TIOCE_ADM_INT_DEST_VECTOR_SHIFT              56 /* inferred */
 #define TIOCE_ADM_INT_DEST_VECTOR_MASK               0xffull
-#define TIOCE_ADM_INT_DEST_VECTOR_INPLACE            (TIOCE_ADM_INT_DEST_VECTOR_MASK << TIOCE_ADM_INT_DEST_VECTOR_SHIFT)
+#define TIOCE_ADM_INT_DEST_VECTOR_INPLACE (TIOCE_ADM_INT_DEST_VECTOR_MASK << TIOCE_ADM_INT_DEST_VECTOR_SHIFT)
 
 /*
- * Name and offset are the vendor header's definition (struct member ce_adm_error_summary). The header gives no access direction or reset value; access rw is a placeholder. Field layout from the header: one bit per error source, bits 0 to 61.
+ * Name and offset are the vendor header's definition (struct member
+ * ce_adm_error_summary). The header gives no access direction or reset value;
+ * access rw is a placeholder. Field layout from the header: one bit per error
+ * source, bits 0 to 61.
  */
 /* adm_error_summary: rw64, reset unknown */
 #define TIOCE_ADM_ERROR_SUMMARY                      0x000100 /* established */
@@ -376,69 +446,89 @@
 #define TIOCE_ADM_ERROR_SUMMARY_PORT1_PCIE_COR_ERR_SHIFT 56 /* established */
 #define TIOCE_ADM_ERROR_SUMMARY_PORT1_PCIE_COR_ERR_MASK 0x1ull
 #define TIOCE_ADM_ERROR_SUMMARY_PORT1_PCIE_COR_ERR_INPLACE (TIOCE_ADM_ERROR_SUMMARY_PORT1_PCIE_COR_ERR_MASK << TIOCE_ADM_ERROR_SUMMARY_PORT1_PCIE_COR_ERR_SHIFT)
-#define TIOCE_ADM_ERROR_SUMMARY_DTL2_POSTED_D_CRED_MAX_ERR_SHIFT 55 /* established */
+/* established */
+#define TIOCE_ADM_ERROR_SUMMARY_DTL2_POSTED_D_CRED_MAX_ERR_SHIFT 55
 #define TIOCE_ADM_ERROR_SUMMARY_DTL2_POSTED_D_CRED_MAX_ERR_MASK 0x1ull
 #define TIOCE_ADM_ERROR_SUMMARY_DTL2_POSTED_D_CRED_MAX_ERR_INPLACE (TIOCE_ADM_ERROR_SUMMARY_DTL2_POSTED_D_CRED_MAX_ERR_MASK << TIOCE_ADM_ERROR_SUMMARY_DTL2_POSTED_D_CRED_MAX_ERR_SHIFT)
-#define TIOCE_ADM_ERROR_SUMMARY_DTL2_POSTED_HD_CRED_MAX_ERR_SHIFT 54 /* established */
+/* established */
+#define TIOCE_ADM_ERROR_SUMMARY_DTL2_POSTED_HD_CRED_MAX_ERR_SHIFT 54
 #define TIOCE_ADM_ERROR_SUMMARY_DTL2_POSTED_HD_CRED_MAX_ERR_MASK 0x1ull
 #define TIOCE_ADM_ERROR_SUMMARY_DTL2_POSTED_HD_CRED_MAX_ERR_INPLACE (TIOCE_ADM_ERROR_SUMMARY_DTL2_POSTED_HD_CRED_MAX_ERR_MASK << TIOCE_ADM_ERROR_SUMMARY_DTL2_POSTED_HD_CRED_MAX_ERR_SHIFT)
-#define TIOCE_ADM_ERROR_SUMMARY_DTL2_NPOSTED_D_CRED_MAX_ERR_SHIFT 53 /* established */
+/* established */
+#define TIOCE_ADM_ERROR_SUMMARY_DTL2_NPOSTED_D_CRED_MAX_ERR_SHIFT 53
 #define TIOCE_ADM_ERROR_SUMMARY_DTL2_NPOSTED_D_CRED_MAX_ERR_MASK 0x1ull
 #define TIOCE_ADM_ERROR_SUMMARY_DTL2_NPOSTED_D_CRED_MAX_ERR_INPLACE (TIOCE_ADM_ERROR_SUMMARY_DTL2_NPOSTED_D_CRED_MAX_ERR_MASK << TIOCE_ADM_ERROR_SUMMARY_DTL2_NPOSTED_D_CRED_MAX_ERR_SHIFT)
-#define TIOCE_ADM_ERROR_SUMMARY_DTL2_NPOSTED_HD_CRED_MAX_ERR_SHIFT 52 /* established */
+/* established */
+#define TIOCE_ADM_ERROR_SUMMARY_DTL2_NPOSTED_HD_CRED_MAX_ERR_SHIFT 52
 #define TIOCE_ADM_ERROR_SUMMARY_DTL2_NPOSTED_HD_CRED_MAX_ERR_MASK 0x1ull
 #define TIOCE_ADM_ERROR_SUMMARY_DTL2_NPOSTED_HD_CRED_MAX_ERR_INPLACE (TIOCE_ADM_ERROR_SUMMARY_DTL2_NPOSTED_HD_CRED_MAX_ERR_MASK << TIOCE_ADM_ERROR_SUMMARY_DTL2_NPOSTED_HD_CRED_MAX_ERR_SHIFT)
-#define TIOCE_ADM_ERROR_SUMMARY_DTL2_COMP_D_CRED_MAX_ERR_SHIFT 51 /* established */
+/* established */
+#define TIOCE_ADM_ERROR_SUMMARY_DTL2_COMP_D_CRED_MAX_ERR_SHIFT 51
 #define TIOCE_ADM_ERROR_SUMMARY_DTL2_COMP_D_CRED_MAX_ERR_MASK 0x1ull
 #define TIOCE_ADM_ERROR_SUMMARY_DTL2_COMP_D_CRED_MAX_ERR_INPLACE (TIOCE_ADM_ERROR_SUMMARY_DTL2_COMP_D_CRED_MAX_ERR_MASK << TIOCE_ADM_ERROR_SUMMARY_DTL2_COMP_D_CRED_MAX_ERR_SHIFT)
-#define TIOCE_ADM_ERROR_SUMMARY_DTL2_COMP_HD_CRED_MAX_ERR_SHIFT 50 /* established */
+/* established */
+#define TIOCE_ADM_ERROR_SUMMARY_DTL2_COMP_HD_CRED_MAX_ERR_SHIFT 50
 #define TIOCE_ADM_ERROR_SUMMARY_DTL2_COMP_HD_CRED_MAX_ERR_MASK 0x1ull
 #define TIOCE_ADM_ERROR_SUMMARY_DTL2_COMP_HD_CRED_MAX_ERR_INPLACE (TIOCE_ADM_ERROR_SUMMARY_DTL2_COMP_HD_CRED_MAX_ERR_MASK << TIOCE_ADM_ERROR_SUMMARY_DTL2_COMP_HD_CRED_MAX_ERR_SHIFT)
-#define TIOCE_ADM_ERROR_SUMMARY_DTL2_INF_NPOSTED_CRED_UPDT_ERR_SHIFT 49 /* established */
+/* established */
+#define TIOCE_ADM_ERROR_SUMMARY_DTL2_INF_NPOSTED_CRED_UPDT_ERR_SHIFT 49
 #define TIOCE_ADM_ERROR_SUMMARY_DTL2_INF_NPOSTED_CRED_UPDT_ERR_MASK 0x1ull
 #define TIOCE_ADM_ERROR_SUMMARY_DTL2_INF_NPOSTED_CRED_UPDT_ERR_INPLACE (TIOCE_ADM_ERROR_SUMMARY_DTL2_INF_NPOSTED_CRED_UPDT_ERR_MASK << TIOCE_ADM_ERROR_SUMMARY_DTL2_INF_NPOSTED_CRED_UPDT_ERR_SHIFT)
-#define TIOCE_ADM_ERROR_SUMMARY_DTL2_INF_POSTED_CRED_UPDT_ERR_SHIFT 48 /* established */
+/* established */
+#define TIOCE_ADM_ERROR_SUMMARY_DTL2_INF_POSTED_CRED_UPDT_ERR_SHIFT 48
 #define TIOCE_ADM_ERROR_SUMMARY_DTL2_INF_POSTED_CRED_UPDT_ERR_MASK 0x1ull
 #define TIOCE_ADM_ERROR_SUMMARY_DTL2_INF_POSTED_CRED_UPDT_ERR_INPLACE (TIOCE_ADM_ERROR_SUMMARY_DTL2_INF_POSTED_CRED_UPDT_ERR_MASK << TIOCE_ADM_ERROR_SUMMARY_DTL2_INF_POSTED_CRED_UPDT_ERR_SHIFT)
-#define TIOCE_ADM_ERROR_SUMMARY_DTL2_INF_COMPL_CRED_UPDT_ERR_SHIFT 47 /* established */
+/* established */
+#define TIOCE_ADM_ERROR_SUMMARY_DTL2_INF_COMPL_CRED_UPDT_ERR_SHIFT 47
 #define TIOCE_ADM_ERROR_SUMMARY_DTL2_INF_COMPL_CRED_UPDT_ERR_MASK 0x1ull
 #define TIOCE_ADM_ERROR_SUMMARY_DTL2_INF_COMPL_CRED_UPDT_ERR_INPLACE (TIOCE_ADM_ERROR_SUMMARY_DTL2_INF_COMPL_CRED_UPDT_ERR_MASK << TIOCE_ADM_ERROR_SUMMARY_DTL2_INF_COMPL_CRED_UPDT_ERR_SHIFT)
-#define TIOCE_ADM_ERROR_SUMMARY_DTL2_MIN_PDATA_CREDIT_ERR_SHIFT 46 /* established */
+/* established */
+#define TIOCE_ADM_ERROR_SUMMARY_DTL2_MIN_PDATA_CREDIT_ERR_SHIFT 46
 #define TIOCE_ADM_ERROR_SUMMARY_DTL2_MIN_PDATA_CREDIT_ERR_MASK 0x1ull
 #define TIOCE_ADM_ERROR_SUMMARY_DTL2_MIN_PDATA_CREDIT_ERR_INPLACE (TIOCE_ADM_ERROR_SUMMARY_DTL2_MIN_PDATA_CREDIT_ERR_MASK << TIOCE_ADM_ERROR_SUMMARY_DTL2_MIN_PDATA_CREDIT_ERR_SHIFT)
-#define TIOCE_ADM_ERROR_SUMMARY_DTL1_POSTED_D_CRED_MAX_ERR_SHIFT 45 /* established */
+/* established */
+#define TIOCE_ADM_ERROR_SUMMARY_DTL1_POSTED_D_CRED_MAX_ERR_SHIFT 45
 #define TIOCE_ADM_ERROR_SUMMARY_DTL1_POSTED_D_CRED_MAX_ERR_MASK 0x1ull
 #define TIOCE_ADM_ERROR_SUMMARY_DTL1_POSTED_D_CRED_MAX_ERR_INPLACE (TIOCE_ADM_ERROR_SUMMARY_DTL1_POSTED_D_CRED_MAX_ERR_MASK << TIOCE_ADM_ERROR_SUMMARY_DTL1_POSTED_D_CRED_MAX_ERR_SHIFT)
-#define TIOCE_ADM_ERROR_SUMMARY_DTL1_POSTED_HD_CRED_MAX_ERR_SHIFT 44 /* established */
+/* established */
+#define TIOCE_ADM_ERROR_SUMMARY_DTL1_POSTED_HD_CRED_MAX_ERR_SHIFT 44
 #define TIOCE_ADM_ERROR_SUMMARY_DTL1_POSTED_HD_CRED_MAX_ERR_MASK 0x1ull
 #define TIOCE_ADM_ERROR_SUMMARY_DTL1_POSTED_HD_CRED_MAX_ERR_INPLACE (TIOCE_ADM_ERROR_SUMMARY_DTL1_POSTED_HD_CRED_MAX_ERR_MASK << TIOCE_ADM_ERROR_SUMMARY_DTL1_POSTED_HD_CRED_MAX_ERR_SHIFT)
-#define TIOCE_ADM_ERROR_SUMMARY_DTL1_NPOSTED_D_CRED_MAX_ERR_SHIFT 43 /* established */
+/* established */
+#define TIOCE_ADM_ERROR_SUMMARY_DTL1_NPOSTED_D_CRED_MAX_ERR_SHIFT 43
 #define TIOCE_ADM_ERROR_SUMMARY_DTL1_NPOSTED_D_CRED_MAX_ERR_MASK 0x1ull
 #define TIOCE_ADM_ERROR_SUMMARY_DTL1_NPOSTED_D_CRED_MAX_ERR_INPLACE (TIOCE_ADM_ERROR_SUMMARY_DTL1_NPOSTED_D_CRED_MAX_ERR_MASK << TIOCE_ADM_ERROR_SUMMARY_DTL1_NPOSTED_D_CRED_MAX_ERR_SHIFT)
-#define TIOCE_ADM_ERROR_SUMMARY_DTL1_NPOSTED_HD_CRED_MAX_ERR_SHIFT 42 /* established */
+/* established */
+#define TIOCE_ADM_ERROR_SUMMARY_DTL1_NPOSTED_HD_CRED_MAX_ERR_SHIFT 42
 #define TIOCE_ADM_ERROR_SUMMARY_DTL1_NPOSTED_HD_CRED_MAX_ERR_MASK 0x1ull
 #define TIOCE_ADM_ERROR_SUMMARY_DTL1_NPOSTED_HD_CRED_MAX_ERR_INPLACE (TIOCE_ADM_ERROR_SUMMARY_DTL1_NPOSTED_HD_CRED_MAX_ERR_MASK << TIOCE_ADM_ERROR_SUMMARY_DTL1_NPOSTED_HD_CRED_MAX_ERR_SHIFT)
-#define TIOCE_ADM_ERROR_SUMMARY_DTL1_COMP_D_CRED_MAX_ERR_SHIFT 41 /* established */
+/* established */
+#define TIOCE_ADM_ERROR_SUMMARY_DTL1_COMP_D_CRED_MAX_ERR_SHIFT 41
 #define TIOCE_ADM_ERROR_SUMMARY_DTL1_COMP_D_CRED_MAX_ERR_MASK 0x1ull
 #define TIOCE_ADM_ERROR_SUMMARY_DTL1_COMP_D_CRED_MAX_ERR_INPLACE (TIOCE_ADM_ERROR_SUMMARY_DTL1_COMP_D_CRED_MAX_ERR_MASK << TIOCE_ADM_ERROR_SUMMARY_DTL1_COMP_D_CRED_MAX_ERR_SHIFT)
-#define TIOCE_ADM_ERROR_SUMMARY_DTL1_COMP_HD_CRED_MAX_ERR_SHIFT 40 /* established */
+/* established */
+#define TIOCE_ADM_ERROR_SUMMARY_DTL1_COMP_HD_CRED_MAX_ERR_SHIFT 40
 #define TIOCE_ADM_ERROR_SUMMARY_DTL1_COMP_HD_CRED_MAX_ERR_MASK 0x1ull
 #define TIOCE_ADM_ERROR_SUMMARY_DTL1_COMP_HD_CRED_MAX_ERR_INPLACE (TIOCE_ADM_ERROR_SUMMARY_DTL1_COMP_HD_CRED_MAX_ERR_MASK << TIOCE_ADM_ERROR_SUMMARY_DTL1_COMP_HD_CRED_MAX_ERR_SHIFT)
-#define TIOCE_ADM_ERROR_SUMMARY_DTL1_INF_NPOSTED_CRED_UPDT_ERR_SHIFT 39 /* established */
+/* established */
+#define TIOCE_ADM_ERROR_SUMMARY_DTL1_INF_NPOSTED_CRED_UPDT_ERR_SHIFT 39
 #define TIOCE_ADM_ERROR_SUMMARY_DTL1_INF_NPOSTED_CRED_UPDT_ERR_MASK 0x1ull
 #define TIOCE_ADM_ERROR_SUMMARY_DTL1_INF_NPOSTED_CRED_UPDT_ERR_INPLACE (TIOCE_ADM_ERROR_SUMMARY_DTL1_INF_NPOSTED_CRED_UPDT_ERR_MASK << TIOCE_ADM_ERROR_SUMMARY_DTL1_INF_NPOSTED_CRED_UPDT_ERR_SHIFT)
-#define TIOCE_ADM_ERROR_SUMMARY_DTL1_INF_POSTED_CRED_UPDT_ERR_SHIFT 38 /* established */
+/* established */
+#define TIOCE_ADM_ERROR_SUMMARY_DTL1_INF_POSTED_CRED_UPDT_ERR_SHIFT 38
 #define TIOCE_ADM_ERROR_SUMMARY_DTL1_INF_POSTED_CRED_UPDT_ERR_MASK 0x1ull
 #define TIOCE_ADM_ERROR_SUMMARY_DTL1_INF_POSTED_CRED_UPDT_ERR_INPLACE (TIOCE_ADM_ERROR_SUMMARY_DTL1_INF_POSTED_CRED_UPDT_ERR_MASK << TIOCE_ADM_ERROR_SUMMARY_DTL1_INF_POSTED_CRED_UPDT_ERR_SHIFT)
-#define TIOCE_ADM_ERROR_SUMMARY_DTL1_INF_COMPL_CRED_UPDT_ERR_SHIFT 37 /* established */
+/* established */
+#define TIOCE_ADM_ERROR_SUMMARY_DTL1_INF_COMPL_CRED_UPDT_ERR_SHIFT 37
 #define TIOCE_ADM_ERROR_SUMMARY_DTL1_INF_COMPL_CRED_UPDT_ERR_MASK 0x1ull
 #define TIOCE_ADM_ERROR_SUMMARY_DTL1_INF_COMPL_CRED_UPDT_ERR_INPLACE (TIOCE_ADM_ERROR_SUMMARY_DTL1_INF_COMPL_CRED_UPDT_ERR_MASK << TIOCE_ADM_ERROR_SUMMARY_DTL1_INF_COMPL_CRED_UPDT_ERR_SHIFT)
-#define TIOCE_ADM_ERROR_SUMMARY_DTL1_MIN_PDATA_CREDIT_ERR_SHIFT 36 /* established */
+/* established */
+#define TIOCE_ADM_ERROR_SUMMARY_DTL1_MIN_PDATA_CREDIT_ERR_SHIFT 36
 #define TIOCE_ADM_ERROR_SUMMARY_DTL1_MIN_PDATA_CREDIT_ERR_MASK 0x1ull
 #define TIOCE_ADM_ERROR_SUMMARY_DTL1_MIN_PDATA_CREDIT_ERR_INPLACE (TIOCE_ADM_ERROR_SUMMARY_DTL1_MIN_PDATA_CREDIT_ERR_MASK << TIOCE_ADM_ERROR_SUMMARY_DTL1_MIN_PDATA_CREDIT_ERR_SHIFT)
 #define TIOCE_ADM_ERROR_SUMMARY_ADM_SRAM_PE_SHIFT    35 /* established */
 #define TIOCE_ADM_ERROR_SUMMARY_ADM_SRAM_PE_MASK     0x1ull
-#define TIOCE_ADM_ERROR_SUMMARY_ADM_SRAM_PE_INPLACE  (TIOCE_ADM_ERROR_SUMMARY_ADM_SRAM_PE_MASK << TIOCE_ADM_ERROR_SUMMARY_ADM_SRAM_PE_SHIFT)
+#define TIOCE_ADM_ERROR_SUMMARY_ADM_SRAM_PE_INPLACE (TIOCE_ADM_ERROR_SUMMARY_ADM_SRAM_PE_MASK << TIOCE_ADM_ERROR_SUMMARY_ADM_SRAM_PE_SHIFT)
 #define TIOCE_ADM_ERROR_SUMMARY_ADM_CREDIT_OFLOW_SHIFT 34 /* established */
 #define TIOCE_ADM_ERROR_SUMMARY_ADM_CREDIT_OFLOW_MASK 0x1ull
 #define TIOCE_ADM_ERROR_SUMMARY_ADM_CREDIT_OFLOW_INPLACE (TIOCE_ADM_ERROR_SUMMARY_ADM_CREDIT_OFLOW_MASK << TIOCE_ADM_ERROR_SUMMARY_ADM_CREDIT_OFLOW_SHIFT)
@@ -456,20 +546,23 @@
 #define TIOCE_ADM_ERROR_SUMMARY_ADM_SSP_RSP_UNEXP_INPLACE (TIOCE_ADM_ERROR_SUMMARY_ADM_SSP_RSP_UNEXP_MASK << TIOCE_ADM_ERROR_SUMMARY_ADM_SSP_RSP_UNEXP_SHIFT)
 #define TIOCE_ADM_ERROR_SUMMARY_URE_SRAM_PE_SHIFT    29 /* established */
 #define TIOCE_ADM_ERROR_SUMMARY_URE_SRAM_PE_MASK     0x1ull
-#define TIOCE_ADM_ERROR_SUMMARY_URE_SRAM_PE_INPLACE  (TIOCE_ADM_ERROR_SUMMARY_URE_SRAM_PE_MASK << TIOCE_ADM_ERROR_SUMMARY_URE_SRAM_PE_SHIFT)
+#define TIOCE_ADM_ERROR_SUMMARY_URE_SRAM_PE_INPLACE (TIOCE_ADM_ERROR_SUMMARY_URE_SRAM_PE_MASK << TIOCE_ADM_ERROR_SUMMARY_URE_SRAM_PE_SHIFT)
 #define TIOCE_ADM_ERROR_SUMMARY_URE_CREDIT_OFLOW_SHIFT 28 /* established */
 #define TIOCE_ADM_ERROR_SUMMARY_URE_CREDIT_OFLOW_MASK 0x1ull
 #define TIOCE_ADM_ERROR_SUMMARY_URE_CREDIT_OFLOW_INPLACE (TIOCE_ADM_ERROR_SUMMARY_URE_CREDIT_OFLOW_MASK << TIOCE_ADM_ERROR_SUMMARY_URE_CREDIT_OFLOW_SHIFT)
 #define TIOCE_ADM_ERROR_SUMMARY_URE_ATE40_PAGE_FAULT_SHIFT 27 /* established */
 #define TIOCE_ADM_ERROR_SUMMARY_URE_ATE40_PAGE_FAULT_MASK 0x1ull
 #define TIOCE_ADM_ERROR_SUMMARY_URE_ATE40_PAGE_FAULT_INPLACE (TIOCE_ADM_ERROR_SUMMARY_URE_ATE40_PAGE_FAULT_MASK << TIOCE_ADM_ERROR_SUMMARY_URE_ATE40_PAGE_FAULT_SHIFT)
-#define TIOCE_ADM_ERROR_SUMMARY_URE_ATE3240_PAGE_FAULT_SHIFT 26 /* established */
+/* established */
+#define TIOCE_ADM_ERROR_SUMMARY_URE_ATE3240_PAGE_FAULT_SHIFT 26
 #define TIOCE_ADM_ERROR_SUMMARY_URE_ATE3240_PAGE_FAULT_MASK 0x1ull
 #define TIOCE_ADM_ERROR_SUMMARY_URE_ATE3240_PAGE_FAULT_INPLACE (TIOCE_ADM_ERROR_SUMMARY_URE_ATE3240_PAGE_FAULT_MASK << TIOCE_ADM_ERROR_SUMMARY_URE_ATE3240_PAGE_FAULT_SHIFT)
-#define TIOCE_ADM_ERROR_SUMMARY_URE_SSP_RD_REQ_TIMEOUT_SHIFT 25 /* established */
+/* established */
+#define TIOCE_ADM_ERROR_SUMMARY_URE_SSP_RD_REQ_TIMEOUT_SHIFT 25
 #define TIOCE_ADM_ERROR_SUMMARY_URE_SSP_RD_REQ_TIMEOUT_MASK 0x1ull
 #define TIOCE_ADM_ERROR_SUMMARY_URE_SSP_RD_REQ_TIMEOUT_INPLACE (TIOCE_ADM_ERROR_SUMMARY_URE_SSP_RD_REQ_TIMEOUT_MASK << TIOCE_ADM_ERROR_SUMMARY_URE_SSP_RD_REQ_TIMEOUT_SHIFT)
-#define TIOCE_ADM_ERROR_SUMMARY_URE_SSP_WR_REQ_TIMEOUT_SHIFT 24 /* established */
+/* established */
+#define TIOCE_ADM_ERROR_SUMMARY_URE_SSP_WR_REQ_TIMEOUT_SHIFT 24
 #define TIOCE_ADM_ERROR_SUMMARY_URE_SSP_WR_REQ_TIMEOUT_MASK 0x1ull
 #define TIOCE_ADM_ERROR_SUMMARY_URE_SSP_WR_REQ_TIMEOUT_INPLACE (TIOCE_ADM_ERROR_SUMMARY_URE_SSP_WR_REQ_TIMEOUT_MASK << TIOCE_ADM_ERROR_SUMMARY_URE_SSP_WR_REQ_TIMEOUT_SHIFT)
 #define TIOCE_ADM_ERROR_SUMMARY_URE_SSP_RSP_UNEXP_SHIFT 23 /* established */
@@ -489,7 +582,7 @@
 #define TIOCE_ADM_ERROR_SUMMARY_SSP_RSP_INVALID_INPLACE (TIOCE_ADM_ERROR_SUMMARY_SSP_RSP_INVALID_MASK << TIOCE_ADM_ERROR_SUMMARY_SSP_RSP_INVALID_SHIFT)
 #define TIOCE_ADM_ERROR_SUMMARY_DRE_SRAM_PE_SHIFT    18 /* established */
 #define TIOCE_ADM_ERROR_SUMMARY_DRE_SRAM_PE_MASK     0x1ull
-#define TIOCE_ADM_ERROR_SUMMARY_DRE_SRAM_PE_INPLACE  (TIOCE_ADM_ERROR_SUMMARY_DRE_SRAM_PE_MASK << TIOCE_ADM_ERROR_SUMMARY_DRE_SRAM_PE_SHIFT)
+#define TIOCE_ADM_ERROR_SUMMARY_DRE_SRAM_PE_INPLACE (TIOCE_ADM_ERROR_SUMMARY_DRE_SRAM_PE_MASK << TIOCE_ADM_ERROR_SUMMARY_DRE_SRAM_PE_SHIFT)
 #define TIOCE_ADM_ERROR_SUMMARY_DRE_CREDIT_OFLOW_SHIFT 17 /* established */
 #define TIOCE_ADM_ERROR_SUMMARY_DRE_CREDIT_OFLOW_MASK 0x1ull
 #define TIOCE_ADM_ERROR_SUMMARY_DRE_CREDIT_OFLOW_INPLACE (TIOCE_ADM_ERROR_SUMMARY_DRE_CREDIT_OFLOW_MASK << TIOCE_ADM_ERROR_SUMMARY_DRE_CREDIT_OFLOW_SHIFT)
@@ -528,10 +621,10 @@
 #define TIOCE_ADM_ERROR_SUMMARY_CXM_CREDIT_OFLOW_INPLACE (TIOCE_ADM_ERROR_SUMMARY_CXM_CREDIT_OFLOW_MASK << TIOCE_ADM_ERROR_SUMMARY_CXM_CREDIT_OFLOW_SHIFT)
 #define TIOCE_ADM_ERROR_SUMMARY_SSP_MBE_SHIFT        5 /* established */
 #define TIOCE_ADM_ERROR_SUMMARY_SSP_MBE_MASK         0x1ull
-#define TIOCE_ADM_ERROR_SUMMARY_SSP_MBE_INPLACE      (TIOCE_ADM_ERROR_SUMMARY_SSP_MBE_MASK << TIOCE_ADM_ERROR_SUMMARY_SSP_MBE_SHIFT)
+#define TIOCE_ADM_ERROR_SUMMARY_SSP_MBE_INPLACE (TIOCE_ADM_ERROR_SUMMARY_SSP_MBE_MASK << TIOCE_ADM_ERROR_SUMMARY_SSP_MBE_SHIFT)
 #define TIOCE_ADM_ERROR_SUMMARY_SSP_SBE_SHIFT        4 /* established */
 #define TIOCE_ADM_ERROR_SUMMARY_SSP_SBE_MASK         0x1ull
-#define TIOCE_ADM_ERROR_SUMMARY_SSP_SBE_INPLACE      (TIOCE_ADM_ERROR_SUMMARY_SSP_SBE_MASK << TIOCE_ADM_ERROR_SUMMARY_SSP_SBE_SHIFT)
+#define TIOCE_ADM_ERROR_SUMMARY_SSP_SBE_INPLACE (TIOCE_ADM_ERROR_SUMMARY_SSP_SBE_MASK << TIOCE_ADM_ERROR_SUMMARY_SSP_SBE_SHIFT)
 #define TIOCE_ADM_ERROR_SUMMARY_SSP_PROTOCOL_ERROR_SHIFT 3 /* established */
 #define TIOCE_ADM_ERROR_SUMMARY_SSP_PROTOCOL_ERROR_MASK 0x1ull
 #define TIOCE_ADM_ERROR_SUMMARY_SSP_PROTOCOL_ERROR_INPLACE (TIOCE_ADM_ERROR_SUMMARY_SSP_PROTOCOL_ERROR_MASK << TIOCE_ADM_ERROR_SUMMARY_SSP_PROTOCOL_ERROR_SHIFT)
@@ -546,14 +639,22 @@
 #define TIOCE_ADM_ERROR_SUMMARY_CRM_SSP_REQ_INVALID_INPLACE (TIOCE_ADM_ERROR_SUMMARY_CRM_SSP_REQ_INVALID_MASK << TIOCE_ADM_ERROR_SUMMARY_CRM_SSP_REQ_INVALID_SHIFT)
 
 /*
- * Error summary alias. The provider sets every bit through it at attach to clear transient errors. Name and offset are the vendor header's definition (struct member ce_adm_error_summary_alias). The header gives no access direction or reset value; access rw is a placeholder. Field layout is inferred: the header assigns bits to the summary and mask registers only. The provider writes all ones here at attach with the same clear-transient-errors intent as the status alias; the one-bit-per-source layout is carried over from the summary by that role, not stated.
+ * Error summary alias. The provider sets every bit through it at attach to
+ * clear transient errors. Name and offset are the vendor header's definition
+ * (struct member ce_adm_error_summary_alias). The header gives no access
+ * direction or reset value; access rw is a placeholder. Field layout is
+ * inferred: the header assigns bits to the summary and mask registers only. The
+ * provider writes all ones here at attach with the same clear-transient-errors
+ * intent as the status alias; the one-bit-per-source layout is carried over
+ * from the summary by that role, not stated.
  */
 /* adm_error_summary_alias: rw64, reset unknown */
 #define TIOCE_ADM_ERROR_SUMMARY_ALIAS                0x000108 /* established */
 #define TIOCE_ADM_ERROR_SUMMARY_ALIAS_PORT2_PCIE_FAT_ERR_SHIFT 61 /* inferred */
 #define TIOCE_ADM_ERROR_SUMMARY_ALIAS_PORT2_PCIE_FAT_ERR_MASK 0x1ull
 #define TIOCE_ADM_ERROR_SUMMARY_ALIAS_PORT2_PCIE_FAT_ERR_INPLACE (TIOCE_ADM_ERROR_SUMMARY_ALIAS_PORT2_PCIE_FAT_ERR_MASK << TIOCE_ADM_ERROR_SUMMARY_ALIAS_PORT2_PCIE_FAT_ERR_SHIFT)
-#define TIOCE_ADM_ERROR_SUMMARY_ALIAS_PORT2_PCIE_NFAT_ERR_SHIFT 60 /* inferred */
+/* inferred */
+#define TIOCE_ADM_ERROR_SUMMARY_ALIAS_PORT2_PCIE_NFAT_ERR_SHIFT 60
 #define TIOCE_ADM_ERROR_SUMMARY_ALIAS_PORT2_PCIE_NFAT_ERR_MASK 0x1ull
 #define TIOCE_ADM_ERROR_SUMMARY_ALIAS_PORT2_PCIE_NFAT_ERR_INPLACE (TIOCE_ADM_ERROR_SUMMARY_ALIAS_PORT2_PCIE_NFAT_ERR_MASK << TIOCE_ADM_ERROR_SUMMARY_ALIAS_PORT2_PCIE_NFAT_ERR_SHIFT)
 #define TIOCE_ADM_ERROR_SUMMARY_ALIAS_PORT2_PCIE_COR_ERR_SHIFT 59 /* inferred */
@@ -562,70 +663,91 @@
 #define TIOCE_ADM_ERROR_SUMMARY_ALIAS_PORT1_PCIE_FAT_ERR_SHIFT 58 /* inferred */
 #define TIOCE_ADM_ERROR_SUMMARY_ALIAS_PORT1_PCIE_FAT_ERR_MASK 0x1ull
 #define TIOCE_ADM_ERROR_SUMMARY_ALIAS_PORT1_PCIE_FAT_ERR_INPLACE (TIOCE_ADM_ERROR_SUMMARY_ALIAS_PORT1_PCIE_FAT_ERR_MASK << TIOCE_ADM_ERROR_SUMMARY_ALIAS_PORT1_PCIE_FAT_ERR_SHIFT)
-#define TIOCE_ADM_ERROR_SUMMARY_ALIAS_PORT1_PCIE_NFAT_ERR_SHIFT 57 /* inferred */
+/* inferred */
+#define TIOCE_ADM_ERROR_SUMMARY_ALIAS_PORT1_PCIE_NFAT_ERR_SHIFT 57
 #define TIOCE_ADM_ERROR_SUMMARY_ALIAS_PORT1_PCIE_NFAT_ERR_MASK 0x1ull
 #define TIOCE_ADM_ERROR_SUMMARY_ALIAS_PORT1_PCIE_NFAT_ERR_INPLACE (TIOCE_ADM_ERROR_SUMMARY_ALIAS_PORT1_PCIE_NFAT_ERR_MASK << TIOCE_ADM_ERROR_SUMMARY_ALIAS_PORT1_PCIE_NFAT_ERR_SHIFT)
 #define TIOCE_ADM_ERROR_SUMMARY_ALIAS_PORT1_PCIE_COR_ERR_SHIFT 56 /* inferred */
 #define TIOCE_ADM_ERROR_SUMMARY_ALIAS_PORT1_PCIE_COR_ERR_MASK 0x1ull
 #define TIOCE_ADM_ERROR_SUMMARY_ALIAS_PORT1_PCIE_COR_ERR_INPLACE (TIOCE_ADM_ERROR_SUMMARY_ALIAS_PORT1_PCIE_COR_ERR_MASK << TIOCE_ADM_ERROR_SUMMARY_ALIAS_PORT1_PCIE_COR_ERR_SHIFT)
-#define TIOCE_ADM_ERROR_SUMMARY_ALIAS_DTL2_POSTED_D_CRED_MAX_ERR_SHIFT 55 /* inferred */
+/* inferred */
+#define TIOCE_ADM_ERROR_SUMMARY_ALIAS_DTL2_POSTED_D_CRED_MAX_ERR_SHIFT 55
 #define TIOCE_ADM_ERROR_SUMMARY_ALIAS_DTL2_POSTED_D_CRED_MAX_ERR_MASK 0x1ull
 #define TIOCE_ADM_ERROR_SUMMARY_ALIAS_DTL2_POSTED_D_CRED_MAX_ERR_INPLACE (TIOCE_ADM_ERROR_SUMMARY_ALIAS_DTL2_POSTED_D_CRED_MAX_ERR_MASK << TIOCE_ADM_ERROR_SUMMARY_ALIAS_DTL2_POSTED_D_CRED_MAX_ERR_SHIFT)
-#define TIOCE_ADM_ERROR_SUMMARY_ALIAS_DTL2_POSTED_HD_CRED_MAX_ERR_SHIFT 54 /* inferred */
+/* inferred */
+#define TIOCE_ADM_ERROR_SUMMARY_ALIAS_DTL2_POSTED_HD_CRED_MAX_ERR_SHIFT 54
 #define TIOCE_ADM_ERROR_SUMMARY_ALIAS_DTL2_POSTED_HD_CRED_MAX_ERR_MASK 0x1ull
 #define TIOCE_ADM_ERROR_SUMMARY_ALIAS_DTL2_POSTED_HD_CRED_MAX_ERR_INPLACE (TIOCE_ADM_ERROR_SUMMARY_ALIAS_DTL2_POSTED_HD_CRED_MAX_ERR_MASK << TIOCE_ADM_ERROR_SUMMARY_ALIAS_DTL2_POSTED_HD_CRED_MAX_ERR_SHIFT)
-#define TIOCE_ADM_ERROR_SUMMARY_ALIAS_DTL2_NPOSTED_D_CRED_MAX_ERR_SHIFT 53 /* inferred */
+/* inferred */
+#define TIOCE_ADM_ERROR_SUMMARY_ALIAS_DTL2_NPOSTED_D_CRED_MAX_ERR_SHIFT 53
 #define TIOCE_ADM_ERROR_SUMMARY_ALIAS_DTL2_NPOSTED_D_CRED_MAX_ERR_MASK 0x1ull
 #define TIOCE_ADM_ERROR_SUMMARY_ALIAS_DTL2_NPOSTED_D_CRED_MAX_ERR_INPLACE (TIOCE_ADM_ERROR_SUMMARY_ALIAS_DTL2_NPOSTED_D_CRED_MAX_ERR_MASK << TIOCE_ADM_ERROR_SUMMARY_ALIAS_DTL2_NPOSTED_D_CRED_MAX_ERR_SHIFT)
-#define TIOCE_ADM_ERROR_SUMMARY_ALIAS_DTL2_NPOSTED_HD_CRED_MAX_ERR_SHIFT 52 /* inferred */
+/* inferred */
+#define TIOCE_ADM_ERROR_SUMMARY_ALIAS_DTL2_NPOSTED_HD_CRED_MAX_ERR_SHIFT 52
 #define TIOCE_ADM_ERROR_SUMMARY_ALIAS_DTL2_NPOSTED_HD_CRED_MAX_ERR_MASK 0x1ull
 #define TIOCE_ADM_ERROR_SUMMARY_ALIAS_DTL2_NPOSTED_HD_CRED_MAX_ERR_INPLACE (TIOCE_ADM_ERROR_SUMMARY_ALIAS_DTL2_NPOSTED_HD_CRED_MAX_ERR_MASK << TIOCE_ADM_ERROR_SUMMARY_ALIAS_DTL2_NPOSTED_HD_CRED_MAX_ERR_SHIFT)
-#define TIOCE_ADM_ERROR_SUMMARY_ALIAS_DTL2_COMP_D_CRED_MAX_ERR_SHIFT 51 /* inferred */
+/* inferred */
+#define TIOCE_ADM_ERROR_SUMMARY_ALIAS_DTL2_COMP_D_CRED_MAX_ERR_SHIFT 51
 #define TIOCE_ADM_ERROR_SUMMARY_ALIAS_DTL2_COMP_D_CRED_MAX_ERR_MASK 0x1ull
 #define TIOCE_ADM_ERROR_SUMMARY_ALIAS_DTL2_COMP_D_CRED_MAX_ERR_INPLACE (TIOCE_ADM_ERROR_SUMMARY_ALIAS_DTL2_COMP_D_CRED_MAX_ERR_MASK << TIOCE_ADM_ERROR_SUMMARY_ALIAS_DTL2_COMP_D_CRED_MAX_ERR_SHIFT)
-#define TIOCE_ADM_ERROR_SUMMARY_ALIAS_DTL2_COMP_HD_CRED_MAX_ERR_SHIFT 50 /* inferred */
+/* inferred */
+#define TIOCE_ADM_ERROR_SUMMARY_ALIAS_DTL2_COMP_HD_CRED_MAX_ERR_SHIFT 50
 #define TIOCE_ADM_ERROR_SUMMARY_ALIAS_DTL2_COMP_HD_CRED_MAX_ERR_MASK 0x1ull
 #define TIOCE_ADM_ERROR_SUMMARY_ALIAS_DTL2_COMP_HD_CRED_MAX_ERR_INPLACE (TIOCE_ADM_ERROR_SUMMARY_ALIAS_DTL2_COMP_HD_CRED_MAX_ERR_MASK << TIOCE_ADM_ERROR_SUMMARY_ALIAS_DTL2_COMP_HD_CRED_MAX_ERR_SHIFT)
-#define TIOCE_ADM_ERROR_SUMMARY_ALIAS_DTL2_INF_NPOSTED_CRED_UPDT_ERR_SHIFT 49 /* inferred */
+/* inferred */
+#define TIOCE_ADM_ERROR_SUMMARY_ALIAS_DTL2_INF_NPOSTED_CRED_UPDT_ERR_SHIFT 49
 #define TIOCE_ADM_ERROR_SUMMARY_ALIAS_DTL2_INF_NPOSTED_CRED_UPDT_ERR_MASK 0x1ull
 #define TIOCE_ADM_ERROR_SUMMARY_ALIAS_DTL2_INF_NPOSTED_CRED_UPDT_ERR_INPLACE (TIOCE_ADM_ERROR_SUMMARY_ALIAS_DTL2_INF_NPOSTED_CRED_UPDT_ERR_MASK << TIOCE_ADM_ERROR_SUMMARY_ALIAS_DTL2_INF_NPOSTED_CRED_UPDT_ERR_SHIFT)
-#define TIOCE_ADM_ERROR_SUMMARY_ALIAS_DTL2_INF_POSTED_CRED_UPDT_ERR_SHIFT 48 /* inferred */
+/* inferred */
+#define TIOCE_ADM_ERROR_SUMMARY_ALIAS_DTL2_INF_POSTED_CRED_UPDT_ERR_SHIFT 48
 #define TIOCE_ADM_ERROR_SUMMARY_ALIAS_DTL2_INF_POSTED_CRED_UPDT_ERR_MASK 0x1ull
 #define TIOCE_ADM_ERROR_SUMMARY_ALIAS_DTL2_INF_POSTED_CRED_UPDT_ERR_INPLACE (TIOCE_ADM_ERROR_SUMMARY_ALIAS_DTL2_INF_POSTED_CRED_UPDT_ERR_MASK << TIOCE_ADM_ERROR_SUMMARY_ALIAS_DTL2_INF_POSTED_CRED_UPDT_ERR_SHIFT)
-#define TIOCE_ADM_ERROR_SUMMARY_ALIAS_DTL2_INF_COMPL_CRED_UPDT_ERR_SHIFT 47 /* inferred */
+/* inferred */
+#define TIOCE_ADM_ERROR_SUMMARY_ALIAS_DTL2_INF_COMPL_CRED_UPDT_ERR_SHIFT 47
 #define TIOCE_ADM_ERROR_SUMMARY_ALIAS_DTL2_INF_COMPL_CRED_UPDT_ERR_MASK 0x1ull
 #define TIOCE_ADM_ERROR_SUMMARY_ALIAS_DTL2_INF_COMPL_CRED_UPDT_ERR_INPLACE (TIOCE_ADM_ERROR_SUMMARY_ALIAS_DTL2_INF_COMPL_CRED_UPDT_ERR_MASK << TIOCE_ADM_ERROR_SUMMARY_ALIAS_DTL2_INF_COMPL_CRED_UPDT_ERR_SHIFT)
-#define TIOCE_ADM_ERROR_SUMMARY_ALIAS_DTL2_MIN_PDATA_CREDIT_ERR_SHIFT 46 /* inferred */
+/* inferred */
+#define TIOCE_ADM_ERROR_SUMMARY_ALIAS_DTL2_MIN_PDATA_CREDIT_ERR_SHIFT 46
 #define TIOCE_ADM_ERROR_SUMMARY_ALIAS_DTL2_MIN_PDATA_CREDIT_ERR_MASK 0x1ull
 #define TIOCE_ADM_ERROR_SUMMARY_ALIAS_DTL2_MIN_PDATA_CREDIT_ERR_INPLACE (TIOCE_ADM_ERROR_SUMMARY_ALIAS_DTL2_MIN_PDATA_CREDIT_ERR_MASK << TIOCE_ADM_ERROR_SUMMARY_ALIAS_DTL2_MIN_PDATA_CREDIT_ERR_SHIFT)
-#define TIOCE_ADM_ERROR_SUMMARY_ALIAS_DTL1_POSTED_D_CRED_MAX_ERR_SHIFT 45 /* inferred */
+/* inferred */
+#define TIOCE_ADM_ERROR_SUMMARY_ALIAS_DTL1_POSTED_D_CRED_MAX_ERR_SHIFT 45
 #define TIOCE_ADM_ERROR_SUMMARY_ALIAS_DTL1_POSTED_D_CRED_MAX_ERR_MASK 0x1ull
 #define TIOCE_ADM_ERROR_SUMMARY_ALIAS_DTL1_POSTED_D_CRED_MAX_ERR_INPLACE (TIOCE_ADM_ERROR_SUMMARY_ALIAS_DTL1_POSTED_D_CRED_MAX_ERR_MASK << TIOCE_ADM_ERROR_SUMMARY_ALIAS_DTL1_POSTED_D_CRED_MAX_ERR_SHIFT)
-#define TIOCE_ADM_ERROR_SUMMARY_ALIAS_DTL1_POSTED_HD_CRED_MAX_ERR_SHIFT 44 /* inferred */
+/* inferred */
+#define TIOCE_ADM_ERROR_SUMMARY_ALIAS_DTL1_POSTED_HD_CRED_MAX_ERR_SHIFT 44
 #define TIOCE_ADM_ERROR_SUMMARY_ALIAS_DTL1_POSTED_HD_CRED_MAX_ERR_MASK 0x1ull
 #define TIOCE_ADM_ERROR_SUMMARY_ALIAS_DTL1_POSTED_HD_CRED_MAX_ERR_INPLACE (TIOCE_ADM_ERROR_SUMMARY_ALIAS_DTL1_POSTED_HD_CRED_MAX_ERR_MASK << TIOCE_ADM_ERROR_SUMMARY_ALIAS_DTL1_POSTED_HD_CRED_MAX_ERR_SHIFT)
-#define TIOCE_ADM_ERROR_SUMMARY_ALIAS_DTL1_NPOSTED_D_CRED_MAX_ERR_SHIFT 43 /* inferred */
+/* inferred */
+#define TIOCE_ADM_ERROR_SUMMARY_ALIAS_DTL1_NPOSTED_D_CRED_MAX_ERR_SHIFT 43
 #define TIOCE_ADM_ERROR_SUMMARY_ALIAS_DTL1_NPOSTED_D_CRED_MAX_ERR_MASK 0x1ull
 #define TIOCE_ADM_ERROR_SUMMARY_ALIAS_DTL1_NPOSTED_D_CRED_MAX_ERR_INPLACE (TIOCE_ADM_ERROR_SUMMARY_ALIAS_DTL1_NPOSTED_D_CRED_MAX_ERR_MASK << TIOCE_ADM_ERROR_SUMMARY_ALIAS_DTL1_NPOSTED_D_CRED_MAX_ERR_SHIFT)
-#define TIOCE_ADM_ERROR_SUMMARY_ALIAS_DTL1_NPOSTED_HD_CRED_MAX_ERR_SHIFT 42 /* inferred */
+/* inferred */
+#define TIOCE_ADM_ERROR_SUMMARY_ALIAS_DTL1_NPOSTED_HD_CRED_MAX_ERR_SHIFT 42
 #define TIOCE_ADM_ERROR_SUMMARY_ALIAS_DTL1_NPOSTED_HD_CRED_MAX_ERR_MASK 0x1ull
 #define TIOCE_ADM_ERROR_SUMMARY_ALIAS_DTL1_NPOSTED_HD_CRED_MAX_ERR_INPLACE (TIOCE_ADM_ERROR_SUMMARY_ALIAS_DTL1_NPOSTED_HD_CRED_MAX_ERR_MASK << TIOCE_ADM_ERROR_SUMMARY_ALIAS_DTL1_NPOSTED_HD_CRED_MAX_ERR_SHIFT)
-#define TIOCE_ADM_ERROR_SUMMARY_ALIAS_DTL1_COMP_D_CRED_MAX_ERR_SHIFT 41 /* inferred */
+/* inferred */
+#define TIOCE_ADM_ERROR_SUMMARY_ALIAS_DTL1_COMP_D_CRED_MAX_ERR_SHIFT 41
 #define TIOCE_ADM_ERROR_SUMMARY_ALIAS_DTL1_COMP_D_CRED_MAX_ERR_MASK 0x1ull
 #define TIOCE_ADM_ERROR_SUMMARY_ALIAS_DTL1_COMP_D_CRED_MAX_ERR_INPLACE (TIOCE_ADM_ERROR_SUMMARY_ALIAS_DTL1_COMP_D_CRED_MAX_ERR_MASK << TIOCE_ADM_ERROR_SUMMARY_ALIAS_DTL1_COMP_D_CRED_MAX_ERR_SHIFT)
-#define TIOCE_ADM_ERROR_SUMMARY_ALIAS_DTL1_COMP_HD_CRED_MAX_ERR_SHIFT 40 /* inferred */
+/* inferred */
+#define TIOCE_ADM_ERROR_SUMMARY_ALIAS_DTL1_COMP_HD_CRED_MAX_ERR_SHIFT 40
 #define TIOCE_ADM_ERROR_SUMMARY_ALIAS_DTL1_COMP_HD_CRED_MAX_ERR_MASK 0x1ull
 #define TIOCE_ADM_ERROR_SUMMARY_ALIAS_DTL1_COMP_HD_CRED_MAX_ERR_INPLACE (TIOCE_ADM_ERROR_SUMMARY_ALIAS_DTL1_COMP_HD_CRED_MAX_ERR_MASK << TIOCE_ADM_ERROR_SUMMARY_ALIAS_DTL1_COMP_HD_CRED_MAX_ERR_SHIFT)
-#define TIOCE_ADM_ERROR_SUMMARY_ALIAS_DTL1_INF_NPOSTED_CRED_UPDT_ERR_SHIFT 39 /* inferred */
+/* inferred */
+#define TIOCE_ADM_ERROR_SUMMARY_ALIAS_DTL1_INF_NPOSTED_CRED_UPDT_ERR_SHIFT 39
 #define TIOCE_ADM_ERROR_SUMMARY_ALIAS_DTL1_INF_NPOSTED_CRED_UPDT_ERR_MASK 0x1ull
 #define TIOCE_ADM_ERROR_SUMMARY_ALIAS_DTL1_INF_NPOSTED_CRED_UPDT_ERR_INPLACE (TIOCE_ADM_ERROR_SUMMARY_ALIAS_DTL1_INF_NPOSTED_CRED_UPDT_ERR_MASK << TIOCE_ADM_ERROR_SUMMARY_ALIAS_DTL1_INF_NPOSTED_CRED_UPDT_ERR_SHIFT)
-#define TIOCE_ADM_ERROR_SUMMARY_ALIAS_DTL1_INF_POSTED_CRED_UPDT_ERR_SHIFT 38 /* inferred */
+/* inferred */
+#define TIOCE_ADM_ERROR_SUMMARY_ALIAS_DTL1_INF_POSTED_CRED_UPDT_ERR_SHIFT 38
 #define TIOCE_ADM_ERROR_SUMMARY_ALIAS_DTL1_INF_POSTED_CRED_UPDT_ERR_MASK 0x1ull
 #define TIOCE_ADM_ERROR_SUMMARY_ALIAS_DTL1_INF_POSTED_CRED_UPDT_ERR_INPLACE (TIOCE_ADM_ERROR_SUMMARY_ALIAS_DTL1_INF_POSTED_CRED_UPDT_ERR_MASK << TIOCE_ADM_ERROR_SUMMARY_ALIAS_DTL1_INF_POSTED_CRED_UPDT_ERR_SHIFT)
-#define TIOCE_ADM_ERROR_SUMMARY_ALIAS_DTL1_INF_COMPL_CRED_UPDT_ERR_SHIFT 37 /* inferred */
+/* inferred */
+#define TIOCE_ADM_ERROR_SUMMARY_ALIAS_DTL1_INF_COMPL_CRED_UPDT_ERR_SHIFT 37
 #define TIOCE_ADM_ERROR_SUMMARY_ALIAS_DTL1_INF_COMPL_CRED_UPDT_ERR_MASK 0x1ull
 #define TIOCE_ADM_ERROR_SUMMARY_ALIAS_DTL1_INF_COMPL_CRED_UPDT_ERR_INPLACE (TIOCE_ADM_ERROR_SUMMARY_ALIAS_DTL1_INF_COMPL_CRED_UPDT_ERR_MASK << TIOCE_ADM_ERROR_SUMMARY_ALIAS_DTL1_INF_COMPL_CRED_UPDT_ERR_SHIFT)
-#define TIOCE_ADM_ERROR_SUMMARY_ALIAS_DTL1_MIN_PDATA_CREDIT_ERR_SHIFT 36 /* inferred */
+/* inferred */
+#define TIOCE_ADM_ERROR_SUMMARY_ALIAS_DTL1_MIN_PDATA_CREDIT_ERR_SHIFT 36
 #define TIOCE_ADM_ERROR_SUMMARY_ALIAS_DTL1_MIN_PDATA_CREDIT_ERR_MASK 0x1ull
 #define TIOCE_ADM_ERROR_SUMMARY_ALIAS_DTL1_MIN_PDATA_CREDIT_ERR_INPLACE (TIOCE_ADM_ERROR_SUMMARY_ALIAS_DTL1_MIN_PDATA_CREDIT_ERR_MASK << TIOCE_ADM_ERROR_SUMMARY_ALIAS_DTL1_MIN_PDATA_CREDIT_ERR_SHIFT)
 #define TIOCE_ADM_ERROR_SUMMARY_ALIAS_ADM_SRAM_PE_SHIFT 35 /* inferred */
@@ -640,7 +762,8 @@
 #define TIOCE_ADM_ERROR_SUMMARY_ALIAS_MMR_ACCESS_ERROR_SHIFT 32 /* inferred */
 #define TIOCE_ADM_ERROR_SUMMARY_ALIAS_MMR_ACCESS_ERROR_MASK 0x1ull
 #define TIOCE_ADM_ERROR_SUMMARY_ALIAS_MMR_ACCESS_ERROR_INPLACE (TIOCE_ADM_ERROR_SUMMARY_ALIAS_MMR_ACCESS_ERROR_MASK << TIOCE_ADM_ERROR_SUMMARY_ALIAS_MMR_ACCESS_ERROR_SHIFT)
-#define TIOCE_ADM_ERROR_SUMMARY_ALIAS_ADM_SSP_REQ_TIMEOUT_SHIFT 31 /* inferred */
+/* inferred */
+#define TIOCE_ADM_ERROR_SUMMARY_ALIAS_ADM_SSP_REQ_TIMEOUT_SHIFT 31
 #define TIOCE_ADM_ERROR_SUMMARY_ALIAS_ADM_SSP_REQ_TIMEOUT_MASK 0x1ull
 #define TIOCE_ADM_ERROR_SUMMARY_ALIAS_ADM_SSP_REQ_TIMEOUT_INPLACE (TIOCE_ADM_ERROR_SUMMARY_ALIAS_ADM_SSP_REQ_TIMEOUT_MASK << TIOCE_ADM_ERROR_SUMMARY_ALIAS_ADM_SSP_REQ_TIMEOUT_SHIFT)
 #define TIOCE_ADM_ERROR_SUMMARY_ALIAS_ADM_SSP_RSP_UNEXP_SHIFT 30 /* inferred */
@@ -652,16 +775,20 @@
 #define TIOCE_ADM_ERROR_SUMMARY_ALIAS_URE_CREDIT_OFLOW_SHIFT 28 /* inferred */
 #define TIOCE_ADM_ERROR_SUMMARY_ALIAS_URE_CREDIT_OFLOW_MASK 0x1ull
 #define TIOCE_ADM_ERROR_SUMMARY_ALIAS_URE_CREDIT_OFLOW_INPLACE (TIOCE_ADM_ERROR_SUMMARY_ALIAS_URE_CREDIT_OFLOW_MASK << TIOCE_ADM_ERROR_SUMMARY_ALIAS_URE_CREDIT_OFLOW_SHIFT)
-#define TIOCE_ADM_ERROR_SUMMARY_ALIAS_URE_ATE40_PAGE_FAULT_SHIFT 27 /* inferred */
+/* inferred */
+#define TIOCE_ADM_ERROR_SUMMARY_ALIAS_URE_ATE40_PAGE_FAULT_SHIFT 27
 #define TIOCE_ADM_ERROR_SUMMARY_ALIAS_URE_ATE40_PAGE_FAULT_MASK 0x1ull
 #define TIOCE_ADM_ERROR_SUMMARY_ALIAS_URE_ATE40_PAGE_FAULT_INPLACE (TIOCE_ADM_ERROR_SUMMARY_ALIAS_URE_ATE40_PAGE_FAULT_MASK << TIOCE_ADM_ERROR_SUMMARY_ALIAS_URE_ATE40_PAGE_FAULT_SHIFT)
-#define TIOCE_ADM_ERROR_SUMMARY_ALIAS_URE_ATE3240_PAGE_FAULT_SHIFT 26 /* inferred */
+/* inferred */
+#define TIOCE_ADM_ERROR_SUMMARY_ALIAS_URE_ATE3240_PAGE_FAULT_SHIFT 26
 #define TIOCE_ADM_ERROR_SUMMARY_ALIAS_URE_ATE3240_PAGE_FAULT_MASK 0x1ull
 #define TIOCE_ADM_ERROR_SUMMARY_ALIAS_URE_ATE3240_PAGE_FAULT_INPLACE (TIOCE_ADM_ERROR_SUMMARY_ALIAS_URE_ATE3240_PAGE_FAULT_MASK << TIOCE_ADM_ERROR_SUMMARY_ALIAS_URE_ATE3240_PAGE_FAULT_SHIFT)
-#define TIOCE_ADM_ERROR_SUMMARY_ALIAS_URE_SSP_RD_REQ_TIMEOUT_SHIFT 25 /* inferred */
+/* inferred */
+#define TIOCE_ADM_ERROR_SUMMARY_ALIAS_URE_SSP_RD_REQ_TIMEOUT_SHIFT 25
 #define TIOCE_ADM_ERROR_SUMMARY_ALIAS_URE_SSP_RD_REQ_TIMEOUT_MASK 0x1ull
 #define TIOCE_ADM_ERROR_SUMMARY_ALIAS_URE_SSP_RD_REQ_TIMEOUT_INPLACE (TIOCE_ADM_ERROR_SUMMARY_ALIAS_URE_SSP_RD_REQ_TIMEOUT_MASK << TIOCE_ADM_ERROR_SUMMARY_ALIAS_URE_SSP_RD_REQ_TIMEOUT_SHIFT)
-#define TIOCE_ADM_ERROR_SUMMARY_ALIAS_URE_SSP_WR_REQ_TIMEOUT_SHIFT 24 /* inferred */
+/* inferred */
+#define TIOCE_ADM_ERROR_SUMMARY_ALIAS_URE_SSP_WR_REQ_TIMEOUT_SHIFT 24
 #define TIOCE_ADM_ERROR_SUMMARY_ALIAS_URE_SSP_WR_REQ_TIMEOUT_MASK 0x1ull
 #define TIOCE_ADM_ERROR_SUMMARY_ALIAS_URE_SSP_WR_REQ_TIMEOUT_INPLACE (TIOCE_ADM_ERROR_SUMMARY_ALIAS_URE_SSP_WR_REQ_TIMEOUT_MASK << TIOCE_ADM_ERROR_SUMMARY_ALIAS_URE_SSP_WR_REQ_TIMEOUT_SHIFT)
 #define TIOCE_ADM_ERROR_SUMMARY_ALIAS_URE_SSP_RSP_UNEXP_SHIFT 23 /* inferred */
@@ -738,7 +865,11 @@
 #define TIOCE_ADM_ERROR_SUMMARY_ALIAS_CRM_SSP_REQ_INVALID_INPLACE (TIOCE_ADM_ERROR_SUMMARY_ALIAS_CRM_SSP_REQ_INVALID_MASK << TIOCE_ADM_ERROR_SUMMARY_ALIAS_CRM_SSP_REQ_INVALID_SHIFT)
 
 /*
- * Name and offset are the vendor header's definition (struct member ce_adm_error_mask). The header gives no access direction or reset value; access rw is a placeholder. Field layout from the header: same bit assignment as the summary register. The header does not say whether a set bit enables or masks the source (unknown).
+ * Name and offset are the vendor header's definition (struct member
+ * ce_adm_error_mask). The header gives no access direction or reset value;
+ * access rw is a placeholder. Field layout from the header: same bit assignment
+ * as the summary register. The header does not say whether a set bit enables or
+ * masks the source (unknown).
  */
 /* adm_error_mask: rw64, reset unknown */
 #define TIOCE_ADM_ERROR_MASK                         0x000110 /* established */
@@ -760,75 +891,93 @@
 #define TIOCE_ADM_ERROR_MASK_PORT1_PCIE_COR_ERR_SHIFT 56 /* established */
 #define TIOCE_ADM_ERROR_MASK_PORT1_PCIE_COR_ERR_MASK 0x1ull
 #define TIOCE_ADM_ERROR_MASK_PORT1_PCIE_COR_ERR_INPLACE (TIOCE_ADM_ERROR_MASK_PORT1_PCIE_COR_ERR_MASK << TIOCE_ADM_ERROR_MASK_PORT1_PCIE_COR_ERR_SHIFT)
-#define TIOCE_ADM_ERROR_MASK_DTL2_POSTED_D_CRED_MAX_ERR_SHIFT 55 /* established */
+/* established */
+#define TIOCE_ADM_ERROR_MASK_DTL2_POSTED_D_CRED_MAX_ERR_SHIFT 55
 #define TIOCE_ADM_ERROR_MASK_DTL2_POSTED_D_CRED_MAX_ERR_MASK 0x1ull
 #define TIOCE_ADM_ERROR_MASK_DTL2_POSTED_D_CRED_MAX_ERR_INPLACE (TIOCE_ADM_ERROR_MASK_DTL2_POSTED_D_CRED_MAX_ERR_MASK << TIOCE_ADM_ERROR_MASK_DTL2_POSTED_D_CRED_MAX_ERR_SHIFT)
-#define TIOCE_ADM_ERROR_MASK_DTL2_POSTED_HD_CRED_MAX_ERR_SHIFT 54 /* established */
+/* established */
+#define TIOCE_ADM_ERROR_MASK_DTL2_POSTED_HD_CRED_MAX_ERR_SHIFT 54
 #define TIOCE_ADM_ERROR_MASK_DTL2_POSTED_HD_CRED_MAX_ERR_MASK 0x1ull
 #define TIOCE_ADM_ERROR_MASK_DTL2_POSTED_HD_CRED_MAX_ERR_INPLACE (TIOCE_ADM_ERROR_MASK_DTL2_POSTED_HD_CRED_MAX_ERR_MASK << TIOCE_ADM_ERROR_MASK_DTL2_POSTED_HD_CRED_MAX_ERR_SHIFT)
-#define TIOCE_ADM_ERROR_MASK_DTL2_NPOSTED_D_CRED_MAX_ERR_SHIFT 53 /* established */
+/* established */
+#define TIOCE_ADM_ERROR_MASK_DTL2_NPOSTED_D_CRED_MAX_ERR_SHIFT 53
 #define TIOCE_ADM_ERROR_MASK_DTL2_NPOSTED_D_CRED_MAX_ERR_MASK 0x1ull
 #define TIOCE_ADM_ERROR_MASK_DTL2_NPOSTED_D_CRED_MAX_ERR_INPLACE (TIOCE_ADM_ERROR_MASK_DTL2_NPOSTED_D_CRED_MAX_ERR_MASK << TIOCE_ADM_ERROR_MASK_DTL2_NPOSTED_D_CRED_MAX_ERR_SHIFT)
-#define TIOCE_ADM_ERROR_MASK_DTL2_NPOSTED_HD_CRED_MAX_ERR_SHIFT 52 /* established */
+/* established */
+#define TIOCE_ADM_ERROR_MASK_DTL2_NPOSTED_HD_CRED_MAX_ERR_SHIFT 52
 #define TIOCE_ADM_ERROR_MASK_DTL2_NPOSTED_HD_CRED_MAX_ERR_MASK 0x1ull
 #define TIOCE_ADM_ERROR_MASK_DTL2_NPOSTED_HD_CRED_MAX_ERR_INPLACE (TIOCE_ADM_ERROR_MASK_DTL2_NPOSTED_HD_CRED_MAX_ERR_MASK << TIOCE_ADM_ERROR_MASK_DTL2_NPOSTED_HD_CRED_MAX_ERR_SHIFT)
 #define TIOCE_ADM_ERROR_MASK_DTL2_COMP_D_CRED_MAX_ERR_SHIFT 51 /* established */
 #define TIOCE_ADM_ERROR_MASK_DTL2_COMP_D_CRED_MAX_ERR_MASK 0x1ull
 #define TIOCE_ADM_ERROR_MASK_DTL2_COMP_D_CRED_MAX_ERR_INPLACE (TIOCE_ADM_ERROR_MASK_DTL2_COMP_D_CRED_MAX_ERR_MASK << TIOCE_ADM_ERROR_MASK_DTL2_COMP_D_CRED_MAX_ERR_SHIFT)
-#define TIOCE_ADM_ERROR_MASK_DTL2_COMP_HD_CRED_MAX_ERR_SHIFT 50 /* established */
+/* established */
+#define TIOCE_ADM_ERROR_MASK_DTL2_COMP_HD_CRED_MAX_ERR_SHIFT 50
 #define TIOCE_ADM_ERROR_MASK_DTL2_COMP_HD_CRED_MAX_ERR_MASK 0x1ull
 #define TIOCE_ADM_ERROR_MASK_DTL2_COMP_HD_CRED_MAX_ERR_INPLACE (TIOCE_ADM_ERROR_MASK_DTL2_COMP_HD_CRED_MAX_ERR_MASK << TIOCE_ADM_ERROR_MASK_DTL2_COMP_HD_CRED_MAX_ERR_SHIFT)
-#define TIOCE_ADM_ERROR_MASK_DTL2_INF_NPOSTED_CRED_UPDT_ERR_SHIFT 49 /* established */
+/* established */
+#define TIOCE_ADM_ERROR_MASK_DTL2_INF_NPOSTED_CRED_UPDT_ERR_SHIFT 49
 #define TIOCE_ADM_ERROR_MASK_DTL2_INF_NPOSTED_CRED_UPDT_ERR_MASK 0x1ull
 #define TIOCE_ADM_ERROR_MASK_DTL2_INF_NPOSTED_CRED_UPDT_ERR_INPLACE (TIOCE_ADM_ERROR_MASK_DTL2_INF_NPOSTED_CRED_UPDT_ERR_MASK << TIOCE_ADM_ERROR_MASK_DTL2_INF_NPOSTED_CRED_UPDT_ERR_SHIFT)
-#define TIOCE_ADM_ERROR_MASK_DTL2_INF_POSTED_CRED_UPDT_ERR_SHIFT 48 /* established */
+/* established */
+#define TIOCE_ADM_ERROR_MASK_DTL2_INF_POSTED_CRED_UPDT_ERR_SHIFT 48
 #define TIOCE_ADM_ERROR_MASK_DTL2_INF_POSTED_CRED_UPDT_ERR_MASK 0x1ull
 #define TIOCE_ADM_ERROR_MASK_DTL2_INF_POSTED_CRED_UPDT_ERR_INPLACE (TIOCE_ADM_ERROR_MASK_DTL2_INF_POSTED_CRED_UPDT_ERR_MASK << TIOCE_ADM_ERROR_MASK_DTL2_INF_POSTED_CRED_UPDT_ERR_SHIFT)
-#define TIOCE_ADM_ERROR_MASK_DTL2_INF_COMPL_CRED_UPDT_ERR_SHIFT 47 /* established */
+/* established */
+#define TIOCE_ADM_ERROR_MASK_DTL2_INF_COMPL_CRED_UPDT_ERR_SHIFT 47
 #define TIOCE_ADM_ERROR_MASK_DTL2_INF_COMPL_CRED_UPDT_ERR_MASK 0x1ull
 #define TIOCE_ADM_ERROR_MASK_DTL2_INF_COMPL_CRED_UPDT_ERR_INPLACE (TIOCE_ADM_ERROR_MASK_DTL2_INF_COMPL_CRED_UPDT_ERR_MASK << TIOCE_ADM_ERROR_MASK_DTL2_INF_COMPL_CRED_UPDT_ERR_SHIFT)
-#define TIOCE_ADM_ERROR_MASK_DTL2_MIN_PDATA_CREDIT_ERR_SHIFT 46 /* established */
+/* established */
+#define TIOCE_ADM_ERROR_MASK_DTL2_MIN_PDATA_CREDIT_ERR_SHIFT 46
 #define TIOCE_ADM_ERROR_MASK_DTL2_MIN_PDATA_CREDIT_ERR_MASK 0x1ull
 #define TIOCE_ADM_ERROR_MASK_DTL2_MIN_PDATA_CREDIT_ERR_INPLACE (TIOCE_ADM_ERROR_MASK_DTL2_MIN_PDATA_CREDIT_ERR_MASK << TIOCE_ADM_ERROR_MASK_DTL2_MIN_PDATA_CREDIT_ERR_SHIFT)
-#define TIOCE_ADM_ERROR_MASK_DTL1_POSTED_D_CRED_MAX_ERR_SHIFT 45 /* established */
+/* established */
+#define TIOCE_ADM_ERROR_MASK_DTL1_POSTED_D_CRED_MAX_ERR_SHIFT 45
 #define TIOCE_ADM_ERROR_MASK_DTL1_POSTED_D_CRED_MAX_ERR_MASK 0x1ull
 #define TIOCE_ADM_ERROR_MASK_DTL1_POSTED_D_CRED_MAX_ERR_INPLACE (TIOCE_ADM_ERROR_MASK_DTL1_POSTED_D_CRED_MAX_ERR_MASK << TIOCE_ADM_ERROR_MASK_DTL1_POSTED_D_CRED_MAX_ERR_SHIFT)
-#define TIOCE_ADM_ERROR_MASK_DTL1_POSTED_HD_CRED_MAX_ERR_SHIFT 44 /* established */
+/* established */
+#define TIOCE_ADM_ERROR_MASK_DTL1_POSTED_HD_CRED_MAX_ERR_SHIFT 44
 #define TIOCE_ADM_ERROR_MASK_DTL1_POSTED_HD_CRED_MAX_ERR_MASK 0x1ull
 #define TIOCE_ADM_ERROR_MASK_DTL1_POSTED_HD_CRED_MAX_ERR_INPLACE (TIOCE_ADM_ERROR_MASK_DTL1_POSTED_HD_CRED_MAX_ERR_MASK << TIOCE_ADM_ERROR_MASK_DTL1_POSTED_HD_CRED_MAX_ERR_SHIFT)
-#define TIOCE_ADM_ERROR_MASK_DTL1_NPOSTED_D_CRED_MAX_ERR_SHIFT 43 /* established */
+/* established */
+#define TIOCE_ADM_ERROR_MASK_DTL1_NPOSTED_D_CRED_MAX_ERR_SHIFT 43
 #define TIOCE_ADM_ERROR_MASK_DTL1_NPOSTED_D_CRED_MAX_ERR_MASK 0x1ull
 #define TIOCE_ADM_ERROR_MASK_DTL1_NPOSTED_D_CRED_MAX_ERR_INPLACE (TIOCE_ADM_ERROR_MASK_DTL1_NPOSTED_D_CRED_MAX_ERR_MASK << TIOCE_ADM_ERROR_MASK_DTL1_NPOSTED_D_CRED_MAX_ERR_SHIFT)
-#define TIOCE_ADM_ERROR_MASK_DTL1_NPOSTED_HD_CRED_MAX_ERR_SHIFT 42 /* established */
+/* established */
+#define TIOCE_ADM_ERROR_MASK_DTL1_NPOSTED_HD_CRED_MAX_ERR_SHIFT 42
 #define TIOCE_ADM_ERROR_MASK_DTL1_NPOSTED_HD_CRED_MAX_ERR_MASK 0x1ull
 #define TIOCE_ADM_ERROR_MASK_DTL1_NPOSTED_HD_CRED_MAX_ERR_INPLACE (TIOCE_ADM_ERROR_MASK_DTL1_NPOSTED_HD_CRED_MAX_ERR_MASK << TIOCE_ADM_ERROR_MASK_DTL1_NPOSTED_HD_CRED_MAX_ERR_SHIFT)
 #define TIOCE_ADM_ERROR_MASK_DTL1_COMP_D_CRED_MAX_ERR_SHIFT 41 /* established */
 #define TIOCE_ADM_ERROR_MASK_DTL1_COMP_D_CRED_MAX_ERR_MASK 0x1ull
 #define TIOCE_ADM_ERROR_MASK_DTL1_COMP_D_CRED_MAX_ERR_INPLACE (TIOCE_ADM_ERROR_MASK_DTL1_COMP_D_CRED_MAX_ERR_MASK << TIOCE_ADM_ERROR_MASK_DTL1_COMP_D_CRED_MAX_ERR_SHIFT)
-#define TIOCE_ADM_ERROR_MASK_DTL1_COMP_HD_CRED_MAX_ERR_SHIFT 40 /* established */
+/* established */
+#define TIOCE_ADM_ERROR_MASK_DTL1_COMP_HD_CRED_MAX_ERR_SHIFT 40
 #define TIOCE_ADM_ERROR_MASK_DTL1_COMP_HD_CRED_MAX_ERR_MASK 0x1ull
 #define TIOCE_ADM_ERROR_MASK_DTL1_COMP_HD_CRED_MAX_ERR_INPLACE (TIOCE_ADM_ERROR_MASK_DTL1_COMP_HD_CRED_MAX_ERR_MASK << TIOCE_ADM_ERROR_MASK_DTL1_COMP_HD_CRED_MAX_ERR_SHIFT)
-#define TIOCE_ADM_ERROR_MASK_DTL1_INF_NPOSTED_CRED_UPDT_ERR_SHIFT 39 /* established */
+/* established */
+#define TIOCE_ADM_ERROR_MASK_DTL1_INF_NPOSTED_CRED_UPDT_ERR_SHIFT 39
 #define TIOCE_ADM_ERROR_MASK_DTL1_INF_NPOSTED_CRED_UPDT_ERR_MASK 0x1ull
 #define TIOCE_ADM_ERROR_MASK_DTL1_INF_NPOSTED_CRED_UPDT_ERR_INPLACE (TIOCE_ADM_ERROR_MASK_DTL1_INF_NPOSTED_CRED_UPDT_ERR_MASK << TIOCE_ADM_ERROR_MASK_DTL1_INF_NPOSTED_CRED_UPDT_ERR_SHIFT)
-#define TIOCE_ADM_ERROR_MASK_DTL1_INF_POSTED_CRED_UPDT_ERR_SHIFT 38 /* established */
+/* established */
+#define TIOCE_ADM_ERROR_MASK_DTL1_INF_POSTED_CRED_UPDT_ERR_SHIFT 38
 #define TIOCE_ADM_ERROR_MASK_DTL1_INF_POSTED_CRED_UPDT_ERR_MASK 0x1ull
 #define TIOCE_ADM_ERROR_MASK_DTL1_INF_POSTED_CRED_UPDT_ERR_INPLACE (TIOCE_ADM_ERROR_MASK_DTL1_INF_POSTED_CRED_UPDT_ERR_MASK << TIOCE_ADM_ERROR_MASK_DTL1_INF_POSTED_CRED_UPDT_ERR_SHIFT)
-#define TIOCE_ADM_ERROR_MASK_DTL1_INF_COMPL_CRED_UPDT_ERR_SHIFT 37 /* established */
+/* established */
+#define TIOCE_ADM_ERROR_MASK_DTL1_INF_COMPL_CRED_UPDT_ERR_SHIFT 37
 #define TIOCE_ADM_ERROR_MASK_DTL1_INF_COMPL_CRED_UPDT_ERR_MASK 0x1ull
 #define TIOCE_ADM_ERROR_MASK_DTL1_INF_COMPL_CRED_UPDT_ERR_INPLACE (TIOCE_ADM_ERROR_MASK_DTL1_INF_COMPL_CRED_UPDT_ERR_MASK << TIOCE_ADM_ERROR_MASK_DTL1_INF_COMPL_CRED_UPDT_ERR_SHIFT)
-#define TIOCE_ADM_ERROR_MASK_DTL1_MIN_PDATA_CREDIT_ERR_SHIFT 36 /* established */
+/* established */
+#define TIOCE_ADM_ERROR_MASK_DTL1_MIN_PDATA_CREDIT_ERR_SHIFT 36
 #define TIOCE_ADM_ERROR_MASK_DTL1_MIN_PDATA_CREDIT_ERR_MASK 0x1ull
 #define TIOCE_ADM_ERROR_MASK_DTL1_MIN_PDATA_CREDIT_ERR_INPLACE (TIOCE_ADM_ERROR_MASK_DTL1_MIN_PDATA_CREDIT_ERR_MASK << TIOCE_ADM_ERROR_MASK_DTL1_MIN_PDATA_CREDIT_ERR_SHIFT)
 #define TIOCE_ADM_ERROR_MASK_ADM_SRAM_PE_SHIFT       35 /* established */
 #define TIOCE_ADM_ERROR_MASK_ADM_SRAM_PE_MASK        0x1ull
-#define TIOCE_ADM_ERROR_MASK_ADM_SRAM_PE_INPLACE     (TIOCE_ADM_ERROR_MASK_ADM_SRAM_PE_MASK << TIOCE_ADM_ERROR_MASK_ADM_SRAM_PE_SHIFT)
+#define TIOCE_ADM_ERROR_MASK_ADM_SRAM_PE_INPLACE (TIOCE_ADM_ERROR_MASK_ADM_SRAM_PE_MASK << TIOCE_ADM_ERROR_MASK_ADM_SRAM_PE_SHIFT)
 #define TIOCE_ADM_ERROR_MASK_ADM_CREDIT_OFLOW_SHIFT  34 /* established */
 #define TIOCE_ADM_ERROR_MASK_ADM_CREDIT_OFLOW_MASK   0x1ull
 #define TIOCE_ADM_ERROR_MASK_ADM_CREDIT_OFLOW_INPLACE (TIOCE_ADM_ERROR_MASK_ADM_CREDIT_OFLOW_MASK << TIOCE_ADM_ERROR_MASK_ADM_CREDIT_OFLOW_SHIFT)
 #define TIOCE_ADM_ERROR_MASK_MMR_ADDR_ERROR_SHIFT    33 /* established */
 #define TIOCE_ADM_ERROR_MASK_MMR_ADDR_ERROR_MASK     0x1ull
-#define TIOCE_ADM_ERROR_MASK_MMR_ADDR_ERROR_INPLACE  (TIOCE_ADM_ERROR_MASK_MMR_ADDR_ERROR_MASK << TIOCE_ADM_ERROR_MASK_MMR_ADDR_ERROR_SHIFT)
+#define TIOCE_ADM_ERROR_MASK_MMR_ADDR_ERROR_INPLACE (TIOCE_ADM_ERROR_MASK_MMR_ADDR_ERROR_MASK << TIOCE_ADM_ERROR_MASK_MMR_ADDR_ERROR_SHIFT)
 #define TIOCE_ADM_ERROR_MASK_MMR_ACCESS_ERROR_SHIFT  32 /* established */
 #define TIOCE_ADM_ERROR_MASK_MMR_ACCESS_ERROR_MASK   0x1ull
 #define TIOCE_ADM_ERROR_MASK_MMR_ACCESS_ERROR_INPLACE (TIOCE_ADM_ERROR_MASK_MMR_ACCESS_ERROR_MASK << TIOCE_ADM_ERROR_MASK_MMR_ACCESS_ERROR_SHIFT)
@@ -840,7 +989,7 @@
 #define TIOCE_ADM_ERROR_MASK_ADM_SSP_RSP_UNEXP_INPLACE (TIOCE_ADM_ERROR_MASK_ADM_SSP_RSP_UNEXP_MASK << TIOCE_ADM_ERROR_MASK_ADM_SSP_RSP_UNEXP_SHIFT)
 #define TIOCE_ADM_ERROR_MASK_URE_SRAM_PE_SHIFT       29 /* established */
 #define TIOCE_ADM_ERROR_MASK_URE_SRAM_PE_MASK        0x1ull
-#define TIOCE_ADM_ERROR_MASK_URE_SRAM_PE_INPLACE     (TIOCE_ADM_ERROR_MASK_URE_SRAM_PE_MASK << TIOCE_ADM_ERROR_MASK_URE_SRAM_PE_SHIFT)
+#define TIOCE_ADM_ERROR_MASK_URE_SRAM_PE_INPLACE (TIOCE_ADM_ERROR_MASK_URE_SRAM_PE_MASK << TIOCE_ADM_ERROR_MASK_URE_SRAM_PE_SHIFT)
 #define TIOCE_ADM_ERROR_MASK_URE_CREDIT_OFLOW_SHIFT  28 /* established */
 #define TIOCE_ADM_ERROR_MASK_URE_CREDIT_OFLOW_MASK   0x1ull
 #define TIOCE_ADM_ERROR_MASK_URE_CREDIT_OFLOW_INPLACE (TIOCE_ADM_ERROR_MASK_URE_CREDIT_OFLOW_MASK << TIOCE_ADM_ERROR_MASK_URE_CREDIT_OFLOW_SHIFT)
@@ -864,22 +1013,22 @@
 #define TIOCE_ADM_ERROR_MASK_SSP_RSP_SIDEBAND_INPLACE (TIOCE_ADM_ERROR_MASK_SSP_RSP_SIDEBAND_MASK << TIOCE_ADM_ERROR_MASK_SSP_RSP_SIDEBAND_SHIFT)
 #define TIOCE_ADM_ERROR_MASK_SSP_RSP_SHORT_SHIFT     21 /* established */
 #define TIOCE_ADM_ERROR_MASK_SSP_RSP_SHORT_MASK      0x1ull
-#define TIOCE_ADM_ERROR_MASK_SSP_RSP_SHORT_INPLACE   (TIOCE_ADM_ERROR_MASK_SSP_RSP_SHORT_MASK << TIOCE_ADM_ERROR_MASK_SSP_RSP_SHORT_SHIFT)
+#define TIOCE_ADM_ERROR_MASK_SSP_RSP_SHORT_INPLACE (TIOCE_ADM_ERROR_MASK_SSP_RSP_SHORT_MASK << TIOCE_ADM_ERROR_MASK_SSP_RSP_SHORT_SHIFT)
 #define TIOCE_ADM_ERROR_MASK_SSP_RSP_LONG_SHIFT      20 /* established */
 #define TIOCE_ADM_ERROR_MASK_SSP_RSP_LONG_MASK       0x1ull
-#define TIOCE_ADM_ERROR_MASK_SSP_RSP_LONG_INPLACE    (TIOCE_ADM_ERROR_MASK_SSP_RSP_LONG_MASK << TIOCE_ADM_ERROR_MASK_SSP_RSP_LONG_SHIFT)
+#define TIOCE_ADM_ERROR_MASK_SSP_RSP_LONG_INPLACE (TIOCE_ADM_ERROR_MASK_SSP_RSP_LONG_MASK << TIOCE_ADM_ERROR_MASK_SSP_RSP_LONG_SHIFT)
 #define TIOCE_ADM_ERROR_MASK_SSP_RSP_INVALID_SHIFT   19 /* established */
 #define TIOCE_ADM_ERROR_MASK_SSP_RSP_INVALID_MASK    0x1ull
 #define TIOCE_ADM_ERROR_MASK_SSP_RSP_INVALID_INPLACE (TIOCE_ADM_ERROR_MASK_SSP_RSP_INVALID_MASK << TIOCE_ADM_ERROR_MASK_SSP_RSP_INVALID_SHIFT)
 #define TIOCE_ADM_ERROR_MASK_DRE_SRAM_PE_SHIFT       18 /* established */
 #define TIOCE_ADM_ERROR_MASK_DRE_SRAM_PE_MASK        0x1ull
-#define TIOCE_ADM_ERROR_MASK_DRE_SRAM_PE_INPLACE     (TIOCE_ADM_ERROR_MASK_DRE_SRAM_PE_MASK << TIOCE_ADM_ERROR_MASK_DRE_SRAM_PE_SHIFT)
+#define TIOCE_ADM_ERROR_MASK_DRE_SRAM_PE_INPLACE (TIOCE_ADM_ERROR_MASK_DRE_SRAM_PE_MASK << TIOCE_ADM_ERROR_MASK_DRE_SRAM_PE_SHIFT)
 #define TIOCE_ADM_ERROR_MASK_DRE_CREDIT_OFLOW_SHIFT  17 /* established */
 #define TIOCE_ADM_ERROR_MASK_DRE_CREDIT_OFLOW_MASK   0x1ull
 #define TIOCE_ADM_ERROR_MASK_DRE_CREDIT_OFLOW_INPLACE (TIOCE_ADM_ERROR_MASK_DRE_CREDIT_OFLOW_MASK << TIOCE_ADM_ERROR_MASK_DRE_CREDIT_OFLOW_SHIFT)
 #define TIOCE_ADM_ERROR_MASK_PCIE_ERR_COMPL_SHIFT    16 /* established */
 #define TIOCE_ADM_ERROR_MASK_PCIE_ERR_COMPL_MASK     0x1ull
-#define TIOCE_ADM_ERROR_MASK_PCIE_ERR_COMPL_INPLACE  (TIOCE_ADM_ERROR_MASK_PCIE_ERR_COMPL_MASK << TIOCE_ADM_ERROR_MASK_PCIE_ERR_COMPL_SHIFT)
+#define TIOCE_ADM_ERROR_MASK_PCIE_ERR_COMPL_INPLACE (TIOCE_ADM_ERROR_MASK_PCIE_ERR_COMPL_MASK << TIOCE_ADM_ERROR_MASK_PCIE_ERR_COMPL_SHIFT)
 #define TIOCE_ADM_ERROR_MASK_PCIE_UNEXP_COMPL_SHIFT  15 /* established */
 #define TIOCE_ADM_ERROR_MASK_PCIE_UNEXP_COMPL_MASK   0x1ull
 #define TIOCE_ADM_ERROR_MASK_PCIE_UNEXP_COMPL_INPLACE (TIOCE_ADM_ERROR_MASK_PCIE_UNEXP_COMPL_MASK << TIOCE_ADM_ERROR_MASK_PCIE_UNEXP_COMPL_SHIFT)
@@ -888,7 +1037,7 @@
 #define TIOCE_ADM_ERROR_MASK_PCIE_COMPL_TIMEOUT_INPLACE (TIOCE_ADM_ERROR_MASK_PCIE_COMPL_TIMEOUT_MASK << TIOCE_ADM_ERROR_MASK_PCIE_COMPL_TIMEOUT_SHIFT)
 #define TIOCE_ADM_ERROR_MASK_SSP_REQ_BAD_BE_SHIFT    13 /* established */
 #define TIOCE_ADM_ERROR_MASK_SSP_REQ_BAD_BE_MASK     0x1ull
-#define TIOCE_ADM_ERROR_MASK_SSP_REQ_BAD_BE_INPLACE  (TIOCE_ADM_ERROR_MASK_SSP_REQ_BAD_BE_MASK << TIOCE_ADM_ERROR_MASK_SSP_REQ_BAD_BE_SHIFT)
+#define TIOCE_ADM_ERROR_MASK_SSP_REQ_BAD_BE_INPLACE (TIOCE_ADM_ERROR_MASK_SSP_REQ_BAD_BE_MASK << TIOCE_ADM_ERROR_MASK_SSP_REQ_BAD_BE_SHIFT)
 #define TIOCE_ADM_ERROR_MASK_SSP_REQ_ADDR_ERR_SHIFT  12 /* established */
 #define TIOCE_ADM_ERROR_MASK_SSP_REQ_ADDR_ERR_MASK   0x1ull
 #define TIOCE_ADM_ERROR_MASK_SSP_REQ_ADDR_ERR_INPLACE (TIOCE_ADM_ERROR_MASK_SSP_REQ_ADDR_ERR_MASK << TIOCE_ADM_ERROR_MASK_SSP_REQ_ADDR_ERR_SHIFT)
@@ -897,13 +1046,13 @@
 #define TIOCE_ADM_ERROR_MASK_SSP_REQ_SIDEBAND_INPLACE (TIOCE_ADM_ERROR_MASK_SSP_REQ_SIDEBAND_MASK << TIOCE_ADM_ERROR_MASK_SSP_REQ_SIDEBAND_SHIFT)
 #define TIOCE_ADM_ERROR_MASK_SSP_REQ_SHORT_SHIFT     10 /* established */
 #define TIOCE_ADM_ERROR_MASK_SSP_REQ_SHORT_MASK      0x1ull
-#define TIOCE_ADM_ERROR_MASK_SSP_REQ_SHORT_INPLACE   (TIOCE_ADM_ERROR_MASK_SSP_REQ_SHORT_MASK << TIOCE_ADM_ERROR_MASK_SSP_REQ_SHORT_SHIFT)
+#define TIOCE_ADM_ERROR_MASK_SSP_REQ_SHORT_INPLACE (TIOCE_ADM_ERROR_MASK_SSP_REQ_SHORT_MASK << TIOCE_ADM_ERROR_MASK_SSP_REQ_SHORT_SHIFT)
 #define TIOCE_ADM_ERROR_MASK_SSP_REQ_OFLOW_SHIFT     9 /* established */
 #define TIOCE_ADM_ERROR_MASK_SSP_REQ_OFLOW_MASK      0x1ull
-#define TIOCE_ADM_ERROR_MASK_SSP_REQ_OFLOW_INPLACE   (TIOCE_ADM_ERROR_MASK_SSP_REQ_OFLOW_MASK << TIOCE_ADM_ERROR_MASK_SSP_REQ_OFLOW_SHIFT)
+#define TIOCE_ADM_ERROR_MASK_SSP_REQ_OFLOW_INPLACE (TIOCE_ADM_ERROR_MASK_SSP_REQ_OFLOW_MASK << TIOCE_ADM_ERROR_MASK_SSP_REQ_OFLOW_SHIFT)
 #define TIOCE_ADM_ERROR_MASK_SSP_REQ_LONG_SHIFT      8 /* established */
 #define TIOCE_ADM_ERROR_MASK_SSP_REQ_LONG_MASK       0x1ull
-#define TIOCE_ADM_ERROR_MASK_SSP_REQ_LONG_INPLACE    (TIOCE_ADM_ERROR_MASK_SSP_REQ_LONG_MASK << TIOCE_ADM_ERROR_MASK_SSP_REQ_LONG_SHIFT)
+#define TIOCE_ADM_ERROR_MASK_SSP_REQ_LONG_INPLACE (TIOCE_ADM_ERROR_MASK_SSP_REQ_LONG_MASK << TIOCE_ADM_ERROR_MASK_SSP_REQ_LONG_SHIFT)
 #define TIOCE_ADM_ERROR_MASK_DRE_SSP_REQ_INVAL_SHIFT 7 /* established */
 #define TIOCE_ADM_ERROR_MASK_DRE_SSP_REQ_INVAL_MASK  0x1ull
 #define TIOCE_ADM_ERROR_MASK_DRE_SSP_REQ_INVAL_INPLACE (TIOCE_ADM_ERROR_MASK_DRE_SSP_REQ_INVAL_MASK << TIOCE_ADM_ERROR_MASK_DRE_SSP_REQ_INVAL_SHIFT)
@@ -912,193 +1061,251 @@
 #define TIOCE_ADM_ERROR_MASK_CXM_CREDIT_OFLOW_INPLACE (TIOCE_ADM_ERROR_MASK_CXM_CREDIT_OFLOW_MASK << TIOCE_ADM_ERROR_MASK_CXM_CREDIT_OFLOW_SHIFT)
 #define TIOCE_ADM_ERROR_MASK_SSP_MBE_SHIFT           5 /* established */
 #define TIOCE_ADM_ERROR_MASK_SSP_MBE_MASK            0x1ull
-#define TIOCE_ADM_ERROR_MASK_SSP_MBE_INPLACE         (TIOCE_ADM_ERROR_MASK_SSP_MBE_MASK << TIOCE_ADM_ERROR_MASK_SSP_MBE_SHIFT)
+#define TIOCE_ADM_ERROR_MASK_SSP_MBE_INPLACE (TIOCE_ADM_ERROR_MASK_SSP_MBE_MASK << TIOCE_ADM_ERROR_MASK_SSP_MBE_SHIFT)
 #define TIOCE_ADM_ERROR_MASK_SSP_SBE_SHIFT           4 /* established */
 #define TIOCE_ADM_ERROR_MASK_SSP_SBE_MASK            0x1ull
-#define TIOCE_ADM_ERROR_MASK_SSP_SBE_INPLACE         (TIOCE_ADM_ERROR_MASK_SSP_SBE_MASK << TIOCE_ADM_ERROR_MASK_SSP_SBE_SHIFT)
+#define TIOCE_ADM_ERROR_MASK_SSP_SBE_INPLACE (TIOCE_ADM_ERROR_MASK_SSP_SBE_MASK << TIOCE_ADM_ERROR_MASK_SSP_SBE_SHIFT)
 #define TIOCE_ADM_ERROR_MASK_SSP_PROTOCOL_ERROR_SHIFT 3 /* established */
 #define TIOCE_ADM_ERROR_MASK_SSP_PROTOCOL_ERROR_MASK 0x1ull
 #define TIOCE_ADM_ERROR_MASK_SSP_PROTOCOL_ERROR_INPLACE (TIOCE_ADM_ERROR_MASK_SSP_PROTOCOL_ERROR_MASK << TIOCE_ADM_ERROR_MASK_SSP_PROTOCOL_ERROR_SHIFT)
 #define TIOCE_ADM_ERROR_MASK_SSP_RSP_HEADER_SHIFT    2 /* established */
 #define TIOCE_ADM_ERROR_MASK_SSP_RSP_HEADER_MASK     0x1ull
-#define TIOCE_ADM_ERROR_MASK_SSP_RSP_HEADER_INPLACE  (TIOCE_ADM_ERROR_MASK_SSP_RSP_HEADER_MASK << TIOCE_ADM_ERROR_MASK_SSP_RSP_HEADER_SHIFT)
+#define TIOCE_ADM_ERROR_MASK_SSP_RSP_HEADER_INPLACE (TIOCE_ADM_ERROR_MASK_SSP_RSP_HEADER_MASK << TIOCE_ADM_ERROR_MASK_SSP_RSP_HEADER_SHIFT)
 #define TIOCE_ADM_ERROR_MASK_SSP_REQ_HEADER_SHIFT    1 /* established */
 #define TIOCE_ADM_ERROR_MASK_SSP_REQ_HEADER_MASK     0x1ull
-#define TIOCE_ADM_ERROR_MASK_SSP_REQ_HEADER_INPLACE  (TIOCE_ADM_ERROR_MASK_SSP_REQ_HEADER_MASK << TIOCE_ADM_ERROR_MASK_SSP_REQ_HEADER_SHIFT)
+#define TIOCE_ADM_ERROR_MASK_SSP_REQ_HEADER_INPLACE (TIOCE_ADM_ERROR_MASK_SSP_REQ_HEADER_MASK << TIOCE_ADM_ERROR_MASK_SSP_REQ_HEADER_SHIFT)
 #define TIOCE_ADM_ERROR_MASK_CRM_SSP_REQ_INVALID_SHIFT 0 /* established */
 #define TIOCE_ADM_ERROR_MASK_CRM_SSP_REQ_INVALID_MASK 0x1ull
 #define TIOCE_ADM_ERROR_MASK_CRM_SSP_REQ_INVALID_INPLACE (TIOCE_ADM_ERROR_MASK_CRM_SSP_REQ_INVALID_MASK << TIOCE_ADM_ERROR_MASK_CRM_SSP_REQ_INVALID_SHIFT)
 
 /*
- * Name and offset are the vendor header's definition (struct member ce_adm_first_error). The header gives no access direction or reset value; access rw is a placeholder.
+ * Name and offset are the vendor header's definition (struct member
+ * ce_adm_first_error). The header gives no access direction or reset value;
+ * access rw is a placeholder.
  */
 /* adm_first_error: rw64, reset unknown */
 #define TIOCE_ADM_FIRST_ERROR                        0x000118 /* established */
 
 /*
- * Name and offset are the vendor header's definition (struct member ce_adm_error_overflow). The header gives no access direction or reset value; access rw is a placeholder.
+ * Name and offset are the vendor header's definition (struct member
+ * ce_adm_error_overflow). The header gives no access direction or reset value;
+ * access rw is a placeholder.
  */
 /* adm_error_overflow: rw64, reset unknown */
 #define TIOCE_ADM_ERROR_OVERFLOW                     0x000120 /* established */
 
 /*
- * Name and offset are the vendor header's definition (struct member ce_adm_error_overflow_alias). The header gives no access direction or reset value; access rw is a placeholder.
+ * Name and offset are the vendor header's definition (struct member
+ * ce_adm_error_overflow_alias). The header gives no access direction or reset
+ * value; access rw is a placeholder.
  */
 /* adm_error_overflow_alias: rw64, reset unknown */
 #define TIOCE_ADM_ERROR_OVERFLOW_ALIAS               0x000128 /* established */
 
 /*
- * Name and offset are the vendor header's definition (struct member ce_adm_tnum_error). The header gives no access direction or reset value; access rw is a placeholder.
+ * Name and offset are the vendor header's definition (struct member
+ * ce_adm_tnum_error). The header gives no access direction or reset value;
+ * access rw is a placeholder.
  */
 /* adm_tnum_error: rw64, reset unknown */
 #define TIOCE_ADM_TNUM_ERROR                         0x000140 /* established */
 
 /*
- * Name and offset are the vendor header's definition (struct member ce_adm_mmr_err_detail). The header gives no access direction or reset value; access rw is a placeholder.
+ * Name and offset are the vendor header's definition (struct member
+ * ce_adm_mmr_err_detail). The header gives no access direction or reset value;
+ * access rw is a placeholder.
  */
 /* adm_mmr_err_detail: rw64, reset unknown */
 #define TIOCE_ADM_MMR_ERR_DETAIL                     0x000148 /* established */
 
 /*
- * Name and offset are the vendor header's definition (struct member ce_adm_msg_sram_perr_detail). The header gives no access direction or reset value; access rw is a placeholder.
+ * Name and offset are the vendor header's definition (struct member
+ * ce_adm_msg_sram_perr_detail). The header gives no access direction or reset
+ * value; access rw is a placeholder.
  */
 /* adm_msg_sram_perr_detail: rw64, reset unknown */
 #define TIOCE_ADM_MSG_SRAM_PERR_DETAIL               0x000150 /* established */
 
 /*
- * Name and offset are the vendor header's definition (struct member ce_adm_bap_sram_perr_detail). The header gives no access direction or reset value; access rw is a placeholder.
+ * Name and offset are the vendor header's definition (struct member
+ * ce_adm_bap_sram_perr_detail). The header gives no access direction or reset
+ * value; access rw is a placeholder.
  */
 /* adm_bap_sram_perr_detail: rw64, reset unknown */
 #define TIOCE_ADM_BAP_SRAM_PERR_DETAIL               0x000158 /* established */
 
 /*
- * Name and offset are the vendor header's definition (struct member ce_adm_ce_sram_perr_detail). The header gives no access direction or reset value; access rw is a placeholder.
+ * Name and offset are the vendor header's definition (struct member
+ * ce_adm_ce_sram_perr_detail). The header gives no access direction or reset
+ * value; access rw is a placeholder.
  */
 /* adm_ce_sram_perr_detail: rw64, reset unknown */
 #define TIOCE_ADM_CE_SRAM_PERR_DETAIL                0x000160 /* established */
 
 /*
- * Name and offset are the vendor header's definition (struct member ce_adm_ce_credit_oflow_detail). The header gives no access direction or reset value; access rw is a placeholder.
+ * Name and offset are the vendor header's definition (struct member
+ * ce_adm_ce_credit_oflow_detail). The header gives no access direction or reset
+ * value; access rw is a placeholder.
  */
 /* adm_ce_credit_oflow_detail: rw64, reset unknown */
 #define TIOCE_ADM_CE_CREDIT_OFLOW_DETAIL             0x000168 /* established */
 
 /*
- * Name and offset are the vendor header's definition (struct member ce_adm_tx_link_idle_max_timer). The header gives no access direction or reset value; access rw is a placeholder.
+ * Name and offset are the vendor header's definition (struct member
+ * ce_adm_tx_link_idle_max_timer). The header gives no access direction or reset
+ * value; access rw is a placeholder.
  */
 /* adm_tx_link_idle_max_timer: rw64, reset unknown */
 #define TIOCE_ADM_TX_LINK_IDLE_MAX_TIMER             0x000170 /* established */
 
 /*
- * Name and offset are the vendor header's definition (struct member ce_adm_pcie_debug_sel). The header gives no access direction or reset value; access rw is a placeholder.
+ * Name and offset are the vendor header's definition (struct member
+ * ce_adm_pcie_debug_sel). The header gives no access direction or reset value;
+ * access rw is a placeholder.
  */
 /* adm_pcie_debug_sel: rw64, reset unknown */
 #define TIOCE_ADM_PCIE_DEBUG_SEL                     0x000178 /* established */
 
 /*
- * Name and offset are the vendor header's definition (struct member ce_adm_pcie_debug_sel_top). The header gives no access direction or reset value; access rw is a placeholder.
+ * Name and offset are the vendor header's definition (struct member
+ * ce_adm_pcie_debug_sel_top). The header gives no access direction or reset
+ * value; access rw is a placeholder.
  */
 /* adm_pcie_debug_sel_top: rw64, reset unknown */
 #define TIOCE_ADM_PCIE_DEBUG_SEL_TOP                 0x000200 /* established */
 
 /*
- * Name and offset are the vendor header's definition (struct member ce_adm_pcie_debug_lat_sel_lo_top). The header gives no access direction or reset value; access rw is a placeholder.
+ * Name and offset are the vendor header's definition (struct member
+ * ce_adm_pcie_debug_lat_sel_lo_top). The header gives no access direction or
+ * reset value; access rw is a placeholder.
  */
 /* adm_pcie_debug_lat_sel_lo_top: rw64, reset unknown */
 #define TIOCE_ADM_PCIE_DEBUG_LAT_SEL_LO_TOP          0x000208 /* established */
 
 /*
- * Name and offset are the vendor header's definition (struct member ce_adm_pcie_debug_lat_sel_hi_top). The header gives no access direction or reset value; access rw is a placeholder.
+ * Name and offset are the vendor header's definition (struct member
+ * ce_adm_pcie_debug_lat_sel_hi_top). The header gives no access direction or
+ * reset value; access rw is a placeholder.
  */
 /* adm_pcie_debug_lat_sel_hi_top: rw64, reset unknown */
 #define TIOCE_ADM_PCIE_DEBUG_LAT_SEL_HI_TOP          0x000210 /* established */
 
 /*
- * Name and offset are the vendor header's definition (struct member ce_adm_pcie_debug_trig_sel_top). The header gives no access direction or reset value; access rw is a placeholder.
+ * Name and offset are the vendor header's definition (struct member
+ * ce_adm_pcie_debug_trig_sel_top). The header gives no access direction or
+ * reset value; access rw is a placeholder.
  */
 /* adm_pcie_debug_trig_sel_top: rw64, reset unknown */
 #define TIOCE_ADM_PCIE_DEBUG_TRIG_SEL_TOP            0x000218 /* established */
 
 /*
- * Name and offset are the vendor header's definition (struct member ce_adm_pcie_debug_trig_lat_sel_lo_top). The header gives no access direction or reset value; access rw is a placeholder.
+ * Name and offset are the vendor header's definition (struct member
+ * ce_adm_pcie_debug_trig_lat_sel_lo_top). The header gives no access direction
+ * or reset value; access rw is a placeholder.
  */
 /* adm_pcie_debug_trig_lat_sel_lo_top: rw64, reset unknown */
 #define TIOCE_ADM_PCIE_DEBUG_TRIG_LAT_SEL_LO_TOP     0x000220 /* established */
 
 /*
- * Name and offset are the vendor header's definition (struct member ce_adm_pcie_debug_trig_lat_sel_hi_top). The header gives no access direction or reset value; access rw is a placeholder.
+ * Name and offset are the vendor header's definition (struct member
+ * ce_adm_pcie_debug_trig_lat_sel_hi_top). The header gives no access direction
+ * or reset value; access rw is a placeholder.
  */
 /* adm_pcie_debug_trig_lat_sel_hi_top: rw64, reset unknown */
 #define TIOCE_ADM_PCIE_DEBUG_TRIG_LAT_SEL_HI_TOP     0x000228 /* established */
 
 /*
- * Name and offset are the vendor header's definition (struct member ce_adm_pcie_trig_compare_top). The header gives no access direction or reset value; access rw is a placeholder.
+ * Name and offset are the vendor header's definition (struct member
+ * ce_adm_pcie_trig_compare_top). The header gives no access direction or reset
+ * value; access rw is a placeholder.
  */
 /* adm_pcie_trig_compare_top: rw64, reset unknown */
 #define TIOCE_ADM_PCIE_TRIG_COMPARE_TOP              0x000230 /* established */
 
 /*
- * Name and offset are the vendor header's definition (struct member ce_adm_pcie_trig_compare_en_top). The header gives no access direction or reset value; access rw is a placeholder.
+ * Name and offset are the vendor header's definition (struct member
+ * ce_adm_pcie_trig_compare_en_top). The header gives no access direction or
+ * reset value; access rw is a placeholder.
  */
 /* adm_pcie_trig_compare_en_top: rw64, reset unknown */
 #define TIOCE_ADM_PCIE_TRIG_COMPARE_EN_TOP           0x000238 /* established */
 
 /*
- * Name and offset are the vendor header's definition (struct member ce_adm_ssp_debug_sel_top). The header gives no access direction or reset value; access rw is a placeholder.
+ * Name and offset are the vendor header's definition (struct member
+ * ce_adm_ssp_debug_sel_top). The header gives no access direction or reset
+ * value; access rw is a placeholder.
  */
 /* adm_ssp_debug_sel_top: rw64, reset unknown */
 #define TIOCE_ADM_SSP_DEBUG_SEL_TOP                  0x000240 /* established */
 
 /*
- * Name and offset are the vendor header's definition (struct member ce_adm_ssp_debug_lat_sel_lo_top). The header gives no access direction or reset value; access rw is a placeholder.
+ * Name and offset are the vendor header's definition (struct member
+ * ce_adm_ssp_debug_lat_sel_lo_top). The header gives no access direction or
+ * reset value; access rw is a placeholder.
  */
 /* adm_ssp_debug_lat_sel_lo_top: rw64, reset unknown */
 #define TIOCE_ADM_SSP_DEBUG_LAT_SEL_LO_TOP           0x000248 /* established */
 
 /*
- * Name and offset are the vendor header's definition (struct member ce_adm_ssp_debug_lat_sel_hi_top). The header gives no access direction or reset value; access rw is a placeholder.
+ * Name and offset are the vendor header's definition (struct member
+ * ce_adm_ssp_debug_lat_sel_hi_top). The header gives no access direction or
+ * reset value; access rw is a placeholder.
  */
 /* adm_ssp_debug_lat_sel_hi_top: rw64, reset unknown */
 #define TIOCE_ADM_SSP_DEBUG_LAT_SEL_HI_TOP           0x000250 /* established */
 
 /*
- * Name and offset are the vendor header's definition (struct member ce_adm_ssp_debug_trig_sel_top). The header gives no access direction or reset value; access rw is a placeholder.
+ * Name and offset are the vendor header's definition (struct member
+ * ce_adm_ssp_debug_trig_sel_top). The header gives no access direction or reset
+ * value; access rw is a placeholder.
  */
 /* adm_ssp_debug_trig_sel_top: rw64, reset unknown */
 #define TIOCE_ADM_SSP_DEBUG_TRIG_SEL_TOP             0x000258 /* established */
 
 /*
- * Name and offset are the vendor header's definition (struct member ce_adm_ssp_debug_trig_lat_sel_lo_top). The header gives no access direction or reset value; access rw is a placeholder.
+ * Name and offset are the vendor header's definition (struct member
+ * ce_adm_ssp_debug_trig_lat_sel_lo_top). The header gives no access direction
+ * or reset value; access rw is a placeholder.
  */
 /* adm_ssp_debug_trig_lat_sel_lo_top: rw64, reset unknown */
 #define TIOCE_ADM_SSP_DEBUG_TRIG_LAT_SEL_LO_TOP      0x000260 /* established */
 
 /*
- * Name and offset are the vendor header's definition (struct member ce_adm_ssp_debug_trig_lat_sel_hi_top). The header gives no access direction or reset value; access rw is a placeholder.
+ * Name and offset are the vendor header's definition (struct member
+ * ce_adm_ssp_debug_trig_lat_sel_hi_top). The header gives no access direction
+ * or reset value; access rw is a placeholder.
  */
 /* adm_ssp_debug_trig_lat_sel_hi_top: rw64, reset unknown */
 #define TIOCE_ADM_SSP_DEBUG_TRIG_LAT_SEL_HI_TOP      0x000268 /* established */
 
 /*
- * Name and offset are the vendor header's definition (struct member ce_adm_ssp_trig_compare_top). The header gives no access direction or reset value; access rw is a placeholder.
+ * Name and offset are the vendor header's definition (struct member
+ * ce_adm_ssp_trig_compare_top). The header gives no access direction or reset
+ * value; access rw is a placeholder.
  */
 /* adm_ssp_trig_compare_top: rw64, reset unknown */
 #define TIOCE_ADM_SSP_TRIG_COMPARE_TOP               0x000270 /* established */
 
 /*
- * Name and offset are the vendor header's definition (struct member ce_adm_ssp_trig_compare_en_top). The header gives no access direction or reset value; access rw is a placeholder.
+ * Name and offset are the vendor header's definition (struct member
+ * ce_adm_ssp_trig_compare_en_top). The header gives no access direction or
+ * reset value; access rw is a placeholder.
  */
 /* adm_ssp_trig_compare_en_top: rw64, reset unknown */
 #define TIOCE_ADM_SSP_TRIG_COMPARE_EN_TOP            0x000278 /* established */
 
 /*
- * Name and offset are the vendor header's definition (struct member ce_adm_bap_ctrl). The header gives no access direction or reset value; access rw is a placeholder.
+ * Name and offset are the vendor header's definition (struct member
+ * ce_adm_bap_ctrl). The header gives no access direction or reset value; access
+ * rw is a placeholder.
  */
 /* adm_bap_ctrl: rw64, reset unknown */
 #define TIOCE_ADM_BAP_CTRL                           0x000400 /* established */
 
 /*
- * Name and offset are the vendor header's definition (struct member ce_msg_buf_data63_0). The header gives no access direction or reset value; access rw is a placeholder.
+ * Name and offset are the vendor header's definition (struct member
+ * ce_msg_buf_data63_0). The header gives no access direction or reset value;
+ * access rw is a placeholder.
  */
 /* msg_buf_data63_0: rw64, reset unknown */
 #define TIOCE_MSG_BUF_DATA63_0                       0x000800 /* established */
@@ -1106,7 +1313,9 @@
 #define TIOCE_MSG_BUF_DATA63_0_STRIDE                8
 
 /*
- * Name and offset are the vendor header's definition (struct member ce_msg_buf_data127_64). The header gives no access direction or reset value; access rw is a placeholder.
+ * Name and offset are the vendor header's definition (struct member
+ * ce_msg_buf_data127_64). The header gives no access direction or reset value;
+ * access rw is a placeholder.
  */
 /* msg_buf_data127_64: rw64, reset unknown */
 #define TIOCE_MSG_BUF_DATA127_64                     0x000a00 /* established */
@@ -1114,7 +1323,9 @@
 #define TIOCE_MSG_BUF_DATA127_64_STRIDE              8
 
 /*
- * Name and offset are the vendor header's definition (struct member ce_msg_buf_parity). The header gives no access direction or reset value; access rw is a placeholder.
+ * Name and offset are the vendor header's definition (struct member
+ * ce_msg_buf_parity). The header gives no access direction or reset value;
+ * access rw is a placeholder.
  */
 /* msg_buf_parity: rw64, reset unknown */
 #define TIOCE_MSG_BUF_PARITY                         0x000c00 /* established */
@@ -1122,7 +1333,9 @@
 #define TIOCE_MSG_BUF_PARITY_STRIDE                  8
 
 /*
- * Name and offset are the vendor header's definition (struct member ce_lsi_lpu_id). The header gives no access direction or reset value; access rw is a placeholder.
+ * Name and offset are the vendor header's definition (struct member
+ * ce_lsi_lpu_id). The header gives no access direction or reset value; access
+ * rw is a placeholder.
  */
 /* lsi_lpu_id: rw64, reset unknown */
 #define TIOCE_LSI_LPU_ID                             0x002000 /* established */
@@ -1130,7 +1343,9 @@
 #define TIOCE_LSI_LPU_ID_STRIDE                      4096
 
 /*
- * Name and offset are the vendor header's definition (struct member ce_lsi_rst). The header gives no access direction or reset value; access rw is a placeholder.
+ * Name and offset are the vendor header's definition (struct member
+ * ce_lsi_rst). The header gives no access direction or reset value; access rw
+ * is a placeholder.
  */
 /* lsi_rst: rw64, reset unknown */
 #define TIOCE_LSI_RST                                0x002008 /* established */
@@ -1138,7 +1353,9 @@
 #define TIOCE_LSI_RST_STRIDE                         4096
 
 /*
- * Name and offset are the vendor header's definition (struct member ce_lsi_dbg_stat). The header gives no access direction or reset value; access rw is a placeholder.
+ * Name and offset are the vendor header's definition (struct member
+ * ce_lsi_dbg_stat). The header gives no access direction or reset value; access
+ * rw is a placeholder.
  */
 /* lsi_dbg_stat: rw64, reset unknown */
 #define TIOCE_LSI_DBG_STAT                           0x002010 /* established */
@@ -1146,7 +1363,9 @@
 #define TIOCE_LSI_DBG_STAT_STRIDE                    4096
 
 /*
- * Name and offset are the vendor header's definition (struct member ce_lsi_dbg_cfg). The header gives no access direction or reset value; access rw is a placeholder.
+ * Name and offset are the vendor header's definition (struct member
+ * ce_lsi_dbg_cfg). The header gives no access direction or reset value; access
+ * rw is a placeholder.
  */
 /* lsi_dbg_cfg: rw64, reset unknown */
 #define TIOCE_LSI_DBG_CFG                            0x002018 /* established */
@@ -1154,7 +1373,9 @@
 #define TIOCE_LSI_DBG_CFG_STRIDE                     4096
 
 /*
- * Name and offset are the vendor header's definition (struct member ce_lsi_ltssm_ctrl). The header gives no access direction or reset value; access rw is a placeholder.
+ * Name and offset are the vendor header's definition (struct member
+ * ce_lsi_ltssm_ctrl). The header gives no access direction or reset value;
+ * access rw is a placeholder.
  */
 /* lsi_ltssm_ctrl: rw64, reset unknown */
 #define TIOCE_LSI_LTSSM_CTRL                         0x002020 /* established */
@@ -1162,7 +1383,9 @@
 #define TIOCE_LSI_LTSSM_CTRL_STRIDE                  4096
 
 /*
- * Name and offset are the vendor header's definition (struct member ce_lsi_lk_stat). The header gives no access direction or reset value; access rw is a placeholder.
+ * Name and offset are the vendor header's definition (struct member
+ * ce_lsi_lk_stat). The header gives no access direction or reset value; access
+ * rw is a placeholder.
  */
 /* lsi_lk_stat: rw64, reset unknown */
 #define TIOCE_LSI_LK_STAT                            0x002028 /* established */
@@ -1170,7 +1393,9 @@
 #define TIOCE_LSI_LK_STAT_STRIDE                     4096
 
 /*
- * Name and offset are the vendor header's definition (struct member ce_lsi_int_and_stat). The header gives no access direction or reset value; access rw is a placeholder.
+ * Name and offset are the vendor header's definition (struct member
+ * ce_lsi_int_and_stat). The header gives no access direction or reset value;
+ * access rw is a placeholder.
  */
 /* lsi_int_and_stat: rw64, reset unknown */
 #define TIOCE_LSI_INT_AND_STAT                       0x002040 /* established */
@@ -1178,7 +1403,9 @@
 #define TIOCE_LSI_INT_AND_STAT_STRIDE                4096
 
 /*
- * Name and offset are the vendor header's definition (struct member ce_lsi_int_mask). The header gives no access direction or reset value; access rw is a placeholder.
+ * Name and offset are the vendor header's definition (struct member
+ * ce_lsi_int_mask). The header gives no access direction or reset value; access
+ * rw is a placeholder.
  */
 /* lsi_int_mask: rw64, reset unknown */
 #define TIOCE_LSI_INT_MASK                           0x002048 /* established */
@@ -1186,7 +1413,9 @@
 #define TIOCE_LSI_INT_MASK_STRIDE                    4096
 
 /*
- * Name and offset are the vendor header's definition (struct member ce_lsi_lk_perf_cnt_sel). The header gives no access direction or reset value; access rw is a placeholder.
+ * Name and offset are the vendor header's definition (struct member
+ * ce_lsi_lk_perf_cnt_sel). The header gives no access direction or reset value;
+ * access rw is a placeholder.
  */
 /* lsi_lk_perf_cnt_sel: rw64, reset unknown */
 #define TIOCE_LSI_LK_PERF_CNT_SEL                    0x002100 /* established */
@@ -1194,7 +1423,9 @@
 #define TIOCE_LSI_LK_PERF_CNT_SEL_STRIDE             4096
 
 /*
- * Name and offset are the vendor header's definition (struct member ce_lsi_lk_perf_cnt_ctrl). The header gives no access direction or reset value; access rw is a placeholder.
+ * Name and offset are the vendor header's definition (struct member
+ * ce_lsi_lk_perf_cnt_ctrl). The header gives no access direction or reset
+ * value; access rw is a placeholder.
  */
 /* lsi_lk_perf_cnt_ctrl: rw64, reset unknown */
 #define TIOCE_LSI_LK_PERF_CNT_CTRL                   0x002110 /* established */
@@ -1202,7 +1433,9 @@
 #define TIOCE_LSI_LK_PERF_CNT_CTRL_STRIDE            4096
 
 /*
- * Name and offset are the vendor header's definition (struct member ce_lsi_lk_perf_cnt1). The header gives no access direction or reset value; access rw is a placeholder.
+ * Name and offset are the vendor header's definition (struct member
+ * ce_lsi_lk_perf_cnt1). The header gives no access direction or reset value;
+ * access rw is a placeholder.
  */
 /* lsi_lk_perf_cnt1: rw64, reset unknown */
 #define TIOCE_LSI_LK_PERF_CNT1                       0x002120 /* established */
@@ -1210,7 +1443,9 @@
 #define TIOCE_LSI_LK_PERF_CNT1_STRIDE                4096
 
 /*
- * Name and offset are the vendor header's definition (struct member ce_lsi_lk_perf_cnt1_test). The header gives no access direction or reset value; access rw is a placeholder.
+ * Name and offset are the vendor header's definition (struct member
+ * ce_lsi_lk_perf_cnt1_test). The header gives no access direction or reset
+ * value; access rw is a placeholder.
  */
 /* lsi_lk_perf_cnt1_test: rw64, reset unknown */
 #define TIOCE_LSI_LK_PERF_CNT1_TEST                  0x002128 /* established */
@@ -1218,7 +1453,9 @@
 #define TIOCE_LSI_LK_PERF_CNT1_TEST_STRIDE           4096
 
 /*
- * Name and offset are the vendor header's definition (struct member ce_lsi_lk_perf_cnt2). The header gives no access direction or reset value; access rw is a placeholder.
+ * Name and offset are the vendor header's definition (struct member
+ * ce_lsi_lk_perf_cnt2). The header gives no access direction or reset value;
+ * access rw is a placeholder.
  */
 /* lsi_lk_perf_cnt2: rw64, reset unknown */
 #define TIOCE_LSI_LK_PERF_CNT2                       0x002130 /* established */
@@ -1226,7 +1463,9 @@
 #define TIOCE_LSI_LK_PERF_CNT2_STRIDE                4096
 
 /*
- * Name and offset are the vendor header's definition (struct member ce_lsi_lk_perf_cnt2_test). The header gives no access direction or reset value; access rw is a placeholder.
+ * Name and offset are the vendor header's definition (struct member
+ * ce_lsi_lk_perf_cnt2_test). The header gives no access direction or reset
+ * value; access rw is a placeholder.
  */
 /* lsi_lk_perf_cnt2_test: rw64, reset unknown */
 #define TIOCE_LSI_LK_PERF_CNT2_TEST                  0x002138 /* established */
@@ -1234,7 +1473,9 @@
 #define TIOCE_LSI_LK_PERF_CNT2_TEST_STRIDE           4096
 
 /*
- * Name and offset are the vendor header's definition (struct member ce_lsi_lk_lyr_cfg). The header gives no access direction or reset value; access rw is a placeholder.
+ * Name and offset are the vendor header's definition (struct member
+ * ce_lsi_lk_lyr_cfg). The header gives no access direction or reset value;
+ * access rw is a placeholder.
  */
 /* lsi_lk_lyr_cfg: rw64, reset unknown */
 #define TIOCE_LSI_LK_LYR_CFG                         0x002200 /* established */
@@ -1242,7 +1483,9 @@
 #define TIOCE_LSI_LK_LYR_CFG_STRIDE                  4096
 
 /*
- * Name and offset are the vendor header's definition (struct member ce_lsi_lk_lyr_status). The header gives no access direction or reset value; access rw is a placeholder.
+ * Name and offset are the vendor header's definition (struct member
+ * ce_lsi_lk_lyr_status). The header gives no access direction or reset value;
+ * access rw is a placeholder.
  */
 /* lsi_lk_lyr_status: rw64, reset unknown */
 #define TIOCE_LSI_LK_LYR_STATUS                      0x002208 /* established */
@@ -1250,7 +1493,9 @@
 #define TIOCE_LSI_LK_LYR_STATUS_STRIDE               4096
 
 /*
- * Name and offset are the vendor header's definition (struct member ce_lsi_lk_lyr_int_stat). The header gives no access direction or reset value; access rw is a placeholder.
+ * Name and offset are the vendor header's definition (struct member
+ * ce_lsi_lk_lyr_int_stat). The header gives no access direction or reset value;
+ * access rw is a placeholder.
  */
 /* lsi_lk_lyr_int_stat: rw64, reset unknown */
 #define TIOCE_LSI_LK_LYR_INT_STAT                    0x002210 /* established */
@@ -1258,7 +1503,9 @@
 #define TIOCE_LSI_LK_LYR_INT_STAT_STRIDE             4096
 
 /*
- * Name and offset are the vendor header's definition (struct member ce_lsi_lk_ly_int_stat_test). The header gives no access direction or reset value; access rw is a placeholder.
+ * Name and offset are the vendor header's definition (struct member
+ * ce_lsi_lk_ly_int_stat_test). The header gives no access direction or reset
+ * value; access rw is a placeholder.
  */
 /* lsi_lk_ly_int_stat_test: rw64, reset unknown */
 #define TIOCE_LSI_LK_LY_INT_STAT_TEST                0x002218 /* established */
@@ -1266,7 +1513,9 @@
 #define TIOCE_LSI_LK_LY_INT_STAT_TEST_STRIDE         4096
 
 /*
- * Name and offset are the vendor header's definition (struct member ce_lsi_lk_ly_int_stat_mask). The header gives no access direction or reset value; access rw is a placeholder.
+ * Name and offset are the vendor header's definition (struct member
+ * ce_lsi_lk_ly_int_stat_mask). The header gives no access direction or reset
+ * value; access rw is a placeholder.
  */
 /* lsi_lk_ly_int_stat_mask: rw64, reset unknown */
 #define TIOCE_LSI_LK_LY_INT_STAT_MASK                0x002220 /* established */
@@ -1274,7 +1523,9 @@
 #define TIOCE_LSI_LK_LY_INT_STAT_MASK_STRIDE         4096
 
 /*
- * Name and offset are the vendor header's definition (struct member ce_lsi_fc_upd_ctl). The header gives no access direction or reset value; access rw is a placeholder.
+ * Name and offset are the vendor header's definition (struct member
+ * ce_lsi_fc_upd_ctl). The header gives no access direction or reset value;
+ * access rw is a placeholder.
  */
 /* lsi_fc_upd_ctl: rw64, reset unknown */
 #define TIOCE_LSI_FC_UPD_CTL                         0x002240 /* established */
@@ -1282,7 +1533,9 @@
 #define TIOCE_LSI_FC_UPD_CTL_STRIDE                  4096
 
 /*
- * Name and offset are the vendor header's definition (struct member ce_lsi_flw_ctl_upd_to_timer). The header gives no access direction or reset value; access rw is a placeholder.
+ * Name and offset are the vendor header's definition (struct member
+ * ce_lsi_flw_ctl_upd_to_timer). The header gives no access direction or reset
+ * value; access rw is a placeholder.
  */
 /* lsi_flw_ctl_upd_to_timer: rw64, reset unknown */
 #define TIOCE_LSI_FLW_CTL_UPD_TO_TIMER               0x002260 /* established */
@@ -1290,7 +1543,9 @@
 #define TIOCE_LSI_FLW_CTL_UPD_TO_TIMER_STRIDE        4096
 
 /*
- * Name and offset are the vendor header's definition (struct member ce_lsi_flw_ctl_upd_timer0). The header gives no access direction or reset value; access rw is a placeholder.
+ * Name and offset are the vendor header's definition (struct member
+ * ce_lsi_flw_ctl_upd_timer0). The header gives no access direction or reset
+ * value; access rw is a placeholder.
  */
 /* lsi_flw_ctl_upd_timer0: rw64, reset unknown */
 #define TIOCE_LSI_FLW_CTL_UPD_TIMER0                 0x002268 /* established */
@@ -1298,7 +1553,9 @@
 #define TIOCE_LSI_FLW_CTL_UPD_TIMER0_STRIDE          4096
 
 /*
- * Name and offset are the vendor header's definition (struct member ce_lsi_flw_ctl_upd_timer1). The header gives no access direction or reset value; access rw is a placeholder.
+ * Name and offset are the vendor header's definition (struct member
+ * ce_lsi_flw_ctl_upd_timer1). The header gives no access direction or reset
+ * value; access rw is a placeholder.
  */
 /* lsi_flw_ctl_upd_timer1: rw64, reset unknown */
 #define TIOCE_LSI_FLW_CTL_UPD_TIMER1                 0x002270 /* established */
@@ -1306,7 +1563,9 @@
 #define TIOCE_LSI_FLW_CTL_UPD_TIMER1_STRIDE          4096
 
 /*
- * Name and offset are the vendor header's definition (struct member ce_lsi_freq_nak_lat_thrsh). The header gives no access direction or reset value; access rw is a placeholder.
+ * Name and offset are the vendor header's definition (struct member
+ * ce_lsi_freq_nak_lat_thrsh). The header gives no access direction or reset
+ * value; access rw is a placeholder.
  */
 /* lsi_freq_nak_lat_thrsh: rw64, reset unknown */
 #define TIOCE_LSI_FREQ_NAK_LAT_THRSH                 0x002400 /* established */
@@ -1314,7 +1573,9 @@
 #define TIOCE_LSI_FREQ_NAK_LAT_THRSH_STRIDE          4096
 
 /*
- * Name and offset are the vendor header's definition (struct member ce_lsi_ack_nak_lat_tmr). The header gives no access direction or reset value; access rw is a placeholder.
+ * Name and offset are the vendor header's definition (struct member
+ * ce_lsi_ack_nak_lat_tmr). The header gives no access direction or reset value;
+ * access rw is a placeholder.
  */
 /* lsi_ack_nak_lat_tmr: rw64, reset unknown */
 #define TIOCE_LSI_ACK_NAK_LAT_TMR                    0x002408 /* established */
@@ -1322,7 +1583,9 @@
 #define TIOCE_LSI_ACK_NAK_LAT_TMR_STRIDE             4096
 
 /*
- * Name and offset are the vendor header's definition (struct member ce_lsi_rply_tmr_thr). The header gives no access direction or reset value; access rw is a placeholder.
+ * Name and offset are the vendor header's definition (struct member
+ * ce_lsi_rply_tmr_thr). The header gives no access direction or reset value;
+ * access rw is a placeholder.
  */
 /* lsi_rply_tmr_thr: rw64, reset unknown */
 #define TIOCE_LSI_RPLY_TMR_THR                       0x002410 /* established */
@@ -1330,7 +1593,9 @@
 #define TIOCE_LSI_RPLY_TMR_THR_STRIDE                4096
 
 /*
- * Name and offset are the vendor header's definition (struct member ce_lsi_rply_tmr). The header gives no access direction or reset value; access rw is a placeholder.
+ * Name and offset are the vendor header's definition (struct member
+ * ce_lsi_rply_tmr). The header gives no access direction or reset value; access
+ * rw is a placeholder.
  */
 /* lsi_rply_tmr: rw64, reset unknown */
 #define TIOCE_LSI_RPLY_TMR                           0x002418 /* established */
@@ -1338,7 +1603,9 @@
 #define TIOCE_LSI_RPLY_TMR_STRIDE                    4096
 
 /*
- * Name and offset are the vendor header's definition (struct member ce_lsi_rply_num_stat). The header gives no access direction or reset value; access rw is a placeholder.
+ * Name and offset are the vendor header's definition (struct member
+ * ce_lsi_rply_num_stat). The header gives no access direction or reset value;
+ * access rw is a placeholder.
  */
 /* lsi_rply_num_stat: rw64, reset unknown */
 #define TIOCE_LSI_RPLY_NUM_STAT                      0x002420 /* established */
@@ -1346,7 +1613,9 @@
 #define TIOCE_LSI_RPLY_NUM_STAT_STRIDE               4096
 
 /*
- * Name and offset are the vendor header's definition (struct member ce_lsi_rty_buf_max_addr). The header gives no access direction or reset value; access rw is a placeholder.
+ * Name and offset are the vendor header's definition (struct member
+ * ce_lsi_rty_buf_max_addr). The header gives no access direction or reset
+ * value; access rw is a placeholder.
  */
 /* lsi_rty_buf_max_addr: rw64, reset unknown */
 #define TIOCE_LSI_RTY_BUF_MAX_ADDR                   0x002428 /* established */
@@ -1354,7 +1623,9 @@
 #define TIOCE_LSI_RTY_BUF_MAX_ADDR_STRIDE            4096
 
 /*
- * Name and offset are the vendor header's definition (struct member ce_lsi_rty_fifo_ptr). The header gives no access direction or reset value; access rw is a placeholder.
+ * Name and offset are the vendor header's definition (struct member
+ * ce_lsi_rty_fifo_ptr). The header gives no access direction or reset value;
+ * access rw is a placeholder.
  */
 /* lsi_rty_fifo_ptr: rw64, reset unknown */
 #define TIOCE_LSI_RTY_FIFO_PTR                       0x002430 /* established */
@@ -1362,7 +1633,9 @@
 #define TIOCE_LSI_RTY_FIFO_PTR_STRIDE                4096
 
 /*
- * Name and offset are the vendor header's definition (struct member ce_lsi_rty_fifo_rd_wr_ptr). The header gives no access direction or reset value; access rw is a placeholder.
+ * Name and offset are the vendor header's definition (struct member
+ * ce_lsi_rty_fifo_rd_wr_ptr). The header gives no access direction or reset
+ * value; access rw is a placeholder.
  */
 /* lsi_rty_fifo_rd_wr_ptr: rw64, reset unknown */
 #define TIOCE_LSI_RTY_FIFO_RD_WR_PTR                 0x002438 /* established */
@@ -1370,7 +1643,9 @@
 #define TIOCE_LSI_RTY_FIFO_RD_WR_PTR_STRIDE          4096
 
 /*
- * Name and offset are the vendor header's definition (struct member ce_lsi_rty_fifo_cred). The header gives no access direction or reset value; access rw is a placeholder.
+ * Name and offset are the vendor header's definition (struct member
+ * ce_lsi_rty_fifo_cred). The header gives no access direction or reset value;
+ * access rw is a placeholder.
  */
 /* lsi_rty_fifo_cred: rw64, reset unknown */
 #define TIOCE_LSI_RTY_FIFO_CRED                      0x002440 /* established */
@@ -1378,7 +1653,9 @@
 #define TIOCE_LSI_RTY_FIFO_CRED_STRIDE               4096
 
 /*
- * Name and offset are the vendor header's definition (struct member ce_lsi_seq_cnt). The header gives no access direction or reset value; access rw is a placeholder.
+ * Name and offset are the vendor header's definition (struct member
+ * ce_lsi_seq_cnt). The header gives no access direction or reset value; access
+ * rw is a placeholder.
  */
 /* lsi_seq_cnt: rw64, reset unknown */
 #define TIOCE_LSI_SEQ_CNT                            0x002448 /* established */
@@ -1386,7 +1663,9 @@
 #define TIOCE_LSI_SEQ_CNT_STRIDE                     4096
 
 /*
- * Name and offset are the vendor header's definition (struct member ce_lsi_ack_sent_seq_num). The header gives no access direction or reset value; access rw is a placeholder.
+ * Name and offset are the vendor header's definition (struct member
+ * ce_lsi_ack_sent_seq_num). The header gives no access direction or reset
+ * value; access rw is a placeholder.
  */
 /* lsi_ack_sent_seq_num: rw64, reset unknown */
 #define TIOCE_LSI_ACK_SENT_SEQ_NUM                   0x002450 /* established */
@@ -1394,7 +1673,9 @@
 #define TIOCE_LSI_ACK_SENT_SEQ_NUM_STRIDE            4096
 
 /*
- * Name and offset are the vendor header's definition (struct member ce_lsi_seq_cnt_fifo_max_addr). The header gives no access direction or reset value; access rw is a placeholder.
+ * Name and offset are the vendor header's definition (struct member
+ * ce_lsi_seq_cnt_fifo_max_addr). The header gives no access direction or reset
+ * value; access rw is a placeholder.
  */
 /* lsi_seq_cnt_fifo_max_addr: rw64, reset unknown */
 #define TIOCE_LSI_SEQ_CNT_FIFO_MAX_ADDR              0x002458 /* established */
@@ -1402,7 +1683,9 @@
 #define TIOCE_LSI_SEQ_CNT_FIFO_MAX_ADDR_STRIDE       4096
 
 /*
- * Name and offset are the vendor header's definition (struct member ce_lsi_seq_cnt_fifo_ptr). The header gives no access direction or reset value; access rw is a placeholder.
+ * Name and offset are the vendor header's definition (struct member
+ * ce_lsi_seq_cnt_fifo_ptr). The header gives no access direction or reset
+ * value; access rw is a placeholder.
  */
 /* lsi_seq_cnt_fifo_ptr: rw64, reset unknown */
 #define TIOCE_LSI_SEQ_CNT_FIFO_PTR                   0x002460 /* established */
@@ -1410,7 +1693,9 @@
 #define TIOCE_LSI_SEQ_CNT_FIFO_PTR_STRIDE            4096
 
 /*
- * Name and offset are the vendor header's definition (struct member ce_lsi_seq_cnt_rd_wr_ptr). The header gives no access direction or reset value; access rw is a placeholder.
+ * Name and offset are the vendor header's definition (struct member
+ * ce_lsi_seq_cnt_rd_wr_ptr). The header gives no access direction or reset
+ * value; access rw is a placeholder.
  */
 /* lsi_seq_cnt_rd_wr_ptr: rw64, reset unknown */
 #define TIOCE_LSI_SEQ_CNT_RD_WR_PTR                  0x002468 /* established */
@@ -1418,7 +1703,9 @@
 #define TIOCE_LSI_SEQ_CNT_RD_WR_PTR_STRIDE           4096
 
 /*
- * Name and offset are the vendor header's definition (struct member ce_lsi_tx_lk_ts_ctl). The header gives no access direction or reset value; access rw is a placeholder.
+ * Name and offset are the vendor header's definition (struct member
+ * ce_lsi_tx_lk_ts_ctl). The header gives no access direction or reset value;
+ * access rw is a placeholder.
  */
 /* lsi_tx_lk_ts_ctl: rw64, reset unknown */
 #define TIOCE_LSI_TX_LK_TS_CTL                       0x002470 /* established */
@@ -1426,7 +1713,9 @@
 #define TIOCE_LSI_TX_LK_TS_CTL_STRIDE                4096
 
 /*
- * Name and offset are the vendor header's definition (struct member ce_lsi_mem_addr_ctl). The header gives no access direction or reset value; access rw is a placeholder.
+ * Name and offset are the vendor header's definition (struct member
+ * ce_lsi_mem_addr_ctl). The header gives no access direction or reset value;
+ * access rw is a placeholder.
  */
 /* lsi_mem_addr_ctl: rw64, reset unknown */
 #define TIOCE_LSI_MEM_ADDR_CTL                       0x002480 /* established */
@@ -1434,7 +1723,9 @@
 #define TIOCE_LSI_MEM_ADDR_CTL_STRIDE                4096
 
 /*
- * Name and offset are the vendor header's definition (struct member ce_lsi_mem_d_ld0). The header gives no access direction or reset value; access rw is a placeholder.
+ * Name and offset are the vendor header's definition (struct member
+ * ce_lsi_mem_d_ld0). The header gives no access direction or reset value;
+ * access rw is a placeholder.
  */
 /* lsi_mem_d_ld0: rw64, reset unknown */
 #define TIOCE_LSI_MEM_D_LD0                          0x002488 /* established */
@@ -1442,7 +1733,9 @@
 #define TIOCE_LSI_MEM_D_LD0_STRIDE                   4096
 
 /*
- * Name and offset are the vendor header's definition (struct member ce_lsi_mem_d_ld1). The header gives no access direction or reset value; access rw is a placeholder.
+ * Name and offset are the vendor header's definition (struct member
+ * ce_lsi_mem_d_ld1). The header gives no access direction or reset value;
+ * access rw is a placeholder.
  */
 /* lsi_mem_d_ld1: rw64, reset unknown */
 #define TIOCE_LSI_MEM_D_LD1                          0x002490 /* established */
@@ -1450,7 +1743,9 @@
 #define TIOCE_LSI_MEM_D_LD1_STRIDE                   4096
 
 /*
- * Name and offset are the vendor header's definition (struct member ce_lsi_mem_d_ld2). The header gives no access direction or reset value; access rw is a placeholder.
+ * Name and offset are the vendor header's definition (struct member
+ * ce_lsi_mem_d_ld2). The header gives no access direction or reset value;
+ * access rw is a placeholder.
  */
 /* lsi_mem_d_ld2: rw64, reset unknown */
 #define TIOCE_LSI_MEM_D_LD2                          0x002498 /* established */
@@ -1458,7 +1753,9 @@
 #define TIOCE_LSI_MEM_D_LD2_STRIDE                   4096
 
 /*
- * Name and offset are the vendor header's definition (struct member ce_lsi_mem_d_ld3). The header gives no access direction or reset value; access rw is a placeholder.
+ * Name and offset are the vendor header's definition (struct member
+ * ce_lsi_mem_d_ld3). The header gives no access direction or reset value;
+ * access rw is a placeholder.
  */
 /* lsi_mem_d_ld3: rw64, reset unknown */
 #define TIOCE_LSI_MEM_D_LD3                          0x0024a0 /* established */
@@ -1466,7 +1763,9 @@
 #define TIOCE_LSI_MEM_D_LD3_STRIDE                   4096
 
 /*
- * Name and offset are the vendor header's definition (struct member ce_lsi_mem_d_ld4). The header gives no access direction or reset value; access rw is a placeholder.
+ * Name and offset are the vendor header's definition (struct member
+ * ce_lsi_mem_d_ld4). The header gives no access direction or reset value;
+ * access rw is a placeholder.
  */
 /* lsi_mem_d_ld4: rw64, reset unknown */
 #define TIOCE_LSI_MEM_D_LD4                          0x0024a8 /* established */
@@ -1474,7 +1773,9 @@
 #define TIOCE_LSI_MEM_D_LD4_STRIDE                   4096
 
 /*
- * Name and offset are the vendor header's definition (struct member ce_lsi_rty_d_cnt). The header gives no access direction or reset value; access rw is a placeholder.
+ * Name and offset are the vendor header's definition (struct member
+ * ce_lsi_rty_d_cnt). The header gives no access direction or reset value;
+ * access rw is a placeholder.
  */
 /* lsi_rty_d_cnt: rw64, reset unknown */
 #define TIOCE_LSI_RTY_D_CNT                          0x0024c0 /* established */
@@ -1482,7 +1783,9 @@
 #define TIOCE_LSI_RTY_D_CNT_STRIDE                   4096
 
 /*
- * Name and offset are the vendor header's definition (struct member ce_lsi_seq_buf_cnt). The header gives no access direction or reset value; access rw is a placeholder.
+ * Name and offset are the vendor header's definition (struct member
+ * ce_lsi_seq_buf_cnt). The header gives no access direction or reset value;
+ * access rw is a placeholder.
  */
 /* lsi_seq_buf_cnt: rw64, reset unknown */
 #define TIOCE_LSI_SEQ_BUF_CNT                        0x0024c8 /* established */
@@ -1490,7 +1793,9 @@
 #define TIOCE_LSI_SEQ_BUF_CNT_STRIDE                 4096
 
 /*
- * Name and offset are the vendor header's definition (struct member ce_lsi_seq_buf_bt_d). The header gives no access direction or reset value; access rw is a placeholder.
+ * Name and offset are the vendor header's definition (struct member
+ * ce_lsi_seq_buf_bt_d). The header gives no access direction or reset value;
+ * access rw is a placeholder.
  */
 /* lsi_seq_buf_bt_d: rw64, reset unknown */
 #define TIOCE_LSI_SEQ_BUF_BT_D                       0x0024d0 /* established */
@@ -1498,7 +1803,9 @@
 #define TIOCE_LSI_SEQ_BUF_BT_D_STRIDE                4096
 
 /*
- * Name and offset are the vendor header's definition (struct member ce_lsi_ack_lat_thr). The header gives no access direction or reset value; access rw is a placeholder.
+ * Name and offset are the vendor header's definition (struct member
+ * ce_lsi_ack_lat_thr). The header gives no access direction or reset value;
+ * access rw is a placeholder.
  */
 /* lsi_ack_lat_thr: rw64, reset unknown */
 #define TIOCE_LSI_ACK_LAT_THR                        0x0024e0 /* established */
@@ -1506,7 +1813,9 @@
 #define TIOCE_LSI_ACK_LAT_THR_STRIDE                 4096
 
 /*
- * Name and offset are the vendor header's definition (struct member ce_lsi_nxt_rcv_seq_1_cntr). The header gives no access direction or reset value; access rw is a placeholder.
+ * Name and offset are the vendor header's definition (struct member
+ * ce_lsi_nxt_rcv_seq_1_cntr). The header gives no access direction or reset
+ * value; access rw is a placeholder.
  */
 /* lsi_nxt_rcv_seq_1_cntr: rw64, reset unknown */
 #define TIOCE_LSI_NXT_RCV_SEQ_1_CNTR                 0x002500 /* established */
@@ -1514,7 +1823,9 @@
 #define TIOCE_LSI_NXT_RCV_SEQ_1_CNTR_STRIDE          4096
 
 /*
- * Name and offset are the vendor header's definition (struct member ce_lsi_unsp_dllp_rcvd). The header gives no access direction or reset value; access rw is a placeholder.
+ * Name and offset are the vendor header's definition (struct member
+ * ce_lsi_unsp_dllp_rcvd). The header gives no access direction or reset value;
+ * access rw is a placeholder.
  */
 /* lsi_unsp_dllp_rcvd: rw64, reset unknown */
 #define TIOCE_LSI_UNSP_DLLP_RCVD                     0x002508 /* established */
@@ -1522,7 +1833,9 @@
 #define TIOCE_LSI_UNSP_DLLP_RCVD_STRIDE              4096
 
 /*
- * Name and offset are the vendor header's definition (struct member ce_lsi_rcv_lk_ts_ctl). The header gives no access direction or reset value; access rw is a placeholder.
+ * Name and offset are the vendor header's definition (struct member
+ * ce_lsi_rcv_lk_ts_ctl). The header gives no access direction or reset value;
+ * access rw is a placeholder.
  */
 /* lsi_rcv_lk_ts_ctl: rw64, reset unknown */
 #define TIOCE_LSI_RCV_LK_TS_CTL                      0x002510 /* established */
@@ -1530,7 +1843,9 @@
 #define TIOCE_LSI_RCV_LK_TS_CTL_STRIDE               4096
 
 /*
- * Name and offset are the vendor header's definition (struct member ce_lsi_phy_lyr_cfg). The header gives no access direction or reset value; access rw is a placeholder.
+ * Name and offset are the vendor header's definition (struct member
+ * ce_lsi_phy_lyr_cfg). The header gives no access direction or reset value;
+ * access rw is a placeholder.
  */
 /* lsi_phy_lyr_cfg: rw64, reset unknown */
 #define TIOCE_LSI_PHY_LYR_CFG                        0x002600 /* established */
@@ -1538,7 +1853,9 @@
 #define TIOCE_LSI_PHY_LYR_CFG_STRIDE                 4096
 
 /*
- * Name and offset are the vendor header's definition (struct member ce_lsi_phy_lyr_int_stat). The header gives no access direction or reset value; access rw is a placeholder.
+ * Name and offset are the vendor header's definition (struct member
+ * ce_lsi_phy_lyr_int_stat). The header gives no access direction or reset
+ * value; access rw is a placeholder.
  */
 /* lsi_phy_lyr_int_stat: rw64, reset unknown */
 #define TIOCE_LSI_PHY_LYR_INT_STAT                   0x002610 /* established */
@@ -1546,7 +1863,9 @@
 #define TIOCE_LSI_PHY_LYR_INT_STAT_STRIDE            4096
 
 /*
- * Name and offset are the vendor header's definition (struct member ce_lsi_phy_lyr_int_stat_test). The header gives no access direction or reset value; access rw is a placeholder.
+ * Name and offset are the vendor header's definition (struct member
+ * ce_lsi_phy_lyr_int_stat_test). The header gives no access direction or reset
+ * value; access rw is a placeholder.
  */
 /* lsi_phy_lyr_int_stat_test: rw64, reset unknown */
 #define TIOCE_LSI_PHY_LYR_INT_STAT_TEST              0x002618 /* established */
@@ -1554,7 +1873,9 @@
 #define TIOCE_LSI_PHY_LYR_INT_STAT_TEST_STRIDE       4096
 
 /*
- * Name and offset are the vendor header's definition (struct member ce_lsi_phy_lyr_int_mask). The header gives no access direction or reset value; access rw is a placeholder.
+ * Name and offset are the vendor header's definition (struct member
+ * ce_lsi_phy_lyr_int_mask). The header gives no access direction or reset
+ * value; access rw is a placeholder.
  */
 /* lsi_phy_lyr_int_mask: rw64, reset unknown */
 #define TIOCE_LSI_PHY_LYR_INT_MASK                   0x002620 /* established */
@@ -1562,7 +1883,9 @@
 #define TIOCE_LSI_PHY_LYR_INT_MASK_STRIDE            4096
 
 /*
- * Name and offset are the vendor header's definition (struct member ce_lsi_rcv_phy_cfg). The header gives no access direction or reset value; access rw is a placeholder.
+ * Name and offset are the vendor header's definition (struct member
+ * ce_lsi_rcv_phy_cfg). The header gives no access direction or reset value;
+ * access rw is a placeholder.
  */
 /* lsi_rcv_phy_cfg: rw64, reset unknown */
 #define TIOCE_LSI_RCV_PHY_CFG                        0x002680 /* established */
@@ -1570,7 +1893,9 @@
 #define TIOCE_LSI_RCV_PHY_CFG_STRIDE                 4096
 
 /*
- * Name and offset are the vendor header's definition (struct member ce_lsi_rcv_phy_stat1). The header gives no access direction or reset value; access rw is a placeholder.
+ * Name and offset are the vendor header's definition (struct member
+ * ce_lsi_rcv_phy_stat1). The header gives no access direction or reset value;
+ * access rw is a placeholder.
  */
 /* lsi_rcv_phy_stat1: rw64, reset unknown */
 #define TIOCE_LSI_RCV_PHY_STAT1                      0x002688 /* established */
@@ -1578,7 +1903,9 @@
 #define TIOCE_LSI_RCV_PHY_STAT1_STRIDE               4096
 
 /*
- * Name and offset are the vendor header's definition (struct member ce_lsi_rcv_phy_stat2). The header gives no access direction or reset value; access rw is a placeholder.
+ * Name and offset are the vendor header's definition (struct member
+ * ce_lsi_rcv_phy_stat2). The header gives no access direction or reset value;
+ * access rw is a placeholder.
  */
 /* lsi_rcv_phy_stat2: rw64, reset unknown */
 #define TIOCE_LSI_RCV_PHY_STAT2                      0x002690 /* established */
@@ -1586,7 +1913,9 @@
 #define TIOCE_LSI_RCV_PHY_STAT2_STRIDE               4096
 
 /*
- * Name and offset are the vendor header's definition (struct member ce_lsi_rcv_phy_stat3). The header gives no access direction or reset value; access rw is a placeholder.
+ * Name and offset are the vendor header's definition (struct member
+ * ce_lsi_rcv_phy_stat3). The header gives no access direction or reset value;
+ * access rw is a placeholder.
  */
 /* lsi_rcv_phy_stat3: rw64, reset unknown */
 #define TIOCE_LSI_RCV_PHY_STAT3                      0x002698 /* established */
@@ -1594,7 +1923,9 @@
 #define TIOCE_LSI_RCV_PHY_STAT3_STRIDE               4096
 
 /*
- * Name and offset are the vendor header's definition (struct member ce_lsi_rcv_phy_int_stat). The header gives no access direction or reset value; access rw is a placeholder.
+ * Name and offset are the vendor header's definition (struct member
+ * ce_lsi_rcv_phy_int_stat). The header gives no access direction or reset
+ * value; access rw is a placeholder.
  */
 /* lsi_rcv_phy_int_stat: rw64, reset unknown */
 #define TIOCE_LSI_RCV_PHY_INT_STAT                   0x0026a0 /* established */
@@ -1602,7 +1933,9 @@
 #define TIOCE_LSI_RCV_PHY_INT_STAT_STRIDE            4096
 
 /*
- * Name and offset are the vendor header's definition (struct member ce_lsi_rcv_phy_int_stat_test). The header gives no access direction or reset value; access rw is a placeholder.
+ * Name and offset are the vendor header's definition (struct member
+ * ce_lsi_rcv_phy_int_stat_test). The header gives no access direction or reset
+ * value; access rw is a placeholder.
  */
 /* lsi_rcv_phy_int_stat_test: rw64, reset unknown */
 #define TIOCE_LSI_RCV_PHY_INT_STAT_TEST              0x0026a8 /* established */
@@ -1610,7 +1943,9 @@
 #define TIOCE_LSI_RCV_PHY_INT_STAT_TEST_STRIDE       4096
 
 /*
- * Name and offset are the vendor header's definition (struct member ce_lsi_rcv_phy_int_mask). The header gives no access direction or reset value; access rw is a placeholder.
+ * Name and offset are the vendor header's definition (struct member
+ * ce_lsi_rcv_phy_int_mask). The header gives no access direction or reset
+ * value; access rw is a placeholder.
  */
 /* lsi_rcv_phy_int_mask: rw64, reset unknown */
 #define TIOCE_LSI_RCV_PHY_INT_MASK                   0x0026b0 /* established */
@@ -1618,7 +1953,9 @@
 #define TIOCE_LSI_RCV_PHY_INT_MASK_STRIDE            4096
 
 /*
- * Name and offset are the vendor header's definition (struct member ce_lsi_tx_phy_cfg). The header gives no access direction or reset value; access rw is a placeholder.
+ * Name and offset are the vendor header's definition (struct member
+ * ce_lsi_tx_phy_cfg). The header gives no access direction or reset value;
+ * access rw is a placeholder.
  */
 /* lsi_tx_phy_cfg: rw64, reset unknown */
 #define TIOCE_LSI_TX_PHY_CFG                         0x002700 /* established */
@@ -1626,7 +1963,9 @@
 #define TIOCE_LSI_TX_PHY_CFG_STRIDE                  4096
 
 /*
- * Name and offset are the vendor header's definition (struct member ce_lsi_tx_phy_stat). The header gives no access direction or reset value; access rw is a placeholder.
+ * Name and offset are the vendor header's definition (struct member
+ * ce_lsi_tx_phy_stat). The header gives no access direction or reset value;
+ * access rw is a placeholder.
  */
 /* lsi_tx_phy_stat: rw64, reset unknown */
 #define TIOCE_LSI_TX_PHY_STAT                        0x002708 /* established */
@@ -1634,7 +1973,9 @@
 #define TIOCE_LSI_TX_PHY_STAT_STRIDE                 4096
 
 /*
- * Name and offset are the vendor header's definition (struct member ce_lsi_tx_phy_int_stat). The header gives no access direction or reset value; access rw is a placeholder.
+ * Name and offset are the vendor header's definition (struct member
+ * ce_lsi_tx_phy_int_stat). The header gives no access direction or reset value;
+ * access rw is a placeholder.
  */
 /* lsi_tx_phy_int_stat: rw64, reset unknown */
 #define TIOCE_LSI_TX_PHY_INT_STAT                    0x002710 /* established */
@@ -1642,7 +1983,9 @@
 #define TIOCE_LSI_TX_PHY_INT_STAT_STRIDE             4096
 
 /*
- * Name and offset are the vendor header's definition (struct member ce_lsi_tx_phy_int_stat_test). The header gives no access direction or reset value; access rw is a placeholder.
+ * Name and offset are the vendor header's definition (struct member
+ * ce_lsi_tx_phy_int_stat_test). The header gives no access direction or reset
+ * value; access rw is a placeholder.
  */
 /* lsi_tx_phy_int_stat_test: rw64, reset unknown */
 #define TIOCE_LSI_TX_PHY_INT_STAT_TEST               0x002718 /* established */
@@ -1650,7 +1993,9 @@
 #define TIOCE_LSI_TX_PHY_INT_STAT_TEST_STRIDE        4096
 
 /*
- * Name and offset are the vendor header's definition (struct member ce_lsi_tx_phy_int_mask). The header gives no access direction or reset value; access rw is a placeholder.
+ * Name and offset are the vendor header's definition (struct member
+ * ce_lsi_tx_phy_int_mask). The header gives no access direction or reset value;
+ * access rw is a placeholder.
  */
 /* lsi_tx_phy_int_mask: rw64, reset unknown */
 #define TIOCE_LSI_TX_PHY_INT_MASK                    0x002720 /* established */
@@ -1658,7 +2003,9 @@
 #define TIOCE_LSI_TX_PHY_INT_MASK_STRIDE             4096
 
 /*
- * Name and offset are the vendor header's definition (struct member ce_lsi_tx_phy_stat2). The header gives no access direction or reset value; access rw is a placeholder.
+ * Name and offset are the vendor header's definition (struct member
+ * ce_lsi_tx_phy_stat2). The header gives no access direction or reset value;
+ * access rw is a placeholder.
  */
 /* lsi_tx_phy_stat2: rw64, reset unknown */
 #define TIOCE_LSI_TX_PHY_STAT2                       0x002728 /* established */
@@ -1666,7 +2013,9 @@
 #define TIOCE_LSI_TX_PHY_STAT2_STRIDE                4096
 
 /*
- * Name and offset are the vendor header's definition (struct member ce_lsi_ltssm_cfg1). The header gives no access direction or reset value; access rw is a placeholder.
+ * Name and offset are the vendor header's definition (struct member
+ * ce_lsi_ltssm_cfg1). The header gives no access direction or reset value;
+ * access rw is a placeholder.
  */
 /* lsi_ltssm_cfg1: rw64, reset unknown */
 #define TIOCE_LSI_LTSSM_CFG1                         0x002780 /* established */
@@ -1674,7 +2023,9 @@
 #define TIOCE_LSI_LTSSM_CFG1_STRIDE                  4096
 
 /*
- * Name and offset are the vendor header's definition (struct member ce_lsi_ltssm_cfg2). The header gives no access direction or reset value; access rw is a placeholder.
+ * Name and offset are the vendor header's definition (struct member
+ * ce_lsi_ltssm_cfg2). The header gives no access direction or reset value;
+ * access rw is a placeholder.
  */
 /* lsi_ltssm_cfg2: rw64, reset unknown */
 #define TIOCE_LSI_LTSSM_CFG2                         0x002788 /* established */
@@ -1682,7 +2033,9 @@
 #define TIOCE_LSI_LTSSM_CFG2_STRIDE                  4096
 
 /*
- * Name and offset are the vendor header's definition (struct member ce_lsi_ltssm_cfg3). The header gives no access direction or reset value; access rw is a placeholder.
+ * Name and offset are the vendor header's definition (struct member
+ * ce_lsi_ltssm_cfg3). The header gives no access direction or reset value;
+ * access rw is a placeholder.
  */
 /* lsi_ltssm_cfg3: rw64, reset unknown */
 #define TIOCE_LSI_LTSSM_CFG3                         0x002790 /* established */
@@ -1690,7 +2043,9 @@
 #define TIOCE_LSI_LTSSM_CFG3_STRIDE                  4096
 
 /*
- * Name and offset are the vendor header's definition (struct member ce_lsi_ltssm_cfg4). The header gives no access direction or reset value; access rw is a placeholder.
+ * Name and offset are the vendor header's definition (struct member
+ * ce_lsi_ltssm_cfg4). The header gives no access direction or reset value;
+ * access rw is a placeholder.
  */
 /* lsi_ltssm_cfg4: rw64, reset unknown */
 #define TIOCE_LSI_LTSSM_CFG4                         0x002798 /* established */
@@ -1698,7 +2053,9 @@
 #define TIOCE_LSI_LTSSM_CFG4_STRIDE                  4096
 
 /*
- * Name and offset are the vendor header's definition (struct member ce_lsi_ltssm_cfg5). The header gives no access direction or reset value; access rw is a placeholder.
+ * Name and offset are the vendor header's definition (struct member
+ * ce_lsi_ltssm_cfg5). The header gives no access direction or reset value;
+ * access rw is a placeholder.
  */
 /* lsi_ltssm_cfg5: rw64, reset unknown */
 #define TIOCE_LSI_LTSSM_CFG5                         0x0027a0 /* established */
@@ -1706,7 +2063,9 @@
 #define TIOCE_LSI_LTSSM_CFG5_STRIDE                  4096
 
 /*
- * Name and offset are the vendor header's definition (struct member ce_lsi_ltssm_stat1). The header gives no access direction or reset value; access rw is a placeholder.
+ * Name and offset are the vendor header's definition (struct member
+ * ce_lsi_ltssm_stat1). The header gives no access direction or reset value;
+ * access rw is a placeholder.
  */
 /* lsi_ltssm_stat1: rw64, reset unknown */
 #define TIOCE_LSI_LTSSM_STAT1                        0x0027a8 /* established */
@@ -1714,7 +2073,9 @@
 #define TIOCE_LSI_LTSSM_STAT1_STRIDE                 4096
 
 /*
- * Name and offset are the vendor header's definition (struct member ce_lsi_ltssm_stat2). The header gives no access direction or reset value; access rw is a placeholder.
+ * Name and offset are the vendor header's definition (struct member
+ * ce_lsi_ltssm_stat2). The header gives no access direction or reset value;
+ * access rw is a placeholder.
  */
 /* lsi_ltssm_stat2: rw64, reset unknown */
 #define TIOCE_LSI_LTSSM_STAT2                        0x0027b0 /* established */
@@ -1722,7 +2083,9 @@
 #define TIOCE_LSI_LTSSM_STAT2_STRIDE                 4096
 
 /*
- * Name and offset are the vendor header's definition (struct member ce_lsi_ltssm_int_stat). The header gives no access direction or reset value; access rw is a placeholder.
+ * Name and offset are the vendor header's definition (struct member
+ * ce_lsi_ltssm_int_stat). The header gives no access direction or reset value;
+ * access rw is a placeholder.
  */
 /* lsi_ltssm_int_stat: rw64, reset unknown */
 #define TIOCE_LSI_LTSSM_INT_STAT                     0x0027b8 /* established */
@@ -1730,7 +2093,9 @@
 #define TIOCE_LSI_LTSSM_INT_STAT_STRIDE              4096
 
 /*
- * Name and offset are the vendor header's definition (struct member ce_lsi_ltssm_int_stat_test). The header gives no access direction or reset value; access rw is a placeholder.
+ * Name and offset are the vendor header's definition (struct member
+ * ce_lsi_ltssm_int_stat_test). The header gives no access direction or reset
+ * value; access rw is a placeholder.
  */
 /* lsi_ltssm_int_stat_test: rw64, reset unknown */
 #define TIOCE_LSI_LTSSM_INT_STAT_TEST                0x0027c0 /* established */
@@ -1738,7 +2103,9 @@
 #define TIOCE_LSI_LTSSM_INT_STAT_TEST_STRIDE         4096
 
 /*
- * Name and offset are the vendor header's definition (struct member ce_lsi_ltssm_int_mask). The header gives no access direction or reset value; access rw is a placeholder.
+ * Name and offset are the vendor header's definition (struct member
+ * ce_lsi_ltssm_int_mask). The header gives no access direction or reset value;
+ * access rw is a placeholder.
  */
 /* lsi_ltssm_int_mask: rw64, reset unknown */
 #define TIOCE_LSI_LTSSM_INT_MASK                     0x0027c8 /* established */
@@ -1746,7 +2113,9 @@
 #define TIOCE_LSI_LTSSM_INT_MASK_STRIDE              4096
 
 /*
- * Name and offset are the vendor header's definition (struct member ce_lsi_ltssm_stat_wr_en). The header gives no access direction or reset value; access rw is a placeholder.
+ * Name and offset are the vendor header's definition (struct member
+ * ce_lsi_ltssm_stat_wr_en). The header gives no access direction or reset
+ * value; access rw is a placeholder.
  */
 /* lsi_ltssm_stat_wr_en: rw64, reset unknown */
 #define TIOCE_LSI_LTSSM_STAT_WR_EN                   0x0027d0 /* established */
@@ -1754,7 +2123,10 @@
 #define TIOCE_LSI_LTSSM_STAT_WR_EN_STRIDE            4096
 
 /*
- * Name and offset are the vendor header's definition (struct member ce_lsi_gb_cfg1). The header gives no access direction or reset value; access rw is a placeholder. Field layout from the header masks (gearbox configuration). Meanings of the fields are unknown beyond their names.
+ * Name and offset are the vendor header's definition (struct member
+ * ce_lsi_gb_cfg1). The header gives no access direction or reset value; access
+ * rw is a placeholder. Field layout from the header masks (gearbox
+ * configuration). Meanings of the fields are unknown beyond their names.
  */
 /* lsi_gb_cfg1: rw64, reset unknown */
 #define TIOCE_LSI_GB_CFG1                            0x002800 /* established */
@@ -1762,34 +2134,36 @@
 #define TIOCE_LSI_GB_CFG1_STRIDE                     4096
 #define TIOCE_LSI_GB_CFG1_SLF_TS_SHIFT               24 /* established */
 #define TIOCE_LSI_GB_CFG1_SLF_TS_MASK                0xfull
-#define TIOCE_LSI_GB_CFG1_SLF_TS_INPLACE             (TIOCE_LSI_GB_CFG1_SLF_TS_MASK << TIOCE_LSI_GB_CFG1_SLF_TS_SHIFT)
+#define TIOCE_LSI_GB_CFG1_SLF_TS_INPLACE (TIOCE_LSI_GB_CFG1_SLF_TS_MASK << TIOCE_LSI_GB_CFG1_SLF_TS_SHIFT)
 #define TIOCE_LSI_GB_CFG1_RVRS_CLK_SHIFT             20 /* established */
 #define TIOCE_LSI_GB_CFG1_RVRS_CLK_MASK              0x3ull
-#define TIOCE_LSI_GB_CFG1_RVRS_CLK_INPLACE           (TIOCE_LSI_GB_CFG1_RVRS_CLK_MASK << TIOCE_LSI_GB_CFG1_RVRS_CLK_SHIFT)
+#define TIOCE_LSI_GB_CFG1_RVRS_CLK_INPLACE (TIOCE_LSI_GB_CFG1_RVRS_CLK_MASK << TIOCE_LSI_GB_CFG1_RVRS_CLK_SHIFT)
 #define TIOCE_LSI_GB_CFG1_RVRS_LB_SHIFT              19 /* established */
 #define TIOCE_LSI_GB_CFG1_RVRS_LB_MASK               0x1ull
-#define TIOCE_LSI_GB_CFG1_RVRS_LB_INPLACE            (TIOCE_LSI_GB_CFG1_RVRS_LB_MASK << TIOCE_LSI_GB_CFG1_RVRS_LB_SHIFT)
+#define TIOCE_LSI_GB_CFG1_RVRS_LB_INPLACE (TIOCE_LSI_GB_CFG1_RVRS_LB_MASK << TIOCE_LSI_GB_CFG1_RVRS_LB_SHIFT)
 #define TIOCE_LSI_GB_CFG1_LPBK_EN_SHIFT              18 /* established */
 #define TIOCE_LSI_GB_CFG1_LPBK_EN_MASK               0x1ull
-#define TIOCE_LSI_GB_CFG1_LPBK_EN_INPLACE            (TIOCE_LSI_GB_CFG1_LPBK_EN_MASK << TIOCE_LSI_GB_CFG1_LPBK_EN_SHIFT)
+#define TIOCE_LSI_GB_CFG1_LPBK_EN_INPLACE (TIOCE_LSI_GB_CFG1_LPBK_EN_MASK << TIOCE_LSI_GB_CFG1_LPBK_EN_SHIFT)
 #define TIOCE_LSI_GB_CFG1_LPBK_SEL_SHIFT             16 /* established */
 #define TIOCE_LSI_GB_CFG1_LPBK_SEL_MASK              0x3ull
-#define TIOCE_LSI_GB_CFG1_LPBK_SEL_INPLACE           (TIOCE_LSI_GB_CFG1_LPBK_SEL_MASK << TIOCE_LSI_GB_CFG1_LPBK_SEL_SHIFT)
+#define TIOCE_LSI_GB_CFG1_LPBK_SEL_INPLACE (TIOCE_LSI_GB_CFG1_LPBK_SEL_MASK << TIOCE_LSI_GB_CFG1_LPBK_SEL_SHIFT)
 #define TIOCE_LSI_GB_CFG1_RXL0S_FLT_SHIFT            15 /* established */
 #define TIOCE_LSI_GB_CFG1_RXL0S_FLT_MASK             0x1ull
-#define TIOCE_LSI_GB_CFG1_RXL0S_FLT_INPLACE          (TIOCE_LSI_GB_CFG1_RXL0S_FLT_MASK << TIOCE_LSI_GB_CFG1_RXL0S_FLT_SHIFT)
+#define TIOCE_LSI_GB_CFG1_RXL0S_FLT_INPLACE (TIOCE_LSI_GB_CFG1_RXL0S_FLT_MASK << TIOCE_LSI_GB_CFG1_RXL0S_FLT_SHIFT)
 #define TIOCE_LSI_GB_CFG1_RXL0S_ADJ_SHIFT            12 /* established */
 #define TIOCE_LSI_GB_CFG1_RXL0S_ADJ_MASK             0x7ull
-#define TIOCE_LSI_GB_CFG1_RXL0S_ADJ_INPLACE          (TIOCE_LSI_GB_CFG1_RXL0S_ADJ_MASK << TIOCE_LSI_GB_CFG1_RXL0S_ADJ_SHIFT)
+#define TIOCE_LSI_GB_CFG1_RXL0S_ADJ_INPLACE (TIOCE_LSI_GB_CFG1_RXL0S_ADJ_MASK << TIOCE_LSI_GB_CFG1_RXL0S_ADJ_SHIFT)
 #define TIOCE_LSI_GB_CFG1_RXL0S_SMP_SHIFT            8 /* established */
 #define TIOCE_LSI_GB_CFG1_RXL0S_SMP_MASK             0xfull
-#define TIOCE_LSI_GB_CFG1_RXL0S_SMP_INPLACE          (TIOCE_LSI_GB_CFG1_RXL0S_SMP_MASK << TIOCE_LSI_GB_CFG1_RXL0S_SMP_SHIFT)
+#define TIOCE_LSI_GB_CFG1_RXL0S_SMP_INPLACE (TIOCE_LSI_GB_CFG1_RXL0S_SMP_MASK << TIOCE_LSI_GB_CFG1_RXL0S_SMP_SHIFT)
 #define TIOCE_LSI_GB_CFG1_RXL0S_THS_SHIFT            0 /* established */
 #define TIOCE_LSI_GB_CFG1_RXL0S_THS_MASK             0xffull
-#define TIOCE_LSI_GB_CFG1_RXL0S_THS_INPLACE          (TIOCE_LSI_GB_CFG1_RXL0S_THS_MASK << TIOCE_LSI_GB_CFG1_RXL0S_THS_SHIFT)
+#define TIOCE_LSI_GB_CFG1_RXL0S_THS_INPLACE (TIOCE_LSI_GB_CFG1_RXL0S_THS_MASK << TIOCE_LSI_GB_CFG1_RXL0S_THS_SHIFT)
 
 /*
- * Name and offset are the vendor header's definition (struct member ce_lsi_gb_cfg2). The header gives no access direction or reset value; access rw is a placeholder.
+ * Name and offset are the vendor header's definition (struct member
+ * ce_lsi_gb_cfg2). The header gives no access direction or reset value; access
+ * rw is a placeholder.
  */
 /* lsi_gb_cfg2: rw64, reset unknown */
 #define TIOCE_LSI_GB_CFG2                            0x002808 /* established */
@@ -1797,7 +2171,9 @@
 #define TIOCE_LSI_GB_CFG2_STRIDE                     4096
 
 /*
- * Name and offset are the vendor header's definition (struct member ce_lsi_gb_cfg3). The header gives no access direction or reset value; access rw is a placeholder.
+ * Name and offset are the vendor header's definition (struct member
+ * ce_lsi_gb_cfg3). The header gives no access direction or reset value; access
+ * rw is a placeholder.
  */
 /* lsi_gb_cfg3: rw64, reset unknown */
 #define TIOCE_LSI_GB_CFG3                            0x002810 /* established */
@@ -1805,7 +2181,9 @@
 #define TIOCE_LSI_GB_CFG3_STRIDE                     4096
 
 /*
- * Name and offset are the vendor header's definition (struct member ce_lsi_gb_cfg4). The header gives no access direction or reset value; access rw is a placeholder.
+ * Name and offset are the vendor header's definition (struct member
+ * ce_lsi_gb_cfg4). The header gives no access direction or reset value; access
+ * rw is a placeholder.
  */
 /* lsi_gb_cfg4: rw64, reset unknown */
 #define TIOCE_LSI_GB_CFG4                            0x002818 /* established */
@@ -1813,7 +2191,9 @@
 #define TIOCE_LSI_GB_CFG4_STRIDE                     4096
 
 /*
- * Name and offset are the vendor header's definition (struct member ce_lsi_gb_stat). The header gives no access direction or reset value; access rw is a placeholder.
+ * Name and offset are the vendor header's definition (struct member
+ * ce_lsi_gb_stat). The header gives no access direction or reset value; access
+ * rw is a placeholder.
  */
 /* lsi_gb_stat: rw64, reset unknown */
 #define TIOCE_LSI_GB_STAT                            0x002820 /* established */
@@ -1821,7 +2201,9 @@
 #define TIOCE_LSI_GB_STAT_STRIDE                     4096
 
 /*
- * Name and offset are the vendor header's definition (struct member ce_lsi_gb_int_stat). The header gives no access direction or reset value; access rw is a placeholder.
+ * Name and offset are the vendor header's definition (struct member
+ * ce_lsi_gb_int_stat). The header gives no access direction or reset value;
+ * access rw is a placeholder.
  */
 /* lsi_gb_int_stat: rw64, reset unknown */
 #define TIOCE_LSI_GB_INT_STAT                        0x002828 /* established */
@@ -1829,7 +2211,9 @@
 #define TIOCE_LSI_GB_INT_STAT_STRIDE                 4096
 
 /*
- * Name and offset are the vendor header's definition (struct member ce_lsi_gb_int_stat_test). The header gives no access direction or reset value; access rw is a placeholder.
+ * Name and offset are the vendor header's definition (struct member
+ * ce_lsi_gb_int_stat_test). The header gives no access direction or reset
+ * value; access rw is a placeholder.
  */
 /* lsi_gb_int_stat_test: rw64, reset unknown */
 #define TIOCE_LSI_GB_INT_STAT_TEST                   0x002830 /* established */
@@ -1837,7 +2221,9 @@
 #define TIOCE_LSI_GB_INT_STAT_TEST_STRIDE            4096
 
 /*
- * Name and offset are the vendor header's definition (struct member ce_lsi_gb_int_mask). The header gives no access direction or reset value; access rw is a placeholder.
+ * Name and offset are the vendor header's definition (struct member
+ * ce_lsi_gb_int_mask). The header gives no access direction or reset value;
+ * access rw is a placeholder.
  */
 /* lsi_gb_int_mask: rw64, reset unknown */
 #define TIOCE_LSI_GB_INT_MASK                        0x002838 /* established */
@@ -1845,7 +2231,9 @@
 #define TIOCE_LSI_GB_INT_MASK_STRIDE                 4096
 
 /*
- * Name and offset are the vendor header's definition (struct member ce_lsi_gb_pwr_dn1). The header gives no access direction or reset value; access rw is a placeholder.
+ * Name and offset are the vendor header's definition (struct member
+ * ce_lsi_gb_pwr_dn1). The header gives no access direction or reset value;
+ * access rw is a placeholder.
  */
 /* lsi_gb_pwr_dn1: rw64, reset unknown */
 #define TIOCE_LSI_GB_PWR_DN1                         0x002840 /* established */
@@ -1853,7 +2241,9 @@
 #define TIOCE_LSI_GB_PWR_DN1_STRIDE                  4096
 
 /*
- * Name and offset are the vendor header's definition (struct member ce_lsi_gb_pwr_dn2). The header gives no access direction or reset value; access rw is a placeholder.
+ * Name and offset are the vendor header's definition (struct member
+ * ce_lsi_gb_pwr_dn2). The header gives no access direction or reset value;
+ * access rw is a placeholder.
  */
 /* lsi_gb_pwr_dn2: rw64, reset unknown */
 #define TIOCE_LSI_GB_PWR_DN2                         0x002848 /* established */
@@ -1861,67 +2251,89 @@
 #define TIOCE_LSI_GB_PWR_DN2_STRIDE                  4096
 
 /*
- * Name and offset are the vendor header's definition (struct member ce_crm_debug_mux). The header gives no access direction or reset value; access rw is a placeholder.
+ * Name and offset are the vendor header's definition (struct member
+ * ce_crm_debug_mux). The header gives no access direction or reset value;
+ * access rw is a placeholder.
  */
 /* crm_debug_mux: rw64, reset unknown */
 #define TIOCE_CRM_DEBUG_MUX                          0x004050 /* established */
 
 /*
- * Name and offset are the vendor header's definition (struct member ce_crm_ssp_err_cmd_wrd). The header gives no access direction or reset value; access rw is a placeholder.
+ * Name and offset are the vendor header's definition (struct member
+ * ce_crm_ssp_err_cmd_wrd). The header gives no access direction or reset value;
+ * access rw is a placeholder.
  */
 /* crm_ssp_err_cmd_wrd: rw64, reset unknown */
 #define TIOCE_CRM_SSP_ERR_CMD_WRD                    0x004060 /* established */
 
 /*
- * Name and offset are the vendor header's definition (struct member ce_crm_ssp_err_addr). The header gives no access direction or reset value; access rw is a placeholder.
+ * Name and offset are the vendor header's definition (struct member
+ * ce_crm_ssp_err_addr). The header gives no access direction or reset value;
+ * access rw is a placeholder.
  */
 /* crm_ssp_err_addr: rw64, reset unknown */
 #define TIOCE_CRM_SSP_ERR_ADDR                       0x004068 /* established */
 
 /*
- * Name and offset are the vendor header's definition (struct member ce_crm_ssp_err_syn). The header gives no access direction or reset value; access rw is a placeholder.
+ * Name and offset are the vendor header's definition (struct member
+ * ce_crm_ssp_err_syn). The header gives no access direction or reset value;
+ * access rw is a placeholder.
  */
 /* crm_ssp_err_syn: rw64, reset unknown */
 #define TIOCE_CRM_SSP_ERR_SYN                        0x004070 /* established */
 
 /*
- * Name and offset are the vendor header's definition (struct member ce_cxm_dyn_credit_status). The header gives no access direction or reset value; access rw is a placeholder.
+ * Name and offset are the vendor header's definition (struct member
+ * ce_cxm_dyn_credit_status). The header gives no access direction or reset
+ * value; access rw is a placeholder.
  */
 /* cxm_dyn_credit_status: rw64, reset unknown */
 #define TIOCE_CXM_DYN_CREDIT_STATUS                  0x005010 /* established */
 
 /*
- * Name and offset are the vendor header's definition (struct member ce_cxm_last_credit_status). The header gives no access direction or reset value; access rw is a placeholder.
+ * Name and offset are the vendor header's definition (struct member
+ * ce_cxm_last_credit_status). The header gives no access direction or reset
+ * value; access rw is a placeholder.
  */
 /* cxm_last_credit_status: rw64, reset unknown */
 #define TIOCE_CXM_LAST_CREDIT_STATUS                 0x005018 /* established */
 
 /*
- * Name and offset are the vendor header's definition (struct member ce_cxm_credit_limit). The header gives no access direction or reset value; access rw is a placeholder.
+ * Name and offset are the vendor header's definition (struct member
+ * ce_cxm_credit_limit). The header gives no access direction or reset value;
+ * access rw is a placeholder.
  */
 /* cxm_credit_limit: rw64, reset unknown */
 #define TIOCE_CXM_CREDIT_LIMIT                       0x005020 /* established */
 
 /*
- * Name and offset are the vendor header's definition (struct member ce_cxm_force_credit). The header gives no access direction or reset value; access rw is a placeholder.
+ * Name and offset are the vendor header's definition (struct member
+ * ce_cxm_force_credit). The header gives no access direction or reset value;
+ * access rw is a placeholder.
  */
 /* cxm_force_credit: rw64, reset unknown */
 #define TIOCE_CXM_FORCE_CREDIT                       0x005028 /* established */
 
 /*
- * Name and offset are the vendor header's definition (struct member ce_cxm_disable_bypass). The header gives no access direction or reset value; access rw is a placeholder.
+ * Name and offset are the vendor header's definition (struct member
+ * ce_cxm_disable_bypass). The header gives no access direction or reset value;
+ * access rw is a placeholder.
  */
 /* cxm_disable_bypass: rw64, reset unknown */
 #define TIOCE_CXM_DISABLE_BYPASS                     0x005030 /* established */
 
 /*
- * Name and offset are the vendor header's definition (struct member ce_cxm_debug_mux). The header gives no access direction or reset value; access rw is a placeholder.
+ * Name and offset are the vendor header's definition (struct member
+ * ce_cxm_debug_mux). The header gives no access direction or reset value;
+ * access rw is a placeholder.
  */
 /* cxm_debug_mux: rw64, reset unknown */
 #define TIOCE_CXM_DEBUG_MUX                          0x005050 /* established */
 
 /*
- * Name and offset are the vendor header's definition (struct member ce_dtl_dtdr_credit_limit). The header gives no access direction or reset value; access rw is a placeholder.
+ * Name and offset are the vendor header's definition (struct member
+ * ce_dtl_dtdr_credit_limit). The header gives no access direction or reset
+ * value; access rw is a placeholder.
  */
 /* dtl_dtdr_credit_limit: rw64, reset unknown */
 #define TIOCE_DTL_DTDR_CREDIT_LIMIT                  0x006000 /* established */
@@ -1929,7 +2341,9 @@
 #define TIOCE_DTL_DTDR_CREDIT_LIMIT_STRIDE           8192
 
 /*
- * Name and offset are the vendor header's definition (struct member ce_dtl_dtdr_credit_force). The header gives no access direction or reset value; access rw is a placeholder.
+ * Name and offset are the vendor header's definition (struct member
+ * ce_dtl_dtdr_credit_force). The header gives no access direction or reset
+ * value; access rw is a placeholder.
  */
 /* dtl_dtdr_credit_force: rw64, reset unknown */
 #define TIOCE_DTL_DTDR_CREDIT_FORCE                  0x006008 /* established */
@@ -1937,7 +2351,9 @@
 #define TIOCE_DTL_DTDR_CREDIT_FORCE_STRIDE           8192
 
 /*
- * Name and offset are the vendor header's definition (struct member ce_dtl_dyn_credit_status). The header gives no access direction or reset value; access rw is a placeholder.
+ * Name and offset are the vendor header's definition (struct member
+ * ce_dtl_dyn_credit_status). The header gives no access direction or reset
+ * value; access rw is a placeholder.
  */
 /* dtl_dyn_credit_status: rw64, reset unknown */
 #define TIOCE_DTL_DYN_CREDIT_STATUS                  0x006010 /* established */
@@ -1945,7 +2361,9 @@
 #define TIOCE_DTL_DYN_CREDIT_STATUS_STRIDE           8192
 
 /*
- * Name and offset are the vendor header's definition (struct member ce_dtl_dtl_last_credit_stat). The header gives no access direction or reset value; access rw is a placeholder.
+ * Name and offset are the vendor header's definition (struct member
+ * ce_dtl_dtl_last_credit_stat). The header gives no access direction or reset
+ * value; access rw is a placeholder.
  */
 /* dtl_dtl_last_credit_stat: rw64, reset unknown */
 #define TIOCE_DTL_DTL_LAST_CREDIT_STAT               0x006018 /* established */
@@ -1953,7 +2371,9 @@
 #define TIOCE_DTL_DTL_LAST_CREDIT_STAT_STRIDE        8192
 
 /*
- * Name and offset are the vendor header's definition (struct member ce_dtl_dtl_ctrl). The header gives no access direction or reset value; access rw is a placeholder.
+ * Name and offset are the vendor header's definition (struct member
+ * ce_dtl_dtl_ctrl). The header gives no access direction or reset value; access
+ * rw is a placeholder.
  */
 /* dtl_dtl_ctrl: rw64, reset unknown */
 #define TIOCE_DTL_DTL_CTRL                           0x006020 /* established */
@@ -1961,7 +2381,9 @@
 #define TIOCE_DTL_DTL_CTRL_STRIDE                    8192
 
 /*
- * Name and offset are the vendor header's definition (struct member ce_dtl_debug_sel). The header gives no access direction or reset value; access rw is a placeholder.
+ * Name and offset are the vendor header's definition (struct member
+ * ce_dtl_debug_sel). The header gives no access direction or reset value;
+ * access rw is a placeholder.
  */
 /* dtl_debug_sel: rw64, reset unknown */
 #define TIOCE_DTL_DEBUG_SEL                          0x006050 /* established */
@@ -1969,7 +2391,9 @@
 #define TIOCE_DTL_DEBUG_SEL_STRIDE                   8192
 
 /*
- * Name and offset are the vendor header's definition (struct member ce_utl_utl_ctrl). The header gives no access direction or reset value; access rw is a placeholder.
+ * Name and offset are the vendor header's definition (struct member
+ * ce_utl_utl_ctrl). The header gives no access direction or reset value; access
+ * rw is a placeholder.
  */
 /* utl_utl_ctrl: rw64, reset unknown */
 #define TIOCE_UTL_UTL_CTRL                           0x007000 /* established */
@@ -1977,7 +2401,9 @@
 #define TIOCE_UTL_UTL_CTRL_STRIDE                    8192
 
 /*
- * Name and offset are the vendor header's definition (struct member ce_utl_debug_sel). The header gives no access direction or reset value; access rw is a placeholder.
+ * Name and offset are the vendor header's definition (struct member
+ * ce_utl_debug_sel). The header gives no access direction or reset value;
+ * access rw is a placeholder.
  */
 /* utl_debug_sel: rw64, reset unknown */
 #define TIOCE_UTL_DEBUG_SEL                          0x007008 /* established */
@@ -1985,34 +2411,44 @@
 #define TIOCE_UTL_DEBUG_SEL_STRIDE                   8192
 
 /*
- * Name and offset are the vendor header's definition (struct member ce_ure_dyn_credit_status). The header gives no access direction or reset value; access rw is a placeholder.
+ * Name and offset are the vendor header's definition (struct member
+ * ce_ure_dyn_credit_status). The header gives no access direction or reset
+ * value; access rw is a placeholder.
  */
 /* ure_dyn_credit_status: rw64, reset unknown */
 #define TIOCE_URE_DYN_CREDIT_STATUS                  0x00b010 /* established */
 
 /*
- * Name and offset are the vendor header's definition (struct member ce_ure_last_credit_status). The header gives no access direction or reset value; access rw is a placeholder.
+ * Name and offset are the vendor header's definition (struct member
+ * ce_ure_last_credit_status). The header gives no access direction or reset
+ * value; access rw is a placeholder.
  */
 /* ure_last_credit_status: rw64, reset unknown */
 #define TIOCE_URE_LAST_CREDIT_STATUS                 0x00b018 /* established */
 
 /*
- * Name and offset are the vendor header's definition (struct member ce_ure_credit_limit). The header gives no access direction or reset value; access rw is a placeholder.
+ * Name and offset are the vendor header's definition (struct member
+ * ce_ure_credit_limit). The header gives no access direction or reset value;
+ * access rw is a placeholder.
  */
 /* ure_credit_limit: rw64, reset unknown */
 #define TIOCE_URE_CREDIT_LIMIT                       0x00b020 /* established */
 
 /*
- * Name and offset are the vendor header's definition (struct member ce_ure_control). The header gives no access direction or reset value; access rw is a placeholder. Field layout from the header: write-merge timer is the eleven-bit mask at bit 12; the rest are single bits. The parity-disable and malform-disable bits are the header names; their effects are not described.
+ * Name and offset are the vendor header's definition (struct member
+ * ce_ure_control). The header gives no access direction or reset value; access
+ * rw is a placeholder. Field layout from the header: write-merge timer is the
+ * eleven-bit mask at bit 12; the rest are single bits. The parity-disable and
+ * malform-disable bits are the header names; their effects are not described.
  */
 /* ure_control: rw64, reset unknown */
 #define TIOCE_URE_CONTROL                            0x00b030 /* established */
 #define TIOCE_URE_CONTROL_UNSUP_DISABLE_SHIFT        45 /* established */
 #define TIOCE_URE_CONTROL_UNSUP_DISABLE_MASK         0x1ull
-#define TIOCE_URE_CONTROL_UNSUP_DISABLE_INPLACE      (TIOCE_URE_CONTROL_UNSUP_DISABLE_MASK << TIOCE_URE_CONTROL_UNSUP_DISABLE_SHIFT)
+#define TIOCE_URE_CONTROL_UNSUP_DISABLE_INPLACE (TIOCE_URE_CONTROL_UNSUP_DISABLE_MASK << TIOCE_URE_CONTROL_UNSUP_DISABLE_SHIFT)
 #define TIOCE_URE_CONTROL_MALFORM_DISABLE_SHIFT      44 /* established */
 #define TIOCE_URE_CONTROL_MALFORM_DISABLE_MASK       0x1ull
-#define TIOCE_URE_CONTROL_MALFORM_DISABLE_INPLACE    (TIOCE_URE_CONTROL_MALFORM_DISABLE_MASK << TIOCE_URE_CONTROL_MALFORM_DISABLE_SHIFT)
+#define TIOCE_URE_CONTROL_MALFORM_DISABLE_INPLACE (TIOCE_URE_CONTROL_MALFORM_DISABLE_MASK << TIOCE_URE_CONTROL_MALFORM_DISABLE_SHIFT)
 #define TIOCE_URE_CONTROL_DNS_HDR_PAR_DISABLE_SHIFT  40 /* established */
 #define TIOCE_URE_CONTROL_DNS_HDR_PAR_DISABLE_MASK   0x1ull
 #define TIOCE_URE_CONTROL_DNS_HDR_PAR_DISABLE_INPLACE (TIOCE_URE_CONTROL_DNS_HDR_PAR_DISABLE_MASK << TIOCE_URE_CONTROL_DNS_HDR_PAR_DISABLE_SHIFT)
@@ -2021,13 +2457,13 @@
 #define TIOCE_URE_CONTROL_DNS_DAT_PAR_DISABLE_INPLACE (TIOCE_URE_CONTROL_DNS_DAT_PAR_DISABLE_MASK << TIOCE_URE_CONTROL_DNS_DAT_PAR_DISABLE_SHIFT)
 #define TIOCE_URE_CONTROL_RSPQ_PAR_DISABLE_SHIFT     38 /* established */
 #define TIOCE_URE_CONTROL_RSPQ_PAR_DISABLE_MASK      0x1ull
-#define TIOCE_URE_CONTROL_RSPQ_PAR_DISABLE_INPLACE   (TIOCE_URE_CONTROL_RSPQ_PAR_DISABLE_MASK << TIOCE_URE_CONTROL_RSPQ_PAR_DISABLE_SHIFT)
+#define TIOCE_URE_CONTROL_RSPQ_PAR_DISABLE_INPLACE (TIOCE_URE_CONTROL_RSPQ_PAR_DISABLE_MASK << TIOCE_URE_CONTROL_RSPQ_PAR_DISABLE_SHIFT)
 #define TIOCE_URE_CONTROL_RCI_PAR_DISABLE_SHIFT      37 /* established */
 #define TIOCE_URE_CONTROL_RCI_PAR_DISABLE_MASK       0x1ull
-#define TIOCE_URE_CONTROL_RCI_PAR_DISABLE_INPLACE    (TIOCE_URE_CONTROL_RCI_PAR_DISABLE_MASK << TIOCE_URE_CONTROL_RCI_PAR_DISABLE_SHIFT)
+#define TIOCE_URE_CONTROL_RCI_PAR_DISABLE_INPLACE (TIOCE_URE_CONTROL_RCI_PAR_DISABLE_MASK << TIOCE_URE_CONTROL_RCI_PAR_DISABLE_SHIFT)
 #define TIOCE_URE_CONTROL_ATE_PAR_DISABLE_SHIFT      36 /* established */
 #define TIOCE_URE_CONTROL_ATE_PAR_DISABLE_MASK       0x1ull
-#define TIOCE_URE_CONTROL_ATE_PAR_DISABLE_INPLACE    (TIOCE_URE_CONTROL_ATE_PAR_DISABLE_MASK << TIOCE_URE_CONTROL_ATE_PAR_DISABLE_SHIFT)
+#define TIOCE_URE_CONTROL_ATE_PAR_DISABLE_INPLACE (TIOCE_URE_CONTROL_ATE_PAR_DISABLE_MASK << TIOCE_URE_CONTROL_ATE_PAR_DISABLE_SHIFT)
 #define TIOCE_URE_CONTROL_UPS_HDR2_PAR_DISABLE_SHIFT 35 /* established */
 #define TIOCE_URE_CONTROL_UPS_HDR2_PAR_DISABLE_MASK  0x1ull
 #define TIOCE_URE_CONTROL_UPS_HDR2_PAR_DISABLE_INPLACE (TIOCE_URE_CONTROL_UPS_HDR2_PAR_DISABLE_MASK << TIOCE_URE_CONTROL_UPS_HDR2_PAR_DISABLE_SHIFT)
@@ -2045,64 +2481,85 @@
 #define TIOCE_URE_CONTROL_RSPQ_BYPASS_DISABLE_INPLACE (TIOCE_URE_CONTROL_RSPQ_BYPASS_DISABLE_MASK << TIOCE_URE_CONTROL_RSPQ_BYPASS_DISABLE_SHIFT)
 #define TIOCE_URE_CONTROL_WRT_MRG_TIMER_SHIFT        12 /* established */
 #define TIOCE_URE_CONTROL_WRT_MRG_TIMER_MASK         0x7ffull
-#define TIOCE_URE_CONTROL_WRT_MRG_TIMER_INPLACE      (TIOCE_URE_CONTROL_WRT_MRG_TIMER_MASK << TIOCE_URE_CONTROL_WRT_MRG_TIMER_SHIFT)
+#define TIOCE_URE_CONTROL_WRT_MRG_TIMER_INPLACE (TIOCE_URE_CONTROL_WRT_MRG_TIMER_MASK << TIOCE_URE_CONTROL_WRT_MRG_TIMER_SHIFT)
 #define TIOCE_URE_CONTROL_WRT_MRG_ENABLE2_SHIFT      5 /* established */
 #define TIOCE_URE_CONTROL_WRT_MRG_ENABLE2_MASK       0x1ull
-#define TIOCE_URE_CONTROL_WRT_MRG_ENABLE2_INPLACE    (TIOCE_URE_CONTROL_WRT_MRG_ENABLE2_MASK << TIOCE_URE_CONTROL_WRT_MRG_ENABLE2_SHIFT)
+#define TIOCE_URE_CONTROL_WRT_MRG_ENABLE2_INPLACE (TIOCE_URE_CONTROL_WRT_MRG_ENABLE2_MASK << TIOCE_URE_CONTROL_WRT_MRG_ENABLE2_SHIFT)
 #define TIOCE_URE_CONTROL_WRT_MRG_ENABLE1_SHIFT      4 /* established */
 #define TIOCE_URE_CONTROL_WRT_MRG_ENABLE1_MASK       0x1ull
-#define TIOCE_URE_CONTROL_WRT_MRG_ENABLE1_INPLACE    (TIOCE_URE_CONTROL_WRT_MRG_ENABLE1_MASK << TIOCE_URE_CONTROL_WRT_MRG_ENABLE1_SHIFT)
+#define TIOCE_URE_CONTROL_WRT_MRG_ENABLE1_INPLACE (TIOCE_URE_CONTROL_WRT_MRG_ENABLE1_MASK << TIOCE_URE_CONTROL_WRT_MRG_ENABLE1_SHIFT)
 #define TIOCE_URE_CONTROL_RD_MRG_ENABLE_SHIFT        0 /* established */
 #define TIOCE_URE_CONTROL_RD_MRG_ENABLE_MASK         0x1ull
-#define TIOCE_URE_CONTROL_RD_MRG_ENABLE_INPLACE      (TIOCE_URE_CONTROL_RD_MRG_ENABLE_MASK << TIOCE_URE_CONTROL_RD_MRG_ENABLE_SHIFT)
+#define TIOCE_URE_CONTROL_RD_MRG_ENABLE_INPLACE (TIOCE_URE_CONTROL_RD_MRG_ENABLE_MASK << TIOCE_URE_CONTROL_RD_MRG_ENABLE_SHIFT)
 
 /*
- * Name and offset are the vendor header's definition (struct member ce_ure_status). The header gives no access direction or reset value; access rw is a placeholder.
+ * Name and offset are the vendor header's definition (struct member
+ * ce_ure_status). The header gives no access direction or reset value; access
+ * rw is a placeholder.
  */
 /* ure_status: rw64, reset unknown */
 #define TIOCE_URE_STATUS                             0x00b038 /* established */
 
 /*
- * Name and offset are the vendor header's definition (struct member ce_ure_debug_sel). The header gives no access direction or reset value; access rw is a placeholder.
+ * Name and offset are the vendor header's definition (struct member
+ * ce_ure_debug_sel). The header gives no access direction or reset value;
+ * access rw is a placeholder.
  */
 /* ure_debug_sel: rw64, reset unknown */
 #define TIOCE_URE_DEBUG_SEL                          0x00b050 /* established */
 
 /*
- * Name and offset are the vendor header's definition (struct member ce_ure_pcie_debug_sel). The header gives no access direction or reset value; access rw is a placeholder.
+ * Name and offset are the vendor header's definition (struct member
+ * ce_ure_pcie_debug_sel). The header gives no access direction or reset value;
+ * access rw is a placeholder.
  */
 /* ure_pcie_debug_sel: rw64, reset unknown */
 #define TIOCE_URE_PCIE_DEBUG_SEL                     0x00b058 /* established */
 
 /*
- * Name and offset are the vendor header's definition (struct member ce_ure_ssp_err_cmd_wrd). The header gives no access direction or reset value; access rw is a placeholder.
+ * Name and offset are the vendor header's definition (struct member
+ * ce_ure_ssp_err_cmd_wrd). The header gives no access direction or reset value;
+ * access rw is a placeholder.
  */
 /* ure_ssp_err_cmd_wrd: rw64, reset unknown */
 #define TIOCE_URE_SSP_ERR_CMD_WRD                    0x00b060 /* established */
 
 /*
- * Name and offset are the vendor header's definition (struct member ce_ure_ssp_err_addr). The header gives no access direction or reset value; access rw is a placeholder.
+ * Name and offset are the vendor header's definition (struct member
+ * ce_ure_ssp_err_addr). The header gives no access direction or reset value;
+ * access rw is a placeholder.
  */
 /* ure_ssp_err_addr: rw64, reset unknown */
 #define TIOCE_URE_SSP_ERR_ADDR                       0x00b068 /* established */
 
 /*
- * Upstream request engine page size map. The provider clears the page-size field and sets it to the 256 KiB encoding (4) at attach, the largest the code uses; the 32/40-bit entries are then 256 KiB pages. Name and offset are the vendor header's definition (struct member ce_ure_page_map). The header gives no access direction or reset value; access rw is a placeholder. Field layout from the header. The pagesize field holds the encodings the header names (0 to 4); 5 to 7 are unknown. The provider uses 4.
+ * Upstream request engine page size map. The provider clears the page-size
+ * field and sets it to the 256 KiB encoding (4) at attach, the largest the code
+ * uses; the 32/40-bit entries are then 256 KiB pages. Name and offset are the
+ * vendor header's definition (struct member ce_ure_page_map). The header gives
+ * no access direction or reset value; access rw is a placeholder. Field layout
+ * from the header. The pagesize field holds the encodings the header names (0
+ * to 4); 5 to 7 are unknown. The provider uses 4.
  */
 /* ure_page_map: rw64, reset unknown */
 #define TIOCE_URE_PAGE_MAP                           0x00b070 /* established */
 #define TIOCE_URE_PAGE_MAP_PAGESIZE_SHIFT            4 /* established */
 #define TIOCE_URE_PAGE_MAP_PAGESIZE_MASK             0x7ull
-#define TIOCE_URE_PAGE_MAP_PAGESIZE_INPLACE          (TIOCE_URE_PAGE_MAP_PAGESIZE_MASK << TIOCE_URE_PAGE_MAP_PAGESIZE_SHIFT)
+#define TIOCE_URE_PAGE_MAP_PAGESIZE_INPLACE (TIOCE_URE_PAGE_MAP_PAGESIZE_MASK << TIOCE_URE_PAGE_MAP_PAGESIZE_SHIFT)
 #define TIOCE_URE_PAGE_MAP_ATE40_ENABLE_SHIFT        1 /* established */
 #define TIOCE_URE_PAGE_MAP_ATE40_ENABLE_MASK         0x1ull
-#define TIOCE_URE_PAGE_MAP_ATE40_ENABLE_INPLACE      (TIOCE_URE_PAGE_MAP_ATE40_ENABLE_MASK << TIOCE_URE_PAGE_MAP_ATE40_ENABLE_SHIFT)
+#define TIOCE_URE_PAGE_MAP_ATE40_ENABLE_INPLACE (TIOCE_URE_PAGE_MAP_ATE40_ENABLE_MASK << TIOCE_URE_PAGE_MAP_ATE40_ENABLE_SHIFT)
 #define TIOCE_URE_PAGE_MAP_ATE3240_ENABLE_SHIFT      0 /* established */
 #define TIOCE_URE_PAGE_MAP_ATE3240_ENABLE_MASK       0x1ull
-#define TIOCE_URE_PAGE_MAP_ATE3240_ENABLE_INPLACE    (TIOCE_URE_PAGE_MAP_ATE3240_ENABLE_MASK << TIOCE_URE_PAGE_MAP_ATE3240_ENABLE_SHIFT)
+#define TIOCE_URE_PAGE_MAP_ATE3240_ENABLE_INPLACE (TIOCE_URE_PAGE_MAP_ATE3240_ENABLE_MASK << TIOCE_URE_PAGE_MAP_ATE3240_ENABLE_SHIFT)
 
 /*
- * Upstream request engine direct map, one per port. For 32-bit direct DMA the provider stores the target's coretalk address with the low 30 bits cleared (a 1 GiB-aligned base), reads it back to flush, and refcounts users: a second user needs the same base. Name and offset are the vendor header's definition (struct member ce_ure_dir_map). The header gives no access direction or reset value; access rw is a placeholder.
+ * Upstream request engine direct map, one per port. For 32-bit direct DMA the
+ * provider stores the target's coretalk address with the low 30 bits cleared (a
+ * 1 GiB-aligned base), reads it back to flush, and refcounts users: a second
+ * user needs the same base. Name and offset are the vendor header's definition
+ * (struct member ce_ure_dir_map). The header gives no access direction or reset
+ * value; access rw is a placeholder.
  */
 /* ure_dir_map: rw64, reset unknown */
 #define TIOCE_URE_DIR_MAP                            0x00b078 /* established */
@@ -2110,370 +2567,466 @@
 #define TIOCE_URE_DIR_MAP_STRIDE                     8
 
 /*
- * Name and offset are the vendor header's definition (struct member ce_ure_pipe_sel1). The header gives no access direction or reset value; access rw is a placeholder. Three 19-bit selectors at bits 0, 20 and 40 (header selector masks). Within a selector the header defines traffic class, bus, device and function masks at bits 18:16, 15:8, 7:3 and 2:0; they sum to 19 bits. The layout is established for the first selector, whose position the macros give; for the second and third it is inferred from the identical selector width. Meaning of each selector (a source id match for a pipe) is inferred from the register name.
+ * Name and offset are the vendor header's definition (struct member
+ * ce_ure_pipe_sel1). The header gives no access direction or reset value;
+ * access rw is a placeholder. Three 19-bit selectors at bits 0, 20 and 40
+ * (header selector masks). Within a selector the header defines traffic class,
+ * bus, device and function masks at bits 18:16, 15:8, 7:3 and 2:0; they sum to
+ * 19 bits. The layout is established for the first selector, whose position the
+ * macros give; for the second and third it is inferred from the identical
+ * selector width. Meaning of each selector (a source id match for a pipe) is
+ * inferred from the register name.
  */
 /* ure_pipe_sel1: rw64, reset unknown */
 #define TIOCE_URE_PIPE_SEL1                          0x00b088 /* established */
 #define TIOCE_URE_PIPE_SEL1_SEL3_TC_SHIFT            56 /* inferred */
 #define TIOCE_URE_PIPE_SEL1_SEL3_TC_MASK             0x7ull
-#define TIOCE_URE_PIPE_SEL1_SEL3_TC_INPLACE          (TIOCE_URE_PIPE_SEL1_SEL3_TC_MASK << TIOCE_URE_PIPE_SEL1_SEL3_TC_SHIFT)
+#define TIOCE_URE_PIPE_SEL1_SEL3_TC_INPLACE (TIOCE_URE_PIPE_SEL1_SEL3_TC_MASK << TIOCE_URE_PIPE_SEL1_SEL3_TC_SHIFT)
 #define TIOCE_URE_PIPE_SEL1_SEL3_BUS_SHIFT           48 /* inferred */
 #define TIOCE_URE_PIPE_SEL1_SEL3_BUS_MASK            0xffull
-#define TIOCE_URE_PIPE_SEL1_SEL3_BUS_INPLACE         (TIOCE_URE_PIPE_SEL1_SEL3_BUS_MASK << TIOCE_URE_PIPE_SEL1_SEL3_BUS_SHIFT)
+#define TIOCE_URE_PIPE_SEL1_SEL3_BUS_INPLACE (TIOCE_URE_PIPE_SEL1_SEL3_BUS_MASK << TIOCE_URE_PIPE_SEL1_SEL3_BUS_SHIFT)
 #define TIOCE_URE_PIPE_SEL1_SEL3_DEV_SHIFT           43 /* inferred */
 #define TIOCE_URE_PIPE_SEL1_SEL3_DEV_MASK            0x1full
-#define TIOCE_URE_PIPE_SEL1_SEL3_DEV_INPLACE         (TIOCE_URE_PIPE_SEL1_SEL3_DEV_MASK << TIOCE_URE_PIPE_SEL1_SEL3_DEV_SHIFT)
+#define TIOCE_URE_PIPE_SEL1_SEL3_DEV_INPLACE (TIOCE_URE_PIPE_SEL1_SEL3_DEV_MASK << TIOCE_URE_PIPE_SEL1_SEL3_DEV_SHIFT)
 #define TIOCE_URE_PIPE_SEL1_SEL3_FNC_SHIFT           40 /* inferred */
 #define TIOCE_URE_PIPE_SEL1_SEL3_FNC_MASK            0x7ull
-#define TIOCE_URE_PIPE_SEL1_SEL3_FNC_INPLACE         (TIOCE_URE_PIPE_SEL1_SEL3_FNC_MASK << TIOCE_URE_PIPE_SEL1_SEL3_FNC_SHIFT)
+#define TIOCE_URE_PIPE_SEL1_SEL3_FNC_INPLACE (TIOCE_URE_PIPE_SEL1_SEL3_FNC_MASK << TIOCE_URE_PIPE_SEL1_SEL3_FNC_SHIFT)
 #define TIOCE_URE_PIPE_SEL1_SEL2_TC_SHIFT            36 /* inferred */
 #define TIOCE_URE_PIPE_SEL1_SEL2_TC_MASK             0x7ull
-#define TIOCE_URE_PIPE_SEL1_SEL2_TC_INPLACE          (TIOCE_URE_PIPE_SEL1_SEL2_TC_MASK << TIOCE_URE_PIPE_SEL1_SEL2_TC_SHIFT)
+#define TIOCE_URE_PIPE_SEL1_SEL2_TC_INPLACE (TIOCE_URE_PIPE_SEL1_SEL2_TC_MASK << TIOCE_URE_PIPE_SEL1_SEL2_TC_SHIFT)
 #define TIOCE_URE_PIPE_SEL1_SEL2_BUS_SHIFT           28 /* inferred */
 #define TIOCE_URE_PIPE_SEL1_SEL2_BUS_MASK            0xffull
-#define TIOCE_URE_PIPE_SEL1_SEL2_BUS_INPLACE         (TIOCE_URE_PIPE_SEL1_SEL2_BUS_MASK << TIOCE_URE_PIPE_SEL1_SEL2_BUS_SHIFT)
+#define TIOCE_URE_PIPE_SEL1_SEL2_BUS_INPLACE (TIOCE_URE_PIPE_SEL1_SEL2_BUS_MASK << TIOCE_URE_PIPE_SEL1_SEL2_BUS_SHIFT)
 #define TIOCE_URE_PIPE_SEL1_SEL2_DEV_SHIFT           23 /* inferred */
 #define TIOCE_URE_PIPE_SEL1_SEL2_DEV_MASK            0x1full
-#define TIOCE_URE_PIPE_SEL1_SEL2_DEV_INPLACE         (TIOCE_URE_PIPE_SEL1_SEL2_DEV_MASK << TIOCE_URE_PIPE_SEL1_SEL2_DEV_SHIFT)
+#define TIOCE_URE_PIPE_SEL1_SEL2_DEV_INPLACE (TIOCE_URE_PIPE_SEL1_SEL2_DEV_MASK << TIOCE_URE_PIPE_SEL1_SEL2_DEV_SHIFT)
 #define TIOCE_URE_PIPE_SEL1_SEL2_FNC_SHIFT           20 /* inferred */
 #define TIOCE_URE_PIPE_SEL1_SEL2_FNC_MASK            0x7ull
-#define TIOCE_URE_PIPE_SEL1_SEL2_FNC_INPLACE         (TIOCE_URE_PIPE_SEL1_SEL2_FNC_MASK << TIOCE_URE_PIPE_SEL1_SEL2_FNC_SHIFT)
+#define TIOCE_URE_PIPE_SEL1_SEL2_FNC_INPLACE (TIOCE_URE_PIPE_SEL1_SEL2_FNC_MASK << TIOCE_URE_PIPE_SEL1_SEL2_FNC_SHIFT)
 #define TIOCE_URE_PIPE_SEL1_SEL1_TC_SHIFT            16 /* established */
 #define TIOCE_URE_PIPE_SEL1_SEL1_TC_MASK             0x7ull
-#define TIOCE_URE_PIPE_SEL1_SEL1_TC_INPLACE          (TIOCE_URE_PIPE_SEL1_SEL1_TC_MASK << TIOCE_URE_PIPE_SEL1_SEL1_TC_SHIFT)
+#define TIOCE_URE_PIPE_SEL1_SEL1_TC_INPLACE (TIOCE_URE_PIPE_SEL1_SEL1_TC_MASK << TIOCE_URE_PIPE_SEL1_SEL1_TC_SHIFT)
 #define TIOCE_URE_PIPE_SEL1_SEL1_BUS_SHIFT           8 /* established */
 #define TIOCE_URE_PIPE_SEL1_SEL1_BUS_MASK            0xffull
-#define TIOCE_URE_PIPE_SEL1_SEL1_BUS_INPLACE         (TIOCE_URE_PIPE_SEL1_SEL1_BUS_MASK << TIOCE_URE_PIPE_SEL1_SEL1_BUS_SHIFT)
+#define TIOCE_URE_PIPE_SEL1_SEL1_BUS_INPLACE (TIOCE_URE_PIPE_SEL1_SEL1_BUS_MASK << TIOCE_URE_PIPE_SEL1_SEL1_BUS_SHIFT)
 #define TIOCE_URE_PIPE_SEL1_SEL1_DEV_SHIFT           3 /* established */
 #define TIOCE_URE_PIPE_SEL1_SEL1_DEV_MASK            0x1full
-#define TIOCE_URE_PIPE_SEL1_SEL1_DEV_INPLACE         (TIOCE_URE_PIPE_SEL1_SEL1_DEV_MASK << TIOCE_URE_PIPE_SEL1_SEL1_DEV_SHIFT)
+#define TIOCE_URE_PIPE_SEL1_SEL1_DEV_INPLACE (TIOCE_URE_PIPE_SEL1_SEL1_DEV_MASK << TIOCE_URE_PIPE_SEL1_SEL1_DEV_SHIFT)
 #define TIOCE_URE_PIPE_SEL1_SEL1_FNC_SHIFT           0 /* established */
 #define TIOCE_URE_PIPE_SEL1_SEL1_FNC_MASK            0x7ull
-#define TIOCE_URE_PIPE_SEL1_SEL1_FNC_INPLACE         (TIOCE_URE_PIPE_SEL1_SEL1_FNC_MASK << TIOCE_URE_PIPE_SEL1_SEL1_FNC_SHIFT)
+#define TIOCE_URE_PIPE_SEL1_SEL1_FNC_INPLACE (TIOCE_URE_PIPE_SEL1_SEL1_FNC_MASK << TIOCE_URE_PIPE_SEL1_SEL1_FNC_SHIFT)
 
 /*
- * Name and offset are the vendor header's definition (struct member ce_ure_pipe_mask1). The header gives no access direction or reset value; access rw is a placeholder. Three 19-bit mask fields at bits 0, 20 and 40 from the header masks. That each mask applies to the selector of the same index is inferred from naming.
+ * Name and offset are the vendor header's definition (struct member
+ * ce_ure_pipe_mask1). The header gives no access direction or reset value;
+ * access rw is a placeholder. Three 19-bit mask fields at bits 0, 20 and 40
+ * from the header masks. That each mask applies to the selector of the same
+ * index is inferred from naming.
  */
 /* ure_pipe_mask1: rw64, reset unknown */
 #define TIOCE_URE_PIPE_MASK1                         0x00b090 /* established */
 #define TIOCE_URE_PIPE_MASK1_MASK3_SHIFT             40 /* inferred */
 #define TIOCE_URE_PIPE_MASK1_MASK3_MASK              0x7ffffull
-#define TIOCE_URE_PIPE_MASK1_MASK3_INPLACE           (TIOCE_URE_PIPE_MASK1_MASK3_MASK << TIOCE_URE_PIPE_MASK1_MASK3_SHIFT)
+#define TIOCE_URE_PIPE_MASK1_MASK3_INPLACE (TIOCE_URE_PIPE_MASK1_MASK3_MASK << TIOCE_URE_PIPE_MASK1_MASK3_SHIFT)
 #define TIOCE_URE_PIPE_MASK1_MASK2_SHIFT             20 /* inferred */
 #define TIOCE_URE_PIPE_MASK1_MASK2_MASK              0x7ffffull
-#define TIOCE_URE_PIPE_MASK1_MASK2_INPLACE           (TIOCE_URE_PIPE_MASK1_MASK2_MASK << TIOCE_URE_PIPE_MASK1_MASK2_SHIFT)
+#define TIOCE_URE_PIPE_MASK1_MASK2_INPLACE (TIOCE_URE_PIPE_MASK1_MASK2_MASK << TIOCE_URE_PIPE_MASK1_MASK2_SHIFT)
 #define TIOCE_URE_PIPE_MASK1_MASK1_SHIFT             0 /* inferred */
 #define TIOCE_URE_PIPE_MASK1_MASK1_MASK              0x7ffffull
-#define TIOCE_URE_PIPE_MASK1_MASK1_INPLACE           (TIOCE_URE_PIPE_MASK1_MASK1_MASK << TIOCE_URE_PIPE_MASK1_MASK1_SHIFT)
+#define TIOCE_URE_PIPE_MASK1_MASK1_INPLACE (TIOCE_URE_PIPE_MASK1_MASK1_MASK << TIOCE_URE_PIPE_MASK1_MASK1_SHIFT)
 
 /*
- * Name and offset are the vendor header's definition (struct member ce_ure_pipe_sel2). The header gives no access direction or reset value; access rw is a placeholder. Same selector layout as the first pipe select register (see there); the header comment covers both under one name. Selector two and three sub-layout is inferred.
+ * Name and offset are the vendor header's definition (struct member
+ * ce_ure_pipe_sel2). The header gives no access direction or reset value;
+ * access rw is a placeholder. Same selector layout as the first pipe select
+ * register (see there); the header comment covers both under one name. Selector
+ * two and three sub-layout is inferred.
  */
 /* ure_pipe_sel2: rw64, reset unknown */
 #define TIOCE_URE_PIPE_SEL2                          0x00b098 /* established */
 #define TIOCE_URE_PIPE_SEL2_SEL3_TC_SHIFT            56 /* inferred */
 #define TIOCE_URE_PIPE_SEL2_SEL3_TC_MASK             0x7ull
-#define TIOCE_URE_PIPE_SEL2_SEL3_TC_INPLACE          (TIOCE_URE_PIPE_SEL2_SEL3_TC_MASK << TIOCE_URE_PIPE_SEL2_SEL3_TC_SHIFT)
+#define TIOCE_URE_PIPE_SEL2_SEL3_TC_INPLACE (TIOCE_URE_PIPE_SEL2_SEL3_TC_MASK << TIOCE_URE_PIPE_SEL2_SEL3_TC_SHIFT)
 #define TIOCE_URE_PIPE_SEL2_SEL3_BUS_SHIFT           48 /* inferred */
 #define TIOCE_URE_PIPE_SEL2_SEL3_BUS_MASK            0xffull
-#define TIOCE_URE_PIPE_SEL2_SEL3_BUS_INPLACE         (TIOCE_URE_PIPE_SEL2_SEL3_BUS_MASK << TIOCE_URE_PIPE_SEL2_SEL3_BUS_SHIFT)
+#define TIOCE_URE_PIPE_SEL2_SEL3_BUS_INPLACE (TIOCE_URE_PIPE_SEL2_SEL3_BUS_MASK << TIOCE_URE_PIPE_SEL2_SEL3_BUS_SHIFT)
 #define TIOCE_URE_PIPE_SEL2_SEL3_DEV_SHIFT           43 /* inferred */
 #define TIOCE_URE_PIPE_SEL2_SEL3_DEV_MASK            0x1full
-#define TIOCE_URE_PIPE_SEL2_SEL3_DEV_INPLACE         (TIOCE_URE_PIPE_SEL2_SEL3_DEV_MASK << TIOCE_URE_PIPE_SEL2_SEL3_DEV_SHIFT)
+#define TIOCE_URE_PIPE_SEL2_SEL3_DEV_INPLACE (TIOCE_URE_PIPE_SEL2_SEL3_DEV_MASK << TIOCE_URE_PIPE_SEL2_SEL3_DEV_SHIFT)
 #define TIOCE_URE_PIPE_SEL2_SEL3_FNC_SHIFT           40 /* inferred */
 #define TIOCE_URE_PIPE_SEL2_SEL3_FNC_MASK            0x7ull
-#define TIOCE_URE_PIPE_SEL2_SEL3_FNC_INPLACE         (TIOCE_URE_PIPE_SEL2_SEL3_FNC_MASK << TIOCE_URE_PIPE_SEL2_SEL3_FNC_SHIFT)
+#define TIOCE_URE_PIPE_SEL2_SEL3_FNC_INPLACE (TIOCE_URE_PIPE_SEL2_SEL3_FNC_MASK << TIOCE_URE_PIPE_SEL2_SEL3_FNC_SHIFT)
 #define TIOCE_URE_PIPE_SEL2_SEL2_TC_SHIFT            36 /* inferred */
 #define TIOCE_URE_PIPE_SEL2_SEL2_TC_MASK             0x7ull
-#define TIOCE_URE_PIPE_SEL2_SEL2_TC_INPLACE          (TIOCE_URE_PIPE_SEL2_SEL2_TC_MASK << TIOCE_URE_PIPE_SEL2_SEL2_TC_SHIFT)
+#define TIOCE_URE_PIPE_SEL2_SEL2_TC_INPLACE (TIOCE_URE_PIPE_SEL2_SEL2_TC_MASK << TIOCE_URE_PIPE_SEL2_SEL2_TC_SHIFT)
 #define TIOCE_URE_PIPE_SEL2_SEL2_BUS_SHIFT           28 /* inferred */
 #define TIOCE_URE_PIPE_SEL2_SEL2_BUS_MASK            0xffull
-#define TIOCE_URE_PIPE_SEL2_SEL2_BUS_INPLACE         (TIOCE_URE_PIPE_SEL2_SEL2_BUS_MASK << TIOCE_URE_PIPE_SEL2_SEL2_BUS_SHIFT)
+#define TIOCE_URE_PIPE_SEL2_SEL2_BUS_INPLACE (TIOCE_URE_PIPE_SEL2_SEL2_BUS_MASK << TIOCE_URE_PIPE_SEL2_SEL2_BUS_SHIFT)
 #define TIOCE_URE_PIPE_SEL2_SEL2_DEV_SHIFT           23 /* inferred */
 #define TIOCE_URE_PIPE_SEL2_SEL2_DEV_MASK            0x1full
-#define TIOCE_URE_PIPE_SEL2_SEL2_DEV_INPLACE         (TIOCE_URE_PIPE_SEL2_SEL2_DEV_MASK << TIOCE_URE_PIPE_SEL2_SEL2_DEV_SHIFT)
+#define TIOCE_URE_PIPE_SEL2_SEL2_DEV_INPLACE (TIOCE_URE_PIPE_SEL2_SEL2_DEV_MASK << TIOCE_URE_PIPE_SEL2_SEL2_DEV_SHIFT)
 #define TIOCE_URE_PIPE_SEL2_SEL2_FNC_SHIFT           20 /* inferred */
 #define TIOCE_URE_PIPE_SEL2_SEL2_FNC_MASK            0x7ull
-#define TIOCE_URE_PIPE_SEL2_SEL2_FNC_INPLACE         (TIOCE_URE_PIPE_SEL2_SEL2_FNC_MASK << TIOCE_URE_PIPE_SEL2_SEL2_FNC_SHIFT)
+#define TIOCE_URE_PIPE_SEL2_SEL2_FNC_INPLACE (TIOCE_URE_PIPE_SEL2_SEL2_FNC_MASK << TIOCE_URE_PIPE_SEL2_SEL2_FNC_SHIFT)
 #define TIOCE_URE_PIPE_SEL2_SEL1_TC_SHIFT            16 /* established */
 #define TIOCE_URE_PIPE_SEL2_SEL1_TC_MASK             0x7ull
-#define TIOCE_URE_PIPE_SEL2_SEL1_TC_INPLACE          (TIOCE_URE_PIPE_SEL2_SEL1_TC_MASK << TIOCE_URE_PIPE_SEL2_SEL1_TC_SHIFT)
+#define TIOCE_URE_PIPE_SEL2_SEL1_TC_INPLACE (TIOCE_URE_PIPE_SEL2_SEL1_TC_MASK << TIOCE_URE_PIPE_SEL2_SEL1_TC_SHIFT)
 #define TIOCE_URE_PIPE_SEL2_SEL1_BUS_SHIFT           8 /* established */
 #define TIOCE_URE_PIPE_SEL2_SEL1_BUS_MASK            0xffull
-#define TIOCE_URE_PIPE_SEL2_SEL1_BUS_INPLACE         (TIOCE_URE_PIPE_SEL2_SEL1_BUS_MASK << TIOCE_URE_PIPE_SEL2_SEL1_BUS_SHIFT)
+#define TIOCE_URE_PIPE_SEL2_SEL1_BUS_INPLACE (TIOCE_URE_PIPE_SEL2_SEL1_BUS_MASK << TIOCE_URE_PIPE_SEL2_SEL1_BUS_SHIFT)
 #define TIOCE_URE_PIPE_SEL2_SEL1_DEV_SHIFT           3 /* established */
 #define TIOCE_URE_PIPE_SEL2_SEL1_DEV_MASK            0x1full
-#define TIOCE_URE_PIPE_SEL2_SEL1_DEV_INPLACE         (TIOCE_URE_PIPE_SEL2_SEL1_DEV_MASK << TIOCE_URE_PIPE_SEL2_SEL1_DEV_SHIFT)
+#define TIOCE_URE_PIPE_SEL2_SEL1_DEV_INPLACE (TIOCE_URE_PIPE_SEL2_SEL1_DEV_MASK << TIOCE_URE_PIPE_SEL2_SEL1_DEV_SHIFT)
 #define TIOCE_URE_PIPE_SEL2_SEL1_FNC_SHIFT           0 /* established */
 #define TIOCE_URE_PIPE_SEL2_SEL1_FNC_MASK            0x7ull
-#define TIOCE_URE_PIPE_SEL2_SEL1_FNC_INPLACE         (TIOCE_URE_PIPE_SEL2_SEL1_FNC_MASK << TIOCE_URE_PIPE_SEL2_SEL1_FNC_SHIFT)
+#define TIOCE_URE_PIPE_SEL2_SEL1_FNC_INPLACE (TIOCE_URE_PIPE_SEL2_SEL1_FNC_MASK << TIOCE_URE_PIPE_SEL2_SEL1_FNC_SHIFT)
 
 /*
- * Name and offset are the vendor header's definition (struct member ce_ure_pipe_mask2). The header gives no access direction or reset value; access rw is a placeholder. Same layout as the first pipe mask register; the header comment covers both.
+ * Name and offset are the vendor header's definition (struct member
+ * ce_ure_pipe_mask2). The header gives no access direction or reset value;
+ * access rw is a placeholder. Same layout as the first pipe mask register; the
+ * header comment covers both.
  */
 /* ure_pipe_mask2: rw64, reset unknown */
 #define TIOCE_URE_PIPE_MASK2                         0x00b0a0 /* established */
 #define TIOCE_URE_PIPE_MASK2_MASK3_SHIFT             40 /* inferred */
 #define TIOCE_URE_PIPE_MASK2_MASK3_MASK              0x7ffffull
-#define TIOCE_URE_PIPE_MASK2_MASK3_INPLACE           (TIOCE_URE_PIPE_MASK2_MASK3_MASK << TIOCE_URE_PIPE_MASK2_MASK3_SHIFT)
+#define TIOCE_URE_PIPE_MASK2_MASK3_INPLACE (TIOCE_URE_PIPE_MASK2_MASK3_MASK << TIOCE_URE_PIPE_MASK2_MASK3_SHIFT)
 #define TIOCE_URE_PIPE_MASK2_MASK2_SHIFT             20 /* inferred */
 #define TIOCE_URE_PIPE_MASK2_MASK2_MASK              0x7ffffull
-#define TIOCE_URE_PIPE_MASK2_MASK2_INPLACE           (TIOCE_URE_PIPE_MASK2_MASK2_MASK << TIOCE_URE_PIPE_MASK2_MASK2_SHIFT)
+#define TIOCE_URE_PIPE_MASK2_MASK2_INPLACE (TIOCE_URE_PIPE_MASK2_MASK2_MASK << TIOCE_URE_PIPE_MASK2_MASK2_SHIFT)
 #define TIOCE_URE_PIPE_MASK2_MASK1_SHIFT             0 /* inferred */
 #define TIOCE_URE_PIPE_MASK2_MASK1_MASK              0x7ffffull
-#define TIOCE_URE_PIPE_MASK2_MASK1_INPLACE           (TIOCE_URE_PIPE_MASK2_MASK1_MASK << TIOCE_URE_PIPE_MASK2_MASK1_SHIFT)
+#define TIOCE_URE_PIPE_MASK2_MASK1_INPLACE (TIOCE_URE_PIPE_MASK2_MASK1_MASK << TIOCE_URE_PIPE_MASK2_MASK1_SHIFT)
 
 /*
- * Name and offset are the vendor header's definition (struct member ce_ure_pcie1_credits_sent). The header gives no access direction or reset value; access rw is a placeholder.
+ * Name and offset are the vendor header's definition (struct member
+ * ce_ure_pcie1_credits_sent). The header gives no access direction or reset
+ * value; access rw is a placeholder.
  */
 /* ure_pcie1_credits_sent: rw64, reset unknown */
 #define TIOCE_URE_PCIE1_CREDITS_SENT                 0x00b0a8 /* established */
 
 /*
- * Name and offset are the vendor header's definition (struct member ce_ure_pcie1_credits_used). The header gives no access direction or reset value; access rw is a placeholder.
+ * Name and offset are the vendor header's definition (struct member
+ * ce_ure_pcie1_credits_used). The header gives no access direction or reset
+ * value; access rw is a placeholder.
  */
 /* ure_pcie1_credits_used: rw64, reset unknown */
 #define TIOCE_URE_PCIE1_CREDITS_USED                 0x00b0b0 /* established */
 
 /*
- * Name and offset are the vendor header's definition (struct member ce_ure_pcie1_credit_limit). The header gives no access direction or reset value; access rw is a placeholder.
+ * Name and offset are the vendor header's definition (struct member
+ * ce_ure_pcie1_credit_limit). The header gives no access direction or reset
+ * value; access rw is a placeholder.
  */
 /* ure_pcie1_credit_limit: rw64, reset unknown */
 #define TIOCE_URE_PCIE1_CREDIT_LIMIT                 0x00b0b8 /* established */
 
 /*
- * Name and offset are the vendor header's definition (struct member ce_ure_pcie2_credits_sent). The header gives no access direction or reset value; access rw is a placeholder.
+ * Name and offset are the vendor header's definition (struct member
+ * ce_ure_pcie2_credits_sent). The header gives no access direction or reset
+ * value; access rw is a placeholder.
  */
 /* ure_pcie2_credits_sent: rw64, reset unknown */
 #define TIOCE_URE_PCIE2_CREDITS_SENT                 0x00b0c0 /* established */
 
 /*
- * Name and offset are the vendor header's definition (struct member ce_ure_pcie2_credits_used). The header gives no access direction or reset value; access rw is a placeholder.
+ * Name and offset are the vendor header's definition (struct member
+ * ce_ure_pcie2_credits_used). The header gives no access direction or reset
+ * value; access rw is a placeholder.
  */
 /* ure_pcie2_credits_used: rw64, reset unknown */
 #define TIOCE_URE_PCIE2_CREDITS_USED                 0x00b0c8 /* established */
 
 /*
- * Name and offset are the vendor header's definition (struct member ce_ure_pcie2_credit_limit). The header gives no access direction or reset value; access rw is a placeholder.
+ * Name and offset are the vendor header's definition (struct member
+ * ce_ure_pcie2_credit_limit). The header gives no access direction or reset
+ * value; access rw is a placeholder.
  */
 /* ure_pcie2_credit_limit: rw64, reset unknown */
 #define TIOCE_URE_PCIE2_CREDIT_LIMIT                 0x00b0d0 /* established */
 
 /*
- * Name and offset are the vendor header's definition (struct member ce_ure_pcie_force_credit). The header gives no access direction or reset value; access rw is a placeholder.
+ * Name and offset are the vendor header's definition (struct member
+ * ce_ure_pcie_force_credit). The header gives no access direction or reset
+ * value; access rw is a placeholder.
  */
 /* ure_pcie_force_credit: rw64, reset unknown */
 #define TIOCE_URE_PCIE_FORCE_CREDIT                  0x00b0d8 /* established */
 
 /*
- * Name and offset are the vendor header's definition (struct member ce_ure_rd_tnum_val). The header gives no access direction or reset value; access rw is a placeholder.
+ * Name and offset are the vendor header's definition (struct member
+ * ce_ure_rd_tnum_val). The header gives no access direction or reset value;
+ * access rw is a placeholder.
  */
 /* ure_rd_tnum_val: rw64, reset unknown */
 #define TIOCE_URE_RD_TNUM_VAL                        0x00b0e0 /* established */
 
 /*
- * Name and offset are the vendor header's definition (struct member ce_ure_rd_tnum_rsp_rcvd). The header gives no access direction or reset value; access rw is a placeholder.
+ * Name and offset are the vendor header's definition (struct member
+ * ce_ure_rd_tnum_rsp_rcvd). The header gives no access direction or reset
+ * value; access rw is a placeholder.
  */
 /* ure_rd_tnum_rsp_rcvd: rw64, reset unknown */
 #define TIOCE_URE_RD_TNUM_RSP_RCVD                   0x00b0e8 /* established */
 
 /*
- * Name and offset are the vendor header's definition (struct member ce_ure_rd_tnum_esent_timer). The header gives no access direction or reset value; access rw is a placeholder.
+ * Name and offset are the vendor header's definition (struct member
+ * ce_ure_rd_tnum_esent_timer). The header gives no access direction or reset
+ * value; access rw is a placeholder.
  */
 /* ure_rd_tnum_esent_timer: rw64, reset unknown */
 #define TIOCE_URE_RD_TNUM_ESENT_TIMER                0x00b0f0 /* established */
 
 /*
- * Name and offset are the vendor header's definition (struct member ce_ure_rd_tnum_error). The header gives no access direction or reset value; access rw is a placeholder.
+ * Name and offset are the vendor header's definition (struct member
+ * ce_ure_rd_tnum_error). The header gives no access direction or reset value;
+ * access rw is a placeholder.
  */
 /* ure_rd_tnum_error: rw64, reset unknown */
 #define TIOCE_URE_RD_TNUM_ERROR                      0x00b0f8 /* established */
 
 /*
- * Name and offset are the vendor header's definition (struct member ce_ure_rd_tnum_first_cl). The header gives no access direction or reset value; access rw is a placeholder.
+ * Name and offset are the vendor header's definition (struct member
+ * ce_ure_rd_tnum_first_cl). The header gives no access direction or reset
+ * value; access rw is a placeholder.
  */
 /* ure_rd_tnum_first_cl: rw64, reset unknown */
 #define TIOCE_URE_RD_TNUM_FIRST_CL                   0x00b100 /* established */
 
 /*
- * Name and offset are the vendor header's definition (struct member ce_ure_rd_tnum_link_buf). The header gives no access direction or reset value; access rw is a placeholder.
+ * Name and offset are the vendor header's definition (struct member
+ * ce_ure_rd_tnum_link_buf). The header gives no access direction or reset
+ * value; access rw is a placeholder.
  */
 /* ure_rd_tnum_link_buf: rw64, reset unknown */
 #define TIOCE_URE_RD_TNUM_LINK_BUF                   0x00b108 /* established */
 
 /*
- * Name and offset are the vendor header's definition (struct member ce_ure_wr_tnum_val). The header gives no access direction or reset value; access rw is a placeholder.
+ * Name and offset are the vendor header's definition (struct member
+ * ce_ure_wr_tnum_val). The header gives no access direction or reset value;
+ * access rw is a placeholder.
  */
 /* ure_wr_tnum_val: rw64, reset unknown */
 #define TIOCE_URE_WR_TNUM_VAL                        0x00b110 /* established */
 
 /*
- * Name and offset are the vendor header's definition (struct member ce_ure_sram_err_addr0). The header gives no access direction or reset value; access rw is a placeholder.
+ * Name and offset are the vendor header's definition (struct member
+ * ce_ure_sram_err_addr0). The header gives no access direction or reset value;
+ * access rw is a placeholder.
  */
 /* ure_sram_err_addr0: rw64, reset unknown */
 #define TIOCE_URE_SRAM_ERR_ADDR0                     0x00b118 /* established */
 
 /*
- * Name and offset are the vendor header's definition (struct member ce_ure_sram_err_addr1). The header gives no access direction or reset value; access rw is a placeholder.
+ * Name and offset are the vendor header's definition (struct member
+ * ce_ure_sram_err_addr1). The header gives no access direction or reset value;
+ * access rw is a placeholder.
  */
 /* ure_sram_err_addr1: rw64, reset unknown */
 #define TIOCE_URE_SRAM_ERR_ADDR1                     0x00b120 /* established */
 
 /*
- * Name and offset are the vendor header's definition (struct member ce_ure_sram_err_addr2). The header gives no access direction or reset value; access rw is a placeholder.
+ * Name and offset are the vendor header's definition (struct member
+ * ce_ure_sram_err_addr2). The header gives no access direction or reset value;
+ * access rw is a placeholder.
  */
 /* ure_sram_err_addr2: rw64, reset unknown */
 #define TIOCE_URE_SRAM_ERR_ADDR2                     0x00b128 /* established */
 
 /*
- * Name and offset are the vendor header's definition (struct member ce_ure_sram_rd_addr0). The header gives no access direction or reset value; access rw is a placeholder.
+ * Name and offset are the vendor header's definition (struct member
+ * ce_ure_sram_rd_addr0). The header gives no access direction or reset value;
+ * access rw is a placeholder.
  */
 /* ure_sram_rd_addr0: rw64, reset unknown */
 #define TIOCE_URE_SRAM_RD_ADDR0                      0x00b130 /* established */
 
 /*
- * Name and offset are the vendor header's definition (struct member ce_ure_sram_rd_addr1). The header gives no access direction or reset value; access rw is a placeholder.
+ * Name and offset are the vendor header's definition (struct member
+ * ce_ure_sram_rd_addr1). The header gives no access direction or reset value;
+ * access rw is a placeholder.
  */
 /* ure_sram_rd_addr1: rw64, reset unknown */
 #define TIOCE_URE_SRAM_RD_ADDR1                      0x00b138 /* established */
 
 /*
- * Name and offset are the vendor header's definition (struct member ce_ure_sram_rd_addr2). The header gives no access direction or reset value; access rw is a placeholder.
+ * Name and offset are the vendor header's definition (struct member
+ * ce_ure_sram_rd_addr2). The header gives no access direction or reset value;
+ * access rw is a placeholder.
  */
 /* ure_sram_rd_addr2: rw64, reset unknown */
 #define TIOCE_URE_SRAM_RD_ADDR2                      0x00b140 /* established */
 
 /*
- * Name and offset are the vendor header's definition (struct member ce_ure_sram_wr_addr0). The header gives no access direction or reset value; access rw is a placeholder.
+ * Name and offset are the vendor header's definition (struct member
+ * ce_ure_sram_wr_addr0). The header gives no access direction or reset value;
+ * access rw is a placeholder.
  */
 /* ure_sram_wr_addr0: rw64, reset unknown */
 #define TIOCE_URE_SRAM_WR_ADDR0                      0x00b148 /* established */
 
 /*
- * Name and offset are the vendor header's definition (struct member ce_ure_sram_wr_addr1). The header gives no access direction or reset value; access rw is a placeholder.
+ * Name and offset are the vendor header's definition (struct member
+ * ce_ure_sram_wr_addr1). The header gives no access direction or reset value;
+ * access rw is a placeholder.
  */
 /* ure_sram_wr_addr1: rw64, reset unknown */
 #define TIOCE_URE_SRAM_WR_ADDR1                      0x00b150 /* established */
 
 /*
- * Name and offset are the vendor header's definition (struct member ce_ure_sram_wr_addr2). The header gives no access direction or reset value; access rw is a placeholder.
+ * Name and offset are the vendor header's definition (struct member
+ * ce_ure_sram_wr_addr2). The header gives no access direction or reset value;
+ * access rw is a placeholder.
  */
 /* ure_sram_wr_addr2: rw64, reset unknown */
 #define TIOCE_URE_SRAM_WR_ADDR2                      0x00b158 /* established */
 
 /*
- * Name and offset are the vendor header's definition (struct member ce_ure_buf_flush10). The header gives no access direction or reset value; access rw is a placeholder.
+ * Name and offset are the vendor header's definition (struct member
+ * ce_ure_buf_flush10). The header gives no access direction or reset value;
+ * access rw is a placeholder.
  */
 /* ure_buf_flush10: rw64, reset unknown */
 #define TIOCE_URE_BUF_FLUSH10                        0x00b160 /* established */
 
 /*
- * Name and offset are the vendor header's definition (struct member ce_ure_buf_flush11). The header gives no access direction or reset value; access rw is a placeholder.
+ * Name and offset are the vendor header's definition (struct member
+ * ce_ure_buf_flush11). The header gives no access direction or reset value;
+ * access rw is a placeholder.
  */
 /* ure_buf_flush11: rw64, reset unknown */
 #define TIOCE_URE_BUF_FLUSH11                        0x00b168 /* established */
 
 /*
- * Name and offset are the vendor header's definition (struct member ce_ure_buf_flush12). The header gives no access direction or reset value; access rw is a placeholder.
+ * Name and offset are the vendor header's definition (struct member
+ * ce_ure_buf_flush12). The header gives no access direction or reset value;
+ * access rw is a placeholder.
  */
 /* ure_buf_flush12: rw64, reset unknown */
 #define TIOCE_URE_BUF_FLUSH12                        0x00b170 /* established */
 
 /*
- * Name and offset are the vendor header's definition (struct member ce_ure_buf_flush13). The header gives no access direction or reset value; access rw is a placeholder.
+ * Name and offset are the vendor header's definition (struct member
+ * ce_ure_buf_flush13). The header gives no access direction or reset value;
+ * access rw is a placeholder.
  */
 /* ure_buf_flush13: rw64, reset unknown */
 #define TIOCE_URE_BUF_FLUSH13                        0x00b178 /* established */
 
 /*
- * Name and offset are the vendor header's definition (struct member ce_ure_buf_flush20). The header gives no access direction or reset value; access rw is a placeholder.
+ * Name and offset are the vendor header's definition (struct member
+ * ce_ure_buf_flush20). The header gives no access direction or reset value;
+ * access rw is a placeholder.
  */
 /* ure_buf_flush20: rw64, reset unknown */
 #define TIOCE_URE_BUF_FLUSH20                        0x00b180 /* established */
 
 /*
- * Name and offset are the vendor header's definition (struct member ce_ure_buf_flush21). The header gives no access direction or reset value; access rw is a placeholder.
+ * Name and offset are the vendor header's definition (struct member
+ * ce_ure_buf_flush21). The header gives no access direction or reset value;
+ * access rw is a placeholder.
  */
 /* ure_buf_flush21: rw64, reset unknown */
 #define TIOCE_URE_BUF_FLUSH21                        0x00b188 /* established */
 
 /*
- * Name and offset are the vendor header's definition (struct member ce_ure_buf_flush22). The header gives no access direction or reset value; access rw is a placeholder.
+ * Name and offset are the vendor header's definition (struct member
+ * ce_ure_buf_flush22). The header gives no access direction or reset value;
+ * access rw is a placeholder.
  */
 /* ure_buf_flush22: rw64, reset unknown */
 #define TIOCE_URE_BUF_FLUSH22                        0x00b190 /* established */
 
 /*
- * Name and offset are the vendor header's definition (struct member ce_ure_buf_flush23). The header gives no access direction or reset value; access rw is a placeholder.
+ * Name and offset are the vendor header's definition (struct member
+ * ce_ure_buf_flush23). The header gives no access direction or reset value;
+ * access rw is a placeholder.
  */
 /* ure_buf_flush23: rw64, reset unknown */
 #define TIOCE_URE_BUF_FLUSH23                        0x00b198 /* established */
 
 /*
- * Name and offset are the vendor header's definition (struct member ce_ure_pcie_control1). The header gives no access direction or reset value; access rw is a placeholder. Field layout from the header masks. Names ELAL, PN and SI match the PCI Express capability fields of the same abbreviations (exit latency, port number, slot implemented); that reading is inferred from the names and unconfirmed.
+ * Name and offset are the vendor header's definition (struct member
+ * ce_ure_pcie_control1). The header gives no access direction or reset value;
+ * access rw is a placeholder. Field layout from the header masks. Names ELAL,
+ * PN and SI match the PCI Express capability fields of the same abbreviations
+ * (exit latency, port number, slot implemented); that reading is inferred from
+ * the names and unconfirmed.
  */
 /* ure_pcie_control1: rw64, reset unknown */
 #define TIOCE_URE_PCIE_CONTROL1                      0x00b1a0 /* established */
 #define TIOCE_URE_PCIE_CONTROL1_PN2_SHIFT            24 /* established */
 #define TIOCE_URE_PCIE_CONTROL1_PN2_MASK             0xffull
-#define TIOCE_URE_PCIE_CONTROL1_PN2_INPLACE          (TIOCE_URE_PCIE_CONTROL1_PN2_MASK << TIOCE_URE_PCIE_CONTROL1_PN2_SHIFT)
+#define TIOCE_URE_PCIE_CONTROL1_PN2_INPLACE (TIOCE_URE_PCIE_CONTROL1_PN2_MASK << TIOCE_URE_PCIE_CONTROL1_PN2_SHIFT)
 #define TIOCE_URE_PCIE_CONTROL1_PN1_SHIFT            16 /* established */
 #define TIOCE_URE_PCIE_CONTROL1_PN1_MASK             0xffull
-#define TIOCE_URE_PCIE_CONTROL1_PN1_INPLACE          (TIOCE_URE_PCIE_CONTROL1_PN1_MASK << TIOCE_URE_PCIE_CONTROL1_PN1_SHIFT)
+#define TIOCE_URE_PCIE_CONTROL1_PN1_INPLACE (TIOCE_URE_PCIE_CONTROL1_PN1_MASK << TIOCE_URE_PCIE_CONTROL1_PN1_SHIFT)
 #define TIOCE_URE_PCIE_CONTROL1_SCC_SHIFT            12 /* established */
 #define TIOCE_URE_PCIE_CONTROL1_SCC_MASK             0x1ull
-#define TIOCE_URE_PCIE_CONTROL1_SCC_INPLACE          (TIOCE_URE_PCIE_CONTROL1_SCC_MASK << TIOCE_URE_PCIE_CONTROL1_SCC_SHIFT)
+#define TIOCE_URE_PCIE_CONTROL1_SCC_INPLACE (TIOCE_URE_PCIE_CONTROL1_SCC_MASK << TIOCE_URE_PCIE_CONTROL1_SCC_SHIFT)
 #define TIOCE_URE_PCIE_CONTROL1_ELAL1_SHIFT          8 /* established */
 #define TIOCE_URE_PCIE_CONTROL1_ELAL1_MASK           0x7ull
-#define TIOCE_URE_PCIE_CONTROL1_ELAL1_INPLACE        (TIOCE_URE_PCIE_CONTROL1_ELAL1_MASK << TIOCE_URE_PCIE_CONTROL1_ELAL1_SHIFT)
+#define TIOCE_URE_PCIE_CONTROL1_ELAL1_INPLACE (TIOCE_URE_PCIE_CONTROL1_ELAL1_MASK << TIOCE_URE_PCIE_CONTROL1_ELAL1_SHIFT)
 #define TIOCE_URE_PCIE_CONTROL1_ELAL_SHIFT           4 /* established */
 #define TIOCE_URE_PCIE_CONTROL1_ELAL_MASK            0x7ull
-#define TIOCE_URE_PCIE_CONTROL1_ELAL_INPLACE         (TIOCE_URE_PCIE_CONTROL1_ELAL_MASK << TIOCE_URE_PCIE_CONTROL1_ELAL_SHIFT)
+#define TIOCE_URE_PCIE_CONTROL1_ELAL_INPLACE (TIOCE_URE_PCIE_CONTROL1_ELAL_MASK << TIOCE_URE_PCIE_CONTROL1_ELAL_SHIFT)
 #define TIOCE_URE_PCIE_CONTROL1_SI_SHIFT             0 /* established */
 #define TIOCE_URE_PCIE_CONTROL1_SI_MASK              0x1ull
-#define TIOCE_URE_PCIE_CONTROL1_SI_INPLACE           (TIOCE_URE_PCIE_CONTROL1_SI_MASK << TIOCE_URE_PCIE_CONTROL1_SI_SHIFT)
+#define TIOCE_URE_PCIE_CONTROL1_SI_INPLACE (TIOCE_URE_PCIE_CONTROL1_SI_MASK << TIOCE_URE_PCIE_CONTROL1_SI_SHIFT)
 
 /*
- * Name and offset are the vendor header's definition (struct member ce_ure_pcie_control2). The header gives no access direction or reset value; access rw is a placeholder. Field layout from the header masks. The names abp, pcp, msp, aip, pip, hps, hpc, splv, spls and psn match the slot capabilities fields of the public PCI Express specification (attention button, power controller, MRL sensor, attention and power indicators, hot-plug surprise and capable, slot power limit value and scale, physical slot number); that reading is inferred from the names. The provider never writes these.
+ * Name and offset are the vendor header's definition (struct member
+ * ce_ure_pcie_control2). The header gives no access direction or reset value;
+ * access rw is a placeholder. Field layout from the header masks. The names
+ * abp, pcp, msp, aip, pip, hps, hpc, splv, spls and psn match the slot
+ * capabilities fields of the public PCI Express specification (attention
+ * button, power controller, MRL sensor, attention and power indicators,
+ * hot-plug surprise and capable, slot power limit value and scale, physical
+ * slot number); that reading is inferred from the names. The provider never
+ * writes these.
  */
 /* ure_pcie_control2: rw64, reset unknown */
 #define TIOCE_URE_PCIE_CONTROL2                      0x00b1a8 /* established */
 #define TIOCE_URE_PCIE_CONTROL2_PSN2_SHIFT           32 /* established */
 #define TIOCE_URE_PCIE_CONTROL2_PSN2_MASK            0x1fffull
-#define TIOCE_URE_PCIE_CONTROL2_PSN2_INPLACE         (TIOCE_URE_PCIE_CONTROL2_PSN2_MASK << TIOCE_URE_PCIE_CONTROL2_PSN2_SHIFT)
+#define TIOCE_URE_PCIE_CONTROL2_PSN2_INPLACE (TIOCE_URE_PCIE_CONTROL2_PSN2_MASK << TIOCE_URE_PCIE_CONTROL2_PSN2_SHIFT)
 #define TIOCE_URE_PCIE_CONTROL2_PSN1_SHIFT           19 /* established */
 #define TIOCE_URE_PCIE_CONTROL2_PSN1_MASK            0x1fffull
-#define TIOCE_URE_PCIE_CONTROL2_PSN1_INPLACE         (TIOCE_URE_PCIE_CONTROL2_PSN1_MASK << TIOCE_URE_PCIE_CONTROL2_PSN1_SHIFT)
+#define TIOCE_URE_PCIE_CONTROL2_PSN1_INPLACE (TIOCE_URE_PCIE_CONTROL2_PSN1_MASK << TIOCE_URE_PCIE_CONTROL2_PSN1_SHIFT)
 #define TIOCE_URE_PCIE_CONTROL2_SPLS_SHIFT           15 /* established */
 #define TIOCE_URE_PCIE_CONTROL2_SPLS_MASK            0x3ull
-#define TIOCE_URE_PCIE_CONTROL2_SPLS_INPLACE         (TIOCE_URE_PCIE_CONTROL2_SPLS_MASK << TIOCE_URE_PCIE_CONTROL2_SPLS_SHIFT)
+#define TIOCE_URE_PCIE_CONTROL2_SPLS_INPLACE (TIOCE_URE_PCIE_CONTROL2_SPLS_MASK << TIOCE_URE_PCIE_CONTROL2_SPLS_SHIFT)
 #define TIOCE_URE_PCIE_CONTROL2_SPLV_SHIFT           7 /* established */
 #define TIOCE_URE_PCIE_CONTROL2_SPLV_MASK            0xffull
-#define TIOCE_URE_PCIE_CONTROL2_SPLV_INPLACE         (TIOCE_URE_PCIE_CONTROL2_SPLV_MASK << TIOCE_URE_PCIE_CONTROL2_SPLV_SHIFT)
+#define TIOCE_URE_PCIE_CONTROL2_SPLV_INPLACE (TIOCE_URE_PCIE_CONTROL2_SPLV_MASK << TIOCE_URE_PCIE_CONTROL2_SPLV_SHIFT)
 #define TIOCE_URE_PCIE_CONTROL2_HPC_SHIFT            6 /* established */
 #define TIOCE_URE_PCIE_CONTROL2_HPC_MASK             0x1ull
-#define TIOCE_URE_PCIE_CONTROL2_HPC_INPLACE          (TIOCE_URE_PCIE_CONTROL2_HPC_MASK << TIOCE_URE_PCIE_CONTROL2_HPC_SHIFT)
+#define TIOCE_URE_PCIE_CONTROL2_HPC_INPLACE (TIOCE_URE_PCIE_CONTROL2_HPC_MASK << TIOCE_URE_PCIE_CONTROL2_HPC_SHIFT)
 #define TIOCE_URE_PCIE_CONTROL2_HPS_SHIFT            5 /* established */
 #define TIOCE_URE_PCIE_CONTROL2_HPS_MASK             0x1ull
-#define TIOCE_URE_PCIE_CONTROL2_HPS_INPLACE          (TIOCE_URE_PCIE_CONTROL2_HPS_MASK << TIOCE_URE_PCIE_CONTROL2_HPS_SHIFT)
+#define TIOCE_URE_PCIE_CONTROL2_HPS_INPLACE (TIOCE_URE_PCIE_CONTROL2_HPS_MASK << TIOCE_URE_PCIE_CONTROL2_HPS_SHIFT)
 #define TIOCE_URE_PCIE_CONTROL2_PIP_SHIFT            4 /* established */
 #define TIOCE_URE_PCIE_CONTROL2_PIP_MASK             0x1ull
-#define TIOCE_URE_PCIE_CONTROL2_PIP_INPLACE          (TIOCE_URE_PCIE_CONTROL2_PIP_MASK << TIOCE_URE_PCIE_CONTROL2_PIP_SHIFT)
+#define TIOCE_URE_PCIE_CONTROL2_PIP_INPLACE (TIOCE_URE_PCIE_CONTROL2_PIP_MASK << TIOCE_URE_PCIE_CONTROL2_PIP_SHIFT)
 #define TIOCE_URE_PCIE_CONTROL2_AIP_SHIFT            3 /* established */
 #define TIOCE_URE_PCIE_CONTROL2_AIP_MASK             0x1ull
-#define TIOCE_URE_PCIE_CONTROL2_AIP_INPLACE          (TIOCE_URE_PCIE_CONTROL2_AIP_MASK << TIOCE_URE_PCIE_CONTROL2_AIP_SHIFT)
+#define TIOCE_URE_PCIE_CONTROL2_AIP_INPLACE (TIOCE_URE_PCIE_CONTROL2_AIP_MASK << TIOCE_URE_PCIE_CONTROL2_AIP_SHIFT)
 #define TIOCE_URE_PCIE_CONTROL2_MSP_SHIFT            2 /* established */
 #define TIOCE_URE_PCIE_CONTROL2_MSP_MASK             0x1ull
-#define TIOCE_URE_PCIE_CONTROL2_MSP_INPLACE          (TIOCE_URE_PCIE_CONTROL2_MSP_MASK << TIOCE_URE_PCIE_CONTROL2_MSP_SHIFT)
+#define TIOCE_URE_PCIE_CONTROL2_MSP_INPLACE (TIOCE_URE_PCIE_CONTROL2_MSP_MASK << TIOCE_URE_PCIE_CONTROL2_MSP_SHIFT)
 #define TIOCE_URE_PCIE_CONTROL2_PCP_SHIFT            1 /* established */
 #define TIOCE_URE_PCIE_CONTROL2_PCP_MASK             0x1ull
-#define TIOCE_URE_PCIE_CONTROL2_PCP_INPLACE          (TIOCE_URE_PCIE_CONTROL2_PCP_MASK << TIOCE_URE_PCIE_CONTROL2_PCP_SHIFT)
+#define TIOCE_URE_PCIE_CONTROL2_PCP_INPLACE (TIOCE_URE_PCIE_CONTROL2_PCP_MASK << TIOCE_URE_PCIE_CONTROL2_PCP_SHIFT)
 #define TIOCE_URE_PCIE_CONTROL2_ABP_SHIFT            0 /* established */
 #define TIOCE_URE_PCIE_CONTROL2_ABP_MASK             0x1ull
-#define TIOCE_URE_PCIE_CONTROL2_ABP_INPLACE          (TIOCE_URE_PCIE_CONTROL2_ABP_MASK << TIOCE_URE_PCIE_CONTROL2_ABP_SHIFT)
+#define TIOCE_URE_PCIE_CONTROL2_ABP_INPLACE (TIOCE_URE_PCIE_CONTROL2_ABP_MASK << TIOCE_URE_PCIE_CONTROL2_ABP_SHIFT)
 
 /*
- * Name and offset are the vendor header's definition (struct member ce_ure_maint_ups_dat1_data63_0). The header gives no access direction or reset value; access rw is a placeholder.
+ * Name and offset are the vendor header's definition (struct member
+ * ce_ure_maint_ups_dat1_data63_0). The header gives no access direction or
+ * reset value; access rw is a placeholder.
  */
 /* ure_maint_ups_dat1_data63_0: rw64, reset unknown */
 #define TIOCE_URE_MAINT_UPS_DAT1_DATA63_0            0x00c000 /* established */
@@ -2481,7 +3034,9 @@
 #define TIOCE_URE_MAINT_UPS_DAT1_DATA63_0_STRIDE     8
 
 /*
- * Name and offset are the vendor header's definition (struct member ce_ure_maint_ups_dat1_data127_64). The header gives no access direction or reset value; access rw is a placeholder.
+ * Name and offset are the vendor header's definition (struct member
+ * ce_ure_maint_ups_dat1_data127_64). The header gives no access direction or
+ * reset value; access rw is a placeholder.
  */
 /* ure_maint_ups_dat1_data127_64: rw64, reset unknown */
 #define TIOCE_URE_MAINT_UPS_DAT1_DATA127_64          0x00d000 /* established */
@@ -2489,7 +3044,9 @@
 #define TIOCE_URE_MAINT_UPS_DAT1_DATA127_64_STRIDE   8
 
 /*
- * Name and offset are the vendor header's definition (struct member ce_ure_maint_ups_dat1_parity). The header gives no access direction or reset value; access rw is a placeholder.
+ * Name and offset are the vendor header's definition (struct member
+ * ce_ure_maint_ups_dat1_parity). The header gives no access direction or reset
+ * value; access rw is a placeholder.
  */
 /* ure_maint_ups_dat1_parity: rw64, reset unknown */
 #define TIOCE_URE_MAINT_UPS_DAT1_PARITY              0x00e000 /* established */
@@ -2497,7 +3054,9 @@
 #define TIOCE_URE_MAINT_UPS_DAT1_PARITY_STRIDE       8
 
 /*
- * Name and offset are the vendor header's definition (struct member ce_ure_maint_ups_hdr1_data63_0). The header gives no access direction or reset value; access rw is a placeholder.
+ * Name and offset are the vendor header's definition (struct member
+ * ce_ure_maint_ups_hdr1_data63_0). The header gives no access direction or
+ * reset value; access rw is a placeholder.
  */
 /* ure_maint_ups_hdr1_data63_0: rw64, reset unknown */
 #define TIOCE_URE_MAINT_UPS_HDR1_DATA63_0            0x00f000 /* established */
@@ -2505,7 +3064,9 @@
 #define TIOCE_URE_MAINT_UPS_HDR1_DATA63_0_STRIDE     8
 
 /*
- * Name and offset are the vendor header's definition (struct member ce_ure_maint_ups_hdr1_data127_64). The header gives no access direction or reset value; access rw is a placeholder.
+ * Name and offset are the vendor header's definition (struct member
+ * ce_ure_maint_ups_hdr1_data127_64). The header gives no access direction or
+ * reset value; access rw is a placeholder.
  */
 /* ure_maint_ups_hdr1_data127_64: rw64, reset unknown */
 #define TIOCE_URE_MAINT_UPS_HDR1_DATA127_64          0x010000 /* established */
@@ -2513,7 +3074,9 @@
 #define TIOCE_URE_MAINT_UPS_HDR1_DATA127_64_STRIDE   8
 
 /*
- * Name and offset are the vendor header's definition (struct member ce_ure_maint_ups_hdr1_parity). The header gives no access direction or reset value; access rw is a placeholder.
+ * Name and offset are the vendor header's definition (struct member
+ * ce_ure_maint_ups_hdr1_parity). The header gives no access direction or reset
+ * value; access rw is a placeholder.
  */
 /* ure_maint_ups_hdr1_parity: rw64, reset unknown */
 #define TIOCE_URE_MAINT_UPS_HDR1_PARITY              0x011000 /* established */
@@ -2521,7 +3084,9 @@
 #define TIOCE_URE_MAINT_UPS_HDR1_PARITY_STRIDE       8
 
 /*
- * Name and offset are the vendor header's definition (struct member ce_ure_maint_ups_dat2_data63_0). The header gives no access direction or reset value; access rw is a placeholder.
+ * Name and offset are the vendor header's definition (struct member
+ * ce_ure_maint_ups_dat2_data63_0). The header gives no access direction or
+ * reset value; access rw is a placeholder.
  */
 /* ure_maint_ups_dat2_data63_0: rw64, reset unknown */
 #define TIOCE_URE_MAINT_UPS_DAT2_DATA63_0            0x012000 /* established */
@@ -2529,7 +3094,9 @@
 #define TIOCE_URE_MAINT_UPS_DAT2_DATA63_0_STRIDE     8
 
 /*
- * Name and offset are the vendor header's definition (struct member ce_ure_maint_ups_dat2_data127_64). The header gives no access direction or reset value; access rw is a placeholder.
+ * Name and offset are the vendor header's definition (struct member
+ * ce_ure_maint_ups_dat2_data127_64). The header gives no access direction or
+ * reset value; access rw is a placeholder.
  */
 /* ure_maint_ups_dat2_data127_64: rw64, reset unknown */
 #define TIOCE_URE_MAINT_UPS_DAT2_DATA127_64          0x013000 /* established */
@@ -2537,7 +3104,9 @@
 #define TIOCE_URE_MAINT_UPS_DAT2_DATA127_64_STRIDE   8
 
 /*
- * Name and offset are the vendor header's definition (struct member ce_ure_maint_ups_dat2_parity). The header gives no access direction or reset value; access rw is a placeholder.
+ * Name and offset are the vendor header's definition (struct member
+ * ce_ure_maint_ups_dat2_parity). The header gives no access direction or reset
+ * value; access rw is a placeholder.
  */
 /* ure_maint_ups_dat2_parity: rw64, reset unknown */
 #define TIOCE_URE_MAINT_UPS_DAT2_PARITY              0x014000 /* established */
@@ -2545,7 +3114,9 @@
 #define TIOCE_URE_MAINT_UPS_DAT2_PARITY_STRIDE       8
 
 /*
- * Name and offset are the vendor header's definition (struct member ce_ure_maint_ups_hdr2_data63_0). The header gives no access direction or reset value; access rw is a placeholder.
+ * Name and offset are the vendor header's definition (struct member
+ * ce_ure_maint_ups_hdr2_data63_0). The header gives no access direction or
+ * reset value; access rw is a placeholder.
  */
 /* ure_maint_ups_hdr2_data63_0: rw64, reset unknown */
 #define TIOCE_URE_MAINT_UPS_HDR2_DATA63_0            0x015000 /* established */
@@ -2553,7 +3124,9 @@
 #define TIOCE_URE_MAINT_UPS_HDR2_DATA63_0_STRIDE     8
 
 /*
- * Name and offset are the vendor header's definition (struct member ce_ure_maint_ups_hdr2_data127_64). The header gives no access direction or reset value; access rw is a placeholder.
+ * Name and offset are the vendor header's definition (struct member
+ * ce_ure_maint_ups_hdr2_data127_64). The header gives no access direction or
+ * reset value; access rw is a placeholder.
  */
 /* ure_maint_ups_hdr2_data127_64: rw64, reset unknown */
 #define TIOCE_URE_MAINT_UPS_HDR2_DATA127_64          0x016000 /* established */
@@ -2561,7 +3134,9 @@
 #define TIOCE_URE_MAINT_UPS_HDR2_DATA127_64_STRIDE   8
 
 /*
- * Name and offset are the vendor header's definition (struct member ce_ure_maint_ups_hdr2_parity). The header gives no access direction or reset value; access rw is a placeholder.
+ * Name and offset are the vendor header's definition (struct member
+ * ce_ure_maint_ups_hdr2_parity). The header gives no access direction or reset
+ * value; access rw is a placeholder.
  */
 /* ure_maint_ups_hdr2_parity: rw64, reset unknown */
 #define TIOCE_URE_MAINT_UPS_HDR2_PARITY              0x017000 /* established */
@@ -2569,7 +3144,9 @@
 #define TIOCE_URE_MAINT_UPS_HDR2_PARITY_STRIDE       8
 
 /*
- * Name and offset are the vendor header's definition (struct member ce_ure_maint_dns_dat_data63_0). The header gives no access direction or reset value; access rw is a placeholder.
+ * Name and offset are the vendor header's definition (struct member
+ * ce_ure_maint_dns_dat_data63_0). The header gives no access direction or reset
+ * value; access rw is a placeholder.
  */
 /* ure_maint_dns_dat_data63_0: rw64, reset unknown */
 #define TIOCE_URE_MAINT_DNS_DAT_DATA63_0             0x018000 /* established */
@@ -2577,7 +3154,9 @@
 #define TIOCE_URE_MAINT_DNS_DAT_DATA63_0_STRIDE      8
 
 /*
- * Name and offset are the vendor header's definition (struct member ce_ure_maint_dns_dat_data127_64). The header gives no access direction or reset value; access rw is a placeholder.
+ * Name and offset are the vendor header's definition (struct member
+ * ce_ure_maint_dns_dat_data127_64). The header gives no access direction or
+ * reset value; access rw is a placeholder.
  */
 /* ure_maint_dns_dat_data127_64: rw64, reset unknown */
 #define TIOCE_URE_MAINT_DNS_DAT_DATA127_64           0x019000 /* established */
@@ -2585,7 +3164,9 @@
 #define TIOCE_URE_MAINT_DNS_DAT_DATA127_64_STRIDE    8
 
 /*
- * Name and offset are the vendor header's definition (struct member ce_ure_maint_dns_dat_parity). The header gives no access direction or reset value; access rw is a placeholder.
+ * Name and offset are the vendor header's definition (struct member
+ * ce_ure_maint_dns_dat_parity). The header gives no access direction or reset
+ * value; access rw is a placeholder.
  */
 /* ure_maint_dns_dat_parity: rw64, reset unknown */
 #define TIOCE_URE_MAINT_DNS_DAT_PARITY               0x01a000 /* established */
@@ -2593,7 +3174,9 @@
 #define TIOCE_URE_MAINT_DNS_DAT_PARITY_STRIDE        8
 
 /*
- * Name and offset are the vendor header's definition (struct member ce_ure_maint_dns_hdr_data31_0). The header gives no access direction or reset value; access rw is a placeholder.
+ * Name and offset are the vendor header's definition (struct member
+ * ce_ure_maint_dns_hdr_data31_0). The header gives no access direction or reset
+ * value; access rw is a placeholder.
  */
 /* ure_maint_dns_hdr_data31_0: rw64, reset unknown */
 #define TIOCE_URE_MAINT_DNS_HDR_DATA31_0             0x01b000 /* established */
@@ -2601,7 +3184,9 @@
 #define TIOCE_URE_MAINT_DNS_HDR_DATA31_0_STRIDE      8
 
 /*
- * Name and offset are the vendor header's definition (struct member ce_ure_maint_dns_hdr_data95_32). The header gives no access direction or reset value; access rw is a placeholder.
+ * Name and offset are the vendor header's definition (struct member
+ * ce_ure_maint_dns_hdr_data95_32). The header gives no access direction or
+ * reset value; access rw is a placeholder.
  */
 /* ure_maint_dns_hdr_data95_32: rw64, reset unknown */
 #define TIOCE_URE_MAINT_DNS_HDR_DATA95_32            0x01b200 /* established */
@@ -2609,7 +3194,9 @@
 #define TIOCE_URE_MAINT_DNS_HDR_DATA95_32_STRIDE     8
 
 /*
- * Name and offset are the vendor header's definition (struct member ce_ure_maint_dns_hdr_parity). The header gives no access direction or reset value; access rw is a placeholder.
+ * Name and offset are the vendor header's definition (struct member
+ * ce_ure_maint_dns_hdr_parity). The header gives no access direction or reset
+ * value; access rw is a placeholder.
  */
 /* ure_maint_dns_hdr_parity: rw64, reset unknown */
 #define TIOCE_URE_MAINT_DNS_HDR_PARITY               0x01b400 /* established */
@@ -2617,7 +3204,9 @@
 #define TIOCE_URE_MAINT_DNS_HDR_PARITY_STRIDE        8
 
 /*
- * Name and offset are the vendor header's definition (struct member ce_ure_maint_rci_data41_0). The header gives no access direction or reset value; access rw is a placeholder.
+ * Name and offset are the vendor header's definition (struct member
+ * ce_ure_maint_rci_data41_0). The header gives no access direction or reset
+ * value; access rw is a placeholder.
  */
 /* ure_maint_rci_data41_0: rw64, reset unknown */
 #define TIOCE_URE_MAINT_RCI_DATA41_0                 0x01b600 /* established */
@@ -2625,7 +3214,9 @@
 #define TIOCE_URE_MAINT_RCI_DATA41_0_STRIDE          8
 
 /*
- * Name and offset are the vendor header's definition (struct member ce_ure_maint_rci_data69_42). The header gives no access direction or reset value; access rw is a placeholder.
+ * Name and offset are the vendor header's definition (struct member
+ * ce_ure_maint_rci_data69_42). The header gives no access direction or reset
+ * value; access rw is a placeholder.
  */
 /* ure_maint_rci_data69_42: rw64, reset unknown */
 #define TIOCE_URE_MAINT_RCI_DATA69_42                0x01b800 /* established */
@@ -2633,7 +3224,9 @@
 #define TIOCE_URE_MAINT_RCI_DATA69_42_STRIDE         8
 
 /*
- * Name and offset are the vendor header's definition (struct member ce_ure_maint_rspq). The header gives no access direction or reset value; access rw is a placeholder.
+ * Name and offset are the vendor header's definition (struct member
+ * ce_ure_maint_rspq). The header gives no access direction or reset value;
+ * access rw is a placeholder.
  */
 /* ure_maint_rspq: rw64, reset unknown */
 #define TIOCE_URE_MAINT_RSPQ                         0x01ba00 /* established */
@@ -2641,7 +3234,9 @@
 #define TIOCE_URE_MAINT_RSPQ_STRIDE                  8
 
 /*
- * Name and offset are the vendor header's definition (struct member ce_adm_maint_bap_buf_data63_0). The header gives no access direction or reset value; access rw is a placeholder.
+ * Name and offset are the vendor header's definition (struct member
+ * ce_adm_maint_bap_buf_data63_0). The header gives no access direction or reset
+ * value; access rw is a placeholder.
  */
 /* adm_maint_bap_buf_data63_0: rw64, reset unknown */
 #define TIOCE_ADM_MAINT_BAP_BUF_DATA63_0             0x024000 /* established */
@@ -2649,7 +3244,9 @@
 #define TIOCE_ADM_MAINT_BAP_BUF_DATA63_0_STRIDE      8
 
 /*
- * Name and offset are the vendor header's definition (struct member ce_adm_maint_bap_buf_data127_64). The header gives no access direction or reset value; access rw is a placeholder.
+ * Name and offset are the vendor header's definition (struct member
+ * ce_adm_maint_bap_buf_data127_64). The header gives no access direction or
+ * reset value; access rw is a placeholder.
  */
 /* adm_maint_bap_buf_data127_64: rw64, reset unknown */
 #define TIOCE_ADM_MAINT_BAP_BUF_DATA127_64           0x024810 /* established */
@@ -2657,7 +3254,9 @@
 #define TIOCE_ADM_MAINT_BAP_BUF_DATA127_64_STRIDE    8
 
 /*
- * Name and offset are the vendor header's definition (struct member ce_adm_maint_bap_buf_parity). The header gives no access direction or reset value; access rw is a placeholder.
+ * Name and offset are the vendor header's definition (struct member
+ * ce_adm_maint_bap_buf_parity). The header gives no access direction or reset
+ * value; access rw is a placeholder.
  */
 /* adm_maint_bap_buf_parity: rw64, reset unknown */
 #define TIOCE_ADM_MAINT_BAP_BUF_PARITY               0x025020 /* established */
@@ -2665,7 +3264,12 @@
 #define TIOCE_ADM_MAINT_BAP_BUF_PARITY_STRIDE        8
 
 /*
- * Upstream request engine 40-bit address translation entries, 4096 entries. The provider uses 64 MiB pages: bus address 0x4000000000 plus index times 64 MiB. Entry bit 63 valid, bit 62 message-signalled interrupt (not capable here), the rest the page-aligned coretalk address. Name and offset are the vendor header's definition (struct member ce_ure_ate40). The header gives no access direction or reset value; access rw is a placeholder.
+ * Upstream request engine 40-bit address translation entries, 4096 entries. The
+ * provider uses 64 MiB pages: bus address 0x4000000000 plus index times 64 MiB.
+ * Entry bit 63 valid, bit 62 message-signalled interrupt (not capable here),
+ * the rest the page-aligned coretalk address. Name and offset are the vendor
+ * header's definition (struct member ce_ure_ate40). The header gives no access
+ * direction or reset value; access rw is a placeholder.
  */
 /* ure_ate40: rw64, reset unknown */
 #define TIOCE_URE_ATE40                              0x030000 /* established */
@@ -2673,7 +3277,13 @@
 #define TIOCE_URE_ATE40_STRIDE                       8
 
 /*
- * Upstream request engine 32/40-bit address translation entries, 2048 entries. Entries 0 to 31 serve port 1 and 32 to 63 port 2 for 16 GiB super-page mappings; entries 64 and up map the 32-bit window in 256 KiB pages from bus address 0. Same entry layout as ce_ure_ate40, and message-signalled interrupt capable. Name and offset are the vendor header's definition (struct member ce_ure_ate3240). The header gives no access direction or reset value; access rw is a placeholder.
+ * Upstream request engine 32/40-bit address translation entries, 2048 entries.
+ * Entries 0 to 31 serve port 1 and 32 to 63 port 2 for 16 GiB super-page
+ * mappings; entries 64 and up map the 32-bit window in 256 KiB pages from bus
+ * address 0. Same entry layout as ce_ure_ate40, and message-signalled interrupt
+ * capable. Name and offset are the vendor header's definition (struct member
+ * ce_ure_ate3240). The header gives no access direction or reset value; access
+ * rw is a placeholder.
  */
 /* ure_ate3240: rw64, reset unknown */
 #define TIOCE_URE_ATE3240                            0x038000 /* established */
@@ -2681,151 +3291,201 @@
 #define TIOCE_URE_ATE3240_STRIDE                     8
 
 /*
- * Name and offset are the vendor header's definition (struct member ce_dre_dyn_credit_status1). The header gives no access direction or reset value; access rw is a placeholder.
+ * Name and offset are the vendor header's definition (struct member
+ * ce_dre_dyn_credit_status1). The header gives no access direction or reset
+ * value; access rw is a placeholder.
  */
 /* dre_dyn_credit_status1: rw64, reset unknown */
 #define TIOCE_DRE_DYN_CREDIT_STATUS1                 0x040010 /* established */
 
 /*
- * Name and offset are the vendor header's definition (struct member ce_dre_dyn_credit_status2). The header gives no access direction or reset value; access rw is a placeholder.
+ * Name and offset are the vendor header's definition (struct member
+ * ce_dre_dyn_credit_status2). The header gives no access direction or reset
+ * value; access rw is a placeholder.
  */
 /* dre_dyn_credit_status2: rw64, reset unknown */
 #define TIOCE_DRE_DYN_CREDIT_STATUS2                 0x040018 /* established */
 
 /*
- * Name and offset are the vendor header's definition (struct member ce_dre_last_credit_status1). The header gives no access direction or reset value; access rw is a placeholder.
+ * Name and offset are the vendor header's definition (struct member
+ * ce_dre_last_credit_status1). The header gives no access direction or reset
+ * value; access rw is a placeholder.
  */
 /* dre_last_credit_status1: rw64, reset unknown */
 #define TIOCE_DRE_LAST_CREDIT_STATUS1                0x040020 /* established */
 
 /*
- * Name and offset are the vendor header's definition (struct member ce_dre_last_credit_status2). The header gives no access direction or reset value; access rw is a placeholder.
+ * Name and offset are the vendor header's definition (struct member
+ * ce_dre_last_credit_status2). The header gives no access direction or reset
+ * value; access rw is a placeholder.
  */
 /* dre_last_credit_status2: rw64, reset unknown */
 #define TIOCE_DRE_LAST_CREDIT_STATUS2                0x040028 /* established */
 
 /*
- * Name and offset are the vendor header's definition (struct member ce_dre_credit_limit1). The header gives no access direction or reset value; access rw is a placeholder.
+ * Name and offset are the vendor header's definition (struct member
+ * ce_dre_credit_limit1). The header gives no access direction or reset value;
+ * access rw is a placeholder.
  */
 /* dre_credit_limit1: rw64, reset unknown */
 #define TIOCE_DRE_CREDIT_LIMIT1                      0x040030 /* established */
 
 /*
- * Name and offset are the vendor header's definition (struct member ce_dre_credit_limit2). The header gives no access direction or reset value; access rw is a placeholder.
+ * Name and offset are the vendor header's definition (struct member
+ * ce_dre_credit_limit2). The header gives no access direction or reset value;
+ * access rw is a placeholder.
  */
 /* dre_credit_limit2: rw64, reset unknown */
 #define TIOCE_DRE_CREDIT_LIMIT2                      0x040038 /* established */
 
 /*
- * Name and offset are the vendor header's definition (struct member ce_dre_force_credit1). The header gives no access direction or reset value; access rw is a placeholder.
+ * Name and offset are the vendor header's definition (struct member
+ * ce_dre_force_credit1). The header gives no access direction or reset value;
+ * access rw is a placeholder.
  */
 /* dre_force_credit1: rw64, reset unknown */
 #define TIOCE_DRE_FORCE_CREDIT1                      0x040040 /* established */
 
 /*
- * Name and offset are the vendor header's definition (struct member ce_dre_force_credit2). The header gives no access direction or reset value; access rw is a placeholder.
+ * Name and offset are the vendor header's definition (struct member
+ * ce_dre_force_credit2). The header gives no access direction or reset value;
+ * access rw is a placeholder.
  */
 /* dre_force_credit2: rw64, reset unknown */
 #define TIOCE_DRE_FORCE_CREDIT2                      0x040048 /* established */
 
 /*
- * Name and offset are the vendor header's definition (struct member ce_dre_debug_mux1). The header gives no access direction or reset value; access rw is a placeholder.
+ * Name and offset are the vendor header's definition (struct member
+ * ce_dre_debug_mux1). The header gives no access direction or reset value;
+ * access rw is a placeholder.
  */
 /* dre_debug_mux1: rw64, reset unknown */
 #define TIOCE_DRE_DEBUG_MUX1                         0x040050 /* established */
 
 /*
- * Name and offset are the vendor header's definition (struct member ce_dre_debug_mux2). The header gives no access direction or reset value; access rw is a placeholder.
+ * Name and offset are the vendor header's definition (struct member
+ * ce_dre_debug_mux2). The header gives no access direction or reset value;
+ * access rw is a placeholder.
  */
 /* dre_debug_mux2: rw64, reset unknown */
 #define TIOCE_DRE_DEBUG_MUX2                         0x040058 /* established */
 
 /*
- * Name and offset are the vendor header's definition (struct member ce_dre_ssp_err_cmd_wrd). The header gives no access direction or reset value; access rw is a placeholder.
+ * Name and offset are the vendor header's definition (struct member
+ * ce_dre_ssp_err_cmd_wrd). The header gives no access direction or reset value;
+ * access rw is a placeholder.
  */
 /* dre_ssp_err_cmd_wrd: rw64, reset unknown */
 #define TIOCE_DRE_SSP_ERR_CMD_WRD                    0x040060 /* established */
 
 /*
- * Name and offset are the vendor header's definition (struct member ce_dre_ssp_err_addr). The header gives no access direction or reset value; access rw is a placeholder.
+ * Name and offset are the vendor header's definition (struct member
+ * ce_dre_ssp_err_addr). The header gives no access direction or reset value;
+ * access rw is a placeholder.
  */
 /* dre_ssp_err_addr: rw64, reset unknown */
 #define TIOCE_DRE_SSP_ERR_ADDR                       0x040068 /* established */
 
 /*
- * Name and offset are the vendor header's definition (struct member ce_dre_comp_err_cmd_wrd). The header gives no access direction or reset value; access rw is a placeholder.
+ * Name and offset are the vendor header's definition (struct member
+ * ce_dre_comp_err_cmd_wrd). The header gives no access direction or reset
+ * value; access rw is a placeholder.
  */
 /* dre_comp_err_cmd_wrd: rw64, reset unknown */
 #define TIOCE_DRE_COMP_ERR_CMD_WRD                   0x040070 /* established */
 
 /*
- * Downstream request engine completion error address. The provider ORs zero into it at attach, after setting the interrupt and error summary alias bits, so the value is read and written back unchanged. Name and offset are the vendor header's definition (struct member ce_dre_comp_err_addr). The header gives no access direction or reset value; access rw is a placeholder.
+ * Downstream request engine completion error address. The provider ORs zero
+ * into it at attach, after setting the interrupt and error summary alias bits,
+ * so the value is read and written back unchanged. Name and offset are the
+ * vendor header's definition (struct member ce_dre_comp_err_addr). The header
+ * gives no access direction or reset value; access rw is a placeholder.
  */
 /* dre_comp_err_addr: rw64, reset unknown */
 #define TIOCE_DRE_COMP_ERR_ADDR                      0x040078 /* established */
 
 /*
- * Name and offset are the vendor header's definition (struct member ce_dre_req_status). The header gives no access direction or reset value; access rw is a placeholder.
+ * Name and offset are the vendor header's definition (struct member
+ * ce_dre_req_status). The header gives no access direction or reset value;
+ * access rw is a placeholder.
  */
 /* dre_req_status: rw64, reset unknown */
 #define TIOCE_DRE_REQ_STATUS                         0x040080 /* established */
 
 /*
- * Name and offset are the vendor header's definition (struct member ce_dre_config1). The header gives no access direction or reset value; access rw is a placeholder. Header-defined bits 0 to 3. The address mode field starts at bit 4 (constant DRE_ADDR_MODE_SHFT); its width and values are unknown, so it is not a field.
+ * Name and offset are the vendor header's definition (struct member
+ * ce_dre_config1). The header gives no access direction or reset value; access
+ * rw is a placeholder. Header-defined bits 0 to 3. The address mode field
+ * starts at bit 4 (constant DRE_ADDR_MODE_SHFT); its width and values are
+ * unknown, so it is not a field.
  */
 /* dre_config1: rw64, reset unknown */
 #define TIOCE_DRE_CONFIG1                            0x040088 /* established */
 #define TIOCE_DRE_CONFIG1_SUP_IO_COMP_ERROR_SHIFT    3 /* established */
 #define TIOCE_DRE_CONFIG1_SUP_IO_COMP_ERROR_MASK     0x1ull
-#define TIOCE_DRE_CONFIG1_SUP_IO_COMP_ERROR_INPLACE  (TIOCE_DRE_CONFIG1_SUP_IO_COMP_ERROR_MASK << TIOCE_DRE_CONFIG1_SUP_IO_COMP_ERROR_SHIFT)
+#define TIOCE_DRE_CONFIG1_SUP_IO_COMP_ERROR_INPLACE (TIOCE_DRE_CONFIG1_SUP_IO_COMP_ERROR_MASK << TIOCE_DRE_CONFIG1_SUP_IO_COMP_ERROR_SHIFT)
 #define TIOCE_DRE_CONFIG1_SUP_CONFIG_COMP_ERROR_SHIFT 2 /* established */
 #define TIOCE_DRE_CONFIG1_SUP_CONFIG_COMP_ERROR_MASK 0x1ull
 #define TIOCE_DRE_CONFIG1_SUP_CONFIG_COMP_ERROR_INPLACE (TIOCE_DRE_CONFIG1_SUP_CONFIG_COMP_ERROR_MASK << TIOCE_DRE_CONFIG1_SUP_CONFIG_COMP_ERROR_SHIFT)
 #define TIOCE_DRE_CONFIG1_DYN_RO_ENABLE_SHIFT        1 /* established */
 #define TIOCE_DRE_CONFIG1_DYN_RO_ENABLE_MASK         0x1ull
-#define TIOCE_DRE_CONFIG1_DYN_RO_ENABLE_INPLACE      (TIOCE_DRE_CONFIG1_DYN_RO_ENABLE_MASK << TIOCE_DRE_CONFIG1_DYN_RO_ENABLE_SHIFT)
+#define TIOCE_DRE_CONFIG1_DYN_RO_ENABLE_INPLACE (TIOCE_DRE_CONFIG1_DYN_RO_ENABLE_MASK << TIOCE_DRE_CONFIG1_DYN_RO_ENABLE_SHIFT)
 #define TIOCE_DRE_CONFIG1_RO_ENABLE_SHIFT            0 /* established */
 #define TIOCE_DRE_CONFIG1_RO_ENABLE_MASK             0x1ull
-#define TIOCE_DRE_CONFIG1_RO_ENABLE_INPLACE          (TIOCE_DRE_CONFIG1_RO_ENABLE_MASK << TIOCE_DRE_CONFIG1_RO_ENABLE_SHIFT)
+#define TIOCE_DRE_CONFIG1_RO_ENABLE_INPLACE (TIOCE_DRE_CONFIG1_RO_ENABLE_MASK << TIOCE_DRE_CONFIG1_RO_ENABLE_SHIFT)
 
 /*
- * Name and offset are the vendor header's definition (struct member ce_dre_config2). The header gives no access direction or reset value; access rw is a placeholder.
+ * Name and offset are the vendor header's definition (struct member
+ * ce_dre_config2). The header gives no access direction or reset value; access
+ * rw is a placeholder.
  */
 /* dre_config2: rw64, reset unknown */
 #define TIOCE_DRE_CONFIG2                            0x040090 /* established */
 
 /*
- * Name and offset are the vendor header's definition (struct member ce_dre_config_req_status). The header gives no access direction or reset value; access rw is a placeholder. Field layout from the header masks.
+ * Name and offset are the vendor header's definition (struct member
+ * ce_dre_config_req_status). The header gives no access direction or reset
+ * value; access rw is a placeholder. Field layout from the header masks.
  */
 /* dre_config_req_status: rw64, reset unknown */
 #define TIOCE_DRE_CONFIG_REQ_STATUS                  0x040098 /* established */
-#define TIOCE_DRE_CONFIG_REQ_STATUS_CONFIG_REQUEST_ACTIVE_SHIFT 5 /* established */
+/* established */
+#define TIOCE_DRE_CONFIG_REQ_STATUS_CONFIG_REQUEST_ACTIVE_SHIFT 5
 #define TIOCE_DRE_CONFIG_REQ_STATUS_CONFIG_REQUEST_ACTIVE_MASK 0x1ull
 #define TIOCE_DRE_CONFIG_REQ_STATUS_CONFIG_REQUEST_ACTIVE_INPLACE (TIOCE_DRE_CONFIG_REQ_STATUS_CONFIG_REQUEST_ACTIVE_MASK << TIOCE_DRE_CONFIG_REQ_STATUS_CONFIG_REQUEST_ACTIVE_SHIFT)
-#define TIOCE_DRE_CONFIG_REQ_STATUS_CONFIG_COMPLETION_VALID_SHIFT 4 /* established */
+/* established */
+#define TIOCE_DRE_CONFIG_REQ_STATUS_CONFIG_COMPLETION_VALID_SHIFT 4
 #define TIOCE_DRE_CONFIG_REQ_STATUS_CONFIG_COMPLETION_VALID_MASK 0x1ull
 #define TIOCE_DRE_CONFIG_REQ_STATUS_CONFIG_COMPLETION_VALID_INPLACE (TIOCE_DRE_CONFIG_REQ_STATUS_CONFIG_COMPLETION_VALID_MASK << TIOCE_DRE_CONFIG_REQ_STATUS_CONFIG_COMPLETION_VALID_SHIFT)
-#define TIOCE_DRE_CONFIG_REQ_STATUS_DOWNSTREAM_CONFIG_ERROR_SHIFT 3 /* established */
+/* established */
+#define TIOCE_DRE_CONFIG_REQ_STATUS_DOWNSTREAM_CONFIG_ERROR_SHIFT 3
 #define TIOCE_DRE_CONFIG_REQ_STATUS_DOWNSTREAM_CONFIG_ERROR_MASK 0x1ull
 #define TIOCE_DRE_CONFIG_REQ_STATUS_DOWNSTREAM_CONFIG_ERROR_INPLACE (TIOCE_DRE_CONFIG_REQ_STATUS_DOWNSTREAM_CONFIG_ERROR_MASK << TIOCE_DRE_CONFIG_REQ_STATUS_DOWNSTREAM_CONFIG_ERROR_SHIFT)
-#define TIOCE_DRE_CONFIG_REQ_STATUS_LAST_CONFIG_COMPLETION_SHIFT 0 /* established */
+/* established */
+#define TIOCE_DRE_CONFIG_REQ_STATUS_LAST_CONFIG_COMPLETION_SHIFT 0
 #define TIOCE_DRE_CONFIG_REQ_STATUS_LAST_CONFIG_COMPLETION_MASK 0x7ull
 #define TIOCE_DRE_CONFIG_REQ_STATUS_LAST_CONFIG_COMPLETION_INPLACE (TIOCE_DRE_CONFIG_REQ_STATUS_LAST_CONFIG_COMPLETION_MASK << TIOCE_DRE_CONFIG_REQ_STATUS_LAST_CONFIG_COMPLETION_SHIFT)
 
 /*
- * Name and offset are the vendor header's definition (struct member ce_dre_dyn_fifo). The header gives no access direction or reset value; access rw is a placeholder.
+ * Name and offset are the vendor header's definition (struct member
+ * ce_dre_dyn_fifo). The header gives no access direction or reset value; access
+ * rw is a placeholder.
  */
 /* dre_dyn_fifo: rw64, reset unknown */
 #define TIOCE_DRE_DYN_FIFO                           0x040100 /* established */
 
 /*
- * Name and offset are the vendor header's definition (struct member ce_dre_last_fifo). The header gives no access direction or reset value; access rw is a placeholder.
+ * Name and offset are the vendor header's definition (struct member
+ * ce_dre_last_fifo). The header gives no access direction or reset value;
+ * access rw is a placeholder.
  */
 /* dre_last_fifo: rw64, reset unknown */
 #define TIOCE_DRE_LAST_FIFO                          0x040120 /* established */
 
 /*
- * Name and offset are the vendor header's definition (struct member ce_dre_maint_ds_head_q_data63_0). The header gives no access direction or reset value; access rw is a placeholder.
+ * Name and offset are the vendor header's definition (struct member
+ * ce_dre_maint_ds_head_q_data63_0). The header gives no access direction or
+ * reset value; access rw is a placeholder.
  */
 /* dre_maint_ds_head_q_data63_0: rw64, reset unknown */
 #define TIOCE_DRE_MAINT_DS_HEAD_Q_DATA63_0           0x040200 /* established */
@@ -2833,7 +3493,9 @@
 #define TIOCE_DRE_MAINT_DS_HEAD_Q_DATA63_0_STRIDE    8
 
 /*
- * Name and offset are the vendor header's definition (struct member ce_dre_maint_ds_head_q_data127_64). The header gives no access direction or reset value; access rw is a placeholder.
+ * Name and offset are the vendor header's definition (struct member
+ * ce_dre_maint_ds_head_q_data127_64). The header gives no access direction or
+ * reset value; access rw is a placeholder.
  */
 /* dre_maint_ds_head_q_data127_64: rw64, reset unknown */
 #define TIOCE_DRE_MAINT_DS_HEAD_Q_DATA127_64         0x040300 /* established */
@@ -2841,7 +3503,9 @@
 #define TIOCE_DRE_MAINT_DS_HEAD_Q_DATA127_64_STRIDE  8
 
 /*
- * Name and offset are the vendor header's definition (struct member ce_dre_maint_ds_head_q_parity). The header gives no access direction or reset value; access rw is a placeholder.
+ * Name and offset are the vendor header's definition (struct member
+ * ce_dre_maint_ds_head_q_parity). The header gives no access direction or reset
+ * value; access rw is a placeholder.
  */
 /* dre_maint_ds_head_q_parity: rw64, reset unknown */
 #define TIOCE_DRE_MAINT_DS_HEAD_Q_PARITY             0x040400 /* established */
@@ -2849,7 +3513,9 @@
 #define TIOCE_DRE_MAINT_DS_HEAD_Q_PARITY_STRIDE      8
 
 /*
- * Name and offset are the vendor header's definition (struct member ce_dre_maint_ds_data_q_data63_0). The header gives no access direction or reset value; access rw is a placeholder.
+ * Name and offset are the vendor header's definition (struct member
+ * ce_dre_maint_ds_data_q_data63_0). The header gives no access direction or
+ * reset value; access rw is a placeholder.
  */
 /* dre_maint_ds_data_q_data63_0: rw64, reset unknown */
 #define TIOCE_DRE_MAINT_DS_DATA_Q_DATA63_0           0x041000 /* established */
@@ -2857,7 +3523,9 @@
 #define TIOCE_DRE_MAINT_DS_DATA_Q_DATA63_0_STRIDE    8
 
 /*
- * Name and offset are the vendor header's definition (struct member ce_dre_maint_ds_data_q_data127_64). The header gives no access direction or reset value; access rw is a placeholder.
+ * Name and offset are the vendor header's definition (struct member
+ * ce_dre_maint_ds_data_q_data127_64). The header gives no access direction or
+ * reset value; access rw is a placeholder.
  */
 /* dre_maint_ds_data_q_data127_64: rw64, reset unknown */
 #define TIOCE_DRE_MAINT_DS_DATA_Q_DATA127_64         0x042000 /* established */
@@ -2865,7 +3533,9 @@
 #define TIOCE_DRE_MAINT_DS_DATA_Q_DATA127_64_STRIDE  8
 
 /*
- * Name and offset are the vendor header's definition (struct member ce_dre_maint_ds_data_q_parity). The header gives no access direction or reset value; access rw is a placeholder.
+ * Name and offset are the vendor header's definition (struct member
+ * ce_dre_maint_ds_data_q_parity). The header gives no access direction or reset
+ * value; access rw is a placeholder.
  */
 /* dre_maint_ds_data_q_parity: rw64, reset unknown */
 #define TIOCE_DRE_MAINT_DS_DATA_Q_PARITY             0x043000 /* established */
@@ -2873,7 +3543,9 @@
 #define TIOCE_DRE_MAINT_DS_DATA_Q_PARITY_STRIDE      8
 
 /*
- * Name and offset are the vendor header's definition (struct member ce_dre_maint_ure_us_rsp_q_data63_0). The header gives no access direction or reset value; access rw is a placeholder.
+ * Name and offset are the vendor header's definition (struct member
+ * ce_dre_maint_ure_us_rsp_q_data63_0). The header gives no access direction or
+ * reset value; access rw is a placeholder.
  */
 /* dre_maint_ure_us_rsp_q_data63_0: rw64, reset unknown */
 #define TIOCE_DRE_MAINT_URE_US_RSP_Q_DATA63_0        0x044000 /* established */
@@ -2881,7 +3553,9 @@
 #define TIOCE_DRE_MAINT_URE_US_RSP_Q_DATA63_0_STRIDE 8
 
 /*
- * Name and offset are the vendor header's definition (struct member ce_dre_maint_ure_us_rsp_q_data127_64). The header gives no access direction or reset value; access rw is a placeholder.
+ * Name and offset are the vendor header's definition (struct member
+ * ce_dre_maint_ure_us_rsp_q_data127_64). The header gives no access direction
+ * or reset value; access rw is a placeholder.
  */
 /* dre_maint_ure_us_rsp_q_data127_64: rw64, reset unknown */
 #define TIOCE_DRE_MAINT_URE_US_RSP_Q_DATA127_64      0x044100 /* established */
@@ -2889,7 +3563,9 @@
 #define TIOCE_DRE_MAINT_URE_US_RSP_Q_DATA127_64_STRIDE 8
 
 /*
- * Name and offset are the vendor header's definition (struct member ce_dre_maint_ure_us_rsp_q_parity). The header gives no access direction or reset value; access rw is a placeholder.
+ * Name and offset are the vendor header's definition (struct member
+ * ce_dre_maint_ure_us_rsp_q_parity). The header gives no access direction or
+ * reset value; access rw is a placeholder.
  */
 /* dre_maint_ure_us_rsp_q_parity: rw64, reset unknown */
 #define TIOCE_DRE_MAINT_URE_US_RSP_Q_PARITY          0x044200 /* established */
@@ -2897,7 +3573,9 @@
 #define TIOCE_DRE_MAINT_URE_US_RSP_Q_PARITY_STRIDE   8
 
 /*
- * Name and offset are the vendor header's definition (struct member ce_dre_maint_us_wrt_rsp). The header gives no access direction or reset value; access rw is a placeholder.
+ * Name and offset are the vendor header's definition (struct member
+ * ce_dre_maint_us_wrt_rsp). The header gives no access direction or reset
+ * value; access rw is a placeholder.
  */
 /* dre_maint_us_wrt_rsp: rw64, reset unknown */
 #define TIOCE_DRE_MAINT_US_WRT_RSP                   0x044300 /* established */
@@ -2907,7 +3585,8 @@
 #define TIOCE_BUS_SRC_ID_SHFT                        0x8u /* established */
 #define TIOCE_DEV_SRC_ID_SHFT                        0x3u /* established */
 #define TIOCE_DRE_ADDR_MODE_SHFT                     0x4u /* established */
-#define TIOCE_E_CONFIG_BUS_MASK                      0xff00000u /* established */
+/* established */
+#define TIOCE_E_CONFIG_BUS_MASK                      0xff00000u
 #define TIOCE_E_CONFIG_BUS_SHFT                      0x14u /* established */
 #define TIOCE_E_CONFIG_DEVICE_MASK                   0xf8000u /* established */
 #define TIOCE_E_CONFIG_DEVICE_SHFT                   0xfu /* established */
@@ -2920,17 +3599,27 @@
 #define TIOCE_NUM_M40_ATES                           0x1000u /* established */
 #define TIOCE_NUM_PORTS                              0x2u /* established */
 #define TIOCE_PART_NUM                               0xce00u /* established */
-#define TIOCE_PIO_CONFIG_SPACE                       0x4000000u /* established */
-#define TIOCE_PIO_CONFIG_SPACE_LEN                   0x4000000u /* established */
-#define TIOCE_PIO_E_CONFIG_SPACE                     0x10000000u /* established */
-#define TIOCE_PIO_E_CONFIG_SPACE_LEN                 0x10000000u /* established */
-#define TIOCE_PIO_IO_SPACE                           0x100000000ull /* established */
-#define TIOCE_PIO_IO_SPACE_ALIAS                     0x8000000u /* established */
-#define TIOCE_PIO_IO_SPACE_ALIAS_LEN                 0x8000000u /* established */
-#define TIOCE_PIO_IO_SPACE_LEN                       0x100000000ull /* established */
-#define TIOCE_PIO_MEM_SPACE                          0x200000000ull /* established */
+/* established */
+#define TIOCE_PIO_CONFIG_SPACE                       0x4000000u
+/* established */
+#define TIOCE_PIO_CONFIG_SPACE_LEN                   0x4000000u
+/* established */
+#define TIOCE_PIO_E_CONFIG_SPACE                     0x10000000u
+/* established */
+#define TIOCE_PIO_E_CONFIG_SPACE_LEN                 0x10000000u
+/* established */
+#define TIOCE_PIO_IO_SPACE                           0x100000000ull
+/* established */
+#define TIOCE_PIO_IO_SPACE_ALIAS                     0x8000000u
+/* established */
+#define TIOCE_PIO_IO_SPACE_ALIAS_LEN                 0x8000000u
+/* established */
+#define TIOCE_PIO_IO_SPACE_LEN                       0x100000000ull
+/* established */
+#define TIOCE_PIO_MEM_SPACE                          0x200000000ull
 #define TIOCE_PIO_MMR                                0x0u /* established */
-#define TIOCE_PIO_MMR_LEN                            0x4000000u /* established */
+/* established */
+#define TIOCE_PIO_MMR_LEN                            0x4000000u
 #define TIOCE_PKT_TRAFIC_SHRT                        0x10u /* established */
 #define TIOCE_REV_A                                  0x1u /* established */
 #define TIOCE_SRC_ID                                 0x1u /* established */

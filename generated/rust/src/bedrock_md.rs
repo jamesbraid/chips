@@ -1,8 +1,10 @@
-// generated from devices/bedrock_md/registers.toml by defs-gen - do not edit, change the source
-// defs-gen 2
+// @generated from devices/bedrock_md/registers.toml by defs-gen - do not edit, change the source
+// defs-gen 3
 // input sha256 5ab763a1dbf1570b7df1888172fc665b0fd53a8e4cc99dde24ccac8e3ba965af
 // Bedrock memory and directory (MD) registers: field layouts, reset statements, error records and backdoor carriers
 #![allow(dead_code)]
+#![allow(clippy::doc_markdown)]
+#![cfg_attr(rustfmt, rustfmt_skip)]
 
 pub mod enums {
     pub mod dir_format {
@@ -229,6 +231,7 @@ pub mod memory_config {
         pub const fn set(v: u64, x: u64) -> u64 {
             (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
         }
+        #[allow(unused_imports)]
         pub use super::super::enums::size_code::Value;
     }
     pub mod pos3_width { // bits 27:27, established
@@ -260,6 +263,7 @@ pub mod memory_config {
         pub const fn set(v: u64, x: u64) -> u64 {
             (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
         }
+        #[allow(unused_imports)]
         pub use super::super::enums::size_code::Value;
     }
     pub mod pos2_width { // bits 19:19, established
@@ -291,6 +295,7 @@ pub mod memory_config {
         pub const fn set(v: u64, x: u64) -> u64 {
             (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
         }
+        #[allow(unused_imports)]
         pub use super::super::enums::size_code::Value;
     }
     pub mod pos1_width { // bits 11:11, established
@@ -322,6 +327,7 @@ pub mod memory_config {
         pub const fn set(v: u64, x: u64) -> u64 {
             (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
         }
+        #[allow(unused_imports)]
         pub use super::super::enums::size_code::Value;
     }
     pub mod pos0_width { // bits 3:3, established
@@ -1712,6 +1718,7 @@ pub mod dir_entry_pointer {
         pub const fn set(v: u64, x: u64) -> u64 {
             (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
         }
+        #[allow(unused_imports)]
         pub use super::super::enums::dir_pointer_state::Value;
     }
     pub mod format { // bits 1:0, established
@@ -1723,6 +1730,7 @@ pub mod dir_entry_pointer {
         pub const fn set(v: u64, x: u64) -> u64 {
             (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
         }
+        #[allow(unused_imports)]
         pub use super::super::enums::dir_format::Value;
     }
 }
@@ -1778,6 +1786,7 @@ pub mod dir_entry_shared_fine {
         pub const fn set(v: u64, x: u64) -> u64 {
             (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
         }
+        #[allow(unused_imports)]
         pub use super::super::enums::dir_format::Value;
     }
 }

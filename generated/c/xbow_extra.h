@@ -1,5 +1,6 @@
-/* generated from devices/xbow/registers-extra.toml by defs-gen - do not edit, change the source */
-/* defs-gen 2 */
+/* generated from devices/xbow/registers-extra.toml by defs-gen - do not edit,
+ * change the source */
+/* defs-gen 3 */
 /* input sha256 5d0eaa0d4362a4e57ae74a9515b91ea99d1ae0b25cbc4f8dbf94696f4a778ea6 */
 /* Xbow registers outside the census */
 #ifndef XBOW_GEN_H
@@ -35,8 +36,10 @@
 #define XBOW_FLUSH_LINK_E                            0x280u /* established */
 #define XBOW_FLUSH_LINK_F                            0x2c0u /* established */
 #define XBOW_ID_MFR_MASK                             0xffeu /* established */
-#define XBOW_ID_PART_MASK                            0xffff000u /* established */
-#define XBOW_ID_REV_MASK                             0xf0000000u /* established */
+/* established */
+#define XBOW_ID_PART_MASK                            0xffff000u
+/* established */
+#define XBOW_ID_REV_MASK                             0xf0000000u
 #define XBOW_PART_PXBOW                              0xd100u /* established */
 #define XBOW_PART_XBOW                               0x0u /* established */
 #define XBOW_PART_XXBOW                              0xd000u /* established */

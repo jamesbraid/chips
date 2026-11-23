@@ -1,8 +1,10 @@
-// generated from devices/hub/registers.toml by defs-gen - do not edit, change the source
-// defs-gen 2
+// @generated from devices/hub/registers.toml by defs-gen - do not edit, change the source
+// defs-gen 3
 // input sha256 b60d4fb7431ff51b63d99d670a08717509715e57155ebbd0e581bdd116cda08d
 // Hub (Origin 2000 node controller)
 #![allow(dead_code)]
+#![allow(clippy::doc_markdown)]
+#![cfg_attr(rustfmt, rustfmt_skip)]
 
 /// (established)
 pub mod pi_region_present {

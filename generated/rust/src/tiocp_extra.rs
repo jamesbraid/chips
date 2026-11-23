@@ -1,8 +1,10 @@
-// generated from devices/tiocp/registers-extra.toml by defs-gen - do not edit, change the source
-// defs-gen 2
+// @generated from devices/tiocp/registers-extra.toml by defs-gen - do not edit, change the source
+// defs-gen 3
 // input sha256 11f87d67648250748efa0557e3091fcd29937fc879c35edb7bda8e7a07b6c989
 // TIOCP registers and constants outside the census
 #![allow(dead_code)]
+#![allow(clippy::doc_markdown)]
+#![cfg_attr(rustfmt, rustfmt_skip)]
 
 /// Widget status (`cp_stat`), second word of the standard widget block. Offset, width and name are the header definition. Access direction is not stated; (established)
 pub mod stat {

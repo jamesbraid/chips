@@ -1,6 +1,6 @@
 <?xml version="1.0" ?>
 <!-- generated from devices/router_origin3000_rbrick/registers.toml by defs-gen - do not edit, change the source -->
-<!-- defs-gen 2 -->
+<!-- defs-gen 3 -->
 <!-- input sha256 5be86454e6c098bd3031660190833330588ae9a2328ee39958e21d60c7e0f456 -->
 <genxml unit="router_origin3000_rbrick" prefix="RBRICK_ROUTER" title="Origin 3000 R-brick router registers outside the census (vector space)" from="shipped kernel and firmware readings; names from the public Linux SN1 router header">
   <doc>Router register fields and link addresses that the shipped firmware and kernel use, and that the census of the router's vector accesses does not give. Every item here is a software expectation read from shipped code or a public header, not a hardware measurement. The register space is named apart from the census so that offsets which the census already names (the status word, the protection configuration) are not claimed twice.</doc>

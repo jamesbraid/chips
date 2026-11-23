@@ -1,5 +1,5 @@
 {
- "generator": "defs-gen 2",
+ "generator": "defs-gen 3",
  "input_sha256": "b54d0ad6199ff74e5b74165da237d6bb27310e0e5dd68c0108216525798dd463",
  "schema": "defs-flat/1",
  "source": "devices/ioc3/registers.toml",

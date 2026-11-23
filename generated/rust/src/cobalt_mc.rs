@@ -1,8 +1,10 @@
-// generated from devices/cobalt_mc/registers.toml by defs-gen - do not edit, change the source
-// defs-gen 2
+// @generated from devices/cobalt_mc/registers.toml by defs-gen - do not edit, change the source
+// defs-gen 3
 // input sha256 73f90f85d2cdc65dda9e1c8485d018d0bbc17dbb41d1f46b9ab0ab950e2b71a5
 // Cobalt memory controller of the SGI Visual Workstation 320 and 540: ECC control, error reporting and the bank registers
 #![allow(dead_code)]
+#![allow(clippy::doc_markdown)]
+#![cfg_attr(rustfmt, rustfmt_skip)]
 
 /// Memory controller control. At timer set-up the HAL also stores 0 here and 0 in the error status. The PROM self-test sets bit 0 with a full-word store  (established)
 pub mod ecc_control {

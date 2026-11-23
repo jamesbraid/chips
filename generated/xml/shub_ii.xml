@@ -1,6 +1,6 @@
 <?xml version="1.0" ?>
 <!-- generated from devices/shub_ii/registers.toml by defs-gen - do not edit, change the source -->
-<!-- defs-gen 2 -->
+<!-- defs-gen 3 -->
 <!-- input sha256 3541c39edc6058df0dcd73d7e112d2483e25cdf0d5a3cd46149152dd0c9fcd31 -->
 <genxml unit="shub_ii" prefix="SHUB_II" title="SHub 1 I/O interface (II): Crosstalk port, access protection, CRBs and block transfer engines" from="Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code">
   <doc>Offsets are node-relative, the same numbers the SGI Linux ia64 header uses: the II starts 4 MiB into the node's register space. Field positions are the header's bitfield unions read least-significant first, which agrees with the header's own shift and mask macros wherever it has both. The header is the vendor platform source, so offsets and field positions are established as definitions. Role text is a paraphrase of the header's comments and is inferred. Reset values are unknown unless a source states one, and none does. The kernel files read use few of these registers; the access note in each register says whether the kernel touches it.</doc>

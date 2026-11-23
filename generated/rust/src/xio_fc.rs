@@ -1,8 +1,10 @@
-// generated from devices/xio_fc/registers.toml by defs-gen - do not edit, change the source
-// defs-gen 2
+// @generated from devices/xio_fc/registers.toml by defs-gen - do not edit, change the source
+// defs-gen 3
 // input sha256 57e8737a3343b26b5b9baa63badf937ee000b92384357355a269d98dd44823d0
 // XIO Fibre Channel adapter (Adaptec AIC-1160 board), command and register contract
 #![allow(dead_code)]
+#![allow(clippy::doc_markdown)]
+#![cfg_attr(rustfmt, rustfmt_skip)]
 
 pub const BANK_CODE_STEP: u32 = 0x11; // established
 pub const CLOCK_STATUS_DIV_1: u32 = 0xbe; // established

@@ -1,8 +1,10 @@
-// generated from devices/isp2200/registers.toml by defs-gen - do not edit, change the source
-// defs-gen 2
+// @generated from devices/isp2200/registers.toml by defs-gen - do not edit, change the source
+// defs-gen 3
 // input sha256 25a998dedd313ff21d1b53226cd2a6032d477219d8ee05e36c714d5d4a76e4ef
 // QLogic ISP2200 Fibre Channel host adapter (PCI 1077:2200), the host interface the public drivers use
 #![allow(dead_code)]
+#![allow(clippy::doc_markdown)]
+#![cfg_attr(rustfmt, rustfmt_skip)]
 
 pub mod enums {
     pub mod hccr_cmd {
@@ -222,6 +224,7 @@ pub mod hccr {
         pub const fn set(v: u32, x: u32) -> u32 {
             (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
         }
+        #[allow(unused_imports)]
         pub use super::super::enums::hccr_cmd::Value;
     }
     pub mod host_int { // bits 7:7, established

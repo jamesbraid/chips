@@ -1,5 +1,5 @@
 """generated from devices/uv1/registers.toml by defs-gen - do not edit, change the source
-defs-gen 2
+defs-gen 3
 input sha256 159c697560a3b949dc49448667f72fec268c6242349e1b64f09c426b965975bf
 UV1 (UV 1000 generation) hub MMR map"""
 

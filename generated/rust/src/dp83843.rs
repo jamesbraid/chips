@@ -1,8 +1,10 @@
-// generated from devices/dp83843/registers.toml by defs-gen - do not edit, change the source
-// defs-gen 2
+// @generated from devices/dp83843/registers.toml by defs-gen - do not edit, change the source
+// defs-gen 3
 // input sha256 8d5ca437e90248734cb54e922a124cf2ba5d1c698e8782ae4e9c09b4cb04c693
 // National DP83843 PHYTER 10/100 Mb/s transceiver, MII registers (Origin 300 IO-8)
 #![allow(dead_code)]
+#![allow(clippy::doc_markdown)]
+#![cfg_attr(rustfmt, rustfmt_skip)]
 
 /// Basic mode control. Reset value not stated by the datasheet text consulted. (inferred)
 pub mod bmcr {

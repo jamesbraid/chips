@@ -1,6 +1,6 @@
 <?xml version="1.0" ?>
 <!-- generated from devices/isp12160/registers.toml by defs-gen - do not edit, change the source -->
-<!-- defs-gen 2 -->
+<!-- defs-gen 3 -->
 <!-- input sha256 76b80bad40a1f9ab19f16c3d95e98399a2589c9f44ea0003211709b2b5ea1212 -->
 <genxml unit="isp12160" prefix="ISP12160" title="QLogic ISP12160 dual-channel Ultra3 SCSI host adapter (PCI 1077:1216), the constants the held sources establish" from="QLogic ISP12160A data sheet (1999); QLogic QLA12160 hardware installation guide (2001); IRIX 6.5 Bedrock-class controller object; IRIX 6.5 Octane SCSI driver object; Linux qla1280, NetBSD isp and OpenBSD qlw drivers (pins in references/documents/INDEX.md); stock PROM 6.210 SCSI diagnostic">
   <doc>The two-channel QLogic SCSI host adapter on the Origin 300 IO-8 board and the Origin 350 IO9 board (PCI 1077:1216). Grades say how each item was derived: established means a vendor datasheet, a hardware capture or a driver or firmware statement that names the value directly; inferred means a software expectation, a shipped program that uses the value and does not show the chip's own behaviour, or a reading of a value's meaning from one driver's use of it. No register offsets, reset values or mailbox operand layouts beyond those named here are held for this part, so the register map is not in this unit. The mailbox opcodes are the values the shipped programs send, not measured chip behaviour.</doc>

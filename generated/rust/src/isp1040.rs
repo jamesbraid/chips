@@ -1,8 +1,10 @@
-// generated from devices/isp1040/registers.toml by defs-gen - do not edit, change the source
-// defs-gen 2
+// @generated from devices/isp1040/registers.toml by defs-gen - do not edit, change the source
+// defs-gen 3
 // input sha256 c6f60bd0ad553be96496d3d404604374c4fbab53c331492226b573abf3d0d9b4
 // QLogic ISP1040 family SCSI host adapter (PCI 1077:1020), register and mailbox contract
 #![allow(dead_code)]
+#![allow(clippy::doc_markdown)]
+#![cfg_attr(rustfmt, rustfmt_skip)]
 
 /// Low half of the identity word. The reset value is not stated by any source. (established)
 pub mod id_l {

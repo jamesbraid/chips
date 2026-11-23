@@ -1,5 +1,5 @@
 """generated from devices/bedrock_xb/registers.toml by defs-gen - do not edit, change the source
-defs-gen 2
+defs-gen 3
 input sha256 ed209e81bcd3b4c09ee365d6ba1890e8b0e7509d8b2d283d8968ad81ab13d230
 Bedrock internal crossbar (XB) registers outside the census"""
 

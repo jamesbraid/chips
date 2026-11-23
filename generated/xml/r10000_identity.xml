@@ -1,6 +1,6 @@
 <?xml version="1.0" ?>
 <!-- generated from devices/r10000_identity/registers.toml by defs-gen - do not edit, change the source -->
-<!-- defs-gen 2 -->
+<!-- defs-gen 3 -->
 <!-- input sha256 d2842a5c402c77293eed3a25235d7f9e4e9e93075e76f5b4f972fabfc15d48aa -->
 <genxml unit="r10000_identity" prefix="R10K" title="R10000 family processor identity and secondary-cache configuration fields" from="Linux v6.6 MIPS headers and CPU driver">
   <doc>Constants for the MIPS R10000 processor family as the public Linux kernel identifies it: the implementation and revision fields of the PRId register, the revision split that separates the R16000 from the R14000, and the Config fields that set the secondary cache size and line. This unit holds constants only; the processor's register layouts are in devices/r10000_identity/README.md. Grades: established means a public driver file says it; inferred means a reasoned reading; unknown items are listed in the page.</doc>

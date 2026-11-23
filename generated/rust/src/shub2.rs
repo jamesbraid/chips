@@ -1,8 +1,10 @@
-// generated from devices/shub/registers.shub2.toml by defs-gen - do not edit, change the source
-// defs-gen 2
+// @generated from devices/shub/registers.shub2.toml by defs-gen - do not edit, change the source
+// defs-gen 3
 // input sha256 25a65e6adabd41724ca20aa7682efa4524185c9de88bf41c87116f7cdc9663a8
 // SHub 2 registers outside the I/O interface, differences from SHub 1
 #![allow(dead_code)]
+#![allow(clippy::doc_markdown)]
+#![cfg_attr(rustfmt, rustfmt_skip)]
 
 /// DIMM population word. One routine (0xff482c60) merges the discovered DIMM layout into the old value: the preserved bits are 38 and above and bits 7, 1 (established)
 pub mod x_dimm_cfg {
@@ -1757,6 +1759,7 @@ pub mod ipi_access {
     pub const STRIDE: u64 = 128;
 }
 /// The node's identification word. Read by the firmware to find its own node number (bits 45:32) and the sharing parameters; written during the interconn (established)
+#[allow(clippy::module_inception)]
 pub mod node_id {
     pub const WIDTH: u32 = 64;
     pub const OFFSET: u64 = 0x10060f00;

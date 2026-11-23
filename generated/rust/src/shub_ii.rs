@@ -1,8 +1,10 @@
-// generated from devices/shub_ii/registers.toml by defs-gen - do not edit, change the source
-// defs-gen 2
+// @generated from devices/shub_ii/registers.toml by defs-gen - do not edit, change the source
+// defs-gen 3
 // input sha256 3541c39edc6058df0dcd73d7e112d2483e25cdf0d5a3cd46149152dd0c9fcd31
 // SHub 1 I/O interface (II): Crosstalk port, access protection, CRBs and block transfer engines
 #![allow(dead_code)]
+#![allow(clippy::doc_markdown)]
+#![cfg_attr(rustfmt, rustfmt_skip)]
 
 /// Crosstalk widget identification. Echoes the revision and manufacturer fields of the local block's revision register and carries the part number SGI as (established)
 pub mod widget_id {
@@ -577,6 +579,7 @@ pub mod graphics_map {
     }
 }
 /// Scratch register for software. Two instances, no hardware effect. Header name IIO_ISCR. (established)
+#[allow(clippy::module_inception)]
 pub mod scratch {
     pub const WIDTH: u32 = 64;
     pub const OFFSET: u64 = 0x400150;

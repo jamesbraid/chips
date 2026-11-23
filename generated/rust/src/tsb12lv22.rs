@@ -1,8 +1,10 @@
-// generated from devices/tsb12lv22/registers.toml by defs-gen - do not edit, change the source
-// defs-gen 2
+// @generated from devices/tsb12lv22/registers.toml by defs-gen - do not edit, change the source
+// defs-gen 3
 // input sha256 7c0c9c2e3187c6789010517cad60bcc61d96bd60b2a5cd37bd3bb1bc955da983
 // TI TSB12LV22 PCI-to-IEEE 1394 OHCI 1.00 link controller (I-brick IO7), the register facts the held sources establish
 #![allow(dead_code)]
+#![allow(clippy::doc_markdown)]
+#![cfg_attr(rustfmt, rustfmt_skip)]
 
 /// OHCI version. Major version 1 is in bits 23:16 and minor version 0 in bits 7:0, so this is OHCI 1.00. Bit 24 reports whether a configuration ROM is pr (established)
 pub mod version {

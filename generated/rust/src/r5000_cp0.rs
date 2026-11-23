@@ -1,8 +1,10 @@
-// generated from devices/r5000_cp0/registers.toml by defs-gen - do not edit, change the source
-// defs-gen 2
+// @generated from devices/r5000_cp0/registers.toml by defs-gen - do not edit, change the source
+// defs-gen 3
 // input sha256 6a9b39abb11b3b99b791300a4de226fd477602f6718575488b04e14313a7ffdf
 // MIPS R5000 CP0 Config, Status, PageMask and LLAddr field positions, and FCR31 flags
 #![allow(dead_code)]
+#![allow(clippy::doc_markdown)]
+#![cfg_attr(rustfmt, rustfmt_skip)]
 
 pub const R5KCFG_BE_MASK: u32 = 0x8000; // established
 pub const R5KCFG_CACHE_32K_CODE: u32 = 0x3; // established

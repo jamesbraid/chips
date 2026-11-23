@@ -1,5 +1,5 @@
 {
- "generator": "defs-gen 2",
+ "generator": "defs-gen 3",
  "input_sha256": "d89a40d75ef24f16f59d754d766f813b993b5cd21cff1d1fa6052589fef38dcd",
  "schema": "defs-flat/1",
  "source": "devices/lithium/registers.toml",

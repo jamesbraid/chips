@@ -1,8 +1,10 @@
-// generated from devices/ioc3/registers-extra.toml by defs-gen - do not edit, change the source
-// defs-gen 2
+// @generated from devices/ioc3/registers-extra.toml by defs-gen - do not edit, change the source
+// defs-gen 3
 // input sha256 c59900e6424ca5a2f7eb294332632d0801a78dc80e6e82309d0f37c86c0b0889
 // IOC3 registers outside the census
 #![allow(dead_code)]
+#![allow(clippy::doc_markdown)]
+#![cfg_attr(rustfmt, rustfmt_skip)]
 
 /// The 32-bit microlan control register the shipped IRIX one-wire access routine drives: it writes the pulse width shifted left 10 ORed with the sample t (established)
 pub mod one_wire_ctl {

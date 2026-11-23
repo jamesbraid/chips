@@ -1,5 +1,5 @@
 {
- "generator": "defs-gen 2",
+ "generator": "defs-gen 3",
  "input_sha256": "25a65e6adabd41724ca20aa7682efa4524185c9de88bf41c87116f7cdc9663a8",
  "schema": "defs-flat/1",
  "source": "devices/shub/registers.shub2.toml",

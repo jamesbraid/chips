@@ -1,6 +1,6 @@
 <?xml version="1.0" ?>
 <!-- generated from devices/tsb12lv22/registers.toml by defs-gen - do not edit, change the source -->
-<!-- defs-gen 2 -->
+<!-- defs-gen 3 -->
 <!-- input sha256 7c0c9c2e3187c6789010517cad60bcc61d96bd60b2a5cd37bd3bb1bc955da983 -->
 <genxml unit="tsb12lv22" prefix="TSB12LV22" title="TI TSB12LV22 PCI-to-IEEE 1394 OHCI 1.00 link controller (I-brick IO7), the register facts the held sources establish" from="TI SLLS290, TSB12LV22 OHCI-Lynx PCI-Based IEEE 1394 Host Controller, July 1998 (pages cited per item)">
   <doc>The PCI-to-1394 link controller on the Origin 3000 and Onyx 3000 I-brick IO7 board (PCI 104c:8009, IEEE 1394 OHCI 1.00 register interface). Grades say how each item was derived: established means the TI datasheet (SLLS290, July 1998) states it; inferred means a software expectation taken from shipped IRIX or PROM code, or a reading that the datasheet does not state outright; unknown means no source held here settles the value. The reset values of most registers are unknown: the datasheet leaves them unspecified or gives them only in part. Software expectations are what the shipped programs require, not measured chip behaviour, and no PHY, bus or DMA behaviour is part of this unit.</doc>

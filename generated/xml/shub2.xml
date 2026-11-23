@@ -1,6 +1,6 @@
 <?xml version="1.0" ?>
 <!-- generated from devices/shub/registers.shub2.toml by defs-gen - do not edit, change the source -->
-<!-- defs-gen 2 -->
+<!-- defs-gen 3 -->
 <!-- input sha256 25a65e6adabd41724ca20aa7682efa4524185c9de88bf41c87116f7cdc9663a8 -->
 <genxml unit="shub2" prefix="SHUB2" title="SHub 2 registers outside the I/O interface, differences from SHub 1">
   <doc>SHub 2 offsets the SGI Linux ia64 platform header defines (SH2_ names) cite it; the rest are read from the SHub 2 PROM and cite no published source. Registers the header defines only for SHub 1 are removed; for those, SHub 2's address is not in the sources read (unknown). Field layouts not patched here are the SHub 1 ones: the header gives one set of field macros for both chips. Registers added from the SHub 2 firmware (grade and site named on each) give the 32-bit offset in the local window; add 0x2_0000_0000 for the address the firmware uses.</doc>

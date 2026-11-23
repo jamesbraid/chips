@@ -1,8 +1,10 @@
-// generated from devices/hpc3_enet/registers.toml by defs-gen - do not edit, change the source
-// defs-gen 2
+// @generated from devices/hpc3_enet/registers.toml by defs-gen - do not edit, change the source
+// defs-gen 3
 // input sha256 2c7abbcb1c2985fa52c20dcda340386f2c9f75c597cf6a1b52429578511083c2
 // SGI HPC3 Ethernet DMA channels (Indy)
 #![allow(dead_code)]
+#![allow(clippy::doc_markdown)]
+#![cfg_attr(rustfmt, rustfmt_skip)]
 
 /// Receive current buffer pointer. HPC3 loads it when it fetches a descriptor, so it names the buffer being filled. (established)
 pub mod rx_cbp {

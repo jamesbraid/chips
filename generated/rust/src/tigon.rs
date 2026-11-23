@@ -1,8 +1,10 @@
-// generated from devices/tigon/registers.toml by defs-gen - do not edit, change the source
-// defs-gen 2
+// @generated from devices/tigon/registers.toml by defs-gen - do not edit, change the source
+// defs-gen 3
 // input sha256 94c049da8c3025db0a794be8a9ac86283932e63a700df777a6180f810e530ea9
 // Alteon Tigon PCI/Gigabit Ethernet controller (SGI IRIS Gigabit Ethernet board)
 #![allow(dead_code)]
+#![allow(clippy::doc_markdown)]
+#![cfg_attr(rustfmt, rustfmt_skip)]
 
 /// Miscellaneous Host Control. The read-write bits sit in the low byte, so a host that writes a byte-wide No Swap value can copy that byte into every lan (established)
 pub mod misc_host_ctl {

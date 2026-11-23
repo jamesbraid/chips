@@ -1,5 +1,5 @@
 """generated from devices/bedrock/registers.toml by defs-gen - do not edit, change the source
-defs-gen 2
+defs-gen 3
 input sha256 79078529ee64620ab2f48db1267490d7a964dfd3b79ea39d037dc224721f8047
 Bedrock (node controller), Origin 3000 family"""
 

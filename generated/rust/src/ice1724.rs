@@ -1,8 +1,10 @@
-// generated from devices/ice1724/registers.toml by defs-gen - do not edit, change the source
-// defs-gen 2
+// @generated from devices/ice1724/registers.toml by defs-gen - do not edit, change the source
+// defs-gen 3
 // input sha256 dd9a3eb1279d5d296b0ebe4786280e365b30feac027d7ff9ddb8d012a80e8ecf
 // VIA/IC Ensemble ICE1724 (Envy24HT) PCI audio controller registers
 #![allow(dead_code)]
+#![allow(clippy::doc_markdown)]
+#![cfg_attr(rustfmt, rustfmt_skip)]
 
 pub mod enums {
     pub mod ac97_slot {
@@ -537,6 +539,7 @@ pub mod ccs_system_config {
         pub const fn set(v: u32, x: u32) -> u32 {
             (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
         }
+        #[allow(unused_imports)]
         pub use super::super::enums::xin1_clock::Value;
     }
     pub mod mpu_uart { // bits 5:5, established
@@ -558,6 +561,7 @@ pub mod ccs_system_config {
         pub const fn set(v: u32, x: u32) -> u32 {
             (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
         }
+        #[allow(unused_imports)]
         pub use super::super::enums::adc_inputs::Value;
     }
     pub mod dac_count_minus_one { // bits 1:0, established
@@ -584,6 +588,7 @@ pub mod ccs_ac97_config {
         pub const fn set(v: u32, x: u32) -> u32 {
             (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
         }
+        #[allow(unused_imports)]
         pub use super::super::enums::converter_type::Value;
     }
     pub mod ac97_slot { // bits 1:1, established
@@ -595,6 +600,7 @@ pub mod ccs_ac97_config {
         pub const fn set(v: u32, x: u32) -> u32 {
             (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
         }
+        #[allow(unused_imports)]
         pub use super::super::enums::ac97_slot::Value;
     }
 }
@@ -631,6 +637,7 @@ pub mod ccs_i2s_features {
         pub const fn set(v: u32, x: u32) -> u32 {
             (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
         }
+        #[allow(unused_imports)]
         pub use super::super::enums::resolution_bits::Value;
     }
     pub mod supports_192k { // bits 3:3, established
@@ -797,6 +804,7 @@ pub mod ccs_i2c_device {
         pub const fn set(v: u32, x: u32) -> u32 {
             (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
         }
+        #[allow(unused_imports)]
         pub use super::super::enums::i2c_direction::Value;
     }
 }
@@ -1063,6 +1071,7 @@ pub mod mt_sampling_rate {
         pub const fn set(v: u32, x: u32) -> u32 {
             (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
         }
+        #[allow(unused_imports)]
         pub use super::super::enums::rate_code::Value;
     }
 }
@@ -1099,6 +1108,7 @@ pub mod mt_i2s_format {
         pub const fn set(v: u32, x: u32) -> u32 {
             (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
         }
+        #[allow(unused_imports)]
         pub use super::super::enums::i2s_format::Value;
     }
 }
@@ -1390,6 +1400,7 @@ pub mod mt_pdmai_streams {
         pub const fn set(v: u32, x: u32) -> u32 {
             (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
         }
+        #[allow(unused_imports)]
         pub use super::super::enums::interleave::Value;
     }
 }
@@ -1456,6 +1467,7 @@ pub mod mt_routing {
         pub const fn set(v: u32, x: u32) -> u32 {
             (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
         }
+        #[allow(unused_imports)]
         pub use super::super::enums::route_source::Value;
     }
     pub mod psdout2_right { // bits 28:26, established
@@ -1467,6 +1479,7 @@ pub mod mt_routing {
         pub const fn set(v: u32, x: u32) -> u32 {
             (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
         }
+        #[allow(unused_imports)]
         pub use super::super::enums::route_source::Value;
     }
     pub mod psdout1_right { // bits 25:23, established
@@ -1478,6 +1491,7 @@ pub mod mt_routing {
         pub const fn set(v: u32, x: u32) -> u32 {
             (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
         }
+        #[allow(unused_imports)]
         pub use super::super::enums::route_source::Value;
     }
     pub mod psdout0_right { // bits 22:20, established
@@ -1489,6 +1503,7 @@ pub mod mt_routing {
         pub const fn set(v: u32, x: u32) -> u32 {
             (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
         }
+        #[allow(unused_imports)]
         pub use super::super::enums::route_source::Value;
     }
     pub mod psdout3_left { // bits 19:17, established
@@ -1500,6 +1515,7 @@ pub mod mt_routing {
         pub const fn set(v: u32, x: u32) -> u32 {
             (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
         }
+        #[allow(unused_imports)]
         pub use super::super::enums::route_source::Value;
     }
     pub mod psdout2_left { // bits 16:14, established
@@ -1511,6 +1527,7 @@ pub mod mt_routing {
         pub const fn set(v: u32, x: u32) -> u32 {
             (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
         }
+        #[allow(unused_imports)]
         pub use super::super::enums::route_source::Value;
     }
     pub mod psdout1_left { // bits 13:11, established
@@ -1522,6 +1539,7 @@ pub mod mt_routing {
         pub const fn set(v: u32, x: u32) -> u32 {
             (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
         }
+        #[allow(unused_imports)]
         pub use super::super::enums::route_source::Value;
     }
     pub mod psdout0_left { // bits 10:8, established
@@ -1533,6 +1551,7 @@ pub mod mt_routing {
         pub const fn set(v: u32, x: u32) -> u32 {
             (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
         }
+        #[allow(unused_imports)]
         pub use super::super::enums::route_source::Value;
     }
     pub mod spdif_right { // bits 5:3, established
@@ -1544,6 +1563,7 @@ pub mod mt_routing {
         pub const fn set(v: u32, x: u32) -> u32 {
             (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
         }
+        #[allow(unused_imports)]
         pub use super::super::enums::route_source::Value;
     }
     pub mod spdif_left { // bits 2:0, established
@@ -1555,6 +1575,7 @@ pub mod mt_routing {
         pub const fn set(v: u32, x: u32) -> u32 {
             (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
         }
+        #[allow(unused_imports)]
         pub use super::super::enums::route_source::Value;
     }
 }
@@ -1606,6 +1627,7 @@ pub mod mt_spdif_control {
         pub const fn set(v: u32, x: u32) -> u32 {
             (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
         }
+        #[allow(unused_imports)]
         pub use super::super::enums::spdif_rate::Value;
     }
     pub mod generation_level { // bits 11:11, established
@@ -2023,6 +2045,7 @@ pub mod pci_pm_control {
         pub const fn set(v: u32, x: u32) -> u32 {
             (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
         }
+        #[allow(unused_imports)]
         pub use super::super::enums::pm_state::Value;
     }
 }

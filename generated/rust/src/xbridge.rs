@@ -1,8 +1,10 @@
-// generated from devices/bridge/registers.xbridge.toml by defs-gen - do not edit, change the source
-// defs-gen 2
+// @generated from devices/bridge/registers.xbridge.toml by defs-gen - do not edit, change the source
+// defs-gen 3
 // input sha256 253247cca74fb8dfe60627ff71940464175d454afc0489721b84d536c3fab261
 // XBridge (XIO-to-PCI bridge, later), Origin 2000 and Octane
 #![allow(dead_code)]
+#![allow(clippy::doc_markdown)]
+#![cfg_attr(rustfmt, rustfmt_skip)]
 
 /// (established)
 pub mod wid_id {

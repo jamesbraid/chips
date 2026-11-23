@@ -1,5 +1,5 @@
 """generated from devices/tl16pir552/registers.toml by defs-gen - do not edit, change the source
-defs-gen 2
+defs-gen 3
 input sha256 3e2e50de5e5e0e4fa39c8450ad2520b250adcd93013d4b878cacd3fb64dce4f0
 TI TL16PIR552 dual UART and IEEE 1284 parallel port, parallel-port register contract (Fuel and Origin 200 board part)"""
 

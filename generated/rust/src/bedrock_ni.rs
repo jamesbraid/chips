@@ -1,8 +1,10 @@
-// generated from devices/bedrock_ni/registers.toml by defs-gen - do not edit, change the source
-// defs-gen 2
+// @generated from devices/bedrock_ni/registers.toml by defs-gen - do not edit, change the source
+// defs-gen 3
 // input sha256 04d5ffad594b1763f0ae5bf21018846c021831d98979a127f60036b8abad3823
 // Bedrock network interface (NI) registers: field layouts, port error bits and routing tables
 #![allow(dead_code)]
+#![allow(clippy::doc_markdown)]
+#![cfg_attr(rustfmt, rustfmt_skip)]
 
 /// Link-level protocol status. The header calls bit 1 link up and bit 2 remote power; the header gives no encoding for the two-bit status, so the meaning (established)
 pub mod port_status {
@@ -40,6 +42,7 @@ pub mod port_status {
     }
 }
 /// Writing this register resets the network interface. The header's comments say bit 0 sends a link reset to the peer, bit 1 sends a warm reset over the  (established)
+#[allow(clippy::module_inception)]
 pub mod port_reset {
     pub const WIDTH: u32 = 64;
     pub const OFFSET: u64 = 0x680008;

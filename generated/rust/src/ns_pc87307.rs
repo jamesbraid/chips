@@ -1,8 +1,10 @@
-// generated from devices/ns-pc87307/registers.toml by defs-gen - do not edit, change the source
-// defs-gen 2
+// @generated from devices/ns-pc87307/registers.toml by defs-gen - do not edit, change the source
+// defs-gen 3
 // input sha256 fdc452855d3492175a63ce3946a9d26e06e456dfb5396f49a49e4e0a4620bb82
 // National Semiconductor PC87307 Super I/O (marked NS87307) as wired in the Visual Workstation 320 and 540
 #![allow(dead_code)]
+#![allow(clippy::doc_markdown)]
+#![cfg_attr(rustfmt, rustfmt_skip)]
 
 /// Plug and Play set RD_DATA port, used only by the Plug and Play ISA protocol. Bits 1 and 0 are fixed at 11. (established)
 pub mod pnp_rd_data {
