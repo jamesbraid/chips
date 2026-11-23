@@ -1,5 +1,5 @@
 // @generated from devices/heart/registers.toml by defs-gen - do not edit, change the source
-// defs-gen 3
+// defs-gen 4
 // input sha256 ae368d15e21d51d42b2115a87fdc90eb6aebf0433a74724323058784d2a713ad
 // HEART (Octane system controller)
 #![allow(dead_code)]

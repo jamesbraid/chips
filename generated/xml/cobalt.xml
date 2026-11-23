@@ -1,6 +1,6 @@
 <?xml version="1.0" ?>
 <!-- generated from devices/cobalt/registers.toml by defs-gen - do not edit, change the source -->
-<!-- defs-gen 3 -->
+<!-- defs-gen 4 -->
 <!-- input sha256 227f99188f7621959f0a363f89816adf63abc0248581cdd907555397055db96e -->
 <genxml unit="cobalt" prefix="COBALT" title="Cobalt (system ASIC of the SGI Visual Workstation 320 and 540): the CPU block with its timer, and the interrupt controller">
   <doc>Offsets, bit positions and values come from the Linux Visual Workstation code (kernel 2.2 to 3.14) and are cross-checked against SGI's shipped Windows NT 4.0 HAL (halborg.dll 1.3). Grades: established means the shipped HAL programs the item the same way (or the item is its own table); inferred means only Linux defines it, a software expectation of Linux and not of the shipped system. Where the HAL differs, the item says so. The chip's own specification is not held. Offsets are relative to the base of each block (CPU_PHYS and APIC_PHYS below). Linux reads and writes every register as a 32-bit word. Names: the register and constant names follow the public Linux header and the shipped HAL's own function names (where the HAL names the feature); the memory controller, which neither names, is the separate unit cobalt_mc with names of our own. Reset values are unknown throughout. Only what the kernel, the NT HAL and the PROM touch is here; the graphics engine registers are not.</doc>

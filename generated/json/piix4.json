@@ -1,5 +1,5 @@
 {
- "generator": "defs-gen 3",
+ "generator": "defs-gen 4",
  "input_sha256": "9419598440ab2c5e0a78081f4f4024eecd7686d44a9b3e8d221f0b1de5cd234d",
  "schema": "defs-flat/1",
  "source": "devices/piix4/registers.toml",

@@ -1,6 +1,6 @@
 <?xml version="1.0" ?>
 <!-- generated from devices/tiocp/registers.toml by defs-gen - do not edit, change the source -->
-<!-- defs-gen 3 -->
+<!-- defs-gen 4 -->
 <!-- input sha256 5576c5319a7ca17a848cd2e3f88bc30b0d3db1e85c584f64b272f1060cb44aef -->
 <genxml unit="tiocp" prefix="TIOCP" title="TIOCP (PCI-X bridge, later family), as the Origin 3000 family Bridge driver reaches it" from="census: loads and stores in the shipped binaries; names from the shipped diagnostic or monitor name, or the public Linux driver name where none is printed (config register_names)">
   <doc>Offsets and widths are established: a load or store in the cited routine reaches that offset with that width. Names are inferred from the accessor routine names the shipped objects carry. Constants are masks and values the code applies; their meaning is not read. Reset values are unknown throughout.</doc>

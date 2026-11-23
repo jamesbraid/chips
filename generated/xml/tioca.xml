@@ -1,6 +1,6 @@
 <?xml version="1.0" ?>
 <!-- generated from devices/tioca/registers.toml by defs-gen - do not edit, change the source -->
-<!-- defs-gen 3 -->
+<!-- defs-gen 4 -->
 <!-- input sha256 2b0f87fc2049e975dc7d32a6177c47d984f40da6459eabf218c44e458d55da3a -->
 <genxml unit="tioca" prefix="TIOCA" title="TIOCA (TIO AGP bridge), as SGI's Linux Altix platform code defines it">
   <doc>Names, offsets and bit fields are the definitions of SGI's Linux Altix platform code (header, AGP and PCI provider, v5.3). The TIOCA's own register specification is not held. The header gives no access direction and no reset value for any register. Each row states its access and the grade of that reading from what the provider does; no reset value is known.</doc>

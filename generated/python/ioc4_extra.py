@@ -1,5 +1,5 @@
 """generated from devices/ioc4/registers-extra.toml by defs-gen - do not edit, change the source
-defs-gen 3
+defs-gen 4
 input sha256 c76a9ebe973b864f75d3bd181dbaa7e4ea1a9a32767fda897711641d5807f1b2
 IOC4 registers outside the census"""
 

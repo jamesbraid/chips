@@ -1,6 +1,6 @@
 <?xml version="1.0" ?>
 <!-- generated from devices/r5000_cp0/registers.toml by defs-gen - do not edit, change the source -->
-<!-- defs-gen 3 -->
+<!-- defs-gen 4 -->
 <!-- input sha256 6a9b39abb11b3b99b791300a4de226fd477602f6718575488b04e14313a7ffdf -->
 <genxml unit="r5000_cp0" prefix="R5KCP0" title="MIPS R5000 CP0 Config, Status, PageMask and LLAddr field positions, and FCR31 flags" from="NEC VR5000/VR5000A 64-/32-bit Microprocessor User's Manual, U11761EJ6V0UM00, sixth edition, April 2001">
   <doc>Constants for the R5000 processor's CP0 registers and FCR31 as the NEC VR5000 user's manual lays them out: the Config field positions, the Status fields and the bits a warm entry sets, the PageMask field and its legal page sizes, the LLAddr diagnostic layout, and the FCR31 field positions. This unit holds constants only; the reset, write and exception rules are in devices/r5000/README.md. Grades: established means the cited manual states it; unknown items are listed in the page.</doc>

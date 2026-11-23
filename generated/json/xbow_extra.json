@@ -1,5 +1,5 @@
 {
- "generator": "defs-gen 3",
+ "generator": "defs-gen 4",
  "input_sha256": "5d0eaa0d4362a4e57ae74a9515b91ea99d1ae0b25cbc4f8dbf94696f4a778ea6",
  "schema": "defs-flat/1",
  "source": "devices/xbow/registers-extra.toml",

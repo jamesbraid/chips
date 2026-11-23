@@ -1,6 +1,6 @@
 <?xml version="1.0" ?>
 <!-- generated from devices/ds2502/registers.toml by defs-gen - do not edit, change the source -->
-<!-- defs-gen 3 -->
+<!-- defs-gen 4 -->
 <!-- input sha256 9941eae5ea6d1a9225c3286c2cb883222d28d7bacbc24cc284abb93703acdb6e -->
 <genxml unit="ds2502" prefix="DS2502" title="Maxim DS2502 1 Kbit add-only 1-Wire memory: ROM, commands, memory layout and timing" from="Maxim DS2502 1Kb Add-Only Memory datasheet, document 19-5075, revision 12/11">
   <doc>The add-only 1-Wire part with a factory-lasered 64-bit ROM, 128 bytes of EPROM in four 32-byte pages and eight status bytes. This unit holds the constants only: the family code, sizes, the CRC polynomial, the command opcodes and the published timing windows. Grades: established means the manufacturer datasheet states the value; inferred means arithmetic on a stated value. The part fitted to any SGI board, and its contents, are not stated by the datasheet and are not listed here.</doc>

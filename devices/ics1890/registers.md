@@ -1,5 +1,5 @@
 <!-- generated from devices/ics1890/registers.toml by defs-gen - do not edit, change the source -->
-<!-- defs-gen 3 -->
+<!-- defs-gen 4 -->
 <!-- input sha256 2677952e5dcb35c5d7263390a75249ba01d1e1a2864c98a6cfa1dfe1b408648f -->
 
 # ICS1890 10Base-T/100Base-TX PHYceiver, MII management registers (Octane base I/O)

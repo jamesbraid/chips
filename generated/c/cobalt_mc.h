@@ -1,6 +1,6 @@
 /* generated from devices/cobalt_mc/registers.toml by defs-gen - do not edit,
  * change the source */
-/* defs-gen 3 */
+/* defs-gen 4 */
 /* input sha256 73f90f85d2cdc65dda9e1c8485d018d0bbc17dbb41d1f46b9ab0ab950e2b71a5 */
 /* Cobalt memory controller of the SGI Visual Workstation 320 and 540: ECC
  * control, error reporting and the bank registers */

@@ -1,5 +1,5 @@
 {
- "generator": "defs-gen 3",
+ "generator": "defs-gen 4",
  "input_sha256": "5be86454e6c098bd3031660190833330588ae9a2328ee39958e21d60c7e0f456",
  "schema": "defs-flat/1",
  "source": "devices/router_origin3000_rbrick/registers.toml",

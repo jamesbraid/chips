@@ -1,6 +1,6 @@
 /* generated from devices/uv5/registers.toml by defs-gen - do not edit, change
  * the source */
-/* defs-gen 3 */
+/* defs-gen 4 */
 /* input sha256 8993ab7dfd44166551161add392c877a885cd768dbb0fec5b47295afa7457b29 */
 /* UV5 (UV 500 generation) hub MMR map */
 #ifndef UV5_GEN_H

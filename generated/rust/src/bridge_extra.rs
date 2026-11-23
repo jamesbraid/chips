@@ -1,5 +1,5 @@
 // @generated from devices/bridge/registers-extra.toml by defs-gen - do not edit, change the source
-// defs-gen 3
+// defs-gen 4
 // input sha256 d79809f695c80a0f37db113eb9f4cd966cf14bc3f14cab4c534195c46a2ac4f8
 // Bridge-family registers and bits outside the census
 #![allow(dead_code)]

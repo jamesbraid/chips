@@ -1,6 +1,6 @@
 /* generated from devices/tio/registers.toml by defs-gen - do not edit, change
  * the source */
-/* defs-gen 3 */
+/* defs-gen 4 */
 /* input sha256 b463b599a6e231ec27eb619f305e4db2b5869fa84254ccd3fe4d207973c9b22e */
 /* TIO (NUMAlink I/O node ASIC of the Altix generation), as SGI's Linux platform
  * code names its registers */

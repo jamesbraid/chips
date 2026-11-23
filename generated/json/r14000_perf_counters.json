@@ -1,5 +1,5 @@
 {
- "generator": "defs-gen 3",
+ "generator": "defs-gen 4",
  "input_sha256": "7eecccb8ac094c1de6c36069e754426c42e0d4e6a5dc0a503425e631c68b20df",
  "schema": "defs-flat/1",
  "source": "devices/r14000_perf_counters/registers.toml",

@@ -1,5 +1,5 @@
 // @generated from devices/isp2200/registers.toml by defs-gen - do not edit, change the source
-// defs-gen 3
+// defs-gen 4
 // input sha256 25a998dedd313ff21d1b53226cd2a6032d477219d8ee05e36c714d5d4a76e4ef
 // QLogic ISP2200 Fibre Channel host adapter (PCI 1077:2200), the host interface the public drivers use
 #![allow(dead_code)]

@@ -1,6 +1,6 @@
 /* generated from devices/xio_fc/registers.toml by defs-gen - do not edit,
  * change the source */
-/* defs-gen 3 */
+/* defs-gen 4 */
 /* input sha256 57e8737a3343b26b5b9baa63badf937ee000b92384357355a269d98dd44823d0 */
 /* XIO Fibre Channel adapter (Adaptec AIC-1160 board), command and register
  * contract */

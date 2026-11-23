@@ -1,6 +1,6 @@
 <?xml version="1.0" ?>
 <!-- generated from devices/bedrock_windows/registers.toml by defs-gen - do not edit, change the source -->
-<!-- defs-gen 3 -->
+<!-- defs-gen 4 -->
 <!-- input sha256 4ce22aad6bef30dbc9d45d94765826ca9936e0ce29420eac7da13078ea7efa6d -->
 <genxml unit="bedrock_windows" prefix="BEDROCK_WIN" title="Bedrock register arrays whose extent is a fact of its own">
   <doc>Runs of consecutive Bedrock registers seen as one array each, so that the end of the run is data. Each entry overlaps the registers listed one by one in the other Bedrock units, which carry the individual names; the two views describe the same storage. The offsets, names and counts come from the IRIX register headers named in each entry.</doc>

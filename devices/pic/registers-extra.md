@@ -1,5 +1,5 @@
 <!-- generated from devices/pic/registers-extra.toml by defs-gen - do not edit, change the source -->
-<!-- defs-gen 3 -->
+<!-- defs-gen 4 -->
 <!-- input sha256 8625d442093f1d068354ca25ec403aee88e928e39d207604767d6738ad20a128 -->
 
 # PIC bits outside the census

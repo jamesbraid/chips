@@ -1,5 +1,5 @@
 {
- "generator": "defs-gen 3",
+ "generator": "defs-gen 4",
  "input_sha256": "4c3ea2546f72bcace270f575e55b39b69ccbbb218f4ea2c4bd2699014b6f3a17",
  "schema": "defs-flat/1",
  "source": "devices/synergy/registers.toml",

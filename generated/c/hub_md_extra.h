@@ -1,6 +1,6 @@
 /* generated from devices/hub_md/registers-extra.toml by defs-gen - do not edit,
  * change the source */
-/* defs-gen 3 */
+/* defs-gen 4 */
 /* input sha256 df97b661d44b747c810d4490e53a5804b7bb12cb4a2de043edf26b3990c7f0d1 */
 /* Hub memory and directory register layouts and constants outside the census */
 #ifndef HUB_GEN_H

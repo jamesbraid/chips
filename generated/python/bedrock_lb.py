@@ -1,5 +1,5 @@
 """generated from devices/bedrock_lb/registers.toml by defs-gen - do not edit, change the source
-defs-gen 3
+defs-gen 4
 input sha256 b37d365dbb57af8f38c2d786617250b65c049cb8d901dc94e622247577944aba
 Bedrock local block (LB) registers: field layouts, reset statements and the vector engine"""
 

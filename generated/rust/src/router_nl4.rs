@@ -1,5 +1,5 @@
 // @generated from devices/router_nl4/registers.toml by defs-gen - do not edit, change the source
-// defs-gen 3
+// defs-gen 4
 // input sha256 8b308a8b92038c2fa56d72eb843a6e1e2ec8301ecc496cafbe84909de51dcf9a
 // NUMAlink 4 router (R4): global, local-block and per-port registers, as the SN2 PROM's error and dump tables name them
 #![allow(dead_code)]

@@ -1,5 +1,5 @@
 <!-- generated from devices/r5000_identity/registers.toml by defs-gen - do not edit, change the source -->
-<!-- defs-gen 3 -->
+<!-- defs-gen 4 -->
 <!-- input sha256 07e1068ce26ce0f77cf78067f4062c9a866cd127df6ad62dd0ea79185aebe2d0 -->
 
 # MIPS R5000 family processor identity, reset entries, cache geometry and TLB size

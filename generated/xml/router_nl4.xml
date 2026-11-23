@@ -1,6 +1,6 @@
 <?xml version="1.0" ?>
 <!-- generated from devices/router_nl4/registers.toml by defs-gen - do not edit, change the source -->
-<!-- defs-gen 3 -->
+<!-- defs-gen 4 -->
 <!-- input sha256 8b308a8b92038c2fa56d72eb843a6e1e2ec8301ecc496cafbe84909de51dcf9a -->
 <genxml unit="router_nl4" prefix="ROUTER_NL4" title="NUMAlink 4 router (R4): global, local-block and per-port registers, as the SN2 PROM's error and dump tables name them">
   <doc>Register numbers, names and bit ranges come from the register description table that the SN2 PROM images carry for the NUMAlink 4 router (names with the prefix R4_, here without it). The table gives each register's number in the router's own register space, its name and its fields with bit positions and a small flags value. It states no reset values and no semantics, so every reset is unknown, roles are inferred from the names, and an access of r or rw is inferred from the flags (bit 1 set means writable, otherwise r; the flag-8 scratch aliases have neither bit and their r is a default). Width 64 is inferred: every number is a multiple of 8 and the SHub's own vector accesses are doublewords. The eight ports are lettered A to H in the PROM and indexed 0 to 7 here (the PROM's own port number is the index plus one). A per-port register is recorded at port A with count 8; the stride is the one the table shows (the port-block distance for registers inside the port blocks, 8 for the per-port registers kept in the global block). The prose is in devices/router_nl4/README.md.</doc>

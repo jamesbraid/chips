@@ -1,6 +1,6 @@
 <?xml version="1.0" ?>
 <!-- generated from devices/uv5/registers.toml by defs-gen - do not edit, change the source -->
-<!-- defs-gen 3 -->
+<!-- defs-gen 4 -->
 <!-- input sha256 8993ab7dfd44166551161add392c877a885cd768dbb0fec5b47295afa7457b29 -->
 <genxml unit="uv5" prefix="UV5" title="UV5 (UV 500 generation) hub MMR map" from="Linux v5.4 SGI UV platform MMR header (GPL); UV5 rows from the v6.6 header">
   <doc>Offsets are relative to the hub local MMR window (or the pnode-indexed global window). Offsets, field positions and access letters are definitions in SGI-written Linux platform code. Field positions are the header bitfield structs read least-significant first; reserved and undefined bits are omitted. Role text is a paraphrase of how the kernel uses the register and is inferred. Reset values are unknown: the header states none.</doc>

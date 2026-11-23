@@ -1,5 +1,5 @@
 <!-- generated from devices/lucent_ohci/registers.toml by defs-gen - do not edit, change the source -->
-<!-- defs-gen 3 -->
+<!-- defs-gen 4 -->
 <!-- input sha256 cf7e5ea835b8e61828bc429fe75da6b0727abc470a22bf2239f922f8dba5d646 -->
 
 # AT&T/Lucent 11C1:5802 two-port OHCI USB host controller (Origin 300 IO-8), the register and identity facts the held sources establish

@@ -1,6 +1,6 @@
 <?xml version="1.0" ?>
 <!-- generated from devices/xframe/registers.toml by defs-gen - do not edit, change the source -->
-<!-- defs-gen 3 -->
+<!-- defs-gen 4 -->
 <!-- input sha256 3f1ba58411bf364f6941e22e5f572e709f77f3c0d7ce1256a016fceffaeb02e0 -->
 <genxml unit="xframe" prefix="XFRAME" title="Neterion Xframe 10-Gigabit Ethernet controller (SGI 10-Gigabit Ethernet card), the offsets, bits and layouts the held sources establish" from="Linux s2io driver">
   <doc>The Neterion (formerly S2io) Xframe 10-gigabit Ethernet controller on the SGI 10-Gigabit Ethernet card. Grades say how each item was derived: established means the IRIX xg driver object states it on disassembly, or the card manual gives it; inferred means a software expectation taken from a public Linux or OpenBSD driver, from the IRIX driver's behaviour, or from a card manual value the manual does not put in a register table; unknown means no held source settles the value. The offsets here are the register names the public drivers use, so they are software expectations of the card, not measured silicon behaviour. Reset values are not held anywhere in these sources, so each register's reset is unknown. The prose page holds the interrupt chain, link state, receive path and open questions.</doc>

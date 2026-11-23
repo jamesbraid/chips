@@ -1,6 +1,6 @@
 /* generated from devices/bedrock_pi/registers.toml by defs-gen - do not edit,
  * change the source */
-/* defs-gen 3 */
+/* defs-gen 4 */
 /* input sha256 56a9d9b03087a7970d1facfa6db42468dac86685a2fa0f13c9d816cce0e4d02e */
 /* Bedrock processor interface (PI) registers: field layouts, interrupt banks,
  * real-time clock, graphics credits and error capture */

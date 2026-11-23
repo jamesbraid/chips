@@ -1,6 +1,6 @@
 /* generated from devices/hub_windows/registers.toml by defs-gen - do not edit,
  * change the source */
-/* defs-gen 3 */
+/* defs-gen 4 */
 /* input sha256 433dec6921b0152c218127b867a36172e0ae5ba71149fa793336f17dac3023f3 */
 /* Hub register arrays whose extent is a fact of its own */
 #ifndef HUB_WIN_GEN_H

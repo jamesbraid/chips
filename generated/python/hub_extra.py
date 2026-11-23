@@ -1,5 +1,5 @@
 """generated from devices/hub/registers-extra.toml by defs-gen - do not edit, change the source
-defs-gen 3
+defs-gen 4
 input sha256 7704657248a0fc8036bec883c4fcec87a565d969ba87cc19c1e9bc8d2ae9aa05
 Hub block transfer engine registers and control bits outside the census"""
 

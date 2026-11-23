@@ -1,5 +1,5 @@
 {
- "generator": "defs-gen 3",
+ "generator": "defs-gen 4",
  "input_sha256": "4df134dc1016e8cf057c55413f2b161f333b9b165e5097b4b0016efb318a1b37",
  "schema": "defs-flat/1",
  "source": "devices/r12000a_variant/registers.toml",

@@ -1,6 +1,6 @@
 <?xml version="1.0" ?>
 <!-- generated from devices/shub/registers.toml by defs-gen - do not edit, change the source -->
-<!-- defs-gen 3 -->
+<!-- defs-gen 4 -->
 <!-- input sha256 c27c4ba4b09b56b6270264238125032654f58c5a4b6632a33d80294f299d9aed -->
 <genxml unit="shub" prefix="SHUB" title="SHub 1 registers outside the I/O interface: interrupts, local block, real-time clock, PIO write status, TLB purge, junk bus LEDs">
   <doc>SHub 1 offsets as the SGI Linux ia64 platform header defines them (SH1_ names), relative to the node's register space; the SHub 2 overlay changes them. Every register is 64 bits wide unless noted, because the kernel reaches all of them with 64-bit loads and stores. The header gives neither the unit a register belongs to nor reset values; the unit named in each doc is inferred from the register's name prefix and address block. Reset values are unknown except where the header's INIT macro names a value, which is recorded as inferred. Roles are paraphrased from the header comments and the kernel's use. For a register Linux does not define, a register-level grade of established covers the offset, width and direction read in the PROM image; what the register means is graded in its fields and doc, inferred unless stated.</doc>

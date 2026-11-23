@@ -1,6 +1,6 @@
 <?xml version="1.0" ?>
 <!-- generated from devices/bedrock/registers.toml by defs-gen - do not edit, change the source -->
-<!-- defs-gen 3 -->
+<!-- defs-gen 4 -->
 <!-- input sha256 79078529ee64620ab2f48db1267490d7a964dfd3b79ea39d037dc224721f8047 -->
 <genxml unit="bedrock" prefix="BEDROCK" title="Bedrock (node controller), Origin 3000 family" from="census: loads and stores in the shipped binaries; names from the shipped diagnostic or monitor name, or the public Linux driver name where none is printed (config register_names)">
   <doc>Offsets and widths are established: a load or store in the cited routine reaches that offset with that width. Names are inferred from the accessor routine names the shipped objects carry. Constants are masks and values the code applies; their meaning is not read. Reset values are unknown unless a register entry cites the source that states one. Bedrock offsets: bits 23:0 of the window address the code forms; the window literals sit 0x1000000 above them, so add 0x1000000 for the offset the kernel uses. Offsets with bit 23 set come through the node-indexed alias (the code adds the node number &lt;&lt; 33); the same register is at offset - 0x800000 in the local alias [I]. Example: 0xe80100, the network-interface error word, is 0x680100 in the local alias, where the code reads its neighbours (0x680108 to 0x680120) directly.</doc>

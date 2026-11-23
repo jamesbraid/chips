@@ -1,5 +1,5 @@
 // @generated from devices/ice1724/registers.toml by defs-gen - do not edit, change the source
-// defs-gen 3
+// defs-gen 4
 // input sha256 dd9a3eb1279d5d296b0ebe4786280e365b30feac027d7ff9ddb8d012a80e8ecf
 // VIA/IC Ensemble ICE1724 (Envy24HT) PCI audio controller registers
 #![allow(dead_code)]

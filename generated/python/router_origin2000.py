@@ -1,5 +1,5 @@
 """generated from devices/router_origin2000/registers.toml by defs-gen - do not edit, change the source
-defs-gen 3
+defs-gen 4
 input sha256 55acab457ef018bc4853a2b04d093f28069ad2bb79ae1b72e1c51ad76c5c6feb
 network router as the Origin 2000 kernel reaches it (register numbers of a vector access)"""
 

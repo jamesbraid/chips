@@ -1,5 +1,5 @@
 {
- "generator": "defs-gen 3",
+ "generator": "defs-gen 4",
  "input_sha256": "cf7e5ea835b8e61828bc429fe75da6b0727abc470a22bf2239f922f8dba5d646",
  "schema": "defs-flat/1",
  "source": "devices/lucent_ohci/registers.toml",

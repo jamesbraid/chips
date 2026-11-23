@@ -1,5 +1,5 @@
 {
- "generator": "defs-gen 3",
+ "generator": "defs-gen 4",
  "input_sha256": "189e7fa9ecefa172f0e241d791ba09c972fbdd69db03706a5ac043de76587a1e",
  "schema": "defs-flat/1",
  "source": "devices/heart/registers-extra.toml",

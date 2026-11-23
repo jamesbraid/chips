@@ -1,5 +1,5 @@
 {
- "generator": "defs-gen 3",
+ "generator": "defs-gen 4",
  "input_sha256": "73f90f85d2cdc65dda9e1c8485d018d0bbc17dbb41d1f46b9ab0ab950e2b71a5",
  "schema": "defs-flat/1",
  "source": "devices/cobalt_mc/registers.toml",

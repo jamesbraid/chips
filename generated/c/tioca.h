@@ -1,6 +1,6 @@
 /* generated from devices/tioca/registers.toml by defs-gen - do not edit, change
  * the source */
-/* defs-gen 3 */
+/* defs-gen 4 */
 /* input sha256 2b0f87fc2049e975dc7d32a6177c47d984f40da6459eabf218c44e458d55da3a */
 /* TIOCA (TIO AGP bridge), as SGI's Linux Altix platform code defines it */
 #ifndef TIOCA_GEN_H

@@ -1,6 +1,6 @@
 /* generated from devices/tioce/registers.toml by defs-gen - do not edit, change
  * the source */
-/* defs-gen 3 */
+/* defs-gen 4 */
 /* input sha256 52905da533c0fdd4266ab81f4644ea275734bd46daf5436fb5dcce504d25b373 */
 /* TIOCE (TIO PCI Express bridge), as SGI's Linux Altix platform code defines it
  */
