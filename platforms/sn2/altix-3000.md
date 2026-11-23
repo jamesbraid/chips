@@ -42,7 +42,7 @@ The rack chapter, the PX-brick chapter and the other brick chapters were not rea
   and "Internal NUMAlink". p.101's "two internal 3.2-GB/s (each direction) NUMAlink channels (one per node)" is read as
   that same link counted from each node's port: 3.2 GB/s each way is 6.4 GB/s in total (inferred reading of p.101).
 - Outside the C-brick: "two external 1.6-GB/s (each direction) NUMAlink channels (one per node)" and two Xtown2
-  channels per node, 1.2 GB/s each direction (p.101). The guide does not name the external generation on the pages
+  channels, one per node, 1.2 GB/s each direction (p.101). The guide does not name the external generation on the pages
   read. The driver guide's SC-brick has two "6.4-GB/s (each direction)" NUMAlink channels and two "2.4-GB/s" Xtown2
   channels (007-4520-006 p.17). That differs from p.101 and may be a product or revision difference; not settled.
 
@@ -95,7 +95,7 @@ IX chapter is not used.
 
 | PIC (widget) | Bus | Slots | Speed | Contents |
 |---|---|---|---|---|
-| Bottom (12) | 1 | Slot 1: IO9 base I/O card (devices 1, 3 and 4). Slot 2: serial daughtercard slot (device 2, 007-4604-001 p.2), no bus connection | 66 MHz PCI (the IO9 is a 66 MHz PCI card, 007-4520-006 p.38; the 3300 capture prints `PCI:66MHz:64-bit`) | IO9: IOC4 (1), SCSI (3), Ethernet (4), DVD-ROM |
+| Bottom (12) | 1 | Slot 1: IO9 base I/O card (devices 1, 3 and 4). Slot 2: serial daughtercard slot (bus 1 slot 2 with no bus resources, 007-4604-001 p.2; device 2 by the slot-is-device rule, driver p.54), no bus connection | 66 MHz PCI (the IO9 is a 66 MHz PCI card, 007-4520-006 p.38; the 3300 capture prints `PCI:66MHz:64-bit`) | IO9: IOC4 (1), SCSI (3), Ethernet (4), DVD-ROM |
 | Bottom (12) | 2 | Slots 1 and 2 | 133 MHz with one card; 100 MHz with two | Cards |
 | Middle (15) | 3 | Slots 1 and 2 | 133 MHz with one card; 100 MHz with two | Cards |
 | Middle (15) | 4 | Slots 1 and 2 | 133 MHz with one card; 100 MHz with two | Cards |
@@ -128,8 +128,8 @@ gives a ceiling, not a measured speed.
 - **Widget numbers are crossbar port numbers (inferred).** Linux names crossbar ports `0x8` to `0xf` (`XBOW_PORT_C` is
   `0xc`, `XBOW_PORT_F` `0xf`), so Port A is widget 10 and Port B widget 11, which is why the connectors are XIO 10 and
   XIO 11. The middle PIC's own PCI side is Port F, widget 15; Ports C and D reach the lower and upper PICs, widgets 12 and
-  13. That fits every drawing here and gives the `Port F` label a meaning; no held text states it. The SAL 10.54 table at
-  `0xffc2b2d8` gives widgets 12, 13 and 15 the first buses 1, 5 and 3 for both type bytes `0x3d` (IX) and `0x23` (PX)
+  13. That fits every drawing here and gives the `Port F` label a meaning; no held text states it. The table at
+  `0xffc2b2d8` in `shub1snprom.bin` (snprom 10.54 package, SAL 5.04) gives widgets 12, 13 and 15 the first buses 1, 5 and 3 for both type bytes `0x3d` (IX) and `0x23` (PX)
   (established as a binary reading).
 - **Not settled.** Whether the XIO 10 cable reaches Port A by the upper box as drawn (a capture from an IX-brick with one
   C-brick cabled to XIO 11 alone would settle the hardware graph side); the FPGA's role; the SCSI channel behind the external
@@ -372,3 +372,21 @@ unknowns table that this section now answers. Renewed independent review is need
 
 Not reviewed. Changed claims: the IO9 device numbers (IOC4 1, SCSI 3, Ethernet 4, from the Altix 3300 capture), the
 widget-number reading and the bus 1 table row. Renewed independent review is needed before these are cleared.
+
+### Review (2026-11-23)
+
+Independent review, 2026-11-23, by a reviewer who wrote none of these pages. Examined chips revision f2d9873e. Scope: the
+changes dated 2026-11-21 and 2026-11-22 (IX-brick wiring, device numbers and widget reading, channel counts, the 17U rack,
+routed layout, router port roles, the SHub generation grades and the Bx2 SHub 1.2 statement). Read in the held PDFs:
+007-4579-001 pp.28, 33, 77, 80, 81, 82, 87, 88, 99, 101, 102, 105, 106, 113, 115, 120, 121, 137; 007-4520-006 pp.17 to 19,
+37, 38, 52, 54, 55; 007-4604-001 pp.2, 4, 10; 007-4605-001 p.3; 007-4377-002 Figure 3-3; the two Usenet posts; `README.snprom`;
+and the `0xffc2b2d8` table in `shub1snprom.bin` (sha256 `51ccf9ad...`).
+
+Confirmed: the figure readings (middle PIC faces the C-brick, Ports C and D to the other PICs, Port A upper box, XIO 10 and
+11 positions on the IX rear, Figures 3-4 and 2-1 routing, router ports 1, 6, 7, 8), widget 12, 13, 15 pairs, the IO9 device
+numbers 1, 3, 4 in both posts, the widget table rows `0x3d` and `0x23`, the 17U rack on pp.77 and 87, the counts, and the
+Bx2 "SHUB 1.2" label. Grades fit. Corrected: the p.101 Xtown2 line read "two per node" where the guide gives two in total,
+one per node; the device-2 and `0xffc2b2d8` source wording. Not verified: the `030-1771` card part in Origin 350 captures. The `XBOW_PORT_C` and `XBOW_PORT_F` values are in
+`arch/ia64/sn/include/xtalk/xbow.h` of Linux v5.3 (ports 8 to F). Figure 5-2 also labels each node's network and I/O
+arrows "3.2 GB/s" and "2.4 GB/s full duplex", which is p.101's 1.6 and 1.2 GB/s each way. The "Not reviewed" notes above are
+cleared by this review.
