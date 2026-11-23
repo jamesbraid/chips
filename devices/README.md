@@ -40,6 +40,7 @@
 | [gbe/](gbe/README.md) | GBE | The register header for GBE is canonical in the crime repository (`GBE.h` and `GBE_DECODE.h`); this repository does... |
 | [heart/](heart/README.md) | HEART | Mode: no-spec (see references/documents/specs.md: no specification is held). |
 | [hollywood-dsp/](hollywood-dsp/README.md) | SGI Hollywood DSP audio block (HPC-attached 56000-family DSP) | Not the Sonic Solutions HDSP PCI audio card, which is a different product. |
+| [hpc1/](hpc1/README.md) | HPC1: the Indigo's peripheral controller | The first-generation peripheral controller (HPC1, and the HPC1.5 revision) of the SGI Indigo, on both the R3000... |
 | [hpc3_enet/](hpc3_enet/README.md) | HPC3 Ethernet DMA channels | The HPC3 is the peripheral controller on the Indy's GIO64 bus. |
 | [hub/](hub/README.md) | Hub | Mode: no-spec (see references/documents/specs.md: no Hub specification is held). |
 | [hub_md/](hub_md/README.md) | Hub memory and directory | The Hub's memory and directory unit is its memory controller and the keeper of the coherence directory. |

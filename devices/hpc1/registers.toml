@@ -1,0 +1,742 @@
+unit = "hpc1"
+prefix = "HPC1"
+title = "SGI HPC1 peripheral controller (Indigo, R3000 and R4000 boards)"
+doc = "The first-generation peripheral controller of the Indigo: Ethernet, SCSI and parallel-port DMA channels, the DSP audio interface, an endian and revision byte, the auxiliary byte that bit-bangs the serial EEPROM, and the decode of the peripheral windows behind it (Ethernet, SCSI, serial, clock, interrupt controller). Offsets are from the start of one HPC1 window; the primary HPC1 sits at physical 1fb80000. Every register sits in a 32-bit slot and a narrower register uses the byte lane its field bits name. Grades say how each item was derived: established means read in a shipped IRIX driver object, the shipped developer header, a PROM image or a public driver as the source records; inferred means a reasoned reading, with the reasoning in devices/hpc1/README.md. No specification for the HPC1 is held."
+from = "IRIX developer header"
+public_from = ["IRIX", "NetBSD", "OpenBSD", "Indigo PROM"]
+
+[spaces.hpc1]
+unit = "byte"
+doc = "Byte offsets from the start of one HPC1 window. A register is one 32-bit word; a fields entry gives the lane that a byte or halfword register occupies."
+
+[enums.scsi_direction]
+values = { to_device = { value = 0, grade = "established" }, to_memory = { value = 1, grade = "established" } }
+
+# ---------------------------------------------------------------- Ethernet DMA
+
+[registers.enet_probe]
+offset = 0x00
+space = "hpc1"
+access = "r"
+width = 32
+reset = "unknown"
+grade = "inferred"
+from = "IRIX developer header"
+doc = "The word at the window base. Software probes it with a guarded read to find out whether a controller is present at the slot; what the word holds is not stated."
+
+[registers.enet_xcount]
+offset = 0x08
+space = "hpc1"
+access = "rw"
+width = 32
+reset = "unknown"
+grade = "unknown"
+from = "IRIX Ethernet driver"
+doc = "Transmit count register. The driver's register dump prints it and nothing writes it; its meaning is not settled."
+
+[registers.enet_cxbp]
+offset = 0x0c
+space = "hpc1"
+access = "rw"
+width = 32
+reset = "unknown"
+grade = "unknown"
+from = "IRIX Ethernet driver"
+doc = "Current transmit buffer pointer, by the dump label. Read by the register dump only; no driver writes it."
+
+[registers.enet_nxbdp]
+offset = 0x10
+space = "hpc1"
+access = "rw"
+width = 32
+reset = "unknown"
+grade = "established"
+from = "IRIX Ethernet driver; NetBSD register header"
+doc = "Next transmit buffer descriptor pointer: the physical address of the descriptor the transmit channel fetches next. Software writes the head of the queue here, with bits 31:29 clear, before it starts the channel."
+
+[registers.enet_xbc]
+offset = 0x14
+space = "hpc1"
+access = "rw"
+width = 32
+reset = "unknown"
+grade = "inferred"
+from = "IRIX Ethernet driver; NetBSD register header"
+doc = "Transmit byte count of the descriptor in progress. Named by the dump and by the public driver; no driver reads it in a decision."
+
+[registers.enet_xpntr]
+offset = 0x18
+space = "hpc1"
+access = "rw"
+width = 32
+reset = "unknown"
+grade = "unknown"
+from = "IRIX Ethernet driver"
+doc = "Transmit FIFO pointer, by the dump label. Only dumped."
+
+[registers.enet_xfifo]
+offset = 0x1c
+space = "hpc1"
+access = "rw"
+width = 32
+reset = "unknown"
+grade = "unknown"
+from = "IRIX Ethernet driver"
+doc = "Transmit FIFO data port, by the dump label. Only dumped."
+
+[registers.enet_cxbdp]
+offset = 0x20
+space = "hpc1"
+access = "rw"
+width = 32
+reset = "unknown"
+grade = "established"
+from = "IRIX Ethernet driver; NetBSD register header"
+doc = "Current transmit buffer descriptor pointer. Both drivers load it with the same address they put in the next-descriptor pointer when they start or restart the channel."
+
+[registers.enet_cpfxbdp]
+offset = 0x24
+space = "hpc1"
+access = "rw"
+width = 32
+reset = "unknown"
+grade = "established"
+from = "IRIX Ethernet driver; NetBSD register header"
+doc = "Current first transmit buffer descriptor pointer: the first descriptor of the frame being sent. Written with the queue head at a restart."
+
+[registers.enet_ppfxbdp]
+offset = 0x28
+space = "hpc1"
+access = "rw"
+width = 32
+reset = "unknown"
+grade = "inferred"
+from = "IRIX Ethernet driver; NetBSD register header"
+doc = "Previous first transmit buffer descriptor pointer. Named by the dump and the public header; neither driver writes it."
+
+[registers.enet_intdelay]
+offset = 0x2c
+space = "hpc1"
+access = "rw"
+width = 32
+reset = "unknown"
+grade = "established"
+from = "IRIX Ethernet driver; NetBSD register header"
+doc = "Receive interrupt delay count. Bit 24 set (0x01000000) disables the delay; the IRIX driver writes that value at initialisation and writes its tunable delay when it re-enables the delay after a received frame."
+
+[registers.enet_trstat]
+offset = 0x34
+space = "hpc1"
+access = "rw"
+width = 32
+reset = "unknown"
+grade = "established"
+from = "IRIX Ethernet driver; NetBSD register header"
+doc = "Transmit status and channel start. Bit 22 starts the transmit channel when written one and reads one while the channel is running. The bits above it carry the SEEQ transmit status byte; the drivers only test bit 22."
+
+[registers.enet_trstat.fields]
+tx_active = { bits = [22, 22], grade = "established", doc = "Write 1 to start transmit DMA from the descriptor in the next-descriptor pointer; reads 1 while the channel is active." }
+seeq_tx_status_low = { bits = [21, 16], grade = "inferred", doc = "Low six bits of the Ethernet chip transmit status byte, shifted up by sixteen." }
+seeq_tx_status_high = { bits = [23, 23], grade = "inferred", doc = "Top bit of the Ethernet chip transmit status byte." }
+
+[registers.enet_rcvstat]
+offset = 0x38
+space = "hpc1"
+access = "rw"
+width = 32
+reset = "unknown"
+grade = "established"
+from = "IRIX Ethernet driver; NetBSD register header"
+doc = "Receive status and channel start. Bit 14 starts the receive channel when written one and reads one while it runs; the other bits of the upper byte carry the Ethernet chip's receive status."
+
+[registers.enet_rcvstat.fields]
+rx_active = { bits = [14, 14], grade = "established", doc = "Write 1 to start receive DMA from the descriptor in the next-descriptor pointer; reads 1 while the channel is active." }
+seeq_rx_status_high = { bits = [15, 15], grade = "inferred", doc = "Top bit of the Ethernet chip receive status byte." }
+seeq_rx_status_low = { bits = [13, 8], grade = "inferred", doc = "Low six bits of the Ethernet chip receive status byte." }
+
+[registers.enet_ctl]
+offset = 0x3c
+space = "hpc1"
+access = "rw"
+width = 32
+reset = "unknown"
+grade = "established"
+from = "IRIX Ethernet driver; NetBSD register header; Indigo PROM"
+doc = "Ethernet channel control: reset, interrupt clear and loopback. Reading bit 1 reports a pending interrupt."
+
+[registers.enet_ctl.fields]
+reset = { bits = [0, 0], grade = "established", doc = "Reset the Ethernet chip and the channel; held for at least 10 microseconds." }
+clear_int = { bits = [1, 1], grade = "established", doc = "Write 1 to clear the channel interrupt; reads 1 while an interrupt is pending." }
+normal_mode = { bits = [2, 2], grade = "inferred", doc = "Both drivers keep it set in operation; clear is the loopback setting by the public header's loopback-enable bit." }
+clear_overflow = { bits = [3, 3], grade = "inferred", doc = "Clear the receive buffer overflow condition, by the public header; the IRIX driver writes it once, after an overflow." }
+
+[registers.enet_rcount]
+offset = 0x44
+space = "hpc1"
+access = "rw"
+width = 32
+reset = "unknown"
+grade = "unknown"
+from = "IRIX Ethernet driver"
+doc = "Receive count register, by the dump label. Only dumped."
+
+[registers.enet_rbc]
+offset = 0x48
+space = "hpc1"
+access = "rw"
+width = 32
+reset = "unknown"
+grade = "inferred"
+from = "IRIX Ethernet driver; NetBSD register header"
+doc = "Receive byte count of the descriptor in progress."
+
+[registers.enet_crbp]
+offset = 0x4c
+space = "hpc1"
+access = "rw"
+width = 32
+reset = "unknown"
+grade = "inferred"
+from = "IRIX Ethernet driver"
+doc = "Current receive buffer pointer, by the dump label."
+
+[registers.enet_nrbdp]
+offset = 0x50
+space = "hpc1"
+access = "rw"
+width = 32
+reset = "unknown"
+grade = "established"
+from = "IRIX Ethernet driver; NetBSD register header"
+doc = "Next receive buffer descriptor pointer: physical address of the first descriptor the receive channel fetches. Software writes the head of the ring here, with bits 31:29 clear, before it sets the receive start bit."
+
+[registers.enet_crbdp]
+offset = 0x54
+space = "hpc1"
+access = "rw"
+width = 32
+reset = "unknown"
+grade = "established"
+from = "IRIX Ethernet driver; NetBSD register header"
+doc = "Current receive buffer descriptor pointer. The IRIX driver loads it with the ring head at start and its watchdog reads it to see whether the channel has moved."
+
+[registers.enet_rpntr]
+offset = 0x58
+space = "hpc1"
+access = "rw"
+width = 32
+reset = "unknown"
+grade = "unknown"
+from = "IRIX Ethernet driver; Indigo PROM"
+doc = "Receive FIFO pointer, by the dump label. The PROM's early test stores the byte 0x5a to its low byte lane and reads the register after it, without a recorded check."
+
+[registers.enet_rfifo]
+offset = 0x5c
+space = "hpc1"
+access = "rw"
+width = 32
+reset = "unknown"
+grade = "unknown"
+from = "IRIX Ethernet driver; Indigo PROM"
+doc = "Receive FIFO data port, by the dump label."
+
+# ---------------------------------------------------------------- SCSI DMA
+
+[registers.scsi_bc]
+offset = 0x88
+space = "hpc1"
+access = "rw"
+width = 32
+reset = "unknown"
+grade = "established"
+from = "IRIX developer header; IRIX kernel; Indigo PROM"
+doc = "SCSI channel byte count of the descriptor being moved. The channel loads it from the descriptor; software does not write it in normal operation."
+
+[registers.scsi_cbp]
+offset = 0x8c
+space = "hpc1"
+access = "rw"
+width = 32
+reset = "unknown"
+grade = "established"
+from = "IRIX developer header; IRIX kernel; Indigo PROM"
+doc = "SCSI channel current buffer pointer: the physical address of the data being moved, loaded from a descriptor."
+
+[registers.scsi_nbdp]
+offset = 0x90
+space = "hpc1"
+access = "rw"
+width = 32
+reset = "unknown"
+grade = "established"
+from = "IRIX developer header; IRIX kernel"
+doc = "SCSI next descriptor pointer. Software writes the physical address of the first descriptor, then the control register with the start bit; the channel then walks the chain by itself."
+
+[registers.scsi_ctrl]
+offset = 0x94
+space = "hpc1"
+access = "rw"
+width = 32
+reset = "unknown"
+grade = "established"
+from = "IRIX developer header; IRIX kernel; Indigo PROM"
+doc = "SCSI channel control. The reset bit holds the WD33C93 chip in reset while set. The flush bit drains the channel FIFO and the start bit reads one while the channel is active, so software sets flush and waits for the start bit to read zero."
+
+[registers.scsi_ctrl.fields]
+reset = { bits = [0, 0], grade = "established", doc = "Hold the WD33C93 reset line; the IRIX bus reset sets it for 25 microseconds and then clears the whole register." }
+flush = { bits = [1, 1], grade = "established", doc = "Flush the SCSI channel buffers." }
+direction = { bits = [4, 4], enum = "scsi_direction", grade = "established", doc = "1 moves data from the device to memory." }
+start = { bits = [7, 7], grade = "established", doc = "Write 1 with a descriptor address loaded to start the DMA; reads 1 while the channel is active." }
+
+[registers.scsi_pntr]
+offset = 0x98
+space = "hpc1"
+access = "rw"
+width = 32
+reset = "unknown"
+grade = "inferred"
+from = "IRIX developer header; IRIX kernel"
+doc = "SCSI FIFO pointer register. Present in both headers and in the chip interface table; no driver read or write of it was found."
+
+[registers.scsi_fifo]
+offset = 0x9c
+space = "hpc1"
+access = "rw"
+width = 32
+reset = "unknown"
+grade = "inferred"
+from = "IRIX developer header; IRIX kernel"
+doc = "SCSI FIFO data port. No driver access was found."
+
+# ---------------------------------------------------------------- parallel port DMA
+
+[registers.par_bc]
+offset = 0xa8
+space = "hpc1"
+access = "rw"
+width = 32
+reset = "unknown"
+grade = "established"
+from = "IRIX developer header; IRIX parallel driver"
+doc = "Parallel port byte count with the strobe timing fields. The header gives three seven-bit timing fields at bits 30:24, 22:16 and 14:8; the driver stores a placeholder here before it loads a descriptor."
+
+[registers.par_bc.fields]
+strobe_min = { bits = [30, 24], grade = "inferred", doc = "Strobe duty cycle (mask 0x7f000000 in the header)." }
+strobe_lead = { bits = [22, 16], grade = "inferred", doc = "Strobe leading edge (mask 0x007f0000)." }
+strobe_trail = { bits = [14, 8], grade = "inferred", doc = "Strobe trailing edge (mask 0x00007f00)." }
+
+[registers.par_cbp]
+offset = 0xac
+space = "hpc1"
+access = "rw"
+width = 32
+reset = "unknown"
+grade = "established"
+from = "IRIX developer header; Indigo PROM"
+doc = "Parallel current buffer pointer. The PROM's power-on test writes a walking one from bit 27 down to bit 0 and reads each value back, so the low 28 bits are plain storage."
+
+[registers.par_nbdp]
+offset = 0xb0
+space = "hpc1"
+access = "rw"
+width = 32
+reset = "unknown"
+grade = "established"
+from = "IRIX developer header; IRIX parallel driver"
+doc = "Parallel next descriptor pointer: the physical address of the first descriptor, written before the control register."
+
+[registers.par_ctrl]
+offset = 0xb4
+space = "hpc1"
+access = "rw"
+width = 32
+reset = "unknown"
+grade = "established"
+from = "IRIX developer header; IRIX parallel driver"
+doc = "Parallel port control."
+
+[registers.par_ctrl.fields]
+reset = { bits = [0, 0], grade = "established", doc = "Reset the parallel port; set then cleared with a 400 microsecond wait." }
+interrupt = { bits = [1, 1], grade = "established", doc = "Reads 1 for a pending interrupt; writing 1 clears it." }
+polarity = { bits = [2, 2], grade = "inferred", doc = "Strobe polarity (header)." }
+soft_ack = { bits = [3, 3], grade = "established", doc = "Soft acknowledge; the reset routine sets it and clears it." }
+to_memory = { bits = [4, 4], grade = "established", doc = "1 for a transfer from the port to memory; the start routine ORs 0x90 for a read and 0x80 for a write." }
+ignore_ack = { bits = [5, 5], grade = "inferred", doc = "Ignore the acknowledge input (header)." }
+flush = { bits = [6, 6], grade = "established", doc = "Flush the port buffers; the stop routine sets it and polls the start bit." }
+start = { bits = [7, 7], grade = "established", doc = "Start DMA; reads 1 while active." }
+
+[registers.par_fifo]
+offset = 0xb8
+space = "hpc1"
+access = "r"
+width = 32
+reset = "unknown"
+grade = "inferred"
+from = "IRIX parallel driver; NetBSD register header"
+doc = "Parallel FIFO status. Bits 22:16 hold the number of bytes still in the port FIFO; the stop routine drains that many bytes by hand when the count is under four."
+
+[registers.par_dmacfg]
+offset = 0xbc
+space = "hpc1"
+access = "rw"
+width = 32
+reset = "unknown"
+grade = "unknown"
+from = "NetBSD register header"
+doc = "Parallel DMA configuration, named by the public header only. No IRIX object touches it."
+
+[registers.par_status]
+offset = 0x134
+space = "hpc1"
+access = "rw"
+width = 32
+reset = "unknown"
+grade = "established"
+from = "IRIX developer header; IRIX parallel driver"
+doc = "Parallel port external status and remote register, one byte in bits 23:16 of the word. A DMA read start stores 1 and a write start stores 3; the reset routine clears it then stores 3."
+
+# ---------------------------------------------------------------- endian and revision
+
+[registers.endian]
+offset = 0xc0
+space = "hpc1"
+access = "rw"
+width = 32
+reset = "unknown"
+grade = "established"
+from = "IRIX developer header; IRIX kernel; NetBSD register header; Indigo PROM"
+doc = "DMA byte order of each channel and the controller revision. A set bit makes that channel's DMA words and descriptors little-endian; clear leaves them big-endian. Only the low byte is used."
+
+[registers.endian.fields]
+cpu_little = { bits = [0, 0], grade = "established", doc = "Set when the CPU runs little-endian. The PROM's first access reads this bit and, if set, stores zero to the whole word." }
+enet_little = { bits = [1, 1], grade = "established", doc = "Ethernet DMA little-endian." }
+scsi_little = { bits = [2, 2], grade = "established", doc = "SCSI DMA little-endian." }
+par_little = { bits = [3, 3], grade = "established", doc = "Parallel DMA little-endian." }
+dsp_little = { bits = [4, 4], grade = "established", doc = "DSP DMA little-endian." }
+revision = { bits = [7, 6], grade = "inferred", doc = "Controller revision; the developer header says 1 means the 1.5 part. Read by the public driver to tell the generations apart; the IRIX PROM and kernel never read it." }
+
+# ---------------------------------------------------------------- Seeq window
+
+[registers.seeq]
+offset = 0x100
+space = "hpc1"
+access = "rw"
+width = 32
+count = 8
+reset = "unknown"
+grade = "established"
+from = "IRIX Ethernet driver; NetBSD register header"
+doc = "The Ethernet chip's eight registers, one per 32-bit slot with the byte in bits 7:0; register n is at 0x100 plus 4n. Registers 0 to 5 hold the station address, register 6 is the receive command and status and register 7 the transmit command and status. The registers themselves are in devices/seeq_8003."
+
+# ---------------------------------------------------------------- WD33C93 window
+
+[registers.wd33c93_address]
+offset = 0x120
+space = "hpc1"
+access = "rw"
+width = 32
+reset = "unknown"
+grade = "established"
+from = "IRIX developer header; IRIX kernel; Indigo PROM"
+doc = "The WD33C93's address/auxiliary-status port. The chip sits on the 15:8 byte lane of the word: a big-endian byte access is at +2 and a little-endian one at +1."
+
+[registers.wd33c93_address.fields]
+data = { bits = [15, 8], grade = "established", doc = "The chip's byte." }
+
+[registers.wd33c93_data]
+offset = 0x124
+space = "hpc1"
+access = "rw"
+width = 32
+reset = "unknown"
+grade = "established"
+from = "IRIX developer header; IRIX kernel; Indigo PROM"
+doc = "The WD33C93's data port, on the same byte lane."
+
+[registers.wd33c93_data.fields]
+data = { bits = [15, 8], grade = "established", doc = "The chip's byte." }
+
+# ---------------------------------------------------------------- DSP interface
+
+[registers.dsp_dma_count]
+offset = 0x180
+space = "hpc1"
+access = "rw"
+width = 32
+reset = "unknown"
+grade = "inferred"
+from = "IRIX developer header; NetBSD register header"
+doc = "DSP DMA transfer length in SRAM words. See devices/hollywood-dsp."
+
+[registers.dsp_gio_low]
+offset = 0x184
+space = "hpc1"
+access = "rw"
+width = 32
+reset = "unknown"
+grade = "inferred"
+from = "IRIX developer header"
+doc = "Low 16 bits of the memory-side DMA address."
+
+[registers.dsp_gio_high]
+offset = 0x188
+space = "hpc1"
+access = "rw"
+width = 32
+reset = "unknown"
+grade = "inferred"
+from = "IRIX developer header"
+doc = "High 16 bits of the memory-side DMA address."
+
+[registers.dsp_pbus_addr]
+offset = 0x18c
+space = "hpc1"
+access = "rw"
+width = 32
+reset = "unknown"
+grade = "inferred"
+from = "IRIX developer header"
+doc = "16-bit peripheral-bus (DSP SRAM) address of the DMA."
+
+[registers.dsp_dma_ctrl]
+offset = 0x190
+space = "hpc1"
+access = "rw"
+width = 32
+reset = "unknown"
+grade = "inferred"
+from = "IRIX developer header; NetBSD register header"
+doc = "DSP DMA control."
+
+[registers.dsp_dma_ctrl.fields]
+go = { bits = [0, 0], grade = "inferred", doc = "Start the DMA." }
+direction = { bits = [1, 1], grade = "inferred", doc = "0 is MIPS to DSP; the public driver reads the opposite sense, so the direction is a recorded conflict." }
+folded = { bits = [2, 2], grade = "inferred", doc = "1 selects folded mode." }
+
+[registers.dsp_counter]
+offset = 0x194
+space = "hpc1"
+access = "r"
+width = 32
+reset = "unknown"
+grade = "unknown"
+from = "IRIX developer header"
+doc = "A free-running 24-bit counter; what it counts is not stated."
+
+[registers.dsp_hand_tx]
+offset = 0x198
+space = "hpc1"
+access = "rw"
+width = 32
+reset = "unknown"
+grade = "inferred"
+from = "IRIX developer header"
+doc = "Handshake transmit word, written by the DSP for the host."
+
+[registers.dsp_hand_rx]
+offset = 0x19c
+space = "hpc1"
+access = "rw"
+width = 32
+reset = "unknown"
+grade = "inferred"
+from = "IRIX developer header"
+doc = "Handshake receive word, written by the host for the DSP."
+
+[registers.dsp_int_status]
+offset = 0x1a0
+space = "hpc1"
+access = "r"
+width = 32
+reset = "unknown"
+grade = "inferred"
+from = "IRIX developer header"
+doc = "DSP-to-CPU interrupt status: bit 0 end of DMA, bit 1 the DSP wrote the transmit word, bit 2 the DSP read the receive word."
+
+[registers.dsp_int_mask]
+offset = 0x1a4
+space = "hpc1"
+access = "rw"
+width = 32
+reset = "unknown"
+grade = "inferred"
+from = "IRIX developer header"
+doc = "Enable bits for the three DSP interrupt sources."
+
+[registers.dsp_misc]
+offset = 0x1b0
+space = "hpc1"
+access = "rw"
+width = 32
+reset = "unknown"
+grade = "inferred"
+from = "IRIX developer header; NetBSD register header; Indigo PROM"
+doc = "DSP miscellaneous control. The PROM stores 9 (reset with 32K SRAM) at start-up, 1 (reset) while it loads the DSP and 8 (run, 32K SRAM) afterwards."
+
+[registers.dsp_misc.fields]
+reset = { bits = [0, 0], grade = "established", doc = "Hard reset the DSP." }
+irqa = { bits = [1, 1], grade = "inferred", doc = "Force IRQA at the polarity of bit 2." }
+irqa_high = { bits = [2, 2], grade = "inferred", doc = "IRQA polarity, 1 is high." }
+sram_32k = { bits = [3, 3], grade = "established", doc = "1 selects 32K words of DSP SRAM, 0 selects 8K." }
+pbus_extend = { bits = [6, 4], grade = "inferred", doc = "Sign extension of a narrow peripheral-bus read: 0x70 8-bit, 0x60 16-bit, 0x40 24-bit, 0 none." }
+
+[registers.dsp_burst]
+offset = 0x1b4
+space = "hpc1"
+access = "rw"
+width = 32
+reset = "unknown"
+grade = "inferred"
+from = "IRIX developer header; NetBSD register header"
+doc = "DMA burst length and spacing; the fields are not stated."
+
+# ---------------------------------------------------------------- auxiliary byte
+
+[registers.aux]
+offset = 0x1bc
+space = "hpc1"
+access = "rw"
+width = 32
+reset = "unknown"
+grade = "established"
+from = "IRIX developer header; IRIX kernel; NetBSD register header; Indigo PROM"
+doc = "The auxiliary byte: the console LED and the four wires of the serial EEPROM. Bit 0 is shared by the LED and the EEPROM protect-register enable."
+
+[registers.aux.fields]
+led_pre = { bits = [0, 0], grade = "established", doc = "Console LED, and the FM93CS56 PRE pin; both drivers save it and restore it around every EEPROM cycle." }
+eeprom_cs = { bits = [1, 1], grade = "established", doc = "EEPROM chip select." }
+eeprom_sk = { bits = [2, 2], grade = "established", doc = "EEPROM serial clock; left high between cycles." }
+eeprom_di = { bits = [3, 3], grade = "established", doc = "Data from the CPU to the EEPROM." }
+eeprom_do = { bits = [4, 4], grade = "established", doc = "Data from the EEPROM to the CPU; read-only." }
+
+# ---------------------------------------------------------------- windows behind the controller
+
+[registers.int2_window]
+offset = 0x1c0
+space = "hpc1"
+access = "rw"
+width = 32
+count = 16
+reset = "unknown"
+grade = "established"
+from = "IRIX developer header"
+doc = "The interrupt controller window, 64 bytes at 0x1c0. The registers are in the interrupt controller's own unit; the controller is not part of the HPC1."
+
+[registers.serial_window]
+offset = 0xd00
+space = "hpc1"
+access = "rw"
+width = 32
+count = 16
+reset = "unknown"
+grade = "established"
+from = "IRIX developer header; IRIX serial driver"
+doc = "Four 16-byte blocks of 8-bit registers at 0xd00, 0xd10, 0xd20, 0xd30, each register in its own slot with the byte in bits 7:0 (offset +3 big-endian). Blocks 0 to 2 are Z85C30 serial controllers; block 3 holds the two headphone gain converters. The chip's registers are in its own unit."
+
+[registers.clock_window]
+offset = 0xe00
+space = "hpc1"
+access = "rw"
+width = 32
+count = 32
+reset = "unknown"
+grade = "established"
+from = "IRIX developer header; IRIX kernel"
+doc = "The battery-backed real-time clock window, one 8-bit register per 32-bit slot, accessed by word at the slot. The chip's registers are in its own unit."
+
+[registers.board_rev]
+offset = 0x50000
+space = "hpc1"
+access = "r"
+width = 32
+reset = "unknown"
+grade = "established"
+from = "IRIX developer header; IRIX kernel; Indigo PROM"
+doc = "Board revision word, in the modem SRAM space. The kernel inverts the word and takes bits 14:12; bit 15 is the header's marker for the HP1 base board."
+
+[registers.board_rev.fields]
+revision_inverted = { bits = [14, 12], grade = "established", doc = "Revision, active low." }
+hp1_marker = { bits = [15, 15], grade = "inferred", doc = "Header name REV_HP1." }
+
+[registers.dsp_sram]
+offset = 0x60000
+space = "hpc1"
+access = "rw"
+width = 32
+count = 32768
+reset = "unknown"
+grade = "established"
+from = "IRIX developer header; NetBSD register header; Indigo PROM"
+doc = "The DSP SRAM, one 24-bit word per 32-bit slot, 128 KB."
+
+[constants]
+EEPROM_OP_READ = { value = 0xc000, grade = "established", doc = "Instruction word: start bit, read, address in bits 12:5 (shifted out MSB first, 11 bits)." }
+EEPROM_OP_WRITE_ENABLE = { value = 0x9800, grade = "established", doc = "Write-enable instruction." }
+EEPROM_OP_WRITE = { value = 0xa000, grade = "established", doc = "Write instruction; the 16 data bits follow." }
+EEPROM_OP_WRITE_ALL = { value = 0x8800, grade = "inferred", doc = "Write-all instruction, named by the shipped header; no code was seen using it." }
+EEPROM_OP_WRITE_DISABLE = { value = 0x8000, grade = "established", doc = "Write-disable instruction." }
+EEPROM_OP_PROTECT_CLEAR = { value = 0xffff, grade = "established", doc = "Protect register clear, issued with PRE high." }
+NVRAM_SIZE = { value = 256, grade = "established", doc = "Serial EEPROM size in bytes." }
+NVRAM_REVISION = { value = 6, grade = "established", doc = "Layout revision the PROM and the kernel require in byte 1." }
+NVRAM_ENET_OFFSET = { value = 250, grade = "established", doc = "Station address, six bytes, the protected tail of the EEPROM." }
+SCSI_START_DMA = { value = 0x80, grade = "established", doc = "Control value that starts a memory-to-device transfer." }
+SCSI_START_DMA_TO_MEM = { value = 0x90, grade = "established", doc = "Control value that starts a device-to-memory transfer." }
+
+[words.SCSI_DESC_W0]
+width = 32
+grade = "established"
+from = "IRIX developer header; IRIX kernel"
+doc = "Word 0 of the SCSI and parallel DMA descriptor. A descriptor is three hardware words in a 16-byte slot; the fourth word is software-only. The words are in the byte order that the endian register selects for the channel."
+
+[words.SCSI_DESC_W0.fields]
+byte_count = { bits = [12, 0], grade = "established", doc = "Transfer size in bytes, at most 8191." }
+
+[words.SCSI_DESC_W1]
+width = 32
+grade = "established"
+from = "IRIX developer header; IRIX kernel"
+doc = "Word 1 of the SCSI and parallel DMA descriptor."
+
+[words.SCSI_DESC_W1.fields]
+eox = { bits = [31, 31], grade = "established", doc = "Last descriptor of the chain." }
+buffer = { bits = [27, 0], grade = "established", doc = "Physical buffer address." }
+
+[words.SCSI_DESC_W2]
+width = 32
+grade = "established"
+from = "IRIX developer header"
+doc = "Word 2 of the SCSI and parallel DMA descriptor."
+
+[words.SCSI_DESC_W2.fields]
+next = { bits = [27, 0], grade = "established", doc = "Physical address of the next descriptor." }
+
+[words.ENET_DESC_W0]
+width = 32
+grade = "established"
+from = "IRIX Ethernet driver; NetBSD register header"
+doc = "Word 0 of the Ethernet DMA descriptor: flags and byte count. The HPC3 puts the buffer address first and the flags second; the HPC1 order is the reverse."
+
+[words.ENET_DESC_W0.fields]
+eop = { bits = [31, 31], grade = "inferred", doc = "End of packet." }
+own = { bits = [30, 30], grade = "inferred", doc = "Ownership flag. The public driver sets it when it posts a receive descriptor and reads a clear bit as received; the IRIX driver sets it on queued transmit descriptors and clears it when it reclaims them. Which side clears it in hardware is not settled." }
+intr = { bits = [15, 15], grade = "inferred", doc = "Interrupt when finished." }
+byte_count = { bits = [12, 0], grade = "established", doc = "Buffer size on queue; on a receive the HPC leaves the unused count." }
+
+[words.ENET_DESC_W1]
+width = 32
+grade = "established"
+from = "IRIX Ethernet driver; NetBSD register header"
+doc = "Word 1 of the Ethernet DMA descriptor: the buffer address with the end-of-chain flag."
+
+[words.ENET_DESC_W1.fields]
+eochain = { bits = [31, 31], grade = "established", doc = "Last descriptor of the chain." }
+buffer = { bits = [27, 0], grade = "established", doc = "Physical buffer address." }
+
+[words.ENET_DESC_W2]
+width = 32
+grade = "established"
+from = "IRIX Ethernet driver; NetBSD register header"
+doc = "Word 2 of the Ethernet DMA descriptor."
+
+[words.ENET_DESC_W2.fields]
+next = { bits = [27, 0], grade = "established", doc = "Physical address of the next descriptor." }
