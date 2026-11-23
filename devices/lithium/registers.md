@@ -1,6 +1,6 @@
 <!-- generated from devices/lithium/registers.toml by defs-gen - do not edit, change the source -->
 <!-- defs-gen 2 -->
-<!-- input sha256 70596ec24940e8315b4fb0fe9a073a0422cfac082fac58aa7aa316aae98f2930 -->
+<!-- input sha256 d89a40d75ef24f16f59d754d766f813b993b5cd21cff1d1fa6052589fef38dcd -->
 
 # Lithium (I/O ASIC of the SGI Visual Workstation 320 and 540): the PCI bridge window and the audio engine, as SGI's Linux platform code names them
 
@@ -137,9 +137,27 @@ Output DMA ring buffer base, same encoding as comm1_base.
 
 Output DMA control and pointers, same layout as comm1_ctl. For output the hardware advances the read pointer and software the write pointer.
 
+| Bits | Field | Grade | Values | Source | Description |
+|---|---|---|---|---|---|
+| 31 | `reset` | inferred |  |  | 1 resets the channel; the driver writes it alone before setting up. |
+| 30:28 | `size` | established |  |  | Ring size code: log2(ring bytes) minus 6. Linux writes 7 for 8 KiB; the NT driver writes 7 for an 8 KiB ring and 6 (4 KiB) for any other size it is configured with, and its default is 8 KiB. Codes below 2 are not used by Linux. |
+| 27 | `dma_enable` | established |  |  | 1 runs the channel. The NT driver sets it last, after the base, configuration and size, and clears it again when it stops an input channel. |
+| 26:24 | `tmask` | inferred |  |  | Trigger mask: an interrupt fires when the hardware pointer and the trigger pointer agree after masking the low (8 minus this) bits. 0 means a mask of 0xff. |
+| 23:16 | `tptr` | inferred |  |  | Trigger pointer, 32-byte chunks. |
+| 15:8 | `rptr` | established |  |  | Read pointer, 32-byte chunks. Hardware on output. The NT driver reads it as the byte at offset +1. |
+| 7:0 | `wptr` | established |  |  | Write pointer, 32-byte chunks. Software on output. The NT driver reads and writes it as the byte at offset +0 of the register (output: software writes it). |
+
 ### Register `comm2_cfg`
 
 Output DMA configuration, same layout as comm1_cfg.
+
+| Bits | Field | Grade | Values | Source | Description |
+|---|---|---|---|---|---|
+| 15 | `lock` | inferred |  |  | Name only; the driver clears it. |
+| 6:4 | `slot` | inferred |  |  | Serial slot of the codec the channel uses; Linux writes 2 for both channels; the NT audio driver never writes the field, so it stays 0 there. |
+| 3 | `direction` | established |  |  | 1 output, 0 input (NT driver: set for the output channel only). |
+| 2 | `mode` | established |  |  | 1 stereo, 0 mono (NT driver: set when the format has two channels). |
+| 1:0 | `format` | established |  |  | 0 is 8-bit unsigned (the engine xors each byte with 0x80), 1 is 16-bit two's complement. The NT driver derives the value from the sample size (8 gives 0, 16 gives 1) and writes the silence word 0x80808080 or 0 to match. |
 
 ### Register `ust_low`
 
@@ -151,7 +169,7 @@ High word of the same counter. The NT audio, time and video drivers all read it 
 
 ### Register `audio1_ust`
 
-Time stamp of the input channel's last sample counter update. The NT driver pairs it with ust_high (read first, re-read afterwards, retried until equal) to form a 64-bit time stamp for the media stream counter.
+Time stamp of the input channel's last sample counter update. Read only as software uses it: no driver writes it. The load-time zeroing the NT notes describe goes to other words: the unadjusted-system-time driver zeroes the two counter words ust_low and ust_high (sgiust.sys 5.2.2, read in full), and the NT audio driver zeroes the media stream counters audio1_msc and audio2_msc when a stream starts (sgisound.sys 5.2.2; software/visws/nt-drivers.md). Not re-read for this change. Whether the hardware accepts a write here is unknown. The NT driver pairs it with ust_high (read first, re-read afterwards, retried until equal) to form a 64-bit time stamp for the media stream counter.
 
 ### Register `audio1_msc`
 
@@ -159,7 +177,7 @@ Input media stream counter: samples processed as of audio1_ust. The NT driver wr
 
 ### Register `audio2_ust`
 
-Time stamp for the output channel, read the same way as audio1_ust.
+Time stamp for the output channel, read the same way as audio1_ust; no driver writes it either.
 
 ### Register `audio2_msc`
 
@@ -251,12 +269,20 @@ Word at physical 0xff01c004, in a one-page Lithium-side block that no driver tou
 | `AUDIO_PHYS` | 0xff001000 | established |  | Physical base of the audio engine's first register page. |
 | `BRIDGE_A_PCI_MEM_PHYS` | 0xf0000000 | established |  | Processor physical address of bridge A's 64 MiB PCI memory window, which appears at PCI address 0x80000000 (established from the PROM 1.0006 mapping that pairs this address with bridge A; PROM 1.1005 maps the same; the HAL's initial bridge records carry a PCI-to-processor offset that agrees, though the layout of those records is inferred). |
 | `BRIDGE_B_PCI_MEM_PHYS` | 0xf4000000 | established |  | Processor physical address of bridge B's 64 MiB PCI memory window, at PCI address 0x80000000 (PROM 1.0006 mapping; the HAL's record offset agrees). |
+| `BRIDGE_WINDOW_MAP_SIZE` | 0x1000 | established |  | Bytes of each bridge window the HAL and the PROM map (4 KiB; Linux maps one page, the USB driver 0x70 bytes). The extent the hardware decodes is unknown. |
+| `BUILD_STAMP_GENERATION_5` | 0x366c3dfb | established |  | Value of build_stamp that the PROM maps to Lithium generation 5; the same value appears as the Serial I/O revision in the hardware export of one running machine (observed). PROM 1.1005 and 1.0006 compare it, whole functions. |
+| `CFG_ENABLE` | 0x80000000 | established |  | Bit 31 of cfg_addr, set in every configuration address the HAL and the PROM write. |
 | `DEVICE_ID` | 0x1002 | inferred |  | PCI device id read from both bridges. |
 | `DMA_CHUNK` | 0x20 | inferred |  | Bytes the audio DMA moves per pointer step. |
+| `DMA_LIMIT` | 0x80000000 | unknown |  | A bus-master address limit used by one emulator model. No firmware, driver or document read here states what address range a bridge's masters reach, so the value is unknown. |
 | `PCI_A_PHYS` | 0xfc000000 | established |  | Physical window of bridge A, the one with the Ethernet device. |
 | `PCI_B_PHYS` | 0xfd000000 | established |  | Physical window of bridge B, the one with the PIIX4. |
+| `PCI_IO_SIZE` | 0x10000 | inferred |  | Combined size of the two bridges' PCI I/O ranges, 64 KiB, from the HAL's per-bridge range records (layout inferred) and the hardware export of one running machine (observed). |
+| `PCI_IO_SPLIT` | 0x8000 | inferred |  | First I/O port of bridge A's range; bridge B takes the ports below it (HAL records, layout inferred; the hardware export shows the same split, observed). Whether it is a decode or only a resource assignment is unknown; the PROM assigns I/O bases of its own. |
 | `PCI_MEM_BUS_BASE` | 0x80000000 | established |  | PCI-side address of the start of both bridges' memory windows. |
 | `PCI_MEM_SIZE` | 0x4000000 | established |  | Size of each bridge's PCI memory window, 64 MiB (HAL records; PROM mapping). |
 | `STAMP_PHYS` | 0xff01c000 | established |  | Physical base of the one-page Lithium-side block whose second word is build_stamp. The PROM maps it, and also reads that word through its mapping of the four-page table window, past the end of that mapping. |
+| `STATUS_MASTER_ABORT` | 0x2000 | inferred |  | Bit 13 of bridge_status, the value the HAL stores after every configuration access. That it is the received-master-abort bit that clears on a written one is the standard header's rule and is inferred here. |
 | `TABLE_WINDOW_PHYS` | 0xff018000 | established |  | Physical base of a four-page window the PROM fills with a 256-dword table (117 dwords written) on generation 5 when the stamp is at most 0x36ffd62f. The role of the window is unknown. |
+| `TABLE_WINDOW_SIZE` | 0x4000 | established |  | Size of the table window, four pages, as the PROM maps it. |
 | `VENDOR_ID` | 0x10a9 | inferred |  | PCI vendor id read from both bridges (SGI). |

@@ -1,6 +1,6 @@
 {
  "generator": "defs-gen 2",
- "input_sha256": "70596ec24940e8315b4fb0fe9a073a0422cfac082fac58aa7aa316aae98f2930",
+ "input_sha256": "d89a40d75ef24f16f59d754d766f813b993b5cd21cff1d1fa6052589fef38dcd",
  "schema": "defs-flat/1",
  "source": "devices/lithium/registers.toml",
  "profile": "public",
@@ -345,6 +345,62 @@
   },
   {
    "unit": "lithium",
+   "kind": "field",
+   "name": "comm2_ctl.reset",
+   "hi": 31,
+   "lo": 31,
+   "grade": "inferred"
+  },
+  {
+   "unit": "lithium",
+   "kind": "field",
+   "name": "comm2_ctl.size",
+   "hi": 30,
+   "lo": 28,
+   "grade": "established"
+  },
+  {
+   "unit": "lithium",
+   "kind": "field",
+   "name": "comm2_ctl.dma_enable",
+   "hi": 27,
+   "lo": 27,
+   "grade": "established"
+  },
+  {
+   "unit": "lithium",
+   "kind": "field",
+   "name": "comm2_ctl.tmask",
+   "hi": 26,
+   "lo": 24,
+   "grade": "inferred"
+  },
+  {
+   "unit": "lithium",
+   "kind": "field",
+   "name": "comm2_ctl.tptr",
+   "hi": 23,
+   "lo": 16,
+   "grade": "inferred"
+  },
+  {
+   "unit": "lithium",
+   "kind": "field",
+   "name": "comm2_ctl.rptr",
+   "hi": 15,
+   "lo": 8,
+   "grade": "established"
+  },
+  {
+   "unit": "lithium",
+   "kind": "field",
+   "name": "comm2_ctl.wptr",
+   "hi": 7,
+   "lo": 0,
+   "grade": "established"
+  },
+  {
+   "unit": "lithium",
    "kind": "register",
    "name": "comm2_cfg",
    "offset": 276,
@@ -355,6 +411,46 @@
    "space": "audio",
    "reset": "unknown",
    "grade": "inferred"
+  },
+  {
+   "unit": "lithium",
+   "kind": "field",
+   "name": "comm2_cfg.lock",
+   "hi": 15,
+   "lo": 15,
+   "grade": "inferred"
+  },
+  {
+   "unit": "lithium",
+   "kind": "field",
+   "name": "comm2_cfg.slot",
+   "hi": 6,
+   "lo": 4,
+   "grade": "inferred"
+  },
+  {
+   "unit": "lithium",
+   "kind": "field",
+   "name": "comm2_cfg.direction",
+   "hi": 3,
+   "lo": 3,
+   "grade": "established"
+  },
+  {
+   "unit": "lithium",
+   "kind": "field",
+   "name": "comm2_cfg.mode",
+   "hi": 2,
+   "lo": 2,
+   "grade": "established"
+  },
+  {
+   "unit": "lithium",
+   "kind": "field",
+   "name": "comm2_cfg.format",
+   "hi": 1,
+   "lo": 0,
+   "grade": "established"
   },
   {
    "unit": "lithium",
@@ -747,6 +843,30 @@
   {
    "unit": "lithium",
    "kind": "constant",
+   "name": "BRIDGE_WINDOW_MAP_SIZE",
+   "value": 4096,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "lithium",
+   "kind": "constant",
+   "name": "BUILD_STAMP_GENERATION_5",
+   "value": 913063419,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "lithium",
+   "kind": "constant",
+   "name": "CFG_ENABLE",
+   "value": 2147483648,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "lithium",
+   "kind": "constant",
    "name": "DEVICE_ID",
    "value": 4098,
    "count": 1,
@@ -763,6 +883,14 @@
   {
    "unit": "lithium",
    "kind": "constant",
+   "name": "DMA_LIMIT",
+   "value": 2147483648,
+   "count": 1,
+   "grade": "unknown"
+  },
+  {
+   "unit": "lithium",
+   "kind": "constant",
    "name": "PCI_A_PHYS",
    "value": 4227858432,
    "count": 1,
@@ -775,6 +903,22 @@
    "value": 4244635648,
    "count": 1,
    "grade": "established"
+  },
+  {
+   "unit": "lithium",
+   "kind": "constant",
+   "name": "PCI_IO_SIZE",
+   "value": 65536,
+   "count": 1,
+   "grade": "inferred"
+  },
+  {
+   "unit": "lithium",
+   "kind": "constant",
+   "name": "PCI_IO_SPLIT",
+   "value": 32768,
+   "count": 1,
+   "grade": "inferred"
   },
   {
    "unit": "lithium",
@@ -803,8 +947,24 @@
   {
    "unit": "lithium",
    "kind": "constant",
+   "name": "STATUS_MASTER_ABORT",
+   "value": 8192,
+   "count": 1,
+   "grade": "inferred"
+  },
+  {
+   "unit": "lithium",
+   "kind": "constant",
    "name": "TABLE_WINDOW_PHYS",
    "value": 4278288384,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "lithium",
+   "kind": "constant",
+   "name": "TABLE_WINDOW_SIZE",
+   "value": 16384,
    "count": 1,
    "grade": "established"
   },

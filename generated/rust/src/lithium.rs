@@ -1,6 +1,6 @@
 // generated from devices/lithium/registers.toml by defs-gen - do not edit, change the source
 // defs-gen 2
-// input sha256 70596ec24940e8315b4fb0fe9a073a0422cfac082fac58aa7aa316aae98f2930
+// input sha256 d89a40d75ef24f16f59d754d766f813b993b5cd21cff1d1fa6052589fef38dcd
 // Lithium (I/O ASIC of the SGI Visual Workstation 320 and 540): the PCI bridge window and the audio engine, as SGI's Linux platform code names them
 #![allow(dead_code)]
 
@@ -313,11 +313,131 @@ pub mod comm2_base {
 pub mod comm2_ctl {
     pub const WIDTH: u32 = 32;
     pub const OFFSET: u64 = 0x110;
+    pub mod reset { // bits 31:31, inferred
+        pub const SHIFT: u32 = 31;
+        pub const MASK: u32 = 0x1;
+        pub const fn get(v: u32) -> u32 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u32, x: u32) -> u32 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod size { // bits 30:28, established
+        pub const SHIFT: u32 = 28;
+        pub const MASK: u32 = 0x7;
+        pub const fn get(v: u32) -> u32 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u32, x: u32) -> u32 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod dma_enable { // bits 27:27, established
+        pub const SHIFT: u32 = 27;
+        pub const MASK: u32 = 0x1;
+        pub const fn get(v: u32) -> u32 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u32, x: u32) -> u32 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod tmask { // bits 26:24, inferred
+        pub const SHIFT: u32 = 24;
+        pub const MASK: u32 = 0x7;
+        pub const fn get(v: u32) -> u32 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u32, x: u32) -> u32 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod tptr { // bits 23:16, inferred
+        pub const SHIFT: u32 = 16;
+        pub const MASK: u32 = 0xff;
+        pub const fn get(v: u32) -> u32 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u32, x: u32) -> u32 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod rptr { // bits 15:8, established
+        pub const SHIFT: u32 = 8;
+        pub const MASK: u32 = 0xff;
+        pub const fn get(v: u32) -> u32 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u32, x: u32) -> u32 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod wptr { // bits 7:0, established
+        pub const SHIFT: u32 = 0;
+        pub const MASK: u32 = 0xff;
+        pub const fn get(v: u32) -> u32 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u32, x: u32) -> u32 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
 }
 /// Output DMA configuration, same layout as comm1_cfg. (inferred)
 pub mod comm2_cfg {
     pub const WIDTH: u32 = 32;
     pub const OFFSET: u64 = 0x114;
+    pub mod lock { // bits 15:15, inferred
+        pub const SHIFT: u32 = 15;
+        pub const MASK: u32 = 0x1;
+        pub const fn get(v: u32) -> u32 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u32, x: u32) -> u32 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod slot { // bits 6:4, inferred
+        pub const SHIFT: u32 = 4;
+        pub const MASK: u32 = 0x7;
+        pub const fn get(v: u32) -> u32 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u32, x: u32) -> u32 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod direction { // bits 3:3, established
+        pub const SHIFT: u32 = 3;
+        pub const MASK: u32 = 0x1;
+        pub const fn get(v: u32) -> u32 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u32, x: u32) -> u32 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod mode { // bits 2:2, established
+        pub const SHIFT: u32 = 2;
+        pub const MASK: u32 = 0x1;
+        pub const fn get(v: u32) -> u32 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u32, x: u32) -> u32 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod format { // bits 1:0, established
+        pub const SHIFT: u32 = 0;
+        pub const MASK: u32 = 0x3;
+        pub const fn get(v: u32) -> u32 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u32, x: u32) -> u32 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
 }
 /// Low word of a 64-bit counter Linux calls unadjusted system time, microseconds since boot (the unit is Linux's comment; the time driver scales the valu (established)
 pub mod ust_low {
@@ -329,7 +449,7 @@ pub mod ust_high {
     pub const WIDTH: u32 = 32;
     pub const OFFSET: u64 = 0x204;
 }
-/// Time stamp of the input channel's last sample counter update. The NT driver pairs it with ust_high (read first, re-read afterwards, retried until equa (established)
+/// Time stamp of the input channel's last sample counter update. Read only as software uses it: no driver writes it. The load-time zeroing the NT notes d (established)
 pub mod audio1_ust {
     pub const WIDTH: u32 = 32;
     pub const OFFSET: u64 = 0x300;
@@ -339,7 +459,7 @@ pub mod audio1_msc {
     pub const WIDTH: u32 = 32;
     pub const OFFSET: u64 = 0x304;
 }
-/// Time stamp for the output channel, read the same way as audio1_ust. (established)
+/// Time stamp for the output channel, read the same way as audio1_ust; no driver writes it either. (established)
 pub mod audio2_ust {
     pub const WIDTH: u32 = 32;
     pub const OFFSET: u64 = 0x308;
@@ -529,12 +649,20 @@ pub const AUDIO_PAGE2: u32 = 0xff010000; // established
 pub const AUDIO_PHYS: u32 = 0xff001000; // established
 pub const BRIDGE_A_PCI_MEM_PHYS: u32 = 0xf0000000; // established
 pub const BRIDGE_B_PCI_MEM_PHYS: u32 = 0xf4000000; // established
+pub const BRIDGE_WINDOW_MAP_SIZE: u32 = 0x1000; // established
+pub const BUILD_STAMP_GENERATION_5: u32 = 0x366c3dfb; // established
+pub const CFG_ENABLE: u32 = 0x80000000; // established
 pub const DEVICE_ID: u32 = 0x1002; // inferred
 pub const DMA_CHUNK: u32 = 0x20; // inferred
+pub const DMA_LIMIT: u32 = 0x80000000; // unknown
 pub const PCI_A_PHYS: u32 = 0xfc000000; // established
 pub const PCI_B_PHYS: u32 = 0xfd000000; // established
+pub const PCI_IO_SIZE: u32 = 0x10000; // inferred
+pub const PCI_IO_SPLIT: u32 = 0x8000; // inferred
 pub const PCI_MEM_BUS_BASE: u32 = 0x80000000; // established
 pub const PCI_MEM_SIZE: u32 = 0x4000000; // established
 pub const STAMP_PHYS: u32 = 0xff01c000; // established
+pub const STATUS_MASTER_ABORT: u32 = 0x2000; // inferred
 pub const TABLE_WINDOW_PHYS: u32 = 0xff018000; // established
+pub const TABLE_WINDOW_SIZE: u32 = 0x4000; // established
 pub const VENDOR_ID: u32 = 0x10a9; // inferred

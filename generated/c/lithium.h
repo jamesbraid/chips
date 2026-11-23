@@ -1,6 +1,6 @@
 /* generated from devices/lithium/registers.toml by defs-gen - do not edit, change the source */
 /* defs-gen 2 */
-/* input sha256 70596ec24940e8315b4fb0fe9a073a0422cfac082fac58aa7aa316aae98f2930 */
+/* input sha256 d89a40d75ef24f16f59d754d766f813b993b5cd21cff1d1fa6052589fef38dcd */
 /* Lithium (I/O ASIC of the SGI Visual Workstation 320 and 540): the PCI bridge window and the audio engine, as SGI's Linux platform code names them */
 #ifndef LITHIUM_GEN_H
 #define LITHIUM_GEN_H
@@ -145,12 +145,48 @@
  */
 /* comm2_ctl: rw32, space audio, reset unknown */
 #define LITHIUM_COMM2_CTL_OFFSET                     0x110u /* inferred */
+#define LITHIUM_COMM2_CTL_RESET_SHIFT                31 /* inferred */
+#define LITHIUM_COMM2_CTL_RESET_MASK                 0x1u
+#define LITHIUM_COMM2_CTL_RESET_INPLACE              (LITHIUM_COMM2_CTL_RESET_MASK << LITHIUM_COMM2_CTL_RESET_SHIFT)
+#define LITHIUM_COMM2_CTL_SIZE_SHIFT                 28 /* established */
+#define LITHIUM_COMM2_CTL_SIZE_MASK                  0x7u
+#define LITHIUM_COMM2_CTL_SIZE_INPLACE               (LITHIUM_COMM2_CTL_SIZE_MASK << LITHIUM_COMM2_CTL_SIZE_SHIFT)
+#define LITHIUM_COMM2_CTL_DMA_ENABLE_SHIFT           27 /* established */
+#define LITHIUM_COMM2_CTL_DMA_ENABLE_MASK            0x1u
+#define LITHIUM_COMM2_CTL_DMA_ENABLE_INPLACE         (LITHIUM_COMM2_CTL_DMA_ENABLE_MASK << LITHIUM_COMM2_CTL_DMA_ENABLE_SHIFT)
+#define LITHIUM_COMM2_CTL_TMASK_SHIFT                24 /* inferred */
+#define LITHIUM_COMM2_CTL_TMASK_MASK                 0x7u
+#define LITHIUM_COMM2_CTL_TMASK_INPLACE              (LITHIUM_COMM2_CTL_TMASK_MASK << LITHIUM_COMM2_CTL_TMASK_SHIFT)
+#define LITHIUM_COMM2_CTL_TPTR_SHIFT                 16 /* inferred */
+#define LITHIUM_COMM2_CTL_TPTR_MASK                  0xffu
+#define LITHIUM_COMM2_CTL_TPTR_INPLACE               (LITHIUM_COMM2_CTL_TPTR_MASK << LITHIUM_COMM2_CTL_TPTR_SHIFT)
+#define LITHIUM_COMM2_CTL_RPTR_SHIFT                 8 /* established */
+#define LITHIUM_COMM2_CTL_RPTR_MASK                  0xffu
+#define LITHIUM_COMM2_CTL_RPTR_INPLACE               (LITHIUM_COMM2_CTL_RPTR_MASK << LITHIUM_COMM2_CTL_RPTR_SHIFT)
+#define LITHIUM_COMM2_CTL_WPTR_SHIFT                 0 /* established */
+#define LITHIUM_COMM2_CTL_WPTR_MASK                  0xffu
+#define LITHIUM_COMM2_CTL_WPTR_INPLACE               (LITHIUM_COMM2_CTL_WPTR_MASK << LITHIUM_COMM2_CTL_WPTR_SHIFT)
 
 /*
  * Output DMA configuration, same layout as comm1_cfg.
  */
 /* comm2_cfg: rw32, space audio, reset unknown */
 #define LITHIUM_COMM2_CFG_OFFSET                     0x114u /* inferred */
+#define LITHIUM_COMM2_CFG_LOCK_SHIFT                 15 /* inferred */
+#define LITHIUM_COMM2_CFG_LOCK_MASK                  0x1u
+#define LITHIUM_COMM2_CFG_LOCK_INPLACE               (LITHIUM_COMM2_CFG_LOCK_MASK << LITHIUM_COMM2_CFG_LOCK_SHIFT)
+#define LITHIUM_COMM2_CFG_SLOT_SHIFT                 4 /* inferred */
+#define LITHIUM_COMM2_CFG_SLOT_MASK                  0x7u
+#define LITHIUM_COMM2_CFG_SLOT_INPLACE               (LITHIUM_COMM2_CFG_SLOT_MASK << LITHIUM_COMM2_CFG_SLOT_SHIFT)
+#define LITHIUM_COMM2_CFG_DIRECTION_SHIFT            3 /* established */
+#define LITHIUM_COMM2_CFG_DIRECTION_MASK             0x1u
+#define LITHIUM_COMM2_CFG_DIRECTION_INPLACE          (LITHIUM_COMM2_CFG_DIRECTION_MASK << LITHIUM_COMM2_CFG_DIRECTION_SHIFT)
+#define LITHIUM_COMM2_CFG_MODE_SHIFT                 2 /* established */
+#define LITHIUM_COMM2_CFG_MODE_MASK                  0x1u
+#define LITHIUM_COMM2_CFG_MODE_INPLACE               (LITHIUM_COMM2_CFG_MODE_MASK << LITHIUM_COMM2_CFG_MODE_SHIFT)
+#define LITHIUM_COMM2_CFG_FORMAT_SHIFT               0 /* established */
+#define LITHIUM_COMM2_CFG_FORMAT_MASK                0x3u
+#define LITHIUM_COMM2_CFG_FORMAT_INPLACE             (LITHIUM_COMM2_CFG_FORMAT_MASK << LITHIUM_COMM2_CFG_FORMAT_SHIFT)
 
 /*
  * Low word of a 64-bit counter Linux calls unadjusted system time, microseconds since boot (the unit is Linux's comment; the time driver scales the value by 1000). The NT audio driver never reads it. The time driver and the video driver map these eight bytes on their own, and the time driver writes zero to both words at load, so they are writable. Both drivers also retry a read when the low halfword is 0xffff (their rules differ; see the NT drivers page).
@@ -165,7 +201,7 @@
 #define LITHIUM_UST_HIGH_OFFSET                      0x204u /* established */
 
 /*
- * Time stamp of the input channel's last sample counter update. The NT driver pairs it with ust_high (read first, re-read afterwards, retried until equal) to form a 64-bit time stamp for the media stream counter.
+ * Time stamp of the input channel's last sample counter update. Read only as software uses it: no driver writes it. The load-time zeroing the NT notes describe goes to other words: the unadjusted-system-time driver zeroes the two counter words ust_low and ust_high (sgiust.sys 5.2.2, read in full), and the NT audio driver zeroes the media stream counters audio1_msc and audio2_msc when a stream starts (sgisound.sys 5.2.2; software/visws/nt-drivers.md). Not re-read for this change. Whether the hardware accepts a write here is unknown. The NT driver pairs it with ust_high (read first, re-read afterwards, retried until equal) to form a 64-bit time stamp for the media stream counter.
  */
 /* audio1_ust: r32, space audio, reset unknown */
 #define LITHIUM_AUDIO1_UST_OFFSET                    0x300u /* established */
@@ -177,7 +213,7 @@
 #define LITHIUM_AUDIO1_MSC_OFFSET                    0x304u /* established */
 
 /*
- * Time stamp for the output channel, read the same way as audio1_ust.
+ * Time stamp for the output channel, read the same way as audio1_ust; no driver writes it either.
  */
 /* audio2_ust: r32, space audio, reset unknown */
 #define LITHIUM_AUDIO2_UST_OFFSET                    0x308u /* established */
@@ -312,14 +348,22 @@
 #define LITHIUM_AUDIO_PHYS                           0xff001000u /* established */
 #define LITHIUM_BRIDGE_A_PCI_MEM_PHYS                0xf0000000u /* established */
 #define LITHIUM_BRIDGE_B_PCI_MEM_PHYS                0xf4000000u /* established */
+#define LITHIUM_BRIDGE_WINDOW_MAP_SIZE               0x1000u /* established */
+#define LITHIUM_BUILD_STAMP_GENERATION_5             0x366c3dfbu /* established */
+#define LITHIUM_CFG_ENABLE                           0x80000000u /* established */
 #define LITHIUM_DEVICE_ID                            0x1002u /* inferred */
 #define LITHIUM_DMA_CHUNK                            0x20u /* inferred */
+#define LITHIUM_DMA_LIMIT                            0x80000000u /* unknown */
 #define LITHIUM_PCI_A_PHYS                           0xfc000000u /* established */
 #define LITHIUM_PCI_B_PHYS                           0xfd000000u /* established */
+#define LITHIUM_PCI_IO_SIZE                          0x10000u /* inferred */
+#define LITHIUM_PCI_IO_SPLIT                         0x8000u /* inferred */
 #define LITHIUM_PCI_MEM_BUS_BASE                     0x80000000u /* established */
 #define LITHIUM_PCI_MEM_SIZE                         0x4000000u /* established */
 #define LITHIUM_STAMP_PHYS                           0xff01c000u /* established */
+#define LITHIUM_STATUS_MASTER_ABORT                  0x2000u /* inferred */
 #define LITHIUM_TABLE_WINDOW_PHYS                    0xff018000u /* established */
+#define LITHIUM_TABLE_WINDOW_SIZE                    0x4000u /* established */
 #define LITHIUM_VENDOR_ID                            0x10a9u /* inferred */
 
 #endif /* LITHIUM_GEN_H */

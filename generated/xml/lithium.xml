@@ -1,7 +1,7 @@
 <?xml version="1.0" ?>
 <!-- generated from devices/lithium/registers.toml by defs-gen - do not edit, change the source -->
 <!-- defs-gen 2 -->
-<!-- input sha256 70596ec24940e8315b4fb0fe9a073a0422cfac082fac58aa7aa316aae98f2930 -->
+<!-- input sha256 d89a40d75ef24f16f59d754d766f813b993b5cd21cff1d1fa6052589fef38dcd -->
 <genxml unit="lithium" prefix="LITHIUM" title="Lithium (I/O ASIC of the SGI Visual Workstation 320 and 540): the PCI bridge window and the audio engine, as SGI's Linux platform code names them">
   <doc>Offsets and bits are software definitions from the Linux Visual Workstation code, cross-checked against SGI's shipped Windows NT 4.0 HAL (halborg.dll 1.3), audio driver (sgisound.sys 5.2.2) and unadjusted-system-time driver (sgiust.sys 5.2.2). Grades: established means the Linux code and a shipped Windows binary agree (or the item is a window address both map); inferred means only Linux defines it, a software expectation of Linux and not of the shipped system. The shipped audio driver was read for the register file only where this page says so. Original basis: the bridge interrupt and bus-number registers from the platform setup and PCI code, the audio engine from SGI's own sound driver (copyright 1999 SGI). The chip's specification is not held. Two bridges (A and B) each show a PCI configuration-style header at a fixed physical window; the audio engine sits at a third. Reset values are unknown throughout. Only registers a kernel touches are here.</doc>
   <space name="bridge" unit="byte"/>
@@ -64,9 +64,21 @@
   </struct>
   <struct name="COMM2_CTL" size="4" grade="inferred" register="yes" offset="0x110" access="rw" space="audio" reset="unknown">
     <doc>Output DMA control and pointers, same layout as comm1_ctl. For output the hardware advances the read pointer and software the write pointer.</doc>
+    <field name="reset" start="31" size="1" type="uint" grade="inferred"/>
+    <field name="size" start="28" size="3" type="uint" grade="established"/>
+    <field name="dma_enable" start="27" size="1" type="uint" grade="established"/>
+    <field name="tmask" start="24" size="3" type="uint" grade="inferred"/>
+    <field name="tptr" start="16" size="8" type="uint" grade="inferred"/>
+    <field name="rptr" start="8" size="8" type="uint" grade="established"/>
+    <field name="wptr" start="0" size="8" type="uint" grade="established"/>
   </struct>
   <struct name="COMM2_CFG" size="4" grade="inferred" register="yes" offset="0x114" access="rw" space="audio" reset="unknown">
     <doc>Output DMA configuration, same layout as comm1_cfg.</doc>
+    <field name="lock" start="15" size="1" type="uint" grade="inferred"/>
+    <field name="slot" start="4" size="3" type="uint" grade="inferred"/>
+    <field name="direction" start="3" size="1" type="uint" grade="established"/>
+    <field name="mode" start="2" size="1" type="uint" grade="established"/>
+    <field name="format" start="0" size="2" type="uint" grade="established"/>
   </struct>
   <struct name="UST_LOW" size="4" grade="established" register="yes" offset="0x200" access="rw" space="audio" reset="unknown">
     <doc>Low word of a 64-bit counter Linux calls unadjusted system time, microseconds since boot (the unit is Linux's comment; the time driver scales the value by 1000). The NT audio driver never reads it. The time driver and the video driver map these eight bytes on their own, and the time driver writes zero to both words at load, so they are writable. Both drivers also retry a read when the low halfword is 0xffff (their rules differ; see the NT drivers page).</doc>
@@ -75,13 +87,13 @@
     <doc>High word of the same counter. The NT audio, time and video drivers all read it before and after the other words and retry if it changed; the time driver zeroes it at load.</doc>
   </struct>
   <struct name="AUDIO1_UST" size="4" grade="established" register="yes" offset="0x300" access="r" space="audio" reset="unknown">
-    <doc>Time stamp of the input channel's last sample counter update. The NT driver pairs it with ust_high (read first, re-read afterwards, retried until equal) to form a 64-bit time stamp for the media stream counter.</doc>
+    <doc>Time stamp of the input channel's last sample counter update. Read only as software uses it: no driver writes it. The load-time zeroing the NT notes describe goes to other words: the unadjusted-system-time driver zeroes the two counter words ust_low and ust_high (sgiust.sys 5.2.2, read in full), and the NT audio driver zeroes the media stream counters audio1_msc and audio2_msc when a stream starts (sgisound.sys 5.2.2; software/visws/nt-drivers.md). Not re-read for this change. Whether the hardware accepts a write here is unknown. The NT driver pairs it with ust_high (read first, re-read afterwards, retried until equal) to form a 64-bit time stamp for the media stream counter.</doc>
   </struct>
   <struct name="AUDIO1_MSC" size="4" grade="established" register="yes" offset="0x304" access="rw" space="audio" reset="unknown">
     <doc>Input media stream counter: samples processed as of audio1_ust. The NT driver writes zero to it when it starts input with no pending counter pair, so it is writable.</doc>
   </struct>
   <struct name="AUDIO2_UST" size="4" grade="established" register="yes" offset="0x308" access="r" space="audio" reset="unknown">
-    <doc>Time stamp for the output channel, read the same way as audio1_ust.</doc>
+    <doc>Time stamp for the output channel, read the same way as audio1_ust; no driver writes it either.</doc>
   </struct>
   <struct name="AUDIO2_MSC" size="4" grade="established" register="yes" offset="0x30c" access="rw" space="audio" reset="unknown">
     <doc>Output media stream counter. The NT driver writes zero to it when it starts output with no pending counter pair, so it is writable.</doc>
@@ -144,13 +156,21 @@
   <constant name="AUDIO_PHYS" value="0xff001000" grade="established"/>
   <constant name="BRIDGE_A_PCI_MEM_PHYS" value="0xf0000000" grade="established"/>
   <constant name="BRIDGE_B_PCI_MEM_PHYS" value="0xf4000000" grade="established"/>
+  <constant name="BRIDGE_WINDOW_MAP_SIZE" value="0x1000" grade="established"/>
+  <constant name="BUILD_STAMP_GENERATION_5" value="0x366c3dfb" grade="established"/>
+  <constant name="CFG_ENABLE" value="0x80000000" grade="established"/>
   <constant name="DEVICE_ID" value="0x1002" grade="inferred"/>
   <constant name="DMA_CHUNK" value="0x20" grade="inferred"/>
+  <constant name="DMA_LIMIT" value="0x80000000" grade="unknown"/>
   <constant name="PCI_A_PHYS" value="0xfc000000" grade="established"/>
   <constant name="PCI_B_PHYS" value="0xfd000000" grade="established"/>
+  <constant name="PCI_IO_SIZE" value="0x10000" grade="inferred"/>
+  <constant name="PCI_IO_SPLIT" value="0x8000" grade="inferred"/>
   <constant name="PCI_MEM_BUS_BASE" value="0x80000000" grade="established"/>
   <constant name="PCI_MEM_SIZE" value="0x4000000" grade="established"/>
   <constant name="STAMP_PHYS" value="0xff01c000" grade="established"/>
+  <constant name="STATUS_MASTER_ABORT" value="0x2000" grade="inferred"/>
   <constant name="TABLE_WINDOW_PHYS" value="0xff018000" grade="established"/>
+  <constant name="TABLE_WINDOW_SIZE" value="0x4000" grade="established"/>
   <constant name="VENDOR_ID" value="0x10a9" grade="inferred"/>
 </genxml>

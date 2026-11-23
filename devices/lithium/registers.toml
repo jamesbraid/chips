@@ -247,6 +247,15 @@ width = 32
 grade = "inferred"
 doc = "Output DMA control and pointers, same layout as comm1_ctl. For output the hardware advances the read pointer and software the write pointer."
 
+[registers.comm2_ctl.fields]
+wptr = { bits = [7, 0], grade = "established", doc = "Write pointer, 32-byte chunks. Software on output. The NT driver reads and writes it as the byte at offset +0 of the register (output: software writes it)." }
+rptr = { bits = [15, 8], grade = "established", doc = "Read pointer, 32-byte chunks. Hardware on output. The NT driver reads it as the byte at offset +1." }
+tptr = { bits = [23, 16], grade = "inferred", doc = "Trigger pointer, 32-byte chunks." }
+tmask = { bits = [26, 24], grade = "inferred", doc = "Trigger mask: an interrupt fires when the hardware pointer and the trigger pointer agree after masking the low (8 minus this) bits. 0 means a mask of 0xff." }
+dma_enable = { bits = [27, 27], grade = "established", doc = "1 runs the channel. The NT driver sets it last, after the base, configuration and size, and clears it again when it stops an input channel." }
+size = { bits = [30, 28], grade = "established", doc = "Ring size code: log2(ring bytes) minus 6. Linux writes 7 for 8 KiB; the NT driver writes 7 for an 8 KiB ring and 6 (4 KiB) for any other size it is configured with, and its default is 8 KiB. Codes below 2 are not used by Linux." }
+reset = { bits = [31, 31], grade = "inferred", doc = "1 resets the channel; the driver writes it alone before setting up." }
+
 [registers.comm2_cfg]
 name_source = "public"
 name_cite = "Linux 2.5.40 sound/oss/vwsnd.c register names LI_COMM2_CFG"
@@ -256,6 +265,13 @@ access = "rw"
 width = 32
 grade = "inferred"
 doc = "Output DMA configuration, same layout as comm1_cfg."
+
+[registers.comm2_cfg.fields]
+format = { bits = [1, 0], grade = "established", doc = "0 is 8-bit unsigned (the engine xors each byte with 0x80), 1 is 16-bit two's complement. The NT driver derives the value from the sample size (8 gives 0, 16 gives 1) and writes the silence word 0x80808080 or 0 to match." }
+mode = { bits = [2, 2], grade = "established", doc = "1 stereo, 0 mono (NT driver: set when the format has two channels)." }
+direction = { bits = [3, 3], grade = "established", doc = "1 output, 0 input (NT driver: set for the output channel only)." }
+slot = { bits = [6, 4], grade = "inferred", doc = "Serial slot of the codec the channel uses; Linux writes 2 for both channels; the NT audio driver never writes the field, so it stays 0 there." }
+lock = { bits = [15, 15], grade = "inferred", doc = "Name only; the driver clears it." }
 
 [registers.ust_low]
 name_source = "public"
@@ -285,7 +301,7 @@ offset = 0x300
 access = "r"
 width = 32
 grade = "established"
-doc = "Time stamp of the input channel's last sample counter update. The NT driver pairs it with ust_high (read first, re-read afterwards, retried until equal) to form a 64-bit time stamp for the media stream counter."
+doc = "Time stamp of the input channel's last sample counter update. Read only as software uses it: no driver writes it. The load-time zeroing the NT notes describe goes to other words: the unadjusted-system-time driver zeroes the two counter words ust_low and ust_high (sgiust.sys 5.2.2, read in full), and the NT audio driver zeroes the media stream counters audio1_msc and audio2_msc when a stream starts (sgisound.sys 5.2.2; software/visws/nt-drivers.md). Not re-read for this change. Whether the hardware accepts a write here is unknown. The NT driver pairs it with ust_high (read first, re-read afterwards, retried until equal) to form a 64-bit time stamp for the media stream counter."
 
 [registers.audio1_msc]
 name_source = "public"
@@ -305,7 +321,7 @@ offset = 0x308
 access = "r"
 width = 32
 grade = "established"
-doc = "Time stamp for the output channel, read the same way as audio1_ust."
+doc = "Time stamp for the output channel, read the same way as audio1_ust; no driver writes it either."
 
 [registers.audio2_msc]
 name_source = "public"
@@ -363,3 +379,11 @@ PCI_MEM_SIZE = { value = 0x4000000, grade = "established", doc = "Size of each b
 PCI_MEM_BUS_BASE = { value = 0x80000000, grade = "established", doc = "PCI-side address of the start of both bridges' memory windows." }
 STAMP_PHYS = { value = 0xff01c000, grade = "established", doc = "Physical base of the one-page Lithium-side block whose second word is build_stamp. The PROM maps it, and also reads that word through its mapping of the four-page table window, past the end of that mapping." }
 TABLE_WINDOW_PHYS = { value = 0xff018000, grade = "established", doc = "Physical base of a four-page window the PROM fills with a 256-dword table (117 dwords written) on generation 5 when the stamp is at most 0x36ffd62f. The role of the window is unknown." }
+BRIDGE_WINDOW_MAP_SIZE = { value = 0x1000, grade = "established", doc = "Bytes of each bridge window the HAL and the PROM map (4 KiB; Linux maps one page, the USB driver 0x70 bytes). The extent the hardware decodes is unknown." }
+PCI_IO_SIZE = { value = 0x10000, grade = "inferred", doc = "Combined size of the two bridges' PCI I/O ranges, 64 KiB, from the HAL's per-bridge range records (layout inferred) and the hardware export of one running machine (observed)." }
+PCI_IO_SPLIT = { value = 0x8000, grade = "inferred", doc = "First I/O port of bridge A's range; bridge B takes the ports below it (HAL records, layout inferred; the hardware export shows the same split, observed). Whether it is a decode or only a resource assignment is unknown; the PROM assigns I/O bases of its own." }
+DMA_LIMIT = { value = 0x80000000, grade = "unknown", doc = "A bus-master address limit used by one emulator model. No firmware, driver or document read here states what address range a bridge's masters reach, so the value is unknown." }
+BUILD_STAMP_GENERATION_5 = { value = 0x366c3dfb, grade = "established", doc = "Value of build_stamp that the PROM maps to Lithium generation 5; the same value appears as the Serial I/O revision in the hardware export of one running machine (observed). PROM 1.1005 and 1.0006 compare it, whole functions." }
+STATUS_MASTER_ABORT = { value = 0x2000, grade = "inferred", doc = "Bit 13 of bridge_status, the value the HAL stores after every configuration access. That it is the received-master-abort bit that clears on a written one is the standard header's rule and is inferred here." }
+CFG_ENABLE = { value = 0x80000000, grade = "established", doc = "Bit 31 of cfg_addr, set in every configuration address the HAL and the PROM write." }
+TABLE_WINDOW_SIZE = { value = 0x4000, grade = "established", doc = "Size of the table window, four pages, as the PROM maps it." }
