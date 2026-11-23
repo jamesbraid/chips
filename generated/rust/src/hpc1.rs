@@ -1,6 +1,6 @@
 // @generated from devices/hpc1/registers.toml by defs-gen - do not edit, change the source
 // defs-gen 4
-// input sha256 375a6b58c47ddb4d00925fe95a4934440c1d9ae9bbfb1ed95ad1a0fa3c2cbb9d
+// input sha256 8b6a27263e374099e75f424a29fb6a1a0374b927ab92b0309c2fc2e94aa98cda
 // SGI HPC1 peripheral controller (Indigo, R3000 and R4000 boards)
 #![allow(dead_code)]
 #![allow(clippy::doc_markdown)]
@@ -174,7 +174,7 @@ pub mod enet_ctl {
             (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
         }
     }
-    pub mod normal_mode { // bits 2:2, inferred
+    pub mod bit2 { // bits 2:2, unknown
         pub const SHIFT: u32 = 2;
         pub const MASK: u32 = 0x1;
         pub const fn get(v: u32) -> u32 {
@@ -347,7 +347,7 @@ pub mod par_bc {
         }
     }
 }
-/// Parallel current buffer pointer. The PROM's power-on test writes a walking one from bit 27 down to bit 0 and reads each value back, so the low 28 bits (established)
+/// Parallel current buffer pointer. The PROM's power-on test writes a walking one from bit 27 down to bit 0 and reads each value back, so at least the lo (established)
 pub mod par_cbp {
     pub const WIDTH: u32 = 32;
     pub const OFFSET: u64 = 0xac;

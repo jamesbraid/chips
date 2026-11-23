@@ -1,7 +1,7 @@
 <?xml version="1.0" ?>
 <!-- generated from devices/hpc1/registers.toml by defs-gen - do not edit, change the source -->
 <!-- defs-gen 4 -->
-<!-- input sha256 375a6b58c47ddb4d00925fe95a4934440c1d9ae9bbfb1ed95ad1a0fa3c2cbb9d -->
+<!-- input sha256 8b6a27263e374099e75f424a29fb6a1a0374b927ab92b0309c2fc2e94aa98cda -->
 <genxml unit="hpc1" prefix="HPC1" title="SGI HPC1 peripheral controller (Indigo, R3000 and R4000 boards)" from="IRIX developer header">
   <doc>The first-generation peripheral controller of the Indigo: Ethernet, SCSI and parallel-port DMA channels, the DSP audio interface, an endian and revision byte, the auxiliary byte that bit-bangs the serial EEPROM, and the decode of the peripheral windows behind it (Ethernet, SCSI, serial, clock, interrupt controller). Offsets are from the start of one HPC1 window; the primary HPC1 sits at physical 1fb80000. Every register sits in a 32-bit slot and a narrower register uses the byte lane its field bits name. Grades say how each item was derived: established means read in a shipped IRIX driver object, the shipped developer header, a PROM image or a public driver as the source records; inferred means a reasoned reading, with the reasoning in devices/hpc1/README.md. No specification for the HPC1 is held.</doc>
   <space name="hpc1" unit="byte"/>
@@ -57,7 +57,7 @@
   <struct name="ENET_CTL" size="4" grade="established" from="IRIX Ethernet driver; NetBSD register header; Indigo PROM" register="yes" offset="0x3c" access="rw" space="hpc1" reset="unknown">
     <doc>Ethernet channel control: reset, interrupt clear and loopback. Reading bit 1 reports a pending interrupt.</doc>
     <field name="clear_overflow" start="3" size="1" type="uint" grade="inferred"/>
-    <field name="normal_mode" start="2" size="1" type="uint" grade="inferred"/>
+    <field name="bit2" start="2" size="1" type="uint" grade="unknown"/>
     <field name="clear_int" start="1" size="1" type="uint" grade="established"/>
     <field name="reset" start="0" size="1" type="uint" grade="established"/>
   </struct>
@@ -111,7 +111,7 @@
     <field name="strobe_trail" start="8" size="7" type="uint" grade="inferred"/>
   </struct>
   <struct name="PAR_CBP" size="4" grade="established" from="IRIX developer header; Indigo PROM" register="yes" offset="0xac" access="rw" space="hpc1" reset="unknown">
-    <doc>Parallel current buffer pointer. The PROM's power-on test writes a walking one from bit 27 down to bit 0 and reads each value back, so the low 28 bits are plain storage.</doc>
+    <doc>Parallel current buffer pointer. The PROM's power-on test writes a walking one from bit 27 down to bit 0 and reads each value back, so at least the low 28 bits are plain storage (the test cannot show bits 31:28 clear).</doc>
   </struct>
   <struct name="PAR_NBDP" size="4" grade="established" from="IRIX developer header; IRIX parallel driver" register="yes" offset="0xb0" access="rw" space="hpc1" reset="unknown">
     <doc>Parallel next descriptor pointer: the physical address of the first descriptor, written before the control register.</doc>

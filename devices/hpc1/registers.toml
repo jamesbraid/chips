@@ -167,7 +167,7 @@ doc = "Ethernet channel control: reset, interrupt clear and loopback. Reading bi
 [registers.enet_ctl.fields]
 reset = { bits = [0, 0], grade = "established", doc = "Reset the Ethernet chip and the channel; held for at least 10 microseconds." }
 clear_int = { bits = [1, 1], grade = "established", doc = "Write 1 to clear the channel interrupt; reads 1 while an interrupt is pending." }
-normal_mode = { bits = [2, 2], grade = "inferred", doc = "Both drivers keep it set in operation; clear is the loopback setting by the public header's loopback-enable bit." }
+bit2 = { bits = [2, 2], grade = "unknown", doc = "The public header names it loopback-enable. IRIX writes it set (7, 4, 6) in operation and NetBSD leaves it clear (3 then 0), so its polarity is not settled." }
 clear_overflow = { bits = [3, 3], grade = "inferred", doc = "Clear the receive buffer overflow condition, by the public header; the IRIX driver writes it once, after an overflow." }
 
 [registers.enet_rcount]
@@ -333,7 +333,7 @@ width = 32
 reset = "unknown"
 grade = "established"
 from = "IRIX developer header; Indigo PROM"
-doc = "Parallel current buffer pointer. The PROM's power-on test writes a walking one from bit 27 down to bit 0 and reads each value back, so the low 28 bits are plain storage."
+doc = "Parallel current buffer pointer. The PROM's power-on test writes a walking one from bit 27 down to bit 0 and reads each value back, so at least the low 28 bits are plain storage (the test cannot show bits 31:28 clear)."
 
 [registers.par_nbdp]
 offset = 0xb0
@@ -607,7 +607,7 @@ led_pre = { bits = [0, 0], grade = "established", doc = "Console LED, and the FM
 eeprom_cs = { bits = [1, 1], grade = "established", doc = "EEPROM chip select." }
 eeprom_sk = { bits = [2, 2], grade = "established", doc = "EEPROM serial clock; left high between cycles." }
 eeprom_di = { bits = [3, 3], grade = "established", doc = "Data from the CPU to the EEPROM." }
-eeprom_do = { bits = [4, 4], grade = "established", doc = "Data from the EEPROM to the CPU; read-only." }
+eeprom_do = { bits = [4, 4], grade = "established", doc = "Data from the EEPROM to the CPU; read-only. Sampled after each rising SK during a read; reads 1 (ready) with CS high once a write has finished. Software decides write success from this bit alone." }
 
 # ---------------------------------------------------------------- windows behind the controller
 

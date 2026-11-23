@@ -1,7 +1,7 @@
 /* generated from devices/hpc1/registers.toml by defs-gen - do not edit, change
  * the source */
 /* defs-gen 4 */
-/* input sha256 375a6b58c47ddb4d00925fe95a4934440c1d9ae9bbfb1ed95ad1a0fa3c2cbb9d */
+/* input sha256 8b6a27263e374099e75f424a29fb6a1a0374b927ab92b0309c2fc2e94aa98cda */
 /* SGI HPC1 peripheral controller (Indigo, R3000 and R4000 boards) */
 #ifndef HPC1_GEN_H
 #define HPC1_GEN_H
@@ -144,9 +144,9 @@
 #define HPC1_ENET_CTL_CLEAR_OVERFLOW_SHIFT           3 /* inferred */
 #define HPC1_ENET_CTL_CLEAR_OVERFLOW_MASK            0x1u
 #define HPC1_ENET_CTL_CLEAR_OVERFLOW_INPLACE (HPC1_ENET_CTL_CLEAR_OVERFLOW_MASK << HPC1_ENET_CTL_CLEAR_OVERFLOW_SHIFT)
-#define HPC1_ENET_CTL_NORMAL_MODE_SHIFT              2 /* inferred */
-#define HPC1_ENET_CTL_NORMAL_MODE_MASK               0x1u
-#define HPC1_ENET_CTL_NORMAL_MODE_INPLACE (HPC1_ENET_CTL_NORMAL_MODE_MASK << HPC1_ENET_CTL_NORMAL_MODE_SHIFT)
+#define HPC1_ENET_CTL_BIT2_SHIFT                     2 /* unknown */
+#define HPC1_ENET_CTL_BIT2_MASK                      0x1u
+#define HPC1_ENET_CTL_BIT2_INPLACE (HPC1_ENET_CTL_BIT2_MASK << HPC1_ENET_CTL_BIT2_SHIFT)
 #define HPC1_ENET_CTL_CLEAR_INT_SHIFT                1 /* established */
 #define HPC1_ENET_CTL_CLEAR_INT_MASK                 0x1u
 #define HPC1_ENET_CTL_CLEAR_INT_INPLACE (HPC1_ENET_CTL_CLEAR_INT_MASK << HPC1_ENET_CTL_CLEAR_INT_SHIFT)
@@ -289,8 +289,8 @@
 
 /*
  * Parallel current buffer pointer. The PROM's power-on test writes a walking
- * one from bit 27 down to bit 0 and reads each value back, so the low 28 bits
- * are plain storage.
+ * one from bit 27 down to bit 0 and reads each value back, so at least the low
+ * 28 bits are plain storage (the test cannot show bits 31:28 clear).
  */
 /* par_cbp: rw32, space hpc1, reset unknown; IRIX developer header; Indigo PROM
  */

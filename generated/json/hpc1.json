@@ -1,6 +1,6 @@
 {
  "generator": "defs-gen 4",
- "input_sha256": "375a6b58c47ddb4d00925fe95a4934440c1d9ae9bbfb1ed95ad1a0fa3c2cbb9d",
+ "input_sha256": "8b6a27263e374099e75f424a29fb6a1a0374b927ab92b0309c2fc2e94aa98cda",
  "schema": "defs-flat/1",
  "source": "devices/hpc1/registers.toml",
  "profile": "public",
@@ -267,10 +267,10 @@
   {
    "unit": "hpc1",
    "kind": "field",
-   "name": "enet_ctl.normal_mode",
+   "name": "enet_ctl.bit2",
    "hi": 2,
    "lo": 2,
-   "grade": "inferred",
+   "grade": "unknown",
    "from": "IRIX Ethernet driver; NetBSD register header; Indigo PROM"
   },
   {

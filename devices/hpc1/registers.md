@@ -1,6 +1,6 @@
 <!-- generated from devices/hpc1/registers.toml by defs-gen - do not edit, change the source -->
 <!-- defs-gen 4 -->
-<!-- input sha256 375a6b58c47ddb4d00925fe95a4934440c1d9ae9bbfb1ed95ad1a0fa3c2cbb9d -->
+<!-- input sha256 8b6a27263e374099e75f424a29fb6a1a0374b927ab92b0309c2fc2e94aa98cda -->
 
 # SGI HPC1 peripheral controller (Indigo, R3000 and R4000 boards)
 
@@ -149,7 +149,7 @@ Ethernet channel control: reset, interrupt clear and loopback. Reading bit 1 rep
 | Bits | Field | Grade | Values | Source | Description |
 |---|---|---|---|---|---|
 | 3 | `clear_overflow` | inferred |  | IRIX Ethernet driver; NetBSD register header; Indigo PROM | Clear the receive buffer overflow condition, by the public header; the IRIX driver writes it once, after an overflow. |
-| 2 | `normal_mode` | inferred |  | IRIX Ethernet driver; NetBSD register header; Indigo PROM | Both drivers keep it set in operation; clear is the loopback setting by the public header's loopback-enable bit. |
+| 2 | `bit2` | unknown |  | IRIX Ethernet driver; NetBSD register header; Indigo PROM | The public header names it loopback-enable. IRIX writes it set (7, 4, 6) in operation and NetBSD leaves it clear (3 then 0), so its polarity is not settled. |
 | 1 | `clear_int` | established |  | IRIX Ethernet driver; NetBSD register header; Indigo PROM | Write 1 to clear the channel interrupt; reads 1 while an interrupt is pending. |
 | 0 | `reset` | established |  | IRIX Ethernet driver; NetBSD register header; Indigo PROM | Reset the Ethernet chip and the channel; held for at least 10 microseconds. |
 
@@ -224,7 +224,7 @@ Parallel port byte count with the strobe timing fields. The header gives three s
 
 ### Register `par_cbp`
 
-Parallel current buffer pointer. The PROM's power-on test writes a walking one from bit 27 down to bit 0 and reads each value back, so the low 28 bits are plain storage.
+Parallel current buffer pointer. The PROM's power-on test writes a walking one from bit 27 down to bit 0 and reads each value back, so at least the low 28 bits are plain storage (the test cannot show bits 31:28 clear).
 
 ### Register `par_nbdp`
 
@@ -360,7 +360,7 @@ The auxiliary byte: the console LED and the four wires of the serial EEPROM. Bit
 
 | Bits | Field | Grade | Values | Source | Description |
 |---|---|---|---|---|---|
-| 4 | `eeprom_do` | established |  | IRIX developer header; IRIX kernel; NetBSD register header; Indigo PROM | Data from the EEPROM to the CPU; read-only. |
+| 4 | `eeprom_do` | established |  | IRIX developer header; IRIX kernel; NetBSD register header; Indigo PROM | Data from the EEPROM to the CPU; read-only. Sampled after each rising SK during a read; reads 1 (ready) with CS high once a write has finished. Software decides write success from this bit alone. |
 | 3 | `eeprom_di` | established |  | IRIX developer header; IRIX kernel; NetBSD register header; Indigo PROM | Data from the CPU to the EEPROM. |
 | 2 | `eeprom_sk` | established |  | IRIX developer header; IRIX kernel; NetBSD register header; Indigo PROM | EEPROM serial clock; left high between cycles. |
 | 1 | `eeprom_cs` | established |  | IRIX developer header; IRIX kernel; NetBSD register header; Indigo PROM | EEPROM chip select. |
