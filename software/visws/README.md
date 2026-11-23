@@ -32,6 +32,7 @@ given. *unknown*: not settled; the route that would settle it is in
 | [hal-builds.md](hal-builds.md) | The six held halborg builds (NT 4.0 multiprocessor and uniprocessor, Windows 2000 RC3, RTM, SP4 beta, SP4) read build by build: exports, function and name counts, the kernel structures the code assumes, SGI-specific versus stock code, differences between builds; one page per build under [hal-builds/](hal-builds/) |
 | [hal-hot-path.md](hal-hot-path.md) | Every register access the HAL makes per interrupt, clock tick, IPI and profile tick, and which a hypervisor with an in-kernel local APIC serves without a user-space exit |
 | [hal-requirements.md](hal-requirements.md) | Requirements for our own Windows XP and XP x64 HAL: each hardware behaviour the NT 4.0 HAL implements, what ours must do, what the guest sees, and what XP expects of a HAL that NT 4.0 did not |
+| [w2k-setupdd-wait.md](w2k-setupdd-wait.md) | Why Windows 2000 text-mode Setup sat in a two-instruction poll on the model: a key wait at the Welcome screen, who writes the word, and the two HAL words on the stack |
 | [emulator-requirements.md](emulator-requirements.md) | What an emulator must provide to boot Linux and NT, and what is still unknown |
 
 ## What was read
