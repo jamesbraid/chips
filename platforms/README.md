@@ -86,6 +86,7 @@
 | [prom-assets.md](ip32/prom-assets.md) | O2 PROM visual and audio assets: palette, gradient, fonts, icons, logo, tunes and menu layout | The O2 (IP32) PROM draws its graphical menus and plays its start-up sound from data inside the `firmware` segment. |
 | [prom-console-input.md](ip32/prom-console-input.md) | O2 PROM 6.5.30: what it does when no PS/2 keyboard or mouse answers | Question. |
 | [prom-environment.md](ip32/prom-environment.md) | O2 PROM environment: the flash "env" segment, its checksums and how setenv writes it | The O2 PROM keeps its environment variables (`console`, `netaddr`, `OSLoadPartition` and so on) in one segment of... |
+| [prom-r5000.md](ip32/prom-r5000.md) | O2 PROM and the R5000: which Config bits the firmware reads, writes and assumes | The O2 (IP32) system PROM reads the R5000's cache-size and secondary-cache Config fields, writes only K0 and SE, and... |
 | [prom-rom.md](ip32/prom-rom.md) | O2 system ROM: decode, flash aliasing and reset fetch | This page covers the O2's system ROM window as CRIME and MACE expose it, the external flash that MACE drives, and... |
 | [prom-software.md](ip32/prom-software.md) | O2 PROM software: layout, environment, console, ARCS tables, configuration tree, boot menu | This page records what the O2 (IP32) system PROM's own code does, read from the shipped flash images with a MIPS... |
 

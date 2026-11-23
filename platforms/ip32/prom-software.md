@@ -112,7 +112,8 @@ Firmware (established, run-time):
   `0x81006b0c`; anything else prints "Not supported CPU type" and asserts. The R10000 path reads primary instruction and
   data size from Config[31:29] and Config[28:26] as `0x1000 << n`, secondary size from Config[18:16] as `0x80000 << n`
   and the secondary line length from Config bit 13. The R5000 path reads secondary presence from Config bit 17 and size
-  from Config[21:20] as `0x80000 << n`, with a 32-byte line. A table of cache routines is filled in per CPU
+  from Config[21:20] as `0x80000 << n`, with a 32-byte line. The R5000 route's Config reads and writes, the clock measurement and the
+  per-version CPU tests are in [prom-r5000.md](prom-r5000.md). A table of cache routines is filled in per CPU
   (`0x810600c8..0x810600f4`). A debug dump routine (`0x81004230`) prints the sizes it computed.
 - Memory size (`0x81003cec`, established arithmetic, inferred meaning): starts at 32 MB (`0x2000000`) or 128 MB
   (`0x8000000`) from bit 8 of the register at `0x14000208`, then for each of `0x14000210..0x14000240` adds 32 MB or 128 MB
