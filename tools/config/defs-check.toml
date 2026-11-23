@@ -367,3 +367,7 @@ prose_offsets = false
 [units.uv_bau]
 group = "uv_bau.h"
 prose_offsets = false
+
+[units.piix4]
+group = "piix4"
+prose_offsets = false

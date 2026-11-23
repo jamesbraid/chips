@@ -1,0 +1,1710 @@
+unit = "piix4"
+prefix = "PIIX4"
+title = "Intel 82371AB PIIX4 (PCI-to-ISA bridge, IDE, USB, power management and SMBus) as wired in the Visual Workstation 320 and 540"
+doc = "Register contract of the PIIX4 southbridge, functions 0 to 3, from the published datasheet and specification update, with the board wiring taken from the system firmware, the Windows NT hardware abstraction layer and the Linux Visual Workstation code. Grades: established means a datasheet or specification update page states it (the page is cited) or the shipped firmware and HAL do it in a routine read in full, which is a software expectation and not a measurement; inferred means a reasoned reading; unknown means no held source settles it. The update corrects the datasheet and wins where they differ. Config-space registers are in one space per PCI function (f0 ISA bridge, f1 IDE, f2 USB, f3 power management and SMBus). The power management block (pm), the SMBus block (smb), the IDE bus-master block (bm) and the fixed ISA ports (isa) are I/O spaces whose base is programmed in config space. Not listed: the 8259, 8254 and DMA controller registers (standard parts at their PC ports), the USB host controller I/O registers (no held software touches them at register level), and the device-monitor registers of function 3 (offsets 0x50 to 0x7f and the device activity and resource registers), which no held software writes."
+from = "Intel 82371AB PIIX4 datasheet 290562-001 (April 1997) and specification update 297738-017 (January 2002)"
+public_from = ["Intel 82371AB datasheet", "Intel 82371AB specification update"]
+name_source = "public"
+name_cite = "Intel 82371AB (PIIX4) datasheet 290562-001: register names and mnemonics"
+
+[spaces.piix4_f0]
+unit = "byte"
+doc = "PCI function 0 (PCI-to-ISA bridge) configuration space, byte offsets. On the board it is device 4 of the Lithium bridge B bus, reached through bridge B's configuration window."
+
+[spaces.piix4_f1]
+unit = "byte"
+doc = "PCI function 1 (IDE controller) configuration space, byte offsets."
+
+[spaces.piix4_f2]
+unit = "byte"
+doc = "PCI function 2 (USB host controller) configuration space, byte offsets."
+
+[spaces.piix4_f3]
+unit = "byte"
+doc = "PCI function 3 (power management and SMBus) configuration space, byte offsets."
+
+[spaces.piix4_pm]
+unit = "byte"
+doc = "Power management I/O block: base from PMBA (function 3 offset 0x40). The firmware programs the base 0xf80."
+
+[spaces.piix4_smb]
+unit = "byte"
+doc = "SMBus host and slave I/O block: base from SMBBA (function 3 offset 0x90). The firmware programs the base 0xfd0."
+
+[spaces.piix4_bm]
+unit = "byte"
+doc = "IDE bus-master I/O block: base from BMIBA (function 1 offset 0x20); primary channel at +0, secondary at +8."
+
+[spaces.piix4_isa]
+unit = "byte"
+doc = "Fixed ISA-compatible I/O ports the PIIX4 decodes itself (absolute port numbers below 0x100)."
+
+[spaces.piix4_rcport]
+unit = "byte"
+doc = "I/O ports from 0xcf8, offsets from that port. The reset control register sits at port 0xcf9, inside the PCI configuration address dword that the host bridge decodes at 0xcf8."
+
+[registers.f0_vid]
+space = "piix4_f0"
+offset = 0x0
+access = "r"
+width = 16
+reset = 0x8086
+reset_from = "Intel 82371AB datasheet 290562-001 (April 1997) p.53"
+grade = "established"
+from = "Intel 82371AB datasheet 290562-001 (April 1997) p.53"
+doc = "Vendor identification, Intel."
+
+[registers.f0_did]
+space = "piix4_f0"
+offset = 0x2
+access = "r"
+width = 16
+reset = 0x7110
+reset_from = "Intel 82371AB datasheet 290562-001 (April 1997) p.53"
+grade = "established"
+from = "Intel 82371AB datasheet 290562-001 (April 1997) p.53"
+doc = "Device identification of function 0. The firmware's self-test reads the function 0 vendor and device words as one dword and expects 0x71108086."
+
+[registers.f1_vid]
+space = "piix4_f1"
+offset = 0x0
+access = "r"
+width = 16
+reset = 0x8086
+reset_from = "Intel 82371AB datasheet 290562-001 (April 1997) p.89"
+grade = "established"
+from = "Intel 82371AB datasheet 290562-001 (April 1997) p.89"
+doc = "Vendor identification, Intel."
+
+[registers.f1_did]
+space = "piix4_f1"
+offset = 0x2
+access = "r"
+width = 16
+reset = 0x7111
+reset_from = "Intel 82371AB datasheet 290562-001 (April 1997) p.89"
+grade = "established"
+from = "Intel 82371AB datasheet 290562-001 (April 1997) p.89"
+doc = "Device identification of function 1. The firmware's self-test reads the function 0 vendor and device words as one dword and expects 0x71108086."
+
+[registers.f2_vid]
+space = "piix4_f2"
+offset = 0x0
+access = "r"
+width = 16
+reset = 0x8086
+reset_from = "Intel 82371AB datasheet 290562-001 (April 1997) p.102"
+grade = "established"
+from = "Intel 82371AB datasheet 290562-001 (April 1997) p.102"
+doc = "Vendor identification, Intel."
+
+[registers.f2_did]
+space = "piix4_f2"
+offset = 0x2
+access = "r"
+width = 16
+reset = 0x7112
+reset_from = "Intel 82371AB datasheet 290562-001 (April 1997) p.102"
+grade = "established"
+from = "Intel 82371AB datasheet 290562-001 (April 1997) p.102"
+doc = "Device identification of function 2. The firmware's self-test reads the function 0 vendor and device words as one dword and expects 0x71108086."
+
+[registers.f3_vid]
+space = "piix4_f3"
+offset = 0x0
+access = "r"
+width = 16
+reset = 0x8086
+reset_from = "Intel 82371AB datasheet 290562-001 (April 1997) p.117"
+grade = "established"
+from = "Intel 82371AB datasheet 290562-001 (April 1997) p.117"
+doc = "Vendor identification, Intel."
+
+[registers.f3_did]
+space = "piix4_f3"
+offset = 0x2
+access = "r"
+width = 16
+reset = 0x7113
+reset_from = "Intel 82371AB datasheet 290562-001 (April 1997) p.117"
+grade = "established"
+from = "Intel 82371AB datasheet 290562-001 (April 1997) p.117"
+doc = "Device identification of function 3. The firmware's self-test reads the function 0 vendor and device words as one dword and expects 0x71108086."
+
+[registers.f0_pcicmd]
+space = "piix4_f0"
+offset = 0x4
+access = "rw"
+width = 16
+reset = 0x7
+reset_from = "Intel 82371AB datasheet 290562-001 (April 1997) p.54"
+grade = "established"
+from = "Intel 82371AB datasheet 290562-001 (April 1997) p.54"
+doc = "PCI command. The firmware writes 0x0f once. Bits 2 to 0 are hardwired to 1 and the bits the datasheet marks not implemented read 0, so the write leaves special cycle enable (bit 3) and SERR enable unchanged except bit 3 set; the special cycle enable is what lets the chip see the shutdown special cycle that Linux sends before powering off."
+
+[registers.f0_pcicmd.fields]
+io_space = { bits = [0, 0], grade = "established", doc = "Hardwired 1: the function always answers I/O cycles." }
+memory = { bits = [1, 1], grade = "established", doc = "Hardwired 1." }
+bus_master = { bits = [2, 2], grade = "established", doc = "Hardwired 1." }
+sce = { bits = [3, 3], grade = "established", doc = "Special cycle enable: 1 makes the chip recognise PCI shutdown special cycles and assert INIT." }
+serre = { bits = [8, 8], grade = "established", doc = "SERR# enable." }
+
+[[registers.f0_pcicmd.tests]]
+value = 0xf
+expect = { io_space = 1, memory = 1, bus_master = 1, sce = 1, serre = 0 }
+
+[registers.f0_pcists]
+space = "piix4_f0"
+offset = 0x6
+access = "rw"
+width = 16
+reset = 0x280
+reset_from = "Intel 82371AB datasheet 290562-001 (April 1997) p.55"
+w1c = 0x7800
+grade = "established"
+from = "Intel 82371AB datasheet 290562-001 (April 1997) p.55"
+doc = "PCI status. Bits 14 to 11 are write-1-to-clear; DEVSEL# timing is medium (01)."
+
+[registers.f0_pcists.fields]
+sig_serr = { bits = [14, 14], grade = "established", doc = "Signalled SERR#, write 1 to clear." }
+master_abort = { bits = [13, 13], grade = "established", doc = "Master abort received, write 1 to clear." }
+rcv_target_abort = { bits = [12, 12], grade = "established", doc = "Target abort received, write 1 to clear." }
+sig_target_abort = { bits = [11, 11], grade = "established", doc = "Target abort signalled, write 1 to clear." }
+devsel = { bits = [10, 9], grade = "established", doc = "DEVSEL# timing, always 01 (medium)." }
+fast_b2b = { bits = [7, 7], grade = "established", doc = "Fast back-to-back capable, read only." }
+
+[registers.f0_rid]
+space = "piix4_f0"
+offset = 0x8
+access = "r"
+width = 8
+reset = "unknown"
+ro = 0xff
+grade = "established"
+from = "Intel 82371AB datasheet 290562-001 (April 1997) p.55"
+doc = "Revision. Stepping 00h initially; the specification update lists later values. Which stepping the board carries is not known."
+
+[registers.f0_classc_pi]
+space = "piix4_f0"
+offset = 0x9
+access = "r"
+width = 8
+reset = 0x0
+reset_from = "Intel 82371AB datasheet 290562-001 (April 1997) p.56"
+grade = "established"
+from = "Intel 82371AB datasheet 290562-001 (April 1997) p.56"
+doc = "Class code, programming interface byte, 0x00. The PROM's register walk reads this dword once and discards the result."
+
+[registers.f0_classc_scc]
+space = "piix4_f0"
+offset = 0xa
+access = "r"
+width = 8
+reset = 0x1
+reset_from = "Intel 82371AB datasheet 290562-001 (April 1997) p.56"
+grade = "established"
+from = "Intel 82371AB datasheet 290562-001 (April 1997) p.56"
+doc = "Class code, sub-class byte: 0x01 (PCI-to-ISA bridge) while GENCFG bit 1 selects subtractive decode, 0x80 (other bridge) when it selects positive decode."
+
+[registers.f0_classc_basec]
+space = "piix4_f0"
+offset = 0xb
+access = "r"
+width = 8
+reset = 0x6
+reset_from = "Intel 82371AB datasheet 290562-001 (April 1997) p.56"
+grade = "established"
+from = "Intel 82371AB datasheet 290562-001 (April 1997) p.56"
+doc = "Class code, base class byte, 0x06 (bridge)."
+
+[registers.f0_hedt]
+space = "piix4_f0"
+offset = 0xe
+access = "r"
+width = 8
+reset = 0x80
+reset_from = "Intel 82371AB datasheet 290562-001 (April 1997) p.56"
+grade = "established"
+from = "Intel 82371AB datasheet 290562-001 (April 1997) p.56"
+doc = "Header type, 0x80: a multifunction device. Functions 1 to 3 read their own header type as 0."
+
+[registers.f0_iort]
+space = "piix4_f0"
+offset = 0x4c
+access = "rw"
+width = 8
+reset = 0x4d
+reset_from = "Intel 82371AB datasheet 290562-001 (April 1997) p.56"
+grade = "established"
+from = "Intel 82371AB datasheet 290562-001 (April 1997) p.57"
+doc = "ISA I/O recovery timer. Reset enables 8-bit and 16-bit recovery with one SYSCLK added to the 3.5 SYSCLK minimum. Not written by any held software."
+
+[registers.f0_iort.fields]
+dmaac = { bits = [7, 7], grade = "established", doc = "DMA reserved page register aliasing control." }
+rec8_en = { bits = [6, 6], grade = "established", doc = "8-bit I/O recovery enable." }
+rec8 = { bits = [5, 3], grade = "established", doc = "Additional SYSCLKs of 8-bit recovery when enabled (001 is 1 ... 111 is 7, 000 is 8)." }
+rec16_en = { bits = [2, 2], grade = "established", doc = "16-bit I/O recovery enable." }
+rec16 = { bits = [1, 0], grade = "established", doc = "Additional SYSCLKs of 16-bit recovery (00 is 3, 01 is 1, 10 is 2, 11 is 4)." }
+
+[registers.f0_xbcs]
+space = "piix4_f0"
+offset = 0x4e
+access = "rw"
+width = 16
+reset = 0x3
+reset_from = "Intel 82371AB datasheet 290562-001 (April 1997) p.57"
+rsvd = 0xf800
+grade = "established"
+from = "Intel 82371AB datasheet 290562-001 (April 1997) p.57-58"
+doc = "X-bus chip select. The PROM writes the byte 0xf4: that sets the extended BIOS, lower BIOS, BIOSCS# write enable, coprocessor error and mouse functions and clears bits 1 and 0, the external keyboard and RTC chip selects (a software expectation). Clearing them while the Super I/O keyboard controller decodes its own ports is consistent with the board using the Super I/O's keyboard controller (inferred). Bit 9 and bit 7 forward the flash regions 0xfff00000 to 0xfff7ffff and 0xfff80000 to 0xfffdffff to the BIOS chip select; the top 64 KiB is always decoded. Which chip select the flash sits on is not stated by any source."
+
+[registers.f0_xbcs.fields]
+rtccs_en = { bits = [0, 0], grade = "established", doc = "RTCCS#/RTCALE and XOE# for ports 0x70 to 0x77." }
+kbccs_en = { bits = [1, 1], grade = "established", doc = "KBCCS# and XOE# for ports 0x60 and 0x64." }
+bioscs_wp = { bits = [2, 2], grade = "established", doc = "1 asserts BIOSCS# for writes as well as reads in the decoded BIOS regions." }
+port61_alias = { bits = [3, 3], grade = "established", doc = "Alias ports 0x63, 0x65 and 0x67 to 0x61." }
+mouse = { bits = [4, 4], grade = "established", doc = "IRQ12/M mouse function." }
+coproc_err = { bits = [5, 5], grade = "established", doc = "Coprocessor error function (FERR# raises internal IRQ13)." }
+lower_bios = { bits = [6, 6], grade = "established", doc = "Lower BIOS enable: 0xe0000 to 0xeffff and 0xfffe0000 to 0xfffeffff." }
+ext_bios = { bits = [7, 7], grade = "established", doc = "Extended BIOS enable: 0xfff80000 to 0xfffdffff." }
+apic_cs = { bits = [8, 8], grade = "established", doc = "APIC chip select; also selects GPI5, GPO12 to GPO14 and GPO29 versus the APIC functions." }
+bios_1meg = { bits = [9, 9], grade = "established", doc = "1-Meg extended BIOS enable: 0xfff00000 to 0xfff7ffff." }
+mc_loc = { bits = [10, 10], grade = "established", doc = "Microcontroller address location enable (ports 0x62 and 0x66)." }
+
+[[registers.f0_xbcs.tests]]
+value = 0xf4
+expect = { rtccs_en = 0, kbccs_en = 0, bioscs_wp = 1, port61_alias = 0, mouse = 1, coproc_err = 1, lower_bios = 1, ext_bios = 1, apic_cs = 0, bios_1meg = 0, mc_loc = 0 }
+
+[registers.f0_pirqrc]
+space = "piix4_f0"
+offset = 0x60
+access = "rw"
+width = 8
+count = 4
+stride = 1
+reset = 0x80
+reset_from = "Intel 82371AB datasheet 290562-001 (April 1997) p.59"
+grade = "established"
+from = "Intel 82371AB datasheet 290562-001 (April 1997) p.59"
+doc = "PIRQ[A:D]# route control, one byte each at 0x60 to 0x63. The PROM writes 0x09 to the first (route PIRQA# to IRQ9). The routed IRQ must be level sensitive."
+
+[registers.f0_pirqrc.fields]
+route_off = { bits = [7, 7], grade = "established", doc = "0 enables the route, 1 disables it." }
+irq = { bits = [3, 0], grade = "established", doc = "IRQ the PIRQ line is routed to when enabled; other values are reserved.", enums = { irq3 = { value = 3, grade = "established" }, irq4 = { value = 4, grade = "established" }, irq5 = { value = 5, grade = "established" }, irq6 = { value = 6, grade = "established" }, irq7 = { value = 7, grade = "established" }, irq9 = { value = 9, grade = "established" }, irq10 = { value = 10, grade = "established" }, irq11 = { value = 11, grade = "established" }, irq12 = { value = 12, grade = "established" }, irq14 = { value = 14, grade = "established" }, irq15 = { value = 15, grade = "established" } } }
+
+[[registers.f0_pirqrc.tests]]
+value = 0x9
+expect = { route_off = 0, irq = 9 }
+
+[registers.f0_serirqc]
+space = "piix4_f0"
+offset = 0x64
+access = "rw"
+width = 8
+reset = 0x10
+reset_from = "Intel 82371AB datasheet 290562-001 (April 1997) p.59"
+grade = "established"
+from = "Intel 82371AB datasheet 290562-001 (April 1997) p.59"
+doc = "Serial IRQ control. Not written by the PROM; GENCFG bit 16 must also select SERIRQ for it to take effect."
+
+[registers.f0_serirqc.fields]
+enable = { bits = [7, 7], grade = "established", doc = "Serial IRQ enable." }
+continuous = { bits = [6, 6], grade = "established", doc = "1 continuous mode, 0 quiet mode." }
+frame_size = { bits = [5, 2], grade = "established", doc = "Frame size; only 0100 (21 slots) is supported." }
+start_width = { bits = [1, 0], grade = "established", doc = "Start frame pulse width: 4, 6 or 8 PCI clocks." }
+
+[registers.f0_tom]
+space = "piix4_f0"
+offset = 0x69
+access = "rw"
+width = 8
+reset = 0x2
+reset_from = "Intel 82371AB datasheet 290562-001 (April 1997) p.60"
+grade = "established"
+from = "Intel 82371AB datasheet 290562-001 (April 1997) p.60"
+doc = "Top of memory and ISA/DMA forwarding. The PROM writes 0xf2: top of memory 16 MB and the 512-640 KB region forwarded to PCI."
+
+[registers.f0_tom.fields]
+top = { bits = [7, 4], grade = "established", doc = "Top of ISA-accessible memory in 1 MB steps, 0000 is 1 MB, 1111 is 16 MB." }
+lower_bios_fwd = { bits = [3, 3], grade = "established", doc = "Forward ISA/DMA accesses to the lower BIOS region to PCI (when XBCS bit 6 is 0)." }
+a0000_en = { bits = [2, 2], grade = "established", doc = "Forward ISA master and DMA cycles to 0xa0000 to 0xbffff to PCI." }
+low512_fwd = { bits = [1, 1], grade = "established", doc = "Forward 512-640 KB ISA master and DMA cycles to PCI." }
+
+[[registers.f0_tom.tests]]
+value = 0xf2
+expect = { top = 15, lower_bios_fwd = 0, a0000_en = 0, low512_fwd = 1 }
+
+[registers.f0_mstat]
+space = "piix4_f0"
+offset = 0x6a
+access = "rw"
+width = 16
+reset = 0x0
+reset_from = "Intel 82371AB datasheet 290562-001 (April 1997) p.61"
+w1c = 0x8000
+grade = "established"
+from = "Intel 82371AB datasheet 290562-001 (April 1997) p.61"
+doc = "Miscellaneous status."
+
+[registers.f0_mstat.fields]
+serr_dtt = { bits = [15, 15], grade = "established", doc = "SERR# generated by a delayed transaction time-out, write 1 to clear." }
+host_retry = { bits = [7, 7], grade = "established", doc = "Retry CPU-initiated non-locked PCI cycles without a delayed transaction." }
+
+[registers.f0_mbdma]
+space = "piix4_f0"
+offset = 0x76
+access = "rw"
+width = 8
+count = 2
+stride = 1
+reset = 0x4
+reset_from = "Intel 82371AB datasheet 290562-001 (April 1997) p.61"
+grade = "established"
+from = "Intel 82371AB datasheet 290562-001 (April 1997) p.61"
+doc = "Motherboard device DMA control, 0x76 and 0x77. The PROM writes 0x0c to both, which is the disabled channel (100) with the bit the datasheet says reads 1. The datasheet gives the default as 04h while saying bit 3 reads as 1; the two do not agree."
+
+[registers.f0_mbdma.fields]
+fast = { bits = [7, 7], grade = "established", doc = "Type F DMA and 4-byte buffer enable for the channel selected below." }
+one = { bits = [3, 3], grade = "established", doc = "Reserved, read as 1." }
+chnl = { bits = [2, 0], grade = "established", doc = "DMA channel for type F transfers; 100 is disabled." }
+
+[[registers.f0_mbdma.tests]]
+value = 0xc
+expect = { fast = 0, one = 1, chnl = 4 }
+
+[registers.f0_apicbase]
+space = "piix4_f0"
+offset = 0x80
+access = "rw"
+width = 8
+reset = 0x0
+reset_from = "Intel 82371AB datasheet 290562-001 (April 1997) p.62"
+grade = "established"
+from = "Intel 82371AB datasheet 290562-001 (April 1997) p.62"
+doc = "APIC base address relocation (the I/O APIC window follows the Intel 0xfec0 base). Not written by held software."
+
+[registers.f0_dlc]
+space = "piix4_f0"
+offset = 0x82
+access = "rw"
+width = 8
+reset = 0x0
+reset_from = "Intel 82371AB datasheet 290562-001 (April 1997) p.62"
+grade = "established"
+from = "Intel 82371AB datasheet 290562-001 (April 1997) p.62-63"
+doc = "Deterministic latency control: delayed transaction, passive release and SERR# generation enables. Not written by held software."
+
+[registers.f0_dlc.fields]
+serr_en = { bits = [3, 3], grade = "established", doc = "SERR# on delayed transaction time-out." }
+usb_pr = { bits = [2, 2], grade = "established", doc = "USB passive release enable." }
+passive_release = { bits = [1, 1], grade = "established", doc = "Passive release enable." }
+delayed_txn = { bits = [0, 0], grade = "established", doc = "Delayed transaction enable." }
+
+[registers.f0_pdmacfg]
+space = "piix4_f0"
+offset = 0x90
+access = "rw"
+width = 16
+reset = 0x0
+reset_from = "Intel 82371AB datasheet 290562-001 (April 1997) p.63"
+grade = "established"
+from = "Intel 82371AB datasheet 290562-001 (April 1997) p.63-64"
+doc = "PCI DMA configuration: the DMA type of each channel. Channel 4 is the cascade and has no field. The PROM bit-walks the byte at 0x90 and the one at 0x95 (high byte of the channel 5 to 7 pointer) in its function 0 register test, and the walked bytes hold every pattern on the real board."
+
+[registers.f0_pdmacfg.fields]
+ch0 = { bits = [1, 0], grade = "established", doc = "Channel 0 type.", enums = { normal_isa = { value = 0, grade = "established" }, pc_pci = { value = 1, grade = "established" }, distributed = { value = 2, grade = "established" } } }
+ch1 = { bits = [3, 2], grade = "established", doc = "Channel 1 type.", enums = { normal_isa = { value = 0, grade = "established" }, pc_pci = { value = 1, grade = "established" }, distributed = { value = 2, grade = "established" } } }
+ch2 = { bits = [5, 4], grade = "established", doc = "Channel 2 type.", enums = { normal_isa = { value = 0, grade = "established" }, pc_pci = { value = 1, grade = "established" }, distributed = { value = 2, grade = "established" } } }
+ch3 = { bits = [7, 6], grade = "established", doc = "Channel 3 type.", enums = { normal_isa = { value = 0, grade = "established" }, pc_pci = { value = 1, grade = "established" }, distributed = { value = 2, grade = "established" } } }
+ch5 = { bits = [11, 10], grade = "established", doc = "Channel 5 type.", enums = { normal_isa = { value = 0, grade = "established" }, pc_pci = { value = 1, grade = "established" }, distributed = { value = 2, grade = "established" } } }
+ch6 = { bits = [13, 12], grade = "established", doc = "Channel 6 type.", enums = { normal_isa = { value = 0, grade = "established" }, pc_pci = { value = 1, grade = "established" }, distributed = { value = 2, grade = "established" } } }
+ch7 = { bits = [15, 14], grade = "established", doc = "Channel 7 type.", enums = { normal_isa = { value = 0, grade = "established" }, pc_pci = { value = 1, grade = "established" }, distributed = { value = 2, grade = "established" } } }
+
+[registers.f0_ddmabp]
+space = "piix4_f0"
+offset = 0x92
+access = "rw"
+width = 16
+count = 2
+stride = 2
+reset = 0x0
+reset_from = "Intel 82371AB datasheet 290562-001 (April 1997) p.64"
+grade = "established"
+from = "Intel 82371AB datasheet 290562-001 (April 1997) p.64"
+doc = "Distributed DMA slave base pointers: 0x92 for channels 0 to 3, 0x94 for channels 5 to 7; bits 15:6 are I/O address bits. The PROM bit-walks bytes 0x93 and 0x95 of these."
+
+[registers.f0_ddmabp.fields]
+base = { bits = [15, 6], grade = "established", doc = "I/O address bits 15 to 6 of the 64-byte slave register window." }
+
+[registers.f0_gencfg]
+space = "piix4_f0"
+offset = 0xb0
+access = "rw"
+width = 32
+reset = 0x0
+reset_from = "Intel 82371AB datasheet 290562-001 (April 1997) p.65"
+ro = 0xc
+rsvd = 0x4002080
+grade = "established"
+from = "Intel 82371AB datasheet 290562-001 (April 1997) p.65-67"
+doc = "General configuration: pin function selects and bus mode. The PROM writes the bytes 0x4d (register 0xb0) and 0x60 (register 0xb3). 0x4d sets bit 0 (ISA mode, so the pins carry IOCHK# and LA[23:17] and are not GPI0 and GPO[7:1]), bit 6 (positive decode of the Plug and Play ports 0x279 and 0xa79) and the read-only bits 2 and 3, which stay as the straps set them. 0x60 sets bits 30 and 29, turning the RTCALE and RTCCS# pins into outputs GPO25 and GPO24. Bit 29 is printed as 'GPO2' in the datasheet and is GPO24 in its GPO table (a datasheet inconsistency). Tables 1 and 2 label the register 'PCI Function 1' but it is a function 0 register."
+
+[registers.f0_gencfg.fields]
+isa_mode = { bits = [0, 0], grade = "established", doc = "0 EIO (default), 1 ISA; also selects IOCHK#/LA[23:17] (1) versus GPI0/GPO[7:1] (0)." }
+pos_decode = { bits = [1, 1], grade = "established", doc = "0 subtractive (default), 1 positive decode; changes the class code sub-class byte." }
+config1 = { bits = [2, 2], grade = "established", doc = "CONFIG1 pin status, read only: 0 Pentium, 1 Pentium II (changes INIT and CPURST polarity). The board's strap is not known." }
+config2 = { bits = [3, 3], grade = "established", doc = "CONFIG2 pin status, read only, meaning undefined." }
+ide_split = { bits = [4, 4], grade = "established", doc = "0 primary and secondary IDE interfaces, 1 primary drive 0 and drive 1 only." }
+alt_access = { bits = [5, 5], grade = "established", doc = "Alternate access mode: exposes shadow registers." }
+pnp_decode = { bits = [6, 6], grade = "established", doc = "Positive decode and forwarding of the Plug and Play ports 0x279 and 0xa79." }
+reqa_sel = { bits = [8, 8], grade = "established", doc = "0 GPI2 and GPO9 (default), 1 PC/PCI REQA#/GNTA#." }
+reqb_sel = { bits = [9, 9], grade = "established", doc = "0 GPI3 and GPO10 (default), 1 REQB#/GNTB#." }
+reqc_sel = { bits = [10, 10], grade = "established", doc = "0 GPI4 and GPO11 (default), 1 REQC#/GNTC#." }
+pri_ide_tristate = { bits = [11, 11], grade = "established", doc = "1 tri-states the primary IDE interface." }
+sec_ide_tristate = { bits = [12, 12], grade = "established", doc = "1 tri-states the secondary IDE interface." }
+irq8_sel = { bits = [14, 14], grade = "established", doc = "0 GPI6 (default), 1 IRQ8# pin. The specification update says to select GPI6 when the internal RTC is used." }
+smbalert_sel = { bits = [15, 15], grade = "established", doc = "0 SMBALERT# (default), 1 GPI11." }
+serirq_sel = { bits = [16, 16], grade = "established", doc = "0 GPI7 (default), 1 SERIRQ." }
+susbc_gpo = { bits = [17, 17], grade = "established", doc = "0 SUSB#/SUSC# (default), 1 GPO15/GPO16." }
+cpustp_gpo = { bits = [18, 18], grade = "established", doc = "0 CPU_STP# (default), 1 GPO17." }
+pcistp_gpo = { bits = [19, 19], grade = "established", doc = "0 PCI_STP# (default), 1 GPO18." }
+zz_gpo = { bits = [20, 20], grade = "established", doc = "0 ZZ (default), 1 GPO19." }
+susstat1_gpo = { bits = [21, 21], grade = "established", doc = "0 SUS_STAT1# (default), 1 GPO20." }
+susstat2_gpo = { bits = [22, 22], grade = "established", doc = "0 SUS_STAT2# (default), 1 GPO21." }
+thrm_gpi8 = { bits = [23, 23], grade = "established", doc = "0 THRM# (default), 1 GPI8." }
+batlow_gpi9 = { bits = [24, 24], grade = "established", doc = "0 BATLOW# (default), 1 GPI9." }
+lid_gpi10 = { bits = [25, 25], grade = "established", doc = "0 LID (default), 1 GPI10." }
+ri_gpi12 = { bits = [27, 27], grade = "established", doc = "0 RI# (default), 1 GPI12." }
+xoe_gpo = { bits = [28, 28], grade = "established", doc = "0 XOE#/XDIR# (default), 1 GPO23/GPO22." }
+rtccs_gpo24 = { bits = [29, 29], grade = "established", doc = "0 RTCCS# (default), 1 GPO24." }
+rtcale_gpo25 = { bits = [30, 30], grade = "established", doc = "0 RTCALE (default), 1 GPO25." }
+kbccs_gpo26 = { bits = [31, 31], grade = "established", doc = "0 KBCCS# (default), 1 GPO26." }
+
+[[registers.f0_gencfg.tests]]
+value = 0x6000004c
+expect = { isa_mode = 0, pnp_decode = 1, rtccs_gpo24 = 1, rtcale_gpo25 = 1, kbccs_gpo26 = 0 }
+kind = "example"
+
+[registers.f0_rtccfg]
+space = "piix4_f0"
+offset = 0xcb
+access = "rw"
+width = 8
+reset = 0x21
+reset_from = "Intel 82371AB datasheet 290562-001 (April 1997) p.67"
+grade = "established"
+from = "Intel 82371AB datasheet 290562-001 (April 1997) p.67-68"
+doc = "Real-time clock configuration. The PROM writes 0x25 (positive decode, upper bank enable, RTC enable). The HAL sets bit 2 by read-modify-write before using the extended clock RAM at ports 0x72 and 0x73. The PROM's self-test clears and sets bit 0 around its clock RAM probe. The lock bits are write-once until a hardware reset. With bit 2 clear the datasheet says the access is forwarded to ISA (RTCCFG text) and also lists ports 0x72 to 0x77 as aliases of the index and data ports (Table 5); the two statements conflict."
+
+[registers.f0_rtccfg.fields]
+rtc_en = { bits = [0, 0], grade = "established", doc = "1 sends ports 0x70 and 0x71 to the lower 128-byte bank; 0 forwards them to ISA." }
+upper_en = { bits = [2, 2], grade = "established", doc = "1 sends ports 0x72 and 0x73 to the upper 128-byte bank; 0 forwards as bit 5 decides." }
+lock_lower = { bits = [3, 3], grade = "established", doc = "Locks bytes 0x38 to 0x3f of the lower bank until a hardware reset." }
+lock_upper = { bits = [4, 4], grade = "established", doc = "Locks bytes 0x38 to 0x3f of the upper bank until a hardware reset." }
+pos_decode = { bits = [5, 5], grade = "established", doc = "1 positive decode of ports 0x70 to 0x73 (default), 0 subtractive." }
+
+[[registers.f0_rtccfg.tests]]
+value = 0x25
+expect = { rtc_en = 1, upper_en = 1, lock_lower = 0, lock_upper = 0, pos_decode = 1 }
+
+[registers.f1_pcicmd]
+space = "piix4_f1"
+offset = 0x4
+access = "rw"
+width = 16
+reset = 0x0
+reset_from = "Intel 82371AB datasheet 290562-001 (April 1997) p.89"
+grade = "established"
+from = "Intel 82371AB datasheet 290562-001 (April 1997) p.89-90"
+doc = "PCI command. The PROM's IDE attach writes 5 (I/O space and bus master enable)."
+
+[registers.f1_pcicmd.fields]
+iose = { bits = [0, 0], grade = "established", doc = "I/O space enable: legacy IDE ports and the bus-master block." }
+bme = { bits = [2, 2], grade = "established", doc = "Bus master function enable." }
+
+[[registers.f1_pcicmd.tests]]
+value = 0x5
+expect = { iose = 1, bme = 1 }
+
+[registers.f1_pcists]
+space = "piix4_f1"
+offset = 0x6
+access = "rw"
+width = 16
+reset = 0x280
+reset_from = "Intel 82371AB datasheet 290562-001 (April 1997) p.90"
+w1c = 0x3800
+grade = "established"
+from = "Intel 82371AB datasheet 290562-001 (April 1997) p.90"
+doc = "PCI status."
+
+[registers.f1_rid]
+space = "piix4_f1"
+offset = 0x8
+access = "r"
+width = 8
+reset = "unknown"
+grade = "established"
+from = "Intel 82371AB datasheet 290562-001 (April 1997) p.91"
+doc = "Revision."
+
+[registers.f1_classc_pi]
+space = "piix4_f1"
+offset = 0x9
+access = "r"
+width = 8
+reset = 0x80
+reset_from = "Intel 82371AB datasheet 290562-001 (April 1997) p.91"
+grade = "established"
+from = "Intel 82371AB datasheet 290562-001 (April 1997) p.91"
+doc = "Class code, programming interface (bus master capable, both channels legacy mode)."
+
+[registers.f1_classc_scc]
+space = "piix4_f1"
+offset = 0xa
+access = "r"
+width = 8
+reset = 0x1
+reset_from = "Intel 82371AB datasheet 290562-001 (April 1997) p.91"
+grade = "established"
+from = "Intel 82371AB datasheet 290562-001 (April 1997) p.91"
+doc = "Class code, sub-class: IDE."
+
+[registers.f1_classc_basec]
+space = "piix4_f1"
+offset = 0xb
+access = "r"
+width = 8
+reset = 0x1
+reset_from = "Intel 82371AB datasheet 290562-001 (April 1997) p.91"
+grade = "established"
+from = "Intel 82371AB datasheet 290562-001 (April 1997) p.91"
+doc = "Class code, base class: mass storage."
+
+[registers.f1_mlt]
+space = "piix4_f1"
+offset = 0xd
+access = "rw"
+width = 8
+reset = 0x0
+reset_from = "Intel 82371AB datasheet 290562-001 (April 1997) p.91"
+grade = "established"
+from = "Intel 82371AB datasheet 290562-001 (April 1997) p.91"
+doc = "Master latency timer. The PROM's IDE attach writes 0x80."
+
+[registers.f1_hedt]
+space = "piix4_f1"
+offset = 0xe
+access = "r"
+width = 8
+reset = 0x0
+reset_from = "Intel 82371AB datasheet 290562-001 (April 1997) p.92"
+grade = "established"
+from = "Intel 82371AB datasheet 290562-001 (April 1997) p.92"
+doc = "Header type, 0: single function (multifunction is reported by function 0)."
+
+[registers.f1_bmiba]
+space = "piix4_f1"
+offset = 0x20
+access = "rw"
+width = 32
+reset = 0x1
+reset_from = "Intel 82371AB datasheet 290562-001 (April 1997) p.92"
+grade = "established"
+from = "Intel 82371AB datasheet 290562-001 (April 1997) p.92"
+doc = "Bus-master interface base address: I/O space, bits 15:4 are address bits, bit 0 hardwired 1."
+
+[registers.f1_bmiba.fields]
+rte = { bits = [0, 0], grade = "established", doc = "Resource type indicator, hardwired 1 (I/O)." }
+base = { bits = [15, 4], grade = "established", doc = "I/O address bits 15 to 4 of the 16-byte bus-master block." }
+
+[registers.f1_idetim]
+space = "piix4_f1"
+offset = 0x40
+access = "rw"
+width = 16
+count = 2
+stride = 2
+reset = 0x0
+reset_from = "Intel 82371AB datasheet 290562-001 (April 1997) p.93"
+grade = "established"
+from = "Intel 82371AB datasheet 290562-001 (April 1997) p.93-94"
+doc = "IDE timing: 0x40 primary channel, 0x42 secondary. The PROM's IDE attach writes the dword 0xc077c077 (both channels: decode enabled, slave timing register enabled, fast timing with prefetch and IORDY sampling on both drives, ISP 5 clocks, RTC 4 clocks) and, on board type 1 (the 540, which has one IDE channel), writes the byte 0x40 to 0x43, which leaves only the slave timing enable set for the secondary channel and its decode disabled."
+
+[registers.f1_idetim.fields]
+ide_en = { bits = [15, 15], grade = "established", doc = "1 positively decodes the channel's IDE register blocks; 0 decodes them subtractively to ISA." }
+sitre = { bits = [14, 14], grade = "established", doc = "Slave IDE timing register (SIDETIM) enable." }
+isp = { bits = [13, 12], grade = "established", doc = "IORDY sample point: 00 5 clocks, 01 4, 10 3, 11 2." }
+rtc = { bits = [9, 8], grade = "established", doc = "Recovery time: 00 4 clocks, 01 3, 10 2, 11 1." }
+dte1 = { bits = [7, 7], grade = "established", doc = "DMA timing enable only, drive 1." }
+ppe1 = { bits = [6, 6], grade = "established", doc = "Prefetch and posting enable, drive 1." }
+ie1 = { bits = [5, 5], grade = "established", doc = "IORDY sample enable, drive 1." }
+time1 = { bits = [4, 4], grade = "established", doc = "Fast timing bank, drive 1." }
+dte0 = { bits = [3, 3], grade = "established", doc = "DMA timing enable only, drive 0." }
+ppe0 = { bits = [2, 2], grade = "established", doc = "Prefetch and posting enable, drive 0." }
+ie0 = { bits = [1, 1], grade = "established", doc = "IORDY sample enable, drive 0." }
+time0 = { bits = [0, 0], grade = "established", doc = "Fast timing bank, drive 0." }
+
+[[registers.f1_idetim.tests]]
+value = 0xc077
+expect = { ide_en = 1, sitre = 1, isp = 0, rtc = 0, dte1 = 0, ppe1 = 1, ie1 = 1, time1 = 1, dte0 = 0, ppe0 = 1, ie0 = 1, time0 = 1 }
+
+[[registers.f1_idetim.tests]]
+value = 0x4000
+expect = { ide_en = 0, sitre = 1, isp = 0, rtc = 0 }
+
+[registers.f1_sidetim]
+space = "piix4_f1"
+offset = 0x44
+access = "rw"
+width = 8
+reset = 0x0
+reset_from = "Intel 82371AB datasheet 290562-001 (April 1997) p.95"
+grade = "established"
+from = "Intel 82371AB datasheet 290562-001 (April 1997) p.95"
+doc = "Slave IDE timing (drive 1 of each channel) when IDETIM bit 14 is set. The PROM writes 0."
+
+[registers.f1_udmactl]
+space = "piix4_f1"
+offset = 0x48
+access = "rw"
+width = 8
+reset = 0x0
+reset_from = "Intel 82371AB datasheet 290562-001 (April 1997) p.96"
+grade = "established"
+from = "Intel 82371AB datasheet 290562-001 (April 1997) p.96"
+doc = "Ultra DMA/33 enable per drive."
+
+[registers.f1_udmactl.fields]
+psde0 = { bits = [0, 0], grade = "established", doc = "Primary drive 0." }
+psde1 = { bits = [1, 1], grade = "established", doc = "Primary drive 1." }
+ssde0 = { bits = [2, 2], grade = "established", doc = "Secondary drive 0." }
+ssde1 = { bits = [3, 3], grade = "established", doc = "Secondary drive 1." }
+
+[registers.f1_udmatim]
+space = "piix4_f1"
+offset = 0x4a
+access = "rw"
+width = 16
+reset = 0x0
+reset_from = "Intel 82371AB datasheet 290562-001 (April 1997) p.96"
+grade = "established"
+from = "Intel 82371AB datasheet 290562-001 (April 1997) p.96-97"
+doc = "Ultra DMA/33 cycle times, two bits per drive (00 CT 4 and RP 6 PCI clocks, 01 3 and 5, 10 2 and 4)."
+
+[registers.f1_udmatim.fields]
+pct0 = { bits = [1, 0], grade = "established", doc = "Primary drive 0." }
+pct1 = { bits = [5, 4], grade = "established", doc = "Primary drive 1." }
+sct0 = { bits = [9, 8], grade = "established", doc = "Secondary drive 0." }
+sct1 = { bits = [13, 12], grade = "established", doc = "Secondary drive 1." }
+
+[registers.bm_cmd]
+space = "piix4_bm"
+offset = 0x0
+access = "rw"
+width = 8
+reset = 0x0
+reset_from = "Intel 82371AB datasheet 290562-001 (April 1997) p.99"
+grade = "established"
+from = "Intel 82371AB datasheet 290562-001 (April 1997) p.99"
+doc = "Bus-master IDE command, primary channel; the secondary channel's is at +8 (bm_cmd_sec)."
+
+[registers.bm_cmd.fields]
+start = { bits = [0, 0], grade = "established", doc = "1 starts bus-master operation." }
+rw = { bits = [3, 3], grade = "established", doc = "0 reads from the drive, 1 writes to it." }
+
+[registers.bm_cmd_sec]
+space = "piix4_bm"
+offset = 0x8
+access = "rw"
+width = 8
+reset = 0x0
+reset_from = "Intel 82371AB datasheet 290562-001 (April 1997) p.99"
+grade = "established"
+from = "Intel 82371AB datasheet 290562-001 (April 1997) p.99"
+doc = "Bus-master IDE command, secondary channel."
+
+[registers.bm_cmd_sec.fields]
+start = { bits = [0, 0], grade = "established", doc = "1 starts bus-master operation." }
+rw = { bits = [3, 3], grade = "established", doc = "0 reads from the drive, 1 writes to it." }
+
+[registers.bm_status]
+space = "piix4_bm"
+offset = 0x2
+access = "rw"
+width = 8
+reset = 0x0
+reset_from = "Intel 82371AB datasheet 290562-001 (April 1997) p.100"
+w1c = 0x6
+grade = "established"
+from = "Intel 82371AB datasheet 290562-001 (April 1997) p.100"
+doc = "Bus-master IDE status, primary channel; secondary channel's copy is at offset 0x0a."
+
+[registers.bm_status.fields]
+active = { bits = [0, 0], grade = "established", doc = "Bus-master active, read only." }
+error = { bits = [1, 1], grade = "established", doc = "DMA error, write 1 to clear." }
+irq = { bits = [2, 2], grade = "established", doc = "IDE interrupt status, write 1 to clear." }
+dma0_cap = { bits = [5, 5], grade = "established", doc = "Drive 0 DMA capable (software flag)." }
+dma1_cap = { bits = [6, 6], grade = "established", doc = "Drive 1 DMA capable (software flag)." }
+
+[registers.bm_status_sec]
+space = "piix4_bm"
+offset = 0xa
+access = "rw"
+width = 8
+reset = 0x0
+reset_from = "Intel 82371AB datasheet 290562-001 (April 1997) p.100"
+w1c = 0x6
+grade = "established"
+from = "Intel 82371AB datasheet 290562-001 (April 1997) p.100"
+doc = "Bus-master IDE status, secondary channel."
+
+[registers.bm_status_sec.fields]
+active = { bits = [0, 0], grade = "established", doc = "Bus-master active, read only." }
+error = { bits = [1, 1], grade = "established", doc = "DMA error, write 1 to clear." }
+irq = { bits = [2, 2], grade = "established", doc = "IDE interrupt status, write 1 to clear." }
+dma0_cap = { bits = [5, 5], grade = "established", doc = "Drive 0 DMA capable (software flag)." }
+dma1_cap = { bits = [6, 6], grade = "established", doc = "Drive 1 DMA capable (software flag)." }
+
+[registers.bm_prd]
+space = "piix4_bm"
+offset = 0x4
+access = "rw"
+width = 32
+reset = 0x0
+reset_from = "Intel 82371AB datasheet 290562-001 (April 1997) p.101"
+grade = "established"
+from = "Intel 82371AB datasheet 290562-001 (April 1997) p.101"
+doc = "Descriptor table pointer, primary channel; secondary channel's copy is at offset 0x0c."
+
+[registers.bm_prd_sec]
+space = "piix4_bm"
+offset = 0xc
+access = "rw"
+width = 32
+reset = 0x0
+reset_from = "Intel 82371AB datasheet 290562-001 (April 1997) p.101"
+grade = "established"
+from = "Intel 82371AB datasheet 290562-001 (April 1997) p.101"
+doc = "Descriptor table pointer, secondary channel."
+
+[registers.f2_pcicmd]
+space = "piix4_f2"
+offset = 0x4
+access = "rw"
+width = 16
+reset = 0x0
+reset_from = "Intel 82371AB datasheet 290562-001 (April 1997) p.103"
+grade = "established"
+from = "Intel 82371AB datasheet 290562-001 (April 1997) p.103"
+doc = "PCI command."
+
+[registers.f2_pcists]
+space = "piix4_f2"
+offset = 0x6
+access = "rw"
+width = 16
+reset = 0x280
+reset_from = "Intel 82371AB datasheet 290562-001 (April 1997) p.103"
+grade = "established"
+from = "Intel 82371AB datasheet 290562-001 (April 1997) p.103"
+doc = "PCI status."
+
+[registers.f2_rid]
+space = "piix4_f2"
+offset = 0x8
+access = "r"
+width = 8
+reset = "unknown"
+grade = "established"
+from = "Intel 82371AB datasheet 290562-001 (April 1997) p.104"
+doc = "Revision."
+
+[registers.f2_classc_pi]
+space = "piix4_f2"
+offset = 0x9
+access = "r"
+width = 8
+reset = 0x0
+reset_from = "Intel 82371AB datasheet 290562-001 (April 1997) p.104"
+grade = "established"
+from = "Intel 82371AB datasheet 290562-001 (April 1997) p.104"
+doc = "Class code, programming interface: OpenHCI-style USB host controller."
+
+[registers.f2_classc_scc]
+space = "piix4_f2"
+offset = 0xa
+access = "r"
+width = 8
+reset = 0x3
+reset_from = "Intel 82371AB datasheet 290562-001 (April 1997) p.104"
+grade = "established"
+from = "Intel 82371AB datasheet 290562-001 (April 1997) p.104"
+doc = "Class code, sub-class: USB."
+
+[registers.f2_classc_basec]
+space = "piix4_f2"
+offset = 0xb
+access = "r"
+width = 8
+reset = 0xc
+reset_from = "Intel 82371AB datasheet 290562-001 (April 1997) p.104"
+grade = "established"
+from = "Intel 82371AB datasheet 290562-001 (April 1997) p.104"
+doc = "Class code, base class: serial bus."
+
+[registers.f2_mlt]
+space = "piix4_f2"
+offset = 0xd
+access = "rw"
+width = 8
+reset = 0x0
+reset_from = "Intel 82371AB datasheet 290562-001 (April 1997) p.105"
+grade = "established"
+from = "Intel 82371AB datasheet 290562-001 (April 1997) p.105"
+doc = "Master latency timer."
+
+[registers.f2_hedt]
+space = "piix4_f2"
+offset = 0xe
+access = "r"
+width = 8
+reset = 0x0
+reset_from = "Intel 82371AB datasheet 290562-001 (April 1997) p.105"
+grade = "established"
+from = "Intel 82371AB datasheet 290562-001 (April 1997) p.105"
+doc = "Header type, 0."
+
+[registers.f2_usbba]
+space = "piix4_f2"
+offset = 0x20
+access = "rw"
+width = 32
+reset = 0x0
+reset_from = "Intel 82371AB datasheet 290562-001 (April 1997) p.108"
+grade = "established"
+from = "Intel 82371AB datasheet 290562-001 (April 1997) p.108"
+doc = "USB I/O space base address: bits 15:5, bit 0 hardwired 1."
+
+[registers.f2_usbba.fields]
+rte = { bits = [0, 0], grade = "established", doc = "Resource type indicator, hardwired 1 (I/O)." }
+base = { bits = [15, 5], grade = "established", doc = "I/O address bits 15 to 5." }
+
+[registers.f2_intln]
+space = "piix4_f2"
+offset = 0x3c
+access = "rw"
+width = 8
+reset = 0x0
+reset_from = "Intel 82371AB datasheet 290562-001 (April 1997) p.105"
+grade = "established"
+from = "Intel 82371AB datasheet 290562-001 (April 1997) p.105"
+doc = "Interrupt line; no effect on the hardware."
+
+[registers.f2_intpn]
+space = "piix4_f2"
+offset = 0x3d
+access = "r"
+width = 8
+reset = 0x4
+reset_from = "Intel 82371AB datasheet 290562-001 (April 1997) p.106"
+grade = "established"
+from = "Intel 82371AB datasheet 290562-001 (April 1997) p.106"
+doc = "Interrupt pin, hardwired 4 (INTD#). The datasheet says the USB interrupt is also ORed to PIRQD#; the board wires only this pin to its own interrupt entry, never through the 8259."
+
+[registers.f2_sbrnum]
+space = "piix4_f2"
+offset = 0x60
+access = "r"
+width = 8
+reset = 0x10
+reset_from = "Intel 82371AB datasheet 290562-001 (April 1997) p.106"
+grade = "established"
+from = "Intel 82371AB datasheet 290562-001 (April 1997) p.106"
+doc = "Serial bus release number, 0x10 (USB 1.0)."
+
+[registers.f2_legsup]
+space = "piix4_f2"
+offset = 0xc0
+access = "rw"
+width = 16
+reset = 0x2000
+reset_from = "Intel 82371AB datasheet 290562-001 (April 1997) p.107"
+grade = "established"
+from = "Intel 82371AB datasheet 290562-001 (April 1997) p.107-108"
+doc = "Legacy keyboard and mouse support: trap and SMI enables and status. Not written by held software."
+
+[registers.f2_legsup.fields]
+usbpirqden = { bits = [13, 13], grade = "established", doc = "USB interrupt routed to PIRQD# (default 1)." }
+
+[registers.f2_miscsup]
+space = "piix4_f2"
+offset = 0xff
+access = "rw"
+width = 8
+reset = "unknown"
+grade = "established"
+from = "Intel 82371AB datasheet 290562-001 (April 1997) p.109"
+doc = "Miscellaneous support: bit 4 lets a read of port 0x70 return the RTC index. Byte accesses only."
+
+[registers.f2_miscsup.fields]
+rtciren = { bits = [4, 4], grade = "established", doc = "RTC index read enable." }
+
+[registers.f3_pcicmd]
+space = "piix4_f3"
+offset = 0x4
+access = "rw"
+width = 16
+reset = 0x0
+reset_from = "Intel 82371AB datasheet 290562-001 (April 1997) p.117"
+grade = "established"
+from = "Intel 82371AB datasheet 290562-001 (April 1997) p.117-118"
+doc = "PCI command. Bit 0 enables the SMBus I/O block and works independently of PMREGMISC bit 0. The PROM's function 3 attach sets it after writing the SMBus base."
+
+[registers.f3_pcicmd.fields]
+iose = { bits = [0, 0], grade = "established", doc = "SMBus I/O space enable." }
+
+[registers.f3_pcists]
+space = "piix4_f3"
+offset = 0x6
+access = "rw"
+width = 16
+reset = 0x280
+reset_from = "Intel 82371AB datasheet 290562-001 (April 1997) p.118"
+w1c = 0x800
+grade = "established"
+from = "Intel 82371AB datasheet 290562-001 (April 1997) p.118"
+doc = "PCI status; the PROM's attach clears it by writing 0x3800."
+
+[registers.f3_rid]
+space = "piix4_f3"
+offset = 0x8
+access = "r"
+width = 8
+reset = "unknown"
+grade = "established"
+from = "Intel 82371AB datasheet 290562-001 (April 1997) p.119"
+doc = "Revision."
+
+[registers.f3_classc_pi]
+space = "piix4_f3"
+offset = 0x9
+access = "r"
+width = 8
+reset = 0x0
+reset_from = "Intel 82371AB datasheet 290562-001 (April 1997) p.119"
+grade = "established"
+from = "Intel 82371AB datasheet 290562-001 (April 1997) p.119"
+doc = "Class code, programming interface."
+
+[registers.f3_classc_scc]
+space = "piix4_f3"
+offset = 0xa
+access = "r"
+width = 8
+reset = 0x80
+reset_from = "Intel 82371AB datasheet 290562-001 (April 1997) p.119"
+grade = "established"
+from = "Intel 82371AB datasheet 290562-001 (April 1997) p.119"
+doc = "Class code, sub-class: other bridge."
+
+[registers.f3_classc_basec]
+space = "piix4_f3"
+offset = 0xb
+access = "r"
+width = 8
+reset = 0x6
+reset_from = "Intel 82371AB datasheet 290562-001 (April 1997) p.119"
+grade = "established"
+from = "Intel 82371AB datasheet 290562-001 (April 1997) p.119"
+doc = "Class code, base class: bridge."
+
+[registers.f3_hedt]
+space = "piix4_f3"
+offset = 0xe
+access = "r"
+width = 8
+reset = 0x0
+reset_from = "Intel 82371AB datasheet 290562-001 (April 1997) p.119"
+grade = "established"
+from = "Intel 82371AB datasheet 290562-001 (April 1997) p.119"
+doc = "Header type, 0."
+
+[registers.f3_intln]
+space = "piix4_f3"
+offset = 0x3c
+access = "rw"
+width = 8
+reset = 0x0
+reset_from = "Intel 82371AB datasheet 290562-001 (April 1997) p.120"
+grade = "established"
+from = "Intel 82371AB datasheet 290562-001 (April 1997) p.120"
+doc = "Interrupt line; no effect on the hardware."
+
+[registers.f3_intpn]
+space = "piix4_f3"
+offset = 0x3d
+access = "r"
+width = 8
+reset = "unknown"
+grade = "unknown"
+from = "Intel 82371AB datasheet 290562-001 (April 1997) p.120"
+doc = "Interrupt pin. The datasheet says it reads 1 (PIRQA#). The specification update (spec change 1, p.13) says the register is not implemented because the power management and SMBus interrupts are hardwired to IRQ9, so the datasheet value is superseded. What the silicon returns is not stated."
+
+[registers.f3_pmba]
+space = "piix4_f3"
+offset = 0x40
+access = "rw"
+width = 32
+reset = 0x1
+reset_from = "Intel 82371AB datasheet 290562-001 (April 1997) p.120"
+ro = 0xffff003f
+grade = "established"
+from = "Intel 82371AB datasheet 290562-001 (April 1997) p.120"
+doc = "Power management base address. Bits 15:6 hold the I/O base, bit 0 is hardwired 1, bits 31:16 are hardwired 0. The PROM writes 0x0f80 and the register then reads 0x0f81; the base 0xf80 is what Linux and the HAL assume. The HAL never programs it."
+
+[registers.f3_pmba.fields]
+rte = { bits = [0, 0], grade = "established", doc = "Resource type indicator, hardwired 1 (I/O)." }
+base = { bits = [15, 6], grade = "established", doc = "I/O address bits 15 to 6 of the 64-byte power management block." }
+
+[[registers.f3_pmba.tests]]
+value = 0xf81
+expect = { rte = 1, base = 62 }
+
+[registers.f3_cnta]
+space = "piix4_f3"
+offset = 0x44
+access = "rw"
+width = 32
+reset = 0x0
+reset_from = "Intel 82371AB datasheet 290562-001 (April 1997) p.121"
+grade = "established"
+from = "Intel 82371AB datasheet 290562-001 (April 1997) p.121"
+doc = "Idle timer counts and resolutions for the device monitors and the slow burst count. Not written by held software."
+
+[registers.f3_cntb]
+space = "piix4_f3"
+offset = 0x48
+access = "rw"
+width = 32
+reset = 0x0
+reset_from = "Intel 82371AB datasheet 290562-001 (April 1997) p.121"
+grade = "established"
+from = "Intel 82371AB datasheet 290562-001 (April 1997) p.121-122"
+doc = "Fast burst timer count, CPU select, thermal duty and video status. The specification update (spec change 5) corrects bit 5 to 8 microsecond granularity. Not written by held software."
+
+[registers.f3_gpictl]
+space = "piix4_f3"
+offset = 0x4c
+access = "rw"
+width = 32
+reset = 0x0
+reset_from = "Intel 82371AB datasheet 290562-001 (April 1997) p.123"
+grade = "established"
+from = "Intel 82371AB datasheet 290562-001 (April 1997) p.123"
+doc = "General purpose input control: enable, polarity and edge for the device-monitor GPI inputs (Table 17 maps GPI18 to GPI21 to device monitors 10 to 13). Not written by held software."
+
+[registers.f3_pmregmisc]
+space = "piix4_f3"
+offset = 0x80
+access = "rw"
+width = 8
+reset = 0x0
+reset_from = "Intel 82371AB datasheet 290562-001 (April 1997) p.134"
+grade = "established"
+from = "Intel 82371AB datasheet 290562-001 (April 1997) p.134"
+doc = "Miscellaneous power management. The PROM writes 1 after the base. When the bit is clear every access to the power management block goes unclaimed."
+
+[registers.f3_pmregmisc.fields]
+pmiose = { bits = [0, 0], grade = "established", doc = "Power management I/O space enable; set after PMBA is programmed." }
+
+[[registers.f3_pmregmisc.tests]]
+value = 0x1
+expect = { pmiose = 1 }
+
+[registers.f3_smbba]
+space = "piix4_f3"
+offset = 0x90
+access = "rw"
+width = 32
+reset = 0x1
+reset_from = "Intel 82371AB datasheet 290562-001 (April 1997) p.135"
+grade = "established"
+from = "Intel 82371AB datasheet 290562-001 (April 1997) p.135"
+doc = "SMBus base address: bits 15:4, bit 0 hardwired 1. The PROM's function 3 attach writes 0x0fd0, so the register reads 0x00000fd1 (not read back by any held software); neither HAL build touches it."
+
+[registers.f3_smbba.fields]
+rte = { bits = [0, 0], grade = "established", doc = "Resource type indicator, hardwired 1 (I/O)." }
+base = { bits = [15, 4], grade = "established", doc = "I/O address bits 15 to 4 of the 16-byte SMBus block." }
+
+[[registers.f3_smbba.tests]]
+value = 0xfd1
+expect = { rte = 1, base = 253 }
+
+[registers.f3_smbhstcfg]
+space = "piix4_f3"
+offset = 0xd2
+access = "rw"
+width = 8
+reset = 0x0
+reset_from = "Intel 82371AB datasheet 290562-001 (April 1997) p.135"
+grade = "established"
+from = "Intel 82371AB datasheet 290562-001 (April 1997) p.135"
+doc = "SMBus host configuration. The PROM writes 0x09: host interface enabled and the interrupt routed to IRQ9."
+
+[registers.f3_smbhstcfg.fields]
+host_en = { bits = [0, 0], grade = "established", doc = "SMBus host interface enable." }
+intrsel = { bits = [3, 1], grade = "established", doc = "Interrupt: 000 SMI#, 100 IRQ9; others reserved." }
+
+[[registers.f3_smbhstcfg.tests]]
+value = 0x9
+expect = { host_en = 1, intrsel = 4 }
+
+[registers.f3_smbslvc]
+space = "piix4_f3"
+offset = 0xd3
+access = "rw"
+width = 8
+reset = 0x0
+reset_from = "Intel 82371AB datasheet 290562-001 (April 1997) p.135"
+grade = "established"
+from = "Intel 82371AB datasheet 290562-001 (April 1997) p.135"
+doc = "SMBus slave command match value."
+
+[registers.f3_smbshdw1]
+space = "piix4_f3"
+offset = 0xd4
+access = "r"
+width = 8
+reset = 0x0
+reset_from = "Intel 82371AB datasheet 290562-001 (April 1997) p.136"
+grade = "established"
+from = "Intel 82371AB datasheet 290562-001 (April 1997) p.136"
+doc = "SMBus slave shadow port 1."
+
+[registers.f3_smbshdw2]
+space = "piix4_f3"
+offset = 0xd5
+access = "r"
+width = 8
+reset = 0x0
+reset_from = "Intel 82371AB datasheet 290562-001 (April 1997) p.136"
+grade = "established"
+from = "Intel 82371AB datasheet 290562-001 (April 1997) p.136"
+doc = "SMBus slave shadow port 2."
+
+[registers.f3_smbrev]
+space = "piix4_f3"
+offset = 0xd6
+access = "r"
+width = 8
+reset = 0x0
+reset_from = "Intel 82371AB datasheet 290562-001 (April 1997) p.136"
+grade = "established"
+from = "Intel 82371AB datasheet 290562-001 (April 1997) p.136"
+doc = "SMBus revision."
+
+[registers.pmsts]
+space = "piix4_pm"
+offset = 0x0
+access = "rw"
+width = 16
+reset = 0x0
+reset_from = "Intel 82371AB datasheet 290562-001 (April 1997) p.137"
+w1c = 0x8d31
+grade = "established"
+from = "Intel 82371AB datasheet 290562-001 (April 1997) p.137"
+doc = "Power management status. The HAL clears it and reads bit 8 for the power button; the PROM reads it for wake-up state and writes it back to clear."
+
+[registers.pmsts.fields]
+tmrof_sts = { bits = [0, 0], grade = "established", doc = "Timer overflow." }
+bm_sts = { bits = [4, 4], grade = "established", doc = "Bus master request seen." }
+gbl_sts = { bits = [5, 5], grade = "established", doc = "Global status (SCI from BIOS_RLS)." }
+pwrbtn_sts = { bits = [8, 8], grade = "established", doc = "Power button pressed (16 ms debounce)." }
+rtc_sts = { bits = [10, 10], grade = "established", doc = "RTC alarm." }
+pwrbtnor_sts = { bits = [11, 11], grade = "established", doc = "Power button held over 4 s (override)." }
+rsm_sts = { bits = [15, 15], grade = "established", doc = "Resume event occurred." }
+
+[registers.pmen]
+space = "piix4_pm"
+offset = 0x2
+access = "rw"
+width = 16
+reset = 0x0
+reset_from = "Intel 82371AB datasheet 290562-001 (April 1997) p.138"
+grade = "established"
+from = "Intel 82371AB datasheet 290562-001 (April 1997) p.138"
+doc = "Power management resume enable. The PROM and the HAL write 0x0100 (power button)."
+
+[registers.pmen.fields]
+tmrof_en = { bits = [0, 0], grade = "established", doc = "Timer overflow SCI." }
+gbl_en = { bits = [5, 5], grade = "established", doc = "Global SCI." }
+pwrbtn_en = { bits = [8, 8], grade = "established", doc = "Power button SMI# or SCI." }
+rtc_en = { bits = [10, 10], grade = "established", doc = "RTC resume." }
+
+[[registers.pmen.tests]]
+value = 0x100
+expect = { pwrbtn_en = 1, rtc_en = 0 }
+
+[registers.pmcntrl]
+space = "piix4_pm"
+offset = 0x4
+access = "rw"
+width = 16
+reset = 0x0
+reset_from = "Intel 82371AB datasheet 290562-001 (April 1997) p.138"
+grade = "established"
+from = "Intel 82371AB datasheet 290562-001 (April 1997) p.138-139"
+doc = "Power management control. Linux powers off, and the HAL suspends, by writing 0x2000 (suspend enable with type 0, soft off). The PROM writes 0x1401 (working type, SCI enabled) at attach and 0x2000 to power down."
+
+[registers.pmcntrl.fields]
+sci_en = { bits = [0, 0], grade = "established", doc = "SCI enable." }
+brld_en_bm = { bits = [1, 1], grade = "established", doc = "Bus-master reload enable." }
+gbl_rls = { bits = [2, 2], grade = "established", doc = "Global release: raises an SMI# to the BIOS." }
+sus_typ = { bits = [12, 10], grade = "established", doc = "Suspend type.", enums = { soff = { value = 0, grade = "established" }, str = { value = 1, grade = "established" }, poscl = { value = 2, grade = "established" }, posccl = { value = 3, grade = "established" }, pos = { value = 4, grade = "established" }, working = { value = 5, grade = "established" } } }
+sus_en = { bits = [13, 13], grade = "established", doc = "Suspend enable, write only: enters the state in sus_typ." }
+
+[[registers.pmcntrl.tests]]
+value = 0x2000
+expect = { sus_en = 1, sus_typ = 0, sci_en = 0 }
+
+[[registers.pmcntrl.tests]]
+value = 0x1401
+expect = { sus_en = 0, sus_typ = 5, sci_en = 1 }
+
+[registers.pmtmr]
+space = "piix4_pm"
+offset = 0x8
+access = "r"
+width = 32
+reset = 0x0
+reset_from = "Intel 82371AB datasheet 290562-001 (April 1997) p.139"
+grade = "established"
+from = "Intel 82371AB datasheet 290562-001 (April 1997) p.139"
+doc = "Power management timer: a free-running 24-bit counter at 3.579545 MHz; bit 23 toggling sets TMROF_STS."
+
+[registers.pmtmr.fields]
+tmr_val = { bits = [23, 0], grade = "established", doc = "Timer value." }
+
+[registers.gpsts]
+space = "piix4_pm"
+offset = 0xc
+access = "rw"
+width = 16
+reset = 0x0
+reset_from = "Intel 82371AB datasheet 290562-001 (April 1997) p.139"
+w1c = 0xf81
+grade = "established"
+from = "Intel 82371AB datasheet 290562-001 (April 1997) p.139-140"
+doc = "General purpose status. The PROM reads it (0xf8c) for wake-up and power-fail state."
+
+[registers.gpsts.fields]
+thrm_sts = { bits = [0, 0], grade = "established", doc = "THRM# asserted." }
+thrmor_sts = { bits = [7, 7], grade = "established", doc = "Thermal override." }
+usb_sts = { bits = [8, 8], grade = "established", doc = "USB resume." }
+gpi_sts = { bits = [9, 9], grade = "established", doc = "GPI1# asserted." }
+ri_sts = { bits = [10, 10], grade = "established", doc = "Ring indicate." }
+lid_sts = { bits = [11, 11], grade = "established", doc = "LID asserted." }
+
+[registers.gpen]
+space = "piix4_pm"
+offset = 0xe
+access = "rw"
+width = 16
+reset = 0x0
+reset_from = "Intel 82371AB datasheet 290562-001 (April 1997) p.140"
+grade = "established"
+from = "Intel 82371AB datasheet 290562-001 (April 1997) p.140"
+doc = "General purpose enable. The PROM's function 3 attach writes 0 (0xf8e)."
+
+[registers.gpen.fields]
+thrm_en = { bits = [0, 0], grade = "established", doc = "Thermal SMI# or SCI." }
+usb_en = { bits = [8, 8], grade = "established", doc = "USB resume." }
+gpi_en = { bits = [9, 9], grade = "established", doc = "GPI1# SMI#, SCI or resume." }
+ri_en = { bits = [10, 10], grade = "established", doc = "Ring resume." }
+lid_en = { bits = [11, 11], grade = "established", doc = "LID event." }
+
+[registers.pcntrl]
+space = "piix4_pm"
+offset = 0x10
+access = "rw"
+width = 32
+reset = 0x0
+reset_from = "Intel 82371AB datasheet 290562-001 (April 1997) p.141"
+grade = "established"
+from = "Intel 82371AB datasheet 290562-001 (April 1997) p.141"
+doc = "Processor control: throttling, clock control and PCI clock run enables. Not written by held software."
+
+[registers.plvl2]
+space = "piix4_pm"
+offset = 0x14
+access = "r"
+width = 8
+reset = 0x0
+reset_from = "Intel 82371AB datasheet 290562-001 (April 1997) p.142"
+grade = "established"
+from = "Intel 82371AB datasheet 290562-001 (April 1997) p.142"
+doc = "Processor level 2: a read enters stop grant or quick start."
+
+[registers.plvl3]
+space = "piix4_pm"
+offset = 0x15
+access = "r"
+width = 8
+reset = 0x0
+reset_from = "Intel 82371AB datasheet 290562-001 (April 1997) p.142"
+grade = "established"
+from = "Intel 82371AB datasheet 290562-001 (April 1997) p.142"
+doc = "Processor level 3: a read enters stop clock, sleep or deep sleep."
+
+[registers.glbsts]
+space = "piix4_pm"
+offset = 0x18
+access = "rw"
+width = 16
+reset = 0x0
+reset_from = "Intel 82371AB datasheet 290562-001 (April 1997) p.143"
+grade = "established"
+from = "Intel 82371AB datasheet 290562-001 (April 1997) p.143"
+doc = "Global status."
+
+[registers.devsts]
+space = "piix4_pm"
+offset = 0x1c
+access = "rw"
+width = 32
+reset = 0x0
+reset_from = "Intel 82371AB datasheet 290562-001 (April 1997) p.144"
+grade = "established"
+from = "Intel 82371AB datasheet 290562-001 (April 1997) p.144"
+doc = "Device status: idle and trap status of the device monitors."
+
+[registers.glben]
+space = "piix4_pm"
+offset = 0x20
+access = "rw"
+width = 16
+reset = 0x0
+reset_from = "Intel 82371AB datasheet 290562-001 (April 1997) p.144"
+grade = "established"
+from = "Intel 82371AB datasheet 290562-001 (April 1997) p.144"
+doc = "Global enable."
+
+[registers.glbctl]
+space = "piix4_pm"
+offset = 0x28
+access = "rw"
+width = 32
+reset = 0x0
+reset_from = "Intel 82371AB datasheet 290562-001 (April 1997) p.145"
+grade = "established"
+from = "Intel 82371AB datasheet 290562-001 (April 1997) p.145"
+doc = "Global control: SMI enable, end of SMI, BIOS release, global standby timer."
+
+[registers.devctl]
+space = "piix4_pm"
+offset = 0x2c
+access = "rw"
+width = 32
+reset = 0x0
+reset_from = "Intel 82371AB datasheet 290562-001 (April 1997) p.146"
+grade = "established"
+from = "Intel 82371AB datasheet 290562-001 (April 1997) p.146-147"
+doc = "Device control: trap and idle enables of the device monitors."
+
+[registers.gpireg]
+space = "piix4_pm"
+offset = 0x30
+access = "r"
+width = 32
+reset = "unknown"
+rsvd = 0xffc00000
+grade = "established"
+from = "Intel 82371AB datasheet 290562-001 (April 1997) p.147"
+doc = "General purpose input, byte reads only (offsets 0x30 to 0x32; the byte at 0x33 is not listed). Bits 21:0 are the logical value on pins GPI21 to GPI0; GPI13 to GPI21 and GPI1 are not multiplexed, the others need their select bit. A bit that is not configured as an input reads indeterminate. The register is not reset; it follows the pins. Port 0xfb2 is byte 2."
+
+[registers.gpireg.fields]
+gpi0 = { bits = [0, 0], grade = "established", doc = "GPI0 pin level (shared pin: reads as an input only when the select bit chooses it)." }
+gpi1 = { bits = [1, 1], grade = "established", doc = "GPI1 pin level." }
+gpi2 = { bits = [2, 2], grade = "established", doc = "GPI2 pin level (shared pin: reads as an input only when the select bit chooses it)." }
+gpi3 = { bits = [3, 3], grade = "established", doc = "GPI3 pin level (shared pin: reads as an input only when the select bit chooses it)." }
+gpi4 = { bits = [4, 4], grade = "established", doc = "GPI4 pin level (shared pin: reads as an input only when the select bit chooses it)." }
+gpi5 = { bits = [5, 5], grade = "established", doc = "GPI5 pin level (shared pin: reads as an input only when the select bit chooses it)." }
+gpi6 = { bits = [6, 6], grade = "established", doc = "GPI6 pin level (shared pin: reads as an input only when the select bit chooses it)." }
+gpi7 = { bits = [7, 7], grade = "established", doc = "GPI7 pin level (shared pin: reads as an input only when the select bit chooses it)." }
+gpi8 = { bits = [8, 8], grade = "established", doc = "GPI8 pin level (shared pin: reads as an input only when the select bit chooses it)." }
+gpi9 = { bits = [9, 9], grade = "established", doc = "GPI9 pin level (shared pin: reads as an input only when the select bit chooses it)." }
+gpi10 = { bits = [10, 10], grade = "established", doc = "GPI10 pin level (shared pin: reads as an input only when the select bit chooses it)." }
+gpi11 = { bits = [11, 11], grade = "established", doc = "GPI11 pin level (shared pin: reads as an input only when the select bit chooses it)." }
+gpi12 = { bits = [12, 12], grade = "established", doc = "GPI12 pin level (shared pin: reads as an input only when the select bit chooses it)." }
+gpi13 = { bits = [13, 13], grade = "established", doc = "GPI13 pin level." }
+gpi14 = { bits = [14, 14], grade = "established", doc = "GPI14 pin level." }
+gpi15 = { bits = [15, 15], grade = "established", doc = "GPI15 pin level. Port 0xfb1 bit 7: the boot block reads it as a floppy recovery request and the main module as a password override jumper (software expectation)." }
+gpi16 = { bits = [16, 16], grade = "established", doc = "GPI16 pin level." }
+gpi17 = { bits = [17, 17], grade = "established", doc = "GPI17 pin level." }
+board_id = { bits = [21, 18], grade = "inferred", doc = "GPI21 to GPI18: the board type. The firmware and Linux read (inb(0xfb2) >> 2) & 0xf and call 0 a 320 and 1 a 540. That these pins are strapped to the board type is the software's reading; no held source gives the wiring." }
+
+[registers.gporeg]
+space = "piix4_pm"
+offset = 0x34
+access = "rw"
+width = 32
+reset = 0x7fffbfff
+reset_grade = "established"
+reset_from = "Intel 82371AB specification update 297738-017 (January 2002) p.23"
+rsvd = 0x80000000
+grade = "established"
+from = "Intel 82371AB datasheet 290562-001 (April 1997) p.148"
+doc = "General purpose output, byte accesses only (ports 0xfb4 to 0xfb7). Bits 30:0 drive GPO30 to GPO0 and read back the last value written; a pin shared with another function follows that function until GENCFG or XBCS selects the output. The reset value 0x7fffbfff is what the specification update says the chip actually does (erratum 3, p.23): bit 31 has no output, bits 30:15 and 13:0 reset to 1 and bit 14 to 0. Port 0xfb5 therefore resets to 0xbf."
+
+[registers.gporeg.fields]
+gpo0 = { bits = [0, 0], grade = "established", doc = "GPO0 output." }
+gpo1 = { bits = [1, 1], grade = "established", doc = "GPO1 output." }
+gpo2 = { bits = [2, 2], grade = "established", doc = "GPO2 output." }
+gpo3 = { bits = [3, 3], grade = "established", doc = "GPO3 output." }
+gpo4 = { bits = [4, 4], grade = "established", doc = "GPO4 output." }
+gpo5 = { bits = [5, 5], grade = "established", doc = "GPO5 output." }
+gpo6 = { bits = [6, 6], grade = "established", doc = "GPO6 output." }
+gpo7 = { bits = [7, 7], grade = "established", doc = "GPO7 output." }
+gpo8 = { bits = [8, 8], grade = "established", doc = "GPO8, non-multiplexed, driven low when core power is removed. The HAL writes bit 0 of port 0xfb5 (this bit) around its power-off sequence; what the pin drives on the board is not known." }
+gpo9 = { bits = [9, 9], grade = "established", doc = "GPO9 output." }
+gpo10 = { bits = [10, 10], grade = "established", doc = "GPO10 output." }
+gpo11 = { bits = [11, 11], grade = "established", doc = "GPO11 output." }
+gpo12 = { bits = [12, 12], grade = "established", doc = "GPO12 output." }
+gpo13 = { bits = [13, 13], grade = "established", doc = "GPO13 output." }
+gpo14 = { bits = [14, 14], grade = "established", doc = "GPO14 output." }
+gpo15 = { bits = [15, 15], grade = "established", doc = "GPO15 output." }
+gpo16 = { bits = [16, 16], grade = "established", doc = "GPO16 output." }
+gpo17 = { bits = [17, 17], grade = "established", doc = "GPO17 output." }
+gpo18 = { bits = [18, 18], grade = "established", doc = "GPO18 output." }
+gpo19 = { bits = [19, 19], grade = "established", doc = "GPO19 output." }
+gpo20 = { bits = [20, 20], grade = "established", doc = "GPO20 output." }
+gpo21 = { bits = [21, 21], grade = "established", doc = "GPO21 output." }
+gpo22 = { bits = [22, 22], grade = "established", doc = "GPO22 output." }
+gpo23 = { bits = [23, 23], grade = "established", doc = "GPO23 output." }
+gpo24 = { bits = [24, 24], grade = "established", doc = "GPO24 output." }
+gpo25 = { bits = [25, 25], grade = "established", doc = "GPO25 output." }
+gpo26 = { bits = [26, 26], grade = "established", doc = "GPO26 output." }
+gpo27 = { bits = [27, 27], grade = "established", doc = "GPO27 output." }
+gpo28 = { bits = [28, 28], grade = "inferred", doc = "GPO28, non-multiplexed. The front-panel line: the PROM's self-test clears it, pulses it once and sets and clears it later; software only ever writes it. Whether it is an LED or a beeper is not known." }
+gpo29 = { bits = [29, 29], grade = "established", doc = "GPO29 output." }
+gpo30 = { bits = [30, 30], grade = "established", doc = "GPO30 output." }
+
+[registers.smbhststs]
+space = "piix4_smb"
+offset = 0x0
+access = "rw"
+width = 8
+reset = 0x0
+reset_from = "Intel 82371AB datasheet 290562-001 (April 1997) p.148"
+w1c = 0x1e
+grade = "established"
+from = "Intel 82371AB datasheet 290562-001 (April 1997) p.148-149"
+doc = "SMBus host status: failed, bus collision, device error, interrupt (all write 1 to clear) and host busy. The PROM clears it by writing before its one transaction."
+
+[registers.smbhststs.fields]
+host_busy = { bits = [0, 0], grade = "established", doc = "Host busy, read only." }
+inter = { bits = [1, 1], grade = "established", doc = "Command completed." }
+dev_err = { bits = [2, 2], grade = "established", doc = "Device error." }
+bus_err = { bits = [3, 3], grade = "established", doc = "Bus collision." }
+failed = { bits = [4, 4], grade = "established", doc = "Transaction killed." }
+
+[registers.smbslvsts]
+space = "piix4_smb"
+offset = 0x1
+access = "rw"
+width = 8
+reset = 0x0
+reset_from = "Intel 82371AB datasheet 290562-001 (April 1997) p.149"
+grade = "established"
+from = "Intel 82371AB datasheet 290562-001 (April 1997) p.149"
+doc = "SMBus slave status."
+
+[registers.smbhstcnt]
+space = "piix4_smb"
+offset = 0x2
+access = "rw"
+width = 8
+reset = 0x0
+reset_from = "Intel 82371AB datasheet 290562-001 (April 1997) p.150"
+grade = "established"
+from = "Intel 82371AB datasheet 290562-001 (April 1997) p.150"
+doc = "SMBus host control. The PROM's single transaction writes 0x54 (start, block protocol); reading the register resets the block data index."
+
+[registers.smbhstcnt.fields]
+interen = { bits = [0, 0], grade = "established", doc = "Interrupt on completion." }
+kill = { bits = [1, 1], grade = "established", doc = "Kill the transaction." }
+cmd_prot = { bits = [4, 2], grade = "established", doc = "Protocol.", enums = { quick = { value = 0, grade = "established" }, byte = { value = 1, grade = "established" }, byte_data = { value = 2, grade = "established" }, word_data = { value = 3, grade = "established" }, block = { value = 5, grade = "established" } } }
+start = { bits = [6, 6], grade = "established", doc = "Start; always reads 0." }
+
+[[registers.smbhstcnt.tests]]
+value = 0x54
+expect = { start = 1, cmd_prot = 5, kill = 0, interen = 0 }
+
+[registers.smbhstcmd]
+space = "piix4_smb"
+offset = 0x3
+access = "rw"
+width = 8
+reset = 0x0
+reset_from = "Intel 82371AB datasheet 290562-001 (April 1997) p.150"
+grade = "established"
+from = "Intel 82371AB datasheet 290562-001 (April 1997) p.150"
+doc = "SMBus host command field."
+
+[registers.smbhstadd]
+space = "piix4_smb"
+offset = 0x4
+access = "rw"
+width = 8
+reset = 0x0
+reset_from = "Intel 82371AB datasheet 290562-001 (April 1997) p.151"
+grade = "established"
+from = "Intel 82371AB datasheet 290562-001 (April 1997) p.151"
+doc = "SMBus host address: bits 7:1 slave address, bit 0 read (1) or write (0)."
+
+[registers.smbhstdat0]
+space = "piix4_smb"
+offset = 0x5
+access = "rw"
+width = 8
+reset = 0x0
+reset_from = "Intel 82371AB datasheet 290562-001 (April 1997) p.151"
+grade = "established"
+from = "Intel 82371AB datasheet 290562-001 (April 1997) p.151"
+doc = "SMBus host data 0 (byte count for block transfers)."
+
+[registers.smbhstdat1]
+space = "piix4_smb"
+offset = 0x6
+access = "rw"
+width = 8
+reset = 0x0
+reset_from = "Intel 82371AB datasheet 290562-001 (April 1997) p.151"
+grade = "established"
+from = "Intel 82371AB datasheet 290562-001 (April 1997) p.151"
+doc = "SMBus host data 1."
+
+[registers.smbblkdat]
+space = "piix4_smb"
+offset = 0x7
+access = "rw"
+width = 8
+reset = 0x0
+reset_from = "Intel 82371AB datasheet 290562-001 (April 1997) p.152"
+grade = "established"
+from = "Intel 82371AB datasheet 290562-001 (April 1997) p.152"
+doc = "SMBus block data port."
+
+[registers.rtci]
+space = "piix4_isa"
+offset = 0x70
+access = "w"
+width = 8
+reset = 0x80
+reset_grade = "established"
+reset_from = "Intel 82371AB datasheet 290562-001 (April 1997) p.84"
+grade = "established"
+from = "Intel 82371AB datasheet 290562-001 (April 1997) p.84-85"
+doc = "RTC index and NMI enable, shared. Bits 6:0 index the lower RTC bank; bit 7 set disables NMI. The PROM and the HAL reach the clock through ports 0x70 and 0x71."
+
+[registers.rtci.fields]
+addr = { bits = [6, 0], grade = "established", doc = "RTC address." }
+nmi_dis = { bits = [7, 7], grade = "established", doc = "1 disables NMI generation." }
+
+[registers.rtcd]
+space = "piix4_isa"
+offset = 0x71
+access = "rw"
+width = 8
+reset = "unknown"
+grade = "established"
+from = "Intel 82371AB datasheet 290562-001 (April 1997) p.85"
+doc = "RTC data, lower 128-byte bank."
+
+[registers.rtcei]
+space = "piix4_isa"
+offset = 0x72
+access = "w"
+width = 8
+reset = "unknown"
+grade = "established"
+from = "Intel 82371AB datasheet 290562-001 (April 1997) p.85"
+doc = "RTC extended index: bits 6:0 address the upper bank (the datasheet lists it write only in its register page and read/write in Table 5). Bit 7 is the aliased NMI enable according to specification update spec change 2 (p.13); the datasheet calls it reserved. The upper bank is reached only with RTCCFG bit 2 set."
+
+[registers.rtcei.fields]
+addr = { bits = [6, 0], grade = "established", doc = "Upper bank address." }
+nmi_dis = { bits = [7, 7], grade = "established", doc = "Aliased NMI enable, mirrors rtci bit 7 (specification update)." }
+
+[registers.rtced]
+space = "piix4_isa"
+offset = 0x73
+access = "rw"
+width = 8
+reset = "unknown"
+grade = "established"
+from = "Intel 82371AB datasheet 290562-001 (April 1997) p.85"
+doc = "RTC extended data, upper 128-byte bank (battery-backed RAM)."
+
+[registers.p92]
+space = "piix4_isa"
+offset = 0x92
+access = "rw"
+width = 8
+reset = 0x0
+reset_from = "Intel 82371AB datasheet 290562-001 (April 1997) p.87"
+grade = "established"
+from = "Intel 82371AB datasheet 290562-001 (April 1997) p.87"
+doc = "Port 92. The PROM never writes it; the application processors set bit 1. The datasheet text says FAST_A20 set asserts A20M# low but its own table and specification update documentation change 11 (p.54) say a 1 deasserts A20M#."
+
+[registers.p92.fields]
+fast_init = { bits = [0, 0], grade = "established", doc = "Fast INIT: a write of 1 pulses INIT for about 16 PCI clocks; must be rewritten 0 before the next pulse." }
+fast_a20 = { bits = [1, 1], grade = "established", doc = "1 forces A20M# negated (A20 unmasked), 0 lets A20GATE decide (corrected by the specification update)." }
+
+[registers.apmc]
+space = "piix4_isa"
+offset = 0xb2
+access = "rw"
+width = 8
+reset = 0x0
+reset_from = "Intel 82371AB datasheet 290562-001 (April 1997) p.86"
+grade = "established"
+from = "Intel 82371AB datasheet 290562-001 (April 1997) p.86"
+doc = "APM control port; a write can raise an SMI#."
+
+[registers.apms]
+space = "piix4_isa"
+offset = 0xb3
+access = "rw"
+width = 8
+reset = 0x0
+reset_from = "Intel 82371AB datasheet 290562-001 (April 1997) p.86"
+grade = "established"
+from = "Intel 82371AB datasheet 290562-001 (April 1997) p.86"
+doc = "APM status port."
+
+[registers.rc]
+space = "piix4_rcport"
+offset = 0x1
+access = "rw"
+width = 8
+reset = 0x0
+reset_from = "Intel 82371AB datasheet 290562-001 (April 1997) p.88"
+grade = "established"
+from = "Intel 82371AB datasheet 290562-001 (April 1997) p.88"
+doc = "Reset control. Linux restarts the board by writing 0x06 (reset CPU with system reset set); the HAL does the same on all but the earliest boards. Bit 2 going 0 to 1 starts the reset; bit 1 chooses a hard reset (1) or a soft INIT-only reset (0)."
+
+[registers.rc.fields]
+srst = { bits = [1, 1], grade = "established", doc = "1 hard reset, 0 soft reset (INIT)." }
+rcpu = { bits = [2, 2], grade = "established", doc = "Reset CPU on a 0 to 1 transition; cannot be read as 1." }
+
+[[registers.rc.tests]]
+value = 0x6
+expect = { srst = 1, rcpu = 1 }
+
+[constants]
+RC_PORT = { value = 0xcf9, grade = "established", from = "Intel 82371AB datasheet 290562-001 (April 1997) p.88", doc = "I/O port of the reset control register." }
+PM_BASE = { value = 0xf80, grade = "established", from = "PROM 1.1005 boot block, read in Ghidra: software/visws/boot-path.md", doc = "Power management I/O base the firmware programs through PMBA (software expectation; Linux assumes the same value)." }
+SMB_BASE = { value = 0xfd0, grade = "established", from = "PROM 1.1005 boot block, read in Ghidra: software/visws/boot-path.md", doc = "SMBus I/O base the firmware's function 3 attach programs through SMBBA." }
+BOARD_ID_SHIFT = { value = 0x2, grade = "inferred", from = "PROM 1.1005 boot block, read in Ghidra: software/visws/boot-path.md", doc = "Bit position of the board type in the byte at port 0xfb2 (GPIREG byte 2); the field is four bits wide." }
+IDETIM_PROM_VALUE = { value = 0xc077c077, grade = "established", from = "PROM 1.1005 boot block, read in Ghidra: software/visws/boot-path.md", doc = "Dword the PROM's IDE attach writes to function 1 offset 0x40 (both IDETIM registers)." }

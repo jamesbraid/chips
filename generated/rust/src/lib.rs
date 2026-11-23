@@ -1,6 +1,6 @@
 // generated from devices/ and formats/ by defs-gen - do not edit, change the source
 // defs-gen 2
-// input sha256 fdd36b7d1507147b2621211666edaa91fa5cd43228ae525b147f8743855eeabf
+// input sha256 64995149b6734754d21c22bdcb23e04c4ad96ad6a5b4f20b900a84878522ae1e
 #![no_std]
 pub mod aic7880;
 pub mod bedrock;
@@ -50,6 +50,7 @@ pub mod mace_extra;
 pub mod mbcs;
 pub mod pic;
 pub mod pic_extra;
+pub mod piix4;
 pub mod r10000_config;
 pub mod r10000_cp0;
 pub mod r10000_diagnostic;

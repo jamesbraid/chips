@@ -67,6 +67,7 @@
 | [pci-shoebox/](pci-shoebox/README.md) | PCI shoebox: the Origin 2000 PCI carrier assembly | The PCI shoebox is an XIO board for the Origin 2000 and Onyx2. |
 | [pci-shoehorn/](pci-shoehorn/README.md) | PCI shoehorn (the single-slot XIO-to-PCI adapter, 030-1275) | The PCI shoehorn is an SGI XIO option board with one Bridge and one PCI slot. |
 | [pic/](pic/README.md) | PIC | Mode: no-spec (see references/documents/specs.md: no specification is held). |
+| [piix4/](piix4/README.md) | Intel 82371AB PIIX4 as wired in the Visual Workstation 320 and 540 (functions 0 to 3) | Mode: spec-backed. |
 | [r10000_config/](r10000_config/registers.md) | R10000 family CP0 Config register field positions and hardwired primary-cache codes | Constants for the CP0 Config register as the NEC VR10000 and VR12000 user's manual lays it out: the field positions... |
 | [r10000_cp0/](r10000_cp0/registers.md) | R10000 CP0 Count and Compare timer interrupt and TLB geometry | Coprocessor 0 register numbers of the Count and Compare timer, the Cause bit that carries its interrupt, and the TLB... |
 | [r10000_diagnostic/](r10000_diagnostic/README.md) | R10000 family Diagnostic register (CP0 register 22) | This page covers the CP0 register 22 of the MIPS R10000 family, the branch diagnostic register: its field positions... |

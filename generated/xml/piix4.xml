@@ -1,0 +1,768 @@
+<?xml version="1.0" ?>
+<!-- generated from devices/piix4/registers.toml by defs-gen - do not edit, change the source -->
+<!-- defs-gen 2 -->
+<!-- input sha256 4095ecd03f27c316c0e277b1e0601b278c04db4d80a6d3f1f614b65056469c03 -->
+<genxml unit="piix4" prefix="PIIX4" title="Intel 82371AB PIIX4 (PCI-to-ISA bridge, IDE, USB, power management and SMBus) as wired in the Visual Workstation 320 and 540">
+  <doc>Register contract of the PIIX4 southbridge, functions 0 to 3, from the published datasheet and specification update, with the board wiring taken from the system firmware, the Windows NT hardware abstraction layer and the Linux Visual Workstation code. Grades: established means a datasheet or specification update page states it (the page is cited) or the shipped firmware and HAL do it in a routine read in full, which is a software expectation and not a measurement; inferred means a reasoned reading; unknown means no held source settles it. The update corrects the datasheet and wins where they differ. Config-space registers are in one space per PCI function (f0 ISA bridge, f1 IDE, f2 USB, f3 power management and SMBus). The power management block (pm), the SMBus block (smb), the IDE bus-master block (bm) and the fixed ISA ports (isa) are I/O spaces whose base is programmed in config space. Not listed: the 8259, 8254 and DMA controller registers (standard parts at their PC ports), the USB host controller I/O registers (no held software touches them at register level), and the device-monitor registers of function 3 (offsets 0x50 to 0x7f and the device activity and resource registers), which no held software writes.</doc>
+  <space name="piix4_f0" unit="byte"/>
+  <space name="piix4_f1" unit="byte"/>
+  <space name="piix4_f2" unit="byte"/>
+  <space name="piix4_f3" unit="byte"/>
+  <space name="piix4_pm" unit="byte"/>
+  <space name="piix4_smb" unit="byte"/>
+  <space name="piix4_bm" unit="byte"/>
+  <space name="piix4_isa" unit="byte"/>
+  <space name="piix4_rcport" unit="byte"/>
+  <enum name="f0_pirqrc_irq">
+    <value name="irq3" value="3" grade="established"/>
+    <value name="irq4" value="4" grade="established"/>
+    <value name="irq5" value="5" grade="established"/>
+    <value name="irq6" value="6" grade="established"/>
+    <value name="irq7" value="7" grade="established"/>
+    <value name="irq9" value="9" grade="established"/>
+    <value name="irq10" value="10" grade="established"/>
+    <value name="irq11" value="11" grade="established"/>
+    <value name="irq12" value="12" grade="established"/>
+    <value name="irq14" value="14" grade="established"/>
+    <value name="irq15" value="15" grade="established"/>
+  </enum>
+  <enum name="f0_pdmacfg_ch7">
+    <value name="normal_isa" value="0" grade="established"/>
+    <value name="pc_pci" value="1" grade="established"/>
+    <value name="distributed" value="2" grade="established"/>
+  </enum>
+  <enum name="f0_pdmacfg_ch6">
+    <value name="normal_isa" value="0" grade="established"/>
+    <value name="pc_pci" value="1" grade="established"/>
+    <value name="distributed" value="2" grade="established"/>
+  </enum>
+  <enum name="f0_pdmacfg_ch5">
+    <value name="normal_isa" value="0" grade="established"/>
+    <value name="pc_pci" value="1" grade="established"/>
+    <value name="distributed" value="2" grade="established"/>
+  </enum>
+  <enum name="f0_pdmacfg_ch3">
+    <value name="normal_isa" value="0" grade="established"/>
+    <value name="pc_pci" value="1" grade="established"/>
+    <value name="distributed" value="2" grade="established"/>
+  </enum>
+  <enum name="f0_pdmacfg_ch2">
+    <value name="normal_isa" value="0" grade="established"/>
+    <value name="pc_pci" value="1" grade="established"/>
+    <value name="distributed" value="2" grade="established"/>
+  </enum>
+  <enum name="f0_pdmacfg_ch1">
+    <value name="normal_isa" value="0" grade="established"/>
+    <value name="pc_pci" value="1" grade="established"/>
+    <value name="distributed" value="2" grade="established"/>
+  </enum>
+  <enum name="f0_pdmacfg_ch0">
+    <value name="normal_isa" value="0" grade="established"/>
+    <value name="pc_pci" value="1" grade="established"/>
+    <value name="distributed" value="2" grade="established"/>
+  </enum>
+  <enum name="pmcntrl_sus_typ">
+    <value name="soff" value="0" grade="established"/>
+    <value name="str" value="1" grade="established"/>
+    <value name="poscl" value="2" grade="established"/>
+    <value name="posccl" value="3" grade="established"/>
+    <value name="pos" value="4" grade="established"/>
+    <value name="working" value="5" grade="established"/>
+  </enum>
+  <enum name="smbhstcnt_cmd_prot">
+    <value name="quick" value="0" grade="established"/>
+    <value name="byte" value="1" grade="established"/>
+    <value name="byte_data" value="2" grade="established"/>
+    <value name="word_data" value="3" grade="established"/>
+    <value name="block" value="5" grade="established"/>
+  </enum>
+  <struct name="BM_CMD" size="1" grade="established" from="Intel 82371AB datasheet 290562-001 (April 1997) p.99" register="yes" offset="0x0" access="rw" space="piix4_bm" reset="0x0">
+    <doc>Bus-master IDE command, primary channel; the secondary channel's is at +8 (bm_cmd_sec).</doc>
+    <field name="rw" start="3" size="1" type="uint" grade="established"/>
+    <field name="start" start="0" size="1" type="uint" grade="established"/>
+  </struct>
+  <struct name="BM_STATUS" size="1" grade="established" from="Intel 82371AB datasheet 290562-001 (April 1997) p.100" register="yes" offset="0x2" access="rw" space="piix4_bm" reset="0x0">
+    <doc>Bus-master IDE status, primary channel; secondary channel's copy is at offset 0x0a.</doc>
+    <field name="dma1_cap" start="6" size="1" type="uint" grade="established"/>
+    <field name="dma0_cap" start="5" size="1" type="uint" grade="established"/>
+    <field name="irq" start="2" size="1" type="uint" grade="established"/>
+    <field name="error" start="1" size="1" type="uint" grade="established"/>
+    <field name="active" start="0" size="1" type="uint" grade="established"/>
+  </struct>
+  <struct name="BM_PRD" size="4" grade="established" from="Intel 82371AB datasheet 290562-001 (April 1997) p.101" register="yes" offset="0x4" access="rw" space="piix4_bm" reset="0x0">
+    <doc>Descriptor table pointer, primary channel; secondary channel's copy is at offset 0x0c.</doc>
+  </struct>
+  <struct name="BM_CMD_SEC" size="1" grade="established" from="Intel 82371AB datasheet 290562-001 (April 1997) p.99" register="yes" offset="0x8" access="rw" space="piix4_bm" reset="0x0">
+    <doc>Bus-master IDE command, secondary channel.</doc>
+    <field name="rw" start="3" size="1" type="uint" grade="established"/>
+    <field name="start" start="0" size="1" type="uint" grade="established"/>
+  </struct>
+  <struct name="BM_STATUS_SEC" size="1" grade="established" from="Intel 82371AB datasheet 290562-001 (April 1997) p.100" register="yes" offset="0xa" access="rw" space="piix4_bm" reset="0x0">
+    <doc>Bus-master IDE status, secondary channel.</doc>
+    <field name="dma1_cap" start="6" size="1" type="uint" grade="established"/>
+    <field name="dma0_cap" start="5" size="1" type="uint" grade="established"/>
+    <field name="irq" start="2" size="1" type="uint" grade="established"/>
+    <field name="error" start="1" size="1" type="uint" grade="established"/>
+    <field name="active" start="0" size="1" type="uint" grade="established"/>
+  </struct>
+  <struct name="BM_PRD_SEC" size="4" grade="established" from="Intel 82371AB datasheet 290562-001 (April 1997) p.101" register="yes" offset="0xc" access="rw" space="piix4_bm" reset="0x0">
+    <doc>Descriptor table pointer, secondary channel.</doc>
+  </struct>
+  <struct name="F0_VID" size="2" grade="established" from="Intel 82371AB datasheet 290562-001 (April 1997) p.53" register="yes" offset="0x0" access="r" space="piix4_f0" reset="0x8086">
+    <doc>Vendor identification, Intel.</doc>
+  </struct>
+  <struct name="F0_DID" size="2" grade="established" from="Intel 82371AB datasheet 290562-001 (April 1997) p.53" register="yes" offset="0x2" access="r" space="piix4_f0" reset="0x7110">
+    <doc>Device identification of function 0. The firmware's self-test reads the function 0 vendor and device words as one dword and expects 0x71108086.</doc>
+  </struct>
+  <struct name="F0_PCICMD" size="2" grade="established" from="Intel 82371AB datasheet 290562-001 (April 1997) p.54" register="yes" offset="0x4" access="rw" space="piix4_f0" reset="0x7">
+    <doc>PCI command. The firmware writes 0x0f once. Bits 2 to 0 are hardwired to 1 and the bits the datasheet marks not implemented read 0, so the write leaves special cycle enable (bit 3) and SERR enable unchanged except bit 3 set; the special cycle enable is what lets the chip see the shutdown special cycle that Linux sends before powering off.</doc>
+    <field name="serre" start="8" size="1" type="uint" grade="established"/>
+    <field name="sce" start="3" size="1" type="uint" grade="established"/>
+    <field name="bus_master" start="2" size="1" type="uint" grade="established"/>
+    <field name="memory" start="1" size="1" type="uint" grade="established"/>
+    <field name="io_space" start="0" size="1" type="uint" grade="established"/>
+    <test value="0xf" kind="vector">
+      <expect field="io_space" value="1"/>
+      <expect field="memory" value="1"/>
+      <expect field="bus_master" value="1"/>
+      <expect field="sce" value="1"/>
+      <expect field="serre" value="0"/>
+    </test>
+  </struct>
+  <struct name="F0_PCISTS" size="2" grade="established" from="Intel 82371AB datasheet 290562-001 (April 1997) p.55" register="yes" offset="0x6" access="rw" space="piix4_f0" reset="0x280">
+    <doc>PCI status. Bits 14 to 11 are write-1-to-clear; DEVSEL# timing is medium (01).</doc>
+    <field name="sig_serr" start="14" size="1" type="uint" grade="established"/>
+    <field name="master_abort" start="13" size="1" type="uint" grade="established"/>
+    <field name="rcv_target_abort" start="12" size="1" type="uint" grade="established"/>
+    <field name="sig_target_abort" start="11" size="1" type="uint" grade="established"/>
+    <field name="devsel" start="9" size="2" type="uint" grade="established"/>
+    <field name="fast_b2b" start="7" size="1" type="uint" grade="established"/>
+  </struct>
+  <struct name="F0_RID" size="1" grade="established" from="Intel 82371AB datasheet 290562-001 (April 1997) p.55" register="yes" offset="0x8" access="r" space="piix4_f0" reset="unknown">
+    <doc>Revision. Stepping 00h initially; the specification update lists later values. Which stepping the board carries is not known.</doc>
+  </struct>
+  <struct name="F0_CLASSC_PI" size="1" grade="established" from="Intel 82371AB datasheet 290562-001 (April 1997) p.56" register="yes" offset="0x9" access="r" space="piix4_f0" reset="0x0">
+    <doc>Class code, programming interface byte, 0x00. The PROM's register walk reads this dword once and discards the result.</doc>
+  </struct>
+  <struct name="F0_CLASSC_SCC" size="1" grade="established" from="Intel 82371AB datasheet 290562-001 (April 1997) p.56" register="yes" offset="0xa" access="r" space="piix4_f0" reset="0x1">
+    <doc>Class code, sub-class byte: 0x01 (PCI-to-ISA bridge) while GENCFG bit 1 selects subtractive decode, 0x80 (other bridge) when it selects positive decode.</doc>
+  </struct>
+  <struct name="F0_CLASSC_BASEC" size="1" grade="established" from="Intel 82371AB datasheet 290562-001 (April 1997) p.56" register="yes" offset="0xb" access="r" space="piix4_f0" reset="0x6">
+    <doc>Class code, base class byte, 0x06 (bridge).</doc>
+  </struct>
+  <struct name="F0_HEDT" size="1" grade="established" from="Intel 82371AB datasheet 290562-001 (April 1997) p.56" register="yes" offset="0xe" access="r" space="piix4_f0" reset="0x80">
+    <doc>Header type, 0x80: a multifunction device. Functions 1 to 3 read their own header type as 0.</doc>
+  </struct>
+  <struct name="F0_IORT" size="1" grade="established" from="Intel 82371AB datasheet 290562-001 (April 1997) p.57" register="yes" offset="0x4c" access="rw" space="piix4_f0" reset="0x4d">
+    <doc>ISA I/O recovery timer. Reset enables 8-bit and 16-bit recovery with one SYSCLK added to the 3.5 SYSCLK minimum. Not written by any held software.</doc>
+    <field name="dmaac" start="7" size="1" type="uint" grade="established"/>
+    <field name="rec8_en" start="6" size="1" type="uint" grade="established"/>
+    <field name="rec8" start="3" size="3" type="uint" grade="established"/>
+    <field name="rec16_en" start="2" size="1" type="uint" grade="established"/>
+    <field name="rec16" start="0" size="2" type="uint" grade="established"/>
+  </struct>
+  <struct name="F0_XBCS" size="2" grade="established" from="Intel 82371AB datasheet 290562-001 (April 1997) p.57-58" register="yes" offset="0x4e" access="rw" space="piix4_f0" reset="0x3">
+    <doc>X-bus chip select. The PROM writes the byte 0xf4: that sets the extended BIOS, lower BIOS, BIOSCS# write enable, coprocessor error and mouse functions and clears bits 1 and 0, the external keyboard and RTC chip selects (a software expectation). Clearing them while the Super I/O keyboard controller decodes its own ports is consistent with the board using the Super I/O's keyboard controller (inferred). Bit 9 and bit 7 forward the flash regions 0xfff00000 to 0xfff7ffff and 0xfff80000 to 0xfffdffff to the BIOS chip select; the top 64 KiB is always decoded. Which chip select the flash sits on is not stated by any source.</doc>
+    <field name="mc_loc" start="10" size="1" type="uint" grade="established"/>
+    <field name="bios_1meg" start="9" size="1" type="uint" grade="established"/>
+    <field name="apic_cs" start="8" size="1" type="uint" grade="established"/>
+    <field name="ext_bios" start="7" size="1" type="uint" grade="established"/>
+    <field name="lower_bios" start="6" size="1" type="uint" grade="established"/>
+    <field name="coproc_err" start="5" size="1" type="uint" grade="established"/>
+    <field name="mouse" start="4" size="1" type="uint" grade="established"/>
+    <field name="port61_alias" start="3" size="1" type="uint" grade="established"/>
+    <field name="bioscs_wp" start="2" size="1" type="uint" grade="established"/>
+    <field name="kbccs_en" start="1" size="1" type="uint" grade="established"/>
+    <field name="rtccs_en" start="0" size="1" type="uint" grade="established"/>
+    <test value="0xf4" kind="vector">
+      <expect field="rtccs_en" value="0"/>
+      <expect field="kbccs_en" value="0"/>
+      <expect field="bioscs_wp" value="1"/>
+      <expect field="port61_alias" value="0"/>
+      <expect field="mouse" value="1"/>
+      <expect field="coproc_err" value="1"/>
+      <expect field="lower_bios" value="1"/>
+      <expect field="ext_bios" value="1"/>
+      <expect field="apic_cs" value="0"/>
+      <expect field="bios_1meg" value="0"/>
+      <expect field="mc_loc" value="0"/>
+    </test>
+  </struct>
+  <struct name="F0_PIRQRC" size="1" grade="established" from="Intel 82371AB datasheet 290562-001 (April 1997) p.59" register="yes" offset="0x60" access="rw" count="4" stride="1" space="piix4_f0" reset="0x80">
+    <doc>PIRQ[A:D]# route control, one byte each at 0x60 to 0x63. The PROM writes 0x09 to the first (route PIRQA# to IRQ9). The routed IRQ must be level sensitive.</doc>
+    <field name="route_off" start="7" size="1" type="uint" grade="established"/>
+    <field name="irq" start="0" size="4" type="f0_pirqrc_irq" grade="established"/>
+    <test value="0x9" kind="vector">
+      <expect field="route_off" value="0"/>
+      <expect field="irq" value="9"/>
+    </test>
+  </struct>
+  <struct name="F0_SERIRQC" size="1" grade="established" from="Intel 82371AB datasheet 290562-001 (April 1997) p.59" register="yes" offset="0x64" access="rw" space="piix4_f0" reset="0x10">
+    <doc>Serial IRQ control. Not written by the PROM; GENCFG bit 16 must also select SERIRQ for it to take effect.</doc>
+    <field name="enable" start="7" size="1" type="uint" grade="established"/>
+    <field name="continuous" start="6" size="1" type="uint" grade="established"/>
+    <field name="frame_size" start="2" size="4" type="uint" grade="established"/>
+    <field name="start_width" start="0" size="2" type="uint" grade="established"/>
+  </struct>
+  <struct name="F0_TOM" size="1" grade="established" from="Intel 82371AB datasheet 290562-001 (April 1997) p.60" register="yes" offset="0x69" access="rw" space="piix4_f0" reset="0x2">
+    <doc>Top of memory and ISA/DMA forwarding. The PROM writes 0xf2: top of memory 16 MB and the 512-640 KB region forwarded to PCI.</doc>
+    <field name="top" start="4" size="4" type="uint" grade="established"/>
+    <field name="lower_bios_fwd" start="3" size="1" type="uint" grade="established"/>
+    <field name="a0000_en" start="2" size="1" type="uint" grade="established"/>
+    <field name="low512_fwd" start="1" size="1" type="uint" grade="established"/>
+    <test value="0xf2" kind="vector">
+      <expect field="top" value="15"/>
+      <expect field="lower_bios_fwd" value="0"/>
+      <expect field="a0000_en" value="0"/>
+      <expect field="low512_fwd" value="1"/>
+    </test>
+  </struct>
+  <struct name="F0_MSTAT" size="2" grade="established" from="Intel 82371AB datasheet 290562-001 (April 1997) p.61" register="yes" offset="0x6a" access="rw" space="piix4_f0" reset="0x0">
+    <doc>Miscellaneous status.</doc>
+    <field name="serr_dtt" start="15" size="1" type="uint" grade="established"/>
+    <field name="host_retry" start="7" size="1" type="uint" grade="established"/>
+  </struct>
+  <struct name="F0_MBDMA" size="1" grade="established" from="Intel 82371AB datasheet 290562-001 (April 1997) p.61" register="yes" offset="0x76" access="rw" count="2" stride="1" space="piix4_f0" reset="0x4">
+    <doc>Motherboard device DMA control, 0x76 and 0x77. The PROM writes 0x0c to both, which is the disabled channel (100) with the bit the datasheet says reads 1. The datasheet gives the default as 04h while saying bit 3 reads as 1; the two do not agree.</doc>
+    <field name="fast" start="7" size="1" type="uint" grade="established"/>
+    <field name="one" start="3" size="1" type="uint" grade="established"/>
+    <field name="chnl" start="0" size="3" type="uint" grade="established"/>
+    <test value="0xc" kind="vector">
+      <expect field="fast" value="0"/>
+      <expect field="one" value="1"/>
+      <expect field="chnl" value="4"/>
+    </test>
+  </struct>
+  <struct name="F0_APICBASE" size="1" grade="established" from="Intel 82371AB datasheet 290562-001 (April 1997) p.62" register="yes" offset="0x80" access="rw" space="piix4_f0" reset="0x0">
+    <doc>APIC base address relocation (the I/O APIC window follows the Intel 0xfec0 base). Not written by held software.</doc>
+  </struct>
+  <struct name="F0_DLC" size="1" grade="established" from="Intel 82371AB datasheet 290562-001 (April 1997) p.62-63" register="yes" offset="0x82" access="rw" space="piix4_f0" reset="0x0">
+    <doc>Deterministic latency control: delayed transaction, passive release and SERR# generation enables. Not written by held software.</doc>
+    <field name="serr_en" start="3" size="1" type="uint" grade="established"/>
+    <field name="usb_pr" start="2" size="1" type="uint" grade="established"/>
+    <field name="passive_release" start="1" size="1" type="uint" grade="established"/>
+    <field name="delayed_txn" start="0" size="1" type="uint" grade="established"/>
+  </struct>
+  <struct name="F0_PDMACFG" size="2" grade="established" from="Intel 82371AB datasheet 290562-001 (April 1997) p.63-64" register="yes" offset="0x90" access="rw" space="piix4_f0" reset="0x0">
+    <doc>PCI DMA configuration: the DMA type of each channel. Channel 4 is the cascade and has no field. The PROM bit-walks the byte at 0x90 and the one at 0x95 (high byte of the channel 5 to 7 pointer) in its function 0 register test, and the walked bytes hold every pattern on the real board.</doc>
+    <field name="ch7" start="14" size="2" type="f0_pdmacfg_ch7" grade="established"/>
+    <field name="ch6" start="12" size="2" type="f0_pdmacfg_ch6" grade="established"/>
+    <field name="ch5" start="10" size="2" type="f0_pdmacfg_ch5" grade="established"/>
+    <field name="ch3" start="6" size="2" type="f0_pdmacfg_ch3" grade="established"/>
+    <field name="ch2" start="4" size="2" type="f0_pdmacfg_ch2" grade="established"/>
+    <field name="ch1" start="2" size="2" type="f0_pdmacfg_ch1" grade="established"/>
+    <field name="ch0" start="0" size="2" type="f0_pdmacfg_ch0" grade="established"/>
+  </struct>
+  <struct name="F0_DDMABP" size="2" grade="established" from="Intel 82371AB datasheet 290562-001 (April 1997) p.64" register="yes" offset="0x92" access="rw" count="2" stride="2" space="piix4_f0" reset="0x0">
+    <doc>Distributed DMA slave base pointers: 0x92 for channels 0 to 3, 0x94 for channels 5 to 7; bits 15:6 are I/O address bits. The PROM bit-walks bytes 0x93 and 0x95 of these.</doc>
+    <field name="base" start="6" size="10" type="uint" grade="established"/>
+  </struct>
+  <struct name="F0_GENCFG" size="4" grade="established" from="Intel 82371AB datasheet 290562-001 (April 1997) p.65-67" register="yes" offset="0xb0" access="rw" space="piix4_f0" reset="0x0">
+    <doc>General configuration: pin function selects and bus mode. The PROM writes the bytes 0x4d (register 0xb0) and 0x60 (register 0xb3). 0x4d sets bit 0 (ISA mode, so the pins carry IOCHK# and LA[23:17] and are not GPI0 and GPO[7:1]), bit 6 (positive decode of the Plug and Play ports 0x279 and 0xa79) and the read-only bits 2 and 3, which stay as the straps set them. 0x60 sets bits 30 and 29, turning the RTCALE and RTCCS# pins into outputs GPO25 and GPO24. Bit 29 is printed as 'GPO2' in the datasheet and is GPO24 in its GPO table (a datasheet inconsistency). Tables 1 and 2 label the register 'PCI Function 1' but it is a function 0 register.</doc>
+    <field name="kbccs_gpo26" start="31" size="1" type="uint" grade="established"/>
+    <field name="rtcale_gpo25" start="30" size="1" type="uint" grade="established"/>
+    <field name="rtccs_gpo24" start="29" size="1" type="uint" grade="established"/>
+    <field name="xoe_gpo" start="28" size="1" type="uint" grade="established"/>
+    <field name="ri_gpi12" start="27" size="1" type="uint" grade="established"/>
+    <field name="lid_gpi10" start="25" size="1" type="uint" grade="established"/>
+    <field name="batlow_gpi9" start="24" size="1" type="uint" grade="established"/>
+    <field name="thrm_gpi8" start="23" size="1" type="uint" grade="established"/>
+    <field name="susstat2_gpo" start="22" size="1" type="uint" grade="established"/>
+    <field name="susstat1_gpo" start="21" size="1" type="uint" grade="established"/>
+    <field name="zz_gpo" start="20" size="1" type="uint" grade="established"/>
+    <field name="pcistp_gpo" start="19" size="1" type="uint" grade="established"/>
+    <field name="cpustp_gpo" start="18" size="1" type="uint" grade="established"/>
+    <field name="susbc_gpo" start="17" size="1" type="uint" grade="established"/>
+    <field name="serirq_sel" start="16" size="1" type="uint" grade="established"/>
+    <field name="smbalert_sel" start="15" size="1" type="uint" grade="established"/>
+    <field name="irq8_sel" start="14" size="1" type="uint" grade="established"/>
+    <field name="sec_ide_tristate" start="12" size="1" type="uint" grade="established"/>
+    <field name="pri_ide_tristate" start="11" size="1" type="uint" grade="established"/>
+    <field name="reqc_sel" start="10" size="1" type="uint" grade="established"/>
+    <field name="reqb_sel" start="9" size="1" type="uint" grade="established"/>
+    <field name="reqa_sel" start="8" size="1" type="uint" grade="established"/>
+    <field name="pnp_decode" start="6" size="1" type="uint" grade="established"/>
+    <field name="alt_access" start="5" size="1" type="uint" grade="established"/>
+    <field name="ide_split" start="4" size="1" type="uint" grade="established"/>
+    <field name="config2" start="3" size="1" type="uint" grade="established"/>
+    <field name="config1" start="2" size="1" type="uint" grade="established"/>
+    <field name="pos_decode" start="1" size="1" type="uint" grade="established"/>
+    <field name="isa_mode" start="0" size="1" type="uint" grade="established"/>
+    <test value="0x6000004c" kind="example">
+      <expect field="isa_mode" value="0"/>
+      <expect field="pnp_decode" value="1"/>
+      <expect field="rtccs_gpo24" value="1"/>
+      <expect field="rtcale_gpo25" value="1"/>
+      <expect field="kbccs_gpo26" value="0"/>
+    </test>
+  </struct>
+  <struct name="F0_RTCCFG" size="1" grade="established" from="Intel 82371AB datasheet 290562-001 (April 1997) p.67-68" register="yes" offset="0xcb" access="rw" space="piix4_f0" reset="0x21">
+    <doc>Real-time clock configuration. The PROM writes 0x25 (positive decode, upper bank enable, RTC enable). The HAL sets bit 2 by read-modify-write before using the extended clock RAM at ports 0x72 and 0x73. The PROM's self-test clears and sets bit 0 around its clock RAM probe. The lock bits are write-once until a hardware reset. With bit 2 clear the datasheet says the access is forwarded to ISA (RTCCFG text) and also lists ports 0x72 to 0x77 as aliases of the index and data ports (Table 5); the two statements conflict.</doc>
+    <field name="pos_decode" start="5" size="1" type="uint" grade="established"/>
+    <field name="lock_upper" start="4" size="1" type="uint" grade="established"/>
+    <field name="lock_lower" start="3" size="1" type="uint" grade="established"/>
+    <field name="upper_en" start="2" size="1" type="uint" grade="established"/>
+    <field name="rtc_en" start="0" size="1" type="uint" grade="established"/>
+    <test value="0x25" kind="vector">
+      <expect field="rtc_en" value="1"/>
+      <expect field="upper_en" value="1"/>
+      <expect field="lock_lower" value="0"/>
+      <expect field="lock_upper" value="0"/>
+      <expect field="pos_decode" value="1"/>
+    </test>
+  </struct>
+  <struct name="F1_VID" size="2" grade="established" from="Intel 82371AB datasheet 290562-001 (April 1997) p.89" register="yes" offset="0x0" access="r" space="piix4_f1" reset="0x8086">
+    <doc>Vendor identification, Intel.</doc>
+  </struct>
+  <struct name="F1_DID" size="2" grade="established" from="Intel 82371AB datasheet 290562-001 (April 1997) p.89" register="yes" offset="0x2" access="r" space="piix4_f1" reset="0x7111">
+    <doc>Device identification of function 1. The firmware's self-test reads the function 0 vendor and device words as one dword and expects 0x71108086.</doc>
+  </struct>
+  <struct name="F1_PCICMD" size="2" grade="established" from="Intel 82371AB datasheet 290562-001 (April 1997) p.89-90" register="yes" offset="0x4" access="rw" space="piix4_f1" reset="0x0">
+    <doc>PCI command. The PROM's IDE attach writes 5 (I/O space and bus master enable).</doc>
+    <field name="bme" start="2" size="1" type="uint" grade="established"/>
+    <field name="iose" start="0" size="1" type="uint" grade="established"/>
+    <test value="0x5" kind="vector">
+      <expect field="iose" value="1"/>
+      <expect field="bme" value="1"/>
+    </test>
+  </struct>
+  <struct name="F1_PCISTS" size="2" grade="established" from="Intel 82371AB datasheet 290562-001 (April 1997) p.90" register="yes" offset="0x6" access="rw" space="piix4_f1" reset="0x280">
+    <doc>PCI status.</doc>
+  </struct>
+  <struct name="F1_RID" size="1" grade="established" from="Intel 82371AB datasheet 290562-001 (April 1997) p.91" register="yes" offset="0x8" access="r" space="piix4_f1" reset="unknown">
+    <doc>Revision.</doc>
+  </struct>
+  <struct name="F1_CLASSC_PI" size="1" grade="established" from="Intel 82371AB datasheet 290562-001 (April 1997) p.91" register="yes" offset="0x9" access="r" space="piix4_f1" reset="0x80">
+    <doc>Class code, programming interface (bus master capable, both channels legacy mode).</doc>
+  </struct>
+  <struct name="F1_CLASSC_SCC" size="1" grade="established" from="Intel 82371AB datasheet 290562-001 (April 1997) p.91" register="yes" offset="0xa" access="r" space="piix4_f1" reset="0x1">
+    <doc>Class code, sub-class: IDE.</doc>
+  </struct>
+  <struct name="F1_CLASSC_BASEC" size="1" grade="established" from="Intel 82371AB datasheet 290562-001 (April 1997) p.91" register="yes" offset="0xb" access="r" space="piix4_f1" reset="0x1">
+    <doc>Class code, base class: mass storage.</doc>
+  </struct>
+  <struct name="F1_MLT" size="1" grade="established" from="Intel 82371AB datasheet 290562-001 (April 1997) p.91" register="yes" offset="0xd" access="rw" space="piix4_f1" reset="0x0">
+    <doc>Master latency timer. The PROM's IDE attach writes 0x80.</doc>
+  </struct>
+  <struct name="F1_HEDT" size="1" grade="established" from="Intel 82371AB datasheet 290562-001 (April 1997) p.92" register="yes" offset="0xe" access="r" space="piix4_f1" reset="0x0">
+    <doc>Header type, 0: single function (multifunction is reported by function 0).</doc>
+  </struct>
+  <struct name="F1_BMIBA" size="4" grade="established" from="Intel 82371AB datasheet 290562-001 (April 1997) p.92" register="yes" offset="0x20" access="rw" space="piix4_f1" reset="0x1">
+    <doc>Bus-master interface base address: I/O space, bits 15:4 are address bits, bit 0 hardwired 1.</doc>
+    <field name="base" start="4" size="12" type="uint" grade="established"/>
+    <field name="rte" start="0" size="1" type="uint" grade="established"/>
+  </struct>
+  <struct name="F1_IDETIM" size="2" grade="established" from="Intel 82371AB datasheet 290562-001 (April 1997) p.93-94" register="yes" offset="0x40" access="rw" count="2" stride="2" space="piix4_f1" reset="0x0">
+    <doc>IDE timing: 0x40 primary channel, 0x42 secondary. The PROM's IDE attach writes the dword 0xc077c077 (both channels: decode enabled, slave timing register enabled, fast timing with prefetch and IORDY sampling on both drives, ISP 5 clocks, RTC 4 clocks) and, on board type 1 (the 540, which has one IDE channel), writes the byte 0x40 to 0x43, which leaves only the slave timing enable set for the secondary channel and its decode disabled.</doc>
+    <field name="ide_en" start="15" size="1" type="uint" grade="established"/>
+    <field name="sitre" start="14" size="1" type="uint" grade="established"/>
+    <field name="isp" start="12" size="2" type="uint" grade="established"/>
+    <field name="rtc" start="8" size="2" type="uint" grade="established"/>
+    <field name="dte1" start="7" size="1" type="uint" grade="established"/>
+    <field name="ppe1" start="6" size="1" type="uint" grade="established"/>
+    <field name="ie1" start="5" size="1" type="uint" grade="established"/>
+    <field name="time1" start="4" size="1" type="uint" grade="established"/>
+    <field name="dte0" start="3" size="1" type="uint" grade="established"/>
+    <field name="ppe0" start="2" size="1" type="uint" grade="established"/>
+    <field name="ie0" start="1" size="1" type="uint" grade="established"/>
+    <field name="time0" start="0" size="1" type="uint" grade="established"/>
+    <test value="0x4000" kind="vector">
+      <expect field="ide_en" value="0"/>
+      <expect field="sitre" value="1"/>
+      <expect field="isp" value="0"/>
+      <expect field="rtc" value="0"/>
+    </test>
+    <test value="0xc077" kind="vector">
+      <expect field="ide_en" value="1"/>
+      <expect field="sitre" value="1"/>
+      <expect field="isp" value="0"/>
+      <expect field="rtc" value="0"/>
+      <expect field="dte1" value="0"/>
+      <expect field="ppe1" value="1"/>
+      <expect field="ie1" value="1"/>
+      <expect field="time1" value="1"/>
+      <expect field="dte0" value="0"/>
+      <expect field="ppe0" value="1"/>
+      <expect field="ie0" value="1"/>
+      <expect field="time0" value="1"/>
+    </test>
+  </struct>
+  <struct name="F1_SIDETIM" size="1" grade="established" from="Intel 82371AB datasheet 290562-001 (April 1997) p.95" register="yes" offset="0x44" access="rw" space="piix4_f1" reset="0x0">
+    <doc>Slave IDE timing (drive 1 of each channel) when IDETIM bit 14 is set. The PROM writes 0.</doc>
+  </struct>
+  <struct name="F1_UDMACTL" size="1" grade="established" from="Intel 82371AB datasheet 290562-001 (April 1997) p.96" register="yes" offset="0x48" access="rw" space="piix4_f1" reset="0x0">
+    <doc>Ultra DMA/33 enable per drive.</doc>
+    <field name="ssde1" start="3" size="1" type="uint" grade="established"/>
+    <field name="ssde0" start="2" size="1" type="uint" grade="established"/>
+    <field name="psde1" start="1" size="1" type="uint" grade="established"/>
+    <field name="psde0" start="0" size="1" type="uint" grade="established"/>
+  </struct>
+  <struct name="F1_UDMATIM" size="2" grade="established" from="Intel 82371AB datasheet 290562-001 (April 1997) p.96-97" register="yes" offset="0x4a" access="rw" space="piix4_f1" reset="0x0">
+    <doc>Ultra DMA/33 cycle times, two bits per drive (00 CT 4 and RP 6 PCI clocks, 01 3 and 5, 10 2 and 4).</doc>
+    <field name="sct1" start="12" size="2" type="uint" grade="established"/>
+    <field name="sct0" start="8" size="2" type="uint" grade="established"/>
+    <field name="pct1" start="4" size="2" type="uint" grade="established"/>
+    <field name="pct0" start="0" size="2" type="uint" grade="established"/>
+  </struct>
+  <struct name="F2_VID" size="2" grade="established" from="Intel 82371AB datasheet 290562-001 (April 1997) p.102" register="yes" offset="0x0" access="r" space="piix4_f2" reset="0x8086">
+    <doc>Vendor identification, Intel.</doc>
+  </struct>
+  <struct name="F2_DID" size="2" grade="established" from="Intel 82371AB datasheet 290562-001 (April 1997) p.102" register="yes" offset="0x2" access="r" space="piix4_f2" reset="0x7112">
+    <doc>Device identification of function 2. The firmware's self-test reads the function 0 vendor and device words as one dword and expects 0x71108086.</doc>
+  </struct>
+  <struct name="F2_PCICMD" size="2" grade="established" from="Intel 82371AB datasheet 290562-001 (April 1997) p.103" register="yes" offset="0x4" access="rw" space="piix4_f2" reset="0x0">
+    <doc>PCI command.</doc>
+  </struct>
+  <struct name="F2_PCISTS" size="2" grade="established" from="Intel 82371AB datasheet 290562-001 (April 1997) p.103" register="yes" offset="0x6" access="rw" space="piix4_f2" reset="0x280">
+    <doc>PCI status.</doc>
+  </struct>
+  <struct name="F2_RID" size="1" grade="established" from="Intel 82371AB datasheet 290562-001 (April 1997) p.104" register="yes" offset="0x8" access="r" space="piix4_f2" reset="unknown">
+    <doc>Revision.</doc>
+  </struct>
+  <struct name="F2_CLASSC_PI" size="1" grade="established" from="Intel 82371AB datasheet 290562-001 (April 1997) p.104" register="yes" offset="0x9" access="r" space="piix4_f2" reset="0x0">
+    <doc>Class code, programming interface: OpenHCI-style USB host controller.</doc>
+  </struct>
+  <struct name="F2_CLASSC_SCC" size="1" grade="established" from="Intel 82371AB datasheet 290562-001 (April 1997) p.104" register="yes" offset="0xa" access="r" space="piix4_f2" reset="0x3">
+    <doc>Class code, sub-class: USB.</doc>
+  </struct>
+  <struct name="F2_CLASSC_BASEC" size="1" grade="established" from="Intel 82371AB datasheet 290562-001 (April 1997) p.104" register="yes" offset="0xb" access="r" space="piix4_f2" reset="0xc">
+    <doc>Class code, base class: serial bus.</doc>
+  </struct>
+  <struct name="F2_MLT" size="1" grade="established" from="Intel 82371AB datasheet 290562-001 (April 1997) p.105" register="yes" offset="0xd" access="rw" space="piix4_f2" reset="0x0">
+    <doc>Master latency timer.</doc>
+  </struct>
+  <struct name="F2_HEDT" size="1" grade="established" from="Intel 82371AB datasheet 290562-001 (April 1997) p.105" register="yes" offset="0xe" access="r" space="piix4_f2" reset="0x0">
+    <doc>Header type, 0.</doc>
+  </struct>
+  <struct name="F2_USBBA" size="4" grade="established" from="Intel 82371AB datasheet 290562-001 (April 1997) p.108" register="yes" offset="0x20" access="rw" space="piix4_f2" reset="0x0">
+    <doc>USB I/O space base address: bits 15:5, bit 0 hardwired 1.</doc>
+    <field name="base" start="5" size="11" type="uint" grade="established"/>
+    <field name="rte" start="0" size="1" type="uint" grade="established"/>
+  </struct>
+  <struct name="F2_INTLN" size="1" grade="established" from="Intel 82371AB datasheet 290562-001 (April 1997) p.105" register="yes" offset="0x3c" access="rw" space="piix4_f2" reset="0x0">
+    <doc>Interrupt line; no effect on the hardware.</doc>
+  </struct>
+  <struct name="F2_INTPN" size="1" grade="established" from="Intel 82371AB datasheet 290562-001 (April 1997) p.106" register="yes" offset="0x3d" access="r" space="piix4_f2" reset="0x4">
+    <doc>Interrupt pin, hardwired 4 (INTD#). The datasheet says the USB interrupt is also ORed to PIRQD#; the board wires only this pin to its own interrupt entry, never through the 8259.</doc>
+  </struct>
+  <struct name="F2_SBRNUM" size="1" grade="established" from="Intel 82371AB datasheet 290562-001 (April 1997) p.106" register="yes" offset="0x60" access="r" space="piix4_f2" reset="0x10">
+    <doc>Serial bus release number, 0x10 (USB 1.0).</doc>
+  </struct>
+  <struct name="F2_LEGSUP" size="2" grade="established" from="Intel 82371AB datasheet 290562-001 (April 1997) p.107-108" register="yes" offset="0xc0" access="rw" space="piix4_f2" reset="0x2000">
+    <doc>Legacy keyboard and mouse support: trap and SMI enables and status. Not written by held software.</doc>
+    <field name="usbpirqden" start="13" size="1" type="uint" grade="established"/>
+  </struct>
+  <struct name="F2_MISCSUP" size="1" grade="established" from="Intel 82371AB datasheet 290562-001 (April 1997) p.109" register="yes" offset="0xff" access="rw" space="piix4_f2" reset="unknown">
+    <doc>Miscellaneous support: bit 4 lets a read of port 0x70 return the RTC index. Byte accesses only.</doc>
+    <field name="rtciren" start="4" size="1" type="uint" grade="established"/>
+  </struct>
+  <struct name="F3_VID" size="2" grade="established" from="Intel 82371AB datasheet 290562-001 (April 1997) p.117" register="yes" offset="0x0" access="r" space="piix4_f3" reset="0x8086">
+    <doc>Vendor identification, Intel.</doc>
+  </struct>
+  <struct name="F3_DID" size="2" grade="established" from="Intel 82371AB datasheet 290562-001 (April 1997) p.117" register="yes" offset="0x2" access="r" space="piix4_f3" reset="0x7113">
+    <doc>Device identification of function 3. The firmware's self-test reads the function 0 vendor and device words as one dword and expects 0x71108086.</doc>
+  </struct>
+  <struct name="F3_PCICMD" size="2" grade="established" from="Intel 82371AB datasheet 290562-001 (April 1997) p.117-118" register="yes" offset="0x4" access="rw" space="piix4_f3" reset="0x0">
+    <doc>PCI command. Bit 0 enables the SMBus I/O block and works independently of PMREGMISC bit 0. The PROM's function 3 attach sets it after writing the SMBus base.</doc>
+    <field name="iose" start="0" size="1" type="uint" grade="established"/>
+  </struct>
+  <struct name="F3_PCISTS" size="2" grade="established" from="Intel 82371AB datasheet 290562-001 (April 1997) p.118" register="yes" offset="0x6" access="rw" space="piix4_f3" reset="0x280">
+    <doc>PCI status; the PROM's attach clears it by writing 0x3800.</doc>
+  </struct>
+  <struct name="F3_RID" size="1" grade="established" from="Intel 82371AB datasheet 290562-001 (April 1997) p.119" register="yes" offset="0x8" access="r" space="piix4_f3" reset="unknown">
+    <doc>Revision.</doc>
+  </struct>
+  <struct name="F3_CLASSC_PI" size="1" grade="established" from="Intel 82371AB datasheet 290562-001 (April 1997) p.119" register="yes" offset="0x9" access="r" space="piix4_f3" reset="0x0">
+    <doc>Class code, programming interface.</doc>
+  </struct>
+  <struct name="F3_CLASSC_SCC" size="1" grade="established" from="Intel 82371AB datasheet 290562-001 (April 1997) p.119" register="yes" offset="0xa" access="r" space="piix4_f3" reset="0x80">
+    <doc>Class code, sub-class: other bridge.</doc>
+  </struct>
+  <struct name="F3_CLASSC_BASEC" size="1" grade="established" from="Intel 82371AB datasheet 290562-001 (April 1997) p.119" register="yes" offset="0xb" access="r" space="piix4_f3" reset="0x6">
+    <doc>Class code, base class: bridge.</doc>
+  </struct>
+  <struct name="F3_HEDT" size="1" grade="established" from="Intel 82371AB datasheet 290562-001 (April 1997) p.119" register="yes" offset="0xe" access="r" space="piix4_f3" reset="0x0">
+    <doc>Header type, 0.</doc>
+  </struct>
+  <struct name="F3_INTLN" size="1" grade="established" from="Intel 82371AB datasheet 290562-001 (April 1997) p.120" register="yes" offset="0x3c" access="rw" space="piix4_f3" reset="0x0">
+    <doc>Interrupt line; no effect on the hardware.</doc>
+  </struct>
+  <struct name="F3_INTPN" size="1" grade="unknown" from="Intel 82371AB datasheet 290562-001 (April 1997) p.120" register="yes" offset="0x3d" access="r" space="piix4_f3" reset="unknown">
+    <doc>Interrupt pin. The datasheet says it reads 1 (PIRQA#). The specification update (spec change 1, p.13) says the register is not implemented because the power management and SMBus interrupts are hardwired to IRQ9, so the datasheet value is superseded. What the silicon returns is not stated.</doc>
+  </struct>
+  <struct name="F3_PMBA" size="4" grade="established" from="Intel 82371AB datasheet 290562-001 (April 1997) p.120" register="yes" offset="0x40" access="rw" space="piix4_f3" reset="0x1">
+    <doc>Power management base address. Bits 15:6 hold the I/O base, bit 0 is hardwired 1, bits 31:16 are hardwired 0. The PROM writes 0x0f80 and the register then reads 0x0f81; the base 0xf80 is what Linux and the HAL assume. The HAL never programs it.</doc>
+    <field name="base" start="6" size="10" type="uint" grade="established"/>
+    <field name="rte" start="0" size="1" type="uint" grade="established"/>
+    <test value="0xf81" kind="vector">
+      <expect field="rte" value="1"/>
+      <expect field="base" value="62"/>
+    </test>
+  </struct>
+  <struct name="F3_CNTA" size="4" grade="established" from="Intel 82371AB datasheet 290562-001 (April 1997) p.121" register="yes" offset="0x44" access="rw" space="piix4_f3" reset="0x0">
+    <doc>Idle timer counts and resolutions for the device monitors and the slow burst count. Not written by held software.</doc>
+  </struct>
+  <struct name="F3_CNTB" size="4" grade="established" from="Intel 82371AB datasheet 290562-001 (April 1997) p.121-122" register="yes" offset="0x48" access="rw" space="piix4_f3" reset="0x0">
+    <doc>Fast burst timer count, CPU select, thermal duty and video status. The specification update (spec change 5) corrects bit 5 to 8 microsecond granularity. Not written by held software.</doc>
+  </struct>
+  <struct name="F3_GPICTL" size="4" grade="established" from="Intel 82371AB datasheet 290562-001 (April 1997) p.123" register="yes" offset="0x4c" access="rw" space="piix4_f3" reset="0x0">
+    <doc>General purpose input control: enable, polarity and edge for the device-monitor GPI inputs (Table 17 maps GPI18 to GPI21 to device monitors 10 to 13). Not written by held software.</doc>
+  </struct>
+  <struct name="F3_PMREGMISC" size="1" grade="established" from="Intel 82371AB datasheet 290562-001 (April 1997) p.134" register="yes" offset="0x80" access="rw" space="piix4_f3" reset="0x0">
+    <doc>Miscellaneous power management. The PROM writes 1 after the base. When the bit is clear every access to the power management block goes unclaimed.</doc>
+    <field name="pmiose" start="0" size="1" type="uint" grade="established"/>
+    <test value="0x1" kind="vector">
+      <expect field="pmiose" value="1"/>
+    </test>
+  </struct>
+  <struct name="F3_SMBBA" size="4" grade="established" from="Intel 82371AB datasheet 290562-001 (April 1997) p.135" register="yes" offset="0x90" access="rw" space="piix4_f3" reset="0x1">
+    <doc>SMBus base address: bits 15:4, bit 0 hardwired 1. The PROM's function 3 attach writes 0x0fd0, so the register reads 0x00000fd1 (not read back by any held software); neither HAL build touches it.</doc>
+    <field name="base" start="4" size="12" type="uint" grade="established"/>
+    <field name="rte" start="0" size="1" type="uint" grade="established"/>
+    <test value="0xfd1" kind="vector">
+      <expect field="rte" value="1"/>
+      <expect field="base" value="253"/>
+    </test>
+  </struct>
+  <struct name="F3_SMBHSTCFG" size="1" grade="established" from="Intel 82371AB datasheet 290562-001 (April 1997) p.135" register="yes" offset="0xd2" access="rw" space="piix4_f3" reset="0x0">
+    <doc>SMBus host configuration. The PROM writes 0x09: host interface enabled and the interrupt routed to IRQ9.</doc>
+    <field name="intrsel" start="1" size="3" type="uint" grade="established"/>
+    <field name="host_en" start="0" size="1" type="uint" grade="established"/>
+    <test value="0x9" kind="vector">
+      <expect field="host_en" value="1"/>
+      <expect field="intrsel" value="4"/>
+    </test>
+  </struct>
+  <struct name="F3_SMBSLVC" size="1" grade="established" from="Intel 82371AB datasheet 290562-001 (April 1997) p.135" register="yes" offset="0xd3" access="rw" space="piix4_f3" reset="0x0">
+    <doc>SMBus slave command match value.</doc>
+  </struct>
+  <struct name="F3_SMBSHDW1" size="1" grade="established" from="Intel 82371AB datasheet 290562-001 (April 1997) p.136" register="yes" offset="0xd4" access="r" space="piix4_f3" reset="0x0">
+    <doc>SMBus slave shadow port 1.</doc>
+  </struct>
+  <struct name="F3_SMBSHDW2" size="1" grade="established" from="Intel 82371AB datasheet 290562-001 (April 1997) p.136" register="yes" offset="0xd5" access="r" space="piix4_f3" reset="0x0">
+    <doc>SMBus slave shadow port 2.</doc>
+  </struct>
+  <struct name="F3_SMBREV" size="1" grade="established" from="Intel 82371AB datasheet 290562-001 (April 1997) p.136" register="yes" offset="0xd6" access="r" space="piix4_f3" reset="0x0">
+    <doc>SMBus revision.</doc>
+  </struct>
+  <struct name="RTCI" size="1" grade="established" from="Intel 82371AB datasheet 290562-001 (April 1997) p.84-85" register="yes" offset="0x70" access="w" space="piix4_isa" reset="0x80">
+    <doc>RTC index and NMI enable, shared. Bits 6:0 index the lower RTC bank; bit 7 set disables NMI. The PROM and the HAL reach the clock through ports 0x70 and 0x71.</doc>
+    <field name="nmi_dis" start="7" size="1" type="uint" grade="established"/>
+    <field name="addr" start="0" size="7" type="uint" grade="established"/>
+  </struct>
+  <struct name="RTCD" size="1" grade="established" from="Intel 82371AB datasheet 290562-001 (April 1997) p.85" register="yes" offset="0x71" access="rw" space="piix4_isa" reset="unknown">
+    <doc>RTC data, lower 128-byte bank.</doc>
+  </struct>
+  <struct name="RTCEI" size="1" grade="established" from="Intel 82371AB datasheet 290562-001 (April 1997) p.85" register="yes" offset="0x72" access="w" space="piix4_isa" reset="unknown">
+    <doc>RTC extended index: bits 6:0 address the upper bank (the datasheet lists it write only in its register page and read/write in Table 5). Bit 7 is the aliased NMI enable according to specification update spec change 2 (p.13); the datasheet calls it reserved. The upper bank is reached only with RTCCFG bit 2 set.</doc>
+    <field name="nmi_dis" start="7" size="1" type="uint" grade="established"/>
+    <field name="addr" start="0" size="7" type="uint" grade="established"/>
+  </struct>
+  <struct name="RTCED" size="1" grade="established" from="Intel 82371AB datasheet 290562-001 (April 1997) p.85" register="yes" offset="0x73" access="rw" space="piix4_isa" reset="unknown">
+    <doc>RTC extended data, upper 128-byte bank (battery-backed RAM).</doc>
+  </struct>
+  <struct name="P92" size="1" grade="established" from="Intel 82371AB datasheet 290562-001 (April 1997) p.87" register="yes" offset="0x92" access="rw" space="piix4_isa" reset="0x0">
+    <doc>Port 92. The PROM never writes it; the application processors set bit 1. The datasheet text says FAST_A20 set asserts A20M# low but its own table and specification update documentation change 11 (p.54) say a 1 deasserts A20M#.</doc>
+    <field name="fast_a20" start="1" size="1" type="uint" grade="established"/>
+    <field name="fast_init" start="0" size="1" type="uint" grade="established"/>
+  </struct>
+  <struct name="APMC" size="1" grade="established" from="Intel 82371AB datasheet 290562-001 (April 1997) p.86" register="yes" offset="0xb2" access="rw" space="piix4_isa" reset="0x0">
+    <doc>APM control port; a write can raise an SMI#.</doc>
+  </struct>
+  <struct name="APMS" size="1" grade="established" from="Intel 82371AB datasheet 290562-001 (April 1997) p.86" register="yes" offset="0xb3" access="rw" space="piix4_isa" reset="0x0">
+    <doc>APM status port.</doc>
+  </struct>
+  <struct name="PMSTS" size="2" grade="established" from="Intel 82371AB datasheet 290562-001 (April 1997) p.137" register="yes" offset="0x0" access="rw" space="piix4_pm" reset="0x0">
+    <doc>Power management status. The HAL clears it and reads bit 8 for the power button; the PROM reads it for wake-up state and writes it back to clear.</doc>
+    <field name="rsm_sts" start="15" size="1" type="uint" grade="established"/>
+    <field name="pwrbtnor_sts" start="11" size="1" type="uint" grade="established"/>
+    <field name="rtc_sts" start="10" size="1" type="uint" grade="established"/>
+    <field name="pwrbtn_sts" start="8" size="1" type="uint" grade="established"/>
+    <field name="gbl_sts" start="5" size="1" type="uint" grade="established"/>
+    <field name="bm_sts" start="4" size="1" type="uint" grade="established"/>
+    <field name="tmrof_sts" start="0" size="1" type="uint" grade="established"/>
+  </struct>
+  <struct name="PMEN" size="2" grade="established" from="Intel 82371AB datasheet 290562-001 (April 1997) p.138" register="yes" offset="0x2" access="rw" space="piix4_pm" reset="0x0">
+    <doc>Power management resume enable. The PROM and the HAL write 0x0100 (power button).</doc>
+    <field name="rtc_en" start="10" size="1" type="uint" grade="established"/>
+    <field name="pwrbtn_en" start="8" size="1" type="uint" grade="established"/>
+    <field name="gbl_en" start="5" size="1" type="uint" grade="established"/>
+    <field name="tmrof_en" start="0" size="1" type="uint" grade="established"/>
+    <test value="0x100" kind="vector">
+      <expect field="pwrbtn_en" value="1"/>
+      <expect field="rtc_en" value="0"/>
+    </test>
+  </struct>
+  <struct name="PMCNTRL" size="2" grade="established" from="Intel 82371AB datasheet 290562-001 (April 1997) p.138-139" register="yes" offset="0x4" access="rw" space="piix4_pm" reset="0x0">
+    <doc>Power management control. Linux powers off, and the HAL suspends, by writing 0x2000 (suspend enable with type 0, soft off). The PROM writes 0x1401 (working type, SCI enabled) at attach and 0x2000 to power down.</doc>
+    <field name="sus_en" start="13" size="1" type="uint" grade="established"/>
+    <field name="sus_typ" start="10" size="3" type="pmcntrl_sus_typ" grade="established"/>
+    <field name="gbl_rls" start="2" size="1" type="uint" grade="established"/>
+    <field name="brld_en_bm" start="1" size="1" type="uint" grade="established"/>
+    <field name="sci_en" start="0" size="1" type="uint" grade="established"/>
+    <test value="0x1401" kind="vector">
+      <expect field="sus_en" value="0"/>
+      <expect field="sus_typ" value="5"/>
+      <expect field="sci_en" value="1"/>
+    </test>
+    <test value="0x2000" kind="vector">
+      <expect field="sus_en" value="1"/>
+      <expect field="sus_typ" value="0"/>
+      <expect field="sci_en" value="0"/>
+    </test>
+  </struct>
+  <struct name="PMTMR" size="4" grade="established" from="Intel 82371AB datasheet 290562-001 (April 1997) p.139" register="yes" offset="0x8" access="r" space="piix4_pm" reset="0x0">
+    <doc>Power management timer: a free-running 24-bit counter at 3.579545 MHz; bit 23 toggling sets TMROF_STS.</doc>
+    <field name="tmr_val" start="0" size="24" type="uint" grade="established"/>
+  </struct>
+  <struct name="GPSTS" size="2" grade="established" from="Intel 82371AB datasheet 290562-001 (April 1997) p.139-140" register="yes" offset="0xc" access="rw" space="piix4_pm" reset="0x0">
+    <doc>General purpose status. The PROM reads it (0xf8c) for wake-up and power-fail state.</doc>
+    <field name="lid_sts" start="11" size="1" type="uint" grade="established"/>
+    <field name="ri_sts" start="10" size="1" type="uint" grade="established"/>
+    <field name="gpi_sts" start="9" size="1" type="uint" grade="established"/>
+    <field name="usb_sts" start="8" size="1" type="uint" grade="established"/>
+    <field name="thrmor_sts" start="7" size="1" type="uint" grade="established"/>
+    <field name="thrm_sts" start="0" size="1" type="uint" grade="established"/>
+  </struct>
+  <struct name="GPEN" size="2" grade="established" from="Intel 82371AB datasheet 290562-001 (April 1997) p.140" register="yes" offset="0xe" access="rw" space="piix4_pm" reset="0x0">
+    <doc>General purpose enable. The PROM's function 3 attach writes 0 (0xf8e).</doc>
+    <field name="lid_en" start="11" size="1" type="uint" grade="established"/>
+    <field name="ri_en" start="10" size="1" type="uint" grade="established"/>
+    <field name="gpi_en" start="9" size="1" type="uint" grade="established"/>
+    <field name="usb_en" start="8" size="1" type="uint" grade="established"/>
+    <field name="thrm_en" start="0" size="1" type="uint" grade="established"/>
+  </struct>
+  <struct name="PCNTRL" size="4" grade="established" from="Intel 82371AB datasheet 290562-001 (April 1997) p.141" register="yes" offset="0x10" access="rw" space="piix4_pm" reset="0x0">
+    <doc>Processor control: throttling, clock control and PCI clock run enables. Not written by held software.</doc>
+  </struct>
+  <struct name="PLVL2" size="1" grade="established" from="Intel 82371AB datasheet 290562-001 (April 1997) p.142" register="yes" offset="0x14" access="r" space="piix4_pm" reset="0x0">
+    <doc>Processor level 2: a read enters stop grant or quick start.</doc>
+  </struct>
+  <struct name="PLVL3" size="1" grade="established" from="Intel 82371AB datasheet 290562-001 (April 1997) p.142" register="yes" offset="0x15" access="r" space="piix4_pm" reset="0x0">
+    <doc>Processor level 3: a read enters stop clock, sleep or deep sleep.</doc>
+  </struct>
+  <struct name="GLBSTS" size="2" grade="established" from="Intel 82371AB datasheet 290562-001 (April 1997) p.143" register="yes" offset="0x18" access="rw" space="piix4_pm" reset="0x0">
+    <doc>Global status.</doc>
+  </struct>
+  <struct name="DEVSTS" size="4" grade="established" from="Intel 82371AB datasheet 290562-001 (April 1997) p.144" register="yes" offset="0x1c" access="rw" space="piix4_pm" reset="0x0">
+    <doc>Device status: idle and trap status of the device monitors.</doc>
+  </struct>
+  <struct name="GLBEN" size="2" grade="established" from="Intel 82371AB datasheet 290562-001 (April 1997) p.144" register="yes" offset="0x20" access="rw" space="piix4_pm" reset="0x0">
+    <doc>Global enable.</doc>
+  </struct>
+  <struct name="GLBCTL" size="4" grade="established" from="Intel 82371AB datasheet 290562-001 (April 1997) p.145" register="yes" offset="0x28" access="rw" space="piix4_pm" reset="0x0">
+    <doc>Global control: SMI enable, end of SMI, BIOS release, global standby timer.</doc>
+  </struct>
+  <struct name="DEVCTL" size="4" grade="established" from="Intel 82371AB datasheet 290562-001 (April 1997) p.146-147" register="yes" offset="0x2c" access="rw" space="piix4_pm" reset="0x0">
+    <doc>Device control: trap and idle enables of the device monitors.</doc>
+  </struct>
+  <struct name="GPIREG" size="4" grade="established" from="Intel 82371AB datasheet 290562-001 (April 1997) p.147" register="yes" offset="0x30" access="r" space="piix4_pm" reset="unknown">
+    <doc>General purpose input, byte reads only (offsets 0x30 to 0x32; the byte at 0x33 is not listed). Bits 21:0 are the logical value on pins GPI21 to GPI0; GPI13 to GPI21 and GPI1 are not multiplexed, the others need their select bit. A bit that is not configured as an input reads indeterminate. The register is not reset; it follows the pins. Port 0xfb2 is byte 2.</doc>
+    <field name="board_id" start="18" size="4" type="uint" grade="inferred"/>
+    <field name="gpi17" start="17" size="1" type="uint" grade="established"/>
+    <field name="gpi16" start="16" size="1" type="uint" grade="established"/>
+    <field name="gpi15" start="15" size="1" type="uint" grade="established"/>
+    <field name="gpi14" start="14" size="1" type="uint" grade="established"/>
+    <field name="gpi13" start="13" size="1" type="uint" grade="established"/>
+    <field name="gpi12" start="12" size="1" type="uint" grade="established"/>
+    <field name="gpi11" start="11" size="1" type="uint" grade="established"/>
+    <field name="gpi10" start="10" size="1" type="uint" grade="established"/>
+    <field name="gpi9" start="9" size="1" type="uint" grade="established"/>
+    <field name="gpi8" start="8" size="1" type="uint" grade="established"/>
+    <field name="gpi7" start="7" size="1" type="uint" grade="established"/>
+    <field name="gpi6" start="6" size="1" type="uint" grade="established"/>
+    <field name="gpi5" start="5" size="1" type="uint" grade="established"/>
+    <field name="gpi4" start="4" size="1" type="uint" grade="established"/>
+    <field name="gpi3" start="3" size="1" type="uint" grade="established"/>
+    <field name="gpi2" start="2" size="1" type="uint" grade="established"/>
+    <field name="gpi1" start="1" size="1" type="uint" grade="established"/>
+    <field name="gpi0" start="0" size="1" type="uint" grade="established"/>
+  </struct>
+  <struct name="GPOREG" size="4" grade="established" from="Intel 82371AB datasheet 290562-001 (April 1997) p.148" register="yes" offset="0x34" access="rw" space="piix4_pm" reset="0x7fffbfff">
+    <doc>General purpose output, byte accesses only (ports 0xfb4 to 0xfb7). Bits 30:0 drive GPO30 to GPO0 and read back the last value written; a pin shared with another function follows that function until GENCFG or XBCS selects the output. The reset value 0x7fffbfff is what the specification update says the chip actually does (erratum 3, p.23): bit 31 has no output, bits 30:15 and 13:0 reset to 1 and bit 14 to 0. Port 0xfb5 therefore resets to 0xbf.</doc>
+    <field name="gpo30" start="30" size="1" type="uint" grade="established"/>
+    <field name="gpo29" start="29" size="1" type="uint" grade="established"/>
+    <field name="gpo28" start="28" size="1" type="uint" grade="inferred"/>
+    <field name="gpo27" start="27" size="1" type="uint" grade="established"/>
+    <field name="gpo26" start="26" size="1" type="uint" grade="established"/>
+    <field name="gpo25" start="25" size="1" type="uint" grade="established"/>
+    <field name="gpo24" start="24" size="1" type="uint" grade="established"/>
+    <field name="gpo23" start="23" size="1" type="uint" grade="established"/>
+    <field name="gpo22" start="22" size="1" type="uint" grade="established"/>
+    <field name="gpo21" start="21" size="1" type="uint" grade="established"/>
+    <field name="gpo20" start="20" size="1" type="uint" grade="established"/>
+    <field name="gpo19" start="19" size="1" type="uint" grade="established"/>
+    <field name="gpo18" start="18" size="1" type="uint" grade="established"/>
+    <field name="gpo17" start="17" size="1" type="uint" grade="established"/>
+    <field name="gpo16" start="16" size="1" type="uint" grade="established"/>
+    <field name="gpo15" start="15" size="1" type="uint" grade="established"/>
+    <field name="gpo14" start="14" size="1" type="uint" grade="established"/>
+    <field name="gpo13" start="13" size="1" type="uint" grade="established"/>
+    <field name="gpo12" start="12" size="1" type="uint" grade="established"/>
+    <field name="gpo11" start="11" size="1" type="uint" grade="established"/>
+    <field name="gpo10" start="10" size="1" type="uint" grade="established"/>
+    <field name="gpo9" start="9" size="1" type="uint" grade="established"/>
+    <field name="gpo8" start="8" size="1" type="uint" grade="established"/>
+    <field name="gpo7" start="7" size="1" type="uint" grade="established"/>
+    <field name="gpo6" start="6" size="1" type="uint" grade="established"/>
+    <field name="gpo5" start="5" size="1" type="uint" grade="established"/>
+    <field name="gpo4" start="4" size="1" type="uint" grade="established"/>
+    <field name="gpo3" start="3" size="1" type="uint" grade="established"/>
+    <field name="gpo2" start="2" size="1" type="uint" grade="established"/>
+    <field name="gpo1" start="1" size="1" type="uint" grade="established"/>
+    <field name="gpo0" start="0" size="1" type="uint" grade="established"/>
+  </struct>
+  <struct name="RC" size="1" grade="established" from="Intel 82371AB datasheet 290562-001 (April 1997) p.88" register="yes" offset="0x1" access="rw" space="piix4_rcport" reset="0x0">
+    <doc>Reset control. Linux restarts the board by writing 0x06 (reset CPU with system reset set); the HAL does the same on all but the earliest boards. Bit 2 going 0 to 1 starts the reset; bit 1 chooses a hard reset (1) or a soft INIT-only reset (0).</doc>
+    <field name="rcpu" start="2" size="1" type="uint" grade="established"/>
+    <field name="srst" start="1" size="1" type="uint" grade="established"/>
+    <test value="0x6" kind="vector">
+      <expect field="srst" value="1"/>
+      <expect field="rcpu" value="1"/>
+    </test>
+  </struct>
+  <struct name="SMBHSTSTS" size="1" grade="established" from="Intel 82371AB datasheet 290562-001 (April 1997) p.148-149" register="yes" offset="0x0" access="rw" space="piix4_smb" reset="0x0">
+    <doc>SMBus host status: failed, bus collision, device error, interrupt (all write 1 to clear) and host busy. The PROM clears it by writing before its one transaction.</doc>
+    <field name="failed" start="4" size="1" type="uint" grade="established"/>
+    <field name="bus_err" start="3" size="1" type="uint" grade="established"/>
+    <field name="dev_err" start="2" size="1" type="uint" grade="established"/>
+    <field name="inter" start="1" size="1" type="uint" grade="established"/>
+    <field name="host_busy" start="0" size="1" type="uint" grade="established"/>
+  </struct>
+  <struct name="SMBSLVSTS" size="1" grade="established" from="Intel 82371AB datasheet 290562-001 (April 1997) p.149" register="yes" offset="0x1" access="rw" space="piix4_smb" reset="0x0">
+    <doc>SMBus slave status.</doc>
+  </struct>
+  <struct name="SMBHSTCNT" size="1" grade="established" from="Intel 82371AB datasheet 290562-001 (April 1997) p.150" register="yes" offset="0x2" access="rw" space="piix4_smb" reset="0x0">
+    <doc>SMBus host control. The PROM's single transaction writes 0x54 (start, block protocol); reading the register resets the block data index.</doc>
+    <field name="start" start="6" size="1" type="uint" grade="established"/>
+    <field name="cmd_prot" start="2" size="3" type="smbhstcnt_cmd_prot" grade="established"/>
+    <field name="kill" start="1" size="1" type="uint" grade="established"/>
+    <field name="interen" start="0" size="1" type="uint" grade="established"/>
+    <test value="0x54" kind="vector">
+      <expect field="start" value="1"/>
+      <expect field="cmd_prot" value="5"/>
+      <expect field="kill" value="0"/>
+      <expect field="interen" value="0"/>
+    </test>
+  </struct>
+  <struct name="SMBHSTCMD" size="1" grade="established" from="Intel 82371AB datasheet 290562-001 (April 1997) p.150" register="yes" offset="0x3" access="rw" space="piix4_smb" reset="0x0">
+    <doc>SMBus host command field.</doc>
+  </struct>
+  <struct name="SMBHSTADD" size="1" grade="established" from="Intel 82371AB datasheet 290562-001 (April 1997) p.151" register="yes" offset="0x4" access="rw" space="piix4_smb" reset="0x0">
+    <doc>SMBus host address: bits 7:1 slave address, bit 0 read (1) or write (0).</doc>
+  </struct>
+  <struct name="SMBHSTDAT0" size="1" grade="established" from="Intel 82371AB datasheet 290562-001 (April 1997) p.151" register="yes" offset="0x5" access="rw" space="piix4_smb" reset="0x0">
+    <doc>SMBus host data 0 (byte count for block transfers).</doc>
+  </struct>
+  <struct name="SMBHSTDAT1" size="1" grade="established" from="Intel 82371AB datasheet 290562-001 (April 1997) p.151" register="yes" offset="0x6" access="rw" space="piix4_smb" reset="0x0">
+    <doc>SMBus host data 1.</doc>
+  </struct>
+  <struct name="SMBBLKDAT" size="1" grade="established" from="Intel 82371AB datasheet 290562-001 (April 1997) p.152" register="yes" offset="0x7" access="rw" space="piix4_smb" reset="0x0">
+    <doc>SMBus block data port.</doc>
+  </struct>
+  <constant name="BOARD_ID_SHIFT" value="0x2" grade="inferred"/>
+  <constant name="IDETIM_PROM_VALUE" value="0xc077c077" grade="established"/>
+  <constant name="PM_BASE" value="0xf80" grade="established"/>
+  <constant name="RC_PORT" value="0xcf9" grade="established" from="Intel 82371AB datasheet 290562-001 (April 1997) p.88"/>
+  <constant name="SMB_BASE" value="0xfd0" grade="established"/>
+</genxml>
