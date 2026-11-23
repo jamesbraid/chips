@@ -732,7 +732,7 @@ Read in the SHub 1 image (`shub1snprom.bin`, sha256 `51ccf9ad...`) from an `ia64
 image (base `0xffa00000`) and, for the SAL runtime component, of the inflated ELF (gzip stream at image offset `0x252000`).
 Every address, immediate and "no other" statement below is from those listings; Ghidra was used only to find routines. The
 runtime ELF carries symbol names, which name the PROM's anonymous routines. Nothing was run and no hardware was read, so
-every row is a software expectation. Not yet independently reviewed.
+every row is a software expectation. Reviewed 2026-11-23 (see Review at the end).
 
 ### Which part numbers are accepted (established)
 
@@ -899,8 +899,9 @@ rest), not a router register access; as [the router README](../../../devices/rou
   `0xffa81170` and `0xffaac160` beyond their call lists, the two operator commands `0xffb089f0` and `0xffb08ad0`, the UART
   routines `0xffa918c0` to `0xffa91f90` and the validator's use of its second column.
 - **Not checked.** That the PROM is ever run on a system whose router reports `0x3017`: the classification is code, and no
-  capture of a 3700 router's register 0 is held (inferred that a 3700 R-brick reports it, from the shared NL3 name and from
-  the guide's "NUMAlink 3 cable", 007-4579-001 pp. 31 and 33).
+  capture of a 3700 router's register 0 is held. Which router part a 3700 R-brick reports is unknown: the guide's "NUMAlink 3
+  cable" (007-4579-001 pp.31 and 33) is the L1 control cable that carries USB signals, not the data link, and p.81 names
+  NUMAlink 4 for the internal channel. A register 0 read from an R-brick would settle it.
 
 ## Unknown, and the route that would settle it
 
@@ -983,3 +984,29 @@ Independent review of chips `792d8f5` (the 2026-11-21 amendments: the stub-run f
 - `nl4r_fence_ports` does not touch all eight port masks unconditionally: it touches `0x1003018` when bit 0 of its flag argument is set, and a mask `0x1003020 + 8 * i` only when bit 1 is set and bit `i` of its mask argument is set (the emulator run's mask was evidently all ones).
 
 **Not checked.** The emulator-run counts and logged values; the order and codes of the four mailbox requests (`0x0003`, `0x000e`, `0x0013`, `0x000e`); the `-2` result of the receiver `0xffa87830` and its use of the lock around each poll (the call to the lock acquire was not found in the listing's first calls of that routine); the interrupt scrub's processor-table entry; the flash probe callers; whether the insert method slot `0x1c8` clears record bit 0 for the arrival port (so "the crawl does not test the arrival port" is established for the two routines named only, and the hardware behaviour stays inferred, as the page says).
+
+Independent review of chips `f2d9873e`, 2026-11-23, of the sections "A second node that runs its own PROM" and "NUMAlink 3 router
+(part `0x3017`)". The reviewer wrote none of it. Method: `shub1snprom.bin` (sha256 `51ccf9ad...`) disassembled whole with
+`ia64-linux-gnu-objdump` (base `0xffa00000`); the runtime ELF inflated from the gzip stream at image offset `0x252000` and its
+relocations read for the three type tables. Nothing was run.
+
+**Confirmed.** The four part compares and addresses (`0x4363`, `0x3017`, `0x239`, `0x4422`; table array `0xffbd8a18`; "NL3router"
+at `0xffbb49e8`); the twelve direct callers of `0xffa0f7e0`; the immediate-compare list (every `12311` and `569` hit, including
+`0xffa5211c`, `0xffa5a44c`, `0xffb0f896`; the hits above `0xffc00000` are data); every NL3 slot entry named in the table
+(read from the type table at `0xffbd7f98`, null stub at `0xffa1a600`, no entry at `0x328`); the slot call sites listed under
+"Where each slot is called from" (the `adds` of the slot offset precedes each); the small bodies (`0x518` lock poll, `0x118`
+unlock, `0x10` bits 11:8, `0x20` bits 4:1, `0x100`, returns 256, 16, 8, 2, latency 3 or 255, register 0 bits 55:52 minus 1,
+port block `+0x8`, `0x240 + 8 * i`, divisor 13, the `0x50000` record constants, `0x330` and `0x338` offsets); first contact's
+constants (400, 7, `0xffeffffffff0fe01`, bit 4, `0x1000038`); the table writer's `0x80000000`, `0x2000`-class stores and
+`0x18` write; the runtime `chipfunc_nl3r` binding (only the listed slots bound, `0x108`, `0x148`, `0x170` unimplemented) and the
+33-entry validator table at runtime `0xa3f08` (loop bound 33). In the two-node section: the geoid decode of `0xffa8d120`
+(bits 18:16, 38:35, 34:26, 25:20, 15:8, bit 19, low byte `0x6c`, type 99), the module word packing of `0xffa7d010` and the fold
+of `5`, `o`, `m`, `@` in `0xffa7d510`, the compare mask `0xffffffffffff00ff` in `0xffa11ab0`, the L1 request codes (3, 14, 19, 9)
+at their sites, and the call sites in `main`. Grades fit.
+
+**Corrected.** The "Not checked" bullet inferred that a 3700 R-brick reports `0x3017` from "NUMAlink 3 cable". That cable is the
+control cable (p.33 Table 2-1, p.31) and the same guide names NUMAlink 4 for the internal channel; it is now unknown, with the
+route that settles it.
+
+**Not checked.** The NASID numbering walk of `0xffa4d390` beyond its constants (read only for the stride and offset names), the
+insert order of `0xffa450e0`, the bodies named "not read" on the page, and the `0xffa8cc50` to `0xffa91f90` UART framing.
