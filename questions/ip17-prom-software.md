@@ -4,19 +4,17 @@ Question. What did the reading of the Crimson PROM leave unsettled? The settled 
 [the PROM software page](../platforms/ip17/prom-software.md); the byte-order survey is
 [byte-order.md](../software/firmware/byte-order.md).
 
-Status: **unknown** for everything below. Where a route is named it is the shortest one I can see.
+Status: **unknown** for everything below. Where a route is named it is the shortest one known.
 
 - **Little-endian boot to the monitor.** Whether the PROM, started with the CPU little-endian, reaches the monitor prompt and loads a
   little-endian program on a real board. The listing shows no halt or restart; an emulated run (ROM words kept as words, UART status
   forced ready, the CPU-speed routine at `0xbfc22410` stubbed) reached the secondary-cache tag-clearing loop at `0xbfc0cebc` in both
-  byte orders and stayed there. Route: a Crimson set to little-endian with `e2endian little` and a serial capture; or a model of the CPU
-  board that answers the timer, the `e2` byte at offset `0x80`, and the cache set-up.
+  byte orders and stayed there. Would settle it: an observation from any Crimson. The project has none and has not proposed a test.
 - **The byte stored to `0xbd800007`.** What setting bits 31 to 24 of the system-bus status word does, and whether it enables
-  little-endian I/O or clears a flag. No code reads it back and no big-endian code writes that register. Route: the Crimson CPU-board
-  documentation (not held), or the IRIX kernel for IP17 if one can be added to the holdings.
+  little-endian I/O or clears a flag. No instruction tests those bits and a scan of direct references finds no big-endian write to that register.
+  Would settle it: an observation from any Crimson. The project has none and has not proposed a test.
 - **How the hardware samples the `e2` bit.** The PROM only writes and prints the bit at `0xbfe00000` byte 0, bit 2. That it reaches the
-  CPU's byte-order strap at the next reset is inferred. Route: the same schematic, or an owner test: set the bit, power-cycle, run
-  `endian`.
+  CPU's byte-order strap at the next reset is inferred. Would settle it: an observation from any Crimson. The project has none and has not proposed a test.
 - **The part behind `0xbfe00000`.** Byte 0 is written without any ready check; byte `0x80` holds `0xba` on machines with a 4 MB
   secondary cache (inferred from the code, not from a manual). Whether the store is a non-volatile part, and what else lives at other
   offsets, is not read.

@@ -86,8 +86,7 @@ The little-endian awareness is pervasive and read, not guessed:
 
 So the Crimson PROM is endian-neutral at the level of its own code (it addresses registers through the two tables) and can be
 told to restart the other way with `e2endian`. [The IP17 PROM software page](../../platforms/ip17/prom-software.md) reads the
-little-endian paths in full: no code halts or restarts on a little-endian CPU, and an emulated little-endian run matches the
-big-endian run up to the first timer wait. Whether a boot completes on the real board is still unknown.
+little-endian paths in full: a scan of direct references finds no code that halts or restarts on a little-endian CPU. Whether a boot completes on the real board is still unknown.
 
 ## IP20, IP22 and IP24: test, flip, restart
 

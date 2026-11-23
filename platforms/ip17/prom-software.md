@@ -8,7 +8,7 @@ after the download. It is read from the image alone, as MIPS code loaded at virt
 [byte-order.md](../../software/firmware/byte-order.md); this page re-checks it and goes further. Where the two differ, this page is
 the newer reading and the survey carries the corrections.
 
-Grades: **established** (read in full in the disassembly, or executed), **inferred** (reasoned from a partial read, a name or a
+Grades: **established** (read in full in the disassembly), **inferred** (reasoned from a partial read, a name or a
 string), **unknown**. Disassembly is from the MIPS `objdump` in the toolchain container; the decompiler was not needed. Register
 fields of the R4000 Config and Status registers follow the R4000 manual's layout and were not re-read for this page. Hardware
 meanings are given only where the code itself shows a use; strings name things but name no register layout.
@@ -38,7 +38,7 @@ to `0xbfc00410` when the bit is **set**. When the bit is **clear** the next four
 - `lui v0,0xbd80; addiu v0,v0,7` builds `0xbd800007` (`0xbfc003f8`, `0xbfc003fc`);
 - `li v1,1; sb v1,0(v0)` stores the byte `1` there (`0xbfc00404`, `0xbfc00408`).
 
-Nothing else differs on the reset path. The write of Config relies on the BE bit not being writable (a CPU property per the R4000
+A scan of the reset path finds no other difference. The write of Config relies on the BE bit not being writable (a CPU property per the R4000
 manual, not re-read here): the PROM tests what the hardware strap gave, and the value it wrote is the same in either mode.
 
 After the branch both modes continue identically (established as call order):
@@ -62,31 +62,28 @@ After the branch both modes continue identically (established as call order):
 
 ### Does a little-endian boot complete? (answer)
 
-**Established**: nothing in the PROM stops, restarts or flips the byte order when Config bit 15 is clear. The IP20, IP22 and IP24
-PROMs rewrite a mode EEPROM and restart the CPU in that case; this one does not (there are two writes of Config in the image: the reset
-write of 3, and a bare accessor at `0xbfc11a50` that nothing calls; the only little-endian action is the byte store above, the `, EL`
+**Established** (from the listing; the absences are scans of direct references): nothing in the PROM stops, restarts or flips the byte order when Config bit 15 is clear. The IP20, IP22 and IP24
+PROMs rewrite a mode EEPROM and restart the CPU in that case; this one does not (a scan of direct references finds two writes of Config in the image: the reset
+write of 3, and a bare accessor at `0xbfc11a50` that no `jal` or `j` reaches; the only little-endian action is the byte store above, the `, EL`
 banner suffix and the table selections below). The monitor, memory test, environment, loader and inventory code all carry
 little-endian branches, listed in the next section.
 
-**Established, executed**: the image was run in an R4000 emulator (a generic CPU emulator, not the hardware) twice, once big-endian
-and once little-endian, with the ROM presented so that each 32-bit word has the same value in both modes and with the two UART
-status bits forced ready. Both runs printed the same text: the banner (the little-endian run adds `, EL`), then
-"Memory address pattern test from A0000000 to A0003000" and "...from A0500000 to A05FFFFC". Both then stopped at the
-timer-based CPU speed measurement at `0xbfc22410`, which needs a modelled timer. With that one routine replaced by a stub that
-returns a constant, both runs went on, identically, to the secondary-cache tag-clearing loop at `0xbfc0cebc` and stayed in it for
-the rest of the budget; why was not diagnosed (the loop step comes from Config and from the `e2` byte, and the emulator supplies
-neither faithfully). So the code through the pattern test, including the little-endian string reads, is executed rather than only
-read. Nothing beyond that was run.
+**Emulator run (model behaviour, not hardware evidence).** The image was run in a generic R4000 emulator, which does not model this
+board, once big-endian and once little-endian, with the ROM presented so that each 32-bit word has the same value in both modes and
+with the two UART status bits forced ready. Both runs printed the same text: the banner (the little-endian run adds `, EL`), then
+"Memory address pattern test from A0000000 to A0003000" and "...from A0500000 to A05FFFFC". Both then waited in the timer-based CPU
+speed measurement at `0xbfc22410`; with that routine stubbed they went on, identically, into the secondary-cache tag-clearing loop at
+`0xbfc0cebc` and stayed there, for a reason not diagnosed. The run proves nothing about hardware. It is why those addresses were
+examined; every fact about them on this page rests on the listing alone. That a little-endian boot works is **unknown**.
 
 **Unknown**: whether the PROM reaches the monitor prompt and loads a little-endian program on the real board. The remaining
 obstacles are hardware behaviour the listing cannot show: the I/O board's byte lanes (see below), the DUART and the SCSI and
-Ethernet DMA engines in little-endian mode, and the lane-unswizzled ROM reads in the hazards list. What would settle it is a run on a Crimson
-with `e2endian little` set, or a complete model of the CPU board.
+Ethernet DMA engines in little-endian mode, and the lane-unswizzled ROM reads in the hazards list. Would settle it: an observation from any Crimson. The project has none and has not proposed a test.
 
 ### What the 137 callers do
 
-`0xbfc11ac8` returns 1 when Config bit 15 is clear (`mfc0; srl 15; andi 1; xori 1`). It has exactly 137 `jal` callers and no data
-reference (searched for the address as a data word and as `lui/addiu` pairs). Reading the code after each call to the next
+`0xbfc11ac8` returns 1 when Config bit 15 is clear (`mfc0; srl 15; andi 1; xori 1`). It has exactly 137 `jal` callers and a scan of direct
+references (the address as a data word and as `lui/addiu` pairs) finds no other use. Reading the code after each call to the next
 `jr ra` puts every call in one of these classes (the counts are from that reading and are exact for the classes of 1 to 4 sites; the
 two large classes are counted by a pattern match and are within a few of the true figure):
 
@@ -96,10 +93,11 @@ two large classes are counted by a pattern match and are within a few of the tru
 | String and ROM pointer reads | about 34 | If the pointer is in the PROM's own megabyte (`0xbfcxxxxx`) or in `0xa08xxxxx` (tested as `ptr >> 20` equal to `0xbfc` or `0xa08`), reads each byte at address `xor 3` (for example at `0xbfc0134c`, `0xbfc09574`, `0xbfc0b7b8`). Strings in RAM elsewhere are read plainly. |
 | Hex digit tables | 3 (`0xbfc018b4`, `0xbfc0a128`, `0xbfc170d0`) | Uses a second copy of the digit string whose bytes are stored lane-swapped (`32107654BA98FEDC` at `0xbfc37e2c` against `0123456789ABCDEF` at `0xbfc37e40`, and a lower-case pair at `0xbfc3973c`, `0xbfc39750`), because the digit is fetched with a plain byte load. |
 | Network byte-order helpers | 4 (`0xbfc0f718`, `0xbfc0f758`, `0xbfc0f798`, `0xbfc0f7d8`) | Swap a 32-bit or 16-bit value (`0xbfc1184c`, `0xbfc11834`) in little-endian mode and return it unchanged in big-endian mode: the standard network-to-host helpers. |
+| Data-pair and record-table selection | about 7 (`0xbfc10c70`, `0xbfc10cec`, `0xbfc0a61c`, and sites choosing record tables `0xbfc399d4` or `0xbfc39a24`) | `0xbfc10c70` and `0xbfc10cec` pick the graphics probe address (little-endian `0xb7000004`, big-endian `0xb7000000`, from the pair at `0xbfc3a22c`/`0xbfc3a228`); `0xbfc0a61c` keeps the flag on the stack for later; the record tables hold the I/O-board register addresses for the two byte orders. These are separate from the ten-entry table selections. |
 | Single-purpose | 4 (`0xbfc03538` program loader, `0xbfc03c00` banner, `0xbfc0c7b4` `endian` command, `0xbfc0a5ac` "IO3B" warning) | Described below. |
 | Wrapper | 1 (`0xbfc222b0`) | A function that only returns the flag; its one caller is the dispatcher at `0xbfc223c4`. |
 
-There is no code path that depends on the flag outside these classes.
+A scan of direct references finds no use of the flag outside these classes; indirect reaches are not excluded.
 
 **The two register tables** (established). Two arrays of ten pointers: `0xbfc39960` (big-endian view) and `0xbfc39988` (little-endian
 view). The survey page says eleven; the arrays are ten entries each. Entry order and big-endian addresses: 0 `0xbf200001`,
@@ -112,12 +110,11 @@ for the I/O board, sit at `0xbfc39780` (big-endian) and `0xbfc39870` (little-end
 `0xb7b` prefix instead of `0xb7f`, +0x78); there a byte register `A` becomes `A xor 7`, a halfword `A xor 6` and a word `A xor 4`,
 so each access reaches the same bus lane the big-endian access would. Twenty-six sites pick the ten-entry pair with the flag and
 load one entry straight away (for example `0xbfc0c6d0` to `0xbfc0c6fc`); they use entries 0, 2, 4, 7, 8 and 9 only, and the
-routine at `0xbfc1f1f0` selects both tables and keeps entry 2 of each in RAM descriptors. Entries 1, 3, 5 and 6 (`0xbf800000`,
-`0xbf400000`, `0xbf100000`, `0xbf180000`) are never loaded by any code I found, and the `0xbf` space's other device addresses are
-reached only through them.
+routine at `0xbfc1f1f0` selects both tables and keeps entries 1 and 2 of each in RAM descriptors (stored at `0xa053cd40`, `0xa053cd44`,
+`0xa053d158`, `0xa053d15c`). Entry 1 is also loaded at `0xbfc06ccc` and `0xbfc06cf4`, entry 3 at `0xbfc06d1c` and entry 5 at
+`0xbfc06ff0` (the DUART self-tests). A scan of direct loads found no load of entry 6 (`0xbf180000`).
 
-**The only deliberate byte-order write is the byte store at reset** (established as the only conditional store; see the next section
-for what it is).
+**The byte store at reset is the only conditional store found** (a scan of direct references; see the next section for what it is).
 
 **Hazards: ROM reads that skip the lane swizzle** (established as reads; consequences inferred). In little-endian mode a plain byte or
 halfword load from ROM data returns a different byte from the one the big-endian build reads, because the ROM supplies whole words:
@@ -148,13 +145,14 @@ show, a little-endian byte at offset 7 is the most significant byte of the 32-bi
 The four bits `0x100`, `0x80`, `0x40`, `0x20` are printed by the routine at `0xbfc0ae48` ("Rmp Status: %x < %s%s%s%s>") as `DMA BERR`,
 `IOEACK`, `IOWACK` and `RANGE`. So the register at `0xbd800000` is the system-bus status word, and `0xbd000000` is read to
 acknowledge it (inferred from the names and the read-and-discard). Whether the store of 1 in bits 31 to 24 sets a mode or merely
-clears a status field is **unknown**: no big-endian code writes that register, and no instruction reads that byte back. The only link to
+clears a status field is **unknown**: a scan of direct references finds no big-endian write to that register. The probes read the whole word at `0xbd800004`
+in little-endian mode (`0xbfc21ed0`, `0xbfc21fe4`), and the stored byte is bits 31 to 24 of it, but no instruction tests those bits
+(only `andi 0x1e0`). The only link to
 byte order is that the PROM writes it on the little-endian path alone; the warning at `0xbfc39a8c` ("IO3B needed for little endian
-IO") shows that little-endian operation needs a particular I/O board variant. What would settle it: the Crimson CPU-board
-documentation (not held), or the IRIX kernel for this board.
+IO") shows that little-endian operation needs a particular I/O board variant. Would settle it: an observation from any Crimson. The project has none and has not proposed a test.
 
 **The `0xbfe00000` byte.** Table entry 7 (`0xbfe00000`, little-endian view `0xbfe00003`) is a byte-wide region on the same bus lane as
-the other `0xbf` devices. Its uses are exactly four, all through the table:
+the other `0xbf` devices. A scan of direct references finds four uses, all through the table:
 
 | Site | Access | Use |
 |---|---|---|
@@ -163,17 +161,17 @@ the other `0xbf` devices. Its uses are exactly four, all through the table:
 | `0xbfc0c784` | `lbu`, `andi 0xfb`, `sb` at +0 | `e2endian little`: clear bit 2 |
 | `0xbfc0c8d8` | `lbu` at +0x80 | secondary cache size: 4 MB when the byte is `0xba`, otherwise 1 MB (function `0xbfc0c8ac`; the 4 MB value is `lui 0x40`, the 1 MB value `lui 0x10`) |
 
-There is no other reference to this region as a constant (the words `0xbfe00000` and `0xbfe00003` occur only in the two tables), and
-no other code loads table entry 7. The `e2endian` handler is at
+A scan finds no other reference to this region as a constant (the words `0xbfe00000` and `0xbfe00003` occur only in the two tables), and
+the scan finds no other load of table entry 7. The `e2endian` handler is at
 `0xbfc0c7f4`: with no argument it prints `big` when the bit is set and `little` when clear (`0xbfc39d70`, `0xbfc39d78`); with one argument
 the first character `b` (98) sets and `l` (108) clears; it then returns. It does not reset the machine or touch Config.
 
-**How `e2endian` takes effect.** The PROM never reads the bit at reset: the reset path reads Config and nothing else, and the only reader
-of the bit is the `e2endian` status call. So the bit reaches `Config.BE` through the hardware, which presumably samples it into the CPU's
+**How `e2endian` takes effect.** Bit 2 at offset 0 is never read at reset: the reset path reads Config and nothing else, and the only
+reader of the bit is the `e2endian` status call. (The configuration byte at offset `0x80` is different: it is read during start-up,
+through `0xbfc03cd4`, `0xbfc0cabc` and `0xbfc0c8ac`, and from `0xbfc040bc`.) So the bit reaches `Config.BE` through the hardware, which presumably samples it into the CPU's
 byte-order strap on the next reset (**inferred**; the PROM neither reads it back nor triggers a reset). The name `e2` suggests a small
-non-volatile part, which fits a byte that is written with no ready poll only if it is a battery-backed or fast-write device (unknown which). What would settle it is the CPU-board schematic, or an
-owner with a Crimson who runs `e2endian little`, power-cycles, and then runs `endian`. The `endian` command (handler `0xbfc0c7ac`) prints
-`cpu endian:`, then `little` or `big` from Config alone, so it can confirm the result.
+non-volatile part, which fits a byte that is written with no ready poll only if it is a battery-backed or fast-write device (unknown which). Would settle it: an observation from any Crimson. The project has none and has not proposed a test. The `endian` command (handler
+`0xbfc0c7ac`) prints only `little` or `big`, from Config alone (`cpu endian:` is its help string at `0xbfc38588`).
 
 ## The loader refuses images of the wrong byte order (established)
 
@@ -187,8 +185,8 @@ The file loader at `0xbfc03490` opens the named file, reads a 76-byte header int
 four are accepted by the code and were not named from a public source. Magic accepted, the loader goes on to the optional-header
 magic at offset 20 (`0x107`, `0x108`, `0x10b`, `0x123` and `0x109`; anything else prints "%s: bad magic number", `0xbfc38494`). So a
 little-endian PROM boots only a little-endian image, and the PROM does not byte-swap or convert an image. Strings elsewhere in the
-loader ("not in a.out format", "short read") are the other rejections. The network boot path (`bootp` then TFTP) hands its file to
-the same routine, so the same check applies.
+loader ("not in a.out format", "short read") are the other rejections. The loader has two callers (`0xbfc038d8` and `0xbfc03964`); that the network boot path (`bootp` then TFTP) reaches it through
+one of them is **inferred** and was not traced.
 
 ## Memory sizing and where RAM sits
 
@@ -216,10 +214,12 @@ All **established** unless marked.
   main monitor was not traced.
 - **Consequence for a client that needs RAM at physical 0 and at 6 MB.** The PROM supplies both (page 0 to `0x4fffff` and
   `0x600000` up), keeps `0x500000` to `0x5fffff` for itself and leaves the rest as unclaimed RAM; the diagnostic monitor's stack
-  and the clears use the region above 6 MB, so a client must not assume it is untouched. The PROM never touches memory above
-  the 512 MB window of KSEG0 and KSEG1 (every address it forms is `0x80000000` or `0xa0000000` plus the offset), so memory beyond
-  512 MB is neither tested nor cleared; whether the size register can encode more than that and whether the hardware decodes it
-  is unknown (the decode above reaches 1216 MB).
+  and the clears use the region above 6 MB, so a client must not assume it is untouched. The RAM tests and clears use KSEG0 and KSEG1 addresses
+  (`0x80000000` or `0xa0000000` plus the offset). The self-test at `0xbfc07cd8` to `0xbfc07e00` also installs a TLB mapping (helper
+  `0xbfc08be0`, virtual address `0x400000`) and uses it, and `0xbfc03df8` invalidates TLB entries 1 to 47. Above 512 MB the forms
+  `size | 0x80000000` and `size | 0xa0000000` (for example `0xbfc03f1c`, `0xbfc03fe0`) no longer give valid KSEG addresses, so what
+  the PROM does with more than 512 MB is **unknown**, as is whether the size register's reach (1216 MB in the decode above) is
+  populated and decoded by the hardware.
 
 ## Caches (established unless marked)
 
@@ -345,27 +345,28 @@ The program loader path, passwords (`passwd`, `resetpw`, "Enter new password:", 
 Addresses are the big-endian-view virtual addresses in KSEG1; the physical address is the low 29 bits. "Table" means reached through the
 register tables above, so the little-endian address differs as described. Grades are for the access, not for the part named.
 
-| Address | Width | What the PROM does there | Grade |
+| Address | Width | What the PROM does there | Grade (of the access) |
 |---|---|---|---|
-| `0xbf000000` | word | Read for memory size and printed as `Mpsr` (see above). Also read in the exception dump. | established; name inferred |
-| `0xbf200001` | byte | Front-panel LED: the one's complement of a value is stored (`0xbfc00a4c`, `0xbfc0c684`). | established; role inferred |
-| `0xbf600000` (table entry 4) | bytes at +0, +4, +8, +12 | A three-counter timer: control words `0x34`, `0x74`, `0xb4` at offset 12 (counter 0, 1, 2 in mode 2, 16-bit loads), counters at 0, 4 and 8. Used for ticks and the CPU speed measurement at `0xbfc22410` that feeds "%d MHZ". After each write the code reads `0xbc000000` (a bus drain, inferred). | established as accesses; part inferred |
-| `0xbfa00000` (table 2) | byte | Console dual UART (above). Also tested as "DUART0 channel B" etc. | established; part inferred |
+| `0xbf000000` | word | Read for memory size and printed as `Mpsr` (see above). Also read in the exception dump. The grade is for the access; name inferred. | established |
+| `0xbf200001` | byte | Front-panel LED: the one's complement of a value is stored (`0xbfc00a4c`, `0xbfc0c684`). The grade is for the access; role inferred. | established |
+| `0xbf600000` (table entry 4) | bytes at +0, +4, +8, +12 | A three-counter timer: control words `0x34`, `0x74`, `0xb4` at offset 12 (counter 0, 1, 2 in mode 2, 16-bit loads), counters at 0, 4 and 8. Used for ticks and the CPU speed measurement at `0xbfc22410` that feeds "%d MHZ". After each write the code reads `0xbc000000` (a bus drain, inferred). The grade is for the access; part inferred. | established |
+| `0xbfa00000` (table 2) | byte | Console dual UART (above). Also tested as "DUART0 channel B" etc. The grade is for the access; part inferred. | established |
 | `0xbfe00000` (table 7) | byte | CPU-board `e2` store: byte 0 bit 2 = endian bit, byte `0x80` = secondary cache size flag. | established |
-| `0xbd800000` (table 8) | word | System-bus status, bits `0x1e0` = four error flags; read in the bus-probe routines and the exception dump; the byte at `0xbd800007` is stored once on the little-endian path. | established; name inferred |
+| `0xbd800000` (table 8) | word | System-bus status, bits `0x1e0` = four error flags; read in the bus-probe routines and the exception dump; the byte at `0xbd800007` is stored once on the little-endian path. The grade is for the access; name inferred. | established |
 | `0xbd000000` (table 9) | word | Read and discarded after probes and in the status-set routine at `0xbfc11790` (which loads Status with `0x4001`); an acknowledge. | inferred |
 | `0xbc000000`, `0xbc000004` | words | Read in the exception dump as "Rmp Error Address: %x %x"; read once after each store in timing loops (bus drain). | inferred |
-| `0xbe400000`..`0xbe4000fc` | words | A block of 32-bit registers touched by one routine cluster at `0xbfc072a4` to `0xbfc07560` (offsets `0x04`, `0x20`, `0x38`, `0x40`, `0x78`, `0x80`, `0xa0`, `0xb0`, `0xc0`..`0xd8`, `0xfc`: set to zero, read back, tested); it has no little-endian twin in the tables, which fits words only. I did not tie it to a named test. | established as accesses; role unknown |
-| `0xb7000000` | word | Probed for a graphics board ID (low byte `0xdd` or `0xee`). | established; role inferred |
-| `0xb7c20000` | byte | Read with `lb` in the Ethernet driver's set-up code (`0xbfc33454`, `0xbfc3347c`; the driver has "eh%d: bad RAM" strings). | role inferred |
+| `0xbe400000`..`0xbe4000fc` | words | A block of 32-bit registers touched by one routine cluster at `0xbfc072a4` to `0xbfc07560` (offsets `0x04`, `0x20`, `0x38`, `0x40`, `0x78`, `0x80`, `0xa0`, `0xb0`, `0xc0`..`0xd8`, `0xfc`: set to zero, read back, tested); it has no little-endian twin in the tables, which fits words only. It is not tied here to a named test. The grade is for the access; role unknown. | established |
+| `0xb7000000` | word | Probed for a graphics board ID (low byte `0xdd` or `0xee`); big-endian address. | established |
+| `0xb7000004` | word | The same graphics probe in little-endian mode (`0xbfc10c70`, `0xbfc10cec`; address pair at `0xbfc3a228`). | established |
+| `0xb7c20000` | byte | Read with `lb` in the Ethernet driver's set-up code (`0xbfc33454`, `0xbfc3347c`; the driver has "eh%d: bad RAM" strings). The role is inferred from that. | inferred |
 | `0xb7c14000`, `0xb3f0ffff`, `0xb7d00000`..`0xb7d7ffff` | byte | `0xb7d00000` upward is walked in 8-byte steps with a zero written to `0xb7cffff8` by code inside the `ecc` command handler (`0xbfc19a98` to `0xbfc19b54`); the other two are built at `0xbfc2c328` and `0xbfc2c378` in the disk-driver region. | unknown |
-| `0xb7f10000` (entry 26) | byte, stride 8 | The environment NVRAM, 2048 logical bytes; entry 28 (`0xb7f13ff0`) is the checksum byte. | established; part unknown |
-| `0xb7f13ff8` (entry 27) | byte | Time-of-day clock, bit-serial: the PROM writes the 64-bit pattern `C5 3A A3 5C C5 3A A3 5C` (ROM at `0xbfc39c60`), one bit per write, then reads or writes eight clock bytes one bit at a time (`0xbfc0b534`). The pattern is the recognition sequence of a Dallas phantom-clock part that sits in the RAM socket (inferred from the pattern; the datasheet is not held). Strings: "initializing tod clock", "setting secs=%d min=%d hour=%d day=%d month=%d year=%d". | established as accesses; part inferred |
+| `0xb7f10000` (entry 26) | byte, stride 8 | The environment NVRAM, 2048 logical bytes; entry 28 (`0xb7f13ff0`) is the checksum byte. The grade is for the access; part unknown. | established |
+| `0xb7f13ff8` (entry 27) | byte | Time-of-day clock, bit-serial: the PROM writes the 64-bit pattern `C5 3A A3 5C C5 3A A3 5C` (ROM at `0xbfc39c60`), one bit per write, then reads or writes eight clock bytes one bit at a time (`0xbfc0b534`). The pattern is the recognition sequence of a Dallas phantom-clock part that sits in the RAM socket (inferred from the pattern; the datasheet is not held). Strings: "initializing tod clock", "setting secs=%d min=%d hour=%d day=%d month=%d year=%d". The grade is for the access; part inferred. | established |
 | `0xb7f18000` (29) | byte | Written with 0 before the checksum check. | unknown |
-| `0xb7f30000` (3) | halfword | Option or switch word read by `0xbfc04264`. | established; role inferred |
-| `0xb7f40000`..`0xb7f40003` (11 to 15) | bytes | Four byte registers: written once with the word `0x01010000` at reset; bit 0 of the last pulsed (set then cleared) at `0xbfc0a674` to `0xbfc0a6a4`; bits `0x40` and `0x80` set and cleared by the routine at `0xbfc0bad4` for two units. | established as accesses; roles unknown |
-| rest of the 30-entry table | various | `0xb7fe0000`, `0xb7fe8000`, `0xb7ff0000`, `0xb7ff0002`, `0xb7ff4000`, `0xb7ff8000`, `0xb7fc0002`, `0xb7fc000a`, `0xb7f28000`, `0xb7f20000`, `0xb7fa0000`, `0xb7fb0000`, `0xb7f48000`, `0xb7f4c000`, `0xb7f60000`, `0xb7f10000`/`0xb7f13ff0`, `0xb7e00004`, `0xb7fffff0` | roles not read; the table lists them |
-| `0xb7fffff4` | byte | Read in little-endian mode only: bit 0 set prints "IO3B needed for little endian IO" (`0xbfc0a5bc`..`0xbfc0a5dc`). Read without the lane swizzle; its big-endian equivalent is `0xb7fffff3`. | established; meaning inferred |
+| `0xb7f30000` (3) | halfword | Option or switch word read by `0xbfc04264`. The grade is for the access; role inferred. | established |
+| `0xb7f40000`..`0xb7f40003` (11 to 15) | bytes | Four byte registers: written once with the word `0x01010000` at reset; bit 0 of the last pulsed (set then cleared) at `0xbfc0a674` to `0xbfc0a6a4`; bits `0x40` and `0x80` set and cleared by the routine at `0xbfc0bad4` for two units. The grade is for the access; roles unknown. | established |
+| rest of the 30-entry table | various | `0xb7fe0000`, `0xb7fe8000`, `0xb7ff0000`, `0xb7ff0002`, `0xb7ff4000`, `0xb7ff8000`, `0xb7fc0002`, `0xb7fc000a`, `0xb7f28000`, `0xb7f20000`, `0xb7fa0000`, `0xb7fb0000`, `0xb7f48000`, `0xb7f4c000`, `0xb7f60000`, `0xb7f10000`/`0xb7f13ff0`, `0xb7e00004`, `0xb7fffff0` | Roles not read; the table lists them. | unknown |
+| `0xb7fffff4` | byte | Read in little-endian mode only: bit 0 set prints "IO3B needed for little endian IO" (`0xbfc0a5bc`..`0xbfc0a5dc`). Read without the lane swizzle; its big-endian equivalent is `0xb7fffff3`. The grade is for the access; meaning inferred. | established |
 
 The second 30-entry block (`0xb7b` prefix) is a second copy of the same registers for a second I/O board; the routines that take a unit
 number (`0xbfc0bad4`) divide it by two to choose the board and use its low bit for the unit. That is inferred from the index
