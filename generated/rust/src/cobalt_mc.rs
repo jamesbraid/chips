@@ -1,6 +1,6 @@
 // generated from devices/cobalt_mc/registers.toml by defs-gen - do not edit, change the source
 // defs-gen 2
-// input sha256 3d100dec20588755741fdb06f5abce36f69505f14e7ee89805fe602319bd80dc
+// input sha256 73f90f85d2cdc65dda9e1c8485d018d0bbc17dbb41d1f46b9ab0ab950e2b71a5
 // Cobalt memory controller of the SGI Visual Workstation 320 and 540: ECC control, error reporting and the bank registers
 #![allow(dead_code)]
 
@@ -24,7 +24,7 @@ pub mod delay_period {
     pub const WIDTH: u32 = 32;
     pub const OFFSET: u64 = 0x8;
 }
-/// Counter the PROM self-test polls (signed compares) until it is at or below, then at or above, half the value of mem_period, as a delay between probe w (inferred)
+/// Counter the PROM self-test polls (signed compares) until it is at or below, then at or above, half the value of delay_period, as a delay between probe (inferred)
 pub mod delay_counter {
     pub const WIDTH: u32 = 32;
     pub const OFFSET: u64 = 0x10;

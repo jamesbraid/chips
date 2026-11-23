@@ -1,6 +1,6 @@
 <!-- generated from devices/cobalt/registers.toml by defs-gen - do not edit, change the source -->
 <!-- defs-gen 2 -->
-<!-- input sha256 826434452ed937ca170c881051b95aad522fe52d7ce6d8dc38e54c6c482ecd9d -->
+<!-- input sha256 19f8621d27161f38e6f456d3242a1560c0986e491015583f41f0bff9b6e515ee -->
 
 # Cobalt (system ASIC of the SGI Visual Workstation 320 and 540): the CPU block with its timer, and the interrupt controller
 
@@ -75,7 +75,7 @@ Cobalt revision. The kernel prints it at start-up and, in the 2.4 interrupt path
 
 ### Register `cpu_ctrl`
 
-Timer and memory control. Linux sets timer_run and clears timer_mask, each by a read-modify-write, after loading the count, and touches no other bit. The NT HAL (halborg.dll 1.3: the Cobalt control set-up in HalInitSystem and HalpEccControl) also clears ecc_enable at start-up, sets timer_mask, ORs in page_close from its PAGEOPENPOLICY boot option, and sets ecc_enable together with bit 0 of the memory block when it enables ECC.
+Timer and memory control. Linux sets timer_run and clears timer_mask, each by a read-modify-write, after loading the count, and touches no other bit. The NT HAL (halborg.dll 1.3: the Cobalt control set-up in HalInitSystem and HalpEccControl) also clears ecc_enable at start-up, sets timer_mask at start-up (it clears the mask later, when it starts the tick: see cpu_timeval), ORs in page_close from its PAGEOPENPOLICY boot option, and sets ecc_enable together with bit 0 of the memory block when it enables ECC.
 
 | Bits | Field | Grade | Values | Source | Description |
 |---|---|---|---|---|---|
@@ -103,7 +103,7 @@ Timer status. The HAL also stores all ones here once while setting up the timer,
 
 ### Register `cpu_timeval`
 
-Timer count. The kernel writes the Cobalt core rate divided by the tick rate (a 100 MHz core rate) before starting the timer and calls it a countdown value. That it reloads itself each period is inferred from the kernel using it as the periodic tick and writing it once. The NT HAL writes all ones to it three times: once at set-up before the run bit is set, then twice more in the calibration loop (two passes, run bit already set), and each pass reads the current count about one real-time-clock second later, of which only the last is used; it takes all ones minus that count as the rate, rounded to the nearest 10,000, with no range test. For that to measure one second the write must set the running count at once, not only a reload that waits for the next expiry (software expectation; the hardware behaviour is inferred). The HAL never reads this register back. Addresses: the Cobalt README.
+Timer count. The kernel writes the Cobalt core rate divided by the tick rate (a 100 MHz core rate) before starting the timer and calls it a countdown value. That it reloads itself each period is inferred from the kernel using it as the periodic tick and writing it once. The NT HAL writes all ones to it three times: once at set-up before the run bit is set, then twice more in the calibration loop (two passes, run bit already set), and each pass reads the current count about one real-time-clock second later, of which only the last is used; it takes all ones minus that count as the rate, rounded to the nearest 10,000, with no range test. For that to measure one second the write must set the running count at once, not only a reload that waits for the next expiry (software expectation; the hardware behaviour is inferred). After calibration the HAL also writes the computed tick reload here (halborg.dll 1.3, addresses in the Cobalt README), then sets timer_run and clears timer_mask. The HAL never reads this register back. Addresses: the Cobalt README.
 
 ### Register `cpu_timecur`
 
@@ -132,8 +132,8 @@ Bit 16 is set while cache operations are outstanding. The HAL polls it, stalling
 | `APIC_IDE1` | 0x2 | established |  | Line of the second IDE channel, on the 320 only. |
 | `APIC_LINES` | 0x1e | established |  | Number of interrupt lines the kernel knows (0 to 29). |
 | `APIC_LI_AUDIO` | 0x16 | inferred |  | Line of the Lithium audio engine. |
-| `APIC_MEM_ERR0` | 0x1a | established |  | First memory-error interrupt line. The NT HAL (halborg.dll 1.3, HalpMemErrInterrupt, HalpInitMemErrSubsystem) connects lines 26 and 27, with vectors 0xf2 and 0xf1 as read in nt-hal.md, only when the board is not a Cobalt Lite revision. Which error uses which line is not recovered. |
-| `APIC_MEM_ERR1` | 0x1b | established |  | Second memory-error interrupt line; see APIC_MEM_ERR0. On Lite revisions 0xa0 and 0xa8 the HAL puts the clock here and the NMI on line 28. |
+| `APIC_MEM_ERR0` | 0x1a | established |  | First memory-error interrupt line. The NT HAL (halborg.dll 1.3, HalpMemErrInterrupt, HalpInitMemErrSubsystem) connects lines 26 and 27, only when the board is not a Cobalt Lite revision. Line 26 has vector 0xf1 (HalpInitMemErrSubsystem, 0x8001a041 to 0x8001a071). Which error uses which line is not recovered. |
+| `APIC_MEM_ERR1` | 0x1b | established |  | Second memory-error interrupt line; Line 27 has vector 0xf2 (HalpInitMemErrSubsystem, 0x8001a041 to 0x8001a071). On Lite revisions 0xa0 and 0xa8 the HAL puts the clock here and the NMI on line 28. |
 | `APIC_NMI` | 0x1d | established |  | Last line; named NMI by the header and unused by Linux. The NT HAL programs it as an NMI-delivery entry (entry 28 on the Lite revisions 0xa0 and 0xa8 moves the NMI to 28 and the clock to 27). |
 | `APIC_PCIA_BASE0` | 0x0 | established |  | First line of the per-slot INTA lines of Lithium bridge A. |
 | `APIC_PCIA_BASE123` | 0x5 | established |  | First of the lines bridge A shares among INTB, INTC and INTD (the header comment says 5 and 6). |

@@ -1,6 +1,6 @@
 /* generated from devices/cobalt_mc/registers.toml by defs-gen - do not edit, change the source */
 /* defs-gen 2 */
-/* input sha256 3d100dec20588755741fdb06f5abce36f69505f14e7ee89805fe602319bd80dc */
+/* input sha256 73f90f85d2cdc65dda9e1c8485d018d0bbc17dbb41d1f46b9ab0ab950e2b71a5 */
 /* Cobalt memory controller of the SGI Visual Workstation 320 and 540: ECC control, error reporting and the bank registers */
 #ifndef COBALT_MC_GEN_H
 #define COBALT_MC_GEN_H
@@ -24,7 +24,7 @@
 #define COBALT_MC_DELAY_PERIOD_OFFSET                0x8u /* inferred */
 
 /*
- * Counter the PROM self-test polls (signed compares) until it is at or below, then at or above, half the value of mem_period, as a delay between probe writes, in every probe step. Whether it counts up or down is not shown.
+ * Counter the PROM self-test polls (signed compares) until it is at or below, then at or above, half the value of delay_period, as a delay between probe writes, in every probe step. Whether it counts up or down is not shown.
  */
 /* delay_counter: r32, space mc, reset unknown */
 #define COBALT_MC_DELAY_COUNTER_OFFSET               0x10u /* inferred */
@@ -54,7 +54,7 @@
 #define COBALT_MC_ERROR_SYNDROME_OFFSET              0x30u /* established */
 
 /*
- * Read once by the PROM self-test's DIMM speed check (check 0x0d, prom-console-path.md), on every Cobalt revision. The check passes only when bit 16 reads 1; otherwise it reports a soft failure and the main module waits for a key before booting. What the bit reports is inferred from the check's name only. On revisions 0xa0 and 0xa8 this address is bank register 0 (see bank), whose codes never have bit 16, so the check always fails there. The firmware never writes it.
+ * Read once by the PROM self-test's DIMM speed check (check 0x0d, prom-console-path.md), on every Cobalt revision. The check passes only when bit 16 reads 1; otherwise it reports a soft failure and the main module waits for a key before booting. What the bit reports is inferred from the check's name only. On revisions 0xa0 and 0xa8 this address is bank register 0 (see bank), whose codes never have bit 16, so the check always fails there. Off the Lite revisions the firmware never writes it; on 0xa0 and 0xa8 the self-test writes bank register 0 here (addresses in the memory controller README).
  */
 /* dimm_speed_check: r32, space mc, reset unknown */
 #define COBALT_MC_DIMM_SPEED_CHECK_OFFSET            0x48u /* inferred */

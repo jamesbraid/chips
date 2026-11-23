@@ -1,8 +1,5 @@
 unit = "cobalt"
 prefix = "COBALT"
-# Names follow Linux include/asm-i386/cobalt.h (2.2, 2.4) and arch/x86/include/asm/visws/cobalt.h (2.6.33), and
-# the function names the shipped halborg.dll 1.3 carries (CoApic redirection entry, Cacheop, CalibrateCobaltTimer).
-# No SGI source symbol is used.
 name_source = "ours"
 title = "Cobalt (system ASIC of the SGI Visual Workstation 320 and 540): the CPU block with its timer, and the interrupt controller"
 doc = "Offsets, bit positions and values come from the Linux Visual Workstation code (kernel 2.2 to 3.14) and are cross-checked against SGI's shipped Windows NT 4.0 HAL (halborg.dll 1.3). Grades: established means the shipped HAL programs the item the same way (or the item is its own table); inferred means only Linux defines it, a software expectation of Linux and not of the shipped system. Where the HAL differs, the item says so. The chip's own specification is not held. Offsets are relative to the base of each block (CPU_PHYS and APIC_PHYS below). Linux reads and writes every register as a 32-bit word. Names: the register and constant names follow the public Linux header and the shipped HAL's own function names (where the HAL names the feature); the memory controller, which neither names, is the separate unit cobalt_mc with names of our own. Reset values are unknown throughout. Only what the kernel, the NT HAL and the PROM touch is here; the graphics engine registers are not."
@@ -26,7 +23,7 @@ offset = 0x10
 access = "rw"
 width = 32
 grade = "established"
-doc = "Timer and memory control. Linux sets timer_run and clears timer_mask, each by a read-modify-write, after loading the count, and touches no other bit. The NT HAL (halborg.dll 1.3: the Cobalt control set-up in HalInitSystem and HalpEccControl) also clears ecc_enable at start-up, sets timer_mask, ORs in page_close from its PAGEOPENPOLICY boot option, and sets ecc_enable together with bit 0 of the memory block when it enables ECC."
+doc = "Timer and memory control. Linux sets timer_run and clears timer_mask, each by a read-modify-write, after loading the count, and touches no other bit. The NT HAL (halborg.dll 1.3: the Cobalt control set-up in HalInitSystem and HalpEccControl) also clears ecc_enable at start-up, sets timer_mask at start-up (it clears the mask later, when it starts the tick: see cpu_timeval), ORs in page_close from its PAGEOPENPOLICY boot option, and sets ecc_enable together with bit 0 of the memory block when it enables ECC."
 
 [registers.cpu_ctrl.fields]
 ecc_enable = { bits = [0, 0], grade = "established", doc = "1 turns ECC checking on (the HAL sets it with bit 0 of the first memory-controller register). Cleared by the HAL at start-up; the NT HAL never sets it on a Cobalt Lite revision (0xa0, 0xa8)." }
@@ -95,7 +92,7 @@ offset = 0x30
 access = "rw"
 width = 32
 grade = "established"
-doc = "Timer count. The kernel writes the Cobalt core rate divided by the tick rate (a 100 MHz core rate) before starting the timer and calls it a countdown value. That it reloads itself each period is inferred from the kernel using it as the periodic tick and writing it once. The NT HAL writes all ones to it three times: once at set-up before the run bit is set, then twice more in the calibration loop (two passes, run bit already set), and each pass reads the current count about one real-time-clock second later, of which only the last is used; it takes all ones minus that count as the rate, rounded to the nearest 10,000, with no range test. For that to measure one second the write must set the running count at once, not only a reload that waits for the next expiry (software expectation; the hardware behaviour is inferred). The HAL never reads this register back. Addresses: the Cobalt README."
+doc = "Timer count. The kernel writes the Cobalt core rate divided by the tick rate (a 100 MHz core rate) before starting the timer and calls it a countdown value. That it reloads itself each period is inferred from the kernel using it as the periodic tick and writing it once. The NT HAL writes all ones to it three times: once at set-up before the run bit is set, then twice more in the calibration loop (two passes, run bit already set), and each pass reads the current count about one real-time-clock second later, of which only the last is used; it takes all ones minus that count as the rate, rounded to the nearest 10,000, with no range test. For that to measure one second the write must set the running count at once, not only a reload that waits for the next expiry (software expectation; the hardware behaviour is inferred). After calibration the HAL also writes the computed tick reload here (halborg.dll 1.3, addresses in the Cobalt README), then sets timer_run and clears timer_mask. The HAL never reads this register back. Addresses: the Cobalt README."
 
 [registers.apic_lo]
 space = "apic"
@@ -166,5 +163,5 @@ APIC_VIDIN0 = { value = 18, grade = "established", doc = "Video input 0 interrup
 APIC_VIDIN1 = { value = 19, grade = "established", doc = "Video input 1 interrupt." }
 APIC_AS = { value = 24, grade = "established", doc = "Linux does not use the line; the NT graphics miniport (sgcomp.sys) asks the HAL for the vector of line 24 and connects a handler to it. The line number is established; the name is Linux's." }
 APIC_RE = { value = 25, grade = "established", doc = "Linux does not use the line; the NT graphics miniport (sgcomp.sys) asks the HAL for the vector of line 25 and connects a handler to it. The line number is established; the name is Linux's." }
-APIC_MEM_ERR0 = { value = 26, grade = "established", doc = "First memory-error interrupt line. The NT HAL (halborg.dll 1.3, HalpMemErrInterrupt, HalpInitMemErrSubsystem) connects lines 26 and 27, with vectors 0xf2 and 0xf1 as read in nt-hal.md, only when the board is not a Cobalt Lite revision. Which error uses which line is not recovered." }
-APIC_MEM_ERR1 = { value = 27, grade = "established", doc = "Second memory-error interrupt line; see APIC_MEM_ERR0. On Lite revisions 0xa0 and 0xa8 the HAL puts the clock here and the NMI on line 28." }
+APIC_MEM_ERR0 = { value = 26, grade = "established", doc = "First memory-error interrupt line. The NT HAL (halborg.dll 1.3, HalpMemErrInterrupt, HalpInitMemErrSubsystem) connects lines 26 and 27, only when the board is not a Cobalt Lite revision. Line 26 has vector 0xf1 (HalpInitMemErrSubsystem, 0x8001a041 to 0x8001a071). Which error uses which line is not recovered." }
+APIC_MEM_ERR1 = { value = 27, grade = "established", doc = "Second memory-error interrupt line; Line 27 has vector 0xf2 (HalpInitMemErrSubsystem, 0x8001a041 to 0x8001a071). On Lite revisions 0xa0 and 0xa8 the HAL puts the clock here and the NMI on line 28." }

@@ -134,8 +134,10 @@ Full detail and addresses are in [hal-hot-path.md](../../software/visws/hal-hot-
 
 CPU status `+0x20` bit 0 is a cache-operation interrupt (unexpected; cleared by writing all ones but bit 0) and bit 1 the timer.
 CPU `+0x18` bit 0 resets the machine on early boards; `+0x38` is the timer's current value, counting down. The memory block at
-`0xc6000000` holds, for the HAL, `+0x00` (bit 0 ECC enable), `+0x18` (error status), `+0x28` (error address) and `+0x30`
-(syndrome): see [registers.md](registers.md).
+`0xc6000000` is the separate unit [cobalt_mc](../cobalt_mc/registers.md): for the HAL it holds `+0x00` (bit 0 ECC enable),
+`+0x18` (error status), `+0x28` (error address) and `+0x30` (syndrome).
+
+Timer start-up: after calibration the HAL writes the tick reload to `+0x30` (`halborg.dll` 1.3 `0x8002d86d`), then sets the run bit and clears the mask bit (`0x8002d870` to `0x8002d894`).
 
 ## Memory controller (unit [cobalt_mc](../cobalt_mc/registers.md))
 

@@ -17,3 +17,7 @@ What the shipped code does, and where the full readings live:
 Unknown: every reset value (the PROM writes before it reads), the meaning of the bank register bits beyond the stored codes
 3, 2 and 0, the error status bits that select the message, the delay period and counter rates, and the block's extent past
 one page. Routes: the Cobalt specification, or a read of a real machine's registers before any software has written them.
+
+Addresses: the highest register used is bank 15 at `+0xc8` (`+0xc0` on the Lite revisions). On revisions `0xa0` and `0xa8` the
+PROM self-test writes bank register 0 at `+0x48` (self-test offsets `0x4256` and `0x4298`), the address that is the speed-check
+register on every other revision.

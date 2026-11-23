@@ -1,6 +1,6 @@
 {
  "generator": "defs-gen 2",
- "input_sha256": "3d100dec20588755741fdb06f5abce36f69505f14e7ee89805fe602319bd80dc",
+ "input_sha256": "73f90f85d2cdc65dda9e1c8485d018d0bbc17dbb41d1f46b9ab0ab950e2b71a5",
  "schema": "defs-flat/1",
  "source": "devices/cobalt_mc/registers.toml",
  "profile": "public",
