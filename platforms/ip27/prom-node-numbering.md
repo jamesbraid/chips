@@ -31,7 +31,7 @@ listed but not for every branch is **I**, even when each routine it calls is **E
 
 | Item | Identity | Note |
 |---|---|---|
-| IP27 CPU PROM, PROM 6.156 ("SGI Version 6.156  built 11:27:56 AM Nov 18, 2003", payload offset 0x6ae58) | `firmware/ip27prom.img`, sha256 `0dbd5d5f7027e380383ce81523e1f614d58343ca82e07ec48bb4740b287eba0e` | the IRIX 6.5.30 media image. A promgen64 container, one segment `ip27prom`, container offset 0x1000, load and entry 0xc00000001fc00000, length 0xdddd0, additive checksum matches (`retools/tools/chips/promgen64.py`). Payload sha256 `c2c69bf33c375b43ec7ac511fab41ddf595be1b6838ae717e58a9a1273437fdd` |
+| IP27 CPU PROM, PROM 6.156 ("SGI Version 6.156  built 11:27:56 AM Nov 18, 2003", payload offset 0x6ae58) | `firmware/ip27prom.img`, sha256 `0dbd5d5f7027e380383ce81523e1f614d58343ca82e07ec48bb4740b287eba0e` | the IRIX 6.5.30 media image. A promgen64 container, one segment `ip27prom`, container offset 0x1000, load and entry 0xc00000001fc00000, length 0xdddd0, additive checksum matches (`retools/tools/prom/promkit unpack`). Payload sha256 `c2c69bf33c375b43ec7ac511fab41ddf595be1b6838ae717e58a9a1273437fdd` |
 | IRIX 6.5.30 IP27 kernel | `IP27/unix`, sha256 `567474674eaa83d36431e70f079a35819d0bc3ce1d4b4a2758b8e891b5acc463` | only for the launch call, below |
 | IRIX 6.5.22 IP27 kernel | `6.5.22/unix.IP27`, sha256 `40e3f6246b58aa9b0856cf36cd868355c0c3cbc5e00bb7fc886b52ca4622dc0f` | same |
 
@@ -44,7 +44,7 @@ nothing here says what it does to the registers (**U**).
 
 Not read: the IRIX 6.5 base-media PROM (6.11, sha256 prefix `2247a76e`, named in
 [crosstown-ktown.md](../../devices/crosstown-ktown/README.md)). It is not in this repository's `root/`. Nothing below carries over to
-it (**U**; route: unpack it with `promgen64.py` and repeat the reads listed under "How to repeat").
+it (**U**; route: unpack it with `retools/tools/prom/promkit unpack` and repeat the reads listed under "How to repeat").
 
 ## Registers and aliases used
 
@@ -286,7 +286,7 @@ other processor's wait both run from that RAM copy while the node number changes
 ## How to repeat
 
 ```
-retools/tools/re-run python3 retools/tools/chips/promgen64.py root/firmware/ip27prom.img out p156
+retools/tools/re-run python3 retools/tools/prom/promkit unpack root/firmware/ip27prom.img --out out --label p156
 retools/tools/re-run sh -c 'mips64-linux-gnuabi64-objdump -D -b binary -m mips:isa64 -EB \
     --adjust-vma=0xc00000001fc00000 -w -M no-aliases,gpr-names=numeric --no-show-raw-insn \
     out/p156.ip27prom.bin'

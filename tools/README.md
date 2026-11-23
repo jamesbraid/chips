@@ -8,7 +8,7 @@ root (`retools/tools/chips/scan.py tools/configs/bridge.json ...`). The configs 
 
 | Stage | Tool | Output (work/) |
 |---|---|---|
-| 1 disassemble (container) | `disasm.sh CONFIG` | `dis/*.s`, `.nm`, literal pools; PROM containers unpacked by `promgen64.py` |
+| 1 disassemble (container) | `disasm.sh CONFIG` | `dis/*.s`, `.nm`, literal pools; PROM containers unpacked by `retools/tools/prom/promkit unpack` |
 | 2 scan | `scan.py CONFIG --base . --out work/CHIP` | `sites.tsv`, `unresolved.tsv`, `suspects.tsv`, `scope.tsv`, `accessor-calls.tsv`, `scan-stats.json` |
 | 3 reference | `ref.py` | `ref.json` (datasheet, specification, model entries), spec-backed only |
 | 4 join | `join.py` | `CHIP-census.tsv`, `-census-sites.tsv`, `-census-windows.tsv` |

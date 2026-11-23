@@ -8,7 +8,7 @@ bytes does `setenv` leave behind (the case that matters is `setenv console d`). 
 
 - IRIX software (source not cited): the standalone-library NVRAM code, its NVRAM header and the flash-log code. Read in full; facts are in our own words.
 - `root/firmware/io6prom.img` (segment `io6prom`, load `0x11c00000`) and `root/firmware/ip27prom.img` (load `0x1fc00000`), unpacked with
-  `retools/tools/chips/promgen64.py` and read as a disassembly (objdump) and, for the IO6 routines below, in Ghidra as a flat image at `0x11c00000`. Read and matching the source: the checksum routine
+  `retools/tools/prom/promkit unpack` and read as a disassembly (objdump) and, for the IO6 routines below, in Ghidra as a flat image at `0x11c00000`. Read and matching the source: the checksum routine
   (`0x11c799e0`), the byte writer (`0x11c7bf8c`), the multi-byte writer (`0x11c7bfe8`), the checksum updater (`0x11c7bf20`), the validity test
   (`0x11c7a32c`), the validity setter (`0x11c7a04c`), the start-up path with the reinitialise message (`0x11c81b40`) and the 42-row variable table
   (`0x11ca7e28`, 48 bytes a row). In the node PROM: the three NVRAM reads (`0x1fc27b58`, `0x1fc3c86c`, `0x1fc3ffe0`) and the log header writer

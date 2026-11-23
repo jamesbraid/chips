@@ -13,7 +13,7 @@ The kernel side is in kudzu `software/kernel/ip27-ip30-ioc3-pckm-absent-device.m
 | IP27 CPU PROM (`ip27prom.img`, load `0xc00000001fc00000`) | Chooses which base I/O board's serial port is the console (message text: "No console found. Searching for console...", `ForceConsole`, `ConsolePath`). It holds no keyboard probe and no ARCS console variables. The one keyboard string in it, "Keyboard input from ELSC", belongs to the system-controller console path | established (strings and source `IP27prom/main.c`); the full image was not decompiled |
 | I/O-board PROM (`io6prom.img`, segment `io6prom` loaded at `0xc000000011c00000`) | Runs the IOC3 keyboard and mouse probe, builds `ConsoleIn` and `ConsoleOut` and opens them | established |
 
-The addresses below are in the unpacked `io6prom` segment (promgen64 container, checksum ok; unpack with `retools/tools/chips/promgen64.py`).
+The addresses below are in the unpacked `io6prom` segment (promgen64 container, checksum ok; unpack with `retools/tools/prom/promkit unpack`).
 
 ## The probe
 

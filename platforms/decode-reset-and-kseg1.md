@@ -235,8 +235,8 @@ built `lui 0x9200`, `dsll`, `ori 0x100`, `dsll`; **E** in the PROM, not re-scann
 ## How to repeat
 
 ```
-retools/tools/re-run python3 retools/tools/chips/promgen64.py root/firmware/ip27prom.img out p156
-retools/tools/re-run python3 retools/tools/chips/promgen64.py root/firmware/ip35prom.img out p210
+retools/tools/re-run python3 retools/tools/prom/promkit unpack root/firmware/ip27prom.img --out out --label p156
+retools/tools/re-run python3 retools/tools/prom/promkit unpack root/firmware/ip35prom.img --out out --label p210
 retools/tools/re-run sh -c 'mips64-linux-gnuabi64-objdump -D -b binary -m mips:isa64 -EB \
     --adjust-vma=0xc00000001fc00000 -w -M no-aliases,gpr-names=numeric --no-show-raw-insn \
     out/p210.ip35prom.bin'

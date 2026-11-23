@@ -35,7 +35,7 @@ What is held (each remaining gap is a question in questions/README.md):
   `l1.o`, and so on). The linked IP35 and IP32 kernels are not held; the IP35 kernel exists only as `kernel.o`
   plus these objects.
 - PROMs: IP27, IP30, IP32 and IP35 CPU PROMs and the I/O-board PROM (`io6prom.img`), all in `firmware/`. The
-  IP35 and IP27 images are promgen64 containers; `retools/tools/chips/promgen64.py` unpacks them (checksum verified).
+  IP35 and IP27 images are promgen64 containers; `retools/tools/prom/promkit unpack` unpacks them (checksum verified).
 - Diagnostics and loaders in `sbin/stand/`: `ide` for IP30 and IP32, `symmon` for IP30 and IP32, `sash`.
   No `ide` for IP27 or IP35.
 - System-controller firmware `l1.bin`, `l2.bin` and `mmscfw.bin` are listed on the media; only `mmscfw.bin` is a file here.

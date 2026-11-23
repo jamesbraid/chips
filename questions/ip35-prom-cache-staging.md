@@ -15,7 +15,7 @@ the flash word at the same offset. At two sites the routine refuses to stage a r
 from a cached alias.
 
 Sources. The shipped IP35 PROM, SGI Version 6.210 (built Aug 26 2004), container segment `ip35prom`, load
-address 0xc00000001fc00000, length 0x1686a8, additive checksum ok; unpacked with `retools/tools/chips/promgen64.py`. MIPS
+address 0xc00000001fc00000, length 0x1686a8, additive checksum ok; unpacked with `retools/tools/prom/promkit unpack`. MIPS
 R10000 Microprocessor User's Manual, version 2.0 (October 10, 1996): sections 4.1 to 4.3 (cache organisation,
 pp. 46 to 52), 5.1 (secondary cache arrays), 10.1 to 10.22 (CACHE operations, Table 10-1, pp. 191 to 202),
 14.21 (ECC register, p. 273) and 14.23 (TagLo and TagHi, Figures 14-28 to 14-33, pp. 278 to 283). Companion
@@ -26,7 +26,7 @@ CACHE instructions of the two paths straight from the PROM bytes, with the cache
 anything else. It does not use the Unicorn harness: Unicorn runs CACHE as a no-op and exposes no TagLo, TagHi or ECC
 registers, so a purpose-built interpreter was shorter than hooking it (the Unicorn route was not tried).
 
-    python3 retools/tools/chips/promgen64.py ip35prom.img OUT ip35
+    python3 retools/tools/prom/promkit unpack ip35prom.img --out OUT --label ip35
     python3 retools/tools/chips/cache_stage_sim.py OUT/ip35.ip35prom.bin --dword lo-hi --regions
     python3 retools/tools/chips/cache_stage_sim.py OUT/ip35.ip35prom.bin --matrix --copy-len 0x2000
 

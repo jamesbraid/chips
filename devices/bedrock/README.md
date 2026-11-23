@@ -750,7 +750,7 @@ Bedrock hardware reference, or a read on a running Origin 300; neither is held.
 
 Unknown for every register; `per_hub_init` and `hub_error_init` write fixed values (above) without reading
 first, which is the only reset-related evidence, and states what the driver sets, not what the chip powers up with.
-Settling test: in the IP35 PROM image (unpack it with `retools/tools/chips/promgen64.py`), list each routine that loads a Bedrock
+Settling test: in the IP35 PROM image (unpack it with `retools/tools/prom/promkit unpack`), list each routine that loads a Bedrock
 register before any store to the same register in the same routine, using `hostfacts.py` on the unpacked segments; a first load
 before a write is the only software-visible trace of a reset value. A register with no such load ends as unknown with no software
 dependency. A hardware reference or a read on a node controller before the PROM runs would settle the rest.
