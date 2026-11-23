@@ -337,6 +337,26 @@ profiles = ["c-clean"]
 base = 0x0
 profiles = ["c-clean"]
 
+[gen.export.units.piix4]
+base = 0x0
+profiles = ["c-regfields"]
+
+[gen.export.units.ns_pc87307]
+base = 0x0
+profiles = ["c-regfields"]
+
+[gen.export.units.cobalt]
+base = 0x0
+profiles = ["c-regfields"]
+
+[gen.export.units.cobalt_mc]
+base = 0x0
+profiles = ["c-regfields"]
+
+[gen.export.units.lithium]
+base = 0x0
+profiles = ["c-regfields"]
+
 [allowlists]
 leak = "tools/config/defs-leak-allow.txt"
 
