@@ -40,7 +40,8 @@ IRIX loads at `0x88002000` (physical `0x08002000`). All `established` from the h
 
 ### Memory banks
 
-Four banks, each four identical SIMMs, 36 bits wide with parity, sizes 4 MiB to 128 MiB per bank. The MC maps a CPU or GIO address to a
+The MC has four banks, each four identical SIMMs, 36 bits wide with parity, sizes 4 MiB to 128 MiB per bank. The Indigo board wires only three
+groups of sockets (A, B, C; 384 MiB at most), see [the board page](README.md#memory). The MC maps a CPU or GIO address to a
 bank when the address' bits 29:22 fall in the bank's base and size range; the bank words are `memcfg0` (banks 0 and 1) and `memcfg1`
 (banks 2 and 3). The largest SIMMs go lowest and a bank's base must be a multiple of its size. Details and the PROM's probe algorithm:
 [devices/mc](../../devices/mc/README.md#memory-sizing-and-the-bank-registers-established). **established**.

@@ -242,7 +242,7 @@ specification notes.
 | EISA | None: `sysid.eisa` 0, `eisa_lock` unused, `eisa_mst` 0 | Indigo2 has it on some boards |
 | Parity enables | Set only when board revision ≥ 2 (older boards write bad parity during virtual DMA through a faulty MUX); the PROM and the kernel do the same | All reporting enabled, with `r4k_chk_par_n` set (kernel) |
 | `rpss_divider` | Reset `0x0104` kept by the PROM 4.0.5D; kernel writes `0x0101` | The PROM writes `0x0104`; kernel `0x0101` |
-| Memory | Two windows, 384 MiB maximum, 4 banks of SIMMs (the 128 MiB bank maximum applies) | Same layout; the Indigo2 kernel also handles a revision 5 or later chip whose base and size units are four times larger (not an Indigo part) |
+| Memory | Two windows, 384 MiB maximum, three groups of SIMM sockets wired of the chip's four banks (the 128 MiB bank maximum applies; [board page](../../platforms/ip20/README.md#memory)) | Same layout; the Indigo2 kernel also handles a revision 5 or later chip whose base and size units are four times larger (not an Indigo part) |
 | Revisions | A, B, C | Indigo2: revision A not supported (kernel comment) |
 
 ## IP12 (R3000 Indigo)

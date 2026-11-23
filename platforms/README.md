@@ -6,6 +6,7 @@
 |---|---|---|
 | [decode-mapped-uncached-and-region.md](decode-mapped-uncached-and-region.md) | Mapped uncached accesses, the region-present register and the memory configuration word: what the manuals, the PROMs and IRIX show about address decode | Questions answered, for the Origin 2000/Onyx2 node controller (Hub, IP27) and the Origin 300/3000 node controller... |
 | [decode-reset-and-kseg1.md](decode-reset-and-kseg1.md) | Reset fetch, the compatibility segment and the Bedrock node number: what the PROMs and IRIX show about address decode | Questions answered, for the Origin 2000/Onyx2 node controller (Hub, IP27) and the Origin 300/3000 node controller... |
+| [ip20/](ip20/README.md) | Indigo R4000 (IP20) | The R4000 Indigo workstation: the processor board, its memory, its slots and the pages that describe them. |
 | [sn1-ia64/](sn1-ia64/README.md) | SN1 on IA-64 (Bedrock node with Itanium processors) | In 2000 to 2003 SGI ran Linux on a node that is the Origin 3000 node with Itaniums in place of R12000s: the same... |
 | [sn2/](sn2/README.md) | SN2: the IA-64 Altix and Prism machines | SN2 is SGI's name, in the Linux platform code, for the NUMAflex generation that pairs Intel Itanium 2 processors... |
 | [uv/](uv/README.md) | Altix UV and the UV hub family (UV1 to UV5) | SGI's x86 successor to the Itanium Altix is a cache-coherent NUMA machine built from blades, each carrying a hub... |
@@ -42,14 +43,6 @@
 | Page | Title | Summary |
 |---|---|---|
 | [prom-software.md](ip17/prom-software.md) | Crimson (IP17) PROM 4.0.3: what its own software does | This page records what the shipped Crimson PROM `SGI Version 4.0.3 Rev IP17, Apr 30, 1992` does: part `070-081x-005`... |
-
-## ip20
-
-| Page | Title | Summary |
-|---|---|---|
-| [address-map.md](ip20/address-map.md) | Indigo R4000 (IP20) physical address map and the PROM's MC set-up | The physical address space of the Indigo R4000 board as the MC chip decodes it, with each region's contents and... |
-| [interrupts.md](ip20/interrupts.md) | Indigo R4000 (IP20): interrupt routing | Which device drives which INT2 bit, and what clears it. |
-| [prom-software.md](ip20/prom-software.md) | Indigo R4000 (IP20) PROM 4.0.5D Rev A: what its own software does | This page records what the shipped IP20 PROM image `SGI Version 4.0.5D Rev A IP20, Aug 19, 1992` does: part... |
 
 ## ip22
 
