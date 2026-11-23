@@ -45,10 +45,11 @@ in each section.
 ## The drawing toolkit the assets go through
 
 A small toolkit draws everything. Its device table of function pointers is at `0x8105f1d4` (4.18) and `0x8105e454`
-(4.8); the first seven entries that matter here (established, each read in full):
+(4.8); the entries that matter here (established, each read in full):
 
 | Slot | 4.18 routine | Job |
 |---|---|---|
+| 0 | `0x81039bd0` | not read |
 | 1 | `0x81039c88` | set the current colour index (the byte is replicated into a 32-bit word and written to two drawing registers) |
 | 2 | `0x81039cb4` | write palette entry: `(device, index, r, g, b)` |
 | 3 | `0x81039d88` | filled rectangle between two inclusive corners; one row is a degenerate rectangle |
@@ -81,7 +82,7 @@ builds' routines are identical except for relocation. Entries, as `(r, g, b)`:
 - 0 black, 1 red, 2 green, 3 yellow, 4 blue, 5 magenta, 6 cyan (full-scale primaries), 7 `(240, 240, 240)`,
   8 `(127, 158, 191)`, 14 `(64, 64, 192)`.
 - 9 and 10 both take the `pagecolor` environment variable if it parses, otherwise `(96, 96, 112)`. The parser
-  (`0x81030170`) reads six lower-case hex digits as `rrggbb`, with two digits per channel and no `#`. The value also goes
+  (`0x81030170`) reads two digits per channel as `rrggbb`, no `#`. Any non-null value counts as parsed: there is no length check, only lower-case `a`..`f` is accepted, and an invalid digit counts as 0 (`0x810300e0`). The value also goes
   into the toolkit's state (words at offsets `0x4c`, `0x50`, `0x54`). A helper (`0x810301e4`) then picks the text colour
   for that background: index 0 when the colour is nearer to white than to black by squared distance, else 7.
 - `0x14`..`0x20`, thirteen entries of tinted pairs: `0x14 (85,85,213)`, `0x15 (128,128,255)`, `0x16 (85,213,213)`,
@@ -103,8 +104,7 @@ controller holds a power-on value for them is not known.
 
 The root-window fill at `0x810461a0` (4.18) / `0x81045680` (4.8) paints one rectangle per scanline across the whole
 screen (established; it has five call sites, among them the background draw and the window set-up). Callers pass the
-width and height less one as the right and top limits. With H the screen height read from the root window
-(offset `0x2c`, accessor `0x8103d4e4`):
+width and height less one as the right and top limits. With H the screen height read from the window the routine is given (offset `0x2c`, `0x810461c4`; at the call sites that is the root window, accessor `0x8103d4e4`):
 
     step  = 0xa00000 / (H - 1)                    (integer division)
     index = (0x600000 + y * step) >> 16           for y = 0 .. H-1, y counted up from the bottom row
@@ -129,7 +129,7 @@ such mode is known). Identical in 4.8.
 
 Within each font the bitmap region is followed directly by its entry table, and each table is followed by the next
 font's bitmap. Fonts 0 and 2 consume their bitmap region exactly and font 3 to within a two-byte pad, which fixes the
-entry counts above. All four bitmaps and all four tables are byte-identical in 4.8; only
+entry counts above. Codes `0xa1` and up index past the 95 entries of fonts 2 and 3, so a decoder must bounds-check. All four bitmaps and all four tables are byte-identical in 4.8; only
 their addresses moved (by 0xd80).
 
 **Entry (8 bytes, big-endian).** `off s16` (halfwords from the bitmap base), `width u8`, `height u8`, `xoffset s8`,
@@ -175,8 +175,8 @@ routine (`0x8103dc90` / `0x8103d180`), which wraps the pointer, width and height
 the standard stride and blits it. So each layer is a 1-bit stipple in the glyph bitmap format, y is measured up from the
 icon's bottom edge, and later layers paint over earlier ones.
 
-An icon is centred in its button box by `x = left + ((box width - icon width + 1) >> 1)` and
-`y = bottom + ((box height - icon height + 1) >> 1)` (the routine at `0x8103d798` / `0x8103cc88`, established), and
+An icon is centred in its button box by `x = left + ((right - left - icon width + 1) >> 1)` and
+`y = bottom + ((top - bottom - icon height + 1) >> 1)`, where the box holds inclusive corners (so `(50 - icon width) >> 1` for a 50-pixel button) and the shift is signed (the routine at `0x8103d798` / `0x8103cc88`, established), and
 then the icon's own offsets apply; only the recovery icon has a non-zero one (y -2).
 
 | Icon | Used by | 4.18 object | 4.8 object | Layers |
@@ -193,7 +193,7 @@ then the icon's own offsets apply; only the recovery icon has a non-zero one (y 
 | local tape | install dialog | `0x81056a54` | `0x81055ce4` | 8 |
 
 The menu mapping is read from the menu builder's records (below). The dialog mapping is read from the table at
-`0x810586cc`..`0x81058714` (4.18), each record pairing an icon with its two caption strings ("Remote" / "Tape",
+four 6-word records at `0x810586b8`..`0x81058717` (4.18), each record pairing an icon with its two caption strings ("Remote" / "Tape",
 "Remote" / "Directory", "Local" / "CD-ROM", "Local" / "Tape"). Object sizes run from 15 by 37 to 67 by 64. In 4.8 every
 object, layer list and bitmap is identical to 4.18; the addresses are 0xd70 lower.
 
@@ -209,8 +209,8 @@ header). The 4.8 copy is byte-identical to the 4.18 copy. The decoder is `0x8104
 - A run of length 0 draws nothing. A length above 255 is written as 255, 0, remainder: the 255-zero pair extends the
   current gap or run. In this image only gaps are split that way: 45 rows are a blank full-width row `255, 0, 239`.
 - Row 0 begins with twelve zero bytes (six zero-length gap and run pairs) before its `255, 0, 239`. Any even number of
-  leading zero bytes up to twelve decodes the same way. The 237 rows end at the byte before the two words
-  `0x000001ee, 0x000000ed` (494 and 237) at `0x8105f14c` / `0x8105e3cc`, which is the best anchor for finding the data
+  leading zero bytes up to twelve decodes the same way. The 237 rows end at `0x8105f14a` (4.8: `0x8105e3ca`); the next byte is padding and the two words
+  `0x000001ee, 0x000000ed` (494 and 237) start at `0x8105f14c` / `0x8105e3cc`, which is the best anchor for finding the data
   without the pointer.
 
 The width, height and data pointer the decoder reads come from three words of the root-window record (offsets `0x1c`,
@@ -234,9 +234,9 @@ It was read only far enough to see it uses the root-window fields at offsets `0x
 exercised and is **unknown**.
 
 **When the logo is drawn (established).** The window set-up routine `0x8103caa0` / `0x8103bf90` reads `sgilogo`. A flag
-is set when `sgilogo` is unset, when its first character is `n`, when a mode bit in the flag word is set, or when the
+is set when `sgilogo` is unset, when its first character is `n`, when the mode bit (bit 17, set by the helper at `0x8103cbb4`) is set, or when the
 screen height is under 700 lines (`0x2bc`); the routine clears it otherwise. The flag word is `0x8107215c` /
-`0x810713cc`; bit 16 means "no big logo". With the flag set the background routine draws the gradient only, with no
+`0x810713cc`; bit 16 means "no big logo". The readers (`0x8103cb9c`, `0x81048bc4`) mask `0x10001`, so bit 0 of the same word also means no big logo; what sets it is unknown. With the flag set the background routine draws the gradient only, with no
 logo, tagline or heading. The default `sgilogo=y` (see [prom-environment.md](prom-environment.md)) clears it.
 
 ## Menu
@@ -272,8 +272,7 @@ tests is **unknown**.
 - The button draws its icon centred by the rule under "Icons".
 
 At 1280 by 1024 with the logo on: V = 682, `y0 = 846`, button bottoms 846, 771, 696, 621, 546 and 471 (screen tops 129 + 75 k
-with the flip above), labels at x = 210. This reproduces the positions the pixel check fitted, so nothing in the menu is
-still fitted except the screen-row flip constant (1024), which is inferred as described under the toolkit.
+with the flip above), labels at x = 210. This reproduces the positions the pixel check measured. The only constant not derived is the screen-row flip (1024), which is inferred as described under the toolkit.
 
 **Button frame (inferred; `0x8103d798` / `0x8103cc88`).** A face in colour `0x26` (or `0x27` in some states) with four
 nested one-pixel rings. Ring colours come from byte arrays at `0x8105f5d4`..`0x8105f5ec`, picked by pointer tables at
@@ -334,8 +333,8 @@ is a buffer cache pointer, not data. In every tune the total length equals the l
 | 7 | float: coefficient of a first-order all-pass section in the loop (fractional-delay tuning) |
 
 **Synthesis (established).** The excitation is the delay line filled by a linear congruential generator
-(`s = s * 0x41c64e6d + 0x3039`, from `0x81000e08`), mapped to a signed float, the mean removed and the peak scaled to
-word 3. Per output sample, with x the oldest delay-line sample: `f = (w6 * x + w5 * x_prev) * loss`, then the all-pass
+(`s = s * 0x41c64e6d + 0x3039`, from `0x81000e08`), each value mapped as `(s >> 1) - 1`, times 2^-31, minus 0.5, doubled; then the mean is removed and the peak scaled to
+word 3. The initial seed is read from the stack at `0x81000e48` and the final one stored back at `0x81000ec4`; it is stale stack contents carried from voice to voice, so the first seed is unknown (inferred: stale stack) and the noise is not reproducible from the image. Per output sample, with x the oldest delay-line sample: `f = (w6 * x + w5 * x_prev) * loss`, then the all-pass
 `y = c * f + f_prev - c * y_prev`, written back into the delay line; the sample added to the mix is `trunc(x) << 8`,
 added to both channel words of the output slot. This is a Karplus-Strong-style plucked string; the name is
 descriptive, not the PROM's. In tune 0 the voices start 6013 units apart (voice k at 6013 k).

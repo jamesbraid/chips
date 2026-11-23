@@ -46,3 +46,5 @@ capture of the stock PROM on hardware, as a last resort.
   attenuation and the conversion at `0x81001590`, and the audio-present test at `0x81000910`.
 - **Layout on other screens.** The 600-line and narrower layouts of the menu and dialogs, the `monitor` and `crt_option`
   modes, and whether `sgilogo` or the 700-line threshold changes anything beyond hiding the logo.
+- **Bit 0 of the logo flag word.** `0x8107215c` bit 0 also means no big logo (readers mask `0x10001`); what sets it is not found.
+- **Sound seed.** The first LCG seed is stale stack (`0x81000e48`); whether the noise is meant to vary is open.
