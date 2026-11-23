@@ -276,7 +276,7 @@ or the module-and-slot path. Route: a Cx-brick inventory with the `slab` paths.
 
 **Established** (IP35 PROM 6.210 and 6.211, read in full; see
 [the PROM module-id page](../ip35/prom-module-ids.md)). When the controller answers the type letter
-`6`, the PROM also sends request `0x000e`, adds the answer (low two bits, sign kept) to the bay, turns
+`6`, the PROM also sends request `0x000e`, adds the low two bits of the answer's magnitude to the bay, with the answer's sign reapplied, turns
 an answer of 4 into the letter `R` and folds `6` to `c`. This restores what an earlier version said
 and a later pass withdrew for want of the request routine.
 
@@ -290,9 +290,9 @@ the five letters `7`, `8`, `9`, `0` and `Q`. Those set a nonzero board class in 
 classifier, so IP53 boards that answer `6` take the IP35 path. The classifier table is in
 [the IP35 PROM brick-class question](../../questions/ip35-prom-l1-brick-class.md).
 
-**Established** (PROM routines above; controller side in the sysco repository, marked unverified
-there). The controller answers positions 0 to 3 for the four node boards and 4 for the router. The
-PROM's sum gives the nodes bays *b* to *b* + 3 and the router bay *b* with the letter `r`: for a
+**Inferred** (controller side from the sysco repository, marked unverified there; the PROM's sum
+is established). The controller answers positions 0 to 3 for the four node boards and 4 for the
+router, with the same rack and bay on every port. The PROM's sum gives the nodes bays *b* to *b* + 3 and the router bay *b* with the letter `r`: for a
 brick at unit 7, boards `001c07` to `001c10` and a router `001r07`. That restores the earlier
 inference.
 

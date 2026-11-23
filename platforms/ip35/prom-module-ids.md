@@ -35,7 +35,7 @@ node boards. It is not one module with four slots: the id has no slot field. The
    `0x1fd51ed8`, 6.211 `0x1fd51e78`). Before the lookup the letters `4`, `A`, `6`, `7`, `8`, `9`, `Q` and `0` become `C`,
    `%`, `#` and `E` become `P`, and `=` and `V` become `I`; `R` is left alone. The rack code is bit 5 for a rack of 100 or
    more, then the tens digit and the ones digit minus one, packed into the low five bits (below 100: tens 0 to 3 and ones
-   1 to 8; from 100: tens 0 to 7 and ones 1 to 4). Any other rack number, including 0, makes the routine return -1.
+   1 to 8; from 100: tens 0 to 7 and ones 1 to 4). Any other rack number, including 0 and anything from 200 up, makes the routine return -1.
 2. **Established: the check.** The text `*  PANIC: Modules with duplicate rack/bay positions detected  *` is at base I/O image
    `0x130ef7b8` (6.211 `0x130ef7a8`), in a box that goes on "Please assign globally unique rack and bay positions at the
    system controllers." The routine that prints it, `check_modules`, starts at `0x130e058c` (6.211 `0x130e0574`) and is
@@ -67,15 +67,15 @@ node boards. It is not one module with four slots: the id has no slot field. The
 6. **Established: the two controller requests per link.** `0x1fc24cc8` sends request code 3 (rack, bay and type letter) and
    reads a packed word: bits 5:0 are the bay and bits 15:6 are the rack, then the type letter in a second field. It then
    sends request code 14 (`0x1fc0ee08`) and reads one integer, the position. If the type letter is `6` (the Cx-brick
-   letter), the PROM adds the low two bits of the position, with the position's sign, to the bay; a position of 4 also turns
-   the letter into `R`. Every other letter in the list of item 1 is turned into `C` here. So a node board at position *n*
+   letter), the PROM adds the low two bits of the position's magnitude to the bay and reapplies the position's sign
+   (`0x1fc24ea8` to `0x1fc24ecc`; a position of -1 adds -1); a position of 4 also turns the letter into `R`. Every other letter in the list of item 1 is turned into `C` here. So a node board at position *n*
    (0 to 3) gets bay *b* + *n* and type `c`, and the router position (4) gets bay *b* (4 has low bits 0) and type `r`.
    The sum and the letter change are the same in 6.210 and 6.211.
-7. **Established in the sysco reading of the controller firmware (that page marks its readings unverified): the controller
+7. **Inferred, from the sysco reading of the controller firmware (that page marks its readings unverified): the controller
    answers this way.** On a Cx-brick the controller opens five ports, four node boards in board order and the router.
    Request 3 returns rack and bay and the letter `6`, and request 14 returns the port number as the position. The
-   controller holds one rack and bay for the brick, so it returns the same pair on every port (inferred from that). The PROM,
-   not the controller, adds the position to the bay. A real brick therefore shows its four nodes at consecutive bays, such as
+   controller holds one rack and bay for the brick, so it returns the same pair on every port (inferred from that). The PROM's
+   addition (item 6) is established. The PROM, not the controller, adds the position to the bay. A real brick therefore shows its four nodes at consecutive bays, such as
    `001c07`, `001c08`, `001c09` and `001c10` for a brick whose lowest rack unit is 7, and the router at `001r07`.
    The published rack layout (a Cx-brick is 4U; bricks at units 7, 11, 15 and so on, see
    [the size ladder](../bricks/size-ladder.md)) leaves those ranges disjoint.
@@ -100,9 +100,14 @@ Per brick, and for each of its five links:
   114 and so on. Rack 0 with a nonzero bay makes every node id -1, which the check skips silently, so it does not stop the
   boot but it leaves the nodes without a usable id (the later effect is unknown). Rack 0 with bay 0 returns 0 and stops
   the boot at the other banner.
-- A link that does not answer returns an error code that the PROM may store as the id (an unanswering node reads as -100 in
-  the id; inferred from the control flow: the wrapper's error value reaches the id store unchanged). Two silent nodes would
-  then look like duplicates.
+- A failed request returns a negative code and the PROM stores it as the id without a sign check. Established: `0x1fc24cc8`
+  returns -100 when the reply wait or the port open fails, -103 when the send fails and -112 when the parse fails; the link
+  reader `0x1fc68724` passes them through, and the store at `0x1fc4f264` writes them into the id at +14. Two links failing the
+  same way therefore collide as duplicates (any of these codes other than 0, -1 and -2). That a silent controller shows up as
+  the -100 wait failure is inferred.
+- The position request is not checked. `0x1fc0ee08` returns -100 (wait failure), -103 (send failure) or 0 (parse failure), and
+  `0x1fc24cc8` adds it as it is. After a wait or parse failure the node keeps the base bay *b* and can collide with position 0;
+  after a send failure it gets *b* - 3.
 
 ## Not settled
 
@@ -114,9 +119,9 @@ Per brick, and for each of its five links:
 - **Unknown:** which discovery entries take the stored variable `LastModule` instead of the controller. A second board
   record builder (`0x1fc4f068`, called at `0x1fc59740`) fills the id at +14 from that variable, and the controller-asking
   builder (`0x1fc4f1a0`, called at `0x1fc596e4`) is chosen by a flag test on the discovery entry that was not traced. The
-  PROM also falls back to `LastModule` when its own controller request fails (see
-  [the timeout page](prom-l1-request-timeouts.md)).
+  main boot path also falls back to `LastModule` when its own controller request fails (caller at `0x1fc69ba4`; see
+  [the timeout page](prom-l1-request-timeouts.md)). The per-node record path does not: it stores the raw error code, as above.
 - **Unknown:** whether the type 17 board record is the only record the PROM stores module ids on, and how the IRIX kernel
   turns the four ids into hardware graph names (the earlier claim of a `slab` alias on a node vertex was not found in the
   shipped kernel).
-- **Unknown:** the negative-position case (the sign is kept in the sum; no controller was seen to send one).
+- **Unknown:** the negative-position case (the sign is reapplied to the magnitude's low two bits; no controller was seen to send one).
