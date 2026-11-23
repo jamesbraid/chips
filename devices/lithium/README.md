@@ -4,7 +4,7 @@ Mode: **no-spec**. The Lithium specification (the audio driver quotes "the Lithi
 12/15/1998") is not held, and SGI said none was releasable ([sources](../../references/visws-sources.md)). Everything
 here is from the Linux Visual Workstation code for the 320 and 540, kernel 2.2 to 3.14, and the SGI-written sound driver.
 That code ranks as the vendor's software source: what it defines is **established**, as a software definition; what it
-only implies is **inferred**; the rest is **unknown**. Registers: [registers.md](registers.md) (nineteen registers and constants). The
+only implies is **inferred**; the rest is **unknown**. Registers: [registers.md](registers.md) (thirty-one registers and fifteen constants). The
 platform is in [platforms/visws](../../platforms/visws/README.md).
 
 ## What the chip is

@@ -1,6 +1,6 @@
 <!-- generated from devices/lithium/registers.toml by defs-gen - do not edit, change the source -->
 <!-- defs-gen 2 -->
-<!-- input sha256 2ecc848822dac3d53b8566dbf237b74f289a92c859754826456896e519933761 -->
+<!-- input sha256 70596ec24940e8315b4fb0fe9a073a0422cfac082fac58aa7aa316aae98f2930 -->
 
 # Lithium (I/O ASIC of the SGI Visual Workstation 320 and 540): the PCI bridge window and the audio engine, as SGI's Linux platform code names them
 
@@ -41,8 +41,8 @@ Every item has a grade: established, inferred or unknown. A grade says how the i
 | `audio1_msc` | 0x304 | rw | 32 |  | audio | unknown | established |  |
 | `audio2_ust` | 0x308 | r | 32 |  | audio | unknown | established |  |
 | `audio2_msc` | 0x30c | rw | 32 |  | audio | unknown | established |  |
-| `silence_word` | 0x500 | rw | 32 |  | audio_page1 | unknown | inferred |  |
-| `dma_pointer_copy` | 0x98 | rw | 32 | 2 | audio_page2 | unknown | inferred |  |
+| `silence_word` | 0x500 | w | 32 |  | audio_page1 | unknown | inferred |  |
+| `dma_pointer_copy` | 0x98 | w | 32 | 2 | audio_page2 | unknown | inferred |  |
 | `bridge_cmd` | 0x4 | rw | 16 |  | bridge | unknown | inferred |  |
 | `bridge_status` | 0x6 | rw | 16 |  | bridge | unknown | inferred |  |
 | `bridge_rev` | 0x8 | r | 8 |  | bridge | unknown | established |  |
@@ -167,11 +167,11 @@ Output media stream counter. The NT driver writes zero to it when it starts outp
 
 ### Register `silence_word`
 
-A word on the second audio page, offset from physical 0xff00f000. Both audio drivers store the silence sample here before they start DMA: 0x80808080 for 8-bit samples, 0 for 16-bit (sgisound.sys 5.2.2, sndStartDMA, read in full; Linux's Visual Workstation sound driver writes the same). Linux's comment calls it an undocumented register holding the zero sample, which the hardware repeats after an underflow with a bug that leaves the old value in place. That comment is the only statement of its role, so the role is inferred; reads are never made, so the readable value is unknown.
+A word on the second audio page, offset from physical 0xff00f000. The NT audio driver stores the silence sample here before it starts DMA, in both directions: 0x80808080 for 8-bit samples, 0 for 16-bit (sgisound.sys 5.2.2, sndStartDMA, read in full for the Windows 2000 build only; not verified at binary level in the other two builds here). Linux's Visual Workstation sound driver writes it only once, with 0, when output stops; it never writes 0x80808080. Linux's comment calls it an undocumented register holding the zero sample, which the hardware repeats after an underflow with a bug that leaves the old value in place. That comment is the only statement of its role, so the role is inferred. No driver reads it, so access is write only as software uses it and the readable value is unknown.
 
 ### Register `dma_pointer_copy`
 
-Two words on the third audio page, offset from physical 0xff010000 (0x98 and 0x9c). Linux's comment calls them undocumented internal copies of the DMA read and write pointers that the chip fails to zero when DMA stops, so it zeroes them itself after stopping output. The NT driver zeroes both when it starts output (sgisound.sys 5.2.2, sndStartDMA). Which word is which pointer is unknown. The behaviour is Linux's statement only and the accesses are established, so the role is inferred.
+Two words on the third audio page, offset from physical 0xff010000 (0x98 and 0x9c). Linux's comment calls them undocumented internal copies of the DMA read and write pointers that the chip fails to zero when DMA stops, so it zeroes them itself after stopping output. The NT driver zeroes both when it starts output (sgisound.sys 5.2.2, sndStartDMA, Windows 2000 build; not verified at binary level in the other two builds here). No driver reads them, so access is write only as software uses it. Which word is which pointer is unknown. The behaviour is Linux's statement only and the accesses are established, so the role is inferred.
 
 Array of 2 registers, stride 4.
 
@@ -189,7 +189,7 @@ Revision byte. The HAL tests it above zero to choose where the bus number goes; 
 
 ### Register `bridge_40`
 
-When the revision byte is zero the top byte holds the bus number: the HAL clears bits 31:24 and ORs in the bus number shifted up 24, as a 32-bit read-modify-write. PROM 1.0002 and 1.0004 also read-modify-write this word before their error-status and control stores; later PROM images do not touch it. The meaning of the other bits is unknown.
+When the revision byte is zero the top byte holds the bus number: the HAL clears bits 31:24 and ORs in the bus number shifted up 24, as a 32-bit read-modify-write. PROM 1.0002 and 1.0004 also read-modify-write this word on both bridges, keeping bits 23:6 and 4:0 and setting bit 5; on bridge A they also set bit 24 (top byte 0x01), on bridge B the top byte becomes 0, before their error-status and control stores. Later PROM images do not touch it. The HAL writes it only when the revision byte is zero. The meaning of the other bits is unknown.
 
 ### Register `bus_number`
 
@@ -239,7 +239,7 @@ Configuration data. Accessed as a byte, halfword or word; the lane is picked by 
 
 ### Register `build_stamp`
 
-Word at physical 0xff01c004, in a one-page Lithium-side block that no driver touches. The PROM reads it (no HAL or driver read was found) and compares it with four values that decode as Unix times of 30 July, 10 September, 2 November and 7 December 1998 (0x35c0194c, 0x35f7357f, 0x363e4470, 0x366c3dfb) to pick the Cobalt I/O generation 2 to 5; a larger value gives 6, any other value gives -2, and bridge B's revision byte of zero gives 1 before the word is read. It also copies a table into the table window (constant TABLE_WINDOW_PHYS) unless the word is above 0x36ffd62f. The firmware prints it as the Serial I/O revision. A build stamp is a reading from the values, so the meaning is inferred; the reads are established (PROM 1.1005 and 1.0006, whole functions; see software/visws/boot-path.md). The block's other words are unknown, and so are its reset and write behaviour.
+Word at physical 0xff01c004, in a one-page Lithium-side block that no driver touches. The PROM reads it (no HAL or driver read was found) and compares it with four values that decode as Unix times of 30 July, 10 September, 2 November and 7 December 1998 (0x35c0194c, 0x35f7357f, 0x363e4470, 0x366c3dfb) to pick the Cobalt I/O generation 2 to 5; a larger value gives 6, any other value gives -2, and bridge B's revision byte of zero gives 1 before the word is read. PROM 1.1005 also copies a table into the table window (constant TABLE_WINDOW_PHYS) unless the word is above 0x36ffd62f; that gate was read in 1.1005 only. The firmware prints it as the Serial I/O revision. A build stamp is a reading from the values, so the meaning is inferred; the reads are established (PROM 1.1005 and 1.0006, whole functions; see software/visws/boot-path.md). The block's other words are unknown, and so are its reset and write behaviour.
 
 ## Constants
 
@@ -249,8 +249,8 @@ Word at physical 0xff01c004, in a one-page Lithium-side block that no driver tou
 | `AUDIO_PAGE1` | 0xff00f000 | established |  | Second audio page; one undocumented word far into the page is zeroed when output stops (see the device page). |
 | `AUDIO_PAGE2` | 0xff010000 | established |  | Third audio page; two undocumented words (copies of the DMA pointers) are zeroed when output stops (see the device page). |
 | `AUDIO_PHYS` | 0xff001000 | established |  | Physical base of the audio engine's first register page. |
-| `BRIDGE_A_PCI_MEM_PHYS` | 0xf0000000 | established |  | Processor physical address of bridge A's 64 MiB PCI memory window, which appears at PCI address 0x80000000 (halborg.dll 1.3 translation routine and initial data; PROM 1.1005 maps the same; the HAL adds 0x70000000 to the PCI address). |
-| `BRIDGE_B_PCI_MEM_PHYS` | 0xf4000000 | established |  | Processor physical address of bridge B's 64 MiB PCI memory window, at PCI address 0x80000000 (HAL adds 0x74000000). |
+| `BRIDGE_A_PCI_MEM_PHYS` | 0xf0000000 | established |  | Processor physical address of bridge A's 64 MiB PCI memory window, which appears at PCI address 0x80000000 (established from the PROM 1.0006 mapping that pairs this address with bridge A; PROM 1.1005 maps the same; the HAL's initial bridge records carry a PCI-to-processor offset that agrees, though the layout of those records is inferred). |
+| `BRIDGE_B_PCI_MEM_PHYS` | 0xf4000000 | established |  | Processor physical address of bridge B's 64 MiB PCI memory window, at PCI address 0x80000000 (PROM 1.0006 mapping; the HAL's record offset agrees). |
 | `DEVICE_ID` | 0x1002 | inferred |  | PCI device id read from both bridges. |
 | `DMA_CHUNK` | 0x20 | inferred |  | Bytes the audio DMA moves per pointer step. |
 | `PCI_A_PHYS` | 0xfc000000 | established |  | Physical window of bridge A, the one with the Ethernet device. |

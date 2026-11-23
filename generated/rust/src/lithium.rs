@@ -1,6 +1,6 @@
 // generated from devices/lithium/registers.toml by defs-gen - do not edit, change the source
 // defs-gen 2
-// input sha256 2ecc848822dac3d53b8566dbf237b74f289a92c859754826456896e519933761
+// input sha256 70596ec24940e8315b4fb0fe9a073a0422cfac082fac58aa7aa316aae98f2930
 // Lithium (I/O ASIC of the SGI Visual Workstation 320 and 540): the PCI bridge window and the audio engine, as SGI's Linux platform code names them
 #![allow(dead_code)]
 
@@ -349,7 +349,7 @@ pub mod audio2_msc {
     pub const WIDTH: u32 = 32;
     pub const OFFSET: u64 = 0x30c;
 }
-/// A word on the second audio page, offset from physical 0xff00f000. Both audio drivers store the silence sample here before they start DMA: 0x80808080 f (inferred)
+/// A word on the second audio page, offset from physical 0xff00f000. The NT audio driver stores the silence sample here before it starts DMA, in both dir (inferred)
 pub mod silence_word {
     pub const WIDTH: u32 = 32;
     pub const OFFSET: u64 = 0x500;

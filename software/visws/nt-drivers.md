@@ -156,8 +156,8 @@ setup). Established:
 - The controller's registers are used through I/O ports (UHCI-style: command and status halfwords at the base and `+0x02`,
   port status at `+0x10` and `+0x12`).
 - It maps Lithium bridge B's window (`0xfd000000`, `0x70` bytes) and writes all ones to the word at `+0x48`, described under
-  [Lithium](../../devices/lithium/README.md#the-bridge-window-established); its watchdog prints "PCI Error Status" and the
-  address of the error.
+  [Lithium](../../devices/lithium/README.md#the-bridge-window-established); its message table has "PCI Error Status" and
+  "PCI Error Status Address" strings, but the driver's code never reads either register (the address register's offset is unknown).
 - It asks the HAL for the interrupt vector and uses the firmware's environment (`HalGetEnvironmentVariable`) for its
   settings.
 
