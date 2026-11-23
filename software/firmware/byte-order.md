@@ -132,11 +132,11 @@ Endian)". Addresses: IP22 5.1 `0xbfc096a4` (the `and`-mask build), IP22 5.3 `0xb
 5.3 `0xbfc09c74`, IP26 `0xbfc0799c`, IP28 `0xbfc094a0`. The same function is linked into the IRIX 6.5-base `ide.IP22` at
 `0xa8486b80` to `0xa8486ca0`. Established (the read-modify-write).
 
-What bit 18 means is not settled by the code. The public Linux `mc.h` (v5.3) defines `SGIMC_CCTRL0_ESNOOP` as `0x4000` (bit 14),
-`SGIMC_CCTRL0_LENDIAN` ("put MC in little-endian mode") as `0x20000` (bit 17) and `SGIMC_CCTRL0_WRESETDMEM` ("warm reset, destroys
-mem contents") as `0x40000` (bit 18). So the bit the helper clears is, by that header, the warm-reset-destroys-memory bit, not the
-little-endian bit. The label "(Big Endian)" in the format string is the only thing tying the clear to byte order; that tie is
-inferred from the string alone, and the endian meaning of the clear is unknown.
+Bit 18 is the MC's little-endian select: the MC chip specification (R4000 project, revision 1.15, section 5.1, page 27) gives `LITTLE` at bit 18, bit 17
+reserved, bit 16 warm restart and bit 19 R4000 warm reset, and NetBSD `sgimips/dev/imcreg.h` (`IMC_CPUCTRL0_LITTLE` `0x40000`) agrees. The helper therefore
+clears the little-endian select, which matches the "(Big Endian)" label. The public Linux `mc.h` (v5.3) names `0x20000` `SGIMC_CCTRL0_LENDIAN` and `0x40000`
+`SGIMC_CCTRL0_WRESETDMEM`; those two names disagree with the specification and NetBSD and are not used here. Established for the bit meaning (specification and a
+public driver); the revision basis is the specification's revisions A and B and NetBSD's IP22 and IP24 driver, which share the layout.
 
 ### The Indigo's NT-flavoured boot defaults
 

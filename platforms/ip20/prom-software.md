@@ -55,11 +55,11 @@ The first word at `0xbfc00000` is `j 0xbfc003c0`; the next vectors jump to `0xbf
    big-endian CPU addresses it). Inferred: this clears a little-endian request left in the HPC.
 4. MC `+0xec` and `+0xfc` are zeroed. CPUCTRL0 (`+0x04`) is written whole with `0x3c002014 | ((line/8 + 4) << 20)`, where `line` is
    16 when Config.SC (bit 17) is set and otherwise `1 << (Config[23:22] + 4)`; CPUCTRL1 (`+0x0c`) gets `0x1016` (`0xbfc004a4`/`a8`, the only CPUCTRL1 store in the image; public header bit `0x1000` FIXEDEHPC set and `0x2000` LITTLEHPC clear, so the HPC is fixed big-endian, inferred from the names); `+0xd4` gets `0x11453433`,
-   `+0xdc` gets `0x34332`. The value written to CPUCTRL0 has bit 17 (`LENDIAN`) clear, bit 16 (`WRESETPMEM`) clear and bit 18
-   (`WRESETDMEM`) clear. This is the only CPUCTRL0 write that could carry an endianness bit, and it is a whole-register store, not a
-   read-modify-write. No routine sets or clears `0x20000` or `0x40000` in CPUCTRL0, and the strings "CPUCTRL0" and "Big Endian" are absent (the
-   Indigo2 helper that prints them has no counterpart here); every CPUCTRL0 write site found is listed in the device map. Established (the constants are in the listing; the bit names are the public header's). An 625-tick wait on the MC
-   refresh counter at `+0x1004` follows.
+   `+0xdc` gets `0x34332`. The value written to CPUCTRL0 has bit 16 (warm restart) clear, bit 18 (little-endian select) clear and bit 19 (R4000 warm reset) clear;
+   bit 17 is reserved. This is the only CPUCTRL0 write that could carry an endianness bit, and it is a whole-register store, not a
+   read-modify-write. No routine in 4.0.5D sets or clears `0x40000`, the little-endian select, and the strings "CPUCTRL0" and "Big Endian" are absent (the
+   Indigo2 helper that prints them has no counterpart here); every CPUCTRL0 write site found is listed in the device map. Established (the constants are in the listing; the bit names are the MC specification's, section 5.1, pages 26 to 27, and NetBSD `imcreg.h`; the Linux `mc.h` bit names for bits 17 and 18 differ and are wrong against both). A 625-tick wait on the MC
+   RPSS counter at `+0x1004` (not the refresh counter) follows: `0xbfc004e8` reads it, then it is read again until the signed difference is at least 625.
 5. Then, in order: `0xbfc0089c`, `0xbfc0096c`, `0xbfc008f8` (peripheral set-up in `0xbfb8xxxx`), `0xbfc023e0` with `s8 = 0xbfc020d0`, `0xbfc028b0`
    (a write and read-back test of MC `+0xd4` with a walking one bit, CPUCTRL0 bit 4 cleared around it and restored), `0xbfc02960`, `0xbfc00a00` (memory
    sizing), a test of the bank words, `0xbfc0059c` (CPUCTRL0 low nibble forced to 2) and `j 0xbfc015c0`, the main start-up routine.
@@ -79,8 +79,8 @@ a 32-bit register at **MC `+0x30`** (bit `0x1` PRE, `0x2` chip select, `0x4` clo
   the register that a big-endian CPU finds at `+4` at `+0` instead. That explains both addresses; the flip routine is written for the
   little-endian view. The same swap explains the one byte access: the ready-poll loop toggles the byte at `0xbfb801bc` (`lb`/`sb` at
   `0xbfc0158c`, `0xbfc015a4`), whereas the big-endian code toggles the HPC1 auxiliary byte at `0xbfb801bf` (below).
-- The value stored is `0x10000`, which the public header names `WRESETPMEM` (warm reset, memory preserved), CPUCTRL0 bit 16. It is not the
-  `LENDIAN` bit (`0x20000`) or the `WRESETDMEM` bit (`0x40000`). Inferred: it restarts the CPU so that the mode stream is re-read from the
+- The value stored is `0x10000`, CPUCTRL0 bit 16, the warm restart of the R4000 (MC specification section 5.1, `WR_ST`; NetBSD `IMC_CPUCTRL0_WRST`). It is not the
+  little-endian select (`0x40000`, bit 18) or the R4000 warm reset (`0x80000`, bit 19). Inferred: it restarts the CPU so that the mode stream is re-read from the
   EEPROM word just written. XOR mask `0x8400` changes bits 15 and 10; what bit 10 does is unknown (no other code names it).
 - **Code that executes correctly when fetched little-endian.** The path from `0xbfc003c0` to `0xbfc003fc` contains no load or store at
   all, and `0xbfc01320` to `0xbfc01548` use only word loads and stores to the MC plus the single HPC byte pair above; the 32-bit instruction
@@ -306,7 +306,7 @@ Only offsets whose use was read are listed.
 
 | Address | Block | Offsets read or written here |
 |---|---|---|
-| `0xbfa00000` | MC | `+0x04` CPUCTRL0 (reset whole write; low nibble `2`; bit `0x400` pulsed `0xbfc03674`/`0xbfc0f5ec`; bit `0x200` whole-register store then spin at `0xbfc07ed8`; bit `0x04000000` and `0x10e0` at `0xbfc07950`), `+0x0c` CPUCTRL1 (`0x1016`, single store), `+0x30` (little-endian view of the EEPROM register), `+0xc4`/`+0xcc` bank words, `+0xd4`, `+0xdc`, `+0xec`, `+0xfc`, `+0x1004` refresh counter, `+0x2004`..`+0x204c` DMA |
+| `0xbfa00000` | MC | `+0x04` CPUCTRL0 (reset whole write; low nibble `2`; bit `0x400` pulsed `0xbfc03674`/`0xbfc0f5ec`; bit `0x200` whole-register store then spin at `0xbfc07ed8`; bit `0x04000000` and `0x10e0` at `0xbfc07950`), `+0x0c` CPUCTRL1 (`0x1016`, single store), `+0x30` (little-endian view of the EEPROM register), `+0xc4`/`+0xcc` bank words, `+0xd4`, `+0xdc`, `+0xec`, `+0xfc`, `+0x1004` RPSS counter (not the refresh counter, which is `+0x4c` and never read), `+0x2004`..`+0x204c` DMA |
 | `0xbfb80000` | HPC1 | `+0xc0` endian register (`+0xc3` byte), `+0x1bc`/`+0x1bf` auxiliary EEPROM and LED byte, `+0xe00` (NetBSD's battery-backed RAM block, code at `0xbfc2c750`..); many more offsets from `+0x00` to `+0x4ff0` are used (SCSI, Ethernet, serial, audio) and were not decoded |
 | `0xbfbd0000` | board id | word read at `0xbfc07c3c`; bits `0x7000` inverted and shifted down (`0xbfc07c44`), a 3-bit board field (meaning unknown) |
 
@@ -351,11 +351,11 @@ call at the end of `resetenv`. Graded established unless marked.
   progress strings is. Unchanged.
 - **New CPUCTRL0 writer, no endian bit.** A new routine at `0xbfc07cd8` reads CPUCTRL0, ORs `0x2`, sets (argument non-zero) or clears
   ESNOOP `0x4000`, clears `0x40000`, and prints each step. It also writes MC `+0x16c` = `0x2000400d` and zeroes `+0x154` and `+0x15c`. One of its
-  messages reads "set CPUCTRL0 = %x (Big Endian)" and is printed right after the `0x40000` clear. By the public header's names `0x40000` is
-  WRESETDMEM and the little-endian bit is `0x20000`, which this routine never touches; so the label does not match the header's bit name. Established
-  for the code and the string; why the label says Big Endian is unknown (the string's author may have had a different bit map in mind). It is called
+  messages reads "set CPUCTRL0 = %x (Big Endian)" and is printed right after the `0x40000` clear. `0x40000` is the little-endian select (MC specification
+  section 5.1, `LITTLE`, bit 18; NetBSD `IMC_CPUCTRL0_LITTLE`), so clearing it and printing "Big Endian" agrees. Established
+  for the code, the string and the bit meaning (the Linux `mc.h` names bit 18 a warm reset; the specification and NetBSD, ranked above it for this register, say otherwise). It is called
   only from the new DMA test code below (inferred from the call graph: one caller, `0xbfc079b0`, itself reached only from the graphics tests). The
-  4.0.5D statement that no routine sets or clears `0x20000` or `0x40000` in CPUCTRL0 therefore stays true for `0x20000` and no longer holds for `0x40000`.
+  4.0.5D statement that no routine writes the little-endian select (`0x40000`) therefore no longer holds for 4.0.5G, which clears it (it never sets it).
 
 ### Memory: placement and descriptors unchanged, two clamps added
 
