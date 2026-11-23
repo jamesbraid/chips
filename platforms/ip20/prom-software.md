@@ -14,6 +14,8 @@ specification and the same NetBSD tree. Cross-references that only name a binary
 offset pair (or the data word) in the listing; where this page says nothing refers to an address, that is a scan of every
 `lui`/`addiu`/`ori`/load/store pair in the image and of every aligned data word, not a proof against computed addresses.
 
+The physical map and the MC initialisation order are on [the address map](address-map.md); the MC registers are on [the MC page](../../devices/mc/README.md).
+
 Companion reading of the same family: [the Indigo2 page](../ip22/prom-software.md) and [the O2 page](../ip32/prom-software.md). The
 byte-order survey across all held PROMs is [byte-order.md](../../software/firmware/byte-order.md); this page adds to its IP20 section: the
 routine that does the byte-order work the string describes, a fifth NT default entry (`scsihostid`), and the absence of a CPUCTRL0 byte-order

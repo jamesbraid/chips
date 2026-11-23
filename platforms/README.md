@@ -47,6 +47,7 @@
 
 | Page | Title | Summary |
 |---|---|---|
+| [address-map.md](ip20/address-map.md) | Indigo R4000 (IP20) physical address map and the PROM's MC set-up | The physical address space of the Indigo R4000 board as the MC chip decodes it, with each region's contents and... |
 | [prom-software.md](ip20/prom-software.md) | Indigo R4000 (IP20) PROM 4.0.5D Rev A: what its own software does | This page records what the shipped IP20 PROM image `SGI Version 4.0.5D Rev A IP20, Aug 19, 1992` does: part... |
 
 ## ip22
